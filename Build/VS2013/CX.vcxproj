@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum-dtoa.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\cached-powers.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\diy-fp.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\double-conversion.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\fast-dtoa.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\fixed-dtoa.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\ieee.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\strtod.h" />
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\utils.h" />
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\core.h" />
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\mintomic.h" />
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\platform_detect.h" />
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\core_msvc.h" />
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\mintomic_msvc.h" />
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h" />
+    <ClInclude Include="..\..\Include\CX\Alloc.h" />
+    <ClInclude Include="..\..\Include\CX\API.h" />
+    <ClInclude Include="..\..\Include\CX\APIDefs.h" />
+    <ClInclude Include="..\..\Include\CX\BitSet.h" />
+    <ClInclude Include="..\..\Include\CX\CX.h" />
+    <ClInclude Include="..\..\Include\CX\C\ctype.h" />
+    <ClInclude Include="..\..\Include\CX\C\Limits.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\ctype.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdio.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdlib.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\string.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Types.h" />
+    <ClInclude Include="..\..\Include\CX\C\stdio.h" />
+    <ClInclude Include="..\..\Include\CX\C\stdlib.h" />
+    <ClInclude Include="..\..\Include\CX\C\string.h" />
+    <ClInclude Include="..\..\Include\CX\C\Types.h" />
+    <ClInclude Include="..\..\Include\CX\Deque.h" />
+    <ClInclude Include="..\..\Include\CX\Detail\Print\DetailPrint.h" />
+    <ClInclude Include="..\..\Include\CX\EmptyType.h" />
+    <ClInclude Include="..\..\Include\CX\IAlloc.h" />
+    <ClInclude Include="..\..\Include\CX\IO\IInputStream.h" />
+    <ClInclude Include="..\..\Include\CX\IO\IOutputStream.h" />
+    <ClInclude Include="..\..\Include\CX\IO\MemInputStream.h" />
+    <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.h" />
+    <ClInclude Include="..\..\Include\CX\IStatus.h" />
+    <ClInclude Include="..\..\Include\CX\Limits.h" />
+    <ClInclude Include="..\..\Include\CX\List.h" />
+    <ClInclude Include="..\..\Include\CX\Map.h" />
+    <ClInclude Include="..\..\Include\CX\Platform.h" />
+    <ClInclude Include="..\..\Include\CX\Print.h" />
+    <ClInclude Include="..\..\Include\CX\Queue.h" />
+    <ClInclude Include="..\..\Include\CX\Set.h" />
+    <ClInclude Include="..\..\Include\CX\Stack.h" />
+    <ClInclude Include="..\..\Include\CX\Status.h" />
+    <ClInclude Include="..\..\Include\CX\StatusCodes.h" />
+    <ClInclude Include="..\..\Include\CX\STLAlloc.h" />
+    <ClInclude Include="..\..\Include\CX\String.h" />
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.h" />
+    <ClInclude Include="..\..\Include\CX\Str\UTF8.h" />
+    <ClInclude Include="..\..\Include\CX\Sys\Atomic.h" />
+    <ClInclude Include="..\..\Include\CX\Sys\BOM.h" />
+    <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.h" />
+    <ClInclude Include="..\..\Include\CX\Sys\DynLib.h" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.h" />
+    <ClInclude Include="..\..\Include\CX\Types.h" />
+    <ClInclude Include="..\..\Include\CX\UOMap.h" />
+    <ClInclude Include="..\..\Include\CX\UOMultiMap.h" />
+    <ClInclude Include="..\..\Include\CX\UOMultiSet.h" />
+    <ClInclude Include="..\..\Include\CX\UOSet.h" />
+    <ClInclude Include="..\..\Include\CX\Util\MemPool.h" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.h" />
+    <ClInclude Include="..\..\Include\CX\Util\Timer.h" />
+    <ClInclude Include="..\..\Include\CX\Vector.h" />
+    <ClInclude Include="..\..\Include\CX\Version.h" />
+    <ClInclude Include="..\..\Src\IO\MemInputStream.cpp" />
+    <ClInclude Include="..\..\Src\Platform\Windows\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum-dtoa.cc" />
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc" />
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\cached-powers.cc" />
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\diy-fp.cc" />
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\double-conversion.cc" />
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fast-dtoa.cc" />
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fixed-dtoa.cc" />
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc" />
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp" />
+    <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
+    <ClCompile Include="..\..\Src\Platform\Windows\Alloc_windows.cpp" />
+    <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
+    <ClCompile Include="..\..\Src\Status.cpp" />
+    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp" />
+    <ClCompile Include="..\..\Src\Sys\DynLib_windows.cpp" />
+    <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\Src\Platform\Windows\cx.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Src\Platform\Windows\cx.rc2" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DC97160C-7040-40EB-8552-F76C36302622}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CX</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
+    <IntDir>../../Temp/VS2013/$(Platform)/$(Configuration)/</IntDir>
+    <TargetName>cx</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
+    <IntDir>../../Temp/VS2013/$(Platform)/$(Configuration)/</IntDir>
+    <TargetName>cx</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
+    <IntDir>../../Temp/VS2013/$(Platform)/$(Configuration)/</IntDir>
+    <TargetName>cx</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
+    <IntDir>../../Temp/VS2013/$(Platform)/$(Configuration)/</IntDir>
+    <TargetName>cx</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_DEBUG</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_DEBUG</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

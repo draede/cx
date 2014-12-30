@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Sys">
+      <UniqueIdentifier>{d38e5aa9-fb1c-4394-a443-06c684ccf88f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C">
+      <UniqueIdentifier>{7f573871-9a6d-46f3-944b-2a0cb77999cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C\Platform">
+      <UniqueIdentifier>{b3619829-1c3a-4129-bbbe-ed136a0b237f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C\Platform\Windows">
+      <UniqueIdentifier>{a013a78c-1ef1-47d7-bdf0-79e246cce92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib">
+      <UniqueIdentifier>{1e608268-8048-4f27-8138-2be8641b9f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\ByteOrder">
+      <UniqueIdentifier>{ec081fa0-4c86-44e9-8b70-adffef1460c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\Mintomic">
+      <UniqueIdentifier>{e6cd0a80-59b9-45ef-ae2e-a8b3faf770fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platform">
+      <UniqueIdentifier>{93005c09-ae17-4a46-bf20-757b0cef9ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platform\Windows">
+      <UniqueIdentifier>{dc2fbe2f-78c4-4f91-875b-d79695acbd3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform">
+      <UniqueIdentifier>{692da411-0b00-45c1-89dc-5136ad459b9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform\Windows">
+      <UniqueIdentifier>{9d055c34-9627-4104-99e8-1858e0ac8596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO">
+      <UniqueIdentifier>{98d003c2-2ce1-477b-8ac2-1242a9583a48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Detail">
+      <UniqueIdentifier>{f41a1864-0767-4554-803a-543ecdee5b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys">
+      <UniqueIdentifier>{4fc7bd34-eb29-45da-bd0d-c156e28af051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform">
+      <UniqueIdentifier>{87ce9721-7afe-45f2-92b2-727b5d9c04eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform\Windows">
+      <UniqueIdentifier>{b1f1a48d-b223-4c45-8061-9f97688522e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{80ef2c49-7042-43eb-9e35-812e5a88e5a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\DoubleConversion">
+      <UniqueIdentifier>{085c5130-f8b2-4190-aecb-4e8e2c229c56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{ee9ca4b0-32bf-4d59-b412-7b551e361f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str">
+      <UniqueIdentifier>{080b323d-57e7-4a9f-9f72-da3e5eff1cab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform">
+      <UniqueIdentifier>{0427a3db-096c-429f-8f00-f3d51d61f926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform\Windows">
+      <UniqueIdentifier>{5894e032-b371-49bd-b98e-69d8aeb07fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail">
+      <UniqueIdentifier>{67c352a5-f637-422e-ae6c-e1ae19779f5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Detail\DetailPrint">
+      <UniqueIdentifier>{cf54c2e1-6549-4119-b120-e814f158209e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint">
+      <UniqueIdentifier>{6ed61017-6194-4453-98d7-e83e8fc47137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str">
+      <UniqueIdentifier>{43aad8d5-7866-4eca-9ede-4c4cb16a01ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform">
+      <UniqueIdentifier>{c805dcee-738b-4fd4-b2d5-5a945da902e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform\Windows">
+      <UniqueIdentifier>{2eb70e77-58bc-4474-b7db-2bd089bcef8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{53d86764-a89c-48a6-aaa3-73ed19a8fb7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform">
+      <UniqueIdentifier>{227f41fc-1813-48ce-8a8b-4ec85124e50b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform\Windows">
+      <UniqueIdentifier>{6979b1ed-c14d-40bf-9c22-f66508523c67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform">
+      <UniqueIdentifier>{dd12c7ce-0a6b-4011-8007-f010cbfa3aa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform\Windows">
+      <UniqueIdentifier>{0edbcc58-58e5-4ea9-983b-835320f4b6d4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Include\CX\C\ctype.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Limits.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\stdio.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\stdlib.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\string.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Types.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\ctype.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdio.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdlib.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\string.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Types.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Atomic.h">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\BOM.h">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.h">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\BitSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Deque.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Limits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\String.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\UOMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\UOMultiMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\UOMultiSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\UOSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h">
+      <Filter>Contrib\ByteOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\core.h">
+      <Filter>Contrib\Mintomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\mintomic.h">
+      <Filter>Contrib\Mintomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\platform_detect.h">
+      <Filter>Contrib\Mintomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\core_msvc.h">
+      <Filter>Contrib\Mintomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\mintomic_msvc.h">
+      <Filter>Contrib\Mintomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h">
+      <Filter>Contrib\Mintomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Platform\Windows\resource.h">
+      <Filter>Source Files\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\APIDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Alloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IAlloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Status.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\StatusCodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\STLAlloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\DynLib.h">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.h">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IInputStream.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IOutputStream.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Print.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Detail\Print\DetailPrint.h">
+      <Filter>Header Files\Detail\DetailPrint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\EmptyType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\MemInputStream.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\IO\MemInputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum-dtoa.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\cached-powers.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\diy-fp.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\double-conversion.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\fast-dtoa.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\fixed-dtoa.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\ieee.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\strtod.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\utils.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.h">
+      <Filter>Header Files\Str\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\UTF8.h">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\MemPool.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.h">
+      <Filter>Header Files\Util\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Timer.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
+      <Filter>Source Files\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Status.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum-dtoa.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\cached-powers.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\diy-fp.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\double-conversion.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fast-dtoa.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fixed-dtoa.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp">
+      <Filter>Source Files\Detail\DetailPrint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp">
+      <Filter>Source Files\Str\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\MemPool.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Platform\Windows\Alloc_windows.cpp">
+      <Filter>Source Files\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\DynLib_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\Src\Platform\Windows\cx.rc">
+      <Filter>Source Files\Platform\Windows</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Src\Platform\Windows\cx.rc2">
+      <Filter>Source Files\Platform\Windows</Filter>
+    </None>
+  </ItemGroup>
+</Project>
