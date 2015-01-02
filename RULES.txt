@@ -8,4 +8,4 @@
 6. why we have typedefs over STL containers? to support cross dll allocation (use Alloc/Realloc/Free/New/Delete/NewArr/DeleteArr for the same reason)
 7. bin/libs folders format: <BUILD_SYSTEM>/<PLATFORM>/<CONFIGURATION>. Example 'VS2013/Win32/Release' or 'GCC/Linux/Debug'
 9. all functions must use Status to set status (including functions that return StatusCode)
-10. all string used are UTF8 (event on windows)
+10. all string used are UTF8 (even on windows)
