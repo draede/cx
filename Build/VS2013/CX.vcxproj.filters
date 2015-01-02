@@ -276,9 +276,6 @@
     <ClInclude Include="..\..\Include\CX\Print.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Detail\Print\DetailPrint.h">
-      <Filter>Header Files\Detail\DetailPrint</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\EmptyType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -335,6 +332,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.h">
       <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.h">
+      <Filter>Header Files\Detail\DetailPrint</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

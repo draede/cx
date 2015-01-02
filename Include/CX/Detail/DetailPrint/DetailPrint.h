@@ -14,12 +14,6 @@
 namespace CX
 {
 
-namespace Detail
-{
-
-namespace DetailPrint
-{
-
 #ifndef CX_USE_CUSTOM_PRINTOUTPUT
 
 template <typename T> 
@@ -55,6 +49,12 @@ static inline StatusCode PrintOutput<String *>(String *psStr, const Char *pBuffe
 #endif
 
 #ifndef CX_USE_CUSTOM_TOSTRING
+
+namespace Detail
+{
+
+namespace DetailPrint
+{
 
 //from Andrei Alexandrescu
 static inline Size GetUInt64DigitsCount(UInt64 nValue)
@@ -126,6 +126,8 @@ CX_API bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrec
 
 }//namespace DetailPrint
 
+}//namespace Detail
+
 template <typename T>
 static inline StatusCode ToString(T p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision);
 
@@ -183,24 +185,25 @@ static inline StatusCode ToString<Int8>(Int8 p, Char *szOutput, Size cLen, Size 
 {
 	if (0 <= p)
 	{
-		*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
 		{
 			return Status_TooSmall;
 		}
-		DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
 	}
 	else
 	{
-		*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
 		if (*pcFinalLen + 2 > cLen)
 		{
 			return Status_TooSmall;
 		}
 		*szOutput = '-';
-		DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		szOutput[*pcFinalLen + 1] = 0;
+		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+		(*pcFinalLen)++;
+		szOutput[*pcFinalLen] = 0;
 	}
 
 	return Status_OK;
@@ -209,12 +212,12 @@ static inline StatusCode ToString<Int8>(Int8 p, Char *szOutput, Size cLen, Size 
 template <>
 static inline StatusCode ToString<UInt8>(UInt8 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
 	{
 		return Status_TooSmall;
 	}
-	DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 	szOutput[*pcFinalLen] = 0;
 
 	return Status_OK;
@@ -225,24 +228,25 @@ static inline StatusCode ToString<Int16>(Int16 p, Char *szOutput, Size cLen, Siz
 {
 	if (0 <= p)
 	{
-		*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
 		{
 			return Status_TooSmall;
 		}
-		DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
 	}
 	else
 	{
-		*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
 		if (*pcFinalLen + 2 > cLen)
 		{
 			return Status_TooSmall;
 		}
 		*szOutput = '-';
-		DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		szOutput[*pcFinalLen + 1] = 0;
+		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+		(*pcFinalLen)++;
+		szOutput[*pcFinalLen] = 0;
 	}
 
 	return Status_OK;
@@ -251,12 +255,12 @@ static inline StatusCode ToString<Int16>(Int16 p, Char *szOutput, Size cLen, Siz
 template <>
 static inline StatusCode ToString<UInt16>(UInt16 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
 	{
 		return Status_TooSmall;
 	}
-	DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 	szOutput[*pcFinalLen] = 0;
 
 	return Status_OK;
@@ -267,24 +271,25 @@ static inline StatusCode ToString<Int32>(Int32 p, Char *szOutput, Size cLen, Siz
 {
 	if (0 <= p)
 	{
-		*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
 		{
 			return Status_TooSmall;
 		}
-		DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
 	}
 	else
 	{
-		*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
 		if (*pcFinalLen + 2 > cLen)
 		{
 			return Status_TooSmall;
 		}
 		*szOutput = '-';
-		DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		szOutput[*pcFinalLen + 1] = 0;
+		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+		(*pcFinalLen)++;
+		szOutput[*pcFinalLen] = 0;
 	}
 
 	return Status_OK;
@@ -293,12 +298,12 @@ static inline StatusCode ToString<Int32>(Int32 p, Char *szOutput, Size cLen, Siz
 template <>
 static inline StatusCode ToString<UInt32>(UInt32 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
 	{
 		return Status_TooSmall;
 	}
-	DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 	szOutput[*pcFinalLen] = 0;
 
 	return Status_OK;
@@ -309,24 +314,25 @@ static inline StatusCode ToString<Int64>(Int64 p, Char *szOutput, Size cLen, Siz
 {
 	if (0 <= p)
 	{
-		*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
 		{
 			return Status_TooSmall;
 		}
-		DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
 	}
 	else
 	{
-		*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
 		if (*pcFinalLen + 2 > cLen)
 		{
 			return Status_TooSmall;
 		}
 		*szOutput = '-';
-		DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		szOutput[*pcFinalLen + 1] = 0;
+		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+		(*pcFinalLen)++;
+		szOutput[*pcFinalLen] = 0;
 	}
 
 	return Status_OK;
@@ -335,12 +341,12 @@ static inline StatusCode ToString<Int64>(Int64 p, Char *szOutput, Size cLen, Siz
 template <>
 static inline StatusCode ToString<UInt64>(UInt64 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
 	{
 		return Status_TooSmall;
 	}
-	DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 	szOutput[*pcFinalLen] = 0;
 
 	return Status_OK;
@@ -349,13 +355,30 @@ static inline StatusCode ToString<UInt64>(UInt64 p, Char *szOutput, Size cLen, S
 template <>
 static inline StatusCode ToString<Float>(Float p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	return ToString(p, szOutput, cLen, pcFinalLen, cPrecision);
+	if (!Detail::DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
+	{
+		return Status_ConversionFailed;
+	}
+	else
+	{
+		*pcFinalLen = 0;
+
+		const Char *pszPos = szOutput;
+
+		while ('\0' != *pszPos)
+		{
+			pszPos++;
+			(*pcFinalLen)++;
+		}
+
+		return Status_OK;
+	}
 }
 
 template <>
 static inline StatusCode ToString<Double>(Double p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	if (!DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
+	if (!Detail::DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
 	{
 		return Status_ConversionFailed;
 	}
@@ -378,14 +401,28 @@ static inline StatusCode ToString<Double>(Double p, Char *szOutput, Size cLen, S
 template <>
 static inline StatusCode ToString<long>(long p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
-	if (*pcFinalLen + 2 > cLen)
+	if (0 <= p)
 	{
-		return Status_TooSmall;
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
+		if (*pcFinalLen + 1 > cLen)
+		{
+			return Status_TooSmall;
+		}
+		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+		szOutput[*pcFinalLen] = 0;
 	}
-	*szOutput = '-';
-	DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-	szOutput[*pcFinalLen + 1] = 0;
+	else
+	{
+		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+		if (*pcFinalLen + 2 > cLen)
+		{
+			return Status_TooSmall;
+		}
+		*szOutput = '-';
+		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+		(*pcFinalLen)++;
+		szOutput[*pcFinalLen] = 0;
+	}
 
 	return Status_OK;
 }
@@ -393,12 +430,12 @@ static inline StatusCode ToString<long>(long p, Char *szOutput, Size cLen, Size 
 template <>
 static inline StatusCode ToString<unsigned long>(unsigned long p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	*pcFinalLen = DetailPrint::GetUInt64DigitsCount((UInt64)p);
+	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
 	{
 		return Status_TooSmall;
 	}
-	DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 	szOutput[*pcFinalLen] = 0;
 
 	return Status_OK;
@@ -442,7 +479,16 @@ static inline StatusCode ToString<String &>(String &p, Char *szOutput, Size cLen
 	return ToString<const String &>(p, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
+template <>
+static inline StatusCode ToString<String>(String p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+{
+	return ToString<const String &>(p, szOutput, cLen, pcFinalLen, cPrecision);
+}
+
 #endif
+
+namespace Detail
+{
 
 namespace DetailPrint
 {

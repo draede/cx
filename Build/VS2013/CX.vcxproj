@@ -54,7 +54,7 @@
     <ClInclude Include="..\..\Include\CX\C\string.h" />
     <ClInclude Include="..\..\Include\CX\C\Types.h" />
     <ClInclude Include="..\..\Include\CX\Deque.h" />
-    <ClInclude Include="..\..\Include\CX\Detail\Print\DetailPrint.h" />
+    <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.h" />
     <ClInclude Include="..\..\Include\CX\EmptyType.h" />
     <ClInclude Include="..\..\Include\CX\IAlloc.h" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.h" />
