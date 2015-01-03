@@ -103,7 +103,8 @@ public:
 		return mint_fetch_or_ptr_relaxed(pObject, nOperand);
 	}
 
-	static inline UInt32 CompareExchange(AtomicCmpExcUInt *pObject, UInt32 nExpected, UInt32 nDesired)
+	static inline UInt32 CompareExchange(AtomicCmpExcUInt *pObject, UInt32 nExpected, 
+	                                     UInt32 nDesired)
 	{
 #ifdef CX_32BIT_ARCH
 		return mint_compare_exchange_strong_32_relaxed(pObject, nExpected, nDesired);

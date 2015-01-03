@@ -31,7 +31,8 @@ static inline StatusCode PrintOutput<FILE *>(FILE *pFile, const Char *pBuffer, S
 }
 
 template <>
-static inline StatusCode PrintOutput<IO::IOutputStream *>(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen)
+static inline StatusCode PrintOutput<IO::IOutputStream *>(IO::IOutputStream *pOutputStream, 
+                         const Char *pBuffer, Size cLen)
 {
 	Size cbAckSize;
 
@@ -129,16 +130,19 @@ CX_API bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrec
 }//namespace Detail
 
 template <typename T>
-static inline StatusCode ToString(T p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision);
+static inline StatusCode ToString(T p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                  Size cPrecision);
 
 template <>
-static inline StatusCode ToString<EmptyType>(EmptyType p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<EmptyType>(EmptyType p, Char *szOutput, Size cLen, 
+                                             Size *pcFinalLen, Size cPrecision)
 {
 	return Status_NotSupported;
 }
 
 template <>
-static inline StatusCode ToString<Char>(Char p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Char>(Char p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
 {
 	if (cLen < 2)
 	{
@@ -152,7 +156,8 @@ static inline StatusCode ToString<Char>(Char p, Char *szOutput, Size cLen, Size 
 }
 
 template <>
-static inline StatusCode ToString<bool>(bool p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<bool>(bool p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
 {
 	if (p)
 	{
@@ -181,7 +186,8 @@ static inline StatusCode ToString<bool>(bool p, Char *szOutput, Size cLen, Size 
 }
 
 template <>
-static inline StatusCode ToString<Int8>(Int8 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Int8>(Int8 p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
 {
 	if (0 <= p)
 	{
@@ -210,7 +216,8 @@ static inline StatusCode ToString<Int8>(Int8 p, Char *szOutput, Size cLen, Size 
 }
 
 template <>
-static inline StatusCode ToString<UInt8>(UInt8 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<UInt8>(UInt8 p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
 {
 	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
@@ -224,7 +231,8 @@ static inline StatusCode ToString<UInt8>(UInt8 p, Char *szOutput, Size cLen, Siz
 }
 
 template <>
-static inline StatusCode ToString<Int16>(Int16 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Int16>(Int16 p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
 {
 	if (0 <= p)
 	{
@@ -253,7 +261,8 @@ static inline StatusCode ToString<Int16>(Int16 p, Char *szOutput, Size cLen, Siz
 }
 
 template <>
-static inline StatusCode ToString<UInt16>(UInt16 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<UInt16>(UInt16 p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
@@ -267,7 +276,8 @@ static inline StatusCode ToString<UInt16>(UInt16 p, Char *szOutput, Size cLen, S
 }
 
 template <>
-static inline StatusCode ToString<Int32>(Int32 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Int32>(Int32 p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
 {
 	if (0 <= p)
 	{
@@ -296,7 +306,8 @@ static inline StatusCode ToString<Int32>(Int32 p, Char *szOutput, Size cLen, Siz
 }
 
 template <>
-static inline StatusCode ToString<UInt32>(UInt32 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<UInt32>(UInt32 p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
@@ -310,7 +321,8 @@ static inline StatusCode ToString<UInt32>(UInt32 p, Char *szOutput, Size cLen, S
 }
 
 template <>
-static inline StatusCode ToString<Int64>(Int64 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Int64>(Int64 p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
 {
 	if (0 <= p)
 	{
@@ -339,7 +351,8 @@ static inline StatusCode ToString<Int64>(Int64 p, Char *szOutput, Size cLen, Siz
 }
 
 template <>
-static inline StatusCode ToString<UInt64>(UInt64 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<UInt64>(UInt64 p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
@@ -353,7 +366,8 @@ static inline StatusCode ToString<UInt64>(UInt64 p, Char *szOutput, Size cLen, S
 }
 
 template <>
-static inline StatusCode ToString<Float>(Float p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Float>(Float p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
 {
 	if (!Detail::DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
 	{
@@ -376,7 +390,8 @@ static inline StatusCode ToString<Float>(Float p, Char *szOutput, Size cLen, Siz
 }
 
 template <>
-static inline StatusCode ToString<Double>(Double p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Double>(Double p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	if (!Detail::DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
 	{
@@ -399,7 +414,8 @@ static inline StatusCode ToString<Double>(Double p, Char *szOutput, Size cLen, S
 }
 
 template <>
-static inline StatusCode ToString<long>(long p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<long>(long p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
 {
 	if (0 <= p)
 	{
@@ -428,7 +444,8 @@ static inline StatusCode ToString<long>(long p, Char *szOutput, Size cLen, Size 
 }
 
 template <>
-static inline StatusCode ToString<unsigned long>(unsigned long p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<unsigned long>(unsigned long p, Char *szOutput, Size cLen, 
+                                                 Size *pcFinalLen, Size cPrecision)
 {
 	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 	if (*pcFinalLen + 1 > cLen)
@@ -442,7 +459,8 @@ static inline StatusCode ToString<unsigned long>(unsigned long p, Char *szOutput
 }
 
 template <>
-static inline StatusCode ToString<const Char *>(const Char *p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<const Char *>(const Char *p, Char *szOutput, Size cLen, 
+                                                Size *pcFinalLen, Size cPrecision)
 {
 	if (!cx_strcopy(szOutput, cLen, p, pcFinalLen))
 	{
@@ -455,13 +473,15 @@ static inline StatusCode ToString<const Char *>(const Char *p, Char *szOutput, S
 }
 
 template <>
-static inline StatusCode ToString<Char *>(Char *p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Char *>(Char *p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	return ToString<const Char *>(p, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<const String &>(const String &p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<const String &>(const String &p, Char *szOutput, Size cLen, 
+                                                  Size *pcFinalLen, Size cPrecision)
 {
 	if (!cx_strcopy(szOutput, cLen, p.c_str(), pcFinalLen))
 	{
@@ -474,13 +494,15 @@ static inline StatusCode ToString<const String &>(const String &p, Char *szOutpu
 }
 
 template <>
-static inline StatusCode ToString<String &>(String &p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<String &>(String &p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                            Size cPrecision)
 {
 	return ToString<const String &>(p, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<String>(String p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<String>(String p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	return ToString<const String &>(p, szOutput, cLen, pcFinalLen, cPrecision);
 }
@@ -577,15 +599,15 @@ enum Align
 
 typedef struct _Flags
 {
-	static const Char		DEFAULT_FILLCHAR	= ' ';
-	static const UInt32	DEFAULT_WIDTH		= 0;
-	static const UInt32	DEFAULT_PRECISION = 6;
-	static const Align	DEFAULT_ALIGN		= Align_Right;
+	static const Char    DEFAULT_FILLCHAR   = ' ';
+	static const UInt32  DEFAULT_WIDTH      = 0;
+	static const UInt32  DEFAULT_PRECISION  = 6;
+	static const Align   DEFAULT_ALIGN      = Align_Right;
 
-	Char		cFillChar;
-	UInt32	cWidth;
-	UInt32	cPrecision;
-	Align		nAlign;
+	Char     cFillChar;
+	UInt32   cWidth;
+	UInt32   cPrecision;
+	Align    nAlign;
 
 	_Flags()
 	{
@@ -594,38 +616,41 @@ typedef struct _Flags
 
 	inline void Init()
 	{
-		cFillChar	= DEFAULT_FILLCHAR;
-		cWidth		= DEFAULT_WIDTH;
-		cPrecision	= DEFAULT_PRECISION;
-		nAlign		= DEFAULT_ALIGN;
+		cFillChar   = DEFAULT_FILLCHAR;
+		cWidth      = DEFAULT_WIDTH;
+		cPrecision  = DEFAULT_PRECISION;
+		nAlign      = DEFAULT_ALIGN;
 	}
 }Flags;
 
-// {$(argpos)[:[<|>]['$(fillchr)']]$(width)][.$(precision)]]}
+//arg format = {$(argpos)[:[<|>]['$(fillchr)']]$(width)][.$(precision)]]}
+//align = < (left), > (right - default), | (center)
+//fillchr = default ' '
+//width = default 0 (= arg width)
+//precision = default 6
 template <Size ARGC, typename O, 
-				typename T1, typename T2, typename T3, typename T4, 
-				typename T5, typename T6, typename T7, typename T8, 
-				typename T9, typename T10, typename T11, typename T12, 
-				typename T13, typename T14, typename T15,	typename T16>
+          typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15,	typename T16>
 static inline StatusCode Print(O o, const Char *szFormat, 
-								T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, 
-								T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
+                               T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, 
+                               T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 {
-	const Char	*pszStart;
-	const Char	*pszPos;
-	Flags			flags;
-	Buffer		buffer;
-	Size			cIndex;
-	UInt32		cWidth;
-	UInt32		cPrec;
-	Size			cLen;
-	Size			cPreLen;
-	Size			cPostLen;
-	Char			buf[1024];
-	StatusCode	nStatus;
+	const Char  *pszStart;
+	const Char  *pszPos;
+	Flags       flags;
+	Buffer      buffer;
+	Size        cIndex;
+	UInt32      cWidth;
+	UInt32      cPrec;
+	Size        cLen;
+	Size        cPreLen;
+	Size        cPostLen;
+	Char        buf[1024];
+	StatusCode  nStatus;
 
-	pszPos	= szFormat;
-	pszStart	= szFormat;
+	pszPos   = szFormat;
+	pszStart = szFormat;
 
 	for (;;)
 	{
@@ -749,7 +774,7 @@ static inline StatusCode Print(O o, const Char *szFormat,
 
 			if ('}' == *pszPos)
 			{
-				pszPos++;			
+				pszPos++;
 				
 				if (0 == cIndex) { nStatus = ToString(p1, buf, sizeof(buf), &cLen, flags.cPrecision); }
 				else if (1 == cIndex) { nStatus = ToString(p2, buf, sizeof(buf), &cLen, flags.cPrecision); }
@@ -775,7 +800,7 @@ static inline StatusCode Print(O o, const Char *szFormat,
 
 				if (Align_Left == flags.nAlign)
 				{
-					cPreLen	= 0;
+					cPreLen  = 0;
 					cPostLen = (cLen < flags.cWidth ? flags.cWidth - cLen : 0);
 				}
 				else
@@ -788,13 +813,13 @@ static inline StatusCode Print(O o, const Char *szFormat,
 					}
 					else
 					{
-						cPreLen	= 0;
+						cPreLen  = 0;
 						cPostLen = 0;
 					}
 				}
 				else
 				{
-					cPreLen	= (cLen < flags.cWidth ? flags.cWidth - cLen : 0);
+					cPreLen  = (cLen < flags.cWidth ? flags.cWidth - cLen : 0);
 					cPostLen = 0;
 				}
 				for (Size i = 0; i < cPreLen; i++)

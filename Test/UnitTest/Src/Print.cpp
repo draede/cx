@@ -6,58 +6,143 @@
 
 using namespace CX;
 
-#define TOSTRTSTP(name, type, actval, strval, prec)		\
-SECTION(name)												\
-{																\
-	Char szOutput[100];									\
-	String sOutput;										\
-	Size cLen;												\
-	type x = actval;										\
-																\
-	ToString(x, szOutput, 100, &cLen, prec);		\
-	sOutput = szOutput;									\
-																\
-	REQUIRE(sOutput == strval);						\
+
+template <typename T>
+const Char *ToString(T p, Size cPrec = 0)
+{
+	static Char   szOutput[100];
+	Size          cLen;
+
+	ToString(p, szOutput, 100, &cLen, cPrec);
+
+	return szOutput;
 }
-
-#define TOSTRTST(name, type, actval, strval)		TOSTRTSTP(name, type, actval, strval, 0)
-
 
 TEST_CASE("ToString tests", "[CX::ToString]")
 {
-	TOSTRTST("char", char, 'x', "x");
-	TOSTRTST("signed char", signed char, -123, "-123");
-	TOSTRTST("unsigned char", unsigned char, 123, "123");
+	SECTION("char")
+	{
+		REQUIRE(String("x") == ToString<char>('x'));
+	}
+	SECTION("signed char")
+	{
+		REQUIRE(String("-123") == ToString<signed char>(-123));
+	}
+	SECTION("unsigned char")
+	{
+		REQUIRE(String("123") == ToString<unsigned char>(123));
+	}
 
-	TOSTRTST("short", short, 1234, "1234");
-	TOSTRTST("signed short", signed short, -1234, "-1234");
-	TOSTRTST("unsigned short", unsigned short, 1234, "1234");
+	SECTION("short")
+	{
+		REQUIRE(String("1234") == ToString<short>(1234));
+	}
+	SECTION("signed short")
+	{
+		REQUIRE(String("-1234") == ToString<signed short>(-1234));
+	}
+	SECTION("unsigned short")
+	{
+		REQUIRE(String("1234") == ToString<unsigned short>(1234));
+	}
 
-	TOSTRTST("int", int, 12345, "12345");
-	TOSTRTST("signed int", signed int, -12345, "-12345");
-	TOSTRTST("unsigned int", unsigned int, 12345, "12345");
+	SECTION("int")
+	{
+		REQUIRE(String("12345") == ToString<int>(12345));
+	}
+	SECTION("signed int")
+	{
+		REQUIRE(String("-12345") == ToString<signed int>(-12345));
+	}
+	SECTION("unsigned int")
+	{
+		REQUIRE(String("12345") == ToString<unsigned int>(12345));
+	}
 
-	TOSTRTST("long", long, 123456, "123456");
-	TOSTRTST("signed long", signed long, -123456, "-123456");
-	TOSTRTST("unsigned long", unsigned long, 123456, "123456");
+	SECTION("long")
+	{
+		REQUIRE(String("123456") == ToString<long>(123456));
+	}
+	SECTION("signed long")
+	{
+		REQUIRE(String("-123456") == ToString<signed long>(-123456));
+	}
+	SECTION("unsigned long")
+	{
+		REQUIRE(String("123456") == ToString<unsigned long>(123456));
+	}
 
-	TOSTRTST("bool - false", bool, false, "false");
-	TOSTRTST("bool - true", bool, true, "true");
+	SECTION("long long")
+	{
+		REQUIRE(String("1234567") == ToString<long long>(1234567));
+	}
+	SECTION("signed long long")
+	{
+		REQUIRE(String("-1234567") == ToString<signed long long>(-1234567));
+	}
+	SECTION("unsigned long long")
+	{
+		REQUIRE(String("1234567") == ToString<unsigned long long>(1234567));
+	}
 
-	TOSTRTSTP("float", float, -123.456f, "-123.456", 3);
-	TOSTRTSTP("double", double, 12345.54321, "12345.54321", 5);
+	SECTION("bool - false")
+	{
+		REQUIRE(String("false") == ToString<bool>(false));
+	}
+	SECTION("bool - true")
+	{
+		REQUIRE(String("true") == ToString<bool>(true));
+	}
 
-	TOSTRTST("Int8", Int8, -123, "-123");
-	TOSTRTST("UInt8", UInt8, 123, "123");
-	TOSTRTST("Int16", Int16, -1234, "-1234");
-	TOSTRTST("UInt16", UInt16, 1234, "1234");
-	TOSTRTST("Int32", Int32, -12345, "-12345");
-	TOSTRTST("UInt32", UInt32, 12345, "12345");
-	TOSTRTST("Int64", Int64, -123456, "-123456");
-	TOSTRTST("UInt64", UInt64, 123456, "123456");
+	SECTION("float")
+	{
+		REQUIRE(String("123.456") == ToString<float>(123.456f, 3));
+	}
+	SECTION("double")
+	{
+		REQUIRE(String("-1234.5678") == ToString<double>(-1234.5678, 4));
+	}
 
-	TOSTRTSTP("Float", Float, -123.456f, "-123.456", 3);
-	TOSTRTSTP("Double", Double, 12345.54321, "12345.54321", 5);
+	SECTION("Int8")
+	{
+		REQUIRE(String("-123") == ToString<Int8>(-123));
+	}
+	SECTION("UInt8")
+	{
+		REQUIRE(String("123") == ToString<UInt8>(123));
+	}
+	SECTION("Int16")
+	{
+		REQUIRE(String("-1234") == ToString<Int16>(-1234));
+	}
+	SECTION("UInt16")
+	{
+		REQUIRE(String("1234") == ToString<UInt16>(1234));
+	}
+	SECTION("Int32")
+	{
+		REQUIRE(String("-12345") == ToString<Int32>(-12345));
+	}
+	SECTION("UInt32")
+	{
+		REQUIRE(String("12345") == ToString<UInt32>(12345));
+	}
+	SECTION("Int64")
+	{
+		REQUIRE(String("-123456") == ToString<Int64>(-123456));
+	}
+	SECTION("UInt64")
+	{
+		REQUIRE(String("123456") == ToString<UInt64>(123456));
+	}
+	SECTION("Float")
+	{
+		REQUIRE(String("123.456") == ToString<Float>(123.456f, 3));
+	}
+	SECTION("Double")
+	{
+		REQUIRE(String("-1234.5678") == ToString<Double>(-1234.5678, 4));
+	}
 }
 
 TEST_CASE("Print tests", "[CX::Print]")
@@ -94,36 +179,44 @@ TEST_CASE("Print tests", "[CX::Print]")
 	{
 		String sTmp;
 
-		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}", 'x', 123.456f, -123.321567, "abc");
+		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}", 'x', 123.456f, -123.321567, 
+		      "abc");
 		REQUIRE(sTmp == "p1 = x, p2 = 123.456, p3 = -123.321567, p4 = abc");
 	}
 	SECTION("5 args")
 	{
 		String sTmp;
 
-		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}, p5 = {5}", 'x', 123.456f, -123.321567, "abc", String("xyz"));
+		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}, p5 = {5}", 'x', 
+		      123.456f, -123.321567, "abc", String("xyz"));
 		REQUIRE(sTmp == "p1 = x, p2 = 123.456, p3 = -123.321567, p4 = abc, p5 = xyz");
 	}
 	SECTION("6 args")
 	{
 		String sTmp;
 
-		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}, p5 = {5}, p6 = {6:<'*'10}", 'x', 123.456f, -123.321567, "abc", String("xyz"), "123");
+		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}, p5 = {5}, p6 = {6:<'*'10}", 'x', 
+		      123.456f, -123.321567, "abc", String("xyz"), "123");
 		REQUIRE(sTmp == "p1 = x, p2 = 123.456, p3 = -123.321567, p4 = abc, p5 = xyz, p6 = 123*******");
 	}
 	SECTION("7 args")
 	{
 		String sTmp;
 
-		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}, p5 = {5}, p6 = {6:<'*'10}, p7 = {7:>'#'12}", 'x', 123.456f, -123.321567, "abc", String("xyz"), "123", 123);
-		REQUIRE(sTmp == "p1 = x, p2 = 123.456, p3 = -123.321567, p4 = abc, p5 = xyz, p6 = 123*******, p7 = #########123");
+		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}, p5 = {5}, p6 = {6:<'*'10},"
+		      " p7 = {7:>'#'12}", 'x', 123.456f, -123.321567, "abc", String("xyz"), "123", 123);
+		REQUIRE(sTmp == "p1 = x, p2 = 123.456, p3 = -123.321567, p4 = abc, p5 = xyz, "
+		        "p6 = 123*******, p7 = #########123");
 	}
 	SECTION("8 args")
 	{
 		String sTmp;
 
-		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}, p5 = {5}, p6 = {6:<'*'10}, p7 = {7:>'#'12}, p8 = {8:|'$'9}", 'x', 123.456f, -123.321567, "abc", String("xyz"), "123", 123, 123);
-		REQUIRE(sTmp == "p1 = x, p2 = 123.456, p3 = -123.321567, p4 = abc, p5 = xyz, p6 = 123*******, p7 = #########123, p8 = $$$123$$$");
+		Print(&sTmp, "p1 = {1}, p2 = {2:.3}, p3 = {3:.6}, p4 = {4}, p5 = {5}, p6 = {6:<'*'10},"
+		      " p7 = {7:>'#'12}, p8 = {8:|'$'9}", 'x', 123.456f, -123.321567, "abc", String("xyz"), 
+		      "123", (Size)123, 123);
+		REQUIRE(sTmp == "p1 = x, p2 = 123.456, p3 = -123.321567, p4 = abc, p5 = xyz, "
+		        "p6 = 123*******, p7 = #########123, p8 = $$$123$$$");
 	}
 }
 

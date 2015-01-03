@@ -107,7 +107,8 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7>
 T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 {
 	Byte *pPtr;
@@ -120,8 +121,8 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8>
 T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 {
 	Byte *pPtr;
@@ -134,8 +135,8 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9>
 T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 {
 	Byte *pPtr;
@@ -148,8 +149,8 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10>
 T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
 {
 	Byte *pPtr;
@@ -162,8 +163,8 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11>
 T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
 {
 	Byte *pPtr;
@@ -176,8 +177,8 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
 T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
 {
 	Byte *pPtr;
@@ -190,9 +191,11 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12, typename T13>
-T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13>
+T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
+       T13 p13)
 {
 	Byte *pPtr;
 
@@ -204,9 +207,11 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14>
-T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14>
+T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
+       T13 p13, T14 p14)
 {
 	Byte *pPtr;
 
@@ -218,10 +223,11 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, 
-				typename T15>
-T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15>
+T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
+       T13 p13, T14 p14, T15 p15)
 {
 	Byte *pPtr;
 
@@ -233,10 +239,11 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, 
-				typename T15, typename T16>
-T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16>
+T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
+       T13 p13, T14 p14, T15 p15, T16 p16)
 {
 	Byte *pPtr;
 
@@ -426,7 +433,8 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7>
 T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 {
 	Byte *pPtr;
@@ -450,8 +458,8 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8>
 T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 {
 	Byte *pPtr;
@@ -475,8 +483,8 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9>
 T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 {
 	Byte *pPtr;
@@ -500,8 +508,8 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10>
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10>
 T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
 {
 	Byte *pPtr;
@@ -525,9 +533,10 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11>
-T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11)
 {
 	Byte *pPtr;
 
@@ -550,9 +559,10 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12>
-T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12)
 {
 	Byte *pPtr;
 
@@ -575,9 +585,10 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12, typename T13>
-T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12, T13 p13)
 {
 	Byte *pPtr;
 
@@ -600,9 +611,11 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14>
-T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12, T13 p13, T14 p14)
 {
 	Byte *pPtr;
 
@@ -625,10 +638,11 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, 
-				typename T15>
-T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12, T13 p13, T14 p14, T15 p15)
 {
 	Byte *pPtr;
 
@@ -651,10 +665,11 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	return (T *)pPtr;
 };
 
-template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, 
-				typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14, 
-				typename T15, typename T16>
-T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 {
 	Byte *pPtr;
 

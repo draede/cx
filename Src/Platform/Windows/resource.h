@@ -34,7 +34,8 @@
 
 #define CX_RES_VER_NUMBER(a, b, c, d)        (a), (b), (c), (d)
 
-#define CX_RES_VER_STRING(a, b, c, d)        CX_RES_VER_STR(a) "." CX_RES_VER_STR(b) "." CX_RES_VER_STR(c) "." CX_RES_VER_STR(d)
+#define CX_RES_VER_STRING(a, b, c, d)        CX_RES_VER_STR(a) "." CX_RES_VER_STR(b) "."           \
+                                             CX_RES_VER_STR(c) "." CX_RES_VER_STR(d)
 
 
 #endif

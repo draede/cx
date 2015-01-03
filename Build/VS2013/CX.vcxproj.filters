@@ -237,12 +237,6 @@
     <ClInclude Include="..\..\Include\CX\Alloc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IAlloc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IStatus.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Status.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -256,9 +250,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\CX.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Sys\DynLib.h">

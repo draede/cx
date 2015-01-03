@@ -22,13 +22,13 @@ class Timer
 {
 public:
 
-   Timer();
+	Timer();
 
-   virtual ~Timer();
+	virtual ~Timer();
 
-   StatusCode ResetTimer();
+	StatusCode ResetTimer();
 
-   double GetElapsedTime() const;
+	double GetElapsedTime() const;
 
 	UInt64 GetTimeStamp();
 
@@ -36,8 +36,8 @@ public:
 
 private:
 
-   LARGE_INTEGER m_liTimerResolution;
-   LARGE_INTEGER m_liStartTimer;
+	LARGE_INTEGER m_liTimerResolution;
+	LARGE_INTEGER m_liStartTimer;
 
 };
 

@@ -7,9 +7,9 @@
 #endif
 
 #if defined(_WIN32)
-	#define CX_TLS				__declspec(thread)
-	#define CX_DLL_EXPORT	__declspec(dllexport)
-	#define CX_DLL_IMPORT	__declspec(dllimport)
+	#define CX_TLS          __declspec(thread)
+	#define CX_DLL_EXPORT   __declspec(dllexport)
+	#define CX_DLL_IMPORT   __declspec(dllimport)
 #ifdef _WIN64
 	#define CX_64BIT_ARCH
 #else
@@ -34,7 +34,7 @@
 #endif
 
 #ifdef __ANDROID__
-	#define CX_TLS		__thread
+	#define CX_TLS          __thread
 	#define CX_DLL_EXPORT
 	#define CX_DLL_IMPORT
 	//Android
@@ -50,7 +50,7 @@
 #endif
 
 #if defined(__APPLE__) && defined(__MACH__)
-	#define CX_TLS		__thread
+	#define CX_TLS          __thread
 	#define CX_DLL_EXPORT
 	#define CX_DLL_IMPORT
 #include <TargetConditionals.h>

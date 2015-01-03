@@ -9,3 +9,14 @@
 7. bin/libs folders format: <BUILD_SYSTEM>/<PLATFORM>/<CONFIGURATION>. Example 'VS2013/Win32/Release' or 'GCC/Linux/Debug'
 9. all functions must use Status to set status (including functions that return StatusCode)
 10. all string used are UTF8 (even on windows)
+11. tabs for identing (start of the line), spaces for aligning:
+int test(int a,
+.........int b)
+{
+<tab>int c;
+
+<tab>c = testfunc(a,
+<tab>.............b);
+}
+12. max line length = 100
+

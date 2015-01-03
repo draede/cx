@@ -37,7 +37,6 @@
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\mintomic_msvc.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h" />
     <ClInclude Include="..\..\Include\CX\Alloc.h" />
-    <ClInclude Include="..\..\Include\CX\API.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.h" />
     <ClInclude Include="..\..\Include\CX\BitSet.h" />
     <ClInclude Include="..\..\Include\CX\CX.h" />
@@ -56,12 +55,10 @@
     <ClInclude Include="..\..\Include\CX\Deque.h" />
     <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.h" />
     <ClInclude Include="..\..\Include\CX\EmptyType.h" />
-    <ClInclude Include="..\..\Include\CX\IAlloc.h" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.h" />
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.h" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.h" />
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.h" />
-    <ClInclude Include="..\..\Include\CX\IStatus.h" />
     <ClInclude Include="..\..\Include\CX\Limits.h" />
     <ClInclude Include="..\..\Include\CX\List.h" />
     <ClInclude Include="..\..\Include\CX\Map.h" />

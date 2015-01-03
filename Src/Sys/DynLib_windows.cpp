@@ -6,6 +6,7 @@
 
 
 #include "CX/Sys/DynLib.h"
+#include "CX/Str/UTF8.h"
 #include "CX/Status.h"
 
 
@@ -41,7 +42,14 @@ StatusCode DynLib::Load(const Char *szPath)
 	Unload();
 	Status::Clear();
 
-	if (NULL == (m_hHandle = LoadLibraryA(szPath)))
+	WString wsPath;
+
+	if (CXNOK(Str::UTF8::ToWChar(szPath, &wsPath)))
+	{
+		return Status::GetCode();
+	}
+
+	if (NULL == (m_hHandle = LoadLibraryW(wsPath.c_str())))
 	{
 		return Status::Set(Status_FileNotFound, "Failed to load library");
 	}

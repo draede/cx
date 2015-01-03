@@ -15,17 +15,23 @@ namespace IO
 MemOutputStream::MemOutputStream(void *pMem, Size cbSize)
 {
 	Status::Clear();
+	m_nType     = Type_Mem;
+	m_pMem      = pMem;
+	m_cbMemSize = cbSize;
 }
 
 MemOutputStream::MemOutputStream(String *pStr)
 {
 	Status::Clear();
+	m_nType     = Type_String;
+	m_pStr      = pStr;
 }
 
 MemOutputStream::MemOutputStream(Util::IMemPool *pMemPool)
 {
 	Status::Clear();
-
+	m_nType     = Type_MemPool;
+	m_pMemPool  = pMemPool;
 }
 
 MemOutputStream::~MemOutputStream()
@@ -39,9 +45,9 @@ Size MemOutputStream::GetSizeImpl() const
 
 	switch(m_nType)
 	{
-		case Type_Mem:			return m_cbMemSize;
-		case Type_String:		return m_pStr->size();
-		case Type_MemPool:	return m_pMemPool->GetSize();
+		case Type_Mem:       return m_cbMemSize;
+		case Type_String:    return m_pStr->size();
+		case Type_MemPool:   return m_pMemPool->GetSize();
 	}
 
 	return 0;

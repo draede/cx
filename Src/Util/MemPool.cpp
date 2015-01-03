@@ -13,10 +13,10 @@ DynMemPool::DynMemPool(Size cbMaxSize/* = SIZET_MAX*/)
 {
 	Status::Clear();
 
-	m_pMem			= NULL;
-	m_cbSize			= 0;
-	m_cbTotalSize	= 0;
-	m_cbMaxSize		= cbMaxSize;
+	m_pMem         = NULL;
+	m_cbSize       = 0;
+	m_cbTotalSize  = 0;
+	m_cbMaxSize    = cbMaxSize;
 }
 
 DynMemPool::~DynMemPool()
@@ -96,9 +96,9 @@ StatusCode DynMemPool::SetSize(Size cbSize)
 		return Status::Set(Status_MemAllocFailed, "Failed to allocate memory");
 	}
 
-	m_pMem			= pFinalMem;
-	m_cbSize			= cbSize;
-	m_cbTotalSize	= cbFinalSize;
+	m_pMem         = pFinalMem;
+	m_cbSize       = cbSize;
+	m_cbTotalSize  = cbFinalSize;
 
 	return Status_OK;
 }
@@ -127,9 +127,9 @@ StaticMemPool::StaticMemPool(void *pMem, Size cbSize)
 {
 	Status::Clear();
 
-	m_pMem			= pMem;
-	m_cbSize			= 0;
-	m_cbTotalSize	= cbSize;
+	m_pMem         = pMem;
+	m_cbSize       = 0;
+	m_cbTotalSize  = cbSize;
 }
 
 StaticMemPool::~StaticMemPool()

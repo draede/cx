@@ -22,16 +22,16 @@ class STLAlloc <void>
 {
 public:
 
-	typedef void			*pointer;
+	typedef void            *pointer;
 	
-	typedef const void	*const_pointer;
+	typedef const void      *const_pointer;
 	
-	typedef void 			value_type;
+	typedef void            value_type;
 	
 	template <class U> 
 	struct rebind 
 	{
-		typedef STLAlloc <U> other;
+		typedef STLAlloc<U>  other;
 	};
 };
 
@@ -40,24 +40,24 @@ class STLAlloc
 {
 public:
 
-	typedef size_t			size_type;
+	typedef size_t          size_type;
 	
-	typedef ptrdiff_t		difference_type;
+	typedef ptrdiff_t       difference_type;
 	
-	typedef T				*pointer;
+	typedef T               *pointer;
 	
-	typedef const T		*const_pointer;
+	typedef const T         *const_pointer;
 	
-	typedef T				&reference;
+	typedef T               &reference;
 	
-	typedef const T		&const_reference;
+	typedef const T         &const_reference;
 	
-	typedef T				value_type;
+	typedef T               value_type;
 	
 	template <class U> 
 	struct rebind 
 	{
-		typedef STLAlloc <U>	other;
+		typedef STLAlloc<U>  other;
 	};
 
 	STLAlloc()

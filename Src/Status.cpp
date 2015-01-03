@@ -10,8 +10,8 @@
 namespace CX
 {
 
-CX_TLS StatusCode	cx_nStatusCode								= Status_OK;
-CX_TLS Char			cx_szStatusMsg[Status::MAX_MSG_LEN]	= "";
+CX_TLS StatusCode   cx_nStatusCode                        = Status_OK;
+CX_TLS Char         cx_szStatusMsg[Status::MAX_MSG_LEN]   = "";
 
 Status::Status()
 {
@@ -24,8 +24,8 @@ Status::~Status()
 
 StatusCode Status::Set(StatusCode nStatus)
 {
-	cx_nStatusCode			= nStatus;
-	cx_szStatusMsg[0] 	= 0;
+	cx_nStatusCode      = nStatus;
+	cx_szStatusMsg[0]   = 0;
 
 	return nStatus;
 }
@@ -52,8 +52,8 @@ const Char *Status::GetMsg()
 
 void Status::Clear()
 {
-	cx_nStatusCode		= Status_OK;
-	cx_szStatusMsg[0] 	= 0;
+	cx_nStatusCode     = Status_OK;
+	cx_szStatusMsg[0]  = 0;
 }
 
 bool Status::IsOK()

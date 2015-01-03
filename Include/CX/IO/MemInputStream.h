@@ -48,12 +48,12 @@ private:
 		Type_MemPool,
 	};
 
-	Type						m_nType;
-	const void				*m_pMem;
-	Size						m_cbMemSize;
-	const String			*m_pStr;
-	const Util::IMemPool *m_pMemPool;
-	Size						m_cbOffset;
+	Type                  m_nType;
+	const void            *m_pMem;
+	Size                  m_cbMemSize;
+	const String          *m_pStr;
+	const Util::IMemPool  *m_pMemPool;
+	Size                  m_cbOffset;
 
 	Size GetSizeImpl() const;
 

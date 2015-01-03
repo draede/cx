@@ -14,8 +14,10 @@ namespace DetailPrint
 
 bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision)
 {
-	double_conversion::DoubleToStringConverter	cvt(double_conversion::DoubleToStringConverter::Flags::NO_FLAGS, "#", "*", 'E', 0, 0, 0, 0);
-	double_conversion::StringBuilder					sb(szOutput, cLen);
+	double_conversion::DoubleToStringConverter   cvt(
+	                   double_conversion::DoubleToStringConverter::Flags::NO_FLAGS, 
+	                   "#", "*", 'E', 0, 0, 0, 0);
+	double_conversion::StringBuilder             sb(szOutput, (int)cLen);
 
 	return cvt.ToFixed(lfValue, cPrecision, &sb);
 }

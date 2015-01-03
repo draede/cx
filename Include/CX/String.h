@@ -10,9 +10,9 @@
 namespace CX
 {
 
-typedef std::basic_string<Char, std::char_traits<Char>, STLAlloc<Char> >			String;
+typedef std::basic_string<Char, std::char_traits<Char>, STLAlloc<Char> >         String;
 
-typedef std::basic_string<WChar, std::char_traits<WChar>, STLAlloc<WChar> >		WString;
+typedef std::basic_string<WChar, std::char_traits<WChar>, STLAlloc<WChar> >      WString;
 
 struct CaseInsensitiveOrderPolicy
 {
