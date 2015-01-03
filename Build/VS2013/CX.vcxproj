@@ -38,7 +38,6 @@
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h" />
     <ClInclude Include="..\..\Include\CX\Alloc.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.h" />
-    <ClInclude Include="..\..\Include\CX\BitSet.h" />
     <ClInclude Include="..\..\Include\CX\CX.h" />
     <ClInclude Include="..\..\Include\CX\C\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Limits.h" />
@@ -66,6 +65,7 @@
     <ClInclude Include="..\..\Include\CX\Print.h" />
     <ClInclude Include="..\..\Include\CX\Queue.h" />
     <ClInclude Include="..\..\Include\CX\Set.h" />
+    <ClInclude Include="..\..\Include\CX\Slice.h" />
     <ClInclude Include="..\..\Include\CX\Stack.h" />
     <ClInclude Include="..\..\Include\CX\Status.h" />
     <ClInclude Include="..\..\Include\CX\StatusCodes.h" />

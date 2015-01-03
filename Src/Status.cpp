@@ -22,6 +22,23 @@ Status::~Status()
 
 }
 
+Char *Status::GetMsgPtr()
+{
+	return cx_szStatusMsg;
+}
+
+Size Status::GetMsgSize()
+{
+	return MAX_MSG_LEN;
+}
+
+StatusCode Status::SetOnlyCode(StatusCode nStatus)
+{
+	cx_nStatusCode = nStatus;
+
+	return nStatus;
+}
+
 StatusCode Status::Set(StatusCode nStatus)
 {
 	cx_nStatusCode      = nStatus;
@@ -59,6 +76,11 @@ void Status::Clear()
 bool Status::IsOK()
 {
 	return (Status_OK == cx_nStatusCode);
+}
+
+bool Status::IsNOK()
+{
+	return (Status_OK != cx_nStatusCode);
 }
 
 }//namespace CX

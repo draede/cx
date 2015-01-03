@@ -159,9 +159,6 @@
     <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.h">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\BitSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Deque.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -326,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.h">
       <Filter>Header Files\Detail\DetailPrint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Slice.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

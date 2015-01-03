@@ -7,6 +7,7 @@
 #include "CX/StatusCodes.h"
 #include "CX/String.h"
 #include "CX/EmptyType.h"
+#include "CX/Slice.h"
 #include "CX/IO/IOutputStream.h"
 #include "CX/C/ctype.h"
 
@@ -43,6 +44,40 @@ template <>
 static inline StatusCode PrintOutput<String *>(String *psStr, const Char *pBuffer, Size cLen)
 {
 	psStr->append(pBuffer, cLen);
+
+	return Status_OK;
+}
+
+template <>
+static inline StatusCode PrintOutput<String &>(String &sStr, const Char *pBuffer, Size cLen)
+{
+	sStr.append(pBuffer, cLen);
+
+	return Status_OK;
+}
+
+template <>
+static inline StatusCode PrintOutput<Slice *>(Slice *pSlice, const Char *pBuffer, Size cLen)
+{
+	if (pSlice->cbSize + 1 < cLen)
+	{
+		return Status_OutOfBounds;
+	}
+	memcpy(pSlice->pBuffer, pBuffer, cLen);
+	*((Byte *)pSlice->pBuffer + cLen) = 0;
+
+	return Status_OK;
+}
+
+template <>
+static inline StatusCode PrintOutput<Slice &>(Slice &slice, const Char *pBuffer, Size cLen)
+{
+	if (slice.cbSize + 1 < cLen)
+	{
+		return Status_OutOfBounds;
+	}
+	memcpy(slice.pBuffer, pBuffer, cLen);
+	*((Byte *)slice.pBuffer + cLen) = 0;
 
 	return Status_OK;
 }

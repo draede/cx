@@ -280,13 +280,15 @@ T *NewArr(Size cCount)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T();
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1>
@@ -304,13 +306,15 @@ T *NewArr(Size cCount, T1 p1)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2>
@@ -328,13 +332,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3>
@@ -352,13 +358,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4>
@@ -376,13 +384,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5>
@@ -400,13 +410,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
@@ -424,13 +436,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -449,13 +463,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -474,13 +490,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -499,13 +517,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -524,13 +544,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -550,13 +572,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -576,13 +600,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -602,13 +628,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -629,13 +657,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -656,13 +686,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
@@ -683,13 +715,15 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	memcpy(pPosPtr, &cCount, sizeof(Size));
 	pPosPtr += sizeof(Size);
 
+	Byte *pFinalPtr = pPosPtr;
+
 	for (Size i = 0; i < cCount; i++)
 	{
 		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16);
 		pPosPtr += sizeof(T);
 	}
 
-	return (T *)pPtr;
+	return (T *)pFinalPtr;
 };
 
 template <typename T>
@@ -697,7 +731,7 @@ void DeleteArr(T *pT)
 {
 	if (NULL != pT)
 	{
-		Byte *pPosPtr = (Byte *)pT;
+		Byte *pPosPtr = (Byte *)pT - sizeof(Size);
 		Size cCount;
 
 		memcpy(&cCount, pPosPtr, sizeof(Size));

@@ -2,7 +2,7 @@
 #pragma once
 
 
-#include "CX/STLAlloc.h"
+#include "CX/Deque.h"
 #include <stack>
 
 
@@ -12,7 +12,7 @@ namespace CX
 template <typename T>
 struct Stack
 {
-	typedef std::stack<T, STLAlloc<T> >	Type;
+	typedef std::stack<T, typename Deque<T>::Type >	Type;
 };
 
 }//namespace CX

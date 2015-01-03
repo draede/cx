@@ -12,7 +12,7 @@ namespace CX
 template <typename T>
 struct Queue
 {
-	typedef std::queue<T, Deque<T> >	Type;
+	typedef std::queue<T, typename Deque<T>::Type >	Type;
 };
 
 }//namespace CX

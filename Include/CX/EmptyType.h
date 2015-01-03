@@ -5,9 +5,9 @@
 namespace CX
 {
 
-struct EmptyType
+typedef struct _EmptyType
 {
-};
+}EmptyType;
 
 }//namespace CX
 
