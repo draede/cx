@@ -327,6 +327,30 @@
     <ClInclude Include="..\..\Include\CX\Slice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FileInputStream.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\IO\Scope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\FastMutex.h">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\FastMutex.h">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Container.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\IFunction.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Function.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -371,14 +395,23 @@
     <ClCompile Include="..\..\Src\Platform\Windows\Alloc_windows.cpp">
       <Filter>Source Files\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\DynLib_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp">
       <Filter>Source Files\Util\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp">
       <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\FileInputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\FileOutputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\FastMutex_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

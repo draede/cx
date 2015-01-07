@@ -24,6 +24,8 @@
     <ClCompile Include="..\..\Src\Print.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
     <ClCompile Include="..\..\Src\STL.cpp" />
+    <ClCompile Include="..\..\Src\Util_Container.cpp" />
+    <ClCompile Include="..\..\Src\Util_Function.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>

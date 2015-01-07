@@ -36,6 +36,10 @@ static const StatusCode      Status_NotImplemented          = 20;
 static const StatusCode      Status_ConversionFailed        = 21;
 static const StatusCode      Status_MemAllocFailed          = 22;
 static const StatusCode      Status_OperationFailed         = 23;
+static const StatusCode      Status_SetPos                  = 24;
+static const StatusCode      Status_GetPos                  = 25;
+static const StatusCode      Status_SetSize                 = 26;
+static const StatusCode      Status_GetSize                 = 27;
 
 }//CX_API 
 

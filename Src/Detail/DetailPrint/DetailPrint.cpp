@@ -19,7 +19,7 @@ bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision)
 	                   "#", "*", 'E', 0, 0, 0, 0);
 	double_conversion::StringBuilder             sb(szOutput, (int)cLen);
 
-	return cvt.ToFixed(lfValue, cPrecision, &sb);
+	return cvt.ToFixed(lfValue, (int)cPrecision, &sb);
 }
 
 }//namespace DetailPrint
