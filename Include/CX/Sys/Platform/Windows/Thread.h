@@ -372,8 +372,6 @@ public:
 
 private:
 
-	typedef void (*ThreadHelperProc)(void *);
-
 	HANDLE   m_hThread;
 	TID      m_nID;
 
@@ -412,13 +410,6 @@ private:
 		Util::IFunction<R> *m_pFunction;
 
 	};
-
-	template <typename R, Util::IFunction<R> *>
-	static void ThreadHelper(void *pFunction)
-	{
-		((Util::IFunction<R> *)pFunction)->Run();
-		Delete((Util::IFunction<R> *)pFunction);
-	}
 
 	static DWORD ThreadProc(void *pArg);
 
