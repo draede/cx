@@ -82,6 +82,8 @@
     <ClInclude Include="..\..\Include\CX\Sys\FastMutex.h" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.h" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\FastMutex.h" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Thread.h" />
+    <ClInclude Include="..\..\Include\CX\Sys\Thread.h" />
     <ClInclude Include="..\..\Include\CX\Types.h" />
     <ClInclude Include="..\..\Include\CX\UOMap.h" />
     <ClInclude Include="..\..\Include\CX\UOMultiMap.h" />
@@ -118,6 +120,7 @@
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\FastMutex_windows.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
   </ItemGroup>

@@ -255,6 +255,75 @@ T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T
 	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16);
 };
 
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16, typename T17>
+T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
+       T13 p13, T14 p14, T15 p15, T16 p16, T17 p17)
+{
+	Byte *pPtr;
+
+	if (NULL == (pPtr = (Byte *)Alloc(sizeof(T))))
+	{
+		return NULL;
+	}
+
+	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17);
+};
+
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16, typename T17, typename T18>
+T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
+       T13 p13, T14 p14, T15 p15, T16 p16, T17 p17, T18 p18)
+{
+	Byte *pPtr;
+
+	if (NULL == (pPtr = (Byte *)Alloc(sizeof(T))))
+	{
+		return NULL;
+	}
+
+	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, 
+	                   p18);
+};
+
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, 
+          typename T19>
+T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
+       T13 p13, T14 p14, T15 p15, T16 p16, T17 p17, T18 p18, T19 p19)
+{
+	Byte *pPtr;
+
+	if (NULL == (pPtr = (Byte *)Alloc(sizeof(T))))
+	{
+		return NULL;
+	}
+
+	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, 
+	                   p18, p19);
+};
+
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, 
+          typename T19, typename T20>
+T *New(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
+       T13 p13, T14 p14, T15 p15, T16 p16, T17 p17, T18 p18, T19 p19, T20 p20)
+{
+	Byte *pPtr;
+
+	if (NULL == (pPtr = (Byte *)Alloc(sizeof(T))))
+	{
+		return NULL;
+	}
+
+	return new (pPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, 
+	                   p18, p19, p20);
+};
+
 template <typename T>
 void Delete(T *pT)
 {
@@ -726,12 +795,134 @@ T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T
 	return (T *)pFinalPtr;
 };
 
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16, typename T17>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16, T17 p17)
+{
+	Byte *pPtr;
+
+	if (NULL == (pPtr = (Byte *)Alloc(sizeof(Size) + sizeof(T) * cCount)))
+	{
+		return NULL;
+	}
+
+	Byte *pPosPtr = pPtr;
+
+	memcpy(pPosPtr, &cCount, sizeof(Size));
+	pPosPtr += sizeof(Size);
+
+	Byte *pFinalPtr = pPosPtr;
+
+	for (Size i = 0; i < cCount; i++)
+	{
+		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17);
+		pPosPtr += sizeof(T);
+	}
+
+	return (T *)pFinalPtr;
+};
+
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16, typename T17, typename T18>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16, T17 p17, T18 p18)
+{
+	Byte *pPtr;
+
+	if (NULL == (pPtr = (Byte *)Alloc(sizeof(Size) + sizeof(T) * cCount)))
+	{
+		return NULL;
+	}
+
+	Byte *pPosPtr = pPtr;
+
+	memcpy(pPosPtr, &cCount, sizeof(Size));
+	pPosPtr += sizeof(Size);
+
+	Byte *pFinalPtr = pPosPtr;
+
+	for (Size i = 0; i < cCount; i++)
+	{
+		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, 
+		               p18);
+		pPosPtr += sizeof(T);
+	}
+
+	return (T *)pFinalPtr;
+};
+
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, 
+          typename T19>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16, T17 p17, T18 p18, T19 p19)
+{
+	Byte *pPtr;
+
+	if (NULL == (pPtr = (Byte *)Alloc(sizeof(Size) + sizeof(T) * cCount)))
+	{
+		return NULL;
+	}
+
+	Byte *pPosPtr = pPtr;
+
+	memcpy(pPosPtr, &cCount, sizeof(Size));
+	pPosPtr += sizeof(Size);
+
+	Byte *pFinalPtr = pPosPtr;
+
+	for (Size i = 0; i < cCount; i++)
+	{
+		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, 
+		               p18, p19);
+		pPosPtr += sizeof(T);
+	}
+
+	return (T *)pFinalPtr;
+};
+
+template <typename T, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+          typename T13, typename T14, typename T15, typename T16, typename T17, typename T18, 
+          typename T19, typename T20>
+T *NewArr(Size cCount, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, 
+          T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16, T17 p17, T18 p18, T19 p19, T20 p20)
+{
+	Byte *pPtr;
+
+	if (NULL == (pPtr = (Byte *)Alloc(sizeof(Size) + sizeof(T) * cCount)))
+	{
+		return NULL;
+	}
+
+	Byte *pPosPtr = pPtr;
+
+	memcpy(pPosPtr, &cCount, sizeof(Size));
+	pPosPtr += sizeof(Size);
+
+	Byte *pFinalPtr = pPosPtr;
+
+	for (Size i = 0; i < cCount; i++)
+	{
+		new (pPosPtr)T(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, 
+		               p18, p19, p20);
+		pPosPtr += sizeof(T);
+	}
+
+	return (T *)pFinalPtr;
+};
+
 template <typename T>
 void DeleteArr(T *pT)
 {
 	if (NULL != pT)
 	{
 		Byte *pPosPtr = (Byte *)pT - sizeof(Size);
+		Byte *pInitialPtr = pPosPtr;
 		Size cCount;
 
 		memcpy(&cCount, pPosPtr, sizeof(Size));
@@ -741,7 +932,7 @@ void DeleteArr(T *pT)
 			((T *)pPosPtr)->~T();
 			pPosPtr += sizeof(T);
 		}
-		Free(pT);
+		Free(pInitialPtr);
 	}
 }
 
