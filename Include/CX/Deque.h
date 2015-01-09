@@ -12,7 +12,7 @@ namespace CX
 template <typename T>
 struct Deque
 {
-	typedef std::deque<T, STLAlloc<T> >	Type;
+	typedef std::deque<T, STLAlloc<T> >     Type;
 };
 
 }//namespace CX

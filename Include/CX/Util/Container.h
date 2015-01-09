@@ -19,11 +19,29 @@ template <typename T1 = EmptyType, typename T2 = EmptyType, typename T3 = EmptyT
 class Container;
 
 template < >
-class Container < >
+class Container< >
 {
 public:
 
+	typedef Container< > SelfType;
+
 	Container()
+	{
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType &operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
 	{
 	}
 
@@ -39,11 +57,30 @@ class Container<T1>
 {
 public:
 
+	typedef Container<T1> SelfType;
+
 	T1    m_p1;
 
 	Container(T1 p1)
 	{
 		m_p1   = p1;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType &operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
 	}
 
 	Size GetCount()
@@ -69,6 +106,8 @@ class Container<T1, T2>
 {
 public:
 
+	typedef Container<T1, T2> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 
@@ -76,6 +115,24 @@ public:
 	{
 		m_p1   = p1;
 		m_p2   = p2;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType &operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
+		m_p2 = con.m_p2;
 	}
 
 	Size GetCount()
@@ -107,6 +164,8 @@ class Container<T1, T2, T3>
 {
 public:
 
+	typedef Container<T1, T2, T3> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -116,6 +175,25 @@ public:
 		m_p1 = p1;
 		m_p2 = p2;
 		m_p3 = p3;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
+		m_p2 = con.m_p2;
+		m_p3 = con.m_p3;
 	}
 
 	Size GetCount()
@@ -153,6 +231,8 @@ class Container<T1, T2, T3, T4>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -164,6 +244,26 @@ public:
 		m_p2 = p2;
 		m_p3 = p3;
 		m_p4 = p4;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
+		m_p2 = con.m_p2;
+		m_p3 = con.m_p3;
+		m_p4 = con.m_p4;
 	}
 
 	Size GetCount()
@@ -207,6 +307,8 @@ class Container<T1, T2, T3, T4, T5>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -220,6 +322,27 @@ public:
 		m_p3 = p3;
 		m_p4 = p4;
 		m_p5 = p5;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
+		m_p2 = con.m_p2;
+		m_p3 = con.m_p3;
+		m_p4 = con.m_p4;
+		m_p5 = con.m_p5;
 	}
 
 	Size GetCount()
@@ -269,6 +392,8 @@ class Container<T1, T2, T3, T4, T5, T6>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -284,6 +409,28 @@ public:
 		m_p4 = p4;
 		m_p5 = p5;
 		m_p6 = p6;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
+		m_p2 = con.m_p2;
+		m_p3 = con.m_p3;
+		m_p4 = con.m_p4;
+		m_p5 = con.m_p5;
+		m_p6 = con.m_p6;
 	}
 
 	Size GetCount()
@@ -340,6 +487,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -357,6 +506,29 @@ public:
 		m_p5 = p5;
 		m_p6 = p6;
 		m_p7 = p7;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
+		m_p2 = con.m_p2;
+		m_p3 = con.m_p3;
+		m_p4 = con.m_p4;
+		m_p5 = con.m_p5;
+		m_p6 = con.m_p6;
+		m_p7 = con.m_p7;
 	}
 
 	Size GetCount()
@@ -419,6 +591,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7, T8>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -438,6 +612,30 @@ public:
 		m_p6 = p6;
 		m_p7 = p7;
 		m_p8 = p8;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
+		m_p2 = con.m_p2;
+		m_p3 = con.m_p3;
+		m_p4 = con.m_p4;
+		m_p5 = con.m_p5;
+		m_p6 = con.m_p6;
+		m_p7 = con.m_p7;
+		m_p8 = con.m_p8;
 	}
 
 	Size GetCount()
@@ -506,6 +704,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8, T9> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -527,6 +727,31 @@ public:
 		m_p7 = p7;
 		m_p8 = p8;
 		m_p9 = p9;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1 = con.m_p1;
+		m_p2 = con.m_p2;
+		m_p3 = con.m_p3;
+		m_p4 = con.m_p4;
+		m_p5 = con.m_p5;
+		m_p6 = con.m_p6;
+		m_p7 = con.m_p7;
+		m_p8 = con.m_p8;
+		m_p9 = con.m_p9;
 	}
 
 	Size GetCount()
@@ -601,6 +826,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -624,6 +851,32 @@ public:
 		m_p8  = p8;
 		m_p9  = p9;
 		m_p10 = p10;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1  = con.m_p1;
+		m_p2  = con.m_p2;
+		m_p3  = con.m_p3;
+		m_p4  = con.m_p4;
+		m_p5  = con.m_p5;
+		m_p6  = con.m_p6;
+		m_p7  = con.m_p7;
+		m_p8  = con.m_p8;
+		m_p9  = con.m_p9;
+		m_p10 = con.m_p10;
 	}
 
 	Size GetCount()
@@ -704,6 +957,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -729,6 +984,33 @@ public:
 		m_p9  = p9;
 		m_p10 = p10;
 		m_p11 = p11;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1  = con.m_p1;
+		m_p2  = con.m_p2;
+		m_p3  = con.m_p3;
+		m_p4  = con.m_p4;
+		m_p5  = con.m_p5;
+		m_p6  = con.m_p6;
+		m_p7  = con.m_p7;
+		m_p8  = con.m_p8;
+		m_p9  = con.m_p9;
+		m_p10 = con.m_p10;
+		m_p11 = con.m_p11;
 	}
 
 	Size GetCount()
@@ -815,6 +1097,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -843,6 +1127,34 @@ public:
 		m_p10 = p10;
 		m_p11 = p11;
 		m_p12 = p12;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1  = con.m_p1;
+		m_p2  = con.m_p2;
+		m_p3  = con.m_p3;
+		m_p4  = con.m_p4;
+		m_p5  = con.m_p5;
+		m_p6  = con.m_p6;
+		m_p7  = con.m_p7;
+		m_p8  = con.m_p8;
+		m_p9  = con.m_p9;
+		m_p10 = con.m_p10;
+		m_p11 = con.m_p11;
+		m_p12 = con.m_p12;
 	}
 
 	Size GetCount()
@@ -936,6 +1248,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -966,6 +1280,35 @@ public:
 		m_p11 = p11;
 		m_p12 = p12;
 		m_p13 = p13;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1  = con.m_p1;
+		m_p2  = con.m_p2;
+		m_p3  = con.m_p3;
+		m_p4  = con.m_p4;
+		m_p5  = con.m_p5;
+		m_p6  = con.m_p6;
+		m_p7  = con.m_p7;
+		m_p8  = con.m_p8;
+		m_p9  = con.m_p9;
+		m_p10 = con.m_p10;
+		m_p11 = con.m_p11;
+		m_p12 = con.m_p12;
+		m_p13 = con.m_p13;
 	}
 
 	Size GetCount()
@@ -1065,6 +1408,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -1097,6 +1442,36 @@ public:
 		m_p12 = p12;
 		m_p13 = p13;
 		m_p14 = p14;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1  = con.m_p1;
+		m_p2  = con.m_p2;
+		m_p3  = con.m_p3;
+		m_p4  = con.m_p4;
+		m_p5  = con.m_p5;
+		m_p6  = con.m_p6;
+		m_p7  = con.m_p7;
+		m_p8  = con.m_p8;
+		m_p9  = con.m_p9;
+		m_p10 = con.m_p10;
+		m_p11 = con.m_p11;
+		m_p12 = con.m_p12;
+		m_p13 = con.m_p13;
+		m_p14 = con.m_p14;
 	}
 
 	Size GetCount()
@@ -1202,6 +1577,8 @@ class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -1236,6 +1613,37 @@ public:
 		m_p13 = p13;
 		m_p14 = p14;
 		m_p15 = p15;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1  = con.m_p1;
+		m_p2  = con.m_p2;
+		m_p3  = con.m_p3;
+		m_p4  = con.m_p4;
+		m_p5  = con.m_p5;
+		m_p6  = con.m_p6;
+		m_p7  = con.m_p7;
+		m_p8  = con.m_p8;
+		m_p9  = con.m_p9;
+		m_p10 = con.m_p10;
+		m_p11 = con.m_p11;
+		m_p12 = con.m_p12;
+		m_p13 = con.m_p13;
+		m_p14 = con.m_p14;
+		m_p15 = con.m_p15;
 	}
 
 	Size GetCount()
@@ -1347,6 +1755,9 @@ class Container
 {
 public:
 
+	typedef Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> 
+	                  SelfType;
+
 	T1    m_p1;
 	T2    m_p2;
 	T3    m_p3;
@@ -1383,6 +1794,38 @@ public:
 		m_p14 = p14;
 		m_p15 = p15;
 		m_p16 = p16;
+	}
+
+	Container(const SelfType &con)
+	{
+		Copy(con);
+	}
+
+	SelfType operator=(const SelfType &con)
+	{
+		Copy(con);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &con)
+	{
+		m_p1  = con.m_p1;
+		m_p2  = con.m_p2;
+		m_p3  = con.m_p3;
+		m_p4  = con.m_p4;
+		m_p5  = con.m_p5;
+		m_p6  = con.m_p6;
+		m_p7  = con.m_p7;
+		m_p8  = con.m_p8;
+		m_p9  = con.m_p9;
+		m_p10 = con.m_p10;
+		m_p11 = con.m_p11;
+		m_p12 = con.m_p12;
+		m_p13 = con.m_p13;
+		m_p14 = con.m_p14;
+		m_p15 = con.m_p15;
+		m_p16 = con.m_p16;
 	}
 
 	Size GetCount()

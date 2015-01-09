@@ -21,15 +21,34 @@ template <typename R, typename T1 = EmptyType, typename T2 = EmptyType, typename
 class Function;
 
 template <typename R>
-class Function <R> : public IFunction<R>
+class Function<R> : public IFunction<R>
 {
 public:
+
+	typedef Function<R> SelfType;
 
 	typedef R (* FunctionProc)();
 
 	Function(FunctionProc pfnProc) 
 		: m_pfnProc(pfnProc)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
 	}
 
 	virtual R Run()
@@ -44,15 +63,35 @@ private:
 };
 
 template <typename R, typename T1>
-class Function <R, T1> : public IFunction<R>
+class Function<R, T1> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1> SelfType;
 
 	typedef R (* FunctionProc)(T1);
 
 	Function(FunctionProc pfnProc, T1 p1)
 		: m_pfnProc(pfnProc), m_params(p1)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -69,15 +108,35 @@ private:
 };
 
 template <typename R, typename T1, typename T2>
-class Function <R, T1, T2> : public IFunction<R>
+class Function<R, T1, T2> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2);
 
 	Function(FunctionProc pfnProc, T1 p1, T2 p2)
 		: m_pfnProc(pfnProc), m_params(p1, p2)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -94,15 +153,35 @@ private:
 };
 
 template <typename R, typename T1, typename T2, typename T3>
-class Function <R, T1, T2, T3> : public IFunction<R>
+class Function<R, T1, T2, T3> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3);
 
 	Function(FunctionProc pfnProc, T1 p1, T2 p2, T3 p3)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -119,11 +198,31 @@ private:
 };
 
 template <typename R, typename T1, typename T2, typename T3, typename T4>
-class Function <R, T1, T2, T3, T4> : public IFunction<R>
+class Function<R, T1, T2, T3, T4> : public IFunction<R>
 {
 public:
 
+	typedef Function<R, T1, T2, T3, T4> SelfType;
+
 	typedef R (* FunctionProc)(T1, T2, T3, T4);
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
+	}
 
 	Function(FunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4)
@@ -144,15 +243,35 @@ private:
 };
 
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5>
-class Function <R, T1, T2, T3, T4, T5> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5);
 
 	Function(FunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -169,15 +288,35 @@ private:
 };
 
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-class Function <R, T1, T2, T3, T4, T5, T6> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5, T6> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6);
 
 	Function(FunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -196,15 +335,35 @@ private:
 
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7>
-class Function <R, T1, T2, T3, T4, T5, T6, T7> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5, T6, T7> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7);
 
 	Function(FunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -223,15 +382,35 @@ private:
 
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8>
-class Function <R, T1, T2, T3, T4, T5, T6, T7, T8> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5, T6, T7, T8> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8);
 
 	Function(FunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -250,15 +429,35 @@ private:
 
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9>
-class Function <R, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9);
 
 	Function(FunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -277,9 +476,11 @@ private:
 
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10>
-class Function <R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10);
 
@@ -287,6 +488,24 @@ public:
 	                               T10 p10)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -305,9 +524,11 @@ private:
 
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11>
-class Function <R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11);
 
@@ -315,6 +536,24 @@ public:
 	                               T10 p10, T11 p11)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -334,9 +573,11 @@ private:
 
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
-class Function <R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12);
 
@@ -344,6 +585,24 @@ public:
 	                               T10 p10, T11 p11, T12 p12)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -364,9 +623,11 @@ private:
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
           typename T13>
-class Function <R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public IFunction<R>
+class Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13);
 
@@ -374,6 +635,24 @@ public:
 	                               T10 p10, T11 p11, T12 p12, T13 p13)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -394,10 +673,12 @@ private:
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
           typename T13, typename T14>
-class Function <R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : 
+class Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : 
           public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14);
 
@@ -405,6 +686,24 @@ public:
 	                               T10 p10, T11 p11, T12 p12, T13 p13, T14 p14)
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -425,10 +724,12 @@ private:
 template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
           typename T13, typename T14, typename T15>
-class Function <R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : 
+class Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : 
           public IFunction<R>
 {
 public:
+
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelfType;
 
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15);
 
@@ -437,6 +738,24 @@ public:
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, 
 	                                  p15)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -462,6 +781,9 @@ class Function : public IFunction<R>
 {
 public:
 
+	typedef Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> 
+	                 SelfType;
+
 	typedef R (* FunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, 
 	                           T16);
 
@@ -470,6 +792,24 @@ public:
 		: m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, 
 	                                  p15, p16)
 	{
+	}
+
+	Function(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -501,11 +841,31 @@ class MemberFunction <T, R> : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R> SelfType;
+
 	typedef R (T::*MemberFunctionProc)();
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc)
 		: m_pInst(pInst), m_pfnProc(pfnProc)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
 	}
 
 	virtual R Run()
@@ -525,11 +885,32 @@ class MemberFunction <T, R, T1> : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R, T1> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -550,11 +931,32 @@ class MemberFunction <T, R, T1, T2> : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -576,11 +978,32 @@ class MemberFunction <T, R, T1, T2, T3> : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -602,11 +1025,32 @@ class MemberFunction <T, R, T1, T2, T3, T4> : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -628,11 +1072,32 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5> : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -656,11 +1121,32 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6> : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -684,12 +1170,33 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7> : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
 	               T7 p7)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -713,12 +1220,33 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7, T8> : public IFunction<R
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
 	               T7 p7, T8 p8)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -742,12 +1270,33 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public IFuncti
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
 	               T7 p7, T8 p8, T9 p9)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -772,12 +1321,33 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public IF
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
 	               T7 p7, T8 p8, T9 p9, T10 p10)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -802,12 +1372,33 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publ
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
 	               T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -833,6 +1424,8 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> :
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
@@ -840,6 +1433,25 @@ public:
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, 
 	                                                  p12)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -866,6 +1478,8 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T13> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
@@ -873,6 +1487,25 @@ public:
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, 
 	                                                  p12, p13)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -900,6 +1533,8 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T13, T14> SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14);
 
 	MemberFunction(T *pInst, MemberFunctionProc pfnProc, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
@@ -907,6 +1542,25 @@ public:
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, 
 	                                                  p12, p13, p14)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -934,6 +1588,9 @@ class MemberFunction <T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T13, T14, T15> 
+	                       SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, 
 	                                   T15);
 
@@ -942,6 +1599,25 @@ public:
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, 
 	                                                  p12, p13, p14, p15)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()
@@ -968,6 +1644,9 @@ class MemberFunction : public IFunction<R>
 {
 public:
 
+	typedef MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T13, T14, T15, T16> 
+	                       SelfType;
+
 	typedef R (T::*MemberFunctionProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, 
 	                                   T15, T16);
 
@@ -977,6 +1656,25 @@ public:
 		: m_pInst(pInst), m_pfnProc(pfnProc), m_params(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, 
 	                                                  p12, p13, p14, p15, p16)
 	{
+	}
+
+	MemberFunction(const SelfType &func)
+	{
+		Copy(func);
+	}
+
+	SelfType &operator=(const SelfType &func)
+	{
+		Copy(func);
+
+		return *this;
+	}
+
+	void Copy(const SelfType &func)
+	{
+		m_pInst   = func.m_pInst;
+		m_pfnProc = func.m_pfnProc;
+		m_params  = func.m_params;
 	}
 
 	virtual R Run()

@@ -12,7 +12,7 @@ namespace CX
 template <typename T>
 struct List
 {
-	typedef std::list<T, STLAlloc<T> >	Type;
+	typedef std::list<T, STLAlloc<T> >     Type;
 };
 
 }//namespace CX

@@ -12,7 +12,7 @@ namespace CX
 template <typename T>
 struct Stack
 {
-	typedef std::stack<T, typename Deque<T>::Type >	Type;
+	typedef std::stack<T, typename Deque<T>::Type >     Type;
 };
 
 }//namespace CX
