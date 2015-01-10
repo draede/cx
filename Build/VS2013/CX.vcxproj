@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
+    <ClCompile Include="..\..\Src\Version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Src\Platform\Windows\cx.rc" />
@@ -218,7 +219,7 @@
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_DEBUG</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_MSC_VER=1800;_DEBUG</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -237,7 +238,7 @@
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_DEBUG</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_MSC_VER=1800;_DEBUG</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -260,6 +261,7 @@
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_MSC_VER=1800;</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -282,6 +284,7 @@
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_MSC_VER=1800;</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

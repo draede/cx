@@ -10,6 +10,22 @@
 	#define CX_TLS          __declspec(thread)
 	#define CX_DLL_EXPORT   __declspec(dllexport)
 	#define CX_DLL_IMPORT   __declspec(dllimport)
+#if _MSC_VER == 1400
+	#define CX_BUILDSYS_VS2005
+	#define CX_BUILDSYS     "VS2005"
+#elif _MSC_VER == 1500
+	#define CX_BUILDSYS_VS2008
+	#define CX_BUILDSYS     "VS2008"
+#elif _MSC_VER == 1600
+	#define CX_BUILDSYS_VS2010
+	#define CX_BUILDSYS     "VS2010"
+#elif _MSC_VER == 1700
+	#define CX_BUILDSYS_VS2012
+	#define CX_BUILDSYS     "VS2012"
+#elif _MSC_VER == 1800
+	#define CX_BUILDSYS_VS2013
+	#define CX_BUILDSYS     "VS2013"
+#endif
 #ifdef _WIN64
 	#define CX_64BIT_ARCH
 #else
