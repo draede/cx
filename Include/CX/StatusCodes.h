@@ -41,6 +41,8 @@ static const StatusCode      Status_GetPos                  = 25;
 static const StatusCode      Status_SetSize                 = 26;
 static const StatusCode      Status_GetSize                 = 27;
 static const StatusCode      Status_Busy                    = 28;
+static const StatusCode      Status_Cancelled               = 29;
+static const StatusCode      Status_Denied                  = 30;
 
 }//CX_API 
 

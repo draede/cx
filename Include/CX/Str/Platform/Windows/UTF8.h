@@ -11,6 +11,7 @@
 #include "CX/Types.h"
 #include "CX/String.h"
 #include "CX/Limits.h"
+#include "CX/APIDefs.h"
 
 
 namespace CX
@@ -19,7 +20,7 @@ namespace CX
 namespace Str
 {
 
-class UTF8
+class CX_API UTF8
 {
 public:
 

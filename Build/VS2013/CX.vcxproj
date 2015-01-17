@@ -51,6 +51,8 @@
     <ClInclude Include="..\..\Include\CX\C\stdlib.h" />
     <ClInclude Include="..\..\Include\CX\C\string.h" />
     <ClInclude Include="..\..\Include\CX\C\Types.h" />
+    <ClInclude Include="..\..\Include\CX\Data\JSON\IJSONSAXParserObserver.h" />
+    <ClInclude Include="..\..\Include\CX\Data\JSON\JSONSAXParser.h" />
     <ClInclude Include="..\..\Include\CX\Deque.h" />
     <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.h" />
     <ClInclude Include="..\..\Include\CX\EmptyType.h" />
@@ -62,6 +64,14 @@
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.h" />
     <ClInclude Include="..\..\Include\CX\Limits.h" />
     <ClInclude Include="..\..\Include\CX\List.h" />
+    <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.h" />
+    <ClInclude Include="..\..\Include\CX\Log\DefaultFormatter.h" />
+    <ClInclude Include="..\..\Include\CX\Log\IFormatter.h" />
+    <ClInclude Include="..\..\Include\CX\Log\IOutput.h" />
+    <ClInclude Include="..\..\Include\CX\Log\Level.h" />
+    <ClInclude Include="..\..\Include\CX\Log\Logger.h" />
+    <ClInclude Include="..\..\Include\CX\Log\StreamOutput.h" />
+    <ClInclude Include="..\..\Include\CX\Log\SystemOutput.h" />
     <ClInclude Include="..\..\Include\CX\Map.h" />
     <ClInclude Include="..\..\Include\CX\Platform.h" />
     <ClInclude Include="..\..\Include\CX\Print.h" />
@@ -93,11 +103,14 @@
     <ClInclude Include="..\..\Include\CX\Util\Function.h" />
     <ClInclude Include="..\..\Include\CX\Util\IFunction.h" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.h" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.h" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.h" />
+    <ClInclude Include="..\..\Include\CX\Util\Time.h" />
     <ClInclude Include="..\..\Include\CX\Util\Timer.h" />
+    <ClInclude Include="..\..\Include\CX\Var.h" />
     <ClInclude Include="..\..\Include\CX\Vector.h" />
     <ClInclude Include="..\..\Include\CX\Version.h" />
-    <ClInclude Include="..\..\Src\IO\MemInputStream.cpp" />
+    <ClInclude Include="..\..\Src\Data\JSON\RapidJSONStreams.h" />
     <ClInclude Include="..\..\Src\IO\Scope.h" />
     <ClInclude Include="..\..\Src\Platform\Windows\resource.h" />
   </ItemGroup>
@@ -110,10 +123,17 @@
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fast-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fixed-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc" />
+    <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp" />
     <ClCompile Include="..\..\Src\IO\FileInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FileOutputStream.cpp" />
+    <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
+    <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
+    <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
+    <ClCompile Include="..\..\Src\Log\Logger.cpp" />
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
+    <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\Alloc_windows.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
@@ -123,6 +143,8 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp" />
+    <ClCompile Include="..\..\Src\Var.cpp" />
     <ClCompile Include="..\..\Src\Version.cpp" />
   </ItemGroup>
   <ItemGroup>

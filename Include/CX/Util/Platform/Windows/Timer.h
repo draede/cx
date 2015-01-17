@@ -9,6 +9,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/APIDefs.h"
 #include <windows.h>
 
 
@@ -18,7 +19,7 @@ namespace CX
 namespace Util
 {
 
-class Timer
+class CX_API Timer
 {
 public:
 

@@ -5,6 +5,7 @@
 #include "CX/IO/IOutputStream.h"
 #include "CX/String.h"
 #include "CX/Util/MemPool.h"
+#include "CX/APIDefs.h"
 
 
 namespace CX
@@ -13,7 +14,7 @@ namespace CX
 namespace IO
 {
 
-class MemOutputStream : public IOutputStream
+class CX_API MemOutputStream : public IOutputStream
 {
 public:
 

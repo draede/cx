@@ -22,7 +22,14 @@ void *Alloc(Size cbSize)
 
 void *Realloc(void *pPtr, Size cbSize)
 {
-	return HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
+	if (NULL == pPtr)
+	{
+		return HeapAlloc(GetProcessHeap(), 0, cbSize);
+	}
+	else
+	{
+		return HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
+	}
 }
 
 void Free(void *pPtr)

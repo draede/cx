@@ -7,7 +7,6 @@
 using namespace CX;
 
 
-
 TEST_CASE("Container tests", "[CX::Util::Container]")
 {
 	SECTION("0 args")

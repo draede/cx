@@ -1,6 +1,7 @@
 
 #include "CX/Detail/DetailPrint/DetailPrint.h"
 #include "../../../Contrib/DoubleConversion/Include/double-conversion.h"
+#include "CX/C/stdio.h"
 
 
 namespace CX

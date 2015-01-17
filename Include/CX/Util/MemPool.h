@@ -5,6 +5,7 @@
 #include "CX/Types.h"
 #include "CX/Limits.h"
 #include "CX/String.h"
+#include "CX/APIDefs.h"
 
 
 namespace CX
@@ -13,7 +14,7 @@ namespace CX
 namespace Util
 {
 
-class IMemPool
+class CX_API IMemPool
 {
 public:
 
@@ -40,7 +41,7 @@ public:
 
 };
 
-class DynMemPool : IMemPool
+class CX_API DynMemPool : IMemPool
 {
 public:
 
@@ -76,7 +77,7 @@ private:
 
 };
 
-class StaticMemPool : IMemPool
+class CX_API StaticMemPool : IMemPool
 {
 public:
 

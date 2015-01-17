@@ -112,6 +112,30 @@
     <Filter Include="Source Files\Util\Platform\Windows">
       <UniqueIdentifier>{0edbcc58-58e5-4ea9-983b-835320f4b6d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data">
+      <UniqueIdentifier>{258466c1-a8ba-4584-a4dd-4439d5a04f1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data\JSON">
+      <UniqueIdentifier>{4baea398-be92-4d00-abc1-ddceb60bf675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data">
+      <UniqueIdentifier>{17302211-bf75-481b-ad7e-3f7de448fd88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\JSON">
+      <UniqueIdentifier>{25a65e68-6f86-413a-ae30-6c8d9e0c832a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log">
+      <UniqueIdentifier>{3bec0df9-4dd4-48b5-beb7-ce12aa00caf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log">
+      <UniqueIdentifier>{d77606a4-ae48-49d0-bc2d-c0c609bd0d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform">
+      <UniqueIdentifier>{ff2ade6b-e667-4734-880c-e018005bb159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform\Windows">
+      <UniqueIdentifier>{614cc691-28bf-4718-9af5-5b727f043131}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\C\ctype.h">
@@ -270,9 +294,6 @@
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\IO\MemInputStream.cpp">
-      <Filter>Source Files\IO</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h">
       <Filter>Contrib\DoubleConversion</Filter>
     </ClInclude>
@@ -357,6 +378,48 @@
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Thread.h">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Var.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\JSONSAXParser.h">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\IJSONSAXParserObserver.h">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Data\JSON\RapidJSONStreams.h">
+      <Filter>Source Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Level.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Logger.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\IOutput.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\StreamOutput.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\SystemOutput.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\IFormatter.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\DefaultFormatter.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Time.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.h">
+      <Filter>Header Files\Util\Platform\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -395,9 +458,6 @@
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp">
       <Filter>Source Files\Str\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Util\MemPool.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Platform\Windows\Alloc_windows.cpp">
       <Filter>Source Files\Platform\Windows</Filter>
     </ClCompile>
@@ -424,6 +484,36 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Version.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Var.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\MemInputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\MemPool.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Logger.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\StreamOutput.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp">
+      <Filter>Source Files\Log\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

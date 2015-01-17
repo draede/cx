@@ -49,14 +49,6 @@ static inline StatusCode PrintOutput<String *>(String *psStr, const Char *pBuffe
 }
 
 template <>
-static inline StatusCode PrintOutput<String &>(String &sStr, const Char *pBuffer, Size cLen)
-{
-	sStr.append(pBuffer, cLen);
-
-	return Status_OK;
-}
-
-template <>
 static inline StatusCode PrintOutput<Slice *>(Slice *pSlice, const Char *pBuffer, Size cLen)
 {
 	if (pSlice->cbSize + 1 < cLen)

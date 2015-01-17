@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Alloc.cpp" />
+    <ClCompile Include="..\..\Src\Log_Logger.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />
     <ClCompile Include="..\..\Src\Print.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="..\..\Src\Sys_Thread.cpp" />
     <ClCompile Include="..\..\Src\Util_Container.cpp" />
     <ClCompile Include="..\..\Src\Util_Function.cpp" />
+    <ClCompile Include="..\..\Src\Var.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>

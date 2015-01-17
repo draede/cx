@@ -103,10 +103,14 @@ private:
 	int      m_nMinor;
 	int      m_nRevision;
 	int      m_nBuild;
+
+#pragma warning(push)
+#pragma warning(disable: 4251)
 	String   m_sName;
 	String   m_sCopyright;
 	String   m_sCompany;
 	String   m_sDescription;
+#pragma warning(pop)
 
 };
 

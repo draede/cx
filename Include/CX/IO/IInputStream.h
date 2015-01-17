@@ -3,6 +3,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/APIDefs.h"
 
 
 namespace CX
@@ -11,7 +12,7 @@ namespace CX
 namespace IO
 {
 
-class IInputStream
+class CX_API IInputStream
 {
 public:
 

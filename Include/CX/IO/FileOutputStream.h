@@ -5,6 +5,7 @@
 #include "CX/IO/IOutputStream.h"
 #include "CX/C/stdio.h"
 #include "CX/String.h"
+#include "CX/APIDefs.h"
 
 
 namespace CX
@@ -13,7 +14,7 @@ namespace CX
 namespace IO
 {
 
-class FileOutputStream : public IOutputStream
+class CX_API FileOutputStream : public IOutputStream
 {
 public:
 
@@ -32,7 +33,11 @@ public:
 private:
 
 	FILE     *m_pFile;
+
+#pragma warning(push)
+#pragma warning(disable: 4251)
 	String   m_sPath;
+#pragma warning(pop)
 
 };
 

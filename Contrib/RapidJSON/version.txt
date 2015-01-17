@@ -1,0 +1,1 @@
+https://github.com/miloyip/rapidjson/commit/29fa15580b26a8f257bcc78f39899fc8c8e9f344
