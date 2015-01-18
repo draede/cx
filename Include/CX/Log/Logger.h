@@ -7,7 +7,7 @@
 #include "CX/Log/IFormatter.h"
 #include "CX/Log/IOutput.h"
 #include "CX/Print.h"
-#include "CX/Sys/FastMutex.h"
+#include "CX/Sys/Lock.h"
 #include "CX/APIDefs.h"
 #include "CX/Vector.h"
 #include "CX/Scope.h"
@@ -108,7 +108,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (NULL == m_pFormatter)
 		{
@@ -146,7 +146,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -179,7 +179,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -212,7 +212,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -245,7 +245,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -279,7 +279,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -313,7 +313,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -348,7 +348,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -383,7 +383,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -418,7 +418,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -453,7 +453,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -488,7 +488,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -523,7 +523,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -559,7 +559,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -596,7 +596,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -634,7 +634,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -672,7 +672,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -710,7 +710,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -748,7 +748,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -786,7 +786,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -825,7 +825,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -864,7 +864,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -903,7 +903,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -942,7 +942,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -982,7 +982,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1022,7 +1022,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1062,7 +1062,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1102,7 +1102,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1142,7 +1142,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1183,7 +1183,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1225,7 +1225,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1267,7 +1267,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1310,7 +1310,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1353,7 +1353,7 @@ public:
 			return Status::Set(Status_Denied, "Level not allowed");
 		}
 
-		Scope<Sys::FastMutex> locker(&m_fmLogger);
+		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
@@ -1387,7 +1387,7 @@ private:
 #pragma warning(disable: 4251)
 	OutputsVector    m_vectorOutputs;
 #pragma warning(pop)
-	Sys::FastMutex   m_fmLogger;
+	Sys::Lock   m_fmLogger;
 
 };
 

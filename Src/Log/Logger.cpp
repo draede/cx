@@ -55,7 +55,7 @@ Level Logger::GetLevel() const
 
 StatusCode Logger::SetFormatter(IFormatter *pFormatter)
 {
-	Scope<Sys::FastMutex>   locker(&m_fmLogger);
+	Sys::Locker   locker(&m_fmLogger);
 
 	Status::Clear();
 
@@ -71,7 +71,7 @@ StatusCode Logger::SetFormatter(IFormatter *pFormatter)
 
 IFormatter *Logger::GetFormatter()
 {
-	Scope<Sys::FastMutex>   locker(&m_fmLogger);
+	Sys::Locker   locker(&m_fmLogger);
 
 	Status::Clear();
 
@@ -80,7 +80,7 @@ IFormatter *Logger::GetFormatter()
 
 StatusCode Logger::AddOutput(IOutput *pOutput)
 {
-	Scope<Sys::FastMutex>   locker(&m_fmLogger);
+	Sys::Locker   locker(&m_fmLogger);
 
 	Status::Clear();
 
@@ -91,7 +91,7 @@ StatusCode Logger::AddOutput(IOutput *pOutput)
 
 StatusCode Logger::RemoveOutputs()
 {
-	Scope<Sys::FastMutex>   locker(&m_fmLogger);
+	Sys::Locker   locker(&m_fmLogger);
 
 	Status::Clear();
 

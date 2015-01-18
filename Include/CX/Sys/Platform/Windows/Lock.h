@@ -9,6 +9,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Scope.h"
 #include "CX/APIDefs.h"
 #include <windows.h>
 
@@ -19,13 +20,13 @@ namespace CX
 namespace Sys
 {
 
-class CX_API FastMutex
+class CX_API Lock
 {
 public:
 
-	FastMutex();
+	Lock();
 
-	virtual ~FastMutex();
+	virtual ~Lock();
 
 	void Enter();
 
@@ -36,6 +37,8 @@ private:
 	CRITICAL_SECTION m_cs;
 
 };
+
+typedef Scope<Lock, &Lock::Enter, &Lock::Leave>     Locker;
 
 }//namespace Sys
 

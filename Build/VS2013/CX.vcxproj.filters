@@ -357,12 +357,6 @@
     <ClInclude Include="..\..\Src\IO\Scope.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\FastMutex.h">
-      <Filter>Header Files\Sys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\FastMutex.h">
-      <Filter>Header Files\Sys\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\Container.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -420,6 +414,18 @@
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.h">
       <Filter>Header Files\Util\Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.h">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Lock.h">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\RWLock.h">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\RWLock.h">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -476,9 +482,6 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\FastMutex_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
@@ -514,6 +517,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp">
       <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

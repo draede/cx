@@ -1,2 +1,2 @@
 1. Tests!!!
-2. Check methods than need to be const
+2. Check methods that need to be const

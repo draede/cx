@@ -5,7 +5,7 @@
 #if defined(CX_OS_WINDOWS)
 
 
-#include "CX/Sys/FastMutex.h"
+#include "CX/Sys/Lock.h"
 #include "CX/Status.h"
 
 
@@ -15,28 +15,28 @@ namespace CX
 namespace Sys
 {
 
-FastMutex::FastMutex()
+Lock::Lock()
 {
 	Status::Clear();
 
 	InitializeCriticalSection(&m_cs);
 }
 
-FastMutex::~FastMutex()
+Lock::~Lock()
 {
 	Status::Clear();
 
 	DeleteCriticalSection(&m_cs);
 }
 
-void FastMutex::Enter()
+void Lock::Enter()
 {
 	Status::Clear();
 
 	EnterCriticalSection(&m_cs);
 }
 
-void FastMutex::Leave()
+void Lock::Leave()
 {
 	LeaveCriticalSection(&m_cs);
 }
