@@ -8,9 +8,6 @@
 #if defined(CX_OS_WINDOWS)
 
 
-#include <stdbool.h>
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -18,6 +15,7 @@ extern "C" {
 
 #include <wchar.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 
 // signed 1 byte int type

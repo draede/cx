@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h" />
+    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum-dtoa.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\cached-powers.h" />
@@ -30,12 +31,17 @@
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\ieee.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\strtod.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\utils.h" />
+    <ClInclude Include="..\..\Contrib\Farmhash\Include\farmhash.h" />
+    <ClInclude Include="..\..\Contrib\MD5\Include\md5.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\core.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\mintomic.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\platform_detect.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\core_msvc.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\mintomic_msvc.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h" />
+    <ClInclude Include="..\..\Contrib\SHA\Include\hmac_sha1.h" />
+    <ClInclude Include="..\..\Contrib\SHA\Include\sha.h" />
+    <ClInclude Include="..\..\Contrib\SHA\Include\sha2.h" />
     <ClInclude Include="..\..\Include\CX\Alloc.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.h" />
     <ClInclude Include="..\..\Include\CX\CX.h" />
@@ -56,6 +62,13 @@
     <ClInclude Include="..\..\Include\CX\Deque.h" />
     <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.h" />
     <ClInclude Include="..\..\Include\CX\EmptyType.h" />
+    <ClInclude Include="..\..\Include\CX\Hash\CRC32Hash.h" />
+    <ClInclude Include="..\..\Include\CX\Hash\IHash.h" />
+    <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.h" />
+    <ClInclude Include="..\..\Include\CX\Hash\SHA1Hash.h" />
+    <ClInclude Include="..\..\Include\CX\Hash\SHA256Hash.h" />
+    <ClInclude Include="..\..\Include\CX\Hash\SHA384Hash.h" />
+    <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.h" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.h" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.h" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.h" />
@@ -83,6 +96,7 @@
     <ClInclude Include="..\..\Include\CX\StatusCodes.h" />
     <ClInclude Include="..\..\Include\CX\STLAlloc.h" />
     <ClInclude Include="..\..\Include\CX\String.h" />
+    <ClInclude Include="..\..\Include\CX\Str\HexString.h" />
     <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.h" />
     <ClInclude Include="..\..\Include\CX\Str\UTF8.h" />
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.h" />
@@ -115,8 +129,10 @@
     <ClInclude Include="..\..\Src\Data\JSON\RapidJSONStreams.h" />
     <ClInclude Include="..\..\Src\IO\Scope.h" />
     <ClInclude Include="..\..\Src\Platform\Windows\resource.h" />
+    <ClInclude Include="..\..\Src\Str\HexString.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32.cpp" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\cached-powers.cc" />
@@ -125,8 +141,37 @@
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fast-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fixed-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc" />
+    <ClCompile Include="..\..\Contrib\Farmhash\Src\farmhash.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\MD5\Src\md5.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\hmac_sha1.c" />
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha1.c" />
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha2.c" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp" />
+    <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />
+    <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp" />
+    <ClCompile Include="..\..\Src\Hash\SHA1Hash.cpp" />
+    <ClCompile Include="..\..\Src\Hash\SHA256Hash.cpp" />
+    <ClCompile Include="..\..\Src\Hash\SHA384Hash.cpp" />
+    <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp" />
     <ClCompile Include="..\..\Src\IO\FileInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FileOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
@@ -233,7 +278,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;_DEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
     </ClCompile>
@@ -252,7 +297,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;_DEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
     </ClCompile>
@@ -273,7 +318,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;NDEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
     </ClCompile>
@@ -296,7 +341,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;NDEBUG;_WINDOWS;_USRDLL;CX_API_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
     </ClCompile>

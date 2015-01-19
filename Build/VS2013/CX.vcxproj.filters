@@ -136,6 +136,24 @@
     <Filter Include="Source Files\Log\Platform\Windows">
       <UniqueIdentifier>{614cc691-28bf-4718-9af5-5b727f043131}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Hash">
+      <UniqueIdentifier>{75917f81-ae6e-4678-a127-f60fe463c3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hash">
+      <UniqueIdentifier>{5fa311d1-83f4-42dc-9f11-b90e9b008fdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\CRC32Slice8">
+      <UniqueIdentifier>{99a94ef4-0951-486c-8326-64d8a99160ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\MD5">
+      <UniqueIdentifier>{01faf7f2-ea37-4b4a-a2c5-2853e2e64a63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\SHA">
+      <UniqueIdentifier>{0e7caf65-d91f-431c-a751-4076c9e607f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\Farmhash">
+      <UniqueIdentifier>{a1f70e12-c5ed-4e66-8fab-7f4acc8b9aae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\C\ctype.h">
@@ -426,6 +444,51 @@
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\RWLock.h">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\CRC32Hash.h">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\IHash.h">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
+      <Filter>Contrib\CRC32Slice8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\HexString.h">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Str\HexString.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.h">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\MD5\Include\md5.h">
+      <Filter>Contrib\MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\SHA\Include\hmac_sha1.h">
+      <Filter>Contrib\SHA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\SHA\Include\sha2.h">
+      <Filter>Contrib\SHA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\SHA\Include\sha.h">
+      <Filter>Contrib\SHA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA1Hash.h">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA256Hash.h">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA384Hash.h">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.h">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Farmhash\Include\farmhash.h">
+      <Filter>Contrib\Farmhash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -523,6 +586,42 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32.cpp">
+      <Filter>Contrib\CRC32Slice8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\MD5\Src\md5.c">
+      <Filter>Contrib\MD5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\hmac_sha1.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha2.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha1.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA1Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA256Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA384Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Farmhash\Src\farmhash.cc">
+      <Filter>Contrib\Farmhash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
