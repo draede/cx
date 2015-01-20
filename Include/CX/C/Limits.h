@@ -36,7 +36,7 @@ static const CX_Int32         CX_INT32_MIN   = -2147483647;
 static const CX_Int32         CX_INT32_MAX   = 2147483647;
 
 //max UInt32 value
-static const CX_UInt32        CX_UIN32_MAX   = 4294967295;
+static const CX_UInt32        CX_UINT32_MAX   = 4294967295;
 
 //min Int64 value
 static const CX_Int64         CX_INT64_MIN   = -9223372036854775807;
