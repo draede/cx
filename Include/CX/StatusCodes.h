@@ -2,7 +2,7 @@
 #pragma once
 
 
-#include "CX/C/StatusCode.h"
+#include "CX/C/StatusCodes.h"
 
 
 namespace CX

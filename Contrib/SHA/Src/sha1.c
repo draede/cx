@@ -24,6 +24,7 @@
  */
 
 #include "../Include/sha.h"
+#include <string.h>
 
 #define rol(value, bits) (((value) << (bits)) | ((value) >> (32 - (bits))))
 

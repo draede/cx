@@ -34,7 +34,7 @@ static const Int32         INT32_MIN   = CX_INT32_MIN;
 static const Int32         INT32_MAX   = CX_INT32_MAX;
 
 //max UInt32 value
-static const UInt32        UIN32_MAX   = CX_UIN32_MAX;
+static const UInt32        UINT32_MAX  = CX_UINT32_MAX;
 
 //min Int64 value
 static const Int64         INT64_MIN   = CX_INT64_MIN;

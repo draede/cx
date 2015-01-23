@@ -5,6 +5,7 @@
 
 #include "CX/Status.h"
 #include "CX/C/stdio.h"
+#include "CX/Detail/DetailPrint/DetailPrint.h"
 
 
 namespace CX
@@ -52,7 +53,7 @@ StatusCode Status::Set(StatusCode nStatus, const Char *szMsg)
 	Size cLen;
 
 	cx_nStatusCode = nStatus;
-	cx_strcopy(cx_szStatusMsg, MAX_MSG_LEN, szMsg, &cLen);
+	Detail::DetailPrint::StrCopy(cx_szStatusMsg, MAX_MSG_LEN, szMsg, &cLen);
 
 	return nStatus;
 }

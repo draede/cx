@@ -84,6 +84,28 @@ namespace Detail
 namespace DetailPrint
 {
 
+static inline bool StrCopy(CX_Char *szDst, CX_Size cDstLen, const CX_Char *szSrc,
+                           CX_Size *pcSrcLen)
+{
+	CX_Char        *pszDst;
+	const CX_Char  *pszSrc;
+
+	*pcSrcLen = 0;
+	pszSrc = szSrc;
+	pszDst = szDst;
+	while (*pcSrcLen + 1 < cDstLen && '\0' != *pszSrc)
+	{
+		*pszDst = *pszSrc;
+		pszSrc++;
+		pszDst++;
+		(*pcSrcLen)++;
+	}
+	*pszDst = 0;
+
+	return ('\0' == *pszSrc);
+}
+
+
 //from Andrei Alexandrescu
 static inline Size GetUInt64DigitsCount(UInt64 nValue)
 {
@@ -489,7 +511,7 @@ template <>
 static inline StatusCode ToString<const Char *>(const Char *p, Char *szOutput, Size cLen, 
                                                 Size *pcFinalLen, Size cPrecision)
 {
-	if (!cx_strcopy(szOutput, cLen, p, pcFinalLen))
+	if (!Detail::DetailPrint::StrCopy(szOutput, cLen, p, pcFinalLen))
 	{
 		return Status_TooSmall;
 	}
@@ -510,7 +532,7 @@ template <>
 static inline StatusCode ToString<const String &>(const String &p, Char *szOutput, Size cLen, 
                                                   Size *pcFinalLen, Size cPrecision)
 {
-	if (!cx_strcopy(szOutput, cLen, p.c_str(), pcFinalLen))
+	if (!Detail::DetailPrint::StrCopy(szOutput, cLen, p.c_str(), pcFinalLen))
 	{
 		return Status_TooSmall;
 	}
