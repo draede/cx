@@ -10,6 +10,9 @@
 	#define CX_TLS          __declspec(thread)
 	#define CX_DLL_EXPORT   __declspec(dllexport)
 	#define CX_DLL_IMPORT   __declspec(dllimport)
+#ifdef _UNICODE
+	#define CX_UNICODE
+#endif
 #if _MSC_VER == 1400
 	#define CX_BUILDSYS_VS2005
 	#define CX_BUILDSYS     "VS2005"
