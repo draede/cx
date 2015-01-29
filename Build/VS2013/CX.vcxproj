@@ -45,9 +45,12 @@
     <ClInclude Include="..\..\Include\CX\Alloc.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.h" />
     <ClInclude Include="..\..\Include\CX\CX.h" />
+    <ClInclude Include="..\..\Include\CX\C\Alloc.h" />
+    <ClInclude Include="..\..\Include\CX\C\APIDefs.h" />
     <ClInclude Include="..\..\Include\CX\C\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Limits.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Alloc.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdio.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdlib.h" />
@@ -191,6 +194,13 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Alloc.cpp" />
+    <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsC</CompileAs>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp" />
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />
@@ -208,7 +218,6 @@
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
-    <ClCompile Include="..\..\Src\Platform\Windows\Alloc_windows.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp" />

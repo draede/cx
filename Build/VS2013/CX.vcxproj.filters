@@ -154,6 +154,15 @@
     <Filter Include="Contrib\Farmhash">
       <UniqueIdentifier>{a1f70e12-c5ed-4e66-8fab-7f4acc8b9aae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\C">
+      <UniqueIdentifier>{1ffd37c0-d3bb-4fd2-a690-cd6db0c16df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform">
+      <UniqueIdentifier>{eae569a8-4126-49dd-9954-9ad3cf1adef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform\Windows">
+      <UniqueIdentifier>{dc06b311-49f9-45a4-99b4-e161f617a0f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\C\ctype.h">
@@ -489,6 +498,15 @@
     <ClInclude Include="..\..\Contrib\Farmhash\Include\farmhash.h">
       <Filter>Contrib\Farmhash</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Alloc.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Alloc.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\APIDefs.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -526,9 +544,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp">
       <Filter>Source Files\Str\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Platform\Windows\Alloc_windows.cpp">
-      <Filter>Source Files\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp">
       <Filter>Source Files\Util\Platform\Windows</Filter>
@@ -622,6 +637,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\Farmhash\Src\farmhash.cc">
       <Filter>Contrib\Farmhash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Alloc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
+      <Filter>Source Files\C\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
