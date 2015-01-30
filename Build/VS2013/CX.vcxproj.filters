@@ -465,9 +465,6 @@
     <ClInclude Include="..\..\Include\CX\Str\HexString.h">
       <Filter>Header Files\Str</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Str\HexString.cpp">
-      <Filter>Source Files\Str</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.h">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
@@ -643,6 +640,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
       <Filter>Source Files\C\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\HexString.cpp">
+      <Filter>Source Files\Str\Platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

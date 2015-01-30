@@ -51,7 +51,7 @@ public:
 	};
 
 	static StatusCode ToString(const Byte *pBinary, Size cbBinarySize, String *psString, 
-	                       int nFlags = Flag::Lowercase);
+	                           int nFlags = Flag::Lowercase);
 
 	static StatusCode FromString(const Char *szString, Byte *pBinary, Size cbBinarySize);
 
