@@ -36,6 +36,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/APIDefs.h"
 #include <windows.h>
 
@@ -69,41 +70,41 @@ public:
 
 	Time &operator=(const Time &t);
 
-	StatusCode GetLocalTime();
+	Status GetLocalTime();
 
-	StatusCode GetUTCTime();
+	Status GetUTCTime();
 
-	StatusCode SetDate(unsigned nYear, unsigned nMonth, unsigned nDay);
+	Status SetDate(unsigned nYear, unsigned nMonth, unsigned nDay);
 
-	StatusCode SetYear(unsigned nYear);
+	Status SetYear(unsigned nYear);
 
 	unsigned GetYear() const;
 
-	StatusCode SetMonth(unsigned nMonth);
+	Status SetMonth(unsigned nMonth);
 
 	unsigned GetMonth() const;
 
-	StatusCode SetDay(unsigned nDay);
+	Status SetDay(unsigned nDay);
 
 	unsigned GetDay() const;
 
-	StatusCode SetTime(unsigned nHour, unsigned nMinute, unsigned nSecond);
+	Status SetTime(unsigned nHour, unsigned nMinute, unsigned nSecond);
 
-	StatusCode SetTime(unsigned nHour, unsigned nMinute, unsigned nSecond, unsigned nMillisecond);
+	Status SetTime(unsigned nHour, unsigned nMinute, unsigned nSecond, unsigned nMillisecond);
 
-	StatusCode SetHour(unsigned nHour);
+	Status SetHour(unsigned nHour);
 
 	unsigned GetHour() const;
 
-	StatusCode SetMinute(unsigned nMinute);
+	Status SetMinute(unsigned nMinute);
 
 	unsigned GetMinute() const;
 
-	StatusCode SetSecond(unsigned nSecond);
+	Status SetSecond(unsigned nSecond);
 
 	unsigned GetSecond() const;
 
-	StatusCode SetMillisecond(unsigned nMillisecond);
+	Status SetMillisecond(unsigned nMillisecond);
 
 	unsigned GetMillisecond() const;
 

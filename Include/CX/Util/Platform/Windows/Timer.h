@@ -36,6 +36,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/APIDefs.h"
 #include <windows.h>
 
@@ -54,7 +55,7 @@ public:
 
 	virtual ~Timer();
 
-	StatusCode ResetTimer();
+	Status ResetTimer();
 
 	double GetElapsedTime() const;
 

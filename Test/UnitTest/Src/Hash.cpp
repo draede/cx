@@ -23,19 +23,19 @@ const Char *ToHash()
 	Hash            hash;
 	Byte            res[Hash::SIZE];
 
-	if (CXNOK(hash.Init()))
+	if (hash.Init().IsNOK())
 	{
 		return "";
 	}
-	if (CXNOK(hash.Update(szTestString, cTestStringLen)))
+	if (hash.Update(szTestString, cTestStringLen).IsNOK())
 	{
 		return "";
 	}
-	if (CXNOK(hash.Done(&res)))
+	if (hash.Done(&res).IsNOK())
 	{
 		return "";
 	}
-	if (CXNOK(Str::HexString::ToString(res, Hash::SIZE, &sRes, Str::HexString::Lowercase)))
+	if (Str::HexString::ToString(res, Hash::SIZE, &sRes, Str::HexString::Lowercase).IsNOK())
 	{
 		return "";
 	}
@@ -59,23 +59,23 @@ const Char *ToHashAcc()
 	{
 		cTestStringLen2++;
 	}
-	if (CXNOK(hash.Init()))
+	if (hash.Init().IsNOK())
 	{
 		return "";
 	}
-	if (CXNOK(hash.Update(szTestString, cTestStringLen1)))
+	if (hash.Update(szTestString, cTestStringLen1).IsNOK())
 	{
 		return "";
 	}
-	if (CXNOK(hash.Update(szTestString + cTestStringLen1, cTestStringLen2)))
+	if (hash.Update(szTestString + cTestStringLen1, cTestStringLen2).IsNOK())
 	{
 		return "";
 	}
-	if (CXNOK(hash.Done(&res)))
+	if (hash.Done(&res).IsNOK())
 	{
 		return "";
 	}
-	if (CXNOK(Str::HexString::ToString(res, Hash::SIZE, &sRes, Str::HexString::Lowercase)))
+	if (Str::HexString::ToString(res, Hash::SIZE, &sRes, Str::HexString::Lowercase).IsNOK())
 	{
 		return "";
 	}

@@ -35,12 +35,36 @@
 #include "CX/String.h"
 #include "CX/EmptyType.h"
 #include "CX/Slice.h"
-#include "CX/IO/IOutputStream.h"
 #include "CX/C/ctype.h"
 
 
 namespace CX
 {
+
+namespace IO
+{
+
+class IOutputStream;
+
+}//namespace IO
+
+}//namespace CX
+
+
+namespace CX
+{
+
+namespace Detail
+{
+
+namespace DetailPrint
+{
+
+CX_API StatusCode WriteStream(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen);
+
+}//namespace DetailPrint
+
+}//namespace Detail
 
 #ifndef CX_USE_CUSTOM_PRINTOUTPUT
 
@@ -59,12 +83,10 @@ static inline StatusCode PrintOutput<FILE *>(FILE *pFile, const Char *pBuffer, S
 }
 
 template <>
-static inline StatusCode PrintOutput<IO::IOutputStream *>(IO::IOutputStream *pOutputStream, 
-                         const Char *pBuffer, Size cLen)
+static inline StatusCode PrintOutput<IO::IOutputStream *>(IO::IOutputStream *pOutputStream,
+                                                          const Char *pBuffer, Size cLen)
 {
-	Size cbAckSize;
-
-	return pOutputStream->Write(pBuffer, cLen * sizeof(Char), &cbAckSize);
+	return Detail::DetailPrint::WriteStream(pOutputStream, pBuffer, cLen);
 }
 
 template <>
@@ -131,7 +153,6 @@ static inline bool StrCopy(CX_Char *szDst, CX_Size cDstLen, const CX_Char *szSrc
 
 	return ('\0' == *pszSrc);
 }
-
 
 //from Andrei Alexandrescu
 static inline Size GetUInt64DigitsCount(UInt64 nValue)

@@ -36,6 +36,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/APIDefs.h"
 #include <windows.h>
 
@@ -58,9 +59,9 @@ public:
 
 	bool IsOK();
 
-	StatusCode Load(const Char *szPath);
+	Status Load(const Char *szPath);
 
-	StatusCode Unload();
+	Status Unload();
 
 	void *GetFunc(const Char *szName);
 

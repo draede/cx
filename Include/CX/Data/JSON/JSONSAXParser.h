@@ -33,6 +33,7 @@
 #include "CX/Data/JSON/IJSONSAXParserObserver.h"
 #include "CX/Vector.h"
 #include "CX/String.h"
+#include "CX/Status.h"
 #include "CX/Util/IFunction.h"
 #include "CX/APIDefs.h"
 
@@ -57,17 +58,17 @@ public:
 
 	~JSONSAXParser();
 
-	StatusCode ParseStream(IO::IInputStream *pInputStream);
+	Status ParseStream(IO::IInputStream *pInputStream);
 
-	StatusCode ParseBuffer(const void *pBuffer, Size cbSize);
+	Status ParseBuffer(const void *pBuffer, Size cbSize);
 
-	StatusCode ParseString(const Char *szString);
+	Status ParseString(const Char *szString);
 
-	StatusCode ParseString(const String &sString);
+	Status ParseString(const String &sString);
 
-	StatusCode AddObserver(IJSONSAXParserObserver *pObserver);
+	Status AddObserver(IJSONSAXParserObserver *pObserver);
 
-	StatusCode RemoveObservers();
+	Status RemoveObservers();
 
 private:
 

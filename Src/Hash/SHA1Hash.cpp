@@ -41,11 +41,9 @@ const Char SHA1Hash::NAME[] = "SHA1";
 
 SHA1Hash::SHA1Hash()
 {
-	Status::Clear();
-
 	if (NULL == (m_pCTX = New<SHA_CTX>()))
 	{
-		Status::Set(Status_MemAllocFailed, "Failed to allocate context");
+		Status(Status_MemAllocFailed, "Failed to allocate context");
 		return;
 	}
 
@@ -54,67 +52,55 @@ SHA1Hash::SHA1Hash()
 
 SHA1Hash::~SHA1Hash()
 {
-	Status::Clear();
-
 	Delete((SHA_CTX *)m_pCTX);
 }
 
 const Char *SHA1Hash::GetName()
 {
-	Status::Clear();
-
 	return NAME;
 }
 
 Size SHA1Hash::GetSize()
 {
-	Status::Clear();
-
 	return SIZE;
 }
 
-StatusCode SHA1Hash::Init(const void *pHash/* = NULL*/)
+Status SHA1Hash::Init(const void *pHash/* = NULL*/)
 {
 	(void)(pHash);
 
-	Status::Clear();
-
 	if (NULL == m_pCTX)
 	{
-		return Status::Set(Status_NotInitialized, "Context not initialized");
+		return Status(Status_NotInitialized, "Context not initialized");
 	}
 
 	SHA1_Init((SHA_CTX *)m_pCTX);
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode SHA1Hash::Update(const void *pBuffer, Size cbSize)
+Status SHA1Hash::Update(const void *pBuffer, Size cbSize)
 {
-	Status::Clear();
-
 	if (NULL == m_pCTX)
 	{
-		return Status::Set(Status_NotInitialized, "Context not initialized");
+		return Status(Status_NotInitialized, "Context not initialized");
 	}
 
 	SHA1_Update((SHA_CTX *)m_pCTX, (sha1_byte *)pBuffer, (unsigned int)cbSize);
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode SHA1Hash::Done(void *pHash)
+Status SHA1Hash::Done(void *pHash)
 {
-	Status::Clear();
-
 	if (NULL == m_pCTX)
 	{
-		return Status::Set(Status_NotInitialized, "Context not initialized");
+		return Status(Status_NotInitialized, "Context not initialized");
 	}
 
 	SHA1_Final((sha1_byte *)pHash, (SHA_CTX *)m_pCTX);
 
-	return Status_OK;
+	return Status();
 }
 
 }//namespace Hash

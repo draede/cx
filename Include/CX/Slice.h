@@ -51,6 +51,7 @@ typedef struct _Slice
 
 	void   *pBuffer;
 	Size   cbSize;
+
 }Slice;
 
 typedef struct _ConstSlice
@@ -69,6 +70,7 @@ typedef struct _ConstSlice
 
 	const void   *pBuffer;
 	Size         cbSize;
+
 }ConstSlice;
 
 }//namespace CX

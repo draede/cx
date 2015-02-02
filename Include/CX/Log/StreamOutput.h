@@ -29,6 +29,8 @@
 #pragma once
 
 
+#include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/Log/IOutput.h"
 #include "CX/IO/IOutputStream.h"
 #include "CX/APIDefs.h"
@@ -49,7 +51,7 @@ public:
 
 	~StreamOutput();
 
-	virtual StatusCode Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
+	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
 
 private:
 

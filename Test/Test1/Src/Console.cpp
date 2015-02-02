@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 	TestVectorFunc		pfnTestVector;
 	TestMemFunc			pfnTestMem;
 
-	if (CXOK(dynlib.Load("dll.dll")))
+	if (dynlib.Load("dll.dll").IsOK())
 	{
 		if (NULL != (pfnTestVector = (TestVectorFunc)dynlib.GetFunc("TestVector")) &&
 				NULL != (pfnTestMem = (TestMemFunc)dynlib.GetFunc("TestMem")))

@@ -46,28 +46,26 @@ namespace Log
 
 SystemOutput::SystemOutput()
 {
-	Status::Clear();
 }
 
 SystemOutput::~SystemOutput()
 {
-	Status::Clear();
 }
 
-StatusCode SystemOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
+Status SystemOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
 {
-	Status::Clear();
-
 	WString wsBuffer;
+	Status  status;
 
-	if (CXNOK(Str::UTF8::ToWChar(pBuffer, &wsBuffer, cLen)))
+	status = Str::UTF8::ToWChar(pBuffer, &wsBuffer, cLen);
+	if (status.IsNOK())
 	{
-		return Status::GetCode();
+		return status;
 	}
 
 	OutputDebugStringW(wsBuffer.c_str());
 
-	return Status_OK;
+	return Status();
 }
 
 }//namespace Log

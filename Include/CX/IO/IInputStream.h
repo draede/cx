@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/APIDefs.h"
 
 
@@ -45,13 +46,13 @@ public:
 
 	virtual ~IInputStream() { }
 
-	virtual StatusCode Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize) = 0;
+	virtual Status Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize) = 0;
 
-	virtual StatusCode SetPos(UInt64 cbPos) = 0;
+	virtual Status SetPos(UInt64 cbPos) = 0;
 
-	virtual StatusCode GetPos(UInt64 *pcbPos) const = 0;
+	virtual Status GetPos(UInt64 *pcbPos) const = 0;
 
-	virtual StatusCode GetSize(UInt64 *pcbSize) const = 0;
+	virtual Status GetSize(UInt64 *pcbSize) const = 0;
 
 	virtual bool IsEOF() const = 0;
 

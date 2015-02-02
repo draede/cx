@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/String.h"
 #include "CX/APIDefs.h"
 
@@ -50,10 +51,10 @@ public:
 		Uppercase = 2,
 	};
 
-	static StatusCode ToString(const Byte *pBinary, Size cbBinarySize, String *psString, 
+	static Status ToString(const Byte *pBinary, Size cbBinarySize, String *psString, 
 	                           int nFlags = Flag::Lowercase);
 
-	static StatusCode FromString(const Char *szString, Byte *pBinary, Size cbBinarySize);
+	static Status FromString(const Char *szString, Byte *pBinary, Size cbBinarySize);
 
 	static Size GetStringLen(Size cbBinarySize);
 

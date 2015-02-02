@@ -28,6 +28,7 @@
 
 #include "CX/Detail/DetailPrint/DetailPrint.h"
 #include "../../../Contrib/DoubleConversion/Include/double-conversion.h"
+#include "CX/IO/IOutputStream.h"
 #include "CX/C/stdio.h"
 
 
@@ -48,6 +49,13 @@ bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision)
 	double_conversion::StringBuilder             sb(szOutput, (int)cLen);
 
 	return cvt.ToFixed(lfValue, (int)cPrecision, &sb);
+}
+
+StatusCode WriteStream(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen)
+{
+	Size cbAckSize;
+
+	return pOutputStream->Write(pBuffer, cLen * sizeof(Char), &cbAckSize).GetCode();
 }
 
 }//namespace DetailPrint

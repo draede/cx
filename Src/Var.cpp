@@ -61,7 +61,7 @@ public:
 	{
 		if (m_bInit)
 		{
-			if (CXNOK(m_pCurrent->SetObject()))
+			if (m_pCurrent->SetObject().IsNOK())
 			{
 				return false;
 			}
@@ -104,7 +104,7 @@ public:
 	{
 		if (m_bInit)
 		{
-			if (CXNOK(m_pCurrent->SetArray()))
+			if (m_pCurrent->SetArray().IsNOK())
 			{
 				return false;
 			}
@@ -234,8 +234,6 @@ Var::Var(bool a1, bool a2, bool a3, bool a4, bool a5)
 
 Var::Var(Type nType/* = Type_Null*/)
 {
-	Status::Clear();
-
 	m_pParent = NULL;
 	m_nType   = Type_Null;
 	SetType(nType);
@@ -243,8 +241,6 @@ Var::Var(Type nType/* = Type_Null*/)
 
 Var::Var(bool bBool)
 {
-	Status::Clear();
-
 	m_pParent = NULL;
 	m_nType   = Type_Null;
 	SetBool(bBool);
@@ -252,8 +248,6 @@ Var::Var(bool bBool)
 
 Var::Var(Int64 nInt)
 {
-	Status::Clear();
-
 	m_pParent = NULL;
 	m_nType   = Type_Null;
 	SetInt(nInt);
@@ -261,8 +255,6 @@ Var::Var(Int64 nInt)
 
 Var::Var(Double lfReal)
 {
-	Status::Clear();
-
 	m_pParent = NULL;
 	m_nType   = Type_Null;
 	SetReal(lfReal);
@@ -270,8 +262,6 @@ Var::Var(Double lfReal)
 
 Var::Var(const Char *szString)
 {
-	Status::Clear();
-
 	m_pParent = NULL;
 	m_nType   = Type_Null;
 	SetString(szString);
@@ -279,8 +269,6 @@ Var::Var(const Char *szString)
 
 Var::Var(const String &sString)
 {
-	Status::Clear();
-
 	m_pParent = NULL;
 	m_nType   = Type_Null;
 	SetString(sString);
@@ -288,8 +276,6 @@ Var::Var(const String &sString)
 
 Var::Var(const Var &var)
 {
-	Status::Clear();
-
 	Copy(var);
 }
 
@@ -300,20 +286,16 @@ Var::~Var()
 
 Var &Var::operator=(const Var &var)
 {
-	Status::Clear();
-
 	Copy(var);
 
 	return *this;
 }
 
-StatusCode Var::Copy(const Var &var)
+Status Var::Copy(const Var &var)
 {
-	Status::Clear();
-
 	if (var.IsInvalid() || IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
 	
 	if (Type_Null == var.GetType())
@@ -343,9 +325,12 @@ StatusCode Var::Copy(const Var &var)
 	else
 	if (Type_Object == var.GetType())
 	{
-		if (CXNOK(SetObject()))
+		Status status;
+
+		status = SetObject();
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 		for (ObjectVar::iterator iter = var.m_pObject->begin(); iter != var.m_pObject->end(); ++iter)
 		{
@@ -353,21 +338,24 @@ StatusCode Var::Copy(const Var &var)
 
 			if (NULL == pVar)
 			{
-				return Status::Set(Status_MemAllocFailed, "Failed to allocate var");
+				return Status(Status_MemAllocFailed, "Failed to allocate var");
 			}
 			pVar->SetParent(this);
 
 			(*m_pObject)[iter->first] = pVar;
 		}
 
-		return Status_OK;
+		return Status();
 	}
 	else
 	if (Type_Array == var.GetType())
 	{
-		if (CXNOK(SetArray()))
+		Status status;
+
+		status = SetArray();
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 		for (ArrayVar::iterator iter = var.m_pArray->begin(); iter != var.m_pArray->end(); ++iter)
 		{
@@ -375,17 +363,17 @@ StatusCode Var::Copy(const Var &var)
 
 			if (NULL == pVar)
 			{
-				return Status::Set(Status_MemAllocFailed, "Failed to allocate var");
+				return Status(Status_MemAllocFailed, "Failed to allocate var");
 			}
 			pVar->SetParent(this);
 
 			m_pArray->push_back(pVar);
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
-	return Status::Set(Status_NotSupported, "Not supported");
+	return Status(Status_NotSupported, "Not supported");
 }
 
 bool Var::operator==(const Var &var) const
@@ -484,25 +472,19 @@ bool Var::Equals(const Var &var, bool bIgnoreCase/* = true*/) const
 
 const Char *Var::GetName() const
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		Status::Set(Status_InvalidCall, "Var is invalid");
-
 		return "";
 	}
 
 	return m_sName.c_str();
 }
 
-StatusCode Var::SetName(const Char *szName)
+Status Var::SetName(const Char *szName)
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
 	if (NULL != GetParent() && GetParent()->IsObject())
 	{
@@ -510,7 +492,7 @@ StatusCode Var::SetName(const Char *szName)
 	}
 	m_sName = szName;
 
-	return Status_OK;
+	return Status();
 }
 
 void Var::HandleChildNameChange(Var *pChild, const Char *szOldName, const Char *szNewName)
@@ -523,18 +505,14 @@ void Var::HandleChildNameChange(Var *pChild, const Char *szOldName, const Char *
 
 Var::Type Var::GetType() const
 {
-	Status::Clear();
-
 	return m_nType;
 }
 
-StatusCode Var::SetType(Type nType)
+Status Var::SetType(Type nType)
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
 	if (Type_String == m_nType && Type_String != nType)
 	{
@@ -562,7 +540,7 @@ StatusCode Var::SetType(Type nType)
 	{
 		if (NULL == (m_psString = New<String>()))
 		{
-			return Status::Set(Status_MemAllocFailed, "Failed to alloc string");
+			return Status(Status_MemAllocFailed, "Failed to alloc string");
 		}
 	}
 	else
@@ -570,7 +548,7 @@ StatusCode Var::SetType(Type nType)
 	{
 		if (NULL == (m_pObject = New<ObjectVar>()))
 		{
-			return Status::Set(Status_MemAllocFailed, "Failed to alloc object");
+			return Status(Status_MemAllocFailed, "Failed to alloc object");
 		}
 	}
 	else
@@ -578,114 +556,91 @@ StatusCode Var::SetType(Type nType)
 	{
 		if (NULL == (m_pArray = New<ArrayVar>()))
 		{
-			return Status::Set(Status_MemAllocFailed, "Failed to alloc array");
+			return Status(Status_MemAllocFailed, "Failed to alloc array");
 		}
 	}
 	m_nType = nType;
 
-	return Status_OK;
+	return Status();
 }
 
 bool Var::IsInvalid() const
 {
-	Status::Clear();
-
 	return (Type_Invalid == m_nType);
 }
 
 bool Var::IsValid() const
 {
-	Status::Clear();
-
 	return (Type_Invalid != m_nType);
 }
 
 bool Var::IsNull() const
 {
-	Status::Clear();
-
 	return (Type_Null == m_nType);
 }
 
 bool Var::IsBool() const
 {
-	Status::Clear();
-
 	return (Type_Bool == m_nType);
 }
 
 bool Var::IsInt() const
 {
-	Status::Clear();
-
 	return (Type_Int == m_nType);
 }
 
 bool Var::IsReal() const
 {
-	Status::Clear();
-
 	return (Type_Real == m_nType);
 }
 
 bool Var::IsString() const
 {
-	Status::Clear();
-
 	return (Type_String == m_nType);
 }
 
 bool Var::IsObject() const
 {
-	Status::Clear();
-
 	return (Type_Object == m_nType);
 }
 
 bool Var::IsArray() const
 {
-	Status::Clear();
-
 	return (Type_Array == m_nType);
 }
 
-StatusCode Var::SetNull()
+Status Var::SetNull()
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
 	
 	return SetType(Type_Null);
 }
 
-StatusCode Var::SetBool(bool bBool)
+Status Var::SetBool(bool bBool)
 {
-	Status::Clear();
+	Status status;
 
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
-	if (CXNOK(SetType(Type_Bool)))
+	status = SetType(Type_Bool);
+	if (status.IsNOK())
 	{
-		return Status::GetCode();
+		return status;
 	}
 	m_bBool = bBool;
 
-	return Status_OK;
+	return Status();
 }
 
 bool Var::GetBool(bool bBoolDefault/* = DEFAULT_BOOL*/) const
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		Status::Set(Status_InvalidCall, "Var is invalid");
-
 		return bBoolDefault;
 	}
 	if (IsBool())
@@ -696,31 +651,28 @@ bool Var::GetBool(bool bBoolDefault/* = DEFAULT_BOOL*/) const
 	return bBoolDefault;
 }
 
-StatusCode Var::SetInt(Int64 nInt)
+Status Var::SetInt(Int64 nInt)
 {
-	Status::Clear();
+	Status status;
 
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
-	if (CXNOK(SetType(Type_Int)))
+	status = SetType(Type_Int);
+	if (status.IsNOK())
 	{
-		return Status::GetCode();
+		return status;
 	}
 	m_nInt = nInt;
 
-	return Status_OK;
+	return Status();
 }
 
 Int64 Var::GetInt(Int64 nIntDefault/* = DEFAULT_INT*/) const
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		Status::Set(Status_InvalidCall, "Var is invalid");
-
 		return nIntDefault;
 	}
 	if (IsInt())
@@ -731,31 +683,28 @@ Int64 Var::GetInt(Int64 nIntDefault/* = DEFAULT_INT*/) const
 	return nIntDefault;
 }
 
-StatusCode Var::SetReal(Double lfReal)
+Status Var::SetReal(Double lfReal)
 {
-	Status::Clear();
+	Status status;
 
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
-	if (CXNOK(SetType(Type_Real)))
+	status = SetType(Type_Real);
+	if (status.IsNOK())
 	{
-		return Status::GetCode();
+		return status;
 	}
 	m_lfReal = lfReal;
 
-	return Status_OK;
+	return Status();
 }
 
 Double Var::GetReal(Double lfRealDefault/* = DEFAULT_REAL*/) const
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		Status::Set(Status_InvalidCall, "Var is invalid");
-
 		return lfRealDefault;
 	}
 	if (IsReal())
@@ -766,48 +715,46 @@ Double Var::GetReal(Double lfRealDefault/* = DEFAULT_REAL*/) const
 	return lfRealDefault;
 }
 
-StatusCode Var::SetString(const Char *szString)
+Status Var::SetString(const Char *szString)
 {
-	Status::Clear();
+	Status status;
 
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
-	if (CXNOK(SetType(Type_String)))
+	status = SetType(Type_String);
+	if (status.IsNOK())
 	{
-		return Status::GetCode();
+		return status;
 	}
 	*m_psString = szString;
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Var::SetString(const String &sString)
+Status Var::SetString(const String &sString)
 {
-	Status::Clear();
+	Status status;
 
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
-	if (CXNOK(SetType(Type_String)))
+	status = SetType(Type_String);
+	if (status.IsNOK())
 	{
-		return Status::GetCode();
+		return status;
 	}
 	*m_psString = sString;
 
-	return Status_OK;
+	return Status();
 }
 
 const Char *Var::GetString(const Char *szStringDefault/* = DEFAULT_STRING*/) const
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		Status::Set(Status_InvalidCall, "Var is invalid");
-
 		return szStringDefault;
 	}
 	if (IsString())
@@ -818,25 +765,21 @@ const Char *Var::GetString(const Char *szStringDefault/* = DEFAULT_STRING*/) con
 	return szStringDefault;
 }
 
-StatusCode Var::SetObject()
+Status Var::SetObject()
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
 
 	return SetType(Type_Object);
 }
 
-StatusCode Var::SetArray()
+Status Var::SetArray()
 {
-	Status::Clear();
-
 	if (IsInvalid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
 
 	return SetType(Type_Array);
@@ -844,11 +787,9 @@ StatusCode Var::SetArray()
 
 bool Var::IsObjectMember(const char *szName) const
 {
-	Status::Clear();
-
 	if (!IsObject())
 	{
-		Status::Set(Status_InvalidCall, "Var is not an object");
+		Status(Status_InvalidCall, "Var is not an object");
 
 		return false;
 	}
@@ -863,12 +804,8 @@ bool Var::IsObjectMember(const String &sName) const
 
 bool Var::IsArrayItem(Size cIndex) const
 {
-	Status::Clear();
-
 	if (!IsArray())
 	{
-		Status::Set(Status_InvalidCall, "Var is not an array");
-
 		return false;
 	}
 
@@ -877,12 +814,8 @@ bool Var::IsArrayItem(Size cIndex) const
 
 Size Var::GetObjectMembersCount() const
 {
-	Status::Clear();
-
 	if (!IsObject())
 	{
-		Status::Set(Status_InvalidCall, "Var is not an object");
-
 		return 0;
 	}
 
@@ -891,12 +824,8 @@ Size Var::GetObjectMembersCount() const
 
 Size Var::GetArrayItemsCount() const
 {
-	Status::Clear();
-
 	if (!IsArray())
 	{
-		Status::Set(Status_InvalidCall, "Var is not an array");
-
 		return 0;
 	}
 	
@@ -915,12 +844,8 @@ Var *Var::GetParent() const
 
 Var::ObjectIterator Var::GetObjectIterator()
 {
-	Status::Clear();
-
 	if (!IsObject())
 	{
-		Status::Set(Status_InvalidCall, "Var is not an object");
-
 		return ObjectIterator(NULL);
 	}
 
@@ -929,12 +854,8 @@ Var::ObjectIterator Var::GetObjectIterator()
 
 Var::ObjectConstIterator Var::GetObjectConstIterator() const
 {
-	Status::Clear();
-
 	if (!IsObject())
 	{
-		Status::Set(Status_InvalidCall, "Var is not an object");
-
 		return ObjectConstIterator(NULL);
 	}
 
@@ -943,12 +864,8 @@ Var::ObjectConstIterator Var::GetObjectConstIterator() const
 
 Var::ArrayIterator Var::GetArrayIterator()
 {
-	Status::Clear();
-
 	if (!IsArray())
 	{
-		Status::Set(Status_InvalidCall, "Var is not an array");
-
 		return ArrayIterator(NULL);
 	}
 
@@ -957,12 +874,8 @@ Var::ArrayIterator Var::GetArrayIterator()
 
 Var::ArrayConstIterator Var::GetArrayConstIterator() const
 {
-	Status::Clear();
-
 	if (!IsArray())
 	{
-		Status::Set(Status_InvalidCall, "Var is not an array");
-
 		return ArrayConstIterator(NULL);
 	}
 
@@ -971,9 +884,7 @@ Var::ArrayConstIterator Var::GetArrayConstIterator() const
 
 Var &Var::GetObjectMember(const char *szName)
 {
-	Status::Clear();
-
-	if (CXNOK(SetObject()))
+	if (SetObject().IsNOK())
 	{
 		return INVALID_VAR;
 	}
@@ -986,8 +897,6 @@ Var &Var::GetObjectMember(const char *szName)
 
 		if (NULL == pVar)
 		{
-			Status::Set(Status_MemAllocFailed, "Failed to allocate var");
-
 			return INVALID_VAR;
 		}
 		pVar->SetName(szName);
@@ -1004,12 +913,8 @@ Var &Var::GetObjectMember(const char *szName)
 
 const Var &Var::GetObjectMember(const char *szName) const
 {
-	Status::Clear();
-
 	if (!IsObject())
 	{
-		Status::Set(Status_NotFound, "Member not found");
-
 		return INVALID_VAR;
 	}
 
@@ -1017,8 +922,6 @@ const Var &Var::GetObjectMember(const char *szName) const
 
 	if (m_pObject->end() == iter)
 	{
-		Status::Set(Status_NotFound, "Member not found");
-
 		return INVALID_VAR;
 	}
 
@@ -1037,9 +940,7 @@ const Var &Var::GetObjectMember(const String &sName) const
 
 Var &Var::GetArrayItem(int cIndex/* = -1*/)
 {
-	Status::Clear();
-
-	if (CXNOK(SetArray()))
+	if (SetArray().IsNOK())
 	{
 		return INVALID_VAR;
 	}
@@ -1050,8 +951,6 @@ Var &Var::GetArrayItem(int cIndex/* = -1*/)
 
 		if (NULL == pVar)
 		{
-			Status::Set(Status_MemAllocFailed, "Failed to allocate var");
-
 			return INVALID_VAR;
 		}
 		pVar->SetParent(this);
@@ -1067,19 +966,13 @@ Var &Var::GetArrayItem(int cIndex/* = -1*/)
 
 const Var &Var::GetArrayItem(int cIndex/* = -1*/) const
 {
-	Status::Clear();
-
 	if (!IsArray())
 	{
-		Status::Set(Status_NotFound, "Item not found");
-
 		return INVALID_VAR;
 	}
 
 	if (cIndex < 0 || cIndex >= (int)m_pArray->size())
 	{
-		Status::Set(Status_NotFound, "Item not found");
-
 		return INVALID_VAR;
 	}
 
@@ -1160,16 +1053,12 @@ Var::operator const Char * () const
 
 Var::ObjectIterator::ObjectIterator(ObjectVar *pVar)
 {
-	Status::Clear();
-
 	m_pVar = pVar;
 	m_iter = m_pVar->begin();
 }
 
 bool Var::ObjectIterator::IsValid() const
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
 		return false;
@@ -1178,55 +1067,45 @@ bool Var::ObjectIterator::IsValid() const
 	return (m_pVar->end() != m_iter);
 }
 
-StatusCode Var::ObjectIterator::Reset()
+Status Var::ObjectIterator::Reset()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
 	m_iter = m_pVar->begin();
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Var::ObjectIterator::Next()
+Status Var::ObjectIterator::Next()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	if (m_pVar->end() == m_iter)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	m_iter++;
 	if (m_pVar->end() == m_iter)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
 Var &Var::ObjectIterator::Get()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		Status::Set(Status_InvalidCall, "Iterator is invalid");
-
 		return INVALID_VAR;
 	}
 	if (m_pVar->end() == m_iter)
 	{
-		Status::Set(Status_InvalidCall, "Iterator is invalid");
-
 		return INVALID_VAR;
 	}
 
@@ -1235,16 +1114,12 @@ Var &Var::ObjectIterator::Get()
 
 Var::ObjectConstIterator::ObjectConstIterator(const ObjectVar *pVar)
 {
-	Status::Clear();
-
 	m_pVar = pVar;
 	m_iter = m_pVar->begin();
 }
 
 bool Var::ObjectConstIterator::IsValid() const
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
 		return false;
@@ -1253,55 +1128,45 @@ bool Var::ObjectConstIterator::IsValid() const
 	return (m_pVar->end() != m_iter);
 }
 
-StatusCode Var::ObjectConstIterator::Reset()
+Status Var::ObjectConstIterator::Reset()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
 	m_iter = m_pVar->begin();
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Var::ObjectConstIterator::Next()
+Status Var::ObjectConstIterator::Next()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	if (m_pVar->end() == m_iter)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	m_iter++;
 	if (m_pVar->end() == m_iter)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
 const Var &Var::ObjectConstIterator::Get() const
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		Status::Set(Status_InvalidCall, "Iterator is invalid");
-
 		return INVALID_VAR;
 	}
 	if (m_pVar->end() == m_iter)
 	{
-		Status::Set(Status_InvalidCall, "Iterator is invalid");
-
 		return INVALID_VAR;
 	}
 
@@ -1310,16 +1175,12 @@ const Var &Var::ObjectConstIterator::Get() const
 
 Var::ArrayIterator::ArrayIterator(ArrayVar *pVar)
 {
-	Status::Clear();
-
 	m_pVar = pVar;
 	m_iter = m_pVar->begin();
 }
 
 bool Var::ArrayIterator::IsValid() const
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
 		return false;
@@ -1328,55 +1189,45 @@ bool Var::ArrayIterator::IsValid() const
 	return (m_pVar->end() != m_iter);
 }
 
-StatusCode Var::ArrayIterator::Reset()
+Status Var::ArrayIterator::Reset()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
 	m_iter = m_pVar->begin();
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Var::ArrayIterator::Next()
+Status Var::ArrayIterator::Next()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	if (m_pVar->end() == m_iter)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	m_iter++;
 	if (m_pVar->end() == m_iter)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
 Var &Var::ArrayIterator::Get()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		Status::Set(Status_InvalidCall, "Iterator is invalid");
-
 		return INVALID_VAR;
 	}
 	if (m_pVar->end() == m_iter)
 	{
-		Status::Set(Status_InvalidCall, "Iterator is invalid");
-
 		return INVALID_VAR;
 	}
 
@@ -1385,16 +1236,12 @@ Var &Var::ArrayIterator::Get()
 
 Var::ArrayConstIterator::ArrayConstIterator(const ArrayVar *pVar)
 {
-	Status::Clear();
-
 	m_pVar = pVar;
 	m_iter = m_pVar->begin();
 }
 
 bool Var::ArrayConstIterator::IsValid() const
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
 		return false;
@@ -1403,13 +1250,11 @@ bool Var::ArrayConstIterator::IsValid() const
 	return (m_pVar->end() != m_iter);
 }
 
-StatusCode Var::ArrayConstIterator::Reset()
+Status Var::ArrayConstIterator::Reset()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
 	m_iter = m_pVar->begin();
@@ -1417,99 +1262,81 @@ StatusCode Var::ArrayConstIterator::Reset()
 	return Status_OK;
 }
 
-StatusCode Var::ArrayConstIterator::Next()
+Status Var::ArrayConstIterator::Next()
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	if (m_pVar->end() == m_iter)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	m_iter++;
 	if (m_pVar->end() == m_iter)
 	{
-		return Status::Set(Status_InvalidCall, "Iterator is invalid");
+		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
 const Var &Var::ArrayConstIterator::Get() const
 {
-	Status::Clear();
-
 	if (NULL == m_pVar)
 	{
-		Status::Set(Status_InvalidCall, "Iterator is invalid");
-
 		return INVALID_VAR;
 	}
 	if (m_pVar->end() == m_iter)
 	{
-		Status::Set(Status_InvalidCall, "Iterator is invalid");
-
 		return INVALID_VAR;
 	}
 
 	return **m_iter;
 }
 
-StatusCode Var::Read(IO::IInputStream *pInputStream)
+Status Var::Read(IO::IInputStream *pInputStream)
 {
 	VarJSONSAXParserObserver   obs;
 	Data::JSON::JSONSAXParser  parser;
 
-	Status::Clear();
-
 	obs.m_pRoot = obs.m_pCurrent = this;
 	obs.m_bInit = true;
 	parser.AddObserver(&obs);
-	if (CXNOK(parser.ParseStream(pInputStream)))
-	{
-		return Status::GetCode();
-	}
 
-	return Status_OK;
+	return parser.ParseStream(pInputStream);
 }
 
-StatusCode Var::Read(const String &sStr)
+Status Var::Read(const String &sStr)
 {
-	Status::Clear();
-
 	IO::MemInputStream mis(&sStr);
 
 	return Read(&mis);
 }
 
-StatusCode Var::Write(IO::IOutputStream *pOutputStream)
+Status Var::Write(IO::IOutputStream *pOutputStream)
 {
 	return Write(pOutputStream, 0, true);
 }
 
-StatusCode Var::Write(String &sStr)
+Status Var::Write(String &sStr)
 {
-	Status::Clear();
-
 	IO::MemOutputStream mos(&sStr);
 
 	return Write(&mos);
 }
 
-StatusCode Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, bool bLast)
+Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, bool bLast)
 {
-	Size cbSize;
-	Size cbAckSize;
-	Char szOutput[64];
-	Char pIndent[256];
-	Status::Clear();
+	Size   cbSize;
+	Size   cbAckSize;
+	Char   szOutput[64];
+	Char   pIndent[256];
+	Status status;
 
 	if (!IsValid())
 	{
-		return Status::Set(Status_InvalidCall, "Var is invalid");
+		return Status(Status_InvalidCall, "Var is invalid");
 	}
 	//indent
 	if (cIndent > 256)
@@ -1520,31 +1347,36 @@ StatusCode Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, bool bLast
 	{
 		pIndent[i] = '\t';
 	}
-	if (CXNOK(pOutputStream->Write(pIndent, cIndent, &cbSize)))
+	status = pOutputStream->Write(pIndent, cIndent, &cbSize);
+	if (status.IsNOK())
 	{
-		return Status::GetCode();
+		return status;
 	}
 	//name
 	if (NULL != GetParent() && !GetParent()->IsArray())
 	{
-		if (CXNOK(pOutputStream->Write("\"", 1, &cbSize)))
+		status = pOutputStream->Write("\"", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(WriteString(pOutputStream, m_sName.c_str(), m_sName.size())))
+		status = WriteString(pOutputStream, m_sName.c_str(), m_sName.size());
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write("\": ", 3, &cbSize)))
+		status = pOutputStream->Write("\": ", 3, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 	if (IsNull())
 	{
-		if (CXNOK(pOutputStream->Write("null", 4, &cbSize)))
+		status = pOutputStream->Write("null", 4, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 	else
@@ -1552,200 +1384,169 @@ StatusCode Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, bool bLast
 	{
 		if (!GetBool())
 		{
-			if (CXNOK(pOutputStream->Write("false", 5, &cbSize)))
+			status = pOutputStream->Write("false", 5, &cbSize);
+			if (status.IsNOK())
 			{
-				return Status::GetCode();
+				return status;
 			}
 		}
 		else
 		{
-			if (CXNOK(pOutputStream->Write("true", 4, &cbSize)))
+			status = pOutputStream->Write("true", 4, &cbSize);
+			if (status.IsNOK())
 			{
-				return Status::GetCode();
+				return status;
 			}
 		}
 	}
 	else
 	if (IsInt())
 	{
-		if (CXNOK(ToString(GetInt(), szOutput, sizeof(szOutput) / sizeof(szOutput[0]), &cbAckSize, 0)))
+		status = ToString(GetInt(), szOutput, sizeof(szOutput) / sizeof(szOutput[0]), &cbAckSize, 0);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write(szOutput, cbAckSize, &cbSize)))
+		status = pOutputStream->Write(szOutput, cbAckSize, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 	else
 	if (IsReal())
 	{
-		if (CXNOK(ToString(GetReal(), szOutput, sizeof(szOutput) / sizeof(szOutput[0]), &cbAckSize, 6)))
+		status = ToString(GetReal(), szOutput, sizeof(szOutput) / sizeof(szOutput[0]), &cbAckSize, 6);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write(szOutput, cbAckSize, &cbSize)))
+		status = pOutputStream->Write(szOutput, cbAckSize, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 	else
 	if (IsString())
 	{
-		if (CXNOK(pOutputStream->Write("\"", 1, &cbSize)))
+		status = pOutputStream->Write("\"", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(WriteString(pOutputStream, m_psString->c_str(), m_psString->size())))
+		status = WriteString(pOutputStream, m_psString->c_str(), m_psString->size());
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write("\"", 1, &cbSize)))
+		status = pOutputStream->Write("\"", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 	else 
 	if (IsObject())
 	{
-		if (CXNOK(pOutputStream->Write("\n", 1, &cbSize)))
+		status = pOutputStream->Write("\n", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write(pIndent, cIndent, &cbSize)))
+		status = pOutputStream->Write(pIndent, cIndent, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write("{\n", 2, &cbSize)))
+		status = pOutputStream->Write("{\n", 2, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 		for (ObjectVar::iterator iter = m_pObject->begin(); iter != m_pObject->end(); ++iter)
 		{
 			ObjectVar::iterator iterEx = iter;
 
 			iterEx++;
-			if (CXNOK(iter->second->Write(pOutputStream, cIndent + 1, (m_pObject->end() == iterEx))))
+			status = iter->second->Write(pOutputStream, cIndent + 1, (m_pObject->end() == iterEx));
+			if (status.IsNOK())
 			{
-				return Status::GetCode();
+				return status;
 			}
 		}
-		if (CXNOK(pOutputStream->Write(pIndent, cIndent, &cbSize)))
+		status = pOutputStream->Write(pIndent, cIndent, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write("}", 1, &cbSize)))
+		status = pOutputStream->Write("}", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 	else 
 	if (IsArray())
 	{
-		if (CXNOK(pOutputStream->Write("\n", 1, &cbSize)))
+		status = pOutputStream->Write("\n", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write(pIndent, cIndent, &cbSize)))
+		status = pOutputStream->Write(pIndent, cIndent, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write("[\n", 2, &cbSize)))
+		status = pOutputStream->Write("[\n", 2, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 		for (ArrayVar::iterator iter = m_pArray->begin(); iter != m_pArray->end(); ++iter)
 		{
 			ArrayVar::iterator iterEx = iter;
 
 			iterEx++;
-			if (CXNOK((*iter)->Write(pOutputStream, cIndent + 1, (m_pArray->end() == iterEx))))
+			status = (*iter)->Write(pOutputStream, cIndent + 1, (m_pArray->end() == iterEx));
+			if (status.IsNOK())
 			{
-				return Status::GetCode();
+				return status;
 			}
 		}
-		if (CXNOK(pOutputStream->Write(pIndent, cIndent, &cbSize)))
+		status = pOutputStream->Write(pIndent, cIndent, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
-		if (CXNOK(pOutputStream->Write("]", 1, &cbSize)))
+		status = pOutputStream->Write("]", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 	if (bLast)
 	{
-		if (CXNOK(pOutputStream->Write("\n", 1, &cbSize)))
+		status = pOutputStream->Write("\n", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 	else
 	{
-		if (CXNOK(pOutputStream->Write(",\n", 1, &cbSize)))
+		status = pOutputStream->Write(",\n", 1, &cbSize);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-unsigned read_code_point_from_utf8()
-{
-	int code_unit1, code_unit2, code_unit3, code_unit4;
-
-	code_unit1 = getchar();
-	if (code_unit1 < 0x80) {
-		return code_unit1;
-	}
-	else if (code_unit1 < 0xC2) {
-		/* continuation or overlong 2-byte sequence */
-		goto ERROR1;
-	}
-	else if (code_unit1 < 0xE0) {
-		/* 2-byte sequence */
-		code_unit2 = getchar();
-		if ((code_unit2 & 0xC0) != 0x80) goto ERROR2;
-		return (code_unit1 << 6) + code_unit2 - 0x3080;
-	}
-	else if (code_unit1 < 0xF0) {
-		/* 3-byte sequence */
-		code_unit2 = getchar();
-		if ((code_unit2 & 0xC0) != 0x80) goto ERROR2;
-		if (code_unit1 == 0xE0 && code_unit2 < 0xA0) goto ERROR2; /* overlong */
-		code_unit3 = getchar();
-		if ((code_unit3 & 0xC0) != 0x80) goto ERROR3;
-		return (code_unit1 << 12) + (code_unit2 << 6) + code_unit3 - 0xE2080;
-	}
-	else if (code_unit1 < 0xF5) {
-		/* 4-byte sequence */
-		code_unit2 = getchar();
-		if ((code_unit2 & 0xC0) != 0x80) goto ERROR2;
-		if (code_unit1 == 0xF0 && code_unit2 < 0x90) goto ERROR2; /* overlong */
-		if (code_unit1 == 0xF4 && code_unit2 >= 0x90) goto ERROR2; /* > U+10FFFF */
-		code_unit3 = getchar();
-		if ((code_unit3 & 0xC0) != 0x80) goto ERROR3;
-		code_unit4 = getchar();
-		if ((code_unit4 & 0xC0) != 0x80) goto ERROR4;
-		return (code_unit1 << 18) + (code_unit2 << 12) + (code_unit3 << 6) + code_unit4 - 0x3C82080;
-	}
-	else {
-		/* > U+10FFFF */
-		goto ERROR1;
-	}
-
-ERROR4:
-	ungetc(code_unit4, stdin);
-ERROR3:
-	ungetc(code_unit3, stdin);
-ERROR2:
-	ungetc(code_unit2, stdin);
-ERROR1:
-	return code_unit1 + 0xDC00;
-}
-
-StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen)
+Status Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen)
 {
 	static Char hexdigits[] = 
 	{ 
@@ -1754,8 +1555,7 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 	const Byte *pPos;
 	Char       escape[6];
 	Size       cbAckSize;
-
-	Status::Clear();
+	Status     status;
 
 	pPos = (const Byte *)pBuffer;
 	while (0 < cLen)
@@ -1768,9 +1568,10 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 			escape[3] = '0';
 			escape[4] = hexdigits[*pPos / 16];
 			escape[5] = hexdigits[*pPos % 16];
-			if (CXNOK(pOutputStream->Write(escape, 6, &cbAckSize)))
+			status = pOutputStream->Write(escape, 6, &cbAckSize);
+			if (status.IsNOK())
 			{
-				return Status::GetCode();
+				return status;
 			}
 			cLen--;
 			pPos++;
@@ -1783,18 +1584,20 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 			{
 				escape[0] = '\\';
 				escape[1] = *pPos;
-				if (CXNOK(pOutputStream->Write(escape, 2, &cbAckSize)))
+				status    = pOutputStream->Write(escape, 2, &cbAckSize);
+				if (status.IsNOK())
 				{
-					return Status::GetCode();
+					return status;
 				}
 				cLen--;
 				pPos++;
 			}
 			else
 			{
-				if (CXNOK(pOutputStream->Write(pPos, 1, &cbAckSize)))
+				status = pOutputStream->Write(pPos, 1, &cbAckSize);
+				if (status.IsNOK())
 				{
-					return Status::GetCode();
+					return status;
 				}
 				cLen--;
 				pPos++;
@@ -1803,7 +1606,7 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 		else
 		if (0xC2 > *pPos)
 		{
-			return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+			return Status(Status_InvalidArg, "Invalid UTF8 string");
 		}
 		else
 		{
@@ -1813,11 +1616,11 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 			{
 				if (2 > cLen)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if ((pPos[1] & 0xC0) != 0x80)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 
 				cp = (pPos[0] << 6) + pPos[1] - 0x3080;
@@ -1830,19 +1633,19 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 			{
 				if (3 > cLen)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if ((pPos[1] & 0xC0) != 0x80)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if (pPos[0] == 0xE0 && pPos[1] < 0xA0)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if ((pPos[2] & 0xC0) != 0x80)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 
 				cp = (pPos[0] << 12) + (pPos[1] << 6) + pPos[2] - 0xE2080;
@@ -1855,27 +1658,27 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 			{
 				if (4 > cLen)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if ((pPos[1] & 0xC0) != 0x80)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if (pPos[0] == 0xF0 && pPos[1] < 0x90)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if (pPos[0] == 0xF4 && pPos[1] >= 0x90)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if ((pPos[2] & 0xC0) != 0x80)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 				if ((pPos[3] & 0xC0) != 0x80)
 				{
-					return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+					return Status(Status_InvalidArg, "Invalid UTF8 string");
 				}
 
 				cp = (pPos[0] << 18) + (pPos[1] << 12) + (pPos[2] << 6) + pPos[3] - 0x3C82080;
@@ -1885,7 +1688,7 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 			}
 			else
 			{
-				return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+				return Status(Status_InvalidArg, "Invalid UTF8 string");
 			}
 
 			if (cp <= 0xD7FF || (cp >= 0xE000 && cp <= 0xFFFF)) 
@@ -1896,9 +1699,10 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 				escape[3] = hexdigits[((Byte *)&cp)[1] % 16];
 				escape[4] = hexdigits[((Byte *)&cp)[0] / 16];
 				escape[5] = hexdigits[((Byte *)&cp)[0] % 16];
-				if (CXNOK(pOutputStream->Write(escape, 6, &cbAckSize)))
+				status = pOutputStream->Write(escape, 6, &cbAckSize);
+				if (status.IsNOK())
 				{
-					return Status::GetCode();
+					return status;
 				}
 			}
 			else 
@@ -1915,9 +1719,10 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 				escape[3] = hexdigits[((Byte *)&lead)[1] % 16];
 				escape[4] = hexdigits[((Byte *)&lead)[0] / 16];
 				escape[5] = hexdigits[((Byte *)&lead)[0] % 16];
-				if (CXNOK(pOutputStream->Write(escape, 6, &cbAckSize)))
+				status = pOutputStream->Write(escape, 6, &cbAckSize);
+				if (status.IsNOK())
 				{
-					return Status::GetCode();
+					return status;
 				}
 
 				escape[0] = '\\';
@@ -1926,19 +1731,20 @@ StatusCode Var::WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffe
 				escape[3] = hexdigits[((Byte *)&trail)[1] % 16];
 				escape[4] = hexdigits[((Byte *)&trail)[0] / 16];
 				escape[5] = hexdigits[((Byte *)&trail)[0] % 16];
-				if (CXNOK(pOutputStream->Write(escape, 6, &cbAckSize)))
+				status = pOutputStream->Write(escape, 6, &cbAckSize);
+				if (status.IsNOK())
 				{
-					return Status::GetCode();
+					return status;
 				}
 			}
 			else
 			{
-				return Status::Set(Status_InvalidArg, "Invalid UTF8 string");
+				return Status(Status_InvalidArg, "Invalid UTF8 string");
 			}
 		}
 	}
 
-	return Status_OK;
+	return Status();
 }
 
 void operator>>(Var &var, String &sStr)

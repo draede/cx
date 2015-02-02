@@ -45,15 +45,11 @@ namespace Util
 
 Time::Time()
 {
-	Status::Clear();
-
 	GetLocalTime();
 }
 
 Time::Time(const Time &t)
 {
-	Status::Clear();
-
 	m_nYear        = t.m_nYear;
 	m_nMonth       = t.m_nMonth;
 	m_nDay         = t.m_nDay;
@@ -66,13 +62,10 @@ Time::Time(const Time &t)
 
 Time::~Time()
 {
-	Status::Clear();
 }
 
 Time &Time::operator=(const Time &t)
 {
-	Status::Clear();
-
 	m_nYear        = t.m_nYear;
 	m_nMonth       = t.m_nMonth;
 	m_nDay         = t.m_nDay;
@@ -85,10 +78,8 @@ Time &Time::operator=(const Time &t)
 	return *this;
 }
 
-StatusCode Time::GetLocalTime()
+Status Time::GetLocalTime()
 {
-	Status::Clear();
-
 	SYSTEMTIME st;
 
 	::GetLocalTime(&st);	
@@ -101,13 +92,11 @@ StatusCode Time::GetLocalTime()
 	m_nSecond      = (unsigned)st.wSecond;
 	m_nMillisecond = (unsigned)st.wMilliseconds;
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Time::GetUTCTime()
+Status Time::GetUTCTime()
 {
-	Status::Clear();
-
 	SYSTEMTIME st;
 
 	GetSystemTime(&st);
@@ -120,152 +109,118 @@ StatusCode Time::GetUTCTime()
 	m_nSecond      = (unsigned)st.wSecond;
 	m_nMillisecond = (unsigned)st.wMilliseconds;
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Time::SetDate(unsigned nYear, unsigned nMonth, unsigned nDay)
+Status Time::SetDate(unsigned nYear, unsigned nMonth, unsigned nDay)
 {
-	Status::Clear();
-
 	m_nYear  = nYear;
 	m_nMonth = nMonth;
 	m_nDay   = nDay;
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Time::SetYear(unsigned nYear)
+Status Time::SetYear(unsigned nYear)
 {
-	Status::Clear();
-
 	m_nYear = nYear;
 
-	return Status_OK;
+	return Status();
 }
 
 unsigned Time::GetYear() const
 {
-	Status::Clear();
-
 	return m_nYear;
 }
 
-StatusCode Time::SetMonth(unsigned nMonth)
+Status Time::SetMonth(unsigned nMonth)
 {
-	Status::Clear();
-
 	m_nMonth = nMonth;
 
-	return Status_OK;
+	return Status();
 }
 
 unsigned Time::GetMonth() const
 {
-	Status::Clear();
-
 	return m_nMonth;
 }
 
-StatusCode Time::SetDay(unsigned nDay)
+Status Time::SetDay(unsigned nDay)
 {
-	Status::Clear();
-
 	m_nDay = nDay;
 
-	return Status_OK;
+	return Status();
 }
 
 unsigned Time::GetDay() const
 {
-	Status::Clear();
-
 	return m_nDay;
 }
 
-StatusCode Time::SetTime(unsigned nHour, unsigned nMinute, unsigned nSecond)
+Status Time::SetTime(unsigned nHour, unsigned nMinute, unsigned nSecond)
 {
-	Status::Clear();
-
 	m_nHour   = nHour;
 	m_nMinute = nMinute;
 	m_nSecond = nSecond;
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Time::SetTime(unsigned nHour, unsigned nMinute, unsigned nSecond, unsigned nMillisecond)
+Status Time::SetTime(unsigned nHour, unsigned nMinute, unsigned nSecond, unsigned nMillisecond)
 {
-	Status::Clear();
-
 	m_nHour        = nHour;
 	m_nMinute      = nMinute;
 	m_nSecond      = nSecond;
 	m_nMillisecond = nMillisecond;
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode Time::SetHour(unsigned nHour)
+Status Time::SetHour(unsigned nHour)
 {
-	Status::Clear();
-
 	m_nHour = nHour;
 
-	return Status_OK;
+	return Status();
 }
 
 unsigned Time::GetHour() const
 {
-	Status::Clear();
-
 	return m_nHour;
 }
 
-StatusCode Time::SetMinute(unsigned nMinute)
+Status Time::SetMinute(unsigned nMinute)
 {
-	Status::Clear();
-
 	m_nMinute = nMinute;
 
-	return Status_OK;
+	return Status();
 }
 
 unsigned Time::GetMinute() const
 {
-	Status::Clear();
-
 	return m_nMinute;
 }
 
-StatusCode Time::SetSecond(unsigned nSecond)
+Status Time::SetSecond(unsigned nSecond)
 {
-	Status::Clear();
-
 	m_nSecond = nSecond;
 
-	return Status_OK;
+	return Status();
 }
 
 unsigned Time::GetSecond() const
 {
-	Status::Clear();
-
 	return m_nSecond;
 }
 
-StatusCode Time::SetMillisecond(unsigned nMillisecond)
+Status Time::SetMillisecond(unsigned nMillisecond)
 {
-	Status::Clear();
-
 	m_nMillisecond = nMillisecond;
 
-	return Status_OK;
+	return Status();
 }
 
 unsigned Time::GetMillisecond() const
 {
-	Status::Clear();
-
 	return m_nMillisecond;
 }
 

@@ -36,6 +36,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/Scope.h"
 #include "CX/APIDefs.h"
 #include <windows.h>

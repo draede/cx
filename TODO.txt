@@ -1,2 +1,4 @@
 1. Tests!!!
 2. Check methods that need to be const
+3. IO paths should convert from UTF8 to UTF16 on windows
+4. Iterative Write method for Var (avoid stackoverflow)

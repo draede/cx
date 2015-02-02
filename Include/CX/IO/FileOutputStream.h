@@ -49,9 +49,9 @@ public:
 
 	~FileOutputStream();
 
-	virtual StatusCode Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize);
+	virtual Status Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize);
 
-	virtual StatusCode GetSize(UInt64 *pcbSize) const;
+	virtual Status GetSize(UInt64 *pcbSize) const;
 
 	virtual bool IsOK() const;
 

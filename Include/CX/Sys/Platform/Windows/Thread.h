@@ -36,6 +36,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/APIDefs.h"
 #include "CX/Util/IFunction.h"
 #include "CX/Util/Function.h"
@@ -59,7 +60,7 @@ public:
 
 	virtual ~Thread();
 
-	StatusCode Wait();
+	Status Wait();
 
 	bool IsRunning();
 
@@ -73,13 +74,11 @@ public:
 
 	//the pFunction will be deleted with Delete<pFunction> when done
 	template <typename R>
-	StatusCode Run(Util::IFunction<R> *pFunction)
+	Status Run(Util::IFunction<R> *pFunction)
 	{
-		Status::Clear();
-
 		if (NULL != m_hThread)
 		{
-			return Status::Set(Status_Busy, "Thread already started");
+			return Status(Status_Busy, "Thread already started");
 		}
 
 		DWORD      dwID;
@@ -90,14 +89,13 @@ public:
 		{
 			m_nID = (TID)dwID;
 
-			return Status_OK;
+			return Status();
 		}
 		else
 		{
 			Delete(pHelper);
 
-			return Status::Set(Status_OpenFailed, "CreateThread failed with error %d",
-				GetLastError());
+			return Status(Status_OpenFailed, "CreateThread failed with error {1}", GetLastError());
 		}
 	}
 

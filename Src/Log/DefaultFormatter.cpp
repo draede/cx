@@ -40,35 +40,26 @@ namespace Log
 
 DefaultFormatter::DefaultFormatter(int nFlags/* = FLAGS_MEDIUM*/)
 {
-	Status::Clear();
-
 	m_nFlags = nFlags;
 }
 
 DefaultFormatter::~DefaultFormatter()
 {
-	Status::Clear();
 }
 
 void DefaultFormatter::SetFlags(int nFlags/* = FLAGS_MEDIUM*/)
 {
-	Status::Clear();
-
 	m_nFlags = nFlags;
 }
 
 int DefaultFormatter::GetFlags() const
 {
-	Status::Clear();
-
 	return m_nFlags;
 }
 
-StatusCode DefaultFormatter::Write(IOutput *pOutput, Level nLevel, const Char *szTag, 
+Status DefaultFormatter::Write(IOutput *pOutput, Level nLevel, const Char *szTag, 
                                    const Char *pBuffer, Size cLen)
 {
-	Status::Clear();
-
 	String sOutput;
 
 	if (Show_Date == (m_nFlags & Show_Date) || Show_Time == (m_nFlags & Show_Time))

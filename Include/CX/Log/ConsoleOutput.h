@@ -47,7 +47,7 @@ public:
 
 	~ConsoleOutput();
 
-	virtual StatusCode Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
+	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
 
 private:
 

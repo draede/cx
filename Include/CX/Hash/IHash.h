@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/APIDefs.h"
 
 
@@ -49,11 +50,11 @@ public:
 
 	virtual Size GetSize() = 0;
 
-	virtual StatusCode Init(const void *pHash = NULL) = 0;
+	virtual Status Init(const void *pHash = NULL) = 0;
 
-	virtual StatusCode Update(const void *pBuffer, Size cbSize) = 0;
+	virtual Status Update(const void *pBuffer, Size cbSize) = 0;
 
-	virtual StatusCode Done(void *pHash) = 0;
+	virtual Status Done(void *pHash) = 0;
 
 };
 

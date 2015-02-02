@@ -38,15 +38,13 @@ namespace Str
 
 HexString::HexString()
 {
-	Status::Clear();
 }
 
 HexString::~HexString()
 {
-	Status::Clear();
 }
 
-StatusCode HexString::ToString(const Byte *pBinary, Size cbBinarySize, String *psString, 
+Status HexString::ToString(const Byte *pBinary, Size cbBinarySize, String *psString, 
                                int nFlags/* = Flag::Lowercase*/)
 {
 	static Char hexdigits_u[] =
@@ -59,8 +57,6 @@ StatusCode HexString::ToString(const Byte *pBinary, Size cbBinarySize, String *p
 	};
 	Byte hi;
 	Byte lo;
-
-	Status::Clear();
 
 	for (Size i = 0; i < cbBinarySize; i++)
 	{
@@ -98,15 +94,13 @@ StatusCode HexString::ToString(const Byte *pBinary, Size cbBinarySize, String *p
 		}
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode HexString::FromString(const Char *szString, Byte *pBinary, Size cbBinarySize)
+Status HexString::FromString(const Char *szString, Byte *pBinary, Size cbBinarySize)
 {
 	const Char   *pszPos;
 	Size         cIndex;
-
-	Status::Clear();
 
 	cIndex = 0;
 	pszPos = szString;
@@ -148,20 +142,16 @@ StatusCode HexString::FromString(const Char *szString, Byte *pBinary, Size cbBin
 		return Status_ParseFailed;
 	}
 
-	return Status_OK;
+	return Status();
 }
 
 Size HexString::GetStringLen(Size cbBinarySize)
 {
-	Status::Clear();
-
 	return cbBinarySize * 2;
 }
 
 Size HexString::GetBinarySize(Size cStringLen)
 {
-	Status::Clear();
-
 	return cStringLen / 2;
 }
 

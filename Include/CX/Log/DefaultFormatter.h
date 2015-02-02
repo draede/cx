@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/Log/IFormatter.h"
 #include "CX/APIDefs.h"
 
@@ -69,7 +70,7 @@ public:
 
 	int GetFlags() const;
 
-	virtual StatusCode Write(IOutput *pOutput, Level nLevel, const Char *szTag, 
+	virtual Status Write(IOutput *pOutput, Level nLevel, const Char *szTag, 
 	                         const Char *pBuffer, Size cLen);
 
 private:

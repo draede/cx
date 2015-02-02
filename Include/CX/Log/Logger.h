@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/Log/Level.h"
 #include "CX/Log/IFormatter.h"
 #include "CX/Log/IOutput.h"
@@ -112,46 +113,46 @@ public:
 
 	static Logger &GetDefaultLogger();
 
-	StatusCode SetLevel(Level nLevel);
+	Status SetLevel(Level nLevel);
 
 	Level GetLevel() const;
 
 	//pFormatter was created with New
-	StatusCode SetFormatter(IFormatter *pFormatter);
+	Status SetFormatter(IFormatter *pFormatter);
 
 	IFormatter *GetFormatter();
 
 	//pOutput was created with New
-	StatusCode AddOutput(IOutput *pOutput);
+	Status AddOutput(IOutput *pOutput);
 
-	StatusCode RemoveOutputs();
+	Status RemoveOutputs();
 
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szMsg)
+	Status Log(Level nLevel, const Char *szTag, const Char *szMsg)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (NULL == m_pFormatter)
 		{
-			return Status::Set(Status_NotInitialized, "No formatter defined");
+			return Status(Status_NotInitialized, "No formatter defined");
 		}
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szMsg)))
+		status = Print(&sOutput, szMsg);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -160,31 +161,31 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1)
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1)))
+		status = Print(&sOutput, szFormat, p1);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -193,31 +194,31 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2)
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2)))
+		status = Print(&sOutput, szFormat, p1, p2);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -226,31 +227,31 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3)
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3)))
+		status = Print(&sOutput, szFormat, p1, p2, p3);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -259,31 +260,31 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4)
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -292,32 +293,32 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -326,32 +327,32 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3,  p4, p5, p6)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -360,33 +361,33 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -395,33 +396,33 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -430,33 +431,33 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -465,33 +466,33 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -500,33 +501,33 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -535,33 +536,33 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -570,34 +571,34 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -606,36 +607,36 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, 
 	               T14 p14)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, 
-		                p14)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, 
+		               p14);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -644,36 +645,36 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, 
 	               T14 p14, T15 p15)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, 
-		                p14, p15)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13,
+		                p14, p15);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -682,36 +683,36 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15, typename T16>
-	StatusCode Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
+	Status Log(Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
 	               T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, 
 	               T14 p14, T15 p15, T16 p16)
 	{
-		Status::Clear();
-
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, 
-		                p14, p15, p16)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13,
+		                p14, p15, p16);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -720,35 +721,35 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szMsg)
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szMsg)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szMsg)))
+		status = Print(&sOutput, szMsg);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -757,36 +758,36 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1)
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1)))
+		status = Print(&sOutput, szFormat, p1);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -795,36 +796,36 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2)
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2)))
+		status = Print(&sOutput, szFormat, p1, p2);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -833,37 +834,37 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3)))
+		status = Print(&sOutput, szFormat, p1, p2, p3);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -872,37 +873,37 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -911,37 +912,37 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -950,37 +951,37 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -989,38 +990,38 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1029,38 +1030,38 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1069,38 +1070,38 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1109,38 +1110,38 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1149,38 +1150,38 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1189,39 +1190,39 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1230,40 +1231,40 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12, T13 p13)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1272,41 +1273,41 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12, T13 p13, T14 p14)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, 
-		                p14)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13,
+		               p14);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1315,41 +1316,41 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12, T13 p13, T14 p14, T15 p15)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, 
-		                p14, p15)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13,
+		               p14, p15);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1358,41 +1359,41 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15, typename T16>
-	StatusCode LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 	{
-		Status::Clear();
-
 		if (!bCond)
 		{
-			return Status::Set(Status_Denied, "Cond not allowed");
+			return Status(Status_Denied, "Cond not allowed");
 		}
 
 		if (nLevel > m_nLevel)
 		{
-			return Status::Set(Status_Denied, "Level not allowed");
+			return Status(Status_Denied, "Level not allowed");
 		}
 
 		Sys::Locker locker(&m_fmLogger);
 
 		if (m_vectorOutputs.empty())
 		{
-			return Status::Set(Status_NotInitialized, "No outputs defined");
+			return Status(Status_NotInitialized, "No outputs defined");
 		}
 
 		String sOutput;
+		Status status;
 
-		if (CXNOK(Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, 
-		                p14, p15, p16)))
+		status = Print(&sOutput, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13,
+		               p14, p15, p16);
+		if (status.IsNOK())
 		{
-			return Status::GetCode();
+			return status;
 		}
 
 		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
@@ -1401,7 +1402,7 @@ public:
 			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
 		}
 
-		return Status_OK;
+		return Status();
 	}
 
 private:
@@ -1414,7 +1415,7 @@ private:
 #pragma warning(disable: 4251)
 	OutputsVector    m_vectorOutputs;
 #pragma warning(pop)
-	Sys::Lock   m_fmLogger;
+	Sys::Lock        m_fmLogger;
 
 };
 

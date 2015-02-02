@@ -172,7 +172,7 @@ struct RapidJSONInputStream
 	{
 		if (bufoffset_ >= bufsize_)
 		{
-			if (CXNOK(inpstr_->Read(buf_, sizeof(buf_), &bufsize_)))
+			if (inpstr_->Read(buf_, sizeof(buf_), &bufsize_).IsNOK())
 			{
 				return '\0';
 			}
@@ -186,7 +186,7 @@ struct RapidJSONInputStream
 	{
 		if (bufoffset_ >= bufsize_)
 		{
-			if (CXNOK(inpstr_->Read(buf_, sizeof(buf_), &bufsize_)))
+			if (inpstr_->Read(buf_, sizeof(buf_), &bufsize_).IsNOK())
 			{
 				return '\0';
 			}

@@ -39,21 +39,17 @@ namespace Log
 
 ConsoleOutput::ConsoleOutput()
 {
-	Status::Clear();
 }
 
 ConsoleOutput::~ConsoleOutput()
 {
-	Status::Clear();
 }
 
-StatusCode ConsoleOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
+Status ConsoleOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
 {
-	Status::Clear();
-
 	cx_printf("%s", pBuffer);
 
-	return Status_OK;
+	return Status();
 }
 
 }//namespace Log

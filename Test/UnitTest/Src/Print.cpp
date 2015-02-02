@@ -1,5 +1,6 @@
 
 #include "CX/CX.h"
+#include "CX/Print.h"
 #include "CX/C/string.h"
 #include "../../../Contrib/Catch/Include/catch.hpp"
 

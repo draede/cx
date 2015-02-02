@@ -31,9 +31,8 @@
 
 #include "CX/APIDefs.h"
 #include "CX/Platform.h"
-#include "CX/String.h"
-#include "CX/Print.h"
 #include "CX/Slice.h"
+#include "CX/Detail/DetailPrint/DetailPrint.h"
 #include "CX/StatusCodes.h"
 
 
@@ -44,265 +43,286 @@ class CX_API Status
 {
 public:
 
-	static const Size    MAX_MSG_LEN = 1024;
+	static const Size    MAX_MSG_LEN = 1023;
 
-	static StatusCode Set(StatusCode nStatus);
+	Status();
 
-	static StatusCode Set(StatusCode nStatus, const Char *szMsg);
+	Status(const Status &status);
+
+	Status(StatusCode nCode);
+
+	Status(StatusCode nCode, const Char *szMsg);
 
 	template <typename T1>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<1>(&slice, szFormat, p1, et, et, et, et, et, et, et, 
+		                                        et, et, et, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		return Print(&slice, szFormat, p1, p2);
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<2>(&slice, szFormat, p1, p2, et, et, et, et, et, et, 
+		                                        et, et, et, et, et, et, et, et)))
+		{
+			m_szMsg[0] = 0;
+		}
 	}
 
 	template <typename T1, typename T2, typename T3>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		return Print(&slice, szFormat, p1, p2, p3);
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<3>(&slice, szFormat, p1, p2, p3, et, et, et, et, et, 
+		                                        et, et, et, et, et, et, et, et)))
+		{
+			m_szMsg[0] = 0;
+		}
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<4>(&slice, szFormat, p1, p2, p3, p4, et, et, et, et, 
+		                                        et, et, et, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<5>(&slice, szFormat, p1, p2, p3, p4, p5, et, et, et, 
+		                                        et, et, et, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<6>(&slice, szFormat, p1, p2, p3, p4, p5, p6, et, et, 
+		                                        et, et, et, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<7>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, et, 
+		                                        et, et, et, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<8>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                        et, et, et, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<9>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                        p9, et, et, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<10>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                         p9, p10, et, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10, T11 p11)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<11>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                         p9, p10, p11, et, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
+	       T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<12>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                         p9, p10, p11, p12, et, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
-	                             T12 p12, T13 p13)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<13>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                         p9, p10, p11, p12, p13, et, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
-	                             T12 p12, T13 p13, T14 p14)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, 
-		                p14)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<14>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                         p9, p10, p11, p12, p13, p14, et, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
-	                             T12 p12, T13 p13, T14 p14, T15 p15)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		CX::EmptyType et;
+		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, 
-		                p15)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<15>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                         p9, p10, p11, p12, p13, p14, p15, et)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15, typename T16>
-	static inline StatusCode Set(StatusCode nStatus, const Char *szFormat, T1 p1, T2 p2, T3 p3, 
-	                             T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
-	                             T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
+	       T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 	{
-		Slice slice(GetMsgPtr(), GetMsgSize());
+		Slice slice(m_szMsg, MAX_MSG_LEN);
 
-		if (CXNOK(Print(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, 
-		                p15, p16)))
+		m_nCode = nCode;
+		if (CXNOK(Detail::DetailPrint::Print<16>(&slice, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, 
+		                                         p9, p10, p11, p12, p13, p14, p15, p16)))
 		{
-			return GetCode();
+			m_szMsg[0] = 0;
 		}
-
-		return SetOnlyCode(nStatus);
 	}
 
-	static StatusCode GetCode();
+	~Status()
+	{
+	}
 
-	static const Char *GetMsg();
+	Status &operator=(const Status &status)
+	{
+		m_nCode = status.m_nCode;
+		memcpy(m_szMsg, status.m_szMsg, (MAX_MSG_LEN + 1) * sizeof(Char));
 
-	static void Clear();
+		return *this;
+	}
 
-	static bool IsOK();
+	StatusCode GetCode();
 
-	static bool IsNOK();
+	const Char *GetMsg();
+
+	bool IsOK();
+
+	bool IsNOK();
 
 private:
 
-	Status();
-
-	~Status();
-
-	static Char *GetMsgPtr();
-
-	static Size GetMsgSize();
-
-	static StatusCode SetOnlyCode(StatusCode nStatus);
+	StatusCode   m_nCode;
+	Char         m_szMsg[MAX_MSG_LEN + 1];
 
 };
 

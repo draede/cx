@@ -34,77 +34,71 @@
 namespace CX
 {
 
-CX_TLS StatusCode   cx_nStatusCode                        = Status_OK;
-CX_TLS Char         cx_szStatusMsg[Status::MAX_MSG_LEN]   = "";
-
 Status::Status()
 {
+	m_nCode    = Status_OK;
+	m_szMsg[0] = 0;
 }
 
-Status::~Status()
+Status::Status(const Status &status)
 {
-
+	m_nCode = status.m_nCode;
+	memcpy(m_szMsg, status.m_szMsg, MAX_MSG_LEN + 1);
 }
 
-Char *Status::GetMsgPtr()
+Status::Status(StatusCode nCode)
 {
-	return cx_szStatusMsg;
+	m_nCode    = nCode;
+	m_szMsg[0] = 0;
 }
 
-Size Status::GetMsgSize()
+Status::Status(StatusCode nCode, const Char *szMsg)
 {
-	return MAX_MSG_LEN;
-}
+	Char       *pDst;
+	Char       *pMaxDst;
+	const Char *pSrc;
 
-StatusCode Status::SetOnlyCode(StatusCode nStatus)
-{
-	cx_nStatusCode = nStatus;
+	m_nCode    = nCode;
+	m_szMsg[0] = 0;
+	pDst       = m_szMsg;
+	pMaxDst    = m_szMsg + MAX_MSG_LEN + 1;
+	pSrc       = szMsg;
 
-	return nStatus;
-}
-
-StatusCode Status::Set(StatusCode nStatus)
-{
-	cx_nStatusCode      = nStatus;
-	cx_szStatusMsg[0]   = 0;
-
-	return nStatus;
-}
-
-StatusCode Status::Set(StatusCode nStatus, const Char *szMsg)
-{
-	Size cLen;
-
-	cx_nStatusCode = nStatus;
-	Detail::DetailPrint::StrCopy(cx_szStatusMsg, MAX_MSG_LEN, szMsg, &cLen);
-
-	return nStatus;
+	for (;;)
+	{
+		*pDst = *pSrc;
+		if (0 == *pSrc)
+		{
+			break;
+		}
+		pDst++;
+		if (pDst >= pMaxDst)
+		{
+			m_szMsg[MAX_MSG_LEN] = 0;
+			break;
+		}
+		pSrc++;
+	}
 }
 
 StatusCode Status::GetCode()
 {
-	return cx_nStatusCode;
+	return m_nCode;
 }
 
 const Char *Status::GetMsg()
 {
-	return cx_szStatusMsg;
-}
-
-void Status::Clear()
-{
-	cx_nStatusCode     = Status_OK;
-	cx_szStatusMsg[0]  = 0;
+	return m_szMsg;
 }
 
 bool Status::IsOK()
 {
-	return (Status_OK == cx_nStatusCode);
+	return CXOK(m_nCode);
 }
 
 bool Status::IsNOK()
 {
-	return (Status_OK != cx_nStatusCode);
+	return CXNOK(m_nCode);
 }
 
 }//namespace CX

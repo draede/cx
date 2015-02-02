@@ -53,10 +53,8 @@ UTF8::~UTF8()
 {
 }
 
-StatusCode UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = SIZET_MAX*/)
+Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = SIZET_MAX*/)
 {
-	Status::Clear();
-
 	int cSize;
 
 	if (SIZET_MAX == cUTF8Len)
@@ -74,22 +72,20 @@ StatusCode UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* =
 			psWChar->resize(cSize);
 			if (0 >= (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, (int)cUTF8Len, &(*psWChar)[0], cSize)))
 			{
-				return Status::Set(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", GetLastError());
+				return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", GetLastError());
 			}
 		}
 		else
 		{
-			return Status::Set(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", GetLastError());
+			return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", GetLastError());
 		}
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* = SIZET_MAX*/)
+Status UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* = SIZET_MAX*/)
 {
-	Status::Clear();
-
 	int cSize;
 
 	if (SIZET_MAX == cWCharLen)
@@ -107,16 +103,16 @@ StatusCode UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen
 			psUTF8->resize(cSize);
 			if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, (int)cWCharLen, &(*psUTF8)[0], cSize, NULL, NULL)))
 			{
-				return Status::Set(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", GetLastError());
+				return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", GetLastError());
 			}
 		}
 		else
 		{
-			return Status::Set(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", GetLastError());
+			return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", GetLastError());
 		}
 	}
 
-	return Status_OK;
+	return Status();
 }
 
 }//namespace Str

@@ -45,65 +45,54 @@ namespace Sys
 
 DynLib::DynLib()
 {
-	Status::Clear();
-
 	m_hHandle = NULL;
 }
 
 DynLib::~DynLib()
 {
-	Status::Clear();
-
 	Unload();
 }
 
 bool DynLib::IsOK()
 {
-	Status::Clear();
-
 	return (NULL != m_hHandle);
 }
 
-StatusCode DynLib::Load(const Char *szPath)
+Status DynLib::Load(const Char *szPath)
 {
 	Unload();
-	Status::Clear();
 
 	WString wsPath;
+	Status  status;
 
-	if (CXNOK(Str::UTF8::ToWChar(szPath, &wsPath)))
+	status = Str::UTF8::ToWChar(szPath, &wsPath);
+	if (status.IsNOK())
 	{
-		return Status::GetCode();
+		return status;
 	}
 
 	if (NULL == (m_hHandle = LoadLibraryW(wsPath.c_str())))
 	{
-		return Status::Set(Status_FileNotFound, "Failed to load library");
+		return Status(Status_FileNotFound, "Failed to load library");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode DynLib::Unload()
+Status DynLib::Unload()
 {
-	Status::Clear();
-
 	if (NULL != m_hHandle)
 	{
 		FreeLibrary(m_hHandle);
 	}
 	
-	return Status_OK;
+	return Status();
 }
 
 void *DynLib::GetFunc(const Char *szName)
 {
-	Status::Clear();
-
 	if (NULL == m_hHandle)
 	{
-		Status::Set(Status_NotInitialized, "");
-
 		return NULL;
 	}
 

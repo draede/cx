@@ -54,11 +54,11 @@ public:
 
 	virtual Size GetSize();
 
-	virtual StatusCode Init(const void *pCrypt = NULL);
+	virtual Status Init(const void *pCrypt = NULL);
 
-	virtual StatusCode Update(const void *pBuffer, Size cbSize);
+	virtual Status Update(const void *pBuffer, Size cbSize);
 
-	virtual StatusCode Done(void *pCrypt);
+	virtual Status Done(void *pCrypt);
 
 private:
 

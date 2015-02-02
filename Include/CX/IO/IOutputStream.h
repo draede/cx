@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/APIDefs.h"
 
 
@@ -45,9 +46,9 @@ public:
 
 	virtual ~IOutputStream() { }
 
-	virtual StatusCode Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize) = 0;
+	virtual Status Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize) = 0;
 
-	virtual StatusCode GetSize(UInt64 *pcbSize) const = 0;
+	virtual Status GetSize(UInt64 *pcbSize) const = 0;
 
 	virtual bool IsOK() const = 0;
 

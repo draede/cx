@@ -38,7 +38,6 @@ namespace IO
 
 MemOutputStream::MemOutputStream(void *pMem, Size cbSize)
 {
-	Status::Clear();
 	m_nType     = Type_Mem;
 	m_pMem      = pMem;
 	m_cbMemSize = cbSize;
@@ -46,27 +45,22 @@ MemOutputStream::MemOutputStream(void *pMem, Size cbSize)
 
 MemOutputStream::MemOutputStream(String *pStr)
 {
-	Status::Clear();
 	m_nType     = Type_String;
 	m_pStr      = pStr;
 }
 
 MemOutputStream::MemOutputStream(Util::IMemPool *pMemPool)
 {
-	Status::Clear();
 	m_nType     = Type_MemPool;
 	m_pMemPool  = pMemPool;
 }
 
 MemOutputStream::~MemOutputStream()
 {
-	Status::Clear();
 }
 
 Size MemOutputStream::GetSizeImpl() const
 {
-	Status::Clear();
-
 	switch(m_nType)
 	{
 		case Type_Mem:       return m_cbMemSize;
@@ -77,10 +71,8 @@ Size MemOutputStream::GetSizeImpl() const
 	return 0;
 }
 
-StatusCode MemOutputStream::WriteImpl(const void *pMem, Size cbReqSize, Size *pcbAckSize)
+Status MemOutputStream::WriteImpl(const void *pMem, Size cbReqSize, Size *pcbAckSize)
 {
-	Status::Clear();
-
 	switch(m_nType)
 	{
 		case Type_Mem:
@@ -102,7 +94,7 @@ StatusCode MemOutputStream::WriteImpl(const void *pMem, Size cbReqSize, Size *pc
 			}
 			else
 			{
-				return Status::Set(Status_WriteFailed, "Max capacity reached");
+				return Status(Status_WriteFailed, "Max capacity reached");
 			}
 		}
 		break;
@@ -116,34 +108,29 @@ StatusCode MemOutputStream::WriteImpl(const void *pMem, Size cbReqSize, Size *pc
 		break;
 		case Type_MemPool:
 		{
-			if (CXOK(m_pMemPool->Add(pMem, cbReqSize)))
+			Status status;
+
+			status = m_pMemPool->Add(pMem, cbReqSize);
+			if (status.IsNOK())
 			{
 				*pcbAckSize = cbReqSize;
+			}
 
-				return Status_OK;
-			}
-			else
-			{
-				return Status::GetCode();
-			}
+			return status;
 		}
 		break;
 	}
 
-	return Status::Set(Status_NotSupported, "Not supported");
+	return Status(Status_NotSupported, "Not supported");
 }
 
-StatusCode MemOutputStream::Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize)
+Status MemOutputStream::Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize)
 {
-	Status::Clear();
-
 	return WriteImpl(pBuffer, cbReqSize, pcbAckSize);
 }
 
-StatusCode MemOutputStream::GetSize(UInt64 *pcbSize) const
+Status MemOutputStream::GetSize(UInt64 *pcbSize) const
 {
-	Status::Clear();
-
 	*pcbSize = (UInt64)GetSizeImpl();
 
 	return Status_OK;
@@ -151,15 +138,11 @@ StatusCode MemOutputStream::GetSize(UInt64 *pcbSize) const
 
 bool MemOutputStream::IsOK() const
 {
-	Status::Clear();
-
 	return true;
 }
 
 const Char *MemOutputStream::GetPath() const
 {
-	Status::Clear();
-
 	return "";
 }
 

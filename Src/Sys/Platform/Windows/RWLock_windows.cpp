@@ -45,21 +45,16 @@ namespace Sys
 RWLock::RWLock()
 	: m_cWritersWaiting(0), m_cReadersWaiting(0), m_cActiveWriterReaders(0)
 {
-	Status::Clear();
-
 	InitializeCriticalSection(&m_cs);
 
 	if (NULL == (m_hReadyToRead = CreateEvent(NULL,TRUE, FALSE, NULL)))
 	{
-		Status::Set(Status_OperationFailed, "CreateEvent failed with code {1}", GetLastError());
-
 		return;
 	}
 
 	if (NULL == (m_hReadyToWrite = CreateSemaphore(NULL, 0, 1, NULL)))
 	{
 		CloseHandle(m_hReadyToRead);
-		Status::Set(Status_OperationFailed, "CreateSemaphore failed with code {1}", GetLastError());
 
 		return;
 	}
@@ -67,8 +62,6 @@ RWLock::RWLock()
 
 RWLock::~RWLock()
 {
-	Status::Clear();
-
 	if (NULL != m_hReadyToWrite)
 	{
 		CloseHandle(m_hReadyToWrite);
@@ -84,8 +77,6 @@ RWLock::~RWLock()
 
 void RWLock::EnterRead()
 {
-	Status::Clear();
-
 	bool fNotifyReaders = false;
 
 	EnterCriticalSection(&m_cs);
@@ -153,8 +144,6 @@ void RWLock::EnterRead()
 
 void RWLock::LeaveRead()
 {
-	Status::Clear();
-
 	EnterCriticalSection(&m_cs);
 
 	// Assert that the lock isn't held by a writer.
@@ -186,8 +175,6 @@ void RWLock::LeaveRead()
 
 void RWLock::EnterWrite()
 {
-	Status::Clear();
-
 	EnterCriticalSection(&m_cs);
 
 	// Are there active readers?
@@ -219,8 +206,6 @@ void RWLock::EnterWrite()
 
 void RWLock::LeaveWrite()
 {
-	Status::Clear();
-
 	bool fNotifyWriter = false;
 	bool fNotifyReaders = false;
 

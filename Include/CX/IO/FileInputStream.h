@@ -49,13 +49,13 @@ public:
 
 	~FileInputStream();
 
-	virtual StatusCode Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize);
+	virtual Status Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize);
 
-	virtual StatusCode SetPos(UInt64 cbPos);
+	virtual Status SetPos(UInt64 cbPos);
 
-	virtual StatusCode GetPos(UInt64 *pcbPos) const;
+	virtual Status GetPos(UInt64 *pcbPos) const;
 
-	virtual StatusCode GetSize(UInt64 *pcbSize) const;
+	virtual Status GetSize(UInt64 *pcbSize) const;
 
 	virtual bool IsEOF() const;
 

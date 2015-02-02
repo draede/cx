@@ -14,13 +14,11 @@ public:
 
 	String m_sOutput;
 
-	virtual StatusCode Write(Log::Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
+	virtual Status Write(Log::Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
 	{
-		Status::Clear();
-
 		m_sOutput.assign(pBuffer, cLen);
 
-		return Status_OK;
+		return Status();
 	}
 
 };

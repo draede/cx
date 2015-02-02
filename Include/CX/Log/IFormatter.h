@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/Log/Level.h"
 #include "CX/Log/IOutput.h"
 #include "CX/Print.h"
@@ -49,7 +50,7 @@ public:
 	virtual ~IFormatter() { }
 
 	//pBuffer is always NULL terminated
-	virtual StatusCode Write(IOutput *pOutput, Level nLevel, const Char *szTag, 
+	virtual Status Write(IOutput *pOutput, Level nLevel, const Char *szTag, 
 	                         const Char *pBuffer, Size cLen) = 0;
 
 };

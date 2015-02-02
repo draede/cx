@@ -38,15 +38,11 @@ namespace IO
 
 FileOutputStream::FileOutputStream(const Char *szPath)
 {
-	Status::Clear();
-
 #pragma warning(push)
 #pragma warning(disable: 4996)
 	if (NULL == (m_pFile = cx_fopen(szPath, CX_FILE_WFLAGS)))
 #pragma warning(pop)
 	{
-		Status::Set(Status_OpenFailed, "fopen failed with error {1}", errno);
-
 		return;
 	}
 	m_sPath = szPath;
@@ -54,8 +50,6 @@ FileOutputStream::FileOutputStream(const Char *szPath)
 
 FileOutputStream::~FileOutputStream()
 {
-	Status::Clear();
-
 	if (NULL != m_pFile)
 	{
 		fclose(m_pFile);
@@ -63,62 +57,52 @@ FileOutputStream::~FileOutputStream()
 	}
 }
 
-StatusCode FileOutputStream::Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize)
+Status FileOutputStream::Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize)
 {
-	Status::Clear();
-
 	if (NULL == m_pFile)
 	{
-		return Status::Set(Status_NotInitialized, "File not opened");
+		return Status(Status_NotInitialized, "File not opened");
 	}
 	*pcbAckSize = fwrite(pBuffer, 1, cbReqSize, m_pFile);
 	if (ferror(m_pFile))
 	{
-		return Status::Set(Status_WriteFailed, "fread failed with error {1}", errno);
+		return Status(Status_WriteFailed, "fread failed with error {1}", errno);
 	}
 	if (0 == *pcbAckSize)
 	{
-		return Status_EOF;
+		return Status(Status_EOF, "End of stream reached");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode FileOutputStream::GetSize(UInt64 *pcbSize) const
+Status FileOutputStream::GetSize(UInt64 *pcbSize) const
 {
-	Status::Clear();
-
 	if (NULL == m_pFile)
 	{
-		return Status::Set(Status_NotInitialized, "File not opened");
+		return Status(Status_NotInitialized, "File not opened");
 	}
 
 	cx_statstruct buf;
 
 	if (0 != cx_fstat(cx_fileno(m_pFile), &buf))
 	{
-		return Status::Set(Status_GetSize, "fstat failed with error {1}", errno);
+		return Status(Status_GetSize, "fstat failed with error {1}", errno);
 	}
 	*pcbSize = buf.st_size;
 
-	return Status_OK;
+	return Status();
 }
 
 bool FileOutputStream::IsOK() const
 {
-	Status::Clear();
-
 	return (NULL != m_pFile);
 }
 
 const Char *FileOutputStream::GetPath() const
 {
-	Status::Clear();
-
 	if (NULL == m_pFile)
 	{
-		Status::Set(Status_NotInitialized, "File not opened");
-
 		return "";
 	}
 

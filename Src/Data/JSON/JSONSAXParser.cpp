@@ -247,41 +247,32 @@ namespace JSON
 
 JSONSAXParser::JSONSAXParser()
 {
-	Status::Clear();
-
 	if (NULL != (m_pHandler = New<CX_Data_JSON_SAX_Handler>()))
 	{
 		m_pHandler->m_pVectorObservers = &m_vectorObservers;
-	}
-	else
-	{
-		Status::Set(Status_MemAllocFailed, "Failed to allocate sax handler");
 	}
 }
 
 JSONSAXParser::~JSONSAXParser()
 {
-	Status::Clear();
 	if (NULL != m_pHandler)
 	{
 		Delete(m_pHandler);
 	}
 }
 
-StatusCode JSONSAXParser::ParseStream(IO::IInputStream *pInputStream)
+Status JSONSAXParser::ParseStream(IO::IInputStream *pInputStream)
 {
-	Status::Clear();
-
 	if (NULL == m_pHandler)
 	{
-		return Status::Set(Status_MemAllocFailed, "Failed to allocate sax handler");
+		return Status(Status_MemAllocFailed, "Failed to allocate sax handler");
 	}
 
 	RapidJSONInputStream str(pInputStream);
 
 	if (!m_pHandler->StartDoc())
 	{
-		return Status::Set(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was cancelled");
 	}
 
 	rapidjson::GenericReader<rapidjson::UTF8<>, rapidjson::UTF8<> > reader;
@@ -291,31 +282,29 @@ StatusCode JSONSAXParser::ParseStream(IO::IInputStream *pInputStream)
 
 	if (res.IsError())
 	{
-		return Status::Set(Status_ParseFailed, "JSON parsing failed with error {1}", (int)res.Code());
+		return Status(Status_ParseFailed, "JSON parsing failed with error {1}", (int)res.Code());
 	}
 
 	if (!m_pHandler->EndDoc())
 	{
-		return Status::Set(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was cancelled");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode JSONSAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
+Status JSONSAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 {
-	Status::Clear();
-	
 	if (NULL == m_pHandler)
 	{
-		return Status::Set(Status_MemAllocFailed, "Failed to allocate sax handler");
+		return Status(Status_MemAllocFailed, "Failed to allocate sax handler");
 	}
 
 	RapidJSONBufferInputStream str((const char *)pBuffer, cbSize);
 
 	if (!m_pHandler->StartDoc())
 	{
-		return Status::Set(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was cancelled");
 	}
 
 	rapidjson::GenericReader<rapidjson::UTF8<>, rapidjson::UTF8<> > reader;
@@ -325,31 +314,29 @@ StatusCode JSONSAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 
 	if (res.IsError())
 	{
-		return Status::Set(Status_ParseFailed, "JSON parsing failed with error {1}", (int)res.Code());
+		return Status(Status_ParseFailed, "JSON parsing failed with error {1}", (int)res.Code());
 	}
 
 	if (!m_pHandler->EndDoc())
 	{
-		return Status::Set(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was cancelled");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode JSONSAXParser::ParseString(const Char *szString)
+Status JSONSAXParser::ParseString(const Char *szString)
 {
-	Status::Clear();
-	
 	if (NULL == m_pHandler)
 	{
-		return Status::Set(Status_MemAllocFailed, "Failed to allocate sax handler");
+		return Status(Status_MemAllocFailed, "Failed to allocate sax handler");
 	}
 
 	RapidJSONStringInputStream str(szString);
 
 	if (!m_pHandler->StartDoc())
 	{
-		return Status::Set(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was cancelled");
 	}
 
 	rapidjson::GenericReader<rapidjson::UTF8<>, rapidjson::UTF8<> > reader;
@@ -359,31 +346,29 @@ StatusCode JSONSAXParser::ParseString(const Char *szString)
 
 	if (res.IsError())
 	{
-		return Status::Set(Status_ParseFailed, "JSON parsing failed with error {1}", (int)res.Code());
+		return Status(Status_ParseFailed, "JSON parsing failed with error {1}", (int)res.Code());
 	}
 
 	if (!m_pHandler->EndDoc())
 	{
-		return Status::Set(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was cancelled");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode JSONSAXParser::ParseString(const String &sString)
+Status JSONSAXParser::ParseString(const String &sString)
 {
-	Status::Clear();
-
 	if (NULL == m_pHandler)
 	{
-		return Status::Set(Status_MemAllocFailed, "Failed to allocate sax handler");
+		return Status(Status_MemAllocFailed, "Failed to allocate sax handler");
 	}
 
 	RapidJSONStringInputStream str(sString.c_str());
 
 	if (!m_pHandler->StartDoc())
 	{
-		return Status::Set(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was cancelled");
 	}
 
 	rapidjson::GenericReader<rapidjson::UTF8<>, rapidjson::UTF8<> > reader;
@@ -393,33 +378,29 @@ StatusCode JSONSAXParser::ParseString(const String &sString)
 
 	if (res.IsError())
 	{
-		return Status::Set(Status_ParseFailed, "JSON parsing failed with error {1}", (int)res.Code());
+		return Status(Status_ParseFailed, "JSON parsing failed with error {1}", (int)res.Code());
 	}
 
 	if (!m_pHandler->EndDoc())
 	{
-		return Status::Set(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was cancelled");
 	}
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode JSONSAXParser::AddObserver(IJSONSAXParserObserver *pObserver)
+Status JSONSAXParser::AddObserver(IJSONSAXParserObserver *pObserver)
 {
-	Status::Clear();
-
 	m_vectorObservers.push_back(pObserver);
 
-	return Status_OK;
+	return Status();
 }
 
-StatusCode JSONSAXParser::RemoveObservers()
+Status JSONSAXParser::RemoveObservers()
 {
-	Status::Clear();
-
 	m_vectorObservers.clear();
 
-	return Status_OK;
+	return Status();
 }
 
 }//namespace JSON

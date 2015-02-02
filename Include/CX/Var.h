@@ -81,7 +81,7 @@ public:
 
 	Var &operator=(const Var &var);
 
-	StatusCode Copy(const Var &var);
+	Status Copy(const Var &var);
 
 	bool operator==(const Var &var) const;
 
@@ -91,11 +91,11 @@ public:
 
 	const Char *GetName() const;
 
-	StatusCode SetName(const Char *szName);
+	Status SetName(const Char *szName);
 
 	Type GetType() const;
 
-	StatusCode SetType(Type nType);
+	Status SetType(Type nType);
 
 	bool IsInvalid() const;
 
@@ -115,29 +115,29 @@ public:
 
 	bool IsArray() const;
 
-	StatusCode SetNull();
+	Status SetNull();
 
-	StatusCode SetBool(bool bBool);
+	Status SetBool(bool bBool);
 
 	bool GetBool(bool bBoolDefault = DEFAULT_BOOL) const;
 
-	StatusCode SetInt(Int64 nInt);
+	Status SetInt(Int64 nInt);
 
 	Int64 GetInt(Int64 nIntDefault = DEFAULT_INT) const;
 
-	StatusCode SetReal(Double lfReal);
+	Status SetReal(Double lfReal);
 
 	Double GetReal(Double lfRealDefault = DEFAULT_REAL) const;
 
-	StatusCode SetString(const Char *szString);
+	Status SetString(const Char *szString);
 
-	StatusCode SetString(const String &sString);
+	Status SetString(const String &sString);
 
 	const Char *GetString(const Char *szStringDefault = DEFAULT_STRING) const;
 
-	StatusCode SetObject();
+	Status SetObject();
 
-	StatusCode SetArray();
+	Status SetArray();
 
 	bool IsObjectMember(const char *szName) const;
 
@@ -157,9 +157,9 @@ public:
 
 		bool IsValid() const;
 
-		StatusCode Reset();
+		Status Reset();
 
-		StatusCode Next();
+		Status Next();
 
 		Var &Get();
 
@@ -182,9 +182,9 @@ public:
 
 		bool IsValid() const;
 
-		StatusCode Reset();
+		Status Reset();
 
-		StatusCode Next();
+		Status Next();
 
 		const Var &Get() const;
 
@@ -211,9 +211,9 @@ public:
 
 		bool IsValid() const;
 
-		StatusCode Reset();
+		Status Reset();
 
-		StatusCode Next();
+		Status Next();
 
 		Var &Get();
 
@@ -236,9 +236,9 @@ public:
 
 		bool IsValid() const;
 
-		StatusCode Reset();
+		Status Reset();
 
-		StatusCode Next();
+		Status Next();
 
 		const Var &Get() const;
 
@@ -295,13 +295,13 @@ public:
 
 	operator const Char * () const;
 
-	StatusCode Read(IO::IInputStream *pInputStream);
+	Status Read(IO::IInputStream *pInputStream);
 
-	StatusCode Read(const String &sStr);
+	Status Read(const String &sStr);
 
-	StatusCode Write(IO::IOutputStream *pOutputStream);
+	Status Write(IO::IOutputStream *pOutputStream);
 
-	StatusCode Write(String &sStr);
+	Status Write(String &sStr);
 
 protected:
 
@@ -344,9 +344,9 @@ private:
 
 	Var(bool a1, bool a2, bool a3, bool a4, bool a5);
 
-	StatusCode Write(IO::IOutputStream *pOutputStream, Size cIndent, bool bLast);
+	Status Write(IO::IOutputStream *pOutputStream, Size cIndent, bool bLast);
 
-	StatusCode WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen);
+	Status WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen);
 
 };
 

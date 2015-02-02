@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/Limits.h"
 #include "CX/String.h"
 #include "CX/APIDefs.h"
@@ -60,11 +61,11 @@ public:
 	//pool max size
 	virtual Size GetMaxSize() const = 0;
 
-	virtual StatusCode SetSize(Size cbSize) = 0;
+	virtual Status SetSize(Size cbSize) = 0;
 		
-	virtual StatusCode Add(Size cbSize) = 0;
+	virtual Status Add(Size cbSize) = 0;
 
-	virtual StatusCode Add(const void *pMem, Size cbSize) = 0;
+	virtual Status Add(const void *pMem, Size cbSize) = 0;
 
 };
 
@@ -89,11 +90,11 @@ public:
 	//pool max size
 	virtual Size GetMaxSize() const;
 
-	virtual StatusCode SetSize(Size cbSize);
+	virtual Status SetSize(Size cbSize);
 
-	virtual StatusCode Add(Size cbSize);
+	virtual Status Add(Size cbSize);
 
-	virtual StatusCode Add(const void *pMem, Size cbSize);
+	virtual Status Add(const void *pMem, Size cbSize);
 
 private:
 
@@ -125,11 +126,11 @@ public:
 	//pool max size
 	virtual Size GetMaxSize() const;
 
-	virtual StatusCode SetSize(Size cbSize);
+	virtual Status SetSize(Size cbSize);
 
-	virtual StatusCode Add(Size cbSize);
+	virtual Status Add(Size cbSize);
 
-	virtual StatusCode Add(const void *pMem, Size cbSize);
+	virtual Status Add(const void *pMem, Size cbSize);
 
 private:
 

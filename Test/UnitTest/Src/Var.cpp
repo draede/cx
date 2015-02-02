@@ -1,6 +1,7 @@
 
 #include "CX/CX.h"
 #include "CX/Var.h"
+#include "CX/Print.h"
 #include "CX/IO/FileInputStream.h"
 #include "CX/Util/MemPool.h"
 #include "../../../Contrib/Catch/Include/catch.hpp"
@@ -176,11 +177,11 @@ TEST_CASE("Var tests", "[CX::Var]")
 			UInt64 cbSize;
 			Size   cbAckSize;
 
-			REQUIRE(Status_OK == fis.GetSize(&cbSize));
+			REQUIRE(fis.GetSize(&cbSize).IsOK());
 
-			REQUIRE(Status_OK == mem.SetSize((Size)cbSize));
+			REQUIRE(mem.SetSize((Size)cbSize).IsOK());
 			
-			REQUIRE(Status_OK == fis.Read(mem.GetMem(), mem.GetSize(), &cbAckSize));
+			REQUIRE(fis.Read(mem.GetMem(), mem.GetSize(), &cbAckSize).IsOK());
 
 			String s1((const Char *)mem.GetMem(), mem.GetSize());
 
@@ -188,17 +189,17 @@ TEST_CASE("Var tests", "[CX::Var]")
 
 			Var v1;
 
-			REQUIRE(Status_OK == v1.Read(s1));
+			REQUIRE(v1.Read(s1).IsOK());
 			
 			String s2;
 
-			REQUIRE(Status_OK == v1.Write(s2));
+			REQUIRE(v1.Write(s2).IsOK());
 
 			//Print(stdout, "s2 = '{1}'\n", s2);
 
 			Var v2;
 
-			REQUIRE(Status_OK == v2.Read(s2));
+			REQUIRE(v2.Read(s2).IsOK());
 
 			REQUIRE(v1.Equals(v2));
 		}

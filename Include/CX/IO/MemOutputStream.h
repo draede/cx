@@ -29,6 +29,8 @@
 #pragma once
 
 
+#include "CX/Types.h"
+#include "CX/Status.h"
 #include "CX/IO/IOutputStream.h"
 #include "CX/String.h"
 #include "CX/Util/MemPool.h"
@@ -53,9 +55,9 @@ public:
 
 	~MemOutputStream();
 
-	virtual StatusCode Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize);
+	virtual Status Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize);
 
-	virtual StatusCode GetSize(UInt64 *pcbSize) const;
+	virtual Status GetSize(UInt64 *pcbSize) const;
 
 	virtual bool IsOK() const;
 
@@ -79,7 +81,7 @@ private:
 
 	Size GetSizeImpl() const;
 
-	StatusCode WriteImpl(const void *pMem, Size cbReqSize, Size *pcbAckSize);
+	Status WriteImpl(const void *pMem, Size cbReqSize, Size *pcbAckSize);
 
 };
 
