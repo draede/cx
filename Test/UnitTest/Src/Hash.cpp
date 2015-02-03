@@ -7,7 +7,11 @@
 #include "CX/Hash/SHA384Hash.h"
 #include "CX/Hash/SHA512Hash.h"
 #include "CX/Str/HexString.h"
+
+#pragma warning(push)
+#pragma warning(disable: 4702)
 #include "../../../Contrib/Catch/Include/catch.hpp"
+#pragma warning(pop)
 
 
 using namespace CX;

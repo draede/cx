@@ -90,7 +90,7 @@ void RWLock::EnterRead()
 
 		_ASSERTE(m_cReadersWaiting > 0);
 
-		while (true)
+		for (;;)
 		{
 			ResetEvent(m_hReadyToRead);
 

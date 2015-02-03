@@ -27,6 +27,9 @@ typedef void * (* TestMemFunc)(CX::Size);
 
 int main(int argc, char *argv[])
 {
+	argc;
+	argv;
+
 	CX::Print(stdout, "{1} => '{2}'", 100, "a123b");
 
 	char *x = (char *)CX::Alloc(100);

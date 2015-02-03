@@ -57,6 +57,9 @@ Status SystemOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer,
 	WString wsBuffer;
 	Status  status;
 
+	nLevel;
+	szTag;
+
 	status = Str::UTF8::ToWChar(pBuffer, &wsBuffer, cLen);
 	if (status.IsNOK())
 	{

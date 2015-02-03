@@ -93,11 +93,13 @@ public:
 
 	STLAlloc(const STLAlloc &al)
 	{
+		al;
 	}
 	
 	template <class U> 
 	STLAlloc(const STLAlloc<U> &al)
 	{
+		al;
 	}
 	
 	~STLAlloc()
@@ -116,11 +118,15 @@ public:
 
 	pointer allocate(size_type n, STLAlloc<void>::const_pointer hint = 0)
 	{
+		hint;
+
 		return (pointer)Alloc(n * sizeof(T));
 	}
 
 	void deallocate(pointer p, size_type n)
 	{
+		n;
+
 		Free(p);
 	}
 
@@ -136,6 +142,8 @@ public:
 
 	void destroy(pointer p)
 	{
+		p; //wth
+
 		p->~T();
 	}
 
@@ -144,12 +152,18 @@ public:
 template <class T1, class T2>
 bool operator==(const STLAlloc<T1 >&p1, const STLAlloc<T2> &p2)
 {
+	p1;
+	p2;
+
 	return true;
 }
 
 template <class T1, class T2>
 bool operator!=(const STLAlloc<T1> &p1, const STLAlloc<T2> &p2)
 {
+	p1;
+	p2;
+
 	return false;
 }
 

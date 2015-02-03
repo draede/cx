@@ -49,7 +49,7 @@ Version::Version(int nMajor, int nMinor, int nRevision, int nBuild,
 	m_nRevision      = nRevision;
 	m_nBuild         = nBuild;
 	m_sName          = szName;
-	m_sCopyright     = szCompany;
+	m_sCopyright     = szCopyright;
 	m_sCompany       = szCompany;
 	m_sDescription   = szDescription;
 }

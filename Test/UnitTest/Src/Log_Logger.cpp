@@ -2,7 +2,11 @@
 #include "CX/CX.h"
 #include "CX/Log/Logger.h"
 #include "CX/Log/DefaultFormatter.h"
+
+#pragma warning(push)
+#pragma warning(disable: 4702)
 #include "../../../Contrib/Catch/Include/catch.hpp"
+#pragma warning(pop)
 
 
 using namespace CX;
@@ -16,6 +20,9 @@ public:
 
 	virtual Status Write(Log::Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
 	{
+		nLevel;
+		szTag;
+
 		m_sOutput.assign(pBuffer, cLen);
 
 		return Status();

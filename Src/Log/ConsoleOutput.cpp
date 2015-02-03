@@ -47,6 +47,10 @@ ConsoleOutput::~ConsoleOutput()
 
 Status ConsoleOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
 {
+	nLevel;
+	szTag;
+	cLen;
+
 	cx_printf("%s", pBuffer);
 
 	return Status();

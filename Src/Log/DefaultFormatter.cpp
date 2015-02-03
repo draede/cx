@@ -62,6 +62,8 @@ Status DefaultFormatter::Write(IOutput *pOutput, Level nLevel, const Char *szTag
 {
 	String sOutput;
 
+	cLen;
+
 	if (Show_Date == (m_nFlags & Show_Date) || Show_Time == (m_nFlags & Show_Time))
 	{
 		Util::Time t;

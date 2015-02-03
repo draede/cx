@@ -12,7 +12,11 @@
 #include "CX/UOMultiSet.h"
 #include "CX/UOSet.h"
 #include "CX/Vector.h"
+
+#pragma warning(push)
+#pragma warning(disable: 4702)
 #include "../../../Contrib/Catch/Include/catch.hpp"
+#pragma warning(pop)
 
 
 using namespace CX;

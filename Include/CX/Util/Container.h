@@ -69,6 +69,7 @@ public:
 
 	void Copy(const SelfType &con)
 	{
+		con;
 	}
 
 	Size GetCount()

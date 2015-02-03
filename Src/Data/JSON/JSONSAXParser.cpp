@@ -111,6 +111,8 @@ struct CX_Data_JSON_SAX_Handler
 
 	bool String(const char *str, rapidjson::SizeType length, bool copy)
 	{
+		copy;
+
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnStringValue, str, (CX::Size)length))
 		{
 			return false;
@@ -131,6 +133,8 @@ struct CX_Data_JSON_SAX_Handler
 
 	bool Key(const char *str, rapidjson::SizeType length, bool copy)
 	{
+		copy;
+
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnKey, str, (CX::Size)length))
 		{
 			return false;
@@ -141,6 +145,8 @@ struct CX_Data_JSON_SAX_Handler
 
 	bool EndObject(rapidjson::SizeType memberCount)
 	{
+		memberCount;
+
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnEndObject))
 		{
 			return false;
@@ -161,6 +167,8 @@ struct CX_Data_JSON_SAX_Handler
 
 	bool EndArray(rapidjson::SizeType elementCount)
 	{
+		elementCount;
+
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnEndArray))
 		{
 			return false;

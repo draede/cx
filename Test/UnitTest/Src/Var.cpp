@@ -4,7 +4,12 @@
 #include "CX/Print.h"
 #include "CX/IO/FileInputStream.h"
 #include "CX/Util/MemPool.h"
+
+
+#pragma warning(push)
+#pragma warning(disable: 4702)
 #include "../../../Contrib/Catch/Include/catch.hpp"
+#pragma warning(pop)
 
 
 using namespace CX;

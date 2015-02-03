@@ -52,6 +52,9 @@ StreamOutput::~StreamOutput()
 
 Status StreamOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
 {
+	nLevel;
+	szTag;
+
 	if (NULL == m_pOutputStream)
 	{
 		return Status(Status_NotInitialized, "No valid stream set");
