@@ -41,7 +41,7 @@ namespace Detail
 namespace DetailPrint
 {
 
-bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision)
+Bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision)
 {
 	double_conversion::DoubleToStringConverter   cvt(
 	                   double_conversion::DoubleToStringConverter::Flags::NO_FLAGS, 

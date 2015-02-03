@@ -133,14 +133,14 @@ Status MemInputStream::GetSize(UInt64 *pcbSize) const
 	return Status();
 }
 
-bool MemInputStream::IsEOF() const
+Bool MemInputStream::IsEOF() const
 {
 	return (m_cbOffset >= GetSizeImpl());
 }
 
-bool MemInputStream::IsOK() const
+Bool MemInputStream::IsOK() const
 {
-	return true;
+	return True;
 }
 
 const Char *MemInputStream::GetPath() const

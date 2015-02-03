@@ -136,9 +136,9 @@ Status MemOutputStream::GetSize(UInt64 *pcbSize) const
 	return Status_OK;
 }
 
-bool MemOutputStream::IsOK() const
+Bool MemOutputStream::IsOK() const
 {
-	return true;
+	return True;
 }
 
 const Char *MemOutputStream::GetPath() const

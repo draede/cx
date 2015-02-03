@@ -57,7 +57,7 @@ public:
 
 	virtual ~DynLib();
 
-	bool IsOK();
+	Bool IsOK();
 
 	Status Load(const Char *szPath);
 

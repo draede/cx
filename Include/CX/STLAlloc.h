@@ -150,21 +150,21 @@ public:
 };
 
 template <class T1, class T2>
-bool operator==(const STLAlloc<T1 >&p1, const STLAlloc<T2> &p2)
+Bool operator==(const STLAlloc<T1 >&p1, const STLAlloc<T2> &p2)
 {
 	p1;
 	p2;
 
-	return true;
+	return True;
 }
 
 template <class T1, class T2>
-bool operator!=(const STLAlloc<T1> &p1, const STLAlloc<T2> &p2)
+Bool operator!=(const STLAlloc<T1> &p1, const STLAlloc<T2> &p2)
 {
 	p1;
 	p2;
 
-	return false;
+	return False;
 }
 
 }//namespace CX

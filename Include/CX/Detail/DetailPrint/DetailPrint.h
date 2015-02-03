@@ -133,7 +133,7 @@ namespace Detail
 namespace DetailPrint
 {
 
-static inline bool StrCopy(CX_Char *szDst, CX_Size cDstLen, const CX_Char *szSrc,
+static inline Bool StrCopy(CX_Char *szDst, CX_Size cDstLen, const CX_Char *szSrc,
                            CX_Size *pcSrcLen)
 {
 	CX_Char        *pszDst;
@@ -220,7 +220,7 @@ static inline Size UInt64ToString(UInt64 nValue, Char *szDst, Size cPreCalcLen =
 	return cLen;
 }
 
-CX_API bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision);
+CX_API Bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision);
 
 }//namespace DetailPrint
 
@@ -261,7 +261,7 @@ static inline StatusCode ToString<Char>(Char p, Char *szOutput, Size cLen, Size 
 }
 
 template <>
-static inline StatusCode ToString<bool>(bool p, Char *szOutput, Size cLen, Size *pcFinalLen, 
+static inline StatusCode ToString<Bool>(Bool p, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
 	cPrecision;
@@ -272,7 +272,7 @@ static inline StatusCode ToString<bool>(bool p, Char *szOutput, Size cLen, Size 
 		{
 			return Status_TooSmall;
 		}
-		memcpy(szOutput, "true", 4);
+		memcpy(szOutput, "True", 4);
 		szOutput[4] = 0;
 		*pcFinalLen = 4;
 
@@ -284,7 +284,7 @@ static inline StatusCode ToString<bool>(bool p, Char *szOutput, Size cLen, Size 
 		{
 			return Status_TooSmall;
 		}
-		memcpy(szOutput, "false", 5);
+		memcpy(szOutput, "False", 5);
 		szOutput[5]	= 0;
 		*pcFinalLen = 5;
 

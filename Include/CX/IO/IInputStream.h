@@ -54,9 +54,9 @@ public:
 
 	virtual Status GetSize(UInt64 *pcbSize) const = 0;
 
-	virtual bool IsEOF() const = 0;
+	virtual Bool IsEOF() const = 0;
 
-	virtual bool IsOK() const = 0;
+	virtual Bool IsOK() const = 0;
 
 	virtual const Char *GetPath() const = 0;
 

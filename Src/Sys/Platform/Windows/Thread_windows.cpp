@@ -70,7 +70,7 @@ Status Thread::Wait()
 	                   GetLastError());
 }
 
-bool Thread::IsRunning()
+Bool Thread::IsRunning()
 {
 	return (NULL != m_hThread);
 }

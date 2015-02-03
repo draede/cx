@@ -43,7 +43,7 @@ typedef std::basic_string<WChar, std::char_traits<WChar>, STLAlloc<WChar> >     
 
 struct CaseInsensitiveOrderPolicy
 {
-	bool operator()(const String &s1, const String &s2) const
+	Bool operator()(const String &s1, const String &s2) const
 	{
 		return (0 > cx_stricmp(s1.c_str(), s2.c_str()));
 	}
@@ -51,7 +51,7 @@ struct CaseInsensitiveOrderPolicy
 
 struct CaseSensitiveOrderPolicy
 {
-	bool operator()(const String &s1, const String &s2) const
+	Bool operator()(const String &s1, const String &s2) const
 	{
 		return (0 > cx_strcmp(s1.c_str(), s2.c_str()));
 	}

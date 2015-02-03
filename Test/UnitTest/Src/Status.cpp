@@ -17,13 +17,13 @@ TEST_CASE("Status tests", "[CX::Status]")
 	{
 		Status status(Status_OperationFailed);
 
-		REQUIRE(false == status.IsOK());
+		REQUIRE(False == status.IsOK());
 	}
 	SECTION("IsNOK")
 	{
 		Status status(Status_OperationFailed);
 
-		REQUIRE(true == status.IsNOK());
+		REQUIRE(True == status.IsNOK());
 	}
 	SECTION("Set code only")
 	{

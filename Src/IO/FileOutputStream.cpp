@@ -94,7 +94,7 @@ Status FileOutputStream::GetSize(UInt64 *pcbSize) const
 	return Status();
 }
 
-bool FileOutputStream::IsOK() const
+Bool FileOutputStream::IsOK() const
 {
 	return (NULL != m_pFile);
 }

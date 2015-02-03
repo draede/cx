@@ -79,8 +79,8 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 	}
 	SECTION("7 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool> x(100, 123.456f, 1234.5678, 
-		          -123, "abc", String("xyz"), false);
+		Util::Container<int, float, double, long, const char *, String, Bool> x(100, 123.456f, 1234.5678, 
+		          -123, "abc", String("xyz"), False);
 
 		REQUIRE(7 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -89,12 +89,12 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 	}
 	SECTION("8 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char> x(100, 123.456f, 
-		          1234.5678, -123, "abc", String("xyz"), false, 'x');
+		Util::Container<int, float, double, long, const char *, String, Bool, char> x(100, 123.456f, 
+		          1234.5678, -123, "abc", String("xyz"), False, 'x');
 
 		REQUIRE(8 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -103,13 +103,13 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 	}
 	SECTION("9 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char, short> x(100, 123.456f, 
-		          1234.5678, -123, "abc", String("xyz"), false, 'x', 10);
+		Util::Container<int, float, double, long, const char *, String, Bool, char, short> x(100, 123.456f, 
+		          1234.5678, -123, "abc", String("xyz"), False, 'x', 10);
 
 		REQUIRE(9 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -118,14 +118,14 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 		REQUIRE(10 == x.m_p9);
 	}
 	SECTION("10 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char, short, unsigned char> 
-		          x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), false, 'x', 10, 5);
+		Util::Container<int, float, double, long, const char *, String, Bool, char, short, unsigned char> 
+		          x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), False, 'x', 10, 5);
 
 		REQUIRE(10 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -134,16 +134,16 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 		REQUIRE(10 == x.m_p9);
 		REQUIRE(5 == x.m_p10);
 	}
 	SECTION("11 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char, short, unsigned char, 
+		Util::Container<int, float, double, long, const char *, String, Bool, char, short, unsigned char, 
 		          Size> 
-		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), false, 'x', 10, 5, 1000);
+		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), False, 'x', 10, 5, 1000);
 
 		REQUIRE(11 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -152,7 +152,7 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 		REQUIRE(10 == x.m_p9);
 		REQUIRE(5 == x.m_p10);
@@ -160,9 +160,9 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 	}
 	SECTION("12 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char, short, unsigned char, 
+		Util::Container<int, float, double, long, const char *, String, Bool, char, short, unsigned char, 
 		          Size, unsigned> 
-		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), false, 'x', 10, 5, 1000, 
+		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), False, 'x', 10, 5, 1000, 
 		               50);
 
 		REQUIRE(12 == x.GetCount());
@@ -172,7 +172,7 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 		REQUIRE(10 == x.m_p9);
 		REQUIRE(5 == x.m_p10);
@@ -181,10 +181,10 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 	}
 	SECTION("13 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char, short, unsigned char, 
-		          Size, unsigned, bool> 
-		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), false, 'x', 10, 5, 1000, 
-		               50, true);
+		Util::Container<int, float, double, long, const char *, String, Bool, char, short, unsigned char, 
+		          Size, unsigned, Bool> 
+		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), False, 'x', 10, 5, 1000, 
+		               50, True);
 
 		REQUIRE(13 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -193,20 +193,20 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 		REQUIRE(10 == x.m_p9);
 		REQUIRE(5 == x.m_p10);
 		REQUIRE(1000 == x.m_p11);
 		REQUIRE(50 == x.m_p12);
-		REQUIRE(true == x.m_p13);
+		REQUIRE(True == x.m_p13);
 	}
 	SECTION("14 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char, short, unsigned char, 
-		          Size, unsigned, bool, String> 
-		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), false, 'x', 10, 5, 1000, 
-		               50, true, "aaa");
+		Util::Container<int, float, double, long, const char *, String, Bool, char, short, unsigned char, 
+		          Size, unsigned, Bool, String> 
+		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), False, 'x', 10, 5, 1000, 
+		               50, True, "aaa");
 
 		REQUIRE(14 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -215,21 +215,21 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 		REQUIRE(10 == x.m_p9);
 		REQUIRE(5 == x.m_p10);
 		REQUIRE(1000 == x.m_p11);
 		REQUIRE(50 == x.m_p12);
-		REQUIRE(true == x.m_p13);
+		REQUIRE(True == x.m_p13);
 		REQUIRE(String("aaa") == x.m_p14);
 	}
 	SECTION("15 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char, short, unsigned char, 
-		          Size, unsigned, bool, String, int> 
-		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), false, 'x', 10, 5, 1000, 
-		               50, true, "aaa", 1);
+		Util::Container<int, float, double, long, const char *, String, Bool, char, short, unsigned char, 
+		          Size, unsigned, Bool, String, int> 
+		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), False, 'x', 10, 5, 1000, 
+		               50, True, "aaa", 1);
 
 		REQUIRE(15 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -238,22 +238,22 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 		REQUIRE(10 == x.m_p9);
 		REQUIRE(5 == x.m_p10);
 		REQUIRE(1000 == x.m_p11);
 		REQUIRE(50 == x.m_p12);
-		REQUIRE(true == x.m_p13);
+		REQUIRE(True == x.m_p13);
 		REQUIRE(String("aaa") == x.m_p14);
 		REQUIRE(1 == x.m_p15);
 	}
 	SECTION("16 args")
 	{
-		Util::Container<int, float, double, long, const char *, String, bool, char, short, unsigned char, 
-		          Size, unsigned, bool, String, int, float> 
-		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), false, 'x', 10, 5, 1000, 
-		               50, true, "aaa", 1, 1.2f);
+		Util::Container<int, float, double, long, const char *, String, Bool, char, short, unsigned char, 
+		          Size, unsigned, Bool, String, int, float> 
+		             x(100, 123.456f, 1234.5678, -123, "abc", String("xyz"), False, 'x', 10, 5, 1000, 
+		               50, True, "aaa", 1, 1.2f);
 
 		REQUIRE(16 == x.GetCount());
 		REQUIRE(100 == x.m_p1);
@@ -262,13 +262,13 @@ TEST_CASE("Container tests", "[CX::Util::Container]")
 		REQUIRE(-123 == x.m_p4);
 		REQUIRE(String("abc") == x.m_p5);
 		REQUIRE(String("xyz") == x.m_p6);
-		REQUIRE(false == x.m_p7);
+		REQUIRE(False == x.m_p7);
 		REQUIRE('x' == x.m_p8);
 		REQUIRE(10 == x.m_p9);
 		REQUIRE(5 == x.m_p10);
 		REQUIRE(1000 == x.m_p11);
 		REQUIRE(50 == x.m_p12);
-		REQUIRE(true == x.m_p13);
+		REQUIRE(True == x.m_p13);
 		REQUIRE(String("aaa") == x.m_p14);
 		REQUIRE(1 == x.m_p15);
 		REQUIRE(1.2f == x.m_p16);

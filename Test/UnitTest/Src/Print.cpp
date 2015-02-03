@@ -90,13 +90,13 @@ TEST_CASE("ToString tests", "[CX::ToString]")
 		REQUIRE(String("1234567") == ToString<unsigned long long>(1234567));
 	}
 
-	SECTION("bool - false")
+	SECTION("Bool - False")
 	{
-		REQUIRE(String("false") == ToString<bool>(false));
+		REQUIRE(String("False") == ToString<Bool>(False));
 	}
-	SECTION("bool - true")
+	SECTION("Bool - True")
 	{
-		REQUIRE(String("true") == ToString<bool>(true));
+		REQUIRE(String("True") == ToString<Bool>(True));
 	}
 
 	SECTION("float")

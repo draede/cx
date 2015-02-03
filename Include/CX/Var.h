@@ -67,7 +67,7 @@ public:
 
 	~Var();
 
-	Var(bool bBool);
+	Var(Bool bBool);
 
 	Var(Int64 nInt);
 
@@ -83,11 +83,11 @@ public:
 
 	Status Copy(const Var &var);
 
-	bool operator==(const Var &var) const;
+	Bool operator==(const Var &var) const;
 
-	bool operator!=(const Var &var) const;
+	Bool operator!=(const Var &var) const;
 
-	bool Equals(const Var &var, bool bIgnoreCase = true) const;
+	Bool Equals(const Var &var, Bool bIgnoreCase = True) const;
 
 	const Char *GetName() const;
 
@@ -97,29 +97,29 @@ public:
 
 	Status SetType(Type nType);
 
-	bool IsInvalid() const;
+	Bool IsInvalid() const;
 
-	bool IsValid() const;
+	Bool IsValid() const;
 
-	bool IsNull() const;
+	Bool IsNull() const;
 
-	bool IsBool() const;
+	Bool IsBool() const;
 
-	bool IsInt() const;
+	Bool IsInt() const;
 
-	bool IsReal() const;
+	Bool IsReal() const;
 
-	bool IsString() const;
+	Bool IsString() const;
 
-	bool IsObject() const;
+	Bool IsObject() const;
 
-	bool IsArray() const;
+	Bool IsArray() const;
 
 	Status SetNull();
 
-	Status SetBool(bool bBool);
+	Status SetBool(Bool bBool);
 
-	bool GetBool(bool bBoolDefault = DEFAULT_BOOL) const;
+	Bool GetBool(Bool bBoolDefault = DEFAULT_BOOL) const;
 
 	Status SetInt(Int64 nInt);
 
@@ -139,11 +139,11 @@ public:
 
 	Status SetArray();
 
-	bool IsObjectMember(const char *szName) const;
+	Bool IsObjectMember(const char *szName) const;
 
-	bool IsObjectMember(const String &sName) const;
+	Bool IsObjectMember(const String &sName) const;
 
-	bool IsArrayItem(Size cIndex) const;
+	Bool IsArrayItem(Size cIndex) const;
 
 	Size GetObjectMembersCount() const;
 
@@ -155,7 +155,7 @@ public:
 	{
 	public:
 
-		bool IsValid() const;
+		Bool IsValid() const;
 
 		Status Reset();
 
@@ -180,7 +180,7 @@ public:
 	{
 	public:
 
-		bool IsValid() const;
+		Bool IsValid() const;
 
 		Status Reset();
 
@@ -209,7 +209,7 @@ public:
 	{
 	public:
 
-		bool IsValid() const;
+		Bool IsValid() const;
 
 		Status Reset();
 
@@ -234,7 +234,7 @@ public:
 	{
 	public:
 
-		bool IsValid() const;
+		Bool IsValid() const;
 
 		Status Reset();
 
@@ -277,7 +277,7 @@ public:
 
 	Var &operator[](int cIndex);
 
-	Var &operator=(bool bBool);
+	Var &operator=(Bool bBool);
 
 	Var &operator=(Int64 nInt);
 
@@ -287,7 +287,7 @@ public:
 
 	Var &operator=(const String &sString);
 
-	operator bool () const;
+	operator Bool () const;
 
 	operator Int64 () const;
 
@@ -316,7 +316,7 @@ private:
 	typedef Vector<Var *>::Type                                    ArrayVar;
 	typedef Map<String, Var *, CaseInsensitiveOrderPolicy>::Type   ObjectVar;
 
-	static const bool         DEFAULT_BOOL = false;
+	static const Bool         DEFAULT_BOOL = False;
 	static const Int64        DEFAULT_INT  = 0;
 	static const Double       DEFAULT_REAL;
 	static const Char         *DEFAULT_STRING;
@@ -332,7 +332,7 @@ private:
 
 	union
 	{
-		bool        m_bBool;
+		Bool        m_bBool;
 		Int64       m_nInt;
 		Double      m_lfReal;
 		String      *m_psString;
@@ -342,9 +342,9 @@ private:
 
 	Var *m_pParent;
 
-	Var(bool a1, bool a2, bool a3, bool a4, bool a5);
+	Var(Bool a1, Bool a2, Bool a3, Bool a4, Bool a5);
 
-	Status Write(IO::IOutputStream *pOutputStream, Size cIndent, bool bLast);
+	Status Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast);
 
 	Status WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen);
 

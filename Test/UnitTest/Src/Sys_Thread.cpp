@@ -15,7 +15,7 @@ namespace Sys_Thread
 {
 
 typedef int            MyT1;
-typedef bool           MyT2;
+typedef Bool           MyT2;
 typedef Size           MyT3;
 typedef String         MyT4;
 typedef Float          MyT5;
@@ -31,7 +31,7 @@ typedef UInt64         MyT14;
 typedef char           MyT15;
 typedef const Char *   MyT16;
 
-bool   g_bRun = false;
+Bool   g_bRun = False;
 
 MyT1   g_p1   = 0;
 MyT2   g_p2   = 0;
@@ -53,25 +53,25 @@ MyT16  g_p16  = "";
 
 void fnr0()
 {
-	g_bRun = true;
+	g_bRun = True;
 }
 
 void fnr1(MyT1 p1)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 }
 
 void fnr2(MyT1 p1, MyT2 p2)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 }
 
 void fnr3(MyT1 p1, MyT2 p2, MyT3 p3)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -79,7 +79,7 @@ void fnr3(MyT1 p1, MyT2 p2, MyT3 p3)
 
 void fnr4(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -88,7 +88,7 @@ void fnr4(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4)
 
 void fnr5(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -98,7 +98,7 @@ void fnr5(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5)
 
 void fnr6(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -109,7 +109,7 @@ void fnr6(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6)
 
 void fnr7(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -121,7 +121,7 @@ void fnr7(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7)
 
 void fnr8(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -134,7 +134,7 @@ void fnr8(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8
 
 void fnr9(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -149,7 +149,7 @@ void fnr9(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8
 void fnr10(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -165,7 +165,7 @@ void fnr10(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p
 void fnr11(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -182,7 +182,7 @@ void fnr11(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p
 void fnr12(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -200,7 +200,7 @@ void fnr12(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p
 void fnr13(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -219,7 +219,7 @@ void fnr13(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p
 void fnr14(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -239,7 +239,7 @@ void fnr14(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p
 void fnr15(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14, MyT15 p15)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -260,7 +260,7 @@ void fnr15(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p
 void fnr16(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14, MyT15 p15, MyT16 p16)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -281,14 +281,14 @@ void fnr16(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p
 
 int fr0()
 {
-	g_bRun = true;
+	g_bRun = True;
 
 	return 123;
 }
 
 int fr1(int p1)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 
 	return 123;
@@ -296,7 +296,7 @@ int fr1(int p1)
 
 int fr2(MyT1 p1, MyT2 p2)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 
@@ -305,7 +305,7 @@ int fr2(MyT1 p1, MyT2 p2)
 
 int fr3(MyT1 p1, MyT2 p2, MyT3 p3)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -315,7 +315,7 @@ int fr3(MyT1 p1, MyT2 p2, MyT3 p3)
 
 int fr4(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -326,7 +326,7 @@ int fr4(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4)
 
 int fr5(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -338,7 +338,7 @@ int fr5(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5)
 
 int fr6(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -351,7 +351,7 @@ int fr6(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6)
 
 int fr7(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -365,7 +365,7 @@ int fr7(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7)
 
 int fr8(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -380,7 +380,7 @@ int fr8(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8)
 
 int fr9(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -397,7 +397,7 @@ int fr9(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, 
 int fr10(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -415,7 +415,7 @@ int fr10(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8,
 int fr11(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -434,7 +434,7 @@ int fr11(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8,
 int fr12(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -454,7 +454,7 @@ int fr12(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8,
 int fr13(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -475,7 +475,7 @@ int fr13(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8,
 int fr14(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -497,7 +497,7 @@ int fr14(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8,
 int fr15(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14, MyT15 p15)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -520,7 +520,7 @@ int fr15(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8,
 int fr16(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
            MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14, MyT15 p15, MyT16 p16)
 {
-	g_bRun = true;
+	g_bRun = True;
 	g_p1   = p1;
 	g_p2   = p2;
 	g_p3   = p3;
@@ -547,25 +547,25 @@ public:
 
 	void fnr0()
 	{
-		g_bRun = true;
+		g_bRun = True;
 	}
 
 	void fnr1(MyT1 p1)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 	}
 
 	void fnr2(MyT1 p1, MyT2 p2)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 	}
 
 	void fnr3(MyT1 p1, MyT2 p2, MyT3 p3)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -573,7 +573,7 @@ public:
 
 	void fnr4(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -582,7 +582,7 @@ public:
 
 	void fnr5(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -592,7 +592,7 @@ public:
 
 	void fnr6(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -603,7 +603,7 @@ public:
 
 	void fnr7(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -615,7 +615,7 @@ public:
 
 	void fnr8(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -628,7 +628,7 @@ public:
 
 	void fnr9(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -643,7 +643,7 @@ public:
 	void fnr10(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -659,7 +659,7 @@ public:
 	void fnr11(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -676,7 +676,7 @@ public:
 	void fnr12(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -694,7 +694,7 @@ public:
 	void fnr13(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -713,7 +713,7 @@ public:
 	void fnr14(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -733,7 +733,7 @@ public:
 	void fnr15(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14, MyT15 p15)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -754,7 +754,7 @@ public:
 	void fnr16(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14, MyT15 p15, MyT16 p16)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -775,14 +775,14 @@ public:
 
 	int fr0()
 	{
-		g_bRun = true;
+		g_bRun = True;
 
 		return 123;
 	}
 
 	int fr1(int p1)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 
 		return 123;
@@ -790,7 +790,7 @@ public:
 
 	int fr2(MyT1 p1, MyT2 p2)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 
@@ -799,7 +799,7 @@ public:
 
 	int fr3(MyT1 p1, MyT2 p2, MyT3 p3)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -809,7 +809,7 @@ public:
 
 	int fr4(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -820,7 +820,7 @@ public:
 
 	int fr5(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -832,7 +832,7 @@ public:
 
 	int fr6(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -845,7 +845,7 @@ public:
 
 	int fr7(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -859,7 +859,7 @@ public:
 
 	int fr8(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -874,7 +874,7 @@ public:
 
 	int fr9(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -891,7 +891,7 @@ public:
 	int fr10(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -909,7 +909,7 @@ public:
 	int fr11(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -928,7 +928,7 @@ public:
 	int fr12(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -948,7 +948,7 @@ public:
 	int fr13(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -969,7 +969,7 @@ public:
 	int fr14(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -991,7 +991,7 @@ public:
 	int fr15(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14, MyT15 p15)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -1014,7 +1014,7 @@ public:
 	int fr16(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8, MyT9 p9, 
 	           MyT10 p10, MyT11 p11, MyT12 p12, MyT13 p13, MyT14 p14, MyT15 p15, MyT16 p16)
 	{
-		g_bRun = true;
+		g_bRun = True;
 		g_p1   = p1;
 		g_p2   = p2;
 		g_p3   = p3;
@@ -1043,54 +1043,54 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
+		g_bRun = False;
 		thread.Run(&fnr0);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 	}
 	SECTION("1 arg no return")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
+		g_bRun = False;
 		thread.Run(&fnr1, 1);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
 	}
 	SECTION("2 args no return")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr2, 1, true);
+		g_bRun = False;
+		thread.Run(&fnr2, 1, True);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 	}
 	SECTION("3 args no return")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr3, 1, true, (MyT3)3);
+		g_bRun = False;
+		thread.Run(&fnr3, 1, True, (MyT3)3);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 	}
 	SECTION("4 args no return")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr4, 1, true, (MyT3)3, (MyT4)"4");
+		g_bRun = False;
+		thread.Run(&fnr4, 1, True, (MyT3)3, (MyT4)"4");
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 	}
@@ -1098,12 +1098,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr5, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5);
+		g_bRun = False;
+		thread.Run(&fnr5, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1112,12 +1112,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr6, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6);
+		g_bRun = False;
+		thread.Run(&fnr6, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1127,12 +1127,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr7, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7);
+		g_bRun = False;
+		thread.Run(&fnr7, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1143,12 +1143,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr8, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8);
+		g_bRun = False;
+		thread.Run(&fnr8, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1160,12 +1160,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr9, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9);
+		g_bRun = False;
+		thread.Run(&fnr9, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1178,13 +1178,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr10, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fnr10, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1198,13 +1198,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr11, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fnr11, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1219,13 +1219,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr12, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fnr12, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1241,13 +1241,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr13, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fnr13, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1264,13 +1264,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr14, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fnr14, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1288,13 +1288,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr15, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fnr15, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14, (MyT15)'x');
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1313,13 +1313,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fnr16, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fnr16, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14, (MyT15)'x', (MyT16)"16");
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1340,55 +1340,55 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
+		g_bRun = False;
 		thread.Run(&fr0);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 	}
 
 	SECTION("1 arg with return")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
+		g_bRun = False;
 		thread.Run(&fr1, 1);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
 	}
 	SECTION("2 args with return")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr2, 1, true);
+		g_bRun = False;
+		thread.Run(&fr2, 1, True);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 	}
 	SECTION("3 args with return")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr3, 1, true, (MyT3)3);
+		g_bRun = False;
+		thread.Run(&fr3, 1, True, (MyT3)3);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 	}
 	SECTION("4 args with return")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr4, 1, true, (MyT3)3, (MyT4)"4");
+		g_bRun = False;
+		thread.Run(&fr4, 1, True, (MyT3)3, (MyT4)"4");
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 	}
@@ -1396,12 +1396,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr5, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5);
+		g_bRun = False;
+		thread.Run(&fr5, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1410,12 +1410,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr6, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6);
+		g_bRun = False;
+		thread.Run(&fr6, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1425,12 +1425,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr7, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7);
+		g_bRun = False;
+		thread.Run(&fr7, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1441,12 +1441,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr8, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8);
+		g_bRun = False;
+		thread.Run(&fr8, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1458,12 +1458,12 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr9, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9);
+		g_bRun = False;
+		thread.Run(&fr9, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1476,13 +1476,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr10, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fr10, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1496,13 +1496,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr11, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fr11, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1517,13 +1517,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr12, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fr12, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1539,13 +1539,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr13, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fr13, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1562,13 +1562,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr14, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fr14, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1586,13 +1586,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr15, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fr15, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14, (MyT15)'x');
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1611,13 +1611,13 @@ TEST_CASE("Thread Function tests", "[CX::Sys::Thread : Function]")
 	{
 		Sys::Thread thread;
 
-		g_bRun = false;
-		thread.Run(&fr16, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&fr16, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14, (MyT15)'x', (MyT16)"16");
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1641,20 +1641,20 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
+		g_bRun = False;
 		thread.Run(&test, &Test::fnr0);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 	}
 	SECTION("1 arg no return")
 	{
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
+		g_bRun = False;
 		thread.Run(&test, &Test::fnr1, 1);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
 	}
 	SECTION("2 args no return")
@@ -1662,24 +1662,24 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr2, 1, true);
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr2, 1, True);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 	}
 	SECTION("3 args no return")
 	{
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr3, 1, true, (MyT3)3);
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr3, 1, True, (MyT3)3);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 	}
 	SECTION("4 args no return")
@@ -1687,12 +1687,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr4, 1, true, (MyT3)3, (MyT4)"4");
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr4, 1, True, (MyT3)3, (MyT4)"4");
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 	}
@@ -1701,12 +1701,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr5, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5);
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr5, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1716,12 +1716,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr6, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6);
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr6, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1732,12 +1732,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr7, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7);
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr7, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1749,12 +1749,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr8, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8);
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr8, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1767,12 +1767,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr9, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9);
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr9, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1786,13 +1786,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr10, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr10, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1807,13 +1807,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr11, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr11, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1829,13 +1829,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr12, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr12, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1852,13 +1852,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr13, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr13, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1876,13 +1876,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr14, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr14, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1901,13 +1901,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr15, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr15, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14, (MyT15)'x');
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1927,13 +1927,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fnr16, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fnr16, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14, (MyT15)'x', (MyT16)"16");
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -1955,10 +1955,10 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
+		g_bRun = False;
 		thread.Run(&test, &Test::fr0);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 	}
 
 	SECTION("1 arg with return")
@@ -1966,10 +1966,10 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
+		g_bRun = False;
 		thread.Run(&test, &Test::fr1, 1);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
 	}
 	SECTION("2 args with return")
@@ -1977,24 +1977,24 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr2, 1, true);
+		g_bRun = False;
+		thread.Run(&test, &Test::fr2, 1, True);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 	}
 	SECTION("3 args with return")
 	{
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr3, 1, true, (MyT3)3);
+		g_bRun = False;
+		thread.Run(&test, &Test::fr3, 1, True, (MyT3)3);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 	}
 	SECTION("4 args with return")
@@ -2002,12 +2002,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr4, 1, true, (MyT3)3, (MyT4)"4");
+		g_bRun = False;
+		thread.Run(&test, &Test::fr4, 1, True, (MyT3)3, (MyT4)"4");
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 	}
@@ -2016,12 +2016,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr5, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5);
+		g_bRun = False;
+		thread.Run(&test, &Test::fr5, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2031,12 +2031,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr6, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6);
+		g_bRun = False;
+		thread.Run(&test, &Test::fr6, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2047,12 +2047,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr7, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7);
+		g_bRun = False;
+		thread.Run(&test, &Test::fr7, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2064,12 +2064,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr8, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8);
+		g_bRun = False;
+		thread.Run(&test, &Test::fr8, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2082,12 +2082,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr9, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9);
+		g_bRun = False;
+		thread.Run(&test, &Test::fr9, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2101,13 +2101,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr10, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fr10, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2122,13 +2122,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr11, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fr11, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2144,13 +2144,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr12, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fr12, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2167,13 +2167,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr13, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fr13, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2191,13 +2191,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr14, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fr14, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14);
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2216,13 +2216,13 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Sys::Thread thread;
 		Test test;
 
-		g_bRun = false;
-		thread.Run(&test, &Test::fr15, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		g_bRun = False;
+		thread.Run(&test, &Test::fr15, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14, (MyT15)'x');
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);
@@ -2243,12 +2243,12 @@ TEST_CASE("Thread MemberFunction tests", "[CX::Sys::Thread : MemberFunction]")
 		Test test;
 
 		g_bRun = false;
-		thread.Run(&test, &Test::fr16, 1, true, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
+		thread.Run(&test, &Test::fr16, 1, True, (MyT3)3, (MyT4)"4", (MyT5)5, (MyT6)6, (MyT7)7, (MyT8)8, (MyT9)9, 
 		           (MyT10)10, (MyT11)11, (MyT12)12, (MyT13)13, (MyT14)14, (MyT15)'x', (MyT16)"16");
 		thread.Wait();
-		REQUIRE(true == g_bRun);
+		REQUIRE(True == g_bRun);
 		REQUIRE(1 == g_p1);
-		REQUIRE(true == g_p2);
+		REQUIRE(True == g_p2);
 		REQUIRE(3 == g_p3);
 		REQUIRE(String("4") == g_p4);
 		REQUIRE(5 == g_p5);

@@ -35,6 +35,12 @@
 namespace CX
 {
 
+// bool
+typedef CX_Bool                Bool;
+
+static const Bool False = CX_False;
+static const Bool True  = CX_True;
+
 // signed 1 byte int type
 typedef CX_Int8                Int8;
 

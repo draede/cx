@@ -62,7 +62,7 @@ public:
 
 	Status Wait();
 
-	bool IsRunning();
+	Bool IsRunning();
 
 	TID GetID();
 

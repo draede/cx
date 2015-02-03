@@ -42,7 +42,24 @@ extern "C" {
 
 #include <wchar.h>
 #include <stddef.h>
+
+// EXAMPLE for DRIVERS
+/*
+#define CX_CUSTOM_BOOL_TYPE    unsigned char
+#define CX_CUSTOM_BOOL_FALSE   FALSE
+#define CX_CUSTOM_BOOL_TRUE    TRUE
+*/
+
+#ifdef CX_CUSTOM_BOOL_TYPE
+typedef CX_CUSTOM_BOOL_TYPE     CX_Bool;
+static const CX_Bool            CX_False = CX_CUSTOM_BOOL_FALSE;
+static const CX_Bool            CX_True  = CX_CUSTOM_BOOL_FALSE;
+#else
 #include <stdbool.h>
+typedef bool CX_Bool;
+static const CX_Bool            CX_False = false;
+static const CX_Bool            CX_True  = true;
+#endif
 
 
 // signed 1 byte int type

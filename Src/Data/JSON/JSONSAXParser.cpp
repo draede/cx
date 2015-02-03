@@ -39,206 +39,207 @@ struct CX_Data_JSON_SAX_Handler
 
 	ObserversVector *m_pVectorObservers;
 
-	bool Null()
+	CX::Bool Null()
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnNullValue))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool Bool(bool b)
+	CX::Bool Bool(CX::Bool b)
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnBoolValue, b))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool Int(int i)
+	CX::Bool Int(int i)
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnIntValue, (CX::Int64)i))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool Uint(unsigned i)
+	CX::Bool Uint(unsigned i)
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnIntValue, (CX::Int64)i))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool Int64(int64_t i)
+	CX::Bool Int64(int64_t i)
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnIntValue, (CX::Int64)i))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool Uint64(uint64_t i)
+	CX::Bool Uint64(uint64_t i)
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnIntValue, (CX::Int64)i))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool Double(double d)
+	CX::Bool Double(double d)
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnRealValue, d))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool String(const char *str, rapidjson::SizeType length, bool copy)
+	CX::Bool String(const char *str, rapidjson::SizeType length, CX::Bool copy)
 	{
 		copy;
 
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnStringValue, str, (CX::Size)length))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool StartObject()
+	CX::Bool StartObject()
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnBeginObject))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool Key(const char *str, rapidjson::SizeType length, bool copy)
+	CX::Bool Key(const char *str, rapidjson::SizeType length, CX::Bool copy)
 	{
 		copy;
 
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnKey, str, (CX::Size)length))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool EndObject(rapidjson::SizeType memberCount)
+	CX::Bool EndObject(rapidjson::SizeType memberCount)
 	{
 		memberCount;
 
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnEndObject))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool StartArray()
+	CX::Bool StartArray()
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnBeginArray))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool EndArray(rapidjson::SizeType elementCount)
+	CX::Bool EndArray(rapidjson::SizeType elementCount)
 	{
 		elementCount;
 
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnEndArray))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool StartDoc()
+	CX::Bool StartDoc()
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnBeginParse))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool EndDoc()
+	CX::Bool EndDoc()
 	{
 		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnEndParse))
 		{
-			return false;
+			return CX::False;
 		}
 
-		return true;
+		return CX::True;
 	}
 
-	bool Notify(bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)())
+	CX::Bool Notify(CX::Bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)())
 	{
 		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
 		     iter != m_pVectorObservers->end(); ++iter)
 		{
 			if (!((*iter)->*pfnHandler)())
 			{
-				return false;
+				return CX::False;
 			}
 		}
 
-		return true;
+		return CX::True;
 	}
 
 	template <typename T1>
-	bool Notify(bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)(T1), T1 p1)
+	CX::Bool Notify(CX::Bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)(T1), T1 p1)
 	{
 		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
 		     iter != m_pVectorObservers->end(); ++iter)
 		{
 			if (!((*iter)->*pfnHandler)(p1))
 			{
-				return false;
+				return CX::False;
 			}
 		}
 
-		return true;
+		return CX::True;
 	}
 
 	template <typename T1, typename T2>
-	bool Notify(bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)(T1, T2), T1 p1, T2 p2)
+	CX::Bool Notify(CX::Bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)(T1, T2), T1 p1, 
+	                T2 p2)
 	{
 		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
 		     iter != m_pVectorObservers->end(); ++iter)
 		{
 			if (!((*iter)->*pfnHandler)(p1, p2))
 			{
-				return false;
+				return CX::False;
 			}
 		}
 
-		return true;
+		return CX::True;
 	}
 
 };

@@ -57,7 +57,7 @@ DynLib::~DynLib()
 	Unload();
 }
 
-bool DynLib::IsOK()
+Bool DynLib::IsOK()
 {
 	Status::Clear();
 

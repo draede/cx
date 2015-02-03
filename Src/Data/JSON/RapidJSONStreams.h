@@ -82,19 +82,19 @@ struct RapidJSONBufferInputStream
 
 	char *PutBegin() 
 	{ 
-		RAPIDJSON_ASSERT(false); 
+		RAPIDJSON_ASSERT(False); 
 		
 		return 0; 
 	}
 
 	void Put(char) 
 	{ 
-		RAPIDJSON_ASSERT(false); 
+		RAPIDJSON_ASSERT(False); 
 	}
 
 	size_t PutEnd(char*) 
 	{ 
-		RAPIDJSON_ASSERT(false); 
+		RAPIDJSON_ASSERT(False); 
 		
 		return 0; 
 	}
@@ -137,19 +137,19 @@ struct RapidJSONStringInputStream
 
 	char *PutBegin() 
 	{ 
-		RAPIDJSON_ASSERT(false); 
+		RAPIDJSON_ASSERT(False); 
 		
 		return 0; 
 	}
 
 	void Put(char) 
 	{ 
-		RAPIDJSON_ASSERT(false); 
+		RAPIDJSON_ASSERT(False); 
 	}
 
 	size_t PutEnd(char*) 
 	{ 
-		RAPIDJSON_ASSERT(false); 
+		RAPIDJSON_ASSERT(False); 
 		
 		return 0; 
 	}
@@ -204,19 +204,19 @@ struct RapidJSONInputStream
 
 	char *PutBegin()
 	{
-		RAPIDJSON_ASSERT(false);
+		RAPIDJSON_ASSERT(False);
 
 		return 0;
 	}
 
 	void Put(char)
 	{
-		RAPIDJSON_ASSERT(false);
+		RAPIDJSON_ASSERT(False);
 	}
 
 	size_t PutEnd(char*)
 	{
-		RAPIDJSON_ASSERT(false);
+		RAPIDJSON_ASSERT(False);
 
 		return 0;
 	}

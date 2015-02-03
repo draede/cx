@@ -48,29 +48,29 @@ public:
 
 	virtual ~IJSONSAXParserObserver() { }
 
-	virtual bool OnBeginParse() = 0;
+	virtual Bool OnBeginParse() = 0;
 
-	virtual bool OnEndParse() = 0;
+	virtual Bool OnEndParse() = 0;
 
-	virtual bool OnBeginObject() = 0;
+	virtual Bool OnBeginObject() = 0;
 
-	virtual bool OnEndObject() = 0;
+	virtual Bool OnEndObject() = 0;
 
-	virtual bool OnBeginArray() = 0;
+	virtual Bool OnBeginArray() = 0;
 
-	virtual bool OnEndArray() = 0;
+	virtual Bool OnEndArray() = 0;
 
-	virtual bool OnKey(const Char *pBuffer, Size cLen) = 0;
+	virtual Bool OnKey(const Char *pBuffer, Size cLen) = 0;
 
-	virtual bool OnNullValue() = 0;
+	virtual Bool OnNullValue() = 0;
 
-	virtual bool OnBoolValue(bool bBool) = 0;
+	virtual Bool OnBoolValue(Bool bBool) = 0;
 
-	virtual bool OnIntValue(Int64 nInt) = 0;
+	virtual Bool OnIntValue(Int64 nInt) = 0;
 
-	virtual bool OnRealValue(Double lfReal) = 0;
+	virtual Bool OnRealValue(Double lfReal) = 0;
 
-	virtual bool OnStringValue(const Char *pBuffer, Size cLen) = 0;
+	virtual Bool OnStringValue(const Char *pBuffer, Size cLen) = 0;
 
 };
 

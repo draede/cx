@@ -42,30 +42,30 @@ class VarJSONSAXParserObserver : public Data::JSON::IJSONSAXParserObserver
 {
 public:
 
-	bool     m_bInit;
+	Bool     m_bInit;
 	Var      *m_pRoot;
 	Var      *m_pCurrent;
 	String   m_sKey;
 
-	virtual bool OnBeginParse()
+	virtual Bool OnBeginParse()
 	{
-		return true;
+		return True;
 	}
 
-	virtual bool OnEndParse()
+	virtual Bool OnEndParse()
 	{
-		return true;
+		return True;
 	}
 
-	virtual bool OnBeginObject()
+	virtual Bool OnBeginObject()
 	{
 		if (m_bInit)
 		{
 			if (m_pCurrent->SetObject().IsNOK())
 			{
-				return false;
+				return False;
 			}
-			m_bInit = false;
+			m_bInit = False;
 		}
 		else
 		{
@@ -73,7 +73,7 @@ public:
 
 			if (NULL == pVar)
 			{
-				return false;
+				return False;
 			}
 			if (m_pCurrent->IsObject())
 			{
@@ -90,25 +90,25 @@ public:
 			}
 		}
 
-		return true;
+		return True;
 	}
 
-	virtual bool OnEndObject()
+	virtual Bool OnEndObject()
 	{
 		m_pCurrent = m_pCurrent->GetParent();
 
-		return true;
+		return True;
 	}
 
-	virtual bool OnBeginArray()
+	virtual Bool OnBeginArray()
 	{
 		if (m_bInit)
 		{
 			if (m_pCurrent->SetArray().IsNOK())
 			{
-				return false;
+				return False;
 			}
-			m_bInit = false;
+			m_bInit = False;
 		}
 		else
 		{
@@ -116,7 +116,7 @@ public:
 
 			if (NULL == pVar)
 			{
-				return false;
+				return False;
 			}
 			if (m_pCurrent->IsObject())
 			{
@@ -133,24 +133,24 @@ public:
 			}
 		}
 
-		return true;
+		return True;
 	}
 
-	virtual bool OnEndArray()
+	virtual Bool OnEndArray()
 	{
 		m_pCurrent = m_pCurrent->GetParent();
 
-		return true;
+		return True;
 	}
 
-	virtual bool OnKey(const Char *pBuffer, Size cLen)
+	virtual Bool OnKey(const Char *pBuffer, Size cLen)
 	{
 		m_sKey.assign(pBuffer, cLen);
 
-		return true;
+		return True;
 	}
 
-	virtual bool OnNullValue()
+	virtual Bool OnNullValue()
 	{
 		if (m_pCurrent->IsObject())
 		{
@@ -161,10 +161,10 @@ public:
 			(*m_pCurrent)[-1].SetNull();
 		}
 		
-		return true;
+		return True;
 	}
 
-	virtual bool OnBoolValue(bool bBool)
+	virtual Bool OnBoolValue(Bool bBool)
 	{
 		if (m_pCurrent->IsObject())
 		{
@@ -175,10 +175,10 @@ public:
 			(*m_pCurrent)[-1].SetBool(bBool);
 		}
 
-		return true;
+		return True;
 	}
 
-	virtual bool OnIntValue(Int64 nInt)
+	virtual Bool OnIntValue(Int64 nInt)
 	{
 		if (m_pCurrent->IsObject())
 		{
@@ -189,10 +189,10 @@ public:
 			(*m_pCurrent)[-1].SetInt(nInt);
 		}
 
-		return true;
+		return True;
 	}
 
-	virtual bool OnRealValue(Double lfReal)
+	virtual Bool OnRealValue(Double lfReal)
 	{
 		if (m_pCurrent->IsObject())
 		{
@@ -203,10 +203,10 @@ public:
 			(*m_pCurrent)[-1].SetReal(lfReal);
 		}
 
-		return true;
+		return True;
 	}
 
-	virtual bool OnStringValue(const Char *pBuffer, Size cLen)
+	virtual Bool OnStringValue(const Char *pBuffer, Size cLen)
 	{
 		if (m_pCurrent->IsObject())
 		{
@@ -217,16 +217,16 @@ public:
 			(*m_pCurrent)[-1].SetString(String(pBuffer, cLen));
 		}
 
-		return true;
+		return True;
 	}
 
 };
 
-Var            Var::INVALID_VAR(true, true, true, true, true);
+Var            Var::INVALID_VAR(True, True, True, True, True);
 const Double   Var::DEFAULT_REAL    = 0.0;
 const Char     *Var::DEFAULT_STRING = "";
 
-Var::Var(bool a1, bool a2, bool a3, bool a4, bool a5)
+Var::Var(Bool a1, Bool a2, Bool a3, Bool a4, Bool a5)
 {
 	a1; a2; a3; a4; a5;
 	m_nType = Type_Invalid;
@@ -239,7 +239,7 @@ Var::Var(Type nType/* = Type_Null*/)
 	SetType(nType);
 }
 
-Var::Var(bool bBool)
+Var::Var(Bool bBool)
 {
 	m_pParent = NULL;
 	m_nType   = Type_Null;
@@ -376,29 +376,29 @@ Status Var::Copy(const Var &var)
 	return Status(Status_NotSupported, "Not supported");
 }
 
-bool Var::operator==(const Var &var) const
+Bool Var::operator==(const Var &var) const
 {
 	return Equals(var);
 }
 
-bool Var::operator!=(const Var &var) const
+Bool Var::operator!=(const Var &var) const
 {
 	return !Equals(var);
 }
 
-bool Var::Equals(const Var &var, bool bIgnoreCase/* = true*/) const
+Bool Var::Equals(const Var &var, Bool bIgnoreCase/* = True*/) const
 {
 	if (var.GetType() != GetType())
 	{
-		return false;
+		return False;
 	}
 	if (0 != cx_stricmp(var.GetName(), GetName()))
 	{
-		return false;
+		return False;
 	}
 	if (IsInvalid() || IsNull())
 	{
-		return true;
+		return True;
 	}
 	if (IsBool())
 	{
@@ -431,42 +431,42 @@ bool Var::Equals(const Var &var, bool bIgnoreCase/* = true*/) const
 	{
 		if (m_pObject->size() != var.m_pObject->size())
 		{
-			return false;
+			return False;
 		}
 		for (ObjectVar::iterator iter = m_pObject->begin(); iter != m_pObject->end(); ++iter)
 		{
 			if (!var.IsObjectMember(iter->first))
 			{
-				return false;
+				return False;
 			}
 			if (!iter->second->Equals(var.GetObjectMember(iter->first)))
 			{
-				return false;
+				return False;
 			}
 		}
 
-		return true;
+		return True;
 	}
 	else
 	if (IsArray())
 	{
 		if (m_pArray->size() != var.m_pArray->size())
 		{
-			return false;
+			return False;
 		}
 		for (Size i = 0; i < m_pArray->size(); i++)
 		{
 			if (!(*m_pArray)[i]->Equals(*(*var.m_pArray)[i]))
 			{
-				return false;
+				return False;
 			}
 		}
 
-		return true;
+		return True;
 	}
 	else
 	{
-		return false;
+		return False;
 	}
 }
 
@@ -564,47 +564,47 @@ Status Var::SetType(Type nType)
 	return Status();
 }
 
-bool Var::IsInvalid() const
+Bool Var::IsInvalid() const
 {
 	return (Type_Invalid == m_nType);
 }
 
-bool Var::IsValid() const
+Bool Var::IsValid() const
 {
 	return (Type_Invalid != m_nType);
 }
 
-bool Var::IsNull() const
+Bool Var::IsNull() const
 {
 	return (Type_Null == m_nType);
 }
 
-bool Var::IsBool() const
+Bool Var::IsBool() const
 {
 	return (Type_Bool == m_nType);
 }
 
-bool Var::IsInt() const
+Bool Var::IsInt() const
 {
 	return (Type_Int == m_nType);
 }
 
-bool Var::IsReal() const
+Bool Var::IsReal() const
 {
 	return (Type_Real == m_nType);
 }
 
-bool Var::IsString() const
+Bool Var::IsString() const
 {
 	return (Type_String == m_nType);
 }
 
-bool Var::IsObject() const
+Bool Var::IsObject() const
 {
 	return (Type_Object == m_nType);
 }
 
-bool Var::IsArray() const
+Bool Var::IsArray() const
 {
 	return (Type_Array == m_nType);
 }
@@ -619,7 +619,7 @@ Status Var::SetNull()
 	return SetType(Type_Null);
 }
 
-Status Var::SetBool(bool bBool)
+Status Var::SetBool(Bool bBool)
 {
 	Status status;
 
@@ -637,7 +637,7 @@ Status Var::SetBool(bool bBool)
 	return Status();
 }
 
-bool Var::GetBool(bool bBoolDefault/* = DEFAULT_BOOL*/) const
+Bool Var::GetBool(Bool bBoolDefault/* = DEFAULT_BOOL*/) const
 {
 	if (IsInvalid())
 	{
@@ -785,28 +785,28 @@ Status Var::SetArray()
 	return SetType(Type_Array);
 }
 
-bool Var::IsObjectMember(const char *szName) const
+Bool Var::IsObjectMember(const char *szName) const
 {
 	if (!IsObject())
 	{
 		Status(Status_InvalidCall, "Var is not an object");
 
-		return false;
+		return False;
 	}
 
 	return (m_pObject->end() != m_pObject->find(szName));
 }
 
-bool Var::IsObjectMember(const String &sName) const
+Bool Var::IsObjectMember(const String &sName) const
 {
 	return IsObjectMember(sName.c_str());
 }
 
-bool Var::IsArrayItem(Size cIndex) const
+Bool Var::IsArrayItem(Size cIndex) const
 {
 	if (!IsArray())
 	{
-		return false;
+		return False;
 	}
 
 	return (m_pObject->size() > cIndex);
@@ -994,7 +994,7 @@ Var &Var::operator[](int cIndex)
 	return GetArrayItem(cIndex);
 }
 
-Var &Var::operator=(bool bBool)
+Var &Var::operator=(Bool bBool)
 {
 	SetBool(bBool);
 
@@ -1029,7 +1029,7 @@ Var &Var::operator=(const String &sString)
 	return *this;
 }
 
-Var::operator bool() const
+Var::operator Bool() const
 {
 	return GetBool();
 }
@@ -1057,11 +1057,11 @@ Var::ObjectIterator::ObjectIterator(ObjectVar *pVar)
 	m_iter = m_pVar->begin();
 }
 
-bool Var::ObjectIterator::IsValid() const
+Bool Var::ObjectIterator::IsValid() const
 {
 	if (NULL == m_pVar)
 	{
-		return false;
+		return False;
 	}
 
 	return (m_pVar->end() != m_iter);
@@ -1118,11 +1118,11 @@ Var::ObjectConstIterator::ObjectConstIterator(const ObjectVar *pVar)
 	m_iter = m_pVar->begin();
 }
 
-bool Var::ObjectConstIterator::IsValid() const
+Bool Var::ObjectConstIterator::IsValid() const
 {
 	if (NULL == m_pVar)
 	{
-		return false;
+		return False;
 	}
 
 	return (m_pVar->end() != m_iter);
@@ -1179,11 +1179,11 @@ Var::ArrayIterator::ArrayIterator(ArrayVar *pVar)
 	m_iter = m_pVar->begin();
 }
 
-bool Var::ArrayIterator::IsValid() const
+Bool Var::ArrayIterator::IsValid() const
 {
 	if (NULL == m_pVar)
 	{
-		return false;
+		return False;
 	}
 
 	return (m_pVar->end() != m_iter);
@@ -1240,11 +1240,11 @@ Var::ArrayConstIterator::ArrayConstIterator(const ArrayVar *pVar)
 	m_iter = m_pVar->begin();
 }
 
-bool Var::ArrayConstIterator::IsValid() const
+Bool Var::ArrayConstIterator::IsValid() const
 {
 	if (NULL == m_pVar)
 	{
-		return false;
+		return False;
 	}
 
 	return (m_pVar->end() != m_iter);
@@ -1301,7 +1301,7 @@ Status Var::Read(IO::IInputStream *pInputStream)
 	Data::JSON::JSONSAXParser  parser;
 
 	obs.m_pRoot = obs.m_pCurrent = this;
-	obs.m_bInit = true;
+	obs.m_bInit = True;
 	parser.AddObserver(&obs);
 
 	return parser.ParseStream(pInputStream);
@@ -1316,7 +1316,7 @@ Status Var::Read(const String &sStr)
 
 Status Var::Write(IO::IOutputStream *pOutputStream)
 {
-	return Write(pOutputStream, 0, true);
+	return Write(pOutputStream, 0, True);
 }
 
 Status Var::Write(String &sStr)
@@ -1326,7 +1326,7 @@ Status Var::Write(String &sStr)
 	return Write(&mos);
 }
 
-Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, bool bLast)
+Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 {
 	Size   cbSize;
 	Size   cbAckSize;

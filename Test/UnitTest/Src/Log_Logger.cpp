@@ -47,11 +47,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[ERR] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test");
+		CXERRIF(True, "mytag", "test");
 		REQUIRE(String("[ERR] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test");
+		CXERRIF(False, "mytag", "test");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
@@ -59,11 +59,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[WRN] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test");
+		CXWARNIF(True, "mytag", "test");
 		REQUIRE(String("[WRN] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test");
+		CXWARNIF(False, "mytag", "test");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -72,11 +72,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[INF] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test");
+		CXINFOIF(True, "mytag", "test");
 		REQUIRE(String("[INF] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test");
+		CXINFOIF(False, "mytag", "test");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -85,11 +85,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[DBG] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test");
+		CXDBGIF(True, "mytag", "test");
 		REQUIRE(String("[DBG] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test");
+		CXDBGIF(False, "mytag", "test");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -98,11 +98,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[VRB] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test");
+		CXVERBIF(True, "mytag", "test");
 		REQUIRE(String("[VRB] [    mytag   ]  : test\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test");
+		CXVERBIF(False, "mytag", "test");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
@@ -112,7 +112,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test");
+		CXINFOIF(True, "mytag", "test");
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -131,11 +131,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[ERR] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1}", 123);
+		CXERRIF(True, "mytag", "test {1}", 123);
 		REQUIRE(String("[ERR] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1}", 123);
+		CXERRIF(False, "mytag", "test {1}", 123);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
@@ -143,11 +143,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[WRN] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1}", 123);
+		CXWARNIF(True, "mytag", "test {1}", 123);
 		REQUIRE(String("[WRN] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1}", 123);
+		CXWARNIF(False, "mytag", "test {1}", 123);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -156,11 +156,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[INF] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1}", 123);
+		CXINFOIF(True, "mytag", "test {1}", 123);
 		REQUIRE(String("[INF] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1}", 123);
+		CXINFOIF(False, "mytag", "test {1}", 123);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -169,11 +169,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[DBG] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1}", 123);
+		CXDBGIF(True, "mytag", "test {1}", 123);
 		REQUIRE(String("[DBG] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1}", 123);
+		CXDBGIF(False, "mytag", "test {1}", 123);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -182,11 +182,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[VRB] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1}", 123);
+		CXVERBIF(True, "mytag", "test {1}", 123);
 		REQUIRE(String("[VRB] [    mytag   ]  : test 123\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1}", 123);
+		CXVERBIF(False, "mytag", "test {1}", 123);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
@@ -196,7 +196,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1}", 123);
+		CXINFOIF(True, "mytag", "test {1}", 123);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -215,11 +215,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2}", 123, 'x');
+		CXERRIF(True, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2}", 123, 'x');
+		CXERRIF(False, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
@@ -227,11 +227,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2}", 123, 'x');
+		CXWARNIF(True, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2}", 123, 'x');
+		CXWARNIF(False, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -240,11 +240,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[INF] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2}", 123, 'x');
+		CXINFOIF(True, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("[INF] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2}", 123, 'x');
+		CXINFOIF(False, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -253,11 +253,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2}", 123, 'x');
+		CXDBGIF(True, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2}", 123, 'x');
+		CXDBGIF(False, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
@@ -266,11 +266,11 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2}", 123, 'x');
+		CXVERBIF(True, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2}", 123, 'x');
+		CXVERBIF(False, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
@@ -280,7 +280,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2}", 123, 'x');
+		CXINFOIF(True, "mytag", "test {1} {2}", 123, 'x');
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -295,76 +295,76 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 		pOutput->m_sOutput.clear();
-		CXERR("mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
+		CXERR("mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
+		CXERRIF(True, "mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3}", 123, 'x', false);
+		CXERRIF(False, "mytag", "test {1} {2} {3}", 123, 'x', False);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARN("mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
+		CXWARN("mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
+		CXWARNIF(True, "mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("") == pOutput->m_sOutput);
-
-
-		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
-
-		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
-
-		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3}", 123, 'x', false);
+		CXWARNIF(False, "mytag", "test {1} {2} {3}", 123, 'x', False);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXDBG("mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
+		CXINFO("mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
+		CXINFOIF(True, "mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3}", 123, 'x', false);
+		CXINFOIF(False, "mytag", "test {1} {2} {3}", 123, 'x', False);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXVERB("mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
+		CXDBG("mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3}", 123, 'x', false);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false\n") == pOutput->m_sOutput);
+		CXDBGIF(True, "mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3}", 123, 'x', false);
+		CXDBGIF(False, "mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("") == pOutput->m_sOutput);
+
+
+		pOutput->m_sOutput.clear();
+		CXVERB("mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
+
+		pOutput->m_sOutput.clear();
+		CXVERBIF(True, "mytag", "test {1} {2} {3}", 123, 'x', False);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False\n") == pOutput->m_sOutput);
+
+		pOutput->m_sOutput.clear();
+		CXVERBIF(False, "mytag", "test {1} {2} {3}", 123, 'x', False);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3}", 123, 'x', false);
+		CXINFO("mytag", "test {1} {2} {3}", 123, 'x', False);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3}", 123, 'x', false);
+		CXINFOIF(True, "mytag", "test {1} {2} {3}", 123, 'x', False);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -379,76 +379,76 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 		pOutput->m_sOutput.clear();
-		CXERR("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
+		CXERR("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
+		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("") == pOutput->m_sOutput);
-
-
-		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
-
-		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
-
-		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
+		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456\n") == pOutput->m_sOutput);
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("") == pOutput->m_sOutput);
+
+
+		pOutput->m_sOutput.clear();
+		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
+
+		pOutput->m_sOutput.clear();
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456\n") == pOutput->m_sOutput);
+
+		pOutput->m_sOutput.clear();
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', false, 123.456);
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3}", 123, 'x', False, 123.456);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -463,76 +463,76 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 		pOutput->m_sOutput.clear();
-		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
+		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
+		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("") == pOutput->m_sOutput);
-
-
-		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
-
-		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
-
-		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
+		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc\n") == pOutput->m_sOutput);
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("") == pOutput->m_sOutput);
+
+
+		pOutput->m_sOutput.clear();
+		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
+
+		pOutput->m_sOutput.clear();
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc\n") == pOutput->m_sOutput);
+
+		pOutput->m_sOutput.clear();
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', false, 123.456, "abc");
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5}", 123, 'x', False, 123.456, "abc");
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -547,102 +547,102 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 		pOutput->m_sOutput.clear();
-		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, "abc", 
+		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, "abc", 
 		      (Size)100);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, "abc", 
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, "abc", 
 		        (Size)100);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		        "abc", (Size)100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, "abc", 
+		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, "abc", 
 		       (Size)100);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, "abc", 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, "abc", 
 		       (Size)100);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, "abc", 
+		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, "abc", 
 		      (Size)100);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		        "abc", (Size)100);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		        "abc", (Size)100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, "abc", 
+		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, "abc", 
 		       (Size)100);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100\n") == 
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100\n") == 
 		         pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, "abc", 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, "abc", 
 		       (Size)100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', false, 123.456, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
@@ -658,102 +658,102 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 		pOutput->m_sOutput.clear();
-		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, "abc", 
+		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, "abc", 
 		      (Size)100, -100);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		        "abc", (Size)100, -100);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		        "abc", (Size)100, -100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, "abc", 
+		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, "abc", 
 		       (Size)100, -100);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100, -100);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100, -100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, "abc", 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, "abc", 
 		       (Size)100, -100);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100, -100);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100, -100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, "abc", 
+		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, "abc", 
 		      (Size)100, -100);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		        "abc", (Size)100, -100);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		        "abc", (Size)100, -100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, "abc", 
+		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, "abc", 
 		       (Size)100, -100);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100, -100);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100\n") == 
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100\n") == 
 		         pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100, -100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, "abc", 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, "abc", 
 		       (Size)100, -100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', false, 123.456, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7}", 123, 'x', False, 123.456, 
 		         "abc", (Size)100, -100);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
@@ -769,102 +769,102 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 		pOutput->m_sOutput.clear();
-		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 123.456, "abc", 
+		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 123.456, "abc", 
 		      (Size)100, -100, "xyz");
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		        123.456, "abc", (Size)100, -100, "xyz");
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		        123.456, "abc", (Size)100, -100, "xyz");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 123.456, 
+		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 123.456, 
 		       "abc", (Size)100, -100, "xyz");
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		         123.456, "abc", (Size)100, -100, "xyz");
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		         123.456, "abc", (Size)100, -100, "xyz");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 123.456, 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 123.456, 
 		       "abc", (Size)100, -100, "xyz");
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		         123.456, "abc", (Size)100, -100, "xyz");
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		         123.456, "abc", (Size)100, -100, "xyz");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 123.456, "abc", 
+		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 123.456, "abc", 
 		      (Size)100, -100, "xyz");
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		        123.456, "abc", (Size)100, -100, "xyz");
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		        123.456, "abc", (Size)100, -100, "xyz");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 123.456, 
+		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 123.456, 
 		       "abc", (Size)100, -100, "xyz");
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		        pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		         123.456, "abc", (Size)100, -100, "xyz");
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz\n") == 
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz\n") == 
 		         pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		         123.456, "abc", (Size)100, -100, "xyz");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 123.456, 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 123.456, 
 		       "abc", (Size)100, -100, "xyz");
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', false, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8}", 123, 'x', False, 
 		         123.456, "abc", (Size)100, -100, "xyz");
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
@@ -880,103 +880,103 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 		pOutput->m_sOutput.clear();
-		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', false, 
+		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', False, 
 		      123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		        false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		        False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		        false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		        False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', false, 
+		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', False, 
 		       123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		         false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		         False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		         false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		         False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', false, 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', False, 
 		       123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		         false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		         False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		         false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		         False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', false, 
+		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', False, 
 		      123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		        false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		        False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		        false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		        False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', false, 
+		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', False, 
 		       123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		         false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34\n") 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		         False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		         false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		         False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', false, 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', False, 
 		       123.456, "abc", (Size)100, -100, "xyz", 12.34f);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
-		         false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2}", 123, 'x', 
+		         False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -991,103 +991,103 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 		pOutput->m_sOutput.clear();
-		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', false, 
+		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', False, 
 		      123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', 
-		        false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', 
+		        False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		        'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		        'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', false, 
+		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', False, 
 		       123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		         'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		         'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		         'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		         'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', false, 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', False, 
 		       123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		         'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		         'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		         'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		         'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', false, 
+		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', False, 
 		      123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', 
-		        false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', 
+		        False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		        'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		        'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
-		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', false, 
+		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', False, 
 		       123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		         'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1\n") 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		         'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1\n") 
 		        == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		         'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		         'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
-		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', false, 
+		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 'x', False, 
 		       123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
-		         'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10}", 123, 
+		         'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -1103,102 +1103,102 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 'x', 
-		      false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		      False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 
-		        'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 
+		        'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		        123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		        123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
 		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 'x', 
-		       false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		         123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		         123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		         123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		         123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 'x', 
-		       false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		         123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		         123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		         123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		         123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 'x', 
-		      false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		      False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 
-		        'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 
+		        'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		        123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		        123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 'x', 
-		       false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		         123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		         123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		         123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		         123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 123, 'x', 
-		       false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		       False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
-		         123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11}", 
+		         123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -1214,102 +1214,102 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 123, 
-		      'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		      'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 
-		        123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 
+		        123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
 		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 123, 
-		       'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 123, 
-		       'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 123, 
-		      'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		      'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 
-		        123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 
+		        123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 123, 
-		       'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Error);
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12}", 123, 
-		       'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		       'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
 
@@ -1325,97 +1325,97 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13}", 
-		      123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		      123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
-		        "{13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
+		        "{13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		        3, 4);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
 		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13}", 
-		       123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		         3, 4);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		         3, 4);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13}", 
-		       123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		         3, 4);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		         3, 4);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13}", 
-		      123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		      123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
-		        "{13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
+		        "{13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		        3, 4);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13}", 
-		       123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		       123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		         3, 4);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		         3, 4);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
@@ -1423,12 +1423,12 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13}", 
-		       123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
+		       123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		         3, 4);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
@@ -1445,102 +1445,102 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		      "{14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 5);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		      "{14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 5);
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
-		        "{13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
+		        "{13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		        3, 4, 5);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		        2, 3, 4, 5);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
 		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 
+		       "{14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 
 		       5);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
 		         1, 2, 3, 4, 5);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
 		         1, 2, 3, 4, 5);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 
+		       "{14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 
 		       5);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
 		         1, 2, 3, 4, 5);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
 		         1, 2, 3, 4, 5);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		      "{14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 5);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		      "{14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 5);
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
-		        "{13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
+		        "{13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 
 		        3, 4, 5);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		        2, 3, 4, 5);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 
+		       "{14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 
 		       5);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
 		         1, 2, 3, 4, 5);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
 		         1, 2, 3, 4, 5);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
@@ -1548,13 +1548,13 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 
+		       "{14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 4, 
 		       5);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 
 		         1, 2, 3, 4, 5);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
@@ -1571,104 +1571,104 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		      "{14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
+		      "{14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
 		      4, 5, 6);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
-		        "{13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1,
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
+		        "{13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1,
 		        2, 3, 4, 5, 6);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		        12.34f, 1, 2, 3, 4, 5, 6);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
 		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
+		       "{14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
 		       4, 5, 6);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
+		       "{14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
 		       4, 5, 6);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		      "{14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
+		      "{14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
 		      4, 5, 6);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
-		        "{13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
+		        "{13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		        2, 3, 4, 5, 6);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		        12.34f, 1, 2, 3, 4, 5, 6);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
+		       "{14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
 		       4, 5, 6);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
@@ -1676,13 +1676,13 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
+		       "{14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 2, 3, 
 		       4, 5, 6);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}
@@ -1699,104 +1699,104 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXERR("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		      "{14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		      "{14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		      2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 		
 		pOutput->m_sOutput.clear();
-		CXERRIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
-		        "{13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXERRIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
+		        "{13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		        12.34f, 1, 2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[ERR] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXERRIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXERRIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		        12.34f, 1, 2, 3, 4, 5, 6, 7);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
 		CXWARN("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		       "{14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		       2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXWARNIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[WRN] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXWARNIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXWARNIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6, 7);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		       "{14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		       2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[INF] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[INF] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXINFOIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6, 7);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXDBG("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		      "{14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		      "{14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		      2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
-		        "{13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXDBGIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} "
+		        "{13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		        12.34f, 1, 2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[DBG] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXDBGIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		        "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXDBGIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		        "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		        12.34f, 1, 2, 3, 4, 5, 6, 7);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 
 		pOutput->m_sOutput.clear();
 		CXVERB("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		       "{14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		       2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXVERBIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6, 7);
-		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x false 123.456 abc 100 -100 xyz 12.34 1 "
+		REQUIRE(String("[VRB] [    mytag   ]  : test 123 x False 123.456 abc 100 -100 xyz 12.34 1 "
 		        "2 3 4 5 6 7\n") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXVERBIF(false, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXVERBIF(False, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6, 7);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
@@ -1804,13 +1804,13 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 		pOutput->m_sOutput.clear();
 		CXINFO("mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} {12} {13} "
-		       "{14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
+		       "{14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 12.34f, 1, 
 		       2, 3, 4, 5, 6, 7);
 		REQUIRE(String("") == pOutput->m_sOutput);
 
 		pOutput->m_sOutput.clear();
-		CXINFOIF(true, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
-		         "{12} {13} {14} {15} {16}", 123, 'x', false, 123.456, "abc", (Size)100, -100, "xyz", 
+		CXINFOIF(True, "mytag", "test {1} {2} {3} {4:'0'.3} {5} {6} {7} {8} {9:'0'.2} {10} {11} "
+		         "{12} {13} {14} {15} {16}", 123, 'x', False, 123.456, "abc", (Size)100, -100, "xyz", 
 		         12.34f, 1, 2, 3, 4, 5, 6, 7);
 		REQUIRE(String("") == pOutput->m_sOutput);
 	}

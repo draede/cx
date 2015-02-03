@@ -53,7 +53,7 @@ DynLib::~DynLib()
 	Unload();
 }
 
-bool DynLib::IsOK()
+Bool DynLib::IsOK()
 {
 	return (NULL != m_hHandle);
 }

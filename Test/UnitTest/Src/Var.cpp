@@ -23,12 +23,12 @@ TEST_CASE("Var tests", "[CX::Var]")
 		
 		REQUIRE(v.IsNull());
 	}
-	SECTION("Constructor (bool)")
+	SECTION("Constructor (Bool)")
 	{
-		Var v(true);
+		Var v(True);
 
 		REQUIRE(v.IsBool());
-		REQUIRE(true == v.GetBool());
+		REQUIRE(True == v.GetBool());
 	}
 	SECTION("Constructor (Int64)")
 	{
@@ -59,13 +59,13 @@ TEST_CASE("Var tests", "[CX::Var]")
 		REQUIRE(v.IsString());
 		REQUIRE(String("abc") == v.GetString());
 	}
-	SECTION("var = false")
+	SECTION("var = False")
 	{
 		Var v;
 
-		v = false;
+		v = False;
 		REQUIRE(v.IsBool());
-		REQUIRE(false == v.GetBool());
+		REQUIRE(False == v.GetBool());
 	}
 	SECTION("var = 123")
 	{
@@ -99,15 +99,15 @@ TEST_CASE("Var tests", "[CX::Var]")
 		REQUIRE(v.IsString());
 		REQUIRE(String("abc") == v.GetString());
 	}
-	SECTION("var[\"a\"] = false")
+	SECTION("var[\"a\"] = False")
 	{
 		Var v;
 
-		v["a"] = false;
+		v["a"] = False;
 		REQUIRE(v.IsObject());
-		REQUIRE(true == v.IsObjectMember("a"));
+		REQUIRE(True == v.IsObjectMember("a"));
 		REQUIRE(v["a"].IsBool());
-		REQUIRE(false == v["a"].GetBool());
+		REQUIRE(False == v["a"].GetBool());
 	}
 	SECTION("var[\"a\"][\"b\"] = \"abc\"")
 	{
@@ -115,9 +115,9 @@ TEST_CASE("Var tests", "[CX::Var]")
 
 		v["a"]["b"] = "abc";
 		REQUIRE(v.IsObject());
-		REQUIRE(true == v.IsObjectMember("a"));
+		REQUIRE(True == v.IsObjectMember("a"));
 		REQUIRE(v["a"].IsObject());
-		REQUIRE(true == v["a"].IsObjectMember("b"));
+		REQUIRE(True == v["a"].IsObjectMember("b"));
 		REQUIRE(v["a"]["b"].IsString());
 		REQUIRE(String("abc") == v["a"]["b"].GetString());
 	}
@@ -127,7 +127,7 @@ TEST_CASE("Var tests", "[CX::Var]")
 
 		v[-1] = "abc";
 		REQUIRE(v.IsArray());
-		REQUIRE(true == v.IsArrayItem(0));
+		REQUIRE(True == v.IsArrayItem(0));
 		REQUIRE(v[0].IsString());
 		REQUIRE(String("abc") == v[0].GetString());
 	}
@@ -137,13 +137,13 @@ TEST_CASE("Var tests", "[CX::Var]")
 
 		v["a"][-1]["b"][-1] = "abc";
 		REQUIRE(v.IsObject());
-		REQUIRE(true == v.IsObjectMember("a"));
+		REQUIRE(True == v.IsObjectMember("a"));
 		REQUIRE(v["a"].IsArray());
-		REQUIRE(true == v["a"].IsArrayItem(0));
+		REQUIRE(True == v["a"].IsArrayItem(0));
 		REQUIRE(v["a"][0].IsObject());
-		REQUIRE(true == v["a"][0].IsObjectMember("b"));
+		REQUIRE(True == v["a"][0].IsObjectMember("b"));
 		REQUIRE(v["a"][0]["b"].IsArray());
-		REQUIRE(true == v["a"][0]["b"].IsArrayItem(0));
+		REQUIRE(True == v["a"][0]["b"].IsArrayItem(0));
 		REQUIRE(v["a"][0]["b"][0].IsString());
 		REQUIRE(String("abc") == v["a"][0]["b"][0].GetString());
 	}

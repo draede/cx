@@ -91,12 +91,12 @@ const Char *Status::GetMsg()
 	return m_szMsg;
 }
 
-bool Status::IsOK()
+Bool Status::IsOK()
 {
 	return CXOK(m_nCode);
 }
 
-bool Status::IsNOK()
+Bool Status::IsNOK()
 {
 	return CXNOK(m_nCode);
 }

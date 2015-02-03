@@ -77,7 +77,7 @@ RWLock::~RWLock()
 
 void RWLock::EnterRead()
 {
-	bool fNotifyReaders = false;
+	Bool fNotifyReaders = False;
 
 	EnterCriticalSection(&m_cs);
 
@@ -128,7 +128,7 @@ void RWLock::EnterRead()
 			// are dispatched by the scheduler they
 			// don't immediately block on the critical
 			// section that this thread is holding.
-			fNotifyReaders = true;
+			fNotifyReaders = True;
 		}
 	}
 
@@ -206,8 +206,8 @@ void RWLock::EnterWrite()
 
 void RWLock::LeaveWrite()
 {
-	bool fNotifyWriter = false;
-	bool fNotifyReaders = false;
+	Bool fNotifyWriter = False;
+	Bool fNotifyReaders = False;
 
 	EnterCriticalSection(&m_cs);
 
@@ -224,7 +224,7 @@ void RWLock::LeaveWrite()
 		// which means ownership is passed to the thread
 		// that has been released.
 		--m_cWritersWaiting;
-		fNotifyWriter = true;
+		fNotifyWriter = True;
 	}
 	else
 	{
@@ -240,7 +240,7 @@ void RWLock::LeaveWrite()
 		// held by this thread.
 		if (m_cReadersWaiting != 0)
 		{
-			fNotifyReaders = true;
+			fNotifyReaders = True;
 		}
 	}
 

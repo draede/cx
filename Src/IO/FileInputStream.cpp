@@ -125,17 +125,17 @@ Status FileInputStream::GetSize(UInt64 *pcbSize) const
 	return Status();
 }
 
-bool FileInputStream::IsEOF() const
+Bool FileInputStream::IsEOF() const
 {
 	if (NULL == m_pFile)
 	{
-		return true;
+		return True;
 	}
 
 	return (0 != feof(m_pFile));
 }
 
-bool FileInputStream::IsOK() const
+Bool FileInputStream::IsOK() const
 {
 	return (NULL != m_pFile);
 }

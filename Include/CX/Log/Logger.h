@@ -724,7 +724,7 @@ public:
 		return Status();
 	}
 
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szMsg)
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szMsg)
 	{
 		if (!bCond)
 		{
@@ -762,7 +762,7 @@ public:
 	}
 
 	template <typename T1>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1)
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1)
 	{
 		if (!bCond)
 		{
@@ -800,7 +800,7 @@ public:
 	}
 
 	template <typename T1, typename T2>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2)
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, T2 p2)
 	{
 		if (!bCond)
 		{
@@ -838,7 +838,7 @@ public:
 	}
 
 	template <typename T1, typename T2, typename T3>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3)
 	{
 		if (!bCond)
@@ -877,7 +877,7 @@ public:
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4)
 	{
 		if (!bCond)
@@ -916,7 +916,7 @@ public:
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5)
 	{
 		if (!bCond)
@@ -955,7 +955,7 @@ public:
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 	{
 		if (!bCond)
@@ -995,7 +995,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 	{
 		if (!bCond)
@@ -1035,7 +1035,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 	{
 		if (!bCond)
@@ -1075,7 +1075,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 	{
 		if (!bCond)
@@ -1115,7 +1115,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
 	{
 		if (!bCond)
@@ -1155,7 +1155,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
 	{
 		if (!bCond)
@@ -1195,7 +1195,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12)
 	{
@@ -1237,7 +1237,7 @@ public:
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12, T13 p13)
 	{
@@ -1279,7 +1279,7 @@ public:
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12, T13 p13, T14 p14)
 	{
@@ -1322,7 +1322,7 @@ public:
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12, T13 p13, T14 p14, T15 p15)
 	{
@@ -1365,7 +1365,7 @@ public:
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15, typename T16>
-	Status LogIf(bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
+	Status LogIf(Bool bCond, Level nLevel, const Char *szTag, const Char *szFormat, T1 p1, 
 	                 T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	                 T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 	{

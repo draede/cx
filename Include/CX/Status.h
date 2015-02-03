@@ -315,9 +315,9 @@ public:
 
 	const Char *GetMsg();
 
-	bool IsOK();
+	Bool IsOK();
 
-	bool IsNOK();
+	Bool IsNOK();
 
 private:
 
