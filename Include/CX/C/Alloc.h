@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -32,9 +32,23 @@
 #include "CX/C/Platform.h"
 
 
-#if defined(CX_OS_WINDOWS)
-   #include "CX/C/Platform/Windows/Alloc.h"
-#else	
-	#error "Alloc.h not implemented on this platform"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#include "CX/C/Types.h"
+#include "CX/C/APIDefs.h"
+
+
+CX_API void *CX_Alloc(CX_Size cbSize);
+
+CX_API void *CX_Realloc(void *pPtr, CX_Size cbSize);
+
+CX_API void CX_Free(void *pPtr);
+
+
+#ifdef __cplusplus
+}
 #endif
 
