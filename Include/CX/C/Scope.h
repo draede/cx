@@ -42,6 +42,39 @@ extern "C" {
 //don't use C++ RAII idioms in CX_SCOPE_TRY scope!
 //when success/failure triggers are used destructors will not called!
 //instead use CX_SCOPE_EXIT/CX_SCOPE_SUCCESS/CX_SCOPE_FAILURE as your exit points
+
+//EXAMPLE:
+/*
+	int x = 1;
+	int y = 1;
+
+	CX_SCOPE
+	{
+		CX_SCOPE_TRY 
+		{
+			CX_SCOPE_TRIGGER_FAILURE;
+		}
+		CX_SCOPE_CATCH
+		{
+			CX_SCOPE_SUCCESS
+			{
+				x = 2;
+			}
+			CX_SCOPE_FAILURE
+			{
+				x = 3;
+			}
+			CX_SCOPE_EXIT
+			{
+				y = 2;
+			}
+		}
+	}
+
+	//x will be 3
+	//y will be 2
+*/
+
 #define CX_SCOPE_TRY                                                                               \
 		CX_Scope_Result ___cx_scope_result = CX_Scope_Result_Succes;
 
