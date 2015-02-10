@@ -52,7 +52,7 @@ CX_SCOPE
 		//do your thing... 
 		//if something bad happens call CX_SCOPE_TRIGGER_FAILURE
 		//if all is ok and you want to exit from TRY scope early then call CX_SCOPE_TRIGGER_SUCCESS
-		//by default you if don't call any TRIGGER than SUCCES is assumed
+		//by default if you don't call any TRIGGER than SUCCES is assumed
 	}
 	CX_SCOPE_CATCH
 	{
