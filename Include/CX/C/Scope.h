@@ -45,34 +45,31 @@ extern "C" {
 
 //EXAMPLE:
 /*
-	int x = 1;
-	int y = 1;
-
-	CX_SCOPE
+CX_SCOPE
+{
+	CX_SCOPE_TRY 
 	{
-		CX_SCOPE_TRY 
+		//do your thing... 
+		//if something bad happens call CX_SCOPE_TRIGGER_FAILURE
+		//if all is ok and you want to exit from TRY scope early then call CX_SCOPE_TRIGGER_SUCCESS
+		//by default you if don't call any TRIGGER than SUCCES is assumed
+	}
+	CX_SCOPE_CATCH
+	{
+		CX_SCOPE_SUCCESS
 		{
-			CX_SCOPE_TRIGGER_FAILURE;
+			//this is called if all is ok
 		}
-		CX_SCOPE_CATCH
+		CX_SCOPE_FAILURE
 		{
-			CX_SCOPE_SUCCESS
-			{
-				x = 2;
-			}
-			CX_SCOPE_FAILURE
-			{
-				x = 3;
-			}
-			CX_SCOPE_EXIT
-			{
-				y = 2;
-			}
+			//this is called if something bad happened
+		}
+		CX_SCOPE_EXIT
+		{
+			//this is always called
 		}
 	}
-
-	//x will be 3
-	//y will be 2
+}
 */
 
 #define CX_SCOPE_TRY                                                                               \
