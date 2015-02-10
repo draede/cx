@@ -504,6 +504,9 @@
     <ClInclude Include="..\..\Include\CX\C\APIDefs.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Scope.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">

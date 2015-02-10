@@ -56,6 +56,7 @@
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdlib.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\string.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Types.h" />
+    <ClInclude Include="..\..\Include\CX\C\Scope.h" />
     <ClInclude Include="..\..\Include\CX\C\stdio.h" />
     <ClInclude Include="..\..\Include\CX\C\stdlib.h" />
     <ClInclude Include="..\..\Include\CX\C\string.h" />
