@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Alloc.h"
+#include "CX/Alloc.hpp"
 #include "CX/C/Alloc.h"
 
 

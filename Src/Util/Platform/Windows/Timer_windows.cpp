@@ -26,14 +26,14 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Platform.h"
+#include "CX/Platform.hpp"
 
 
 #if defined(CX_OS_WINDOWS)
 
 
-#include "CX/Util/Timer.h"
-#include "CX/Status.h"
+#include "CX/Util/Timer.hpp"
+#include "CX/Status.hpp"
 
 
 namespace CX

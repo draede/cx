@@ -165,94 +165,58 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Include\CX\C\ctype.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Limits.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\stdio.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\stdlib.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\string.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Types.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\ctype.h">
-      <Filter>Header Files\C\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdio.h">
-      <Filter>Header Files\C\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdlib.h">
-      <Filter>Header Files\C\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\string.h">
-      <Filter>Header Files\C\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Types.h">
-      <Filter>Header Files\C\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Atomic.h">
+    <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\BOM.h">
+    <ClInclude Include="..\..\Include\CX\Sys\BOM.hpp">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.h">
+    <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.hpp">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Deque.h">
+    <ClInclude Include="..\..\Include\CX\Deque.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Limits.h">
+    <ClInclude Include="..\..\Include\CX\Limits.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\List.h">
+    <ClInclude Include="..\..\Include\CX\List.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Map.h">
+    <ClInclude Include="..\..\Include\CX\Map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Platform.h">
+    <ClInclude Include="..\..\Include\CX\Platform.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Queue.h">
+    <ClInclude Include="..\..\Include\CX\Queue.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Set.h">
+    <ClInclude Include="..\..\Include\CX\Set.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Stack.h">
+    <ClInclude Include="..\..\Include\CX\Stack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\String.h">
+    <ClInclude Include="..\..\Include\CX\String.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Types.h">
+    <ClInclude Include="..\..\Include\CX\Types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\UOMap.h">
+    <ClInclude Include="..\..\Include\CX\UOMap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\UOMultiMap.h">
+    <ClInclude Include="..\..\Include\CX\UOMultiMap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\UOMultiSet.h">
+    <ClInclude Include="..\..\Include\CX\UOMultiSet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\UOSet.h">
+    <ClInclude Include="..\..\Include\CX\UOSet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Vector.h">
+    <ClInclude Include="..\..\Include\CX\Vector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h">
@@ -276,49 +240,46 @@
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h">
       <Filter>Contrib\Mintomic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Platform\Windows\resource.h">
-      <Filter>Source Files\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\APIDefs.h">
+    <ClInclude Include="..\..\Include\CX\APIDefs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Alloc.h">
+    <ClInclude Include="..\..\Include\CX\Alloc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Status.h">
+    <ClInclude Include="..\..\Include\CX\Status.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\StatusCodes.h">
+    <ClInclude Include="..\..\Include\CX\StatusCodes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\STLAlloc.h">
+    <ClInclude Include="..\..\Include\CX\STLAlloc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Version.h">
+    <ClInclude Include="..\..\Include\CX\Version.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\CX.h">
+    <ClInclude Include="..\..\Include\CX\CX.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\DynLib.h">
+    <ClInclude Include="..\..\Include\CX\Sys\DynLib.hpp">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.h">
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\IInputStream.h">
+    <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\IOutputStream.h">
+    <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Print.h">
+    <ClInclude Include="..\..\Include\CX\Print.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\EmptyType.h">
+    <ClInclude Include="..\..\Include\CX\EmptyType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\MemInputStream.h">
+    <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h">
@@ -351,160 +312,211 @@
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\utils.h">
       <Filter>Contrib\DoubleConversion</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.h">
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.hpp">
       <Filter>Header Files\Str\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Str\UTF8.h">
+    <ClInclude Include="..\..\Include\CX\Str\UTF8.hpp">
       <Filter>Header Files\Str</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\MemPool.h">
+    <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.h">
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.hpp">
       <Filter>Header Files\Util\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Timer.h">
+    <ClInclude Include="..\..\Include\CX\Util\Timer.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.h">
+    <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.h">
+    <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.hpp">
       <Filter>Header Files\Detail\DetailPrint</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Slice.h">
+    <ClInclude Include="..\..\Include\CX\Slice.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\FileInputStream.h">
+    <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.h">
+    <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\IO\Scope.h">
+    <ClInclude Include="..\..\Src\IO\Scope.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Container.h">
+    <ClInclude Include="..\..\Include\CX\Util\Container.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\IFunction.h">
+    <ClInclude Include="..\..\Include\CX\Util\IFunction.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Function.h">
+    <ClInclude Include="..\..\Include\CX\Util\Function.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Thread.h">
+    <ClInclude Include="..\..\Include\CX\Sys\Thread.hpp">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Thread.h">
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Thread.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Var.h">
+    <ClInclude Include="..\..\Include\CX\Var.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\JSON\JSONSAXParser.h">
+    <ClInclude Include="..\..\Include\CX\Data\JSON\JSONSAXParser.hpp">
       <Filter>Header Files\Data\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\JSON\IJSONSAXParserObserver.h">
+    <ClInclude Include="..\..\Include\CX\Data\JSON\IJSONSAXParserObserver.hpp">
       <Filter>Header Files\Data\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Data\JSON\RapidJSONStreams.h">
+    <ClInclude Include="..\..\Src\Data\JSON\RapidJSONStreams.hpp">
       <Filter>Source Files\Data\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\Level.h">
+    <ClInclude Include="..\..\Include\CX\Log\Level.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\Logger.h">
+    <ClInclude Include="..\..\Include\CX\Log\Logger.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\IOutput.h">
+    <ClInclude Include="..\..\Include\CX\Log\IOutput.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\StreamOutput.h">
+    <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.h">
+    <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\SystemOutput.h">
+    <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\IFormatter.h">
+    <ClInclude Include="..\..\Include\CX\Log\IFormatter.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\DefaultFormatter.h">
+    <ClInclude Include="..\..\Include\CX\Log\DefaultFormatter.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Time.h">
+    <ClInclude Include="..\..\Include\CX\Util\Time.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.h">
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.hpp">
       <Filter>Header Files\Util\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.h">
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Lock.h">
+    <ClInclude Include="..\..\Include\CX\Sys\Lock.hpp">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\RWLock.h">
+    <ClInclude Include="..\..\Include\CX\Sys\RWLock.hpp">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\RWLock.h">
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\RWLock.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Hash\CRC32Hash.h">
+    <ClInclude Include="..\..\Include\CX\Hash\CRC32Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Hash\IHash.h">
+    <ClInclude Include="..\..\Include\CX\Hash\IHash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
-      <Filter>Contrib\CRC32Slice8</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Str\HexString.h">
+    <ClInclude Include="..\..\Include\CX\Str\HexString.hpp">
       <Filter>Header Files\Str</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.h">
+    <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Contrib\MD5\Include\md5.h">
-      <Filter>Contrib\MD5</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\SHA\Include\hmac_sha1.h">
-      <Filter>Contrib\SHA</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\SHA\Include\sha2.h">
-      <Filter>Contrib\SHA</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\SHA\Include\sha.h">
-      <Filter>Contrib\SHA</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Hash\SHA1Hash.h">
+    <ClInclude Include="..\..\Include\CX\Hash\SHA1Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Hash\SHA256Hash.h">
+    <ClInclude Include="..\..\Include\CX\Hash\SHA256Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Hash\SHA384Hash.h">
+    <ClInclude Include="..\..\Include\CX\Hash\SHA384Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.h">
+    <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp">
       <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Alloc.hpp">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Contrib\Farmhash\Include\farmhash.h">
-      <Filter>Contrib\Farmhash</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\MD5\Include\md5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\SHA\Include\hmac_sha1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\SHA\Include\sha.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\SHA\Include\sha2.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\C\Alloc.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Alloc.h">
-      <Filter>Header Files\C\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\C\APIDefs.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\ctype.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Limits.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Include\CX\C\Scope.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\StatusCodes.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\stdarg.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\stdio.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\stdlib.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\string.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Types.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\ctype.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdarg.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdio.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdlib.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\string.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Types.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Platform\Windows\resource.h">
+      <Filter>Source Files\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Version.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
   </ItemGroup>

@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/SHA512Hash.h"
-#include "CX/Status.h"
+#include "CX/Hash/SHA512Hash.hpp"
+#include "CX/Status.hpp"
 #include "../../Contrib/SHA/Include/sha2.h"
 
 

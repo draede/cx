@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Version.h"
+#include "CX/Version.hpp"
 
 
 namespace CX

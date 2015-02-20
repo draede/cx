@@ -26,15 +26,15 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Platform.h"
+#include "CX/Platform.hpp"
 
 
 #if defined(CX_OS_WINDOWS)
 
 
-#include "CX/Sys/DynLib.h"
-#include "CX/Str/UTF8.h"
-#include "CX/Status.h"
+#include "CX/Sys/DynLib.hpp"
+#include "CX/Str/UTF8.hpp"
+#include "CX/Status.hpp"
 
 
 namespace CX

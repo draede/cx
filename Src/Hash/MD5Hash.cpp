@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/MD5Hash.h"
-#include "CX/Status.h"
+#include "CX/Hash/MD5Hash.hpp"
+#include "CX/Status.hpp"
 #include "../../Contrib/MD5/Include/md5.h"
 
 

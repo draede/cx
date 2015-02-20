@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Util/MemPool.h"
-#include "CX/Status.h"
+#include "CX/Util/MemPool.hpp"
+#include "CX/Status.hpp"
 
 
 namespace CX

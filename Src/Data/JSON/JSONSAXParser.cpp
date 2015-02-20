@@ -26,11 +26,11 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Data/JSON/JSONSAXParser.h"
-#include "CX/Status.h"
+#include "CX/Data/JSON/JSONSAXParser.hpp"
+#include "CX/Status.hpp"
 #include "../../../Contrib/RapidJSON/Include/rapidjson.h"
 #include "../../../Contrib/RapidJSON/Include/reader.h"
-#include "RapidJSONStreams.h"
+#include "RapidJSONStreams.hpp"
 
 
 struct CX_Data_JSON_SAX_Handler

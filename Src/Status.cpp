@@ -26,9 +26,9 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Status.h"
+#include "CX/Status.hpp"
 #include "CX/C/stdio.h"
-#include "CX/Detail/DetailPrint/DetailPrint.h"
+#include "CX/Detail/DetailPrint/DetailPrint.hpp"
 
 
 namespace CX

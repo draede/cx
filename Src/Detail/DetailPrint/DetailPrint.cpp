@@ -26,9 +26,9 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Detail/DetailPrint/DetailPrint.h"
+#include "CX/Detail/DetailPrint/DetailPrint.hpp"
 #include "../../../Contrib/DoubleConversion/Include/double-conversion.h"
-#include "CX/IO/IOutputStream.h"
+#include "CX/IO/IOutputStream.hpp"
 #include "CX/C/stdio.h"
 
 

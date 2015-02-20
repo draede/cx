@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Log/Logger.h"
-#include "CX/Log/DefaultFormatter.h"
+#include "CX/Log/Logger.hpp"
+#include "CX/Log/DefaultFormatter.hpp"
 
 
 namespace CX

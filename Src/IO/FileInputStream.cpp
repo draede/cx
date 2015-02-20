@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/IO/FileInputStream.h"
-#include "CX/Status.h"
+#include "CX/IO/FileInputStream.hpp"
+#include "CX/Status.hpp"
 #include <sys/types.h>
 #include <sys/stat.h>
 

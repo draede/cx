@@ -26,13 +26,13 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Var.h"
-#include "CX/Status.h"
-#include "CX/IO/MemInputStream.h"
-#include "CX/IO/MemOutputStream.h"
-#include "CX/Data/JSON/JSONSAXParser.h"
-#include "CX/Data/JSON/IJSONSAXParserObserver.h"
-#include "Data/JSON/RapidJSONStreams.h"
+#include "CX/Var.hpp"
+#include "CX/Status.hpp"
+#include "CX/IO/MemInputStream.hpp"
+#include "CX/IO/MemOutputStream.hpp"
+#include "CX/Data/JSON/JSONSAXParser.hpp"
+#include "CX/Data/JSON/IJSONSAXParserObserver.hpp"
+#include "Data/JSON/RapidJSONStreams.hpp"
 
 
 namespace CX

@@ -27,16 +27,16 @@
  */ 
 
 
-#include "CX/Platform.h"
+#include "CX/Platform.hpp"
 
 
 #if defined(CX_OS_WINDOWS)
 
 
-#include "CX/Str/UTF8.h"
+#include "CX/Str/UTF8.hpp"
 #include "CX/C/string.h"
-#include "CX/Status.h"
-#include <windows.h>
+#include "CX/Status.hpp"
+#include "CX/Platform/Windows/windows.h"
 
 
 namespace CX

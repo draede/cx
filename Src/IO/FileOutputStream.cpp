@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/IO/FileOutputStream.h"
-#include "CX/Status.h"
+#include "CX/IO/FileOutputStream.hpp"
+#include "CX/Status.hpp"
 
 
 namespace CX

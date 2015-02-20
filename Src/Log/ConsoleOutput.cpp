@@ -26,9 +26,9 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Log/ConsoleOutput.h"
+#include "CX/Log/ConsoleOutput.hpp"
 #include "CX/C/stdio.h"
-#include "CX/Status.h"
+#include "CX/Status.hpp"
 
 
 namespace CX

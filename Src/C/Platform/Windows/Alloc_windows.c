@@ -33,7 +33,7 @@
 
 
 #include "CX/C/Alloc.h"
-#include <windows.h>
+#include "CX/Platform/Windows/windows.h"
 
 
 void *CX_Alloc(CX_Size cbSize)

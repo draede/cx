@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/IO/MemInputStream.h"
-#include "CX/Status.h"
+#include "CX/IO/MemInputStream.hpp"
+#include "CX/Status.hpp"
 
 
 namespace CX

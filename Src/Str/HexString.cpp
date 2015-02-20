@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Str/HexString.h"
-#include "CX/Status.h"
+#include "CX/Str/HexString.hpp"
+#include "CX/Status.hpp"
 
 
 namespace CX

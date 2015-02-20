@@ -26,10 +26,10 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Log/DefaultFormatter.h"
-#include "CX/Status.h"
-#include "CX/Util/Time.h"
-#include "CX/Sys/Thread.h"
+#include "CX/Log/DefaultFormatter.hpp"
+#include "CX/Status.hpp"
+#include "CX/Util/Time.hpp"
+#include "CX/Sys/Thread.hpp"
 
 
 namespace CX

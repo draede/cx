@@ -26,9 +26,9 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Log/StreamOutput.h"
-#include "CX/Alloc.h"
-#include "CX/Status.h"
+#include "CX/Log/StreamOutput.hpp"
+#include "CX/Alloc.hpp"
+#include "CX/Status.hpp"
 
 
 namespace CX
