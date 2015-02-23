@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Data/JSON/JSONSAXParser.hpp"
+#include "CX/Data/JSON/SAXParser.hpp"
 #include "CX/Status.hpp"
 #include "../../../Contrib/RapidJSON/Include/rapidjson.h"
 #include "../../../Contrib/RapidJSON/Include/reader.h"
@@ -35,13 +35,13 @@
 
 struct CX_Data_JSON_SAX_Handler
 {
-	typedef CX::Vector<CX::Data::JSON::IJSONSAXParserObserver *>::Type   ObserversVector;
+	typedef CX::Vector<CX::Data::JSON::ISAXParserObserver *>::Type   ObserversVector;
 
 	ObserversVector *m_pVectorObservers;
 
 	CX::Bool Null()
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnNullValue))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnNullValue))
 		{
 			return CX::False;
 		}
@@ -51,7 +51,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Bool(CX::Bool b)
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnBoolValue, b))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBoolValue, b))
 		{
 			return CX::False;
 		}
@@ -61,7 +61,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Int(int i)
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnIntValue, (CX::Int64)i))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
 		{
 			return CX::False;
 		}
@@ -71,7 +71,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Uint(unsigned i)
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnIntValue, (CX::Int64)i))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
 		{
 			return CX::False;
 		}
@@ -81,7 +81,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Int64(int64_t i)
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnIntValue, (CX::Int64)i))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
 		{
 			return CX::False;
 		}
@@ -91,7 +91,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Uint64(uint64_t i)
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnIntValue, (CX::Int64)i))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
 		{
 			return CX::False;
 		}
@@ -101,7 +101,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Double(double d)
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnRealValue, d))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnRealValue, d))
 		{
 			return CX::False;
 		}
@@ -113,7 +113,7 @@ struct CX_Data_JSON_SAX_Handler
 	{
 		copy;
 
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnStringValue, str, (CX::Size)length))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, str, (CX::Size)length))
 		{
 			return CX::False;
 		}
@@ -123,7 +123,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool StartObject()
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnBeginObject))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginObject))
 		{
 			return CX::False;
 		}
@@ -135,7 +135,7 @@ struct CX_Data_JSON_SAX_Handler
 	{
 		copy;
 
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnKey, str, (CX::Size)length))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnKey, str, (CX::Size)length))
 		{
 			return CX::False;
 		}
@@ -147,7 +147,7 @@ struct CX_Data_JSON_SAX_Handler
 	{
 		memberCount;
 
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnEndObject))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndObject))
 		{
 			return CX::False;
 		}
@@ -157,7 +157,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool StartArray()
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnBeginArray))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginArray))
 		{
 			return CX::False;
 		}
@@ -169,7 +169,7 @@ struct CX_Data_JSON_SAX_Handler
 	{
 		elementCount;
 
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnEndArray))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndArray))
 		{
 			return CX::False;
 		}
@@ -179,7 +179,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool StartDoc()
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnBeginParse))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginParse))
 		{
 			return CX::False;
 		}
@@ -189,7 +189,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool EndDoc()
 	{
-		if (!Notify(&CX::Data::JSON::IJSONSAXParserObserver::OnEndParse))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndParse))
 		{
 			return CX::False;
 		}
@@ -197,7 +197,7 @@ struct CX_Data_JSON_SAX_Handler
 		return CX::True;
 	}
 
-	CX::Bool Notify(CX::Bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)())
+	CX::Bool Notify(CX::Bool (CX::Data::JSON::ISAXParserObserver::*pfnHandler)())
 	{
 		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
 		     iter != m_pVectorObservers->end(); ++iter)
@@ -212,7 +212,7 @@ struct CX_Data_JSON_SAX_Handler
 	}
 
 	template <typename T1>
-	CX::Bool Notify(CX::Bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)(T1), T1 p1)
+	CX::Bool Notify(CX::Bool (CX::Data::JSON::ISAXParserObserver::*pfnHandler)(T1), T1 p1)
 	{
 		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
 		     iter != m_pVectorObservers->end(); ++iter)
@@ -227,7 +227,7 @@ struct CX_Data_JSON_SAX_Handler
 	}
 
 	template <typename T1, typename T2>
-	CX::Bool Notify(CX::Bool (CX::Data::JSON::IJSONSAXParserObserver::*pfnHandler)(T1, T2), T1 p1, 
+	CX::Bool Notify(CX::Bool (CX::Data::JSON::ISAXParserObserver::*pfnHandler)(T1, T2), T1 p1, 
 	                T2 p2)
 	{
 		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
@@ -254,7 +254,7 @@ namespace Data
 namespace JSON
 {
 
-JSONSAXParser::JSONSAXParser()
+SAXParser::SAXParser()
 {
 	if (NULL != (m_pHandler = New<CX_Data_JSON_SAX_Handler>()))
 	{
@@ -262,7 +262,7 @@ JSONSAXParser::JSONSAXParser()
 	}
 }
 
-JSONSAXParser::~JSONSAXParser()
+SAXParser::~SAXParser()
 {
 	if (NULL != m_pHandler)
 	{
@@ -270,7 +270,7 @@ JSONSAXParser::~JSONSAXParser()
 	}
 }
 
-Status JSONSAXParser::ParseStream(IO::IInputStream *pInputStream)
+Status SAXParser::ParseStream(IO::IInputStream *pInputStream)
 {
 	if (NULL == m_pHandler)
 	{
@@ -302,7 +302,7 @@ Status JSONSAXParser::ParseStream(IO::IInputStream *pInputStream)
 	return Status();
 }
 
-Status JSONSAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
+Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 {
 	if (NULL == m_pHandler)
 	{
@@ -334,7 +334,7 @@ Status JSONSAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 	return Status();
 }
 
-Status JSONSAXParser::ParseString(const Char *szString)
+Status SAXParser::ParseString(const Char *szString)
 {
 	if (NULL == m_pHandler)
 	{
@@ -366,7 +366,7 @@ Status JSONSAXParser::ParseString(const Char *szString)
 	return Status();
 }
 
-Status JSONSAXParser::ParseString(const String &sString)
+Status SAXParser::ParseString(const String &sString)
 {
 	if (NULL == m_pHandler)
 	{
@@ -398,14 +398,14 @@ Status JSONSAXParser::ParseString(const String &sString)
 	return Status();
 }
 
-Status JSONSAXParser::AddObserver(IJSONSAXParserObserver *pObserver)
+Status SAXParser::AddObserver(ISAXParserObserver *pObserver)
 {
 	m_vectorObservers.push_back(pObserver);
 
 	return Status();
 }
 
-Status JSONSAXParser::RemoveObservers()
+Status SAXParser::RemoveObservers()
 {
 	m_vectorObservers.clear();
 

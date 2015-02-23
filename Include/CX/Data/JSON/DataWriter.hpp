@@ -29,16 +29,8 @@
 #pragma once
 
 
-#include "CX/IO/IInputStream.hpp"
-#include "CX/Data/JSON/IJSONSAXParserObserver.hpp"
-#include "CX/Vector.hpp"
-#include "CX/String.hpp"
-#include "CX/Status.hpp"
-#include "CX/Util/IFunction.hpp"
-#include "CX/APIDefs.hpp"
-
-
-struct CX_Data_JSON_SAX_Handler;
+#include "CX/IO/IDataWriter.hpp"
+#include "CX/IO/IOutputStream.hpp"
 
 
 namespace CX
@@ -50,36 +42,72 @@ namespace Data
 namespace JSON
 {
 
-class CX_API JSONSAXParser
+class CX_API DataWriter : public IO::IDataWriter
 {
 public:
 
-	JSONSAXParser();
+	DataWriter(IO::IOutputStream *pOutputStream);
 
-	~JSONSAXParser();
+	virtual ~DataWriter();
 
-	Status ParseStream(IO::IInputStream *pInputStream);
+	virtual Status BeginRootObject();
 
-	Status ParseBuffer(const void *pBuffer, Size cbSize);
+	virtual Status EndRootObject();
 
-	Status ParseString(const Char *szString);
+	virtual Status BeginRootArray();
 
-	Status ParseString(const String &sString);
+	virtual Status EndRootArray();
 
-	Status AddObserver(IJSONSAXParserObserver *pObserver);
+	virtual Status ObjWriteNull(const Char *szName);
 
-	Status RemoveObservers();
+	virtual Status ObjWriteBool(const Char *szName, Bool bValue);
+
+	virtual Status ObjWriteInt(const Char *szName, Int64 nValue);
+
+	virtual Status ObjWriteReal(const Char *szName, Double lfValue);
+
+	virtual Status ObjWriteString(const Char *szName, const Char *szValue);
+
+	virtual Status ObjBeginObject(const Char *szName);
+
+	virtual Status ObjEndObject();
+
+	virtual Status ObjBeginArray(const Char *szName);
+
+	virtual Status ObjEndArray();
+
+	virtual Status ArrWriteNull();
+
+	virtual Status ArrWriteBool(Bool bValue);
+
+	virtual Status ArrWriteInt(Int64 nValue);
+
+	virtual Status ArrWriteReal(Double lfValue);
+
+	virtual Status ArrWriteBString(const Char *szValue);
+
+	virtual Status ArrBeginObject();
+
+	virtual Status ArrEndObject();
+
+	virtual Status ArrBeginArray();
+
+	virtual Status ArrEndArray();
 
 private:
 
-	typedef Vector<IJSONSAXParserObserver *>::Type   ObserversVector;
+	enum State
+	{
+		State_Begin,
+		State_RootObject,
+		State_RootArray,
+		State_Object,
+		State_Array,
+		State_End,
+	};
 
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	ObserversVector   m_vectorObservers;
-#pragma warning(push)
-
-	CX_Data_JSON_SAX_Handler *m_pHandler;
+	IO::IOutputStream   *m_pOutputStream;
+	State               m_nState;
 
 };
 
@@ -88,3 +116,4 @@ private:
 }//namespace Data
 
 }//namespace CX
+

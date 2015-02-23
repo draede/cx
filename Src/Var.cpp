@@ -30,15 +30,15 @@
 #include "CX/Status.hpp"
 #include "CX/IO/MemInputStream.hpp"
 #include "CX/IO/MemOutputStream.hpp"
-#include "CX/Data/JSON/JSONSAXParser.hpp"
-#include "CX/Data/JSON/IJSONSAXParserObserver.hpp"
+#include "CX/Data/JSON/SAXParser.hpp"
+#include "CX/Data/JSON/ISAXParserObserver.hpp"
 #include "Data/JSON/RapidJSONStreams.hpp"
 
 
 namespace CX
 {
 
-class VarJSONSAXParserObserver : public Data::JSON::IJSONSAXParserObserver
+class VarJSONSAXParserObserver : public Data::JSON::ISAXParserObserver
 {
 public:
 
@@ -1298,7 +1298,7 @@ const Var &Var::ArrayConstIterator::Get() const
 Status Var::Read(IO::IInputStream *pInputStream)
 {
 	VarJSONSAXParserObserver   obs;
-	Data::JSON::JSONSAXParser  parser;
+	Data::JSON::SAXParser  parser;
 
 	obs.m_pRoot = obs.m_pCurrent = this;
 	obs.m_bInit = True;

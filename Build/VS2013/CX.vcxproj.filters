@@ -366,12 +366,6 @@
     <ClInclude Include="..\..\Include\CX\Var.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\JSON\JSONSAXParser.hpp">
-      <Filter>Header Files\Data\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\JSON\IJSONSAXParserObserver.hpp">
-      <Filter>Header Files\Data\JSON</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Data\JSON\RapidJSONStreams.hpp">
       <Filter>Source Files\Data\JSON</Filter>
     </ClInclude>
@@ -531,6 +525,21 @@
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h">
       <Filter>Contrib\Z85</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IDataReader.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IDataWriter.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\SAXParser.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -676,6 +685,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c">
       <Filter>Contrib\Z85</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

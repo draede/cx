@@ -66,8 +66,9 @@
     <ClInclude Include="..\..\Include\CX\C\string.h" />
     <ClInclude Include="..\..\Include\CX\C\Types.h" />
     <ClInclude Include="..\..\Include\CX\C\Version.h" />
-    <ClInclude Include="..\..\Include\CX\Data\JSON\IJSONSAXParserObserver.hpp" />
-    <ClInclude Include="..\..\Include\CX\Data\JSON\JSONSAXParser.hpp" />
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp" />
+    <ClInclude Include="..\..\Include\CX\Data\JSON\SAXParser.hpp" />
     <ClInclude Include="..\..\Include\CX\Deque.hpp" />
     <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.hpp" />
     <ClInclude Include="..\..\Include\CX\EmptyType.hpp" />
@@ -80,6 +81,8 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\IDataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\IDataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp" />
@@ -209,6 +212,7 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsC</CompileAs>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp" />
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />

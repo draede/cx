@@ -30,52 +30,69 @@
 
 
 #include "CX/Types.hpp"
+#include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 
 
 namespace CX
 {
 
-namespace Data
+namespace IO
 {
 
-namespace JSON
-{
-
-class CX_API IJSONSAXParserObserver
+class CX_API IDataWriter
 {
 public:
 
-	virtual ~IJSONSAXParserObserver() { }
+	virtual ~IDataWriter() { }
 
-	virtual Bool OnBeginParse() = 0;
+	virtual Status BeginRootObject() = 0;
 
-	virtual Bool OnEndParse() = 0;
+	virtual Status EndRootObject() = 0;
 
-	virtual Bool OnBeginObject() = 0;
+	virtual Status BeginRootArray() = 0;
 
-	virtual Bool OnEndObject() = 0;
+	virtual Status EndRootArray() = 0;
 
-	virtual Bool OnBeginArray() = 0;
+	virtual Status ObjWriteNull(const Char *szName) = 0;
 
-	virtual Bool OnEndArray() = 0;
+	virtual Status ObjWriteBool(const Char *szName, Bool bValue) = 0;
 
-	virtual Bool OnKey(const Char *pBuffer, Size cLen) = 0;
+	virtual Status ObjWriteInt(const Char *szName, Int64 nValue) = 0;
 
-	virtual Bool OnNullValue() = 0;
+	virtual Status ObjWriteReal(const Char *szName, Double lfValue) = 0;
 
-	virtual Bool OnBoolValue(Bool bBool) = 0;
+	virtual Status ObjWriteString(const Char *szName, const Char *szValue) = 0;
 
-	virtual Bool OnIntValue(Int64 nInt) = 0;
+	virtual Status ObjBeginObject(const Char *szName) = 0;
 
-	virtual Bool OnRealValue(Double lfReal) = 0;
+	virtual Status ObjEndObject() = 0;
 
-	virtual Bool OnStringValue(const Char *pBuffer, Size cLen) = 0;
+	virtual Status ObjBeginArray(const Char *szName) = 0;
+
+	virtual Status ObjEndArray() = 0;
+
+	virtual Status ArrWriteNull() = 0;
+
+	virtual Status ArrWriteBool(Bool bValue) = 0;
+
+	virtual Status ArrWriteInt(Int64 nValue) = 0;
+
+	virtual Status ArrWriteReal(Double lfValue) = 0;
+
+	virtual Status ArrWriteBString(const Char *szValue) = 0;
+
+	virtual Status ArrBeginObject() = 0;
+
+	virtual Status ArrEndObject() = 0;
+
+	virtual Status ArrBeginArray() = 0;
+
+	virtual Status ArrEndArray() = 0;
 
 };
 
-}//namespace JSON
-
-}//namespace Data
+}//namespace IO
 
 }//namespace CX
+
