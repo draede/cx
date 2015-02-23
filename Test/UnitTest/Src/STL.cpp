@@ -26,19 +26,19 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.h"
-#include "CX/Deque.h"
-#include "CX/List.h"
-#include "CX/Map.h"
-#include "CX/Queue.h"
-#include "CX/Set.h"
-#include "CX/Stack.h"
-#include "CX/String.h"
-#include "CX/UOMap.h"
-#include "CX/UOMultiMap.h"
-#include "CX/UOMultiSet.h"
-#include "CX/UOSet.h"
-#include "CX/Vector.h"
+#include "CX/CX.hpp"
+#include "CX/Deque.hpp"
+#include "CX/List.hpp"
+#include "CX/Map.hpp"
+#include "CX/Queue.hpp"
+#include "CX/Set.hpp"
+#include "CX/Stack.hpp"
+#include "CX/String.hpp"
+#include "CX/UOMap.hpp"
+#include "CX/UOMultiMap.hpp"
+#include "CX/UOMultiSet.hpp"
+#include "CX/UOSet.hpp"
+#include "CX/Vector.hpp"
 
 #pragma warning(push)
 #pragma warning(disable: 4702)

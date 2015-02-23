@@ -163,6 +163,9 @@
     <Filter Include="Source Files\C\Platform\Windows">
       <UniqueIdentifier>{dc06b311-49f9-45a4-99b4-e161f617a0f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contrib\Z85">
+      <UniqueIdentifier>{77433a82-b211-434d-9166-829847057fd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -420,9 +423,6 @@
     <ClInclude Include="..\..\Include\CX\Hash\IHash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Str\HexString.hpp">
-      <Filter>Header Files\Str</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
@@ -518,6 +518,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\C\Version.h">
       <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\IBinStr.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Z85BinStr.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\HexBinStr.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Z85\Include\z85.h">
+      <Filter>Contrib\Z85</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -656,8 +668,14 @@
     <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
       <Filter>Source Files\C\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Str\HexString.cpp">
-      <Filter>Source Files\Str\Platform</Filter>
+    <ClCompile Include="..\..\Src\Str\HexBinStr.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Z85BinStr.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Z85\Src\z85.c">
+      <Filter>Contrib\Z85</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

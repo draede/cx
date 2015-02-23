@@ -26,14 +26,14 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.h"
-#include "CX/Hash/CRC32Hash.h"
-#include "CX/Hash/MD5Hash.h"
-#include "CX/Hash/SHA1Hash.h"
-#include "CX/Hash/SHA256Hash.h"
-#include "CX/Hash/SHA384Hash.h"
-#include "CX/Hash/SHA512Hash.h"
-#include "CX/Str/HexString.h"
+#include "CX/CX.hpp"
+#include "CX/Hash/CRC32Hash.hpp"
+#include "CX/Hash/MD5Hash.hpp"
+#include "CX/Hash/SHA1Hash.hpp"
+#include "CX/Hash/SHA256Hash.hpp"
+#include "CX/Hash/SHA384Hash.hpp"
+#include "CX/Hash/SHA512Hash.hpp"
+#include "CX/Str/HexBinStr.hpp"
 
 #pragma warning(push)
 #pragma warning(disable: 4702)
@@ -53,6 +53,7 @@ const Char *ToHash()
 	static Size     cTestStringLen = cx_strlen(szTestString);
 	Hash            hash;
 	Byte            res[Hash::SIZE];
+	Str::HexBinStr  hbs(Str::HexBinStr::Lowercase);
 
 	if (hash.Init().IsNOK())
 	{
@@ -66,7 +67,7 @@ const Char *ToHash()
 	{
 		return "";
 	}
-	if (Str::HexString::ToString(res, Hash::SIZE, &sRes, Str::HexString::Lowercase).IsNOK())
+	if (hbs.ToStringEx(res, Hash::SIZE, &sRes).IsNOK())
 	{
 		return "";
 	}
@@ -85,6 +86,7 @@ const Char *ToHashAcc()
 	static Size     cTestStringLen2 = cTestStringLen / 2;
 	Hash            hash;
 	Byte            res[Hash::SIZE];
+	Str::HexBinStr  hbs(Str::HexBinStr::Lowercase);
 
 	if (0 < (cTestStringLen % 2))
 	{
@@ -106,7 +108,7 @@ const Char *ToHashAcc()
 	{
 		return "";
 	}
-	if (Str::HexString::ToString(res, Hash::SIZE, &sRes, Str::HexString::Lowercase).IsNOK())
+	if (hbs.ToStringEx(res, Hash::SIZE, &sRes).IsNOK())
 	{
 		return "";
 	}

@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.h"
-#include "CX/Sys/Thread.h"
+#include "CX/CX.hpp"
+#include "CX/Sys/Thread.hpp"
 
 #pragma warning(push)
 #pragma warning(disable: 4702)

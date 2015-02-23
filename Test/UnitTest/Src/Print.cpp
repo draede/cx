@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.h"
-#include "CX/Print.h"
+#include "CX/CX.hpp"
+#include "CX/Print.hpp"
 #include "CX/C/string.h"
 
 #pragma warning(push)

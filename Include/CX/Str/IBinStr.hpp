@@ -26,70 +26,51 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Sys/DynLib.hpp"
-#include "CX/Print.hpp"
-#include <stdio.h>
-#include "DLL.h"
+#pragma once
 
-class Test
+
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/String.hpp"
+#include "CX/APIDefs.hpp"
+
+
+namespace CX
+{
+
+namespace Str
+{
+
+class CX_API IBinStr
 {
 public:
 
-	Test()
-	{
-		printf("Test()\n");
-	}
+	virtual ~IBinStr() { }
 
-	~Test()
+	virtual Status ToString(const Byte *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
+	                        Size cStrOutputLen) = 0;
+
+	virtual Status FromString(const Char *pStrInput, Size cStrInputLen, Byte *pBinOutput, 
+	                          Size cbBinOutputSize) = 0;
+
+	virtual Size GetStrLenFromBinSize(const Byte *pBinInput, Size cbBinInputSize) = 0;
+
+	virtual Size GetBinSizeFromStrLen(const Char *pStrInput, Size cStrInputLen) = 0;
+
+	virtual Status ToStringEx(const Byte *pBinInput, Size cbBinInputSize, String *psStrOutput)
 	{
-		printf("~Test()\n");
+		Size   cStrOutputLen;
+
+		cStrOutputLen = GetStrLenFromBinSize(pBinInput, cbBinInputSize);
+		psStrOutput->reserve(cStrOutputLen + 1);
+		(&(*psStrOutput)[0])[cStrOutputLen] = 0;
+
+		return ToString(pBinInput, cbBinInputSize, &(*psStrOutput)[0], cStrOutputLen);
 	}
 
 };
 
-typedef void (* TestVectorFunc)(CX::Vector<int>::Type *);
+}//namespace Str
 
-typedef void * (* TestMemFunc)(CX::Size);
-
-
-int main(int argc, char *argv[])
-{
-	argc;
-	argv;
-
-	CX::Print(stdout, "{1} => '{2}'", 100, "a123b");
-
-	char *x = (char *)CX::Alloc(100);
-
-	CX::Free(x);
-
-	Test *pTest = CX::New<Test>();
-
-	CX::Delete(pTest);
-
-	CX::Sys::DynLib	dynlib;
-	TestVectorFunc		pfnTestVector;
-	TestMemFunc			pfnTestMem;
-
-	if (dynlib.Load("dll.dll").IsOK())
-	{
-		if (NULL != (pfnTestVector = (TestVectorFunc)dynlib.GetFunc("TestVector")) &&
-				NULL != (pfnTestMem = (TestMemFunc)dynlib.GetFunc("TestMem")))
-		{
-			CX::Vector<int>::Type vectorInts;
-
-			pfnTestVector(&vectorInts);
-			printf("%d\n", vectorInts[0]);
-			printf("%d\n", vectorInts[1]);
-			printf("%d\n", vectorInts[2]);
-			vectorInts.clear();
-
-			void *a  = pfnTestMem(100);
-			CX::Free(a);
-		}
-		dynlib.Unload();
-	}
-
-	return 0;
-}
+}//namespace CX
 

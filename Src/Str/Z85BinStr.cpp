@@ -26,13 +26,9 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
-#include "CX/Types.hpp"
+#include "CX/Str/Z85BinStr.hpp"
 #include "CX/Status.hpp"
-#include "CX/String.hpp"
-#include "CX/APIDefs.hpp"
+#include "../../Contrib/Z85/Include/z85.h"
 
 
 namespace CX
@@ -41,32 +37,51 @@ namespace CX
 namespace Str
 {
 
-class CX_API HexString
+Z85BinStr::Z85BinStr()
 {
-public:
+}
 
-	enum Flag
+Z85BinStr::~Z85BinStr()
+{
+}
+
+Status Z85BinStr::ToString(const Byte *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
+                           Size cStrOutputLen)
+{
+	if (GetStrLenFromBinSize(pBinInput, cbBinInputSize) > cStrOutputLen)
 	{
-		Lowercase = 1,
-		Uppercase = 2,
-	};
+		return Status(Status_TooSmall, "Output buffer to small. See GetStrLenFromBinSize");
+	}
 
-	static Status ToString(const Byte *pBinary, Size cbBinarySize, String *psString, 
-	                           int nFlags = Flag::Lowercase);
+	Z85_encode_with_padding((const char *)pBinInput, pStrOutput, cbBinInputSize);
 
-	static Status FromString(const Char *szString, Byte *pBinary, Size cbBinarySize);
+	return Status();
+}
 
-	static Size GetStringLen(Size cbBinarySize);
+Status Z85BinStr::FromString(const Char *pStrInput, Size cStrInputLen, Byte *pBinOutput, 
+                             Size cbBinOutputSize)
+{
+	if (GetBinSizeFromStrLen(pStrInput, cStrInputLen) > cbBinOutputSize)
+	{
+		return Status(Status_TooSmall, "Output buffer to small. See GetBinSizeFromStrLen");
+	}
 
-	static Size GetBinarySize(Size cStringLen);
+	Z85_decode_with_padding(pStrInput, (char *)pBinOutput, cStrInputLen);
 
-private:
+	return Status();
+}
 
-	HexString();
+Size Z85BinStr::GetStrLenFromBinSize(const Byte *pBinInput, Size cbBinInputSize)
+{
+	pBinInput;
 
-	~HexString();
+	return Z85_encode_with_padding_bound(cbBinInputSize);
+}
 
-};
+Size Z85BinStr::GetBinSizeFromStrLen(const Char *pStrInput, Size cStrInputLen)
+{
+	return Z85_decode_with_padding_bound(pStrInput, cStrInputLen);
+}
 
 }//namespace Str
 

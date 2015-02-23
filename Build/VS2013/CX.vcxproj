@@ -42,6 +42,7 @@
     <ClInclude Include="..\..\Contrib\SHA\Include\hmac_sha1.h" />
     <ClInclude Include="..\..\Contrib\SHA\Include\sha.h" />
     <ClInclude Include="..\..\Contrib\SHA\Include\sha2.h" />
+    <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
     <ClInclude Include="..\..\Include\CX\Alloc.hpp" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
     <ClInclude Include="..\..\Include\CX\CX.hpp" />
@@ -104,9 +105,11 @@
     <ClInclude Include="..\..\Include\CX\StatusCodes.hpp" />
     <ClInclude Include="..\..\Include\CX\STLAlloc.hpp" />
     <ClInclude Include="..\..\Include\CX\String.hpp" />
-    <ClInclude Include="..\..\Include\CX\Str\HexString.hpp" />
+    <ClInclude Include="..\..\Include\CX\Str\HexBinStr.hpp" />
+    <ClInclude Include="..\..\Include\CX\Str\IBinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\UTF8.hpp" />
+    <ClInclude Include="..\..\Include\CX\Str\Z85BinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\BOM.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.hpp" />
@@ -198,6 +201,7 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
     </ClCompile>
+    <ClCompile Include="..\..\Contrib\Z85\Src\z85.c" />
     <ClCompile Include="..\..\Src\Alloc.cpp" />
     <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
@@ -224,8 +228,9 @@
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
-    <ClCompile Include="..\..\Src\Str\HexString.cpp" />
+    <ClCompile Include="..\..\Src\Str\HexBinStr.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp" />
+    <ClCompile Include="..\..\Src\Str\Z85BinStr.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp" />

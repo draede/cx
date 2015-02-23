@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.h"
-#include "CX/Alloc.h"
+#include "CX/CX.hpp"
+#include "CX/Alloc.hpp"
 
 #pragma warning(push)
 #pragma warning(disable: 4702)

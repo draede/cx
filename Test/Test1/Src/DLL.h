@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Vector.h"
+#include "CX/Vector.hpp"
 
 
 #ifdef DLL_EXPORTS

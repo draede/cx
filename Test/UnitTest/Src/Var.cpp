@@ -26,11 +26,11 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.h"
-#include "CX/Var.h"
-#include "CX/Print.h"
-#include "CX/IO/FileInputStream.h"
-#include "CX/Util/MemPool.h"
+#include "CX/CX.hpp"
+#include "CX/Var.hpp"
+#include "CX/Print.hpp"
+#include "CX/IO/FileInputStream.hpp"
+#include "CX/Util/MemPool.hpp"
 
 
 #pragma warning(push)

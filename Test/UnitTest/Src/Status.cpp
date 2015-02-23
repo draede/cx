@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.h"
-#include "CX/Status.h"
+#include "CX/CX.hpp"
+#include "CX/Status.hpp"
 
 #pragma warning(push)
 #pragma warning(disable: 4702)
