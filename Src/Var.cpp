@@ -1051,6 +1051,11 @@ Var::operator const Char * () const
 
 //===
 
+Var::ObjectIterator::ObjectIterator()
+{
+	m_pVar = NULL;
+}
+
 Var::ObjectIterator::ObjectIterator(ObjectVar *pVar)
 {
 	m_pVar = pVar;
@@ -1112,6 +1117,11 @@ Var &Var::ObjectIterator::Get()
 	return *m_iter->second;
 }
 
+Var::ObjectConstIterator::ObjectConstIterator()
+{
+	m_pVar = NULL;
+}
+
 Var::ObjectConstIterator::ObjectConstIterator(const ObjectVar *pVar)
 {
 	m_pVar = pVar;
@@ -1171,6 +1181,11 @@ const Var &Var::ObjectConstIterator::Get() const
 	}
 
 	return *m_iter->second;
+}
+
+Var::ArrayIterator::ArrayIterator()
+{
+	m_pVar = NULL;
 }
 
 Var::ArrayIterator::ArrayIterator(ArrayVar *pVar)
@@ -1238,6 +1253,11 @@ Var::ArrayConstIterator::ArrayConstIterator(const ArrayVar *pVar)
 {
 	m_pVar = pVar;
 	m_iter = m_pVar->begin();
+}
+
+Var::ArrayConstIterator::ArrayConstIterator()
+{
+	m_pVar = NULL;
 }
 
 Bool Var::ArrayConstIterator::IsValid() const

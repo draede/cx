@@ -31,6 +31,8 @@
 
 #include "CX/IO/IDataWriter.hpp"
 #include "CX/IO/IOutputStream.hpp"
+#include "CX/String.hpp"
+#include "CX/Stack.hpp"
 
 
 namespace CX
@@ -58,56 +60,75 @@ public:
 
 	virtual Status EndRootArray();
 
-	virtual Status ObjWriteNull(const Char *szName);
+	//object member
+	virtual Status WriteNull(const Char *szName);
 
-	virtual Status ObjWriteBool(const Char *szName, Bool bValue);
+	//array item
+	virtual Status WriteNull();
 
-	virtual Status ObjWriteInt(const Char *szName, Int64 nValue);
+	//object member
+	virtual Status WriteBool(const Char *szName, Bool bValue);
 
-	virtual Status ObjWriteReal(const Char *szName, Double lfValue);
+	//array item
+	virtual Status WriteBool(Bool bValue);
 
-	virtual Status ObjWriteString(const Char *szName, const Char *szValue);
+	//object member
+	virtual Status WriteInt(const Char *szName, Int64 nValue);
 
-	virtual Status ObjBeginObject(const Char *szName);
+	//array item
+	virtual Status WriteInt(Int64 nValue);
 
-	virtual Status ObjEndObject();
+	//object member
+	virtual Status WriteReal(const Char *szName, Double lfValue);
 
-	virtual Status ObjBeginArray(const Char *szName);
+	//array item
+	virtual Status WriteReal(Double lfValue);
 
-	virtual Status ObjEndArray();
+	//object member
+	virtual Status WriteString(const Char *szName, const Char *szValue);
 
-	virtual Status ArrWriteNull();
+	//array item
+	virtual Status WriteString(const Char *szValue);
 
-	virtual Status ArrWriteBool(Bool bValue);
+	//object member
+	virtual Status BeginObject(const Char *szName);
 
-	virtual Status ArrWriteInt(Int64 nValue);
+	//array item
+	virtual Status BeginObject();
 
-	virtual Status ArrWriteReal(Double lfValue);
+	//object member
+	virtual Status BeginArray(const Char *szName);
 
-	virtual Status ArrWriteBString(const Char *szValue);
+	//array item
+	virtual Status BeginArray();
 
-	virtual Status ArrBeginObject();
+	virtual Status EndObject();
 
-	virtual Status ArrEndObject();
-
-	virtual Status ArrBeginArray();
-
-	virtual Status ArrEndArray();
+	virtual Status EndArray();
 
 private:
 
 	enum State
 	{
-		State_Begin,
+		State_None,
 		State_RootObject,
 		State_RootArray,
 		State_Object,
 		State_Array,
-		State_End,
 	};
 
+	typedef Stack<State>::Type     StatesStack;
+
 	IO::IOutputStream   *m_pOutputStream;
-	State               m_nState;
+	bool                m_bFirst;
+#pragma warning(push)
+#pragma warning(disable: 4251)
+	StatesStack         m_stackStates;
+	String              m_sIndent;
+#pragma warning(pop)
+	Size                m_cIndent;
+
+	void AdjustIndent();
 
 };
 

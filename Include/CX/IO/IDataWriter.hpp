@@ -54,41 +54,51 @@ public:
 
 	virtual Status EndRootArray() = 0;
 
-	virtual Status ObjWriteNull(const Char *szName) = 0;
+	//object member
+	virtual Status WriteNull(const Char *szName) = 0;
 
-	virtual Status ObjWriteBool(const Char *szName, Bool bValue) = 0;
+	//array item
+	virtual Status WriteNull() = 0;
 
-	virtual Status ObjWriteInt(const Char *szName, Int64 nValue) = 0;
+	//object member
+	virtual Status WriteBool(const Char *szName, Bool bValue) = 0;
 
-	virtual Status ObjWriteReal(const Char *szName, Double lfValue) = 0;
+	//array item
+	virtual Status WriteBool(Bool bValue) = 0;
 
-	virtual Status ObjWriteString(const Char *szName, const Char *szValue) = 0;
+	//object member
+	virtual Status WriteInt(const Char *szName, Int64 nValue) = 0;
 
-	virtual Status ObjBeginObject(const Char *szName) = 0;
+	//array item
+	virtual Status WriteInt(Int64 nValue) = 0;
 
-	virtual Status ObjEndObject() = 0;
+	//object member
+	virtual Status WriteReal(const Char *szName, Double lfValue) = 0;
 
-	virtual Status ObjBeginArray(const Char *szName) = 0;
+	//array item
+	virtual Status WriteReal(Double lfValue) = 0;
 
-	virtual Status ObjEndArray() = 0;
+	//object member
+	virtual Status WriteString(const Char *szName, const Char *szValue) = 0;
 
-	virtual Status ArrWriteNull() = 0;
+	//array item
+	virtual Status WriteString(const Char *szValue) = 0;
 
-	virtual Status ArrWriteBool(Bool bValue) = 0;
+	//object member
+	virtual Status BeginObject(const Char *szName) = 0;
 
-	virtual Status ArrWriteInt(Int64 nValue) = 0;
+	//array item
+	virtual Status BeginObject() = 0;
 
-	virtual Status ArrWriteReal(Double lfValue) = 0;
+	//object member
+	virtual Status BeginArray(const Char *szName) = 0;
 
-	virtual Status ArrWriteBString(const Char *szValue) = 0;
+	//array item
+	virtual Status BeginArray() = 0;
 
-	virtual Status ArrBeginObject() = 0;
+	virtual Status EndObject() = 0;
 
-	virtual Status ArrEndObject() = 0;
-
-	virtual Status ArrBeginArray() = 0;
-
-	virtual Status ArrEndArray() = 0;
+	virtual Status EndArray() = 0;
 
 };
 

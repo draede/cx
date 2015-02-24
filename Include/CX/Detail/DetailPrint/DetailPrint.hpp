@@ -272,7 +272,7 @@ static inline StatusCode ToString<Bool>(Bool p, Char *szOutput, Size cLen, Size 
 		{
 			return Status_TooSmall;
 		}
-		memcpy(szOutput, "True", 4);
+		memcpy(szOutput, "true", 4);
 		szOutput[4] = 0;
 		*pcFinalLen = 4;
 
@@ -284,7 +284,7 @@ static inline StatusCode ToString<Bool>(Bool p, Char *szOutput, Size cLen, Size 
 		{
 			return Status_TooSmall;
 		}
-		memcpy(szOutput, "False", 5);
+		memcpy(szOutput, "false", 5);
 		szOutput[5]	= 0;
 		*pcFinalLen = 5;
 
@@ -808,6 +808,7 @@ static inline StatusCode Print(O o, const Char *szFormat,
 				{
 					return nStatus;
 				}
+				continue;
 			}
 			else
 			{

@@ -155,6 +155,8 @@ public:
 	{
 	public:
 
+		ObjectIterator();
+
 		Bool IsValid() const;
 
 		Status Reset();
@@ -179,6 +181,8 @@ public:
 	class ObjectConstIterator
 	{
 	public:
+
+		ObjectConstIterator();
 
 		Bool IsValid() const;
 
@@ -209,6 +213,8 @@ public:
 	{
 	public:
 
+		ArrayIterator();
+
 		Bool IsValid() const;
 
 		Status Reset();
@@ -233,6 +239,8 @@ public:
 	class ArrayConstIterator
 	{
 	public:
+
+		ArrayConstIterator();
 
 		Bool IsValid() const;
 

@@ -46,6 +46,7 @@ public:
 
 	enum EntryType
 	{
+		EntryType_Invalid, // == ERROR
 		EntryType_Null,
 		EntryType_Bool,
 		EntryType_Int,
@@ -67,59 +68,55 @@ public:
 
 	virtual Status EndRootArray() = 0;
 
-	//will return no more items at the end of the object
-	virtual EntryType ObjGetEntryType(String *psName) = 0;
+	virtual EntryType GetEntryType() = 0;
 
-	//will return no more items at the end of the object
-	virtual Status ObjReadNull(String *psName) = 0;
+	//object member - will return Status_OutOfBounds at the end of the object
+	virtual Status ReadNull(String *psName) = 0;
 
-	//will return no more items at the end of the object
-	virtual Status ObjReadBool(String *psName, Bool *pbValue) = 0;
+	//array item - will return Status_OutOfBounds at the end of the array
+	virtual Status ReadNull() = 0;
 
-	//will return no more items at the end of the object
-	virtual Status ObjReadInt(String *psName, Int64 *pnValue) = 0;
+	//object member - will return Status_OutOfBounds at the end of the object
+	virtual Status ReadBool(String *psName, Bool *pbValue) = 0;
 
-	//will return no more items at the end of the object
-	virtual Status ObjReadReal(String *psName, Double *plfValue) = 0;
+	//array item - will return Status_OutOfBounds at the end of the array
+	virtual Status ReadBool(Bool *pbValue) = 0;
 
-	//will return no more items at the end of the object
-	virtual Status ObjWriteString(String *psName, String *psValue) = 0;
+	//object member - will return Status_OutOfBounds at the end of the object
+	virtual Status ReadInt(String *psName, Int64 *pnValue) = 0;
 
-	virtual Status ObjBeginObject(String *psName) = 0;
+	//array item - will return Status_OutOfBounds at the end of the array
+	virtual Status ReadInt(Int64 *pnValue) = 0;
 
-	virtual Status ObjEndObject() = 0;
+	//object member - will return Status_OutOfBounds at the end of the object
+	virtual Status ReadReal(String *psName, Double *plfValue) = 0;
 
-	virtual Status ObjBeginArray(String *psName) = 0;
+	//array item - will return Status_OutOfBounds at the end of the array
+	virtual Status ReadReal(Double *plfValue) = 0;
 
-	virtual Status ObjEndArray() = 0;
+	//object member - will return Status_OutOfBounds at the end of the object
+	virtual Status ReadString(String *psName, String *psValue) = 0;
 
-	//will return no more items at the end of the array
-	virtual EntryType ArrGetEntryType() = 0;
+	//array item - will return Status_OutOfBounds at the end of the array
+	virtual Status ReadString(String *psValue) = 0;
 
-	virtual Size ArrGetItemsCount() = 0;
+	//object member
+	virtual Status BeginObject(String *psName) = 0;
 
-	//will return no more items at the end of the array
-	virtual Status ArrReadNull() = 0;
+	//array item
+	virtual Status BeginObject() = 0;
 
-	//will return no more items at the end of the array
-	virtual Status ArrReadBool(Bool *pbValue) = 0;
+	//object member
+	virtual Status BeginArray(String *psName) = 0;
 
-	//will return no more items at the end of the array
-	virtual Status ArrReadInt(Int64 *pnValue) = 0;
+	//array item
+	virtual Status BeginArray() = 0;
 
-	//will return no more items at the end of the array
-	virtual Status ArrReadReal(Double *plfValue) = 0;
+	virtual Size GetItemsCount() = 0;
 
-	//will return no more items at the end of the array
-	virtual Status ArrReadString(String *psValue) = 0;
+	virtual Status EndObject() = 0;
 
-	virtual Status ArrBeginObject() = 0;
-
-	virtual Status ArrEndObject() = 0;
-
-	virtual Status ArrBeginArray() = 0;
-
-	virtual Status ArrEndArray() = 0;
+	virtual Status EndArray() = 0;
 
 };
 

@@ -119,11 +119,11 @@ TEST_CASE("ToString tests", "[CX::ToString]")
 
 	SECTION("Bool - False")
 	{
-		REQUIRE(String("False") == ToString<Bool>(False));
+		REQUIRE(String("false") == ToString<Bool>(False));
 	}
 	SECTION("Bool - True")
 	{
-		REQUIRE(String("True") == ToString<Bool>(True));
+		REQUIRE(String("true") == ToString<Bool>(True));
 	}
 
 	SECTION("float")

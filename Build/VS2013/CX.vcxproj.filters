@@ -540,6 +540,9 @@
     <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp">
       <Filter>Header Files\Data\JSON</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DataReader.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -687,6 +690,9 @@
       <Filter>Contrib\Z85</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONDataReader.cpp">
       <Filter>Source Files\Data\JSON</Filter>
     </ClCompile>
   </ItemGroup>
