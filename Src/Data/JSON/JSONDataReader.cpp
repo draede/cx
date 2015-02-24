@@ -685,12 +685,15 @@ Status DataReader::EndObject()
 	{
 		return Status(Status_InvalidCall, "Out of order");
 	}
-	if (!m_stackIterators.top().bIsObject)
+	if (m_stackIterators.top().bIsObject)
 	{
-		return Status(Status_InvalidCall, "Out of order");
+		m_iterObject = m_stackIterators.top().iterObject;
+	}
+	else
+	{
+		m_iterArray = m_stackIterators.top().iterArray;
 	}
 	m_pVar       = m_pVar->GetParent();
-	m_iterObject = m_stackIterators.top().iterObject;
 	m_stackIterators.pop();
 
 	return Status();
@@ -716,14 +719,17 @@ Status DataReader::EndArray()
 	}
 	if (m_stackIterators.top().bIsObject)
 	{
-		return Status(Status_InvalidCall, "Out of order");
+		m_iterObject = m_stackIterators.top().iterObject;
+	}
+	else
+	{
+		m_iterArray = m_stackIterators.top().iterArray;
 	}
 	m_pVar      = m_pVar->GetParent();
 	m_iterArray = m_stackIterators.top().iterArray;
 	m_stackIterators.pop();
 
 	return Status();
-
 }
 
 }//namespace JSON

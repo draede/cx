@@ -79,13 +79,14 @@ public:
 			{
 				pVar->SetName(m_sKey.c_str());
 				pVar->SetParent(m_pCurrent);
-				(*m_pCurrent->m_pObject)[m_sKey] = pVar;
+				(m_pCurrent->m_pObject->mapVars)[m_sKey] = pVar;
+				m_pCurrent->m_pObject->vectorVarExs.push_back(Var::VarEx(m_sKey, pVar));
 				m_pCurrent = pVar;
 			}
 			else
 			{
 				pVar->SetParent(m_pCurrent);
-				m_pCurrent->m_pArray->push_back(pVar);
+				m_pCurrent->m_pArray->vectorVars.push_back(pVar);
 				m_pCurrent = pVar;
 			}
 		}
@@ -122,13 +123,14 @@ public:
 			{
 				pVar->SetName(m_sKey.c_str());
 				pVar->SetParent(m_pCurrent);
-				(*m_pCurrent->m_pObject)[m_sKey] = pVar;
+				(m_pCurrent->m_pObject->mapVars)[m_sKey] = pVar;
+				m_pCurrent->m_pObject->vectorVarExs.push_back(Var::VarEx(m_sKey, pVar));
 				m_pCurrent = pVar;
 			}
 			else
 			{
 				pVar->SetParent(m_pCurrent);
-				m_pCurrent->m_pArray->push_back(pVar);
+				m_pCurrent->m_pArray->vectorVars.push_back(pVar);
 				m_pCurrent = pVar;
 			}
 		}
@@ -332,7 +334,9 @@ Status Var::Copy(const Var &var)
 		{
 			return status;
 		}
-		for (ObjectVar::iterator iter = var.m_pObject->begin(); iter != var.m_pObject->end(); ++iter)
+		m_pObject->mapVars.clear();
+		for (VarsMap::iterator iter = var.m_pObject->mapVars.begin(); 
+		     iter != var.m_pObject->mapVars.end(); ++iter)
 		{
 			Var *pVar = New<Var>(*iter->second);
 
@@ -342,7 +346,14 @@ Status Var::Copy(const Var &var)
 			}
 			pVar->SetParent(this);
 
-			(*m_pObject)[iter->first] = pVar;
+			m_pObject->mapVars[iter->first] = pVar;
+			m_pObject->vectorVarExs.push_back(VarEx(iter->first, pVar));
+		}
+		m_pObject->vectorVarExs.clear();
+		for (VarExsVector::iterator iter = var.m_pObject->vectorVarExs.begin(); 
+		     iter != var.m_pObject->vectorVarExs.end(); ++iter)
+		{
+			m_pObject->vectorVarExs.push_back(*iter);
 		}
 
 		return Status();
@@ -357,7 +368,9 @@ Status Var::Copy(const Var &var)
 		{
 			return status;
 		}
-		for (ArrayVar::iterator iter = var.m_pArray->begin(); iter != var.m_pArray->end(); ++iter)
+		m_pArray->vectorVars.clear();
+		for (VarsVector::iterator iter = var.m_pArray->vectorVars.begin(); 
+		     iter != var.m_pArray->vectorVars.end(); ++iter)
 		{
 			Var *pVar = New<Var>(**iter);
 
@@ -367,7 +380,7 @@ Status Var::Copy(const Var &var)
 			}
 			pVar->SetParent(this);
 
-			m_pArray->push_back(pVar);
+			m_pArray->vectorVars.push_back(pVar);
 		}
 
 		return Status();
@@ -429,11 +442,12 @@ Bool Var::Equals(const Var &var, Bool bIgnoreCase/* = True*/) const
 	else
 	if (IsObject())
 	{
-		if (m_pObject->size() != var.m_pObject->size())
+		if (m_pObject->mapVars.size() != var.m_pObject->mapVars.size())
 		{
 			return False;
 		}
-		for (ObjectVar::iterator iter = m_pObject->begin(); iter != m_pObject->end(); ++iter)
+		for (VarsMap::iterator iter = m_pObject->mapVars.begin(); 
+		     iter != m_pObject->mapVars.end(); ++iter)
 		{
 			if (!var.IsObjectMember(iter->first))
 			{
@@ -450,13 +464,13 @@ Bool Var::Equals(const Var &var, Bool bIgnoreCase/* = True*/) const
 	else
 	if (IsArray())
 	{
-		if (m_pArray->size() != var.m_pArray->size())
+		if (m_pArray->vectorVars.size() != var.m_pArray->vectorVars.size())
 		{
 			return False;
 		}
-		for (Size i = 0; i < m_pArray->size(); i++)
+		for (Size i = 0; i < m_pArray->vectorVars.size(); i++)
 		{
-			if (!(*m_pArray)[i]->Equals(*(*var.m_pArray)[i]))
+			if (!(m_pArray->vectorVars)[i]->Equals(*(var.m_pArray->vectorVars)[i]))
 			{
 				return False;
 			}
@@ -497,10 +511,20 @@ Status Var::SetName(const Char *szName)
 
 void Var::HandleChildNameChange(Var *pChild, const Char *szOldName, const Char *szNewName)
 {
-	ObjectVar::iterator iter = m_pObject->find(szOldName);
+	VarsMap::iterator iter = m_pObject->mapVars.find(szOldName);
 
-	m_pObject->erase(iter);
-	(*m_pObject)[szNewName] = pChild;
+	m_pObject->mapVars.erase(iter);
+	(m_pObject->mapVars)[szNewName] = pChild;
+
+	for (VarExsVector::iterator iter = m_pObject->vectorVarExs.begin(); 
+	     iter != m_pObject->vectorVarExs.end(); ++iter)
+	{
+		if (0 == cx_strcmp(iter->sName.c_str(), szOldName) && iter->pVar == pChild)
+		{
+			iter->sName = szNewName;
+			break;
+		}
+	}
 }
 
 Var::Type Var::GetType() const
@@ -521,7 +545,8 @@ Status Var::SetType(Type nType)
 	else
 	if (Type_Object == m_nType && Type_Object != nType)
 	{
-		for (ObjectVar::iterator iter = m_pObject->begin(); iter != m_pObject->end(); ++iter)
+		for (VarsMap::iterator iter = m_pObject->mapVars.begin(); 
+		     iter != m_pObject->mapVars.end(); ++iter)
 		{
 			Delete(iter->second);
 		}
@@ -530,7 +555,8 @@ Status Var::SetType(Type nType)
 	else
 	if (Type_Array == m_nType && Type_Array != nType)
 	{
-		for (ArrayVar::iterator iter = m_pArray->begin(); iter != m_pArray->end(); ++iter)
+		for (VarsVector::iterator iter = m_pArray->vectorVars.begin(); 
+		     iter != m_pArray->vectorVars.end(); ++iter)
 		{
 			Delete(*iter);
 		}
@@ -794,7 +820,7 @@ Bool Var::IsObjectMember(const char *szName) const
 		return False;
 	}
 
-	return (m_pObject->end() != m_pObject->find(szName));
+	return (m_pObject->mapVars.end() != m_pObject->mapVars.find(szName));
 }
 
 Bool Var::IsObjectMember(const String &sName) const
@@ -809,7 +835,7 @@ Bool Var::IsArrayItem(Size cIndex) const
 		return False;
 	}
 
-	return (m_pObject->size() > cIndex);
+	return (m_pObject->mapVars.size() > cIndex);
 }
 
 Size Var::GetObjectMembersCount() const
@@ -819,7 +845,7 @@ Size Var::GetObjectMembersCount() const
 		return 0;
 	}
 
-	return m_pObject->size();
+	return m_pObject->mapVars.size();
 }
 
 Size Var::GetArrayItemsCount() const
@@ -829,7 +855,7 @@ Size Var::GetArrayItemsCount() const
 		return 0;
 	}
 	
-	return m_pArray->size();
+	return m_pArray->vectorVars.size();
 }
 
 void Var::SetParent(Var *pParent)
@@ -889,9 +915,9 @@ Var &Var::GetObjectMember(const char *szName)
 		return INVALID_VAR;
 	}
 
-	ObjectVar::iterator iter = m_pObject->find(szName);
+	VarsMap::iterator iter = m_pObject->mapVars.find(szName);
 
-	if (m_pObject->end() == iter)
+	if (m_pObject->mapVars.end() == iter)
 	{
 		Var *pVar = New<Var>();
 
@@ -901,7 +927,8 @@ Var &Var::GetObjectMember(const char *szName)
 		}
 		pVar->SetName(szName);
 		pVar->SetParent(this);
-		(*m_pObject)[szName] = pVar;
+		(m_pObject->mapVars)[szName] = pVar;
+		m_pObject->vectorVarExs.push_back(VarEx(szName, pVar));
 
 		return *pVar;
 	}
@@ -918,9 +945,9 @@ const Var &Var::GetObjectMember(const char *szName) const
 		return INVALID_VAR;
 	}
 
-	ObjectVar::iterator iter = m_pObject->find(szName);
+	VarsMap::iterator iter = m_pObject->mapVars.find(szName);
 
-	if (m_pObject->end() == iter)
+	if (m_pObject->mapVars.end() == iter)
 	{
 		return INVALID_VAR;
 	}
@@ -945,7 +972,7 @@ Var &Var::GetArrayItem(int cIndex/* = -1*/)
 		return INVALID_VAR;
 	}
 
-	if (cIndex < 0 || cIndex >= (int)m_pArray->size())
+	if (cIndex < 0 || cIndex >= (int)m_pArray->vectorVars.size())
 	{
 		Var *pVar = New<Var>();
 
@@ -954,13 +981,13 @@ Var &Var::GetArrayItem(int cIndex/* = -1*/)
 			return INVALID_VAR;
 		}
 		pVar->SetParent(this);
-		m_pArray->push_back(pVar);
+		m_pArray->vectorVars.push_back(pVar);
 
 		return *pVar;
 	}
 	else
 	{
-		return *(*m_pArray)[cIndex];
+		return *(m_pArray->vectorVars)[cIndex];
 	}
 }
 
@@ -971,12 +998,12 @@ const Var &Var::GetArrayItem(int cIndex/* = -1*/) const
 		return INVALID_VAR;
 	}
 
-	if (cIndex < 0 || cIndex >= (int)m_pArray->size())
+	if (cIndex < 0 || cIndex >= (int)m_pArray->vectorVars.size())
 	{
 		return INVALID_VAR;
 	}
 
-	return *(*m_pArray)[cIndex];
+	return *(m_pArray->vectorVars)[cIndex];
 }
 
 Var &Var::operator[](const char *szName)
@@ -1059,7 +1086,7 @@ Var::ObjectIterator::ObjectIterator()
 Var::ObjectIterator::ObjectIterator(ObjectVar *pVar)
 {
 	m_pVar = pVar;
-	m_iter = m_pVar->begin();
+	m_iter = m_pVar->vectorVarExs.begin();
 }
 
 Bool Var::ObjectIterator::IsValid() const
@@ -1069,7 +1096,7 @@ Bool Var::ObjectIterator::IsValid() const
 		return False;
 	}
 
-	return (m_pVar->end() != m_iter);
+	return (m_pVar->vectorVarExs.end() != m_iter);
 }
 
 Status Var::ObjectIterator::Reset()
@@ -1079,7 +1106,7 @@ Status Var::ObjectIterator::Reset()
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
-	m_iter = m_pVar->begin();
+	m_iter = m_pVar->vectorVarExs.begin();
 
 	return Status();
 }
@@ -1090,12 +1117,12 @@ Status Var::ObjectIterator::Next()
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVarExs.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	m_iter++;
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVarExs.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
@@ -1109,12 +1136,12 @@ Var &Var::ObjectIterator::Get()
 	{
 		return INVALID_VAR;
 	}
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVarExs.end() == m_iter)
 	{
 		return INVALID_VAR;
 	}
 
-	return *m_iter->second;
+	return *m_iter->pVar;
 }
 
 Var::ObjectConstIterator::ObjectConstIterator()
@@ -1125,7 +1152,7 @@ Var::ObjectConstIterator::ObjectConstIterator()
 Var::ObjectConstIterator::ObjectConstIterator(const ObjectVar *pVar)
 {
 	m_pVar = pVar;
-	m_iter = m_pVar->begin();
+	m_iter = m_pVar->vectorVarExs.begin();
 }
 
 Bool Var::ObjectConstIterator::IsValid() const
@@ -1135,7 +1162,7 @@ Bool Var::ObjectConstIterator::IsValid() const
 		return False;
 	}
 
-	return (m_pVar->end() != m_iter);
+	return (m_pVar->vectorVarExs.end() != m_iter);
 }
 
 Status Var::ObjectConstIterator::Reset()
@@ -1145,7 +1172,7 @@ Status Var::ObjectConstIterator::Reset()
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
-	m_iter = m_pVar->begin();
+	m_iter = m_pVar->vectorVarExs.begin();
 
 	return Status();
 }
@@ -1156,12 +1183,12 @@ Status Var::ObjectConstIterator::Next()
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVarExs.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	m_iter++;
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVarExs.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
@@ -1175,12 +1202,12 @@ const Var &Var::ObjectConstIterator::Get() const
 	{
 		return INVALID_VAR;
 	}
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVarExs.end() == m_iter)
 	{
 		return INVALID_VAR;
 	}
 
-	return *m_iter->second;
+	return *m_iter->pVar;
 }
 
 Var::ArrayIterator::ArrayIterator()
@@ -1191,7 +1218,7 @@ Var::ArrayIterator::ArrayIterator()
 Var::ArrayIterator::ArrayIterator(ArrayVar *pVar)
 {
 	m_pVar = pVar;
-	m_iter = m_pVar->begin();
+	m_iter = m_pVar->vectorVars.begin();
 }
 
 Bool Var::ArrayIterator::IsValid() const
@@ -1201,7 +1228,7 @@ Bool Var::ArrayIterator::IsValid() const
 		return False;
 	}
 
-	return (m_pVar->end() != m_iter);
+	return (m_pVar->vectorVars.end() != m_iter);
 }
 
 Status Var::ArrayIterator::Reset()
@@ -1211,7 +1238,7 @@ Status Var::ArrayIterator::Reset()
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
-	m_iter = m_pVar->begin();
+	m_iter = m_pVar->vectorVars.begin();
 
 	return Status();
 }
@@ -1222,12 +1249,12 @@ Status Var::ArrayIterator::Next()
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVars.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	m_iter++;
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVars.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
@@ -1241,7 +1268,7 @@ Var &Var::ArrayIterator::Get()
 	{
 		return INVALID_VAR;
 	}
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVars.end() == m_iter)
 	{
 		return INVALID_VAR;
 	}
@@ -1252,7 +1279,7 @@ Var &Var::ArrayIterator::Get()
 Var::ArrayConstIterator::ArrayConstIterator(const ArrayVar *pVar)
 {
 	m_pVar = pVar;
-	m_iter = m_pVar->begin();
+	m_iter = m_pVar->vectorVars.begin();
 }
 
 Var::ArrayConstIterator::ArrayConstIterator()
@@ -1267,7 +1294,7 @@ Bool Var::ArrayConstIterator::IsValid() const
 		return False;
 	}
 
-	return (m_pVar->end() != m_iter);
+	return (m_pVar->vectorVars.end() != m_iter);
 }
 
 Status Var::ArrayConstIterator::Reset()
@@ -1277,7 +1304,7 @@ Status Var::ArrayConstIterator::Reset()
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 
-	m_iter = m_pVar->begin();
+	m_iter = m_pVar->vectorVars.begin();
 
 	return Status_OK;
 }
@@ -1288,12 +1315,12 @@ Status Var::ArrayConstIterator::Next()
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVars.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
 	m_iter++;
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVars.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
@@ -1307,7 +1334,7 @@ const Var &Var::ArrayConstIterator::Get() const
 	{
 		return INVALID_VAR;
 	}
-	if (m_pVar->end() == m_iter)
+	if (m_pVar->vectorVars.end() == m_iter)
 	{
 		return INVALID_VAR;
 	}
@@ -1484,12 +1511,14 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 		{
 			return status;
 		}
-		for (ObjectVar::iterator iter = m_pObject->begin(); iter != m_pObject->end(); ++iter)
+		for (VarsMap::iterator iter = m_pObject->mapVars.begin(); 
+		     iter != m_pObject->mapVars.end(); ++iter)
 		{
-			ObjectVar::iterator iterEx = iter;
+			VarsMap::iterator iterEx = iter;
 
 			iterEx++;
-			status = iter->second->Write(pOutputStream, cIndent + 1, (m_pObject->end() == iterEx));
+			status = iter->second->Write(pOutputStream, cIndent + 1, 
+			                             (m_pObject->mapVars.end() == iterEx));
 			if (status.IsNOK())
 			{
 				return status;
@@ -1524,12 +1553,14 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 		{
 			return status;
 		}
-		for (ArrayVar::iterator iter = m_pArray->begin(); iter != m_pArray->end(); ++iter)
+		for (VarsVector::iterator iter = m_pArray->vectorVars.begin(); 
+		     iter != m_pArray->vectorVars.end(); ++iter)
 		{
-			ArrayVar::iterator iterEx = iter;
+			VarsVector::iterator iterEx = iter;
 
 			iterEx++;
-			status = (*iter)->Write(pOutputStream, cIndent + 1, (m_pArray->end() == iterEx));
+			status = (*iter)->Write(pOutputStream, cIndent + 1, 
+			                        (m_pArray->vectorVars.end() == iterEx));
 			if (status.IsNOK())
 			{
 				return status;

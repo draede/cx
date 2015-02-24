@@ -46,8 +46,43 @@ class CX_API Var
 {
 private:
 
-	typedef Vector<Var *>::Type                                    ArrayVar;
-	typedef Map<String, Var *, CaseInsensitiveOrderPolicy>::Type   ObjectVar;
+	typedef Vector<Var *>::Type                                    VarsVector;
+	typedef Map<String, Var *, CaseInsensitiveOrderPolicy>::Type   VarsMap;
+	
+	typedef struct _VarEx
+	{
+		_VarEx()
+		{
+		}
+
+		_VarEx(const String &sName, Var *pVar)
+		{
+			this->sName = sName;
+			this->pVar  = pVar;
+		}
+
+		_VarEx(const Char *szName, Var *pVar)
+		{
+			this->sName = szName;
+			this->pVar  = pVar;
+		}
+
+		String sName;
+		Var    *pVar;
+	}VarEx;
+
+	typedef Vector<VarEx>::Type                                     VarExsVector;
+
+	typedef struct _ArrayVar
+	{
+		VarsVector    vectorVars;
+	}ArrayVar;
+
+	typedef struct _ObjectVar
+	{
+		VarsMap       mapVars;
+		VarExsVector  vectorVarExs;
+	}ObjectVar;
 
 public:
 
@@ -173,8 +208,8 @@ public:
 
 	private:
 
-		ObjectVar             *m_pVar;
-		ObjectVar::iterator   m_iter;
+		ObjectVar                *m_pVar;
+		VarExsVector::iterator   m_iter;
 
 	};
 
@@ -200,8 +235,8 @@ public:
 
 	private:
 
-		const ObjectVar             *m_pVar;
-		ObjectVar::const_iterator   m_iter;
+		const ObjectVar                *m_pVar;
+		VarExsVector::const_iterator   m_iter;
 
 	};
 
@@ -231,8 +266,8 @@ public:
 
 	private:
 
-		ArrayVar             *m_pVar;
-		ArrayVar::iterator   m_iter;
+		ArrayVar               *m_pVar;
+		VarsVector::iterator   m_iter;
 
 	};
 
@@ -258,8 +293,8 @@ public:
 
 	private:
 
-		const ArrayVar             *m_pVar;
-		ArrayVar::const_iterator   m_iter;
+		const ArrayVar              *m_pVar;
+		VarsVector::const_iterator   m_iter;
 
 	};
 
@@ -320,9 +355,6 @@ protected:
 	void HandleChildNameChange(Var *pChild, const Char *szOldName, const Char *szNewName);
 
 private:
-
-	typedef Vector<Var *>::Type                                    ArrayVar;
-	typedef Map<String, Var *, CaseInsensitiveOrderPolicy>::Type   ObjectVar;
 
 	static const Bool         DEFAULT_BOOL = False;
 	static const Int64        DEFAULT_INT  = 0;
