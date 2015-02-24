@@ -1180,10 +1180,15 @@ uint32_t Hash32(const char *s, size_t len) {
   f = f * 5 + 0xe6546b64;
   size_t iters = (len - 1) / 20;
   do {
+#pragma warning(suppress: 6246)
     uint32_t a0 = Rotate(Fetch(s) * c1, 17) * c2;
+#pragma warning(suppress: 6246)
     uint32_t a1 = Fetch(s + 4);
+#pragma warning(suppress: 6246)
     uint32_t a2 = Rotate(Fetch(s + 8) * c1, 17) * c2;
+#pragma warning(suppress: 6246)
     uint32_t a3 = Rotate(Fetch(s + 12) * c1, 17) * c2;
+#pragma warning(suppress: 6246)
     uint32_t a4 = Fetch(s + 16);
     h ^= a0;
     h = Rotate(h, 18);
@@ -1420,10 +1425,12 @@ namespace NAMESPACE_FOR_HASH_FUNCTIONS {
 // May change from time to time, may differ on different platforms, may differ
 // depending on NDEBUG.
 uint32_t Hash32(const char* s, size_t len) {
+#pragma warning(suppress: 6313)
   if (can_use_sse42 & can_use_aesni & x86_64)
     return DebugTweak(farmhashns::Hash32(s, len));
 
   return DebugTweak(
+#pragma warning(suppress: 6313)
       (can_use_sse42 & can_use_aesni) ?
       farmhashsu::Hash32(s, len) :
       can_use_sse42 ?
@@ -1436,10 +1443,12 @@ uint32_t Hash32(const char* s, size_t len) {
 // May change from time to time, may differ on different platforms, may differ
 // depending on NDEBUG.
 uint32_t Hash32WithSeed(const char* s, size_t len, uint32_t seed) {
+#pragma warning(suppress: 6313)
   if (can_use_sse42 & can_use_aesni & x86_64)
     return DebugTweak(farmhashns::Hash32WithSeed(s, len, seed));
 
   return DebugTweak(
+#pragma warning(suppress: 6313)
       (can_use_sse42 & can_use_aesni) ?
       farmhashsu::Hash32WithSeed(s, len, seed) :
       can_use_sse42 ?

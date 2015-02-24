@@ -812,13 +812,13 @@ static inline StatusCode Print(O o, const Char *szFormat,
 			}
 			else
 			{
-				if (!cx_isdigit(*pszPos))
+				if (!cx_isdigit((unsigned char)*pszPos))
 				{
 					return Status_InvalidArg;
 				}
 			}
 			cIndex = 0;
-			while (cx_isdigit(*pszPos))
+			while (cx_isdigit((unsigned char)*pszPos))
 			{
 				cIndex *= 10;
 				cIndex += *pszPos - '0';
@@ -877,10 +877,10 @@ static inline StatusCode Print(O o, const Char *szFormat,
 				}
 
 				//width
-				if (cx_isdigit(*pszPos))
+				if (cx_isdigit((unsigned char)*pszPos))
 				{
 					cWidth = 0;
-					while (cx_isdigit(*pszPos))
+					while (cx_isdigit((unsigned char)*pszPos))
 					{
 						cWidth *= 10;
 						cWidth += *pszPos - '0';
@@ -894,7 +894,7 @@ static inline StatusCode Print(O o, const Char *szFormat,
 				{
 					pszPos++;
 					cPrec = 0;
-					while (cx_isdigit(*pszPos))
+					while (cx_isdigit((unsigned char)*pszPos))
 					{
 						cPrec *= 10;
 						cPrec += *pszPos - '0';

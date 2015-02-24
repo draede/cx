@@ -52,11 +52,13 @@ Lock::~Lock()
 	DeleteCriticalSection(&m_cs);
 }
 
+#pragma warning(suppress: 26135)
 void Lock::Enter()
 {
 	EnterCriticalSection(&m_cs);
 }
 
+#pragma warning(suppress: 26135)
 void Lock::Leave()
 {
 	LeaveCriticalSection(&m_cs);

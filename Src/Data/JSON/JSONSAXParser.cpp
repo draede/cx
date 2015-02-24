@@ -270,6 +270,7 @@ SAXParser::~SAXParser()
 	}
 }
 
+#pragma warning(suppress: 6262)
 Status SAXParser::ParseStream(IO::IInputStream *pInputStream)
 {
 	if (NULL == m_pHandler)

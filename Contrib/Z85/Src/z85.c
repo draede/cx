@@ -106,6 +106,7 @@ char* Z85_decode_unsafe(const char* source, const char* sourceEnd, char* dest)
 
    for (; src != end; src += 5, dst += 4)
    {
+#pragma warning(suppress: 6385)
       value =              base256[(src[0] - 32) & 127];
       value = value * 85 + base256[(src[1] - 32) & 127];
       value = value * 85 + base256[(src[2] - 32) & 127];

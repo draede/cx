@@ -547,6 +547,7 @@ void SHA256_Update(SHA256_CTX* context, const sha2_byte *data, size_t len) {
 		if (len >= freespace) {
 			/* Fill the buffer completely and process it */
 			MEMCPY_BCOPY(&context->buffer[usedspace], data, freespace);
+#pragma warning(suppress: 6297)
 			context->bitcount += freespace << 3;
 			len -= freespace;
 			data += freespace;
@@ -554,6 +555,7 @@ void SHA256_Update(SHA256_CTX* context, const sha2_byte *data, size_t len) {
 		} else {
 			/* The buffer is not yet full */
 			MEMCPY_BCOPY(&context->buffer[usedspace], data, len);
+#pragma warning(suppress: 6297)
 			context->bitcount += len << 3;
 			/* Clean up: */
 			usedspace = freespace = 0;
@@ -570,6 +572,7 @@ void SHA256_Update(SHA256_CTX* context, const sha2_byte *data, size_t len) {
 	if (len > 0) {
 		/* There's left-overs, so save 'em */
 		MEMCPY_BCOPY(context->buffer, data, len);
+#pragma warning(suppress: 6297)
 		context->bitcount += len << 3;
 	}
 	/* Clean up: */
@@ -869,6 +872,7 @@ void SHA512_Update(SHA512_CTX* context, const sha2_byte *data, size_t len) {
 		if (len >= freespace) {
 			/* Fill the buffer completely and process it */
 			MEMCPY_BCOPY(&context->buffer[usedspace], data, freespace);
+#pragma warning(suppress: 6297)
 			ADDINC128(context->bitcount, freespace << 3);
 			len -= freespace;
 			data += freespace;
@@ -876,6 +880,7 @@ void SHA512_Update(SHA512_CTX* context, const sha2_byte *data, size_t len) {
 		} else {
 			/* The buffer is not yet full */
 			MEMCPY_BCOPY(&context->buffer[usedspace], data, len);
+#pragma warning(suppress: 6297)
 			ADDINC128(context->bitcount, len << 3);
 			/* Clean up: */
 			usedspace = freespace = 0;
@@ -892,6 +897,7 @@ void SHA512_Update(SHA512_CTX* context, const sha2_byte *data, size_t len) {
 	if (len > 0) {
 		/* There's left-overs, so save 'em */
 		MEMCPY_BCOPY(context->buffer, data, len);
+#pragma warning(suppress: 6297)
 		ADDINC128(context->bitcount, len << 3);
 	}
 	/* Clean up: */

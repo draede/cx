@@ -516,12 +516,12 @@ void Var::HandleChildNameChange(Var *pChild, const Char *szOldName, const Char *
 	m_pObject->mapVars.erase(iter);
 	(m_pObject->mapVars)[szNewName] = pChild;
 
-	for (VarExsVector::iterator iter = m_pObject->vectorVarExs.begin(); 
-	     iter != m_pObject->vectorVarExs.end(); ++iter)
+	for (VarExsVector::iterator iterEx = m_pObject->vectorVarExs.begin(); 
+	     iterEx != m_pObject->vectorVarExs.end(); ++iterEx)
 	{
-		if (0 == cx_strcmp(iter->sName.c_str(), szOldName) && iter->pVar == pChild)
+		if (0 == cx_strcmp(iterEx->sName.c_str(), szOldName) && iterEx->pVar == pChild)
 		{
-			iter->sName = szNewName;
+			iterEx->sName = szNewName;
 			break;
 		}
 	}

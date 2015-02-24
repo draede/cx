@@ -397,6 +397,7 @@ public:
     */
     template <unsigned parseFlags, typename InputStream, typename Handler>
     ParseResult Parse(InputStream& is, Handler& handler) {
+#pragma warning(suppress: 6313)
         if (parseFlags & kParseIterativeFlag)
             return IterativeParse<parseFlags>(is, handler);
 
@@ -414,6 +415,7 @@ public:
             ParseValue<parseFlags>(is, handler);
             RAPIDJSON_PARSE_ERROR_EARLY_RETURN(parseResult_);
 
+#pragma warning(suppress: 6313)
             if (!(parseFlags & kParseStopWhenDoneFlag)) {
                 SkipWhitespace(is);
 
@@ -645,6 +647,7 @@ private:
         InputStream& s(copy.s);
 
         bool success = false;
+#pragma warning(suppress: 6313)
         if (parseFlags & kParseInsituFlag) {
             typename InputStream::Ch *head = s.PutBegin();
             ParseStringToStream<parseFlags, SourceEncoding, SourceEncoding>(s, s);
@@ -719,6 +722,7 @@ private:
             else if ((unsigned)c < 0x20) // RFC 4627: unescaped = %x20-21 / %x23-5B / %x5D-10FFFF
                 RAPIDJSON_PARSE_ERROR(kParseErrorStringEscapeInvalid, is.Tell() - 1);
             else {
+#pragma warning(suppress: 6313)
                 if (parseFlags & kParseValidateEncodingFlag ? 
                     !Transcoder<SEncoding, TEncoding>::Validate(is, os) : 
                     !Transcoder<SEncoding, TEncoding>::Transcode(is, os))
@@ -949,6 +953,7 @@ private:
 
         if (useDouble) {
             int p = exp + expFrac;
+#pragma warning(suppress: 6313)
             if (parseFlags & kParseFullPrecisionFlag)
                 d = internal::StrtodFullPrecision(d, p, decimal, length, decimalPosition, exp);
             else
@@ -1410,6 +1415,7 @@ private:
             state = d;
 
             // Do not further consume streams if a root JSON has been parsed.
+#pragma warning(suppress: 6313)
             if ((parseFlags & kParseStopWhenDoneFlag) && state == IterativeParsingFinishState)
                 break;
 
