@@ -27,6 +27,9 @@
  */ 
 
 #include "CX/Data/JSON/DataWriter.hpp"
+#include "CX/Data/JSON/SAXParser.hpp"
+#include "CX/Str/Z85BinStr.hpp"
+#include "CX/Str/UTF8.hpp"
 #include "CX/Print.hpp"
 
 
@@ -169,6 +172,7 @@ Status DataWriter::EndRootArray()
 //object member
 Status DataWriter::WriteNull(const Char *szName)
 {
+	String sName;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -180,16 +184,20 @@ Status DataWriter::WriteNull(const Char *szName)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
 	if (m_bFirst)
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\": null", m_sIndent, szName)).IsNOK())
+		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\": null", m_sIndent, sName)).IsNOK())
 		{
 			return status;
 		}
 	}
 	else
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\": null", m_sIndent, szName)).IsNOK())
+		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\": null", m_sIndent, sName)).IsNOK())
 		{
 			return status;
 		}
@@ -235,6 +243,7 @@ Status DataWriter::WriteNull()
 //object member
 Status DataWriter::WriteBool(const Char *szName, Bool bValue)
 {
+	String sName;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -246,10 +255,14 @@ Status DataWriter::WriteBool(const Char *szName, Bool bValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
 	if (m_bFirst)
 	{
 		if ((status = 
-		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, szName, bValue)).IsNOK())
+		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, sName, bValue)).IsNOK())
 		{
 			return status;
 		}
@@ -257,7 +270,7 @@ Status DataWriter::WriteBool(const Char *szName, Bool bValue)
 	else
 	{
 		if ((status = 
-		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, szName, bValue)).IsNOK())
+		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, sName, bValue)).IsNOK())
 		{
 			return status;
 		}
@@ -303,6 +316,7 @@ Status DataWriter::WriteBool(Bool bValue)
 //object member
 Status DataWriter::WriteInt(const Char *szName, Int64 nValue)
 {
+	String sName;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -314,10 +328,14 @@ Status DataWriter::WriteInt(const Char *szName, Int64 nValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
 	if (m_bFirst)
 	{
 		if ((status = 
-		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, szName, nValue)).IsNOK())
+		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, sName, nValue)).IsNOK())
 		{
 			return status;
 		}
@@ -325,7 +343,7 @@ Status DataWriter::WriteInt(const Char *szName, Int64 nValue)
 	else
 	{
 		if ((status = 
-		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, szName, nValue)).IsNOK())
+		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, sName, nValue)).IsNOK())
 		{
 			return status;
 		}
@@ -371,6 +389,7 @@ Status DataWriter::WriteInt(Int64 nValue)
 //object member
 Status DataWriter::WriteReal(const Char *szName, Double lfValue)
 {
+	String sName;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -382,10 +401,14 @@ Status DataWriter::WriteReal(const Char *szName, Double lfValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
 	if (m_bFirst)
 	{
 		if ((status = 
-		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, szName, lfValue)).IsNOK())
+		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, sName, lfValue)).IsNOK())
 		{
 			return status;
 		}
@@ -393,7 +416,7 @@ Status DataWriter::WriteReal(const Char *szName, Double lfValue)
 	else
 	{
 		if ((status = 
-		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, szName, lfValue)).IsNOK())
+		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, sName, lfValue)).IsNOK())
 		{
 			return status;
 		}
@@ -439,6 +462,8 @@ Status DataWriter::WriteReal(Double lfValue)
 //object member
 Status DataWriter::WriteString(const Char *szName, const Char *szValue)
 {
+	String sName;
+	String sValue;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -450,10 +475,18 @@ Status DataWriter::WriteString(const Char *szName, const Char *szValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = SAXParser::EscapeString(szValue, &sValue)).IsNOK())
+	{
+		return status;
+	}
 	if (m_bFirst)
 	{
 		if ((status = 
-		     Print(m_pOutputStream, "\n{1}\"{2}\": \"{3}\"", m_sIndent, szName, szValue)).IsNOK())
+		     Print(m_pOutputStream, "\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
 		{
 			return status;
 		}
@@ -461,7 +494,7 @@ Status DataWriter::WriteString(const Char *szName, const Char *szValue)
 	else
 	{
 		if ((status = 
-		     Print(m_pOutputStream, ",\n{1}\"{2}\": \"{3}\"", m_sIndent, szName, szValue)).IsNOK())
+		     Print(m_pOutputStream, ",\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
 		{
 			return status;
 		}
@@ -474,6 +507,7 @@ Status DataWriter::WriteString(const Char *szName, const Char *szValue)
 //array item
 Status DataWriter::WriteString(const Char *szValue)
 {
+	String sValue;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -485,16 +519,204 @@ Status DataWriter::WriteString(const Char *szValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
+	if ((status = SAXParser::EscapeString(szValue, &sValue)).IsNOK())
+	{
+		return status;
+	}
 	if (m_bFirst)
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\"", m_sIndent, szValue)).IsNOK())
+		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
 		{
 			return status;
 		}
 	}
 	else
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\"", m_sIndent, szValue)).IsNOK())
+		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
+		{
+			return status;
+		}
+	}
+	m_bFirst = false;
+
+	return Status();
+}
+
+//object member
+Status DataWriter::WriteWString(const Char *szName, const WChar *wszValue)
+{
+	String sName;
+	String sTmpValue;
+	String sValue;
+	Status status;
+
+	if (NULL == m_pOutputStream)
+	{
+		return Status(Status_NotInitialized, "No valid output stream");
+	}
+	if (m_stackStates.empty() ||
+		(State_Object != m_stackStates.top() && State_RootObject != m_stackStates.top()))
+	{
+		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
+	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = Str::UTF8::FromWChar(wszValue, &sTmpValue)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = SAXParser::EscapeString(sTmpValue.c_str(), &sValue)).IsNOK())
+	{
+		return status;
+	}
+	if (m_bFirst)
+	{
+		if ((status =
+			Print(m_pOutputStream, "\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
+		{
+			return status;
+		}
+	}
+	else
+	{
+		if ((status =
+			Print(m_pOutputStream, ",\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
+		{
+			return status;
+		}
+	}
+	m_bFirst = false;
+
+	return Status();
+}
+
+//array item
+Status DataWriter::WriteWString(const WChar *wszValue)
+{
+	String sTmpValue;
+	String sValue;
+	Status status;
+
+	if (NULL == m_pOutputStream)
+	{
+		return Status(Status_NotInitialized, "No valid output stream");
+	}
+	if (m_stackStates.empty() ||
+		(State_Array != m_stackStates.top() && State_RootArray != m_stackStates.top()))
+	{
+		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
+	}
+	if ((status = Str::UTF8::FromWChar(wszValue, &sTmpValue)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = SAXParser::EscapeString(sTmpValue.c_str(), &sValue)).IsNOK())
+	{
+		return status;
+	}
+	if (m_bFirst)
+	{
+		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
+		{
+			return status;
+		}
+	}
+	else
+	{
+		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
+		{
+			return status;
+		}
+	}
+	m_bFirst = false;
+
+	return Status();
+}
+
+//object member
+Status DataWriter::WriteBLOB(const Char *szName, const void *pData, Size cbSize)
+{
+	String sName;
+	String sValue;
+	Status status;
+
+	if (NULL == m_pOutputStream)
+	{
+		return Status(Status_NotInitialized, "No valid output stream");
+	}
+	if (m_stackStates.empty() ||
+		(State_Object != m_stackStates.top() && State_RootObject != m_stackStates.top()))
+	{
+		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
+	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
+
+	Str::Z85BinStr binstr;
+
+	if ((status = binstr.ToStringEx(pData, cbSize, &sValue)).IsNOK())
+	{
+		return status;
+	}
+
+	if (m_bFirst)
+	{
+		if ((status =
+			Print(m_pOutputStream, "\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
+		{
+			return status;
+		}
+	}
+	else
+	{
+		if ((status =
+			Print(m_pOutputStream, ",\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
+		{
+			return status;
+		}
+	}
+	m_bFirst = false;
+
+	return Status();
+}
+
+//array item
+Status DataWriter::WriteBLOB(const void *pData, Size cbSize)
+{
+	String sValue;
+	Status status;
+
+	if (NULL == m_pOutputStream)
+	{
+		return Status(Status_NotInitialized, "No valid output stream");
+	}
+	if (m_stackStates.empty() ||
+		(State_Array != m_stackStates.top() && State_RootArray != m_stackStates.top()))
+	{
+		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
+	}
+
+	Str::Z85BinStr binstr;
+
+	if ((status = binstr.ToStringEx(pData, cbSize, &sValue)).IsNOK())
+	{
+		return status;
+	}
+
+	if (m_bFirst)
+	{
+		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
+		{
+			return status;
+		}
+	}
+	else
+	{
+		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
 		{
 			return status;
 		}
@@ -507,6 +729,7 @@ Status DataWriter::WriteString(const Char *szValue)
 //object member
 Status DataWriter::BeginObject(const Char *szName)
 {
+	String sName;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -518,10 +741,14 @@ Status DataWriter::BeginObject(const Char *szName)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
 	if (m_bFirst)
 	{
 		if ((status =
-		     Print(m_pOutputStream, "\n{1}\"{2}\":\n{3}{{", m_sIndent, szName, m_sIndent)).IsNOK())
+		     Print(m_pOutputStream, "\n{1}\"{2}\":\n{3}{{", m_sIndent, sName, m_sIndent)).IsNOK())
 		{
 			return status;
 		}
@@ -529,7 +756,7 @@ Status DataWriter::BeginObject(const Char *szName)
 	else
 	{
 		if ((status =
-		     Print(m_pOutputStream, ",\n{1}\"{2}\":\n{3}{{", m_sIndent, szName, m_sIndent)).IsNOK())
+		     Print(m_pOutputStream, ",\n{1}\"{2}\":\n{3}{{", m_sIndent, sName, m_sIndent)).IsNOK())
 		{
 			return status;
 		}
@@ -581,6 +808,7 @@ Status DataWriter::BeginObject()
 //object member
 Status DataWriter::BeginArray(const Char *szName)
 {
+	String sName;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -592,10 +820,14 @@ Status DataWriter::BeginArray(const Char *szName)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
+	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	{
+		return status;
+	}
 	if (m_bFirst)
 	{
 		if ((status =
-			Print(m_pOutputStream, "\n{1}\"{2}\":\n{3}[", m_sIndent, szName, m_sIndent)).IsNOK())
+			Print(m_pOutputStream, "\n{1}\"{2}\":\n{3}[", m_sIndent, sName, m_sIndent)).IsNOK())
 		{
 			return status;
 		}
@@ -603,7 +835,7 @@ Status DataWriter::BeginArray(const Char *szName)
 	else
 	{
 		if ((status =
-			Print(m_pOutputStream, ",\n{1}\"{2}\":\n{3}[", m_sIndent, szName, m_sIndent)).IsNOK())
+			Print(m_pOutputStream, ",\n{1}\"{2}\":\n{3}[", m_sIndent, sName, m_sIndent)).IsNOK())
 		{
 			return status;
 		}
@@ -675,7 +907,6 @@ Status DataWriter::EndObject()
 
 	return Status();
 }
-
 
 Status DataWriter::EndArray()
 {

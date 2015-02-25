@@ -55,7 +55,7 @@ unsigned int HexBinStr::GetFlags()
 	return m_nFlags;
 }
 
-Status HexBinStr::ToString(const Byte *pBinInput, Size cbBinInputSize, Char *pStrOutput,
+Status HexBinStr::ToString(const void *pBinInput, Size cbBinInputSize, Char *pStrOutput,
                            Size cStrOutputLen)
 {
 	static Char hdu[] =
@@ -82,14 +82,14 @@ Status HexBinStr::ToString(const Byte *pBinInput, Size cbBinInputSize, Char *pSt
 	}
 	for (Size i = 0; i < cbBinInputSize; i++)
 	{
-		pStrOutput[i * 2]     = hd[pBinInput[i] / 16];
-		pStrOutput[i * 2 + 1] = hd[pBinInput[i] % 16];
+		pStrOutput[i * 2]     = hd[((const Byte *)pBinInput)[i] / 16];
+		pStrOutput[i * 2 + 1] = hd[((const Byte *)pBinInput)[i] % 16];
 	}
 
 	return Status();
 }
 
-Status HexBinStr::FromString(const Char *pStrInput, Size cStrInputLen, Byte *pBinOutput, 
+Status HexBinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
                              Size cbBinOutputSize)
 {
 	Char ch;
@@ -107,38 +107,38 @@ Status HexBinStr::FromString(const Char *pStrInput, Size cStrInputLen, Byte *pBi
 		ch = pStrInput[i];
 		if ('A' <= ch && 'f' >= ch)
 		{
-			pBinOutput[i / 2] = ch - 'A' + 10;
+			((Byte *)pBinOutput)[i / 2] = ch - 'A' + 10;
 		}
 		else
 		if ('a' <= ch && 'f' >= ch)
 		{
-			pBinOutput[i / 2] = ch - 'a' + 10;
+			((Byte *)pBinOutput)[i / 2] = ch - 'a' + 10;
 		}
 		else
 		{
-			pBinOutput[i / 2] = ch - '0';
+			((Byte *)pBinOutput)[i / 2] = ch - '0';
 		}
-		pBinOutput[i / 2] *= 16;
+		((Byte *)pBinOutput)[i / 2] *= 16;
 		ch = pStrInput[i + 1];
 		if ('A' <= ch && 'f' >= ch)
 		{
-			pBinOutput[i / 2] += ch - 'A' + 10;
+			((Byte *)pBinOutput)[i / 2] += ch - 'A' + 10;
 		}
 		else
 		if ('a' <= ch && 'f' >= ch)
 		{
-			pBinOutput[i / 2] += ch - 'a' + 10;
+			((Byte *)pBinOutput)[i / 2] += ch - 'a' + 10;
 		}
 		else
 		{
-			pBinOutput[i / 2] += ch - '0';
+			((Byte *)pBinOutput)[i / 2] += ch - '0';
 		}
 	}
 
 	return Status();
 }
 
-Size HexBinStr::GetStrLenFromBinSize(const Byte *pBinInput, Size cbBinInputSize)
+Size HexBinStr::GetStrLenFromBinSize(const void *pBinInput, Size cbBinInputSize)
 {
 	pBinInput;
 

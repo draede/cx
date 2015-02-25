@@ -85,6 +85,18 @@ public:
 	virtual Status WriteString(const Char *szValue) = 0;
 
 	//object member
+	virtual Status WriteWString(const Char *szName, const WChar *wszValue) = 0;
+
+	//array item
+	virtual Status WriteWString(const WChar *wszValue) = 0;
+
+	//object member
+	virtual Status WriteBLOB(const Char *szName, const void *pData, Size cbSize) = 0;
+
+	//array item
+	virtual Status WriteBLOB(const void *pData, Size cbSize) = 0;
+
+	//object member
 	virtual Status BeginObject(const Char *szName) = 0;
 
 	//array item

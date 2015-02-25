@@ -170,6 +170,8 @@ public:
 
 	const Char *GetString(const Char *szStringDefault = DEFAULT_STRING) const;
 
+	Size GetStringLen() const;
+
 	Status SetObject();
 
 	Status SetArray();

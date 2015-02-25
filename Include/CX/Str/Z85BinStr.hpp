@@ -46,13 +46,13 @@ public:
 
 	~Z85BinStr();
 
-	virtual Status ToString(const Byte *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
+	virtual Status ToString(const void *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
 	                        Size cStrOutputLen);
 
-	virtual Status FromString(const Char *pStrInput, Size cStrInputLen, Byte *pBinOutput, 
+	virtual Status FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
 	                          Size cbBinOutputSize);
 
-	virtual Size GetStrLenFromBinSize(const Byte *pBinInput, Size cbBinInputSize);
+	virtual Size GetStrLenFromBinSize(const void *pBinInput, Size cbBinInputSize);
 
 	virtual Size GetBinSizeFromStrLen(const Char *pStrInput, Size cStrInputLen);
 

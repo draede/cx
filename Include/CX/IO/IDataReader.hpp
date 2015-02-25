@@ -100,6 +100,18 @@ public:
 	//array item - will return Status_OutOfBounds at the end of the array
 	virtual Status ReadString(String *psValue) = 0;
 
+	//object member - will return Status_OutOfBounds at the end of the object
+	virtual Status ReadWString(String *psName, WString *pwsValue) = 0;
+
+	//array item - will return Status_OutOfBounds at the end of the array
+	virtual Status ReadWString(WString *pwsValue) = 0;
+
+	//object member - will return Status_OutOfBounds at the end of the object; free using CX::Free
+	virtual Status ReadBLOB(String *psName, void **ppData, Size *pcbSize) = 0;
+
+	//array item - will return Status_OutOfBounds at the end of the array free using CX::Free
+	virtual Status ReadBLOB(void **ppData, Size *pcbSize) = 0;
+
 	//object member
 	virtual Status BeginObject(String *psName) = 0;
 

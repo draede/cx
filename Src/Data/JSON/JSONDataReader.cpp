@@ -27,6 +27,8 @@
  */ 
 
 #include "CX/Data/JSON/DataReader.hpp"
+#include "CX/Str/Z85BinStr.hpp"
+#include "CX/Str/UTF8.hpp"
 
 
 namespace CX
@@ -481,6 +483,176 @@ Status DataReader::ReadString(String *psValue)
 		return Status(Status_InvalidCall, "Not a string");
 	}
 	*psValue = m_iterArray.Get().GetString();
+	m_iterArray.Next();
+
+	return Status();
+}
+
+//object member - will return Status_OutOfBounds at the end of the object
+Status DataReader::ReadWString(String *psName, WString *pwsValue)
+{
+	if (!m_bOK)
+	{
+		return Status(Status_NotInitialized, "Not initialized");
+	}
+	if (NULL == m_pVar)
+	{
+		return Status(Status_InvalidCall, "Root function not called");
+	}
+	if (!m_pVar->IsObject())
+	{
+		return Status(Status_InvalidCall, "Not an object member");
+	}
+	if (!m_iterObject.IsValid())
+	{
+		return Status(Status_OutOfBounds, "No more data");
+	}
+	if (Var::Type_String != m_iterObject.Get().GetType())
+	{
+		return Status(Status_InvalidCall, "Not a string");
+	}
+	*psName = m_iterObject.Get().GetName();
+
+	Status status;
+
+	if ((status = Str::UTF8::ToWChar(m_iterObject.Get().GetString(), pwsValue)).IsNOK())
+	{
+		return status;
+	}
+
+	m_iterObject.Next();
+
+	return Status();
+}
+
+//array item - will return Status_OutOfBounds at the end of the array
+Status DataReader::ReadWString(WString *pwsValue)
+{
+	if (!m_bOK)
+	{
+		return Status(Status_NotInitialized, "Not initialized");
+	}
+	if (NULL == m_pVar)
+	{
+		return Status(Status_InvalidCall, "Root function not called");
+	}
+	if (!m_pVar->IsArray())
+	{
+		return Status(Status_InvalidCall, "Not an array item");
+	}
+	if (!m_iterArray.IsValid())
+	{
+		return Status(Status_OutOfBounds, "No more data");
+	}
+	if (Var::Type_String != m_iterArray.Get().GetType())
+	{
+		return Status(Status_InvalidCall, "Not a string");
+	}
+
+	Status status;
+
+	if ((status = Str::UTF8::ToWChar(m_iterObject.Get().GetString(), pwsValue)).IsNOK())
+	{
+		return status;
+	}
+
+	m_iterArray.Next();
+
+	return Status();
+}
+
+//object member - will return Status_OutOfBounds at the end of the object; free using CX::Free
+Status DataReader::ReadBLOB(String *psName, void **ppData, Size *pcbSize)
+{
+	if (!m_bOK)
+	{
+		return Status(Status_NotInitialized, "Not initialized");
+	}
+	if (NULL == m_pVar)
+	{
+		return Status(Status_InvalidCall, "Root function not called");
+	}
+	if (!m_pVar->IsObject())
+	{
+		return Status(Status_InvalidCall, "Not an object member");
+	}
+	if (!m_iterObject.IsValid())
+	{
+		return Status(Status_OutOfBounds, "No more data");
+	}
+	if (Var::Type_String != m_iterObject.Get().GetType())
+	{
+		return Status(Status_InvalidCall, "Not a string");
+	}
+
+	*psName  = m_iterObject.Get().GetName();
+
+	Str::Z85BinStr binstr;
+	Status         status;
+
+	*pcbSize = binstr.GetBinSizeFromStrLen(m_iterObject.Get().GetString(), 
+	                                       m_iterObject.Get().GetStringLen());
+
+	if (NULL == (*ppData = Alloc(*pcbSize)))
+	{
+		return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes of memory", *pcbSize);
+	}
+
+	if ((status = binstr.FromString(m_iterObject.Get().GetString(), 
+	                                m_iterObject.Get().GetStringLen(), *ppData, *pcbSize)).IsNOK())
+	{
+		Free(*ppData);
+
+		return status;
+	}
+	m_iterObject.Next();
+
+	return Status();
+}
+
+//array item - will return Status_OutOfBounds at the end of the array free using CX::Free
+Status DataReader::ReadBLOB(void **ppData, Size *pcbSize)
+{
+	if (!m_bOK)
+	{
+		return Status(Status_NotInitialized, "Not initialized");
+	}
+	if (NULL == m_pVar)
+	{
+		return Status(Status_InvalidCall, "Root function not called");
+	}
+	if (!m_pVar->IsArray())
+	{
+		return Status(Status_InvalidCall, "Not an array item");
+	}
+	if (!m_iterArray.IsValid())
+	{
+		return Status(Status_OutOfBounds, "No more data");
+	}
+	if (Var::Type_String != m_iterArray.Get().GetType())
+	{
+		return Status(Status_InvalidCall, "Not a string");
+	}
+
+	Str::Z85BinStr binstr;
+	Status         status;
+
+	*pcbSize = binstr.GetBinSizeFromStrLen(m_iterArray.Get().GetString(),
+	                                       m_iterArray.Get().GetStringLen());
+
+	if (NULL == (*ppData = Alloc(*pcbSize)))
+	{
+		return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes of memory", *pcbSize);
+	}
+
+	if ((status = binstr.FromString(m_iterArray.Get().GetString(),
+		m_iterArray.Get().GetStringLen(), *ppData, *pcbSize)).IsNOK())
+	{
+		Free(*ppData);
+
+		return status;
+	}
+
 	m_iterArray.Next();
 
 	return Status();

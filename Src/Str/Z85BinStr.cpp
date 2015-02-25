@@ -45,7 +45,7 @@ Z85BinStr::~Z85BinStr()
 {
 }
 
-Status Z85BinStr::ToString(const Byte *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
+Status Z85BinStr::ToString(const void *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
                            Size cStrOutputLen)
 {
 	if (GetStrLenFromBinSize(pBinInput, cbBinInputSize) > cStrOutputLen)
@@ -58,7 +58,7 @@ Status Z85BinStr::ToString(const Byte *pBinInput, Size cbBinInputSize, Char *pSt
 	return Status();
 }
 
-Status Z85BinStr::FromString(const Char *pStrInput, Size cStrInputLen, Byte *pBinOutput, 
+Status Z85BinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
                              Size cbBinOutputSize)
 {
 	if (GetBinSizeFromStrLen(pStrInput, cStrInputLen) > cbBinOutputSize)
@@ -71,7 +71,7 @@ Status Z85BinStr::FromString(const Char *pStrInput, Size cStrInputLen, Byte *pBi
 	return Status();
 }
 
-Size Z85BinStr::GetStrLenFromBinSize(const Byte *pBinInput, Size cbBinInputSize)
+Size Z85BinStr::GetStrLenFromBinSize(const void *pBinInput, Size cbBinInputSize)
 {
 	pBinInput;
 

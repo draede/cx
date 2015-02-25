@@ -791,6 +791,20 @@ const Char *Var::GetString(const Char *szStringDefault/* = DEFAULT_STRING*/) con
 	return szStringDefault;
 }
 
+Size Var::GetStringLen() const
+{
+	if (IsInvalid())
+	{
+		return 0;
+	}
+	if (!IsString())
+	{
+		return 0;
+	}
+		
+	return m_psString->size();
+}
+
 Status Var::SetObject()
 {
 	if (IsInvalid())

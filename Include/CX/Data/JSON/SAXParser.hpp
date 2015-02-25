@@ -70,6 +70,8 @@ public:
 
 	Status RemoveObservers();
 
+	static Status EscapeString(const Char *szStr, String *psStr);
+
 private:
 
 	typedef Vector<ISAXParserObserver *>::Type   ObserversVector;

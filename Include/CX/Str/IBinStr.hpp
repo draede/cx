@@ -47,17 +47,17 @@ public:
 
 	virtual ~IBinStr() { }
 
-	virtual Status ToString(const Byte *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
+	virtual Status ToString(const void *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
 	                        Size cStrOutputLen) = 0;
 
-	virtual Status FromString(const Char *pStrInput, Size cStrInputLen, Byte *pBinOutput, 
+	virtual Status FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
 	                          Size cbBinOutputSize) = 0;
 
-	virtual Size GetStrLenFromBinSize(const Byte *pBinInput, Size cbBinInputSize) = 0;
+	virtual Size GetStrLenFromBinSize(const void *pBinInput, Size cbBinInputSize) = 0;
 
 	virtual Size GetBinSizeFromStrLen(const Char *pStrInput, Size cStrInputLen) = 0;
 
-	virtual Status ToStringEx(const Byte *pBinInput, Size cbBinInputSize, String *psStrOutput)
+	virtual Status ToStringEx(const void *pBinInput, Size cbBinInputSize, String *psStrOutput)
 	{
 		Size   cStrOutputLen;
 
