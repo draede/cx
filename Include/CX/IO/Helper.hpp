@@ -31,73 +31,38 @@
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/String.hpp"
-#include "CX/Vector.hpp"
+#include "CX/IO/IDataReader.hpp"
+#include "CX/IO/IDataWriter.hpp"
+#include "CX/IO/IInputStream.hpp"
+#include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
 
 
 namespace CX
 {
 
-namespace Str
+namespace IO
 {
 
-class CX_API IBinStr
+class CX_API Helper
 {
 public:
 
-	virtual ~IBinStr() { }
+	static const Size COPY_STREAM_BUFFER = 8192;
 
-	virtual Status ToString(const void *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
-	                        Size cStrOutputLen) = 0;
+	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream);
 
-	virtual Status FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
-	                          Size cbBinOutputSize) = 0;
+	static Status CopyData(IDataReader *pDataReader, IDataWriter *pDataWriter);
 
-	virtual Size GetStrLenFromBinSize(const void *pBinInput, Size cbBinInputSize) = 0;
+private:
 
-	virtual Size GetBinSizeFromStrLen(const Char *pStrInput, Size cStrInputLen) = 0;
+	Helper();
 
-	virtual Status ToStringEx(const void *pBinInput, Size cbBinInputSize, String *psStrOutput)
-	{
-		Char      tmp[8192];
-		Char      *pTmp;
-		Size      cStrOutputLen;
-		Status    status;
-
-		cStrOutputLen = GetStrLenFromBinSize(pBinInput, cbBinInputSize);
-		if (cStrOutputLen < sizeof(tmp) / sizeof(tmp[0]))
-		{
-			pTmp = tmp;
-		}
-		else
-		{
-			if (NULL == (pTmp = (Char *)Alloc((cStrOutputLen + 1) * sizeof(Char))))
-			{
-				return Status(Status_MemAllocFailed, "Failed to allocate temp buffer");
-			}
-		}
-		if ((status = ToString(pBinInput, cbBinInputSize, pTmp, cStrOutputLen + 1)).IsNOK())
-		{
-			if (pTmp != tmp)
-			{
-				Free(pTmp);
-			}
-
-			return status;
-		}
-		psStrOutput->append(pTmp, cStrOutputLen);
-		if (pTmp != tmp)
-		{
-			Free(pTmp);
-		}
-
-		return Status();
-	}
+	~Helper();
 
 };
 
-}//namespace Str
+}//namespace IO
 
 }//namespace CX
 

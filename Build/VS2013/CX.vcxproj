@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h" />
-    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum-dtoa.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\cached-powers.h" />
@@ -31,17 +30,12 @@
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\ieee.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\strtod.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\utils.h" />
-    <ClInclude Include="..\..\Contrib\Farmhash\Include\farmhash.h" />
-    <ClInclude Include="..\..\Contrib\MD5\Include\md5.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\core.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\mintomic.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\platform_detect.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\core_msvc.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\mintomic_msvc.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h" />
-    <ClInclude Include="..\..\Contrib\SHA\Include\hmac_sha1.h" />
-    <ClInclude Include="..\..\Contrib\SHA\Include\sha.h" />
-    <ClInclude Include="..\..\Contrib\SHA\Include\sha2.h" />
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
     <ClInclude Include="..\..\Include\CX\Alloc.hpp" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
@@ -66,6 +60,9 @@
     <ClInclude Include="..\..\Include\CX\C\string.h" />
     <ClInclude Include="..\..\Include\CX\C\Types.h" />
     <ClInclude Include="..\..\Include\CX\C\Version.h" />
+    <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Data\BINJSON\Spec.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\DataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp" />
@@ -80,8 +77,10 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA256Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\SHA384Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp" />
+    <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Helper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IDataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IDataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp" />
@@ -155,16 +154,6 @@
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fast-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fixed-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc" />
-    <ClCompile Include="..\..\Contrib\Farmhash\Src\farmhash.cc">
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\MD5\Src\md5.c">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
@@ -205,6 +194,7 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
     </ClCompile>
+    <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c" />
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c" />
     <ClCompile Include="..\..\Src\Alloc.cpp" />
     <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
@@ -213,6 +203,8 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsC</CompileAs>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Data\BINJSON\BINJSONDataReader.cpp" />
+    <ClCompile Include="..\..\Src\Data\BINJSON\BINJSONDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONDataReader.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
@@ -223,8 +215,10 @@
     <ClCompile Include="..\..\Src\Hash\SHA256Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\SHA384Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp" />
+    <ClCompile Include="..\..\Src\Hash\xxHash32.cpp" />
     <ClCompile Include="..\..\Src\IO\FileInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FileOutputStream.cpp" />
+    <ClCompile Include="..\..\Src\IO\Helper.cpp" />
     <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />

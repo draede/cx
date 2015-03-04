@@ -46,11 +46,11 @@ DataReader::DataReader(IO::IInputStream *pInputStream)
 
 	if ((status = m_json.Read(pInputStream)).IsNOK())
 	{
-		m_bOK = false;
+		m_bOK = False;
 	}
 	else
 	{
-		m_bOK = true;
+		m_bOK = True;
 	}
 	m_pVar   = NULL;
 }
@@ -177,19 +177,19 @@ DataReader::EntryType DataReader::GetEntryType()
 	{
 		if (!m_iterObject.IsValid())
 		{
-			return EntryType_Invalid;
+			return EntryType_EOG;
 		}
 
-		return VarTypeToEntryType(m_iterObject.Get().GetType());
+		return VarTypeToEntryType(m_iterObject.Get());
 	}
 	if (m_pVar->IsArray())
 	{
 		if (!m_iterArray.IsValid())
 		{
-			return EntryType_Invalid;
+			return EntryType_EOG;
 		}
 
-		return VarTypeToEntryType(m_iterArray.Get().GetType());
+		return VarTypeToEntryType(m_iterArray.Get());
 	}
 
 	return EntryType_Invalid;
@@ -582,7 +582,12 @@ Status DataReader::ReadBLOB(String *psName, void **ppData, Size *pcbSize)
 	}
 	if (Var::Type_String != m_iterObject.Get().GetType())
 	{
-		return Status(Status_InvalidCall, "Not a string");
+		return Status(Status_InvalidCall, "Not a BLOB");
+	}
+
+	if (0 != cx_strnicmp(m_iterObject.Get().GetString(), "blob://", 7))
+	{
+		return Status(Status_InvalidCall, "Not a BLOB");
 	}
 
 	*psName  = m_iterObject.Get().GetName();
@@ -590,16 +595,16 @@ Status DataReader::ReadBLOB(String *psName, void **ppData, Size *pcbSize)
 	Str::Z85BinStr binstr;
 	Status         status;
 
-	*pcbSize = binstr.GetBinSizeFromStrLen(m_iterObject.Get().GetString(), 
-	                                       m_iterObject.Get().GetStringLen());
+	*pcbSize = binstr.GetBinSizeFromStrLen(m_iterObject.Get().GetString() + 7, 
+	                                       m_iterObject.Get().GetStringLen() - 7);
 
 	if (NULL == (*ppData = Alloc(*pcbSize)))
 	{
 		return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes of memory", *pcbSize);
 	}
 
-	if ((status = binstr.FromString(m_iterObject.Get().GetString(), 
-	                                m_iterObject.Get().GetStringLen(), *ppData, *pcbSize)).IsNOK())
+	if ((status = binstr.FromString(m_iterObject.Get().GetString() + 7, 
+	                              m_iterObject.Get().GetStringLen() - 7, *ppData, *pcbSize)).IsNOK())
 	{
 		Free(*ppData);
 
@@ -631,22 +636,27 @@ Status DataReader::ReadBLOB(void **ppData, Size *pcbSize)
 	}
 	if (Var::Type_String != m_iterArray.Get().GetType())
 	{
-		return Status(Status_InvalidCall, "Not a string");
+		return Status(Status_InvalidCall, "Not a BLOB");
+	}
+
+	if (0 != cx_strnicmp(m_iterArray.Get().GetString(), "blob://", 7))
+	{
+		return Status(Status_InvalidCall, "Not a BLOB");
 	}
 
 	Str::Z85BinStr binstr;
 	Status         status;
 
-	*pcbSize = binstr.GetBinSizeFromStrLen(m_iterArray.Get().GetString(),
-	                                       m_iterArray.Get().GetStringLen());
+	*pcbSize = binstr.GetBinSizeFromStrLen(m_iterArray.Get().GetString() + 7,
+	                                       m_iterArray.Get().GetStringLen() - 7);
 
 	if (NULL == (*ppData = Alloc(*pcbSize)))
 	{
 		return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes of memory", *pcbSize);
 	}
 
-	if ((status = binstr.FromString(m_iterArray.Get().GetString(),
-		m_iterArray.Get().GetStringLen(), *ppData, *pcbSize)).IsNOK())
+	if ((status = binstr.FromString(m_iterArray.Get().GetString() + 7,
+	                               m_iterArray.Get().GetStringLen() - 7, *ppData, *pcbSize)).IsNOK())
 	{
 		Free(*ppData);
 
@@ -685,7 +695,7 @@ Status DataReader::BeginObject(String *psName)
 
 	Iterator iter;
 
-	iter.bIsObject  = true;
+	iter.bIsObject  = True;
 	iter.iterObject = m_iterObject;
 
 	m_stackIterators.push(iter);
@@ -724,7 +734,7 @@ Status DataReader::BeginObject()
 
 	Iterator iter;
 
-	iter.bIsObject = false;
+	iter.bIsObject = False;
 	iter.iterArray = m_iterArray;
 
 	m_stackIterators.push(iter);
@@ -764,7 +774,7 @@ Status DataReader::BeginArray(String *psName)
 
 	Iterator iter;
 
-	iter.bIsObject  = true;
+	iter.bIsObject  = True;
 	iter.iterObject = m_iterObject;
 
 	m_stackIterators.push(iter);
@@ -803,7 +813,7 @@ Status DataReader::BeginArray()
 
 	Iterator iter;
 
-	iter.bIsObject = false;
+	iter.bIsObject = False;
 	iter.iterArray = m_iterArray;
 
 	m_stackIterators.push(iter);
@@ -814,29 +824,6 @@ Status DataReader::BeginArray()
 	m_stackIterators.top().iterArray.Next();
 
 	return Status();
-}
-
-//array item
-Size DataReader::GetItemsCount()
-{
-	if (!m_bOK)
-	{
-		return 0;
-	}
-	if (NULL == m_pVar)
-	{
-		return 0;
-	}
-	if (m_pVar->IsObject())
-	{
-		return m_pVar->GetObjectMembersCount();
-	}
-	if (m_pVar->IsArray())
-	{
-		return m_pVar->GetArrayItemsCount();
-	}
-
-	return 0;
 }
 
 Status DataReader::EndObject()

@@ -29,110 +29,135 @@
 #pragma once
 
 
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/APIDefs.hpp"
+#include "CX/IO/IDataReader.hpp"
+#include "CX/IO/IInputStream.hpp"
+#include "CX/Hash/xxHash32.hpp"
+#include "CX/Stack.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Data
 {
 
-class CX_API IDataReader
+namespace BINJSON
+{
+
+class CX_API DataReader : public IO::IDataReader
 {
 public:
 
-	enum EntryType
-	{
-		EntryType_Invalid, // == ERROR
-		EntryType_EOG,     // == End of group
-		EntryType_Null,
-		EntryType_Bool,
-		EntryType_Int,
-		EntryType_Real,
-		EntryType_String,
-		EntryType_BLOB,
-		EntryType_Object,
-		EntryType_Array,
-	};
+	DataReader(IO::IInputStream *pInputStream);
 
-	virtual ~IDataReader() { }
+	virtual ~DataReader();
 
-	virtual EntryType GetRootEntryType() = 0;
+	virtual EntryType GetRootEntryType();
 
-	virtual Status BeginRootObject() = 0;
+	virtual Status BeginRootObject();
 
-	virtual Status EndRootObject() = 0;
+	virtual Status EndRootObject();
 
-	virtual Status BeginRootArray() = 0;
+	virtual Status BeginRootArray();
 
-	virtual Status EndRootArray() = 0;
+	virtual Status EndRootArray();
 
-	virtual EntryType GetEntryType() = 0;
+	virtual EntryType GetEntryType();
 
 	//object member - will return Status_OutOfBounds at the end of the object
-	virtual Status ReadNull(String *psName) = 0;
+	virtual Status ReadNull(String *psName);
 
 	//array item - will return Status_OutOfBounds at the end of the array
-	virtual Status ReadNull() = 0;
+	virtual Status ReadNull();
 
 	//object member - will return Status_OutOfBounds at the end of the object
-	virtual Status ReadBool(String *psName, Bool *pbValue) = 0;
+	virtual Status ReadBool(String *psName, Bool *pbValue);
 
 	//array item - will return Status_OutOfBounds at the end of the array
-	virtual Status ReadBool(Bool *pbValue) = 0;
+	virtual Status ReadBool(Bool *pbValue);
 
 	//object member - will return Status_OutOfBounds at the end of the object
-	virtual Status ReadInt(String *psName, Int64 *pnValue) = 0;
+	virtual Status ReadInt(String *psName, Int64 *pnValue);
 
 	//array item - will return Status_OutOfBounds at the end of the array
-	virtual Status ReadInt(Int64 *pnValue) = 0;
+	virtual Status ReadInt(Int64 *pnValue);
 
 	//object member - will return Status_OutOfBounds at the end of the object
-	virtual Status ReadReal(String *psName, Double *plfValue) = 0;
+	virtual Status ReadReal(String *psName, Double *plfValue);
 
 	//array item - will return Status_OutOfBounds at the end of the array
-	virtual Status ReadReal(Double *plfValue) = 0;
+	virtual Status ReadReal(Double *plfValue);
 
 	//object member - will return Status_OutOfBounds at the end of the object
-	virtual Status ReadString(String *psName, String *psValue) = 0;
+	virtual Status ReadString(String *psName, String *psValue);
 
 	//array item - will return Status_OutOfBounds at the end of the array
-	virtual Status ReadString(String *psValue) = 0;
+	virtual Status ReadString(String *psValue);
 
 	//object member - will return Status_OutOfBounds at the end of the object
-	virtual Status ReadWString(String *psName, WString *pwsValue) = 0;
+	virtual Status ReadWString(String *psName, WString *pwsValue);
 
 	//array item - will return Status_OutOfBounds at the end of the array
-	virtual Status ReadWString(WString *pwsValue) = 0;
+	virtual Status ReadWString(WString *pwsValue);
 
 	//object member - will return Status_OutOfBounds at the end of the object; free using CX::Free
-	virtual Status ReadBLOB(String *psName, void **ppData, Size *pcbSize) = 0;
+	virtual Status ReadBLOB(String *psName, void **ppData, Size *pcbSize);
 
 	//array item - will return Status_OutOfBounds at the end of the array free using CX::Free
-	virtual Status ReadBLOB(void **ppData, Size *pcbSize) = 0;
+	virtual Status ReadBLOB(void **ppData, Size *pcbSize);
 
 	//object member
-	virtual Status BeginObject(String *psName) = 0;
+	virtual Status BeginObject(String *psName);
 
 	//array item
-	virtual Status BeginObject() = 0;
+	virtual Status BeginObject();
 
 	//object member
-	virtual Status BeginArray(String *psName) = 0;
+	virtual Status BeginArray(String *psName);
 
 	//array item
-	virtual Status BeginArray() = 0;
+	virtual Status BeginArray();
 
-	virtual Status EndObject() = 0;
+	virtual Status EndObject();
 
-	virtual Status EndArray() = 0;
+	virtual Status EndArray();
+
+private:
+
+	typedef Stack<Byte>::Type  EntriesStack;
+
+	IO::IInputStream *m_pInputStream;
+	Hash::xxHash32   m_hash;
+	Byte             m_nRootEntryType;
+	Byte             m_nCrEntryType;
+
+	Status ReadHeader();
+
+	Status ReadFooter(UInt32 *pnHash);
+
+	Status ReadEntryType();
+
+	Status ReadStringData(String *psName);
+
+	Status ReadObjectEntry(String *psName, Byte nType, void *pData, Size cbSize, 
+	                       void **ppData, Size *pcbSize);
+
+	Status ReadArrayEntry(Byte nType, void *pData, Size cbSize, void **ppData, Size *pcbSize);
+
+	Status Read(void *pData, Size cbSize);
+
+	Status ReadEx(void *pData, Size cbSize);
+
+#pragma warning(push)
+#pragma warning(disable: 4251)
+	EntriesStack           m_stackEntries;
+#pragma warning(push)
 
 };
 
-}//namespace IO
+}//namespace BINJSON
+
+}//namespace Data
 
 }//namespace CX
 

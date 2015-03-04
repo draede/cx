@@ -178,12 +178,18 @@ TEST_CASE("Var tests", "[CX::Var]")
 	{
 		Var v1;
 		Var v2;
-		String sS1 = "{ \"a\": 123, \"b\": { \"c\": \"abc\", \"d\": [1, 2, 3]}, \"e\": [ { \"g\": 100 }, 123 ] }";
+		//String sS1 = "{ \"a\": 123, \"b\": { \"c\": \"abc\", \"d\": [1, 2, 3]}, \"e\": [ { \"g\": 100 }, 123 ] }";
+		String sS1 = "{ \"a\": 123, \"b\": \"123\", \"c\": 123.321, \"d\": null, \"e\": false, \"ee\": [ 123, \"123\", 123.321, null, false ], \"f\": { \"a\": 123, \"b\": \"123\", \"c\": 123.321, \"d\": null, \"e\": false, \"ee\": [ 123, \"123\", 123.321, null, false ] }, \"g\": false, \"h\": { \"a\": 123, \"b\": \"123\", \"c\": 123.321, \"d\": null, \"e\": false, \"ee\": [ 123, \"123\", 123.321, null, false, { \"a\": 123, \"b\": \"123\", \"c\": 123.321, \"d\": null, \"e\": false, \"ee\": [ 123, \"123\", 123.321, null, false ] } ], \"dummy\": 100 } }";
 		String sS2;
+
+		
 
 		v1.Read(sS1);
 		v1.Write(sS2);
 		v2.Read(sS2);
+
+		//printf("S1 = \n<\n%s\n>\n", sS1.c_str());
+		//printf("S2 = \n<\n%s\n>\n", sS2.c_str());
 
 		REQUIRE(v1.Equals(v2));
 	}

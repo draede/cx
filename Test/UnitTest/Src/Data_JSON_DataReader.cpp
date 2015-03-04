@@ -31,6 +31,9 @@
 #include "CX/Data/JSON/DataWriter.hpp"
 #include "CX/IO/MemInputStream.hpp"
 #include "CX/IO/MemOutputStream.hpp"
+#include "CX/IO/FileInputStream.hpp"
+#include "CX/IO/Helper.hpp"
+#include "CX/Util/MemPool.hpp"
 #include "CX/Print.hpp"
 #include "CX/C/stdio.h"
 
@@ -42,62 +45,6 @@
 
 using namespace CX;
 
-/*
-const Char INPUT_JSON[] = 
-"{\n"
-"   \"null\": null,\n"
-"   \"bool\": true,\n"
-"   \"int\": 123,\n"
-"   \"real\": 123.123000,\n"
-"   \"string\": \"teststr\",\n"
-"   \"obj1\":\n"
-"   {\n"
-"      \"null\": null,\n"
-"      \"bool\": true,\n"
-"      \"int\": 123,\n"
-"      \"real\": 123.123000,\n"
-"      \"string\": \"teststr\",\n"
-"      \"arr1\":\n"
-"      [\n"
-"         null,\n"
-"         true,\n"
-"         123,\n"
-"         123.123000,\n"
-"         \"teststr\"\n"
-"      ],\n"
-"      \"obj1\":\n"
-"      {\n"
-"         \"null\": null,\n"
-"         \"bool\": true,\n"
-"         \"int\": 123,\n"
-"         \"real\": 123.123000,\n"
-"         \"string\": \"teststr\"\n"
-"      }\n"
-"   },\n"
-"   \"arr1\":\n"
-"   [\n"
-"      null,\n"
-"      true,\n"
-"      123,\n"
-"      123.123000,\n"
-"      \"teststr\",\n"
-"      {\n"
-"         \"null\": null,\n"
-"         \"bool\": true,\n"
-"         \"int\": 123,\n"
-"         \"real\": 123.123000,\n"
-"         \"string\": \"teststr\"\n"
-"      },\n"
-"      [\n"
-"         null,\n"
-"         true,\n"
-"         123,\n"
-"         123.123000,\n"
-"         \"teststr\"\n"
-"      ]\n"
-"   ]\n"
-"}";
-*/
 
 const Char INPUT_JSON[] =
 "{\n"
@@ -106,6 +53,8 @@ const Char INPUT_JSON[] =
 "   \"int\": 123,\n"
 "   \"real\": 123.123000,\n"
 "   \"string\": \"teststr\",\n"
+"   \"wstring\": \"testwstr\",\n"
+"   \"blob\": \"blob://4HelloWorld\",\n"
 "   \"obj1\":\n"
 "   {\n"
 "      \"null\": null,\n"
@@ -113,13 +62,17 @@ const Char INPUT_JSON[] =
 "      \"int\": 123,\n"
 "      \"real\": 123.123000,\n"
 "      \"string\": \"teststr\",\n"
+"      \"wstring\": \"testwstr\",\n"
+"      \"blob\": \"blob://4HelloWorld\",\n"
 "      \"arr1\":\n"
 "      [\n"
 "         null,\n"
 "         true,\n"
 "         123,\n"
 "         123.123000,\n"
-"         \"teststr\"\n"
+"         \"teststr\",\n"
+"         \"testwstr\",\n"
+"         \"blob://4HelloWorld\"\n"
 "      ],\n"
 "      \"obj1\":\n"
 "      {\n"
@@ -127,7 +80,9 @@ const Char INPUT_JSON[] =
 "         \"bool\": true,\n"
 "         \"int\": 123,\n"
 "         \"real\": 123.123000,\n"
-"         \"string\": \"teststr\"\n"
+"         \"string\": \"teststr\",\n"
+"         \"wstring\": \"testwstr\",\n"
+"         \"blob\": \"blob://4HelloWorld\"\n"
 "      }\n"
 "   },\n"
 "   \"arr1\":\n"
@@ -137,23 +92,28 @@ const Char INPUT_JSON[] =
 "      123,\n"
 "      123.123000,\n"
 "      \"teststr\",\n"
+"      \"testwstr\",\n"
+"      \"blob://4HelloWorld\",\n"
 "      {\n"
 "         \"null\": null,\n"
 "         \"bool\": true,\n"
 "         \"int\": 123,\n"
 "         \"real\": 123.123000,\n"
-"         \"string\": \"teststr\"\n"
+"         \"string\": \"teststr\",\n"
+"         \"wstring\": \"testwstr\",\n"
+"         \"blob\": \"blob://4HelloWorld\"\n"
 "      },\n"
 "      [\n"
 "         null,\n"
 "         true,\n"
 "         123,\n"
 "         123.123000,\n"
-"         \"teststr\"\n"
+"         \"teststr\",\n"
+"         \"testwstr\",\n"
+"         \"blob://4HelloWorld\"\n"
 "      ]\n"
 "   ]\n"
 "}";
-
 
 Status HandleObject(Data::JSON::DataReader &r, Data::JSON::DataWriter &w);
 Status HandleArray(Data::JSON::DataReader &r, Data::JSON::DataWriter &w);
@@ -171,6 +131,11 @@ Status HandleObject(Data::JSON::DataReader &r, Data::JSON::DataWriter &w)
 		switch (nEntryType)
 		{
 			case Data::JSON::DataReader::EntryType_Invalid:
+			{
+				bOK = false;
+			}
+			break;
+			case Data::JSON::DataReader::EntryType_EOG:
 			{
 				bOK = false;
 			}
@@ -254,6 +219,24 @@ Status HandleObject(Data::JSON::DataReader &r, Data::JSON::DataWriter &w)
 				}
 				status = w.WriteString(sName.c_str(), val.c_str());
 				SECTION("Object WriteString")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+			}
+			break;
+			case Data::JSON::DataReader::EntryType_BLOB:
+			{
+				String   sName;
+				void     *pBLOB;
+				Size     cbBLOBSize;
+			
+				status = r.ReadBLOB(&sName, &pBLOB, &cbBLOBSize);
+				SECTION("Object ReadBLOB")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = w.WriteBLOB(sName.c_str(), pBLOB, cbBLOBSize);
+				SECTION("Object WriteBLOB")
 				{
 					REQUIRE(Status_OK == status.GetCode());
 				}
@@ -347,6 +330,11 @@ Status HandleArray(Data::JSON::DataReader &r, Data::JSON::DataWriter &w)
 				bOK = false;
 			}
 			break;
+			case Data::JSON::DataReader::EntryType_EOG:
+			{
+				bOK = false;
+			}
+			break;
 			case Data::JSON::DataReader::EntryType_Null:
 			{
 				status = r.ReadNull();
@@ -420,6 +408,23 @@ Status HandleArray(Data::JSON::DataReader &r, Data::JSON::DataWriter &w)
 				}
 				status = w.WriteString(val.c_str());
 				SECTION("Array WriteString")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+			}
+			break;
+			case Data::JSON::DataReader::EntryType_BLOB:
+			{
+				void     *pBLOB;
+				Size     cbBLOBSize;
+
+				status = r.ReadBLOB(&pBLOB, &cbBLOBSize);
+				SECTION("Object ReadBLOB")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = w.WriteBLOB(pBLOB, cbBLOBSize);
+				SECTION("Object WriteBLOB")
 				{
 					REQUIRE(Status_OK == status.GetCode());
 				}
@@ -506,90 +511,150 @@ enum Type
 
 TEST_CASE("Data JSON DataReader", "[CX::Data::JSON::DataReader]")
 {
-	String                 sOutput;
-
 	{
-		IO::MemInputStream     mis(INPUT_JSON, cx_strlen(INPUT_JSON));
-		Data::JSON::DataReader r(&mis);
-		IO::MemOutputStream    mos(&sOutput);
-		Data::JSON::DataWriter w(&mos);
-		Status                 status;
+		String                 sOutput;
 
-		SECTION("Check parsing")
 		{
-			REQUIRE(Data::JSON::DataReader::EntryType_Invalid != r.GetRootEntryType());
+			IO::MemInputStream     mis(INPUT_JSON, cx_strlen(INPUT_JSON));
+			Data::JSON::DataReader r(&mis);
+			IO::MemOutputStream    mos(&sOutput);
+			Data::JSON::DataWriter w(&mos);
+			Status                 status;
+
+			SECTION("Check parsing")
+			{
+				REQUIRE(Data::JSON::DataReader::EntryType_Invalid != r.GetRootEntryType());
+			}
+
+			if (Data::JSON::DataReader::EntryType_Object == r.GetRootEntryType())
+			{
+				status = r.BeginRootObject();
+				SECTION("Reader BeginRootObject")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = w.BeginRootObject();
+				SECTION("Writer BeginRootObject")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = HandleObject(r, w);
+				SECTION("HandleObject")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+			}
+			else
+			if (Data::JSON::DataReader::EntryType_Array == r.GetRootEntryType())
+			{
+				status = r.BeginRootArray();
+				SECTION("Reader BeginRootArray")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = w.BeginRootArray();
+				SECTION("Writer BeginRootArray")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = HandleArray(r, w);
+				SECTION("HandleArray")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+			}
+
+			if (Data::JSON::DataReader::EntryType_Object == r.GetRootEntryType())
+			{
+				status = r.EndRootObject();
+				SECTION("Reader EndRootObject")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = w.EndRootObject();
+				SECTION("Writer EndRootObject")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+			}
+			else
+			if (Data::JSON::DataReader::EntryType_Array == r.GetRootEntryType())
+			{
+				status = r.EndRootArray();
+				SECTION("Reader EndRootArray")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = w.EndRootArray();
+				SECTION("Writer EndRootArray")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+			}
 		}
 
-		if (Data::JSON::DataReader::EntryType_Object == r.GetRootEntryType())
+		SECTION("Compare output")
 		{
-			status = r.BeginRootObject();
-			SECTION("Reader BeginRootObject")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-			status = w.BeginRootObject();
-			SECTION("Writer BeginRootObject")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-			status = HandleObject(r, w);
-			SECTION("HandleObject")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-		}
-		else
-		if (Data::JSON::DataReader::EntryType_Array == r.GetRootEntryType())
-		{
-			status = r.BeginRootArray();
-			SECTION("Reader BeginRootArray")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-			status = w.BeginRootArray();
-			SECTION("Writer BeginRootArray")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-			status = HandleArray(r, w);
-			SECTION("HandleArray")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
+			REQUIRE(sOutput == INPUT_JSON);
 		}
 
-		if (Data::JSON::DataReader::EntryType_Object == r.GetRootEntryType())
-		{
-			status = r.EndRootObject();
-			SECTION("Reader EndRootObject")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-			status = w.EndRootObject();
-			SECTION("Writer EndRootObject")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-		}
-		else
-		if (Data::JSON::DataReader::EntryType_Array == r.GetRootEntryType())
-		{
-			status = r.EndRootArray();
-			SECTION("Reader EndRootArray")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-			status = w.EndRootArray();
-			SECTION("Writer EndRootArray")
-			{
-				REQUIRE(Status_OK == status.GetCode());
-			}
-		}
 	}
 
-	SECTION("Compare output")
+	SECTION("testbed")
 	{
-		REQUIRE(sOutput == INPUT_JSON);
+		const Size cStart = 1;
+		const Size cEnd = 40;
+
+		for (Size i = cStart; i <= cEnd; i++)
+		{
+			String     sOutput1;
+			String     sOutput2;
+			Status     status;
+
+			//Print(stdout, "JSON {1}\n", i);
+
+			String sName;
+			String sPath;
+
+			Print(&sPath, "{1}.json", i);
+
+			IO::FileInputStream fis(sPath.c_str());
+
+			{
+				Data::JSON::DataReader     json_reader(&fis);
+				IO::MemOutputStream        mos(&sOutput1);
+				Data::JSON::DataWriter     json_writer(&mos);
+
+				status = IO::Helper::CopyData(&json_reader, &json_writer);
+			}
+
+			Print(&sName, "TestData_CopyData1_{1}", i);
+			SECTION(sName.c_str())
+			{
+				REQUIRE(Status_OK == status.GetCode());
+			}
+
+			{
+				IO::MemInputStream         mis(&sOutput1);
+				Data::JSON::DataReader     json_reader(&mis);
+				IO::MemOutputStream        mos(&sOutput2);
+				Data::JSON::DataWriter     json_writer(&mos);
+
+				status = IO::Helper::CopyData(&json_reader, &json_writer);
+			}
+
+			Print(&sName, "TestData_CopyData2_{1}", i);
+			SECTION(sName.c_str())
+			{
+				REQUIRE(Status_OK == status.GetCode());
+			}
+
+			Print(&sName, "TestData_Compareoutput_{1}", i);
+			SECTION(sName.c_str())
+			{
+				REQUIRE(sOutput1 == sOutput2);
+			}
+		}
 	}
 }
 

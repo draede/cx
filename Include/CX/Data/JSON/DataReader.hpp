@@ -118,9 +118,6 @@ public:
 	//array item
 	virtual Status BeginArray();
 
-	//array item
-	virtual Size GetItemsCount();
-
 	virtual Status EndObject();
 
 	virtual Status EndArray();
@@ -129,7 +126,7 @@ private:
 
 	typedef struct _Iterator
 	{
-		bool                     bIsObject;
+		Bool                     bIsObject;
 		Var::ObjectConstIterator iterObject;
 		Var::ArrayConstIterator  iterArray;
 	}Iterator;
@@ -137,7 +134,7 @@ private:
 	typedef Stack<Iterator>::Type  IteratorsStack;
 
 	Var              m_json;
-	bool             m_bOK;
+	Bool             m_bOK;
 	const Var        *m_pVar;
 
 #pragma warning(push)
@@ -147,16 +144,24 @@ private:
 	Var::ArrayConstIterator  m_iterArray;
 #pragma warning(push)
 
-	EntryType VarTypeToEntryType(Var::Type nType)
+	EntryType VarTypeToEntryType(const Var &var)
 	{
-		switch (nType)
+		switch (var.GetType())
 		{
 			case Var::Type_Invalid: return EntryType_Invalid;
 			case Var::Type_Null:    return EntryType_Null;
 			case Var::Type_Bool:    return EntryType_Bool;
 			case Var::Type_Int:     return EntryType_Int;
 			case Var::Type_Real:    return EntryType_Real;
-			case Var::Type_String:  return EntryType_String;
+			case Var::Type_String:
+			{
+				if (0 == cx_strnicmp(var.GetString(), "blob://", 7))
+				{
+					return EntryType_BLOB;
+				}
+
+				return EntryType_String;
+			}
 			case Var::Type_Object:  return EntryType_Object;
 			case Var::Type_Array:   return EntryType_Array;
 		};

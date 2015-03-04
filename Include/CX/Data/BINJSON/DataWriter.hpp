@@ -31,6 +31,7 @@
 
 #include "CX/IO/IDataWriter.hpp"
 #include "CX/IO/IOutputStream.hpp"
+#include "CX/Hash/xxHash32.hpp"
 #include "CX/String.hpp"
 #include "CX/Stack.hpp"
 
@@ -41,7 +42,7 @@ namespace CX
 namespace Data
 {
 
-namespace JSON
+namespace BINJSON
 {
 
 class CX_API DataWriter : public IO::IDataWriter
@@ -132,19 +133,24 @@ private:
 	typedef Stack<State>::Type     StatesStack;
 
 	IO::IOutputStream   *m_pOutputStream;
-	Bool                m_bFirst;
+	Hash::xxHash32      m_hash;
+
 #pragma warning(push)
 #pragma warning(disable: 4251)
 	StatesStack         m_stackStates;
-	String              m_sIndent;
 #pragma warning(pop)
-	Size                m_cIndent;
 
-	void AdjustIndent();
+	Status Write(const void *pData, Size cbSize);
+	
+	Status WriteEx(const void *pData, Size cbSize);
+
+	Status WriteHeader();
+
+	Status WriteFooter(UInt32 nHash);
 
 };
 
-}//namespace JSON
+}//namespace BINJSON
 
 }//namespace Data
 

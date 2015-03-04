@@ -26,11 +26,9 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Data/JSON/DataWriter.hpp"
-#include "CX/Data/JSON/SAXParser.hpp"
-#include "CX/Str/Z85BinStr.hpp"
+#include "CX/Data/BINJSON/DataWriter.hpp"
+#include "CX/Data/BINJSON/Spec.hpp"
 #include "CX/Str/UTF8.hpp"
-#include "CX/Print.hpp"
 
 
 namespace CX
@@ -39,39 +37,80 @@ namespace CX
 namespace Data
 {
 
-namespace JSON
+namespace BINJSON
 {
 
 DataWriter::DataWriter(IO::IOutputStream *pOutputStream)
 {
 	m_pOutputStream = pOutputStream;
 	m_stackStates.push(State_None);
-	m_cIndent       = 0;
-	m_bFirst        = True;
 }
 
 DataWriter::~DataWriter()
 {
 }
 
-void DataWriter::AdjustIndent()
+Status DataWriter::Write(const void *pData, Size cbSize)
 {
-	Size cActLen   = m_sIndent.size();
-	Size cFinalLen = m_cIndent * 3;
+	Size   cbAckSize;
+	Status status;
 
-	if (cActLen < cFinalLen)
+	if ((status = m_pOutputStream->Write(pData, cbSize, &cbAckSize)).IsNOK())
 	{
-		for (Size i = cActLen; i < cFinalLen; i++)
-		{
-			m_sIndent += " ";
-		}
+		return status;
 	}
-	else
-	if (cActLen > cFinalLen)
+	if (cbAckSize != cbSize)
 	{
-		m_sIndent = m_sIndent.substr(0, cFinalLen);
+		return Status(Status_WriteFailed, "Failed to write all bytes to stream");
 	}
+
+	return Status();
 }
+
+Status DataWriter::WriteEx(const void *pData, Size cbSize)
+{
+	Status status;
+
+	if ((status = Write(pData, cbSize)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = m_hash.Update(pData, cbSize)).IsNOK())
+	{
+		return status;
+	}
+
+	return status;
+}
+
+Status DataWriter::WriteHeader()
+{
+	Status status;
+
+	if ((status = Write(&Spec::MAGIC, sizeof(Spec::MAGIC))).IsNOK())
+	{
+		return status;
+	}
+	if ((status = Write(&Spec::ENCODING_NONE, sizeof(Spec::ENCODING_NONE))).IsNOK())
+	{
+		return status;
+	}
+
+	return Status();
+}
+
+Status DataWriter::WriteFooter(UInt32 nHash)
+{
+	Status status;
+
+	if ((status = Write(&nHash, sizeof(nHash))).IsNOK())
+	{
+		return status;
+	}
+
+	return Status();
+}
+
 
 Status DataWriter::BeginRootObject()
 {
@@ -85,14 +124,15 @@ Status DataWriter::BeginRootObject()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called at the beginning)");
 	}
-	if ((status = Print(m_pOutputStream, "{{")).IsNOK())
+	if ((status = WriteHeader()).IsNOK())
+	{
+		return status;
+	}
+	if ((status = WriteEx(&Spec::TYPE_BEGINROOTOBJECT, sizeof(Spec::TYPE_BEGINROOTOBJECT))).IsNOK())
 	{
 		return status;
 	}
 	m_stackStates.push(State_RootObject);
-	m_bFirst = True;
-	m_cIndent++;
-	AdjustIndent();
 
 	return Status();
 }
@@ -109,14 +149,24 @@ Status DataWriter::EndRootObject()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be in the root object)");
 	}
-	m_cIndent--;
-	AdjustIndent();
-	if ((status = Print(m_pOutputStream, "\n}")).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_ENDROOTOBJECT, sizeof(Spec::TYPE_ENDROOTOBJECT))).IsNOK())
 	{
 		return status;
 	}
+
+	UInt32 nHash;
+
+	if ((status = m_hash.Done(&nHash)).IsNOK())
+	{
+		return status;
+	}
+
+	if ((status = WriteFooter(nHash)).IsNOK())
+	{
+		return status;
+	}
+
 	m_stackStates.pop();
-	m_bFirst = false;
 
 	return Status();
 }
@@ -133,14 +183,15 @@ Status DataWriter::BeginRootArray()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called at the beginning)");
 	}
-	if ((status = Print(m_pOutputStream, "[")).IsNOK())
+	if ((status = WriteHeader()).IsNOK())
+	{
+		return status;
+	}
+	if ((status = WriteEx(&Spec::TYPE_BEGINROOTARRAY, sizeof(Spec::TYPE_BEGINROOTARRAY))).IsNOK())
 	{
 		return status;
 	}
 	m_stackStates.push(State_RootArray);
-	m_bFirst = True;
-	m_cIndent++;
-	AdjustIndent();
 
 	return Status();
 }
@@ -157,14 +208,24 @@ Status DataWriter::EndRootArray()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be in the root array)");
 	}
-	m_cIndent--;
-	AdjustIndent();
-	if ((status = Print(m_pOutputStream, "\n]")).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_ENDROOTARRAY, sizeof(Spec::TYPE_ENDROOTARRAY))).IsNOK())
 	{
 		return status;
 	}
+
+	UInt32 nHash;
+
+	if ((status = m_hash.Done(&nHash)).IsNOK())
+	{
+		return status;
+	}
+
+	if ((status = WriteFooter(nHash)).IsNOK())
+	{
+		return status;
+	}
+
 	m_stackStates.pop();
-	m_bFirst = false;
 
 	return Status();
 }
@@ -172,6 +233,8 @@ Status DataWriter::EndRootArray()
 //object member
 Status DataWriter::WriteNull(const Char *szName)
 {
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
 	String sName;
 	Status status;
 
@@ -184,25 +247,24 @@ Status DataWriter::WriteNull(const Char *szName)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_NULL, sizeof(Spec::TYPE_NULL))).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\": null", m_sIndent, sName)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Name too long");
 	}
-	else
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\": null", m_sIndent, sName)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	m_bFirst = false;
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -221,21 +283,10 @@ Status DataWriter::WriteNull()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if (m_bFirst)
+	if ((status = WriteEx(&Spec::TYPE_NULL, sizeof(Spec::TYPE_NULL))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}null", m_sIndent)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	else
-	{
-		if ((status = Print(m_pOutputStream, ",\n{1}null", m_sIndent)).IsNOK())
-		{
-			return status;
-		}
-	}
-	m_bFirst = false;
 
 	return Status();
 }
@@ -243,6 +294,8 @@ Status DataWriter::WriteNull()
 //object member
 Status DataWriter::WriteBool(const Char *szName, Bool bValue)
 {
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
 	String sName;
 	Status status;
 
@@ -255,27 +308,38 @@ Status DataWriter::WriteBool(const Char *szName, Bool bValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if (bValue)
 	{
-		return status;
-	}
-	if (m_bFirst)
-	{
-		if ((status = 
-		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, sName, bValue)).IsNOK())
+		if ((status = WriteEx(&Spec::TYPE_TRUE, sizeof(Spec::TYPE_FALSE))).IsNOK())
 		{
 			return status;
 		}
 	}
 	else
 	{
-		if ((status = 
-		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, sName, bValue)).IsNOK())
+		if ((status = WriteEx(&Spec::TYPE_FALSE, sizeof(Spec::TYPE_FALSE))).IsNOK())
 		{
 			return status;
 		}
 	}
-	m_bFirst = false;
+	if ((Size)UINT32_MAX < cx_strlen(szName))
+	{
+		return Status(Status_OutOfBounds, "Name too long");
+	}
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
+	{
+		return Status(Status_OutOfBounds, "Name too long");
+	}
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
+	{
+		return status;
+	}
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -294,21 +358,20 @@ Status DataWriter::WriteBool(Bool bValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if (m_bFirst)
+	if (bValue)
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}{2}", m_sIndent, bValue)).IsNOK())
+		if ((status = WriteEx(&Spec::TYPE_TRUE, sizeof(Spec::TYPE_FALSE))).IsNOK())
 		{
 			return status;
 		}
 	}
 	else
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}{2}", m_sIndent, bValue)).IsNOK())
+		if ((status = WriteEx(&Spec::TYPE_FALSE, sizeof(Spec::TYPE_FALSE))).IsNOK())
 		{
 			return status;
 		}
 	}
-	m_bFirst = false;
 
 	return Status();
 }
@@ -316,6 +379,8 @@ Status DataWriter::WriteBool(Bool bValue)
 //object member
 Status DataWriter::WriteInt(const Char *szName, Int64 nValue)
 {
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
 	String sName;
 	Status status;
 
@@ -328,27 +393,28 @@ Status DataWriter::WriteInt(const Char *szName, Int64 nValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_INT, sizeof(Spec::TYPE_INT))).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
 	{
-		if ((status = 
-		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, sName, nValue)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Name too long");
 	}
-	else
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
 	{
-		if ((status = 
-		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, sName, nValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	m_bFirst = false;
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
+	{
+		return status;
+	}
+	if ((status = WriteEx(&nValue, sizeof(nValue))).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -367,21 +433,14 @@ Status DataWriter::WriteInt(Int64 nValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if (m_bFirst)
+	if ((status = WriteEx(&Spec::TYPE_INT, sizeof(Spec::TYPE_INT))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}{2}", m_sIndent, nValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	else
+	if ((status = WriteEx(&nValue, sizeof(nValue))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}{2}", m_sIndent, nValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	m_bFirst = false;
 
 	return Status();
 }
@@ -389,6 +448,8 @@ Status DataWriter::WriteInt(Int64 nValue)
 //object member
 Status DataWriter::WriteReal(const Char *szName, Double lfValue)
 {
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
 	String sName;
 	Status status;
 
@@ -401,27 +462,28 @@ Status DataWriter::WriteReal(const Char *szName, Double lfValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_REAL, sizeof(Spec::TYPE_REAL))).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
 	{
-		if ((status = 
-		     Print(m_pOutputStream, "\n{1}\"{2}\": {3}", m_sIndent, sName, lfValue)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Name too long");
 	}
-	else
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
 	{
-		if ((status = 
-		     Print(m_pOutputStream, ",\n{1}\"{2}\": {3}", m_sIndent, sName, lfValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	m_bFirst = false;
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
+	{
+		return status;
+	}
+	if ((status = WriteEx(&lfValue, sizeof(lfValue))).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -440,21 +502,14 @@ Status DataWriter::WriteReal(Double lfValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if (m_bFirst)
+	if ((status = WriteEx(&Spec::TYPE_REAL, sizeof(Spec::TYPE_REAL))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}{2}", m_sIndent, lfValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	else
+	if ((status = WriteEx(&lfValue, sizeof(lfValue))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}{2}", m_sIndent, lfValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	m_bFirst = false;
 
 	return Status();
 }
@@ -462,8 +517,10 @@ Status DataWriter::WriteReal(Double lfValue)
 //object member
 Status DataWriter::WriteString(const Char *szName, const Char *szValue)
 {
-	String sName;
-	String sValue;
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
+	UInt32 cValueLen;
+	Size   cTmpValueLen;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -475,31 +532,38 @@ Status DataWriter::WriteString(const Char *szName, const Char *szValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_STRING, sizeof(Spec::TYPE_STRING))).IsNOK())
 	{
 		return status;
 	}
-	if ((status = SAXParser::EscapeString(szValue, &sValue)).IsNOK())
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
+	{
+		return Status(Status_OutOfBounds, "Name too long");
+	}
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
 	{
-		if ((status = 
-		     Print(m_pOutputStream, "\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	else
+	cTmpValueLen = cx_strlen(szValue);
+	if ((Size)UINT32_MAX < cTmpValueLen)
 	{
-		if ((status = 
-		     Print(m_pOutputStream, ",\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Value too big");
 	}
-	m_bFirst = false;
+	cValueLen = (UInt32)cTmpValueLen;
+	if ((status = WriteEx(&cValueLen, sizeof(cValueLen))).IsNOK())
+	{
+		return status;
+	}
+	if ((status = WriteEx(szValue, cValueLen * sizeof(Char))).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -507,7 +571,8 @@ Status DataWriter::WriteString(const Char *szName, const Char *szValue)
 //array item
 Status DataWriter::WriteString(const Char *szValue)
 {
-	String sValue;
+	UInt32 cValueLen;
+	Size   cTmpValueLen;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -519,25 +584,24 @@ Status DataWriter::WriteString(const Char *szValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if ((status = SAXParser::EscapeString(szValue, &sValue)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_STRING, sizeof(Spec::TYPE_STRING))).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	cTmpValueLen = cx_strlen(szValue);
+	if ((Size)UINT32_MAX < cTmpValueLen)
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Value too big");
 	}
-	else
+	cValueLen = (UInt32)cTmpValueLen;
+	if ((status = WriteEx(&cValueLen, sizeof(cValueLen))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	m_bFirst = false;
+	if ((status = WriteEx(szValue, cValueLen * sizeof(Char))).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -545,8 +609,9 @@ Status DataWriter::WriteString(const Char *szValue)
 //object member
 Status DataWriter::WriteWString(const Char *szName, const WChar *wszValue)
 {
-	String sName;
-	String sTmpValue;
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
+	UInt32 cValueLen;
 	String sValue;
 	Status status;
 
@@ -559,35 +624,41 @@ Status DataWriter::WriteWString(const Char *szName, const WChar *wszValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_STRING, sizeof(Spec::TYPE_STRING))).IsNOK())
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::FromWChar(wszValue, &sTmpValue)).IsNOK())
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
+	{
+		return Status(Status_OutOfBounds, "Name too long");
+	}
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
 	{
 		return status;
 	}
-	if ((status = SAXParser::EscapeString(sTmpValue.c_str(), &sValue)).IsNOK())
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	if ((status = Str::UTF8::FromWChar(wszValue, &sValue)).IsNOK())
 	{
-		if ((status =
-			Print(m_pOutputStream, "\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	else
+	if ((Size)UINT32_MAX < sValue.size())
 	{
-		if ((status =
-			Print(m_pOutputStream, ",\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Value too big");
 	}
-	m_bFirst = false;
+	cValueLen = (UInt32)sValue.size();
+	if ((status = WriteEx(&cValueLen, sizeof(cValueLen))).IsNOK())
+	{
+		return status;
+	}
+	if ((status = WriteEx(sValue.c_str(), cValueLen * sizeof(Char))).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -595,7 +666,7 @@ Status DataWriter::WriteWString(const Char *szName, const WChar *wszValue)
 //array item
 Status DataWriter::WriteWString(const WChar *wszValue)
 {
-	String sTmpValue;
+	UInt32 cValueLen;
 	String sValue;
 	Status status;
 
@@ -608,29 +679,27 @@ Status DataWriter::WriteWString(const WChar *wszValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if ((status = Str::UTF8::FromWChar(wszValue, &sTmpValue)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_STRING, sizeof(Spec::TYPE_STRING))).IsNOK())
 	{
 		return status;
 	}
-	if ((status = SAXParser::EscapeString(sTmpValue.c_str(), &sValue)).IsNOK())
+	if ((status = Str::UTF8::FromWChar(wszValue, &sValue)).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	if ((Size)UINT32_MAX < sValue.size())
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Value too big");
 	}
-	else
+	cValueLen = (UInt32)sValue.size();
+	if ((status = WriteEx(&cValueLen, sizeof(cValueLen))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	m_bFirst = false;
+	if ((status = WriteEx(sValue.c_str(), cValueLen * sizeof(Char))).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -638,8 +707,9 @@ Status DataWriter::WriteWString(const WChar *wszValue)
 //object member
 Status DataWriter::WriteBLOB(const Char *szName, const void *pData, Size cbSize)
 {
-	String sName;
-	String sValue;
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
+	UInt32 cbValueSize;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -651,35 +721,37 @@ Status DataWriter::WriteBLOB(const Char *szName, const void *pData, Size cbSize)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_BLOB, sizeof(Spec::TYPE_BLOB))).IsNOK())
 	{
 		return status;
 	}
-
-	Str::Z85BinStr binstr;
-
-	if ((status = binstr.ToStringEx(pData, cbSize, &sValue)).IsNOK())
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
+	{
+		return Status(Status_OutOfBounds, "Name too long");
+	}
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
 	{
 		return status;
 	}
-
-	if (m_bFirst)
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
 	{
-		if ((status =
-			Print(m_pOutputStream, "\n{1}\"{2}\": \"blob://{3}\"", m_sIndent, sName, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	else
+	if ((Size)UINT32_MAX < cbSize)
 	{
-		if ((status =
-			Print(m_pOutputStream, ",\n{1}\"{2}\": \"blob://{3}\"", m_sIndent, sName, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Value too big");
 	}
-	m_bFirst = false;
+	cbValueSize = (UInt32)cbSize;
+	if ((status = WriteEx(&cbValueSize, sizeof(cbValueSize))).IsNOK())
+	{
+		return status;
+	}
+	if ((status = WriteEx(pData, cbSize)).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -688,6 +760,7 @@ Status DataWriter::WriteBLOB(const Char *szName, const void *pData, Size cbSize)
 Status DataWriter::WriteBLOB(const void *pData, Size cbSize)
 {
 	String sValue;
+	UInt32 cbValueSize;
 	Status status;
 
 	if (NULL == m_pOutputStream)
@@ -699,29 +772,23 @@ Status DataWriter::WriteBLOB(const void *pData, Size cbSize)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-
-	Str::Z85BinStr binstr;
-
-	if ((status = binstr.ToStringEx(pData, cbSize, &sValue)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_BLOB, sizeof(Spec::TYPE_BLOB))).IsNOK())
 	{
 		return status;
 	}
-
-	if (m_bFirst)
+	if ((Size)UINT32_MAX < cbSize)
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}\"blob://{2}\"", m_sIndent, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Value too big");
 	}
-	else
+	cbValueSize = (UInt32)cbSize;
+	if ((status = WriteEx(&cbValueSize, sizeof(cbValueSize))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}\"blob://{2}\"", m_sIndent, sValue)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	m_bFirst = false;
+	if ((status = WriteEx(pData, cbSize)).IsNOK())
+	{
+		return status;
+	}
 
 	return Status();
 }
@@ -729,6 +796,8 @@ Status DataWriter::WriteBLOB(const void *pData, Size cbSize)
 //object member
 Status DataWriter::BeginObject(const Char *szName)
 {
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
 	String sName;
 	Status status;
 
@@ -741,30 +810,25 @@ Status DataWriter::BeginObject(const Char *szName)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_BEGINOBJECT, sizeof(Spec::TYPE_BEGINOBJECT))).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
 	{
-		if ((status =
-		     Print(m_pOutputStream, "\n{1}\"{2}\":\n{3}{{", m_sIndent, sName, m_sIndent)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Name too long");
 	}
-	else
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
 	{
-		if ((status =
-		     Print(m_pOutputStream, ",\n{1}\"{2}\":\n{3}{{", m_sIndent, sName, m_sIndent)).IsNOK())
-		{
-			return status;
-		}
+		return status;
+	}
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
+	{
+		return status;
 	}
 	m_stackStates.push(State_Object);
-	m_bFirst = True;
-	m_cIndent++;
-	AdjustIndent();
 
 	return Status();
 }
@@ -783,24 +847,11 @@ Status DataWriter::BeginObject()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if (m_bFirst)
+	if ((status = WriteEx(&Spec::TYPE_BEGINOBJECT, sizeof(Spec::TYPE_BEGINOBJECT))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}{{", m_sIndent)).IsNOK())
-		{
-			return status;
-		}
-	}
-	else
-	{
-		if ((status = Print(m_pOutputStream, ",\n{1}{{", m_sIndent)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
 	m_stackStates.push(State_Object);
-	m_bFirst = True;
-	m_cIndent++;
-	AdjustIndent();
 
 	return Status();
 }
@@ -808,6 +859,8 @@ Status DataWriter::BeginObject()
 //object member
 Status DataWriter::BeginArray(const Char *szName)
 {
+	UInt32 cNameLen;
+	Size   cTmpNameLen;
 	String sName;
 	Status status;
 
@@ -820,30 +873,25 @@ Status DataWriter::BeginArray(const Char *szName)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	if ((status = SAXParser::EscapeString(szName, &sName)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_BEGINARRAY, sizeof(Spec::TYPE_BEGINARRAY))).IsNOK())
 	{
 		return status;
 	}
-	if (m_bFirst)
+	cTmpNameLen = cx_strlen(szName);
+	if ((Size)UINT32_MAX < cTmpNameLen)
 	{
-		if ((status =
-			Print(m_pOutputStream, "\n{1}\"{2}\":\n{3}[", m_sIndent, sName, m_sIndent)).IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_OutOfBounds, "Name too long");
 	}
-	else
+	cNameLen = (UInt32)cTmpNameLen;
+	if ((status = WriteEx(&cNameLen, sizeof(cNameLen))).IsNOK())
 	{
-		if ((status =
-			Print(m_pOutputStream, ",\n{1}\"{2}\":\n{3}[", m_sIndent, sName, m_sIndent)).IsNOK())
-		{
-			return status;
-		}
+		return status;
+	}
+	if ((status = WriteEx(szName, cNameLen * sizeof(Char))).IsNOK())
+	{
+		return status;
 	}
 	m_stackStates.push(State_Array);
-	m_bFirst = True;
-	m_cIndent++;
-	AdjustIndent();
 
 	return Status();
 }
@@ -862,24 +910,11 @@ Status DataWriter::BeginArray()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if (m_bFirst)
+	if ((status = WriteEx(&Spec::TYPE_BEGINARRAY, sizeof(Spec::TYPE_BEGINARRAY))).IsNOK())
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}[", m_sIndent)).IsNOK())
-		{
-			return status;
-		}
-	}
-	else
-	{
-		if ((status = Print(m_pOutputStream, ",\n{1}[", m_sIndent)).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
 	m_stackStates.push(State_Array);
-	m_bFirst = True;
-	m_cIndent++;
-	AdjustIndent();
 
 	return Status();
 }
@@ -896,14 +931,11 @@ Status DataWriter::EndObject()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	m_cIndent--;
-	AdjustIndent();
-	if ((status = Print(m_pOutputStream, "\n{1}}", m_sIndent)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_ENDOBJECT, sizeof(Spec::TYPE_ENDOBJECT))).IsNOK())
 	{
 		return status;
 	}
 	m_stackStates.pop();
-	m_bFirst = False;
 
 	return Status();
 }
@@ -920,19 +952,16 @@ Status DataWriter::EndArray()
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an object)");
 	}
-	m_cIndent--;
-	AdjustIndent();
-	if ((status = Print(m_pOutputStream, "\n{1}]", m_sIndent)).IsNOK())
+	if ((status = WriteEx(&Spec::TYPE_ENDARRAY, sizeof(Spec::TYPE_ENDARRAY))).IsNOK())
 	{
 		return status;
 	}
 	m_stackStates.pop();
-	m_bFirst = False;
 
 	return Status();
 }
 
-}//namespace JSON
+}//namespace BINJSON
 
 }//namespace Data
 

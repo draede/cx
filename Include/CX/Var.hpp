@@ -34,6 +34,7 @@
 #include "CX/String.hpp"
 #include "CX/Map.hpp"
 #include "CX/Vector.hpp"
+#include "CX/Stack.hpp"
 #include "CX/IO/IInputStream.hpp"
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
@@ -125,6 +126,8 @@ public:
 	Bool Equals(const Var &var, Bool bIgnoreCase = True) const;
 
 	const Char *GetName() const;
+
+	Size GetNameLen() const;
 
 	Status SetName(const Char *szName);
 
@@ -386,9 +389,22 @@ private:
 
 	Var(Bool a1, Bool a2, Bool a3, Bool a4, Bool a5);
 
-	Status Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast);
+	typedef struct _WriteNoRecData
+	{
+		const Var            *pVar;
+		ObjectConstIterator  iterObject;
+		ArrayConstIterator   iterArray;
+	}WriteNoRecData;
 
-	Status WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen);
+	typedef Stack<WriteNoRecData>::Type   WriteNoRecDataStack;
+
+	static Status WriteNoRec(const Var *pVar, IO::IOutputStream *pOutputStream);
+
+	static Status WriteNoRecName(const Var *pVar, IO::IOutputStream *pOutputStream);
+
+	static Status WriteNoRecScalar(const Var *pVar, IO::IOutputStream *pOutputStream, Bool bLast);
+
+	static Status WriteString(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen);
 
 };
 

@@ -48,6 +48,8 @@ const Char EXPECTED_JSON[] =
 "   \"int\": 123,\n"
 "   \"real\": 123.123000,\n"
 "   \"string\": \"teststr\",\n"
+"   \"wstring\": \"testwstr\",\n"
+"   \"blob\": \"blob://4HelloWorld\",\n"
 "   \"obj1\":\n"
 "   {\n"
 "      \"null\": null,\n"
@@ -55,13 +57,17 @@ const Char EXPECTED_JSON[] =
 "      \"int\": 123,\n"
 "      \"real\": 123.123000,\n"
 "      \"string\": \"teststr\",\n"
+"      \"wstring\": \"testwstr\",\n"
+"      \"blob\": \"blob://4HelloWorld\",\n"
 "      \"arr1\":\n"
 "      [\n"
 "         null,\n"
 "         true,\n"
 "         123,\n"
 "         123.123000,\n"
-"         \"teststr\"\n"
+"         \"teststr\",\n"
+"         \"testwstr\",\n"
+"         \"blob://4HelloWorld\"\n"
 "      ],\n"
 "      \"obj1\":\n"
 "      {\n"
@@ -69,7 +75,9 @@ const Char EXPECTED_JSON[] =
 "         \"bool\": true,\n"
 "         \"int\": 123,\n"
 "         \"real\": 123.123000,\n"
-"         \"string\": \"teststr\"\n"
+"         \"string\": \"teststr\",\n"
+"         \"wstring\": \"testwstr\",\n"
+"         \"blob\": \"blob://4HelloWorld\"\n"
 "      }\n"
 "   },\n"
 "   \"arr1\":\n"
@@ -79,62 +87,28 @@ const Char EXPECTED_JSON[] =
 "      123,\n"
 "      123.123000,\n"
 "      \"teststr\",\n"
+"      \"testwstr\",\n"
+"      \"blob://4HelloWorld\",\n"
 "      {\n"
 "         \"null\": null,\n"
 "         \"bool\": true,\n"
 "         \"int\": 123,\n"
 "         \"real\": 123.123000,\n"
-"         \"string\": \"teststr\"\n"
+"         \"string\": \"teststr\",\n"
+"         \"wstring\": \"testwstr\",\n"
+"         \"blob\": \"blob://4HelloWorld\"\n"
 "      },\n"
 "      [\n"
 "         null,\n"
 "         true,\n"
 "         123,\n"
 "         123.123000,\n"
-"         \"teststr\"\n"
+"         \"teststr\",\n"
+"         \"testwstr\",\n"
+"         \"blob://4HelloWorld\"\n"
 "      ]\n"
 "   ]\n"
 "}";
-
-int mycmp(const char *pS1, const char *pS2)
-{
-	while (0 != *pS1 && 0 != *pS2 && *pS1 == *pS2)
-	{
-		pS1++;
-		pS2++;
-	}
-	if (0 != *pS1)
-	{
-		if (0 != *pS2)
-		{
-			if (*pS1 < *pS2)
-			{
-				return -1;
-			}
-			else
-			{
-
-				return 1;
-			}
-		}
-		else
-		{
-			return 1;
-		}
-	}
-	else
-	{
-		if (0 != *pS2)
-		{
-			return -1;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-}
-
 
 void WriteObjScalars(const Char *szName, Data::JSON::DataWriter &w)
 {
@@ -176,6 +150,22 @@ void WriteObjScalars(const Char *szName, Data::JSON::DataWriter &w)
 	status = w.WriteString("string", "teststr");
 	sTmp.clear();
 	Print(&sTmp, "{1}: Write string", szName);
+	SECTION(sTmp.c_str())
+	{
+		REQUIRE(Status_OK == status.GetCode());
+	}
+
+	status = w.WriteWString("wstring", L"testwstr");
+	sTmp.clear();
+	Print(&sTmp, "{1}: Write wstring", szName);
+	SECTION(sTmp.c_str())
+	{
+		REQUIRE(Status_OK == status.GetCode());
+	}
+
+	status = w.WriteBLOB("blob", "\x86\x4F\xD2\x6F\xB5\x59\xF7\x5B", cx_strlen("\x86\x4F\xD2\x6F\xB5\x59\xF7\x5B"));
+	sTmp.clear();
+	Print(&sTmp, "{1}: Write blob", szName);
 	SECTION(sTmp.c_str())
 	{
 		REQUIRE(Status_OK == status.GetCode());
@@ -222,6 +212,22 @@ void WriteArrScalars(const Char *szName, Data::JSON::DataWriter &w)
 	status = w.WriteString("teststr");
 	sTmp.clear();
 	Print(&sTmp, "{1}: Write string", szName);
+	SECTION(sTmp.c_str())
+	{
+		REQUIRE(Status_OK == status.GetCode());
+	}
+
+	status = w.WriteWString(L"testwstr");
+	sTmp.clear();
+	Print(&sTmp, "{1}: Write wstring", szName);
+	SECTION(sTmp.c_str())
+	{
+		REQUIRE(Status_OK == status.GetCode());
+	}
+
+	status = w.WriteBLOB("\x86\x4F\xD2\x6F\xB5\x59\xF7\x5B", cx_strlen("\x86\x4F\xD2\x6F\xB5\x59\xF7\x5B"));
+	sTmp.clear();
+	Print(&sTmp, "{1}: Write blob", szName);
 	SECTION(sTmp.c_str())
 	{
 		REQUIRE(Status_OK == status.GetCode());

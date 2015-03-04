@@ -151,9 +151,6 @@
     <Filter Include="Contrib\SHA">
       <UniqueIdentifier>{0e7caf65-d91f-431c-a751-4076c9e607f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contrib\Farmhash">
-      <UniqueIdentifier>{a1f70e12-c5ed-4e66-8fab-7f4acc8b9aae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\C">
       <UniqueIdentifier>{1ffd37c0-d3bb-4fd2-a690-cd6db0c16df0}</UniqueIdentifier>
     </Filter>
@@ -165,6 +162,15 @@
     </Filter>
     <Filter Include="Contrib\Z85">
       <UniqueIdentifier>{77433a82-b211-434d-9166-829847057fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\BINJSON">
+      <UniqueIdentifier>{1b0a97c3-d1cb-4ac8-9bbd-41043193be51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data\BINJSON">
+      <UniqueIdentifier>{291b9ee8-b46e-4847-a2f2-b7bceead02a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\xxHash">
+      <UniqueIdentifier>{a71c9426-4c31-44fb-8cfc-690febfbeacc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -435,24 +441,6 @@
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Alloc.hpp">
       <Filter>Header Files\C\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\Farmhash\Include\farmhash.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\MD5\Include\md5.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\SHA\Include\hmac_sha1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\SHA\Include\sha.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\SHA\Include\sha2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\C\Alloc.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
@@ -542,6 +530,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\JSON\DataReader.hpp">
       <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataWriter.hpp">
+      <Filter>Header Files\Data\BINJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\BINJSON\Spec.hpp">
+      <Filter>Header Files\Data\BINJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Helper.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataReader.hpp">
+      <Filter>Header Files\Data\BINJSON</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -671,9 +674,6 @@
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp">
       <Filter>Source Files\Hash</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Contrib\Farmhash\Src\farmhash.cc">
-      <Filter>Contrib\Farmhash</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Alloc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -694,6 +694,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\JSONDataReader.cpp">
       <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c">
+      <Filter>Contrib\xxHash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\xxHash32.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\BINJSON\BINJSONDataWriter.cpp">
+      <Filter>Source Files\Data\BINJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Helper.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\BINJSON\BINJSONDataReader.cpp">
+      <Filter>Source Files\Data\BINJSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

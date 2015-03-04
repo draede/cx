@@ -494,6 +494,16 @@ const Char *Var::GetName() const
 	return m_sName.c_str();
 }
 
+Size Var::GetNameLen() const
+{
+	if (IsInvalid())
+	{
+		return 0;
+	}
+
+	return m_sName.size();
+}
+
 Status Var::SetName(const Char *szName)
 {
 	if (IsInvalid())
@@ -1377,7 +1387,7 @@ Status Var::Read(const String &sStr)
 
 Status Var::Write(IO::IOutputStream *pOutputStream)
 {
-	return Write(pOutputStream, 0, True);
+	return WriteNoRec(this, pOutputStream);
 }
 
 Status Var::Write(String &sStr)
@@ -1387,41 +1397,20 @@ Status Var::Write(String &sStr)
 	return Write(&mos);
 }
 
-Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
+Status Var::WriteNoRecName(const Var *pVar, IO::IOutputStream *pOutputStream)
 {
 	Size   cbSize;
-	Size   cbAckSize;
-	Char   szOutput[64];
-	Char   pIndent[256];
 	Status status;
 
-	if (!IsValid())
-	{
-		return Status(Status_InvalidCall, "Var is invalid");
-	}
-	//indent
-	if (cIndent > 256)
-	{
-		cIndent = 256;
-	}
-	for (Size i = 0; i < cIndent; i++)
-	{
-		pIndent[i] = '\t';
-	}
-	status = pOutputStream->Write(pIndent, cIndent, &cbSize);
-	if (status.IsNOK())
-	{
-		return status;
-	}
 	//name
-	if (NULL != GetParent() && !GetParent()->IsArray())
+	if (NULL != pVar->GetParent() && !pVar->GetParent()->IsArray())
 	{
 		status = pOutputStream->Write("\"", 1, &cbSize);
 		if (status.IsNOK())
 		{
 			return status;
 		}
-		status = WriteString(pOutputStream, m_sName.c_str(), m_sName.size());
+		status = WriteString(pOutputStream, pVar->GetName(), pVar->GetNameLen());
 		if (status.IsNOK())
 		{
 			return status;
@@ -1432,7 +1421,18 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 			return status;
 		}
 	}
-	if (IsNull())
+
+	return Status();
+}
+
+Status Var::WriteNoRecScalar(const Var *pVar, IO::IOutputStream *pOutputStream, Bool bLast)
+{
+	Size   cbSize;
+	Size   cbAckSize;
+	Char   szOutput[64];
+	Status status;
+
+	if (pVar->IsNull())
 	{
 		status = pOutputStream->Write("null", 4, &cbSize);
 		if (status.IsNOK())
@@ -1441,9 +1441,9 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 		}
 	}
 	else
-	if (IsBool())
+	if (pVar->IsBool())
 	{
-		if (!GetBool())
+		if (!pVar->GetBool())
 		{
 			status = pOutputStream->Write("false", 5, &cbSize);
 			if (status.IsNOK())
@@ -1461,9 +1461,10 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 		}
 	}
 	else
-	if (IsInt())
+	if (pVar->IsInt())
 	{
-		status = ToString(GetInt(), szOutput, sizeof(szOutput) / sizeof(szOutput[0]), &cbAckSize, 0);
+		status = ToString(pVar->GetInt(), szOutput, sizeof(szOutput) / sizeof(szOutput[0]), 
+								&cbAckSize, 0);
 		if (status.IsNOK())
 		{
 			return status;
@@ -1475,9 +1476,10 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 		}
 	}
 	else
-	if (IsReal())
+	if (pVar->IsReal())
 	{
-		status = ToString(GetReal(), szOutput, sizeof(szOutput) / sizeof(szOutput[0]), &cbAckSize, 6);
+		status = ToString(pVar->GetReal(), szOutput, sizeof(szOutput) / sizeof(szOutput[0]), 
+								&cbAckSize, 6);
 		if (status.IsNOK())
 		{
 			return status;
@@ -1489,14 +1491,14 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 		}
 	}
 	else
-	if (IsString())
+	if (pVar->IsString())
 	{
 		status = pOutputStream->Write("\"", 1, &cbSize);
 		if (status.IsNOK())
 		{
 			return status;
 		}
-		status = WriteString(pOutputStream, m_psString->c_str(), m_psString->size());
+		status = WriteString(pOutputStream, pVar->GetString(), pVar->GetStringLen());
 		if (status.IsNOK())
 		{
 			return status;
@@ -1507,89 +1509,9 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 			return status;
 		}
 	}
-	else 
-	if (IsObject())
+	else
 	{
-		status = pOutputStream->Write("\n", 1, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-		status = pOutputStream->Write(pIndent, cIndent, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-		status = pOutputStream->Write("{\n", 2, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-		for (VarsMap::iterator iter = m_pObject->mapVars.begin(); 
-		     iter != m_pObject->mapVars.end(); ++iter)
-		{
-			VarsMap::iterator iterEx = iter;
-
-			iterEx++;
-			status = iter->second->Write(pOutputStream, cIndent + 1, 
-			                             (m_pObject->mapVars.end() == iterEx));
-			if (status.IsNOK())
-			{
-				return status;
-			}
-		}
-		status = pOutputStream->Write(pIndent, cIndent, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-		status = pOutputStream->Write("}", 1, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-	}
-	else 
-	if (IsArray())
-	{
-		status = pOutputStream->Write("\n", 1, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-		status = pOutputStream->Write(pIndent, cIndent, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-		status = pOutputStream->Write("[\n", 2, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-		for (VarsVector::iterator iter = m_pArray->vectorVars.begin(); 
-		     iter != m_pArray->vectorVars.end(); ++iter)
-		{
-			VarsVector::iterator iterEx = iter;
-
-			iterEx++;
-			status = (*iter)->Write(pOutputStream, cIndent + 1, 
-			                        (m_pArray->vectorVars.end() == iterEx));
-			if (status.IsNOK())
-			{
-				return status;
-			}
-		}
-		status = pOutputStream->Write(pIndent, cIndent, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
-		status = pOutputStream->Write("]", 1, &cbSize);
-		if (status.IsNOK())
-		{
-			return status;
-		}
+		return Status(Status_InvalidArg, "Var is not a scalar");
 	}
 	if (bLast)
 	{
@@ -1601,10 +1523,293 @@ Status Var::Write(IO::IOutputStream *pOutputStream, Size cIndent, Bool bLast)
 	}
 	else
 	{
-		status = pOutputStream->Write(",\n", 1, &cbSize);
+		status = pOutputStream->Write(",\n", 2, &cbSize);
 		if (status.IsNOK())
 		{
 			return status;
+		}
+	}
+
+	return Status();
+}
+
+Status Var::WriteNoRec(const Var *pVar, IO::IOutputStream *pOutputStream)
+{
+	static const Size     MAX_INDENT = 1024;
+	Size                  cbSize;
+	Char                  indent[MAX_INDENT];
+	WriteNoRecDataStack   stack;
+	Size                  cIndent;
+	Status                status;
+
+	if (!pVar->IsValid())
+	{
+		return Status(Status_InvalidCall, "Var is invalid");
+	}
+	
+	memset(indent, '\t', MAX_INDENT);
+	
+	status = WriteNoRecName(pVar, pOutputStream);
+	if (status.IsNOK())
+	{
+		return status;
+	}
+	if (!pVar->IsObject() && !pVar->IsArray())
+	{
+		return WriteNoRecScalar(pVar, pOutputStream, True);
+	}
+
+	WriteNoRecData data;
+
+	data.pVar = pVar;
+	if (pVar->IsObject())
+	{
+		data.iterObject = pVar->GetObjectConstIterator();
+		status          = pOutputStream->Write("{\n", 2, &cbSize);
+	}
+	else
+	{
+		data.iterArray = pVar->GetArrayConstIterator();
+		status          = pOutputStream->Write("[\n", 2, &cbSize);
+	}
+	if (status.IsNOK())
+	{
+		return status;
+	}
+
+	stack.push(data);
+
+	cIndent = 1;
+	while (!stack.empty())
+	{
+		const Var *pTmpVar = NULL;
+
+		//get next child
+		if (stack.top().pVar->IsObject())
+		{
+			if (stack.top().iterObject.IsValid())
+			{
+				pTmpVar = &stack.top().iterObject.Get();
+				stack.top().iterObject.Next();
+			}
+		}
+		else
+		{
+			if (stack.top().iterArray.IsValid())
+			{
+				pTmpVar = &stack.top().iterArray.Get();
+				stack.top().iterArray.Next();
+			}
+		}
+
+		if (NULL != pTmpVar) //has next child
+		{
+			if (!pTmpVar->IsValid())
+			{
+				return Status(Status_InvalidCall, "Var is invalid");
+			}
+
+			status = pOutputStream->Write(indent, MAX_INDENT > cIndent ? cIndent : MAX_INDENT, &cbSize);
+			if (status.IsNOK())
+			{
+				return status;
+			}
+
+			//write the name of an object child
+			if (stack.top().pVar->IsObject())
+			{
+				status = WriteNoRecName(pTmpVar, pOutputStream);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+			}
+			if (pTmpVar->IsObject()) //child is an object
+			{
+				if (stack.top().pVar->IsObject())
+				{
+					status = pOutputStream->Write("\n", 1, &cbSize);
+					if (status.IsNOK())
+					{
+						return status;
+					}
+					status = pOutputStream->Write(indent, MAX_INDENT > cIndent ? cIndent : MAX_INDENT, &cbSize);
+					if (status.IsNOK())
+					{
+						return status;
+					}
+				}
+				status = pOutputStream->Write("{\n", 2, &cbSize);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+
+				cIndent++;
+
+				if (pTmpVar->GetObjectConstIterator().IsValid())
+				{
+					WriteNoRecData d;
+
+					d.pVar       = pTmpVar;
+					d.iterObject = pTmpVar->GetObjectConstIterator();
+
+					stack.push(d);
+
+					pTmpVar = &data.iterObject.Get();
+				}
+				else
+				{
+					cIndent--;
+					status = pOutputStream->Write(indent, MAX_INDENT > cIndent ? cIndent : MAX_INDENT, &cbSize);
+					if (status.IsNOK())
+					{
+						return status;
+					}
+					status = pOutputStream->Write("}", 1, &cbSize);
+					if (status.IsNOK())
+					{
+						return status;
+					}
+					if (stack.empty() ||
+						(stack.top().pVar->IsObject() && !stack.top().iterObject.IsValid()) ||
+						(stack.top().pVar->IsArray() && !stack.top().iterArray.IsValid()))
+					{
+						status = pOutputStream->Write("\n", 1, &cbSize);
+						if (status.IsNOK())
+						{
+							return status;
+						}
+					}
+					else
+					{
+						status = pOutputStream->Write(",\n", 2, &cbSize);
+						if (status.IsNOK())
+						{
+							return status;
+						}
+					}
+				}
+			}
+			else
+			if (pTmpVar->IsArray()) //child is an array
+			{
+				status = pOutputStream->Write("\n", 1, &cbSize);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+				status = pOutputStream->Write(indent, MAX_INDENT > cIndent ? cIndent : MAX_INDENT, &cbSize);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+				status = pOutputStream->Write("[\n", 2, &cbSize);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+
+				cIndent++;
+
+				if (pTmpVar->GetArrayConstIterator().IsValid())
+				{
+					WriteNoRecData d;
+
+					d.pVar      = pTmpVar;
+					d.iterArray = pTmpVar->GetArrayConstIterator();
+
+					stack.push(d);
+
+					pTmpVar = &data.iterArray.Get();
+				}
+				else
+				{
+					cIndent--;
+					status = pOutputStream->Write(indent, MAX_INDENT > cIndent ? cIndent : MAX_INDENT, &cbSize);
+					if (status.IsNOK())
+					{
+						return status;
+					}
+					status = pOutputStream->Write("]", 1, &cbSize);
+					if (status.IsNOK())
+					{
+						return status;
+					}
+					if (stack.empty() ||
+						(stack.top().pVar->IsObject() && !stack.top().iterObject.IsValid()) ||
+						(stack.top().pVar->IsArray() && !stack.top().iterArray.IsValid()))
+					{
+						status = pOutputStream->Write("\n", 1, &cbSize);
+						if (status.IsNOK())
+						{
+							return status;
+						}
+					}
+					else
+					{
+						status = pOutputStream->Write(",\n", 2, &cbSize);
+						if (status.IsNOK())
+						{
+							return status;
+						}
+					}
+				}
+			}
+			else  //child is a scalar
+			{
+				status = WriteNoRecScalar(pTmpVar, pOutputStream, 
+				                 (stack.top().pVar->IsObject() && !stack.top().iterObject.IsValid()) || 
+				                 (stack.top().pVar->IsArray() && !stack.top().iterArray.IsValid()));
+				if (status.IsNOK())
+				{
+					return status;
+				}
+			}
+		}
+		else //end of the object/array
+		{
+			cIndent--;
+			status = pOutputStream->Write(indent, MAX_INDENT > cIndent ? cIndent : MAX_INDENT, &cbSize);
+			if (status.IsNOK())
+			{
+				return status;
+			}
+			if (stack.top().pVar->IsObject())
+			{
+				status = pOutputStream->Write("}", 1, &cbSize);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+			}
+			else
+			{
+				status = pOutputStream->Write("]", 1, &cbSize);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+			}
+			stack.pop();
+			if (stack.empty() || 
+			    (stack.top().pVar->IsObject() && !stack.top().iterObject.IsValid()) ||
+			    (stack.top().pVar->IsArray() && !stack.top().iterArray.IsValid()))
+			{
+				status = pOutputStream->Write("\n", 1, &cbSize);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+			}
+			else
+			{
+				status = pOutputStream->Write(",\n", 2, &cbSize);
+				if (status.IsNOK())
+				{
+					return status;
+				}
+			}
 		}
 	}
 
