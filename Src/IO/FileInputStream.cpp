@@ -27,6 +27,7 @@
  */ 
 
 #include "CX/IO/FileInputStream.hpp"
+#include "CX/Str/UTF8.hpp"
 #include "CX/Status.hpp"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -40,14 +41,37 @@ namespace IO
 
 FileInputStream::FileInputStream(const Char *szPath)
 {
+	WString wsPath;
+
+	if (Str::UTF8::ToWChar(szPath, &wsPath).IsOK())
+	{
 #pragma warning(push)
 #pragma warning(disable: 4996)
-	if (NULL == (m_pFile = cx_fopen(szPath, CX_FILE_RFLAGS)))
+		if (NULL == (m_pFile = cxw_fopen(wsPath.c_str(), CX_WFILE_RFLAGS)))
+#pragma warning(pop)
+		{
+			return;
+		}
+
+		m_sPath = szPath;
+	}
+	else
+	{
+		m_pFile = NULL;
+	}
+}
+
+FileInputStream::FileInputStream(const WChar *wszPath)
+{
+#pragma warning(push)
+#pragma warning(disable: 4996)
+	if (NULL == (m_pFile = cxw_fopen(wszPath, CX_WFILE_RFLAGS)))
 #pragma warning(pop)
 	{
 		return;
 	}
-	m_sPath = szPath;
+
+	Str::UTF8::FromWChar(wszPath, &m_sPath);
 }
 
 FileInputStream::~FileInputStream()

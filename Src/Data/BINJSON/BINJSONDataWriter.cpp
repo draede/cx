@@ -111,7 +111,6 @@ Status DataWriter::WriteFooter(UInt32 nHash)
 	return Status();
 }
 
-
 Status DataWriter::BeginRootObject()
 {
 	Status status;

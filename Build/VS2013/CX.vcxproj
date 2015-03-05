@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSON.h" />
+    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSONReader.h" />
+    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSONWriter.h" />
     <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum-dtoa.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h" />
@@ -145,6 +148,8 @@
     <ClInclude Include="..\..\Src\Platform\Windows\resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONReader.c" />
+    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONWriter.c" />
     <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32.cpp" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc" />

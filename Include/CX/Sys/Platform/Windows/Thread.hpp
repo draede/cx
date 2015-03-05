@@ -40,7 +40,7 @@
 #include "CX/APIDefs.hpp"
 #include "CX/Util/IFunction.hpp"
 #include "CX/Util/Function.hpp"
-#include "CX/Platform/Windows/windows.h"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 namespace CX

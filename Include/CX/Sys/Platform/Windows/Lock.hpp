@@ -39,7 +39,7 @@
 #include "CX/Status.hpp"
 #include "CX/Scope.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/Platform/Windows/windows.h"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 namespace CX

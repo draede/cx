@@ -29,48 +29,26 @@
 #pragma once
 
 
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/C/stdio.h"
-#include "CX/String.hpp"
-#include "CX/APIDefs.hpp"
+#include "CX/C/Platform.h"
 
 
-namespace CX
-{
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-namespace IO
-{
 
-class CX_API FileOutputStream : public IOutputStream
-{
-public:
+#include "CX/C/Types.h"
+#include "CX/C/APIDefs.h"
 
-	FileOutputStream(const Char *szPath);
 
-	FileOutputStream(const WChar *wszPath);
+CX_API void *CX_Alloc(CX_Size cbSize);
 
-	~FileOutputStream();
+CX_API void *CX_Realloc(void *pPtr, CX_Size cbSize);
 
-	virtual Status Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize);
+CX_API void CX_Free(void *pPtr);
 
-	virtual Status GetSize(UInt64 *pcbSize) const;
 
-	virtual Bool IsOK() const;
-
-	virtual const Char *GetPath() const;
-
-private:
-
-	FILE     *m_pFile;
-
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	String   m_sPath;
-#pragma warning(pop)
-
-};
-
-}//namespace IO
-
-}//namespace CX
+#ifdef __cplusplus
+}
+#endif
 

@@ -29,30 +29,26 @@
 #pragma once
 
 
-namespace CX
-{
+#include "CX/C/Platform.h"
 
-template <typename T, void (T::*pfnEnter)() = &T::Enter, void (T::*pfnLeave)() = &T::Leave>
-class Scope
-{
-public:
 
-	Scope(T *pInst);
-	{
-		m_pInst = pInst;
-		(m_pInst->*pfnEnter)();
-	}
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-	virtual ~Scope()
-	{
-		(m_pInst->*pfnLeave)();
-	}
 
-private:
+#include "CX/C/Types.h"
+#include "CX/C/APIDefs.h"
 
-	T *m_pInst;
 
-};
+CX_API void *CX_Alloc(CX_Size cbSize);
 
-}//namespace CX
+CX_API void *CX_Realloc(void *pPtr, CX_Size cbSize);
+
+CX_API void CX_Free(void *pPtr);
+
+
+#ifdef __cplusplus
+}
+#endif
 

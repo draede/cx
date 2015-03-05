@@ -32,7 +32,7 @@
 #if defined(CX_OS_WINDOWS)
 
 
-#include "CX/Platform/Windows/windows.h"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)

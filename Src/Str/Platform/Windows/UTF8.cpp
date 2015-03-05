@@ -36,7 +36,7 @@
 #include "CX/Str/UTF8.hpp"
 #include "CX/C/string.h"
 #include "CX/Status.hpp"
-#include "CX/Platform/Windows/windows.h"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 namespace CX
@@ -67,17 +67,43 @@ Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = SIZ
 	}
 	else
 	{
+		WChar *pOut = NULL;
+		WChar out[8192];
+
 		if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, (int)cUTF8Len, NULL, 0)))
 		{
-			psWChar->resize(cSize);
-			if (0 >= (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, (int)cUTF8Len, &(*psWChar)[0], cSize)))
+			if (cSize > 8192)
 			{
-				return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", GetLastError());
+				if (NULL == (pOut = NewArr<WChar>(cSize)))
+				{
+					return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", 
+					              cSize * sizeof(WChar));
+				}
+			}
+			else
+			{
+				pOut = out;
+			}
+			if (0 >= (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, (int)cUTF8Len, pOut, cSize)))
+			{
+				if (pOut != out)
+				{
+					DeleteArr(pOut);
+				}
+
+				return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", 
+				              GetLastError());
+			}
+			psWChar->assign(pOut, cSize);
+			if (pOut != pOut)
+			{
+				DeleteArr(pOut);
 			}
 		}
 		else
 		{
-			return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", GetLastError());
+			return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", 
+			              GetLastError());
 		}
 	}
 
@@ -98,17 +124,45 @@ Status UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* =
 	}
 	else
 	{
-		if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, (int)cWCharLen, NULL, 0, NULL, NULL)))
+		Char *pOut = NULL;
+		Char out[8192];
+
+		if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, (int)cWCharLen, NULL, 0, NULL, 
+		                                       NULL)))
 		{
-			psUTF8->resize(cSize);
-			if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, (int)cWCharLen, &(*psUTF8)[0], cSize, NULL, NULL)))
+			if (cSize > 8192)
 			{
-				return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", GetLastError());
+				if (NULL == (pOut = NewArr<Char>(cSize)))
+				{
+					return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes",
+					              cSize * sizeof(Char));
+				}
+			}
+			else
+			{
+				pOut = out;
+			}
+			if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, (int)cWCharLen, pOut, 
+			                                        cSize, NULL, NULL)))
+			{
+				if (pOut != out)
+				{
+					DeleteArr(pOut);
+				}
+
+				return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", 
+				              GetLastError());
+			}
+			psUTF8->assign(pOut, cSize);
+			if (pOut != out)
+			{
+				DeleteArr(pOut);
 			}
 		}
 		else
 		{
-			return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", GetLastError());
+			return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", 
+			              GetLastError());
 		}
 	}
 

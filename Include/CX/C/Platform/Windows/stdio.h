@@ -171,6 +171,10 @@
 #define CX_FILE_WFLAGS     "wb"
 #define CX_FILE_AFLAGS     "ab"
 
+#define CX_WFILE_RFLAGS    L"rb"
+#define CX_WFILE_WFLAGS    L"wb"
+#define CX_WFILE_AFLAGS    L"ab"
+
 
 #endif
 

@@ -172,6 +172,9 @@
     <Filter Include="Contrib\xxHash">
       <UniqueIdentifier>{a71c9426-4c31-44fb-8cfc-690febfbeacc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contrib\BINJSON">
+      <UniqueIdentifier>{ad15d033-4e95-405c-9b93-106c84b14d8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -546,6 +549,15 @@
     <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataReader.hpp">
       <Filter>Header Files\Data\BINJSON</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSONReader.h">
+      <Filter>Contrib\BINJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSONWriter.h">
+      <Filter>Contrib\BINJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSON.h">
+      <Filter>Contrib\BINJSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -709,6 +721,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\BINJSON\BINJSONDataReader.cpp">
       <Filter>Source Files\Data\BINJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONReader.c">
+      <Filter>Contrib\BINJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONWriter.c">
+      <Filter>Contrib\BINJSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

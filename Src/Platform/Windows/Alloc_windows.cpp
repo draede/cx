@@ -33,7 +33,7 @@
 
 
 #include "CX/Alloc.hpp"
-#include "CX/Platform/Windows/windows.h"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 namespace CX

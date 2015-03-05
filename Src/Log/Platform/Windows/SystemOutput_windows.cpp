@@ -35,7 +35,7 @@
 #include "CX/Log/SystemOutput.hpp"
 #include "CX/Status.hpp"
 #include "CX/Str/UTF8.hpp"
-#include "CX/Platform/Windows/windows.h"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 namespace CX

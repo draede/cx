@@ -47,6 +47,8 @@ public:
 
 	FileInputStream(const Char *szPath);
 
+	FileInputStream(const WChar *wszPath);
+
 	~FileInputStream();
 
 	virtual Status Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize);

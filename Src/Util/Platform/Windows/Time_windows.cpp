@@ -34,7 +34,7 @@
 
 #include "CX/Util/Time.hpp"
 #include "CX/Status.hpp"
-#include "CX/Platform/Windows/windows.h"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 namespace CX
