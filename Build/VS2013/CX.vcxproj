@@ -65,7 +65,6 @@
     <ClInclude Include="..\..\Include\CX\C\Version.h" />
     <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataWriter.hpp" />
-    <ClInclude Include="..\..\Include\CX\Data\BINJSON\Spec.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\DataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp" />
@@ -148,8 +147,18 @@
     <ClInclude Include="..\..\Src\Platform\Windows\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONReader.c" />
-    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONWriter.c" />
+    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONReader.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONWriter.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsC</CompileAs>
+    </ClCompile>
     <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32.cpp" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc" />

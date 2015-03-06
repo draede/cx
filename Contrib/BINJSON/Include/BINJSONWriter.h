@@ -39,97 +39,107 @@ extern "C" {
 
 #include "CX/C/Types.h"
 #include "CX/C/StatusCodes.h"
+#include "../../xxHash/Include/xxhash.h"
 #include "BINJSON.h"
 
 
-struct _CX_BINJSON_Writer;
-
+#define CX_BINJSON_WRITER_MAX_DEPTH 1024
 
 typedef CX_StatusCode (* CX_BINJSON_Writer_Write_Func)(void *pUserContext, const void *pData, 
                                                        CX_Size cbSize);
 
-CX_StatusCode CX_BINJSON_Writer_Init(struct _CX_BINJSON_Writer *pWriter, void *pUserContext, 
+typedef struct _CX_BINJSON_Writer
+{
+	CX_Byte                        stack[CX_BINJSON_WRITER_MAX_DEPTH];
+	CX_Size                        cDepth;
+	void                           *pUserContext;
+	CX_BINJSON_Writer_Write_Func   pfnWrite;
+	CX_BINJSON_HelperAPI           api;
+	XXH32_state_t                  hash;
+}CX_BINJSON_Writer;
+
+CX_StatusCode CX_BINJSON_Writer_Init(CX_BINJSON_Writer *pWriter, void *pUserContext, 
                                      CX_BINJSON_HelperAPI *pHelperAPI, 
                                      CX_BINJSON_Writer_Write_Func pfnWrite);
 
-CX_StatusCode CX_BINJSON_Writer_BeginRootObject(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_BeginRootObject(CX_BINJSON_Writer *pWriter);
 
-CX_StatusCode CX_BINJSON_Writer_EndRootObject(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_EndRootObject(CX_BINJSON_Writer *pWriter);
 
-CX_StatusCode CX_BINJSON_Writer_BeginRootArray(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_BeginRootArray(CX_BINJSON_Writer *pWriter);
 
-CX_StatusCode CX_BINJSON_Writer_EndRootArray(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_EndRootArray(CX_BINJSON_Writer *pWriter);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteNull(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjWriteNull(CX_BINJSON_Writer *pWriter, 
                                              const CX_Char *szName);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteNull(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_ArrWriteNull(CX_BINJSON_Writer *pWriter);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteBool(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjWriteBool(CX_BINJSON_Writer *pWriter, 
                                              const CX_Char *szName, CX_Bool bValue);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteBool(struct _CX_BINJSON_Writer *pWriter, CX_Bool bValue);
+CX_StatusCode CX_BINJSON_Writer_ArrWriteBool(CX_BINJSON_Writer *pWriter, CX_Bool bValue);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteInt(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjWriteInt(CX_BINJSON_Writer *pWriter, 
                                             const CX_Char *szName, CX_Int64 nValue);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteInt(struct _CX_BINJSON_Writer *pWriter, CX_Int64 nValue);
+CX_StatusCode CX_BINJSON_Writer_ArrWriteInt(CX_BINJSON_Writer *pWriter, CX_Int64 nValue);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteReal(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjWriteReal(CX_BINJSON_Writer *pWriter, 
                                              const CX_Char *szName, CX_Double lfValue);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteReal(struct _CX_BINJSON_Writer *pWriter, CX_Double lfValue);
+CX_StatusCode CX_BINJSON_Writer_ArrWriteReal(CX_BINJSON_Writer *pWriter, CX_Double lfValue);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteString(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjWriteString(CX_BINJSON_Writer *pWriter, 
                                                const CX_Char *szName, const CX_Char *szValue);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteString(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ArrWriteString(CX_BINJSON_Writer *pWriter, 
                                             const CX_Char *szValue);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteWString(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjWriteWString(CX_BINJSON_Writer *pWriter, 
                                                 const CX_Char *szName, const CX_WChar *wszValue);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteWString(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ArrWriteWString(CX_BINJSON_Writer *pWriter, 
                                              const CX_WChar *wszValue);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteBLOB(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjWriteBLOB(CX_BINJSON_Writer *pWriter, 
                                              const CX_Char *szName, const void *pData, 
                                              CX_Size cbSize);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteBLOB(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ArrWriteBLOB(CX_BINJSON_Writer *pWriter, 
                                           const void *pData, CX_Size cbSize);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjBeginObject(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjBeginObject(CX_BINJSON_Writer *pWriter, 
                                                const CX_Char *szName);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrBeginObject(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_ArrBeginObject(CX_BINJSON_Writer *pWriter);
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjBeginArray(struct _CX_BINJSON_Writer *pWriter, 
+CX_StatusCode CX_BINJSON_Writer_ObjBeginArray(CX_BINJSON_Writer *pWriter, 
                                               const CX_Char *szName);
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrBeginArray(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_ArrBeginArray(CX_BINJSON_Writer *pWriter);
 
-CX_StatusCode CX_BINJSON_Writer_EndObject(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_EndObject(CX_BINJSON_Writer *pWriter);
 
-CX_StatusCode CX_BINJSON_Writer_EndArray(struct _CX_BINJSON_Writer *pWriter);
+CX_StatusCode CX_BINJSON_Writer_EndArray(CX_BINJSON_Writer *pWriter);
 
 
 #ifdef __cplusplus

@@ -537,9 +537,6 @@
     <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataWriter.hpp">
       <Filter>Header Files\Data\BINJSON</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\BINJSON\Spec.hpp">
-      <Filter>Header Files\Data\BINJSON</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>

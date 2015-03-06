@@ -134,12 +134,12 @@ Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = SIZ
 {
 	int   cSize;
 	WChar *pOut = NULL;
-	WChar out[8192];
+	WChar out[8000];
 
 	if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, 
 	                                       SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
 	{
-		if (cSize > 8192)
+		if (cSize > 8000)
 		{
 			if (NULL == (pOut = NewArr<WChar>(cSize)))
 			{
@@ -182,13 +182,13 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* =
 	int cSize;
 
 	Char *pOut = NULL;
-	Char out[8192];
+	Char out[8000];
 
 	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
 		                                    SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
 		                                    NULL, NULL)))
 	{
-		if (cSize > 8192)
+		if (cSize > 8000)
 		{
 			if (NULL == (pOut = NewArr<Char>(cSize)))
 			{

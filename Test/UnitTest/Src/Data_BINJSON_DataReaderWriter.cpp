@@ -122,6 +122,7 @@ TEST_CASE("Data BINJSON DataWriter", "[CX::Data::BINJSON::DataWriter]")
 	{
 		String   sOutput1;
 		String   sOutput2;
+		String   sOutput3;
 		Status   status;
 
 		{
@@ -152,9 +153,28 @@ TEST_CASE("Data BINJSON DataWriter", "[CX::Data::BINJSON::DataWriter]")
 			REQUIRE(Status_OK == status.GetCode());
 		}
 
-		SECTION("Compare output")
+		SECTION("Compare output 1")
 		{
 			REQUIRE(sOutput1 == sOutput2);
+		}
+
+		{
+			IO::MemInputStream         mis(&sOutput2);
+			Data::BINJSON::DataReader  binjson_reader(&mis);
+			IO::MemOutputStream        mos(&sOutput3);
+			Data::JSON::DataWriter     json_writer(&mos);
+
+			status = IO::Helper::CopyData(&binjson_reader, &json_writer);
+		}
+
+		SECTION("CopyData3")
+		{
+			REQUIRE(Status_OK == status.GetCode());
+		}
+
+		SECTION("Compare output 2")
+		{
+			REQUIRE(String(INPUT_JSON) == sOutput3);
 		}
 	}
 
@@ -165,8 +185,10 @@ TEST_CASE("Data BINJSON DataWriter", "[CX::Data::BINJSON::DataWriter]")
 
 		for (Size i = cStart; i <= cEnd; i++)
 		{
+			String     sOutput0;
 			String     sOutput1;
 			String     sOutput2;
+			String     sOutput3;
 			Status     status;
 
 			//Print(stdout, "JSON {1}\n", i);
@@ -176,9 +198,24 @@ TEST_CASE("Data BINJSON DataWriter", "[CX::Data::BINJSON::DataWriter]")
 
 			Print(&sPath, "{1}.json", i);
 
-			IO::FileInputStream fis(sPath.c_str());
 
 			{
+				IO::FileInputStream        fis(sPath.c_str());
+				Data::JSON::DataReader     json_reader(&fis);
+				IO::MemOutputStream        mos(&sOutput0);
+				Data::JSON::DataWriter     json_writer(&mos);
+
+				status = IO::Helper::CopyData(&json_reader, &json_writer);
+			}
+
+			Print(&sName, "TestData_CopyData0_{1}", i);
+			SECTION(sName.c_str())
+			{
+				REQUIRE(Status_OK == status.GetCode());
+			}
+
+			{
+				IO::FileInputStream        fis(sPath.c_str());
 				Data::JSON::DataReader     json_reader(&fis);
 				IO::MemOutputStream        mos(&sOutput1);
 				Data::BINJSON::DataWriter  binjson_writer(&mos);
@@ -207,10 +244,31 @@ TEST_CASE("Data BINJSON DataWriter", "[CX::Data::BINJSON::DataWriter]")
 				REQUIRE(Status_OK == status.GetCode());
 			}
 
-			Print(&sName, "TestData_Compareoutput_{1}", i);
+			Print(&sName, "TestData_Compareoutput1_{1}", i);
 			SECTION(sName.c_str())
 			{
 				REQUIRE(sOutput1 == sOutput2);
+			}
+
+			{
+				IO::MemInputStream         mis(&sOutput2);
+				Data::BINJSON::DataReader  binjson_reader(&mis);
+				IO::MemOutputStream        mos(&sOutput3);
+				Data::JSON::DataWriter     json_writer(&mos);
+
+				status = IO::Helper::CopyData(&binjson_reader, &json_writer);
+			}
+
+			Print(&sName, "TestData_Compareoutput2_{1}", i);
+			SECTION(sName.c_str())
+			{
+				REQUIRE(Status_OK == status.GetCode());
+			}
+
+			Print(&sName, "TestData_Compareoutput3_{1}", i);
+			SECTION(sName.c_str())
+			{
+				REQUIRE(sOutput0 == sOutput3);
 			}
 		}
 	}

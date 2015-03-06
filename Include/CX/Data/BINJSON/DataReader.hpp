@@ -31,8 +31,8 @@
 
 #include "CX/IO/IDataReader.hpp"
 #include "CX/IO/IInputStream.hpp"
-#include "CX/Hash/xxHash32.hpp"
-#include "CX/Stack.hpp"
+#include "CX/String.hpp"
+#include "../../../../Contrib/BINJSON/Include/BINJSONReader.h"
 
 
 namespace CX
@@ -48,9 +48,20 @@ class CX_API DataReader : public IO::IDataReader
 {
 public:
 
-	DataReader(IO::IInputStream *pInputStream);
+	typedef void * (* Alloc_Func)(void *pUserContext, Size cbSize);
+
+	typedef void * (* Realloc_Func)(void *pUserContext, void *pPtr, Size cbSize);
+
+	typedef void (* Free_Func)(void *pUserContext, void *pPtr);
+
+	DataReader(IO::IInputStream *pInputStream, 
+	           Alloc_Func pfnAlloc = NULL, 
+	           Realloc_Func pfnRealloc = NULL, 
+	           Free_Func pfnFree = NULL);
 
 	virtual ~DataReader();
+
+	void FreeBLOBMem(void *pData);
 
 	virtual EntryType GetRootEntryType();
 
@@ -124,34 +135,25 @@ public:
 
 private:
 
-	typedef Stack<Byte>::Type  EntriesStack;
+	IO::IInputStream   *m_pInputStream;
+	Alloc_Func          m_pfnAlloc;
+	Realloc_Func        m_pfnRealloc;
+	Free_Func           m_pfnFree;
+	CX_BINJSON_Reader   m_reader;
 
-	IO::IInputStream *m_pInputStream;
-	Hash::xxHash32   m_hash;
-	Byte             m_nRootEntryType;
-	Byte             m_nCrEntryType;
+	static void * CustomAlloc(void *pUserContext, Size cbSize);
 
-	Status ReadHeader();
+	static void * CustomRealloc(void *pUserContext, void *pPtr, Size cbSize);
 
-	Status ReadFooter(UInt32 *pnHash);
+	static void CustomFree(void *pUserContext, void *pPtr);
 
-	Status ReadEntryType();
+	static StatusCode CustomRead(void *pUserContext, void *pData, CX_Size cbSize);
 
-	Status ReadStringData(String *psName);
+	static StatusCode CustomUTF8ToUTF16(void *pUserContext, const Char *szSrc,
+	                                    WChar *wszDest, Size *pcDestLen);
 
-	Status ReadObjectEntry(String *psName, Byte nType, void *pData, Size cbSize, 
-	                       void **ppData, Size *pcbSize);
-
-	Status ReadArrayEntry(Byte nType, void *pData, Size cbSize, void **ppData, Size *pcbSize);
-
-	Status Read(void *pData, Size cbSize);
-
-	Status ReadEx(void *pData, Size cbSize);
-
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	EntriesStack           m_stackEntries;
-#pragma warning(push)
+	static StatusCode CustomUTF16ToUTF8(void *pUserContext, const WChar *wszSrc,
+	                                    Char *szDest, Size *pcDestLen);
 
 };
 

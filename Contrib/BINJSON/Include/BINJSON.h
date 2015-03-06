@@ -40,6 +40,15 @@ extern "C" {
 #include "CX/C/Types.h"
 
 
+typedef enum _CX_BINJSON_State
+{
+	CX_BINJSON_State_None,
+	CX_BINJSON_State_RootObject,
+	CX_BINJSON_State_RootArray,
+	CX_BINJSON_State_Object,
+	CX_BINJSON_State_Array,
+}CX_BINJSON_State;
+
 typedef void * (* CX_BINJSON_Alloc_Func)(void *pUserContext, CX_Size cbSize);
 
 typedef void * (* CX_BINJSON_Realloc_Func)(void *pUserContext, void *pPtr, CX_Size cbSize);

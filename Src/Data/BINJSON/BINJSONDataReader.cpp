@@ -27,7 +27,6 @@
  */ 
 
 #include "CX/Data/BINJSON/DataReader.hpp"
-#include "CX/Data/BINJSON/Spec.hpp"
 #include "CX/Str/UTF8.hpp"
 
 
@@ -40,340 +39,89 @@ namespace Data
 namespace BINJSON
 {
 
-DataReader::DataReader(IO::IInputStream *pInputStream)
+DataReader::DataReader(IO::IInputStream *pInputStream, 
+                       Alloc_Func pfnAlloc/* = NULL*/, 
+                       Realloc_Func pfnRealloc/* = NULL*/, 
+                       Free_Func pfnFree/* = NULL*/)
 {
-	m_pInputStream = pInputStream;
-	if (ReadHeader().IsNOK())
-	{
-		m_pInputStream = NULL;
+	m_pInputStream  = pInputStream;
+	m_pfnAlloc      = NULL != pfnAlloc ? pfnAlloc : &DataReader::CustomAlloc;
+	m_pfnRealloc    = NULL != pfnRealloc ? pfnRealloc : &DataReader::CustomRealloc;
+	m_pfnFree       = NULL != pfnFree ? pfnFree : &DataReader::CustomFree;
 
-		return;
-	}
-	if (ReadEntryType().IsNOK())
-	{
-		m_pInputStream = NULL;
+	CX_BINJSON_HelperAPI api;
 
-		return;
-	}
-	if (Spec::TYPE_BEGINROOTOBJECT != m_nCrEntryType && Spec::TYPE_BEGINROOTARRAY != m_nCrEntryType)
-	{
-		m_pInputStream = NULL;
-	}
-	else
-	{
-		m_nRootEntryType = m_nCrEntryType;
-	}
+	api.Alloc        = m_pfnAlloc;
+	api.Realloc      = m_pfnRealloc;
+	api.Free         = m_pfnFree;
+	api.UTF8ToWUTF16 = &CustomUTF8ToUTF16;
+	api.UTF16ToWUTF8 = &CustomUTF16ToUTF8;
+
+	CX_BINJSON_Reader_Init(&m_reader, this, &api, &DataReader::CustomRead);
 }
 
 DataReader::~DataReader()
 {
 }
 
-Status DataReader::ReadHeader()
+void DataReader::FreeBLOBMem(void *pData)
 {
-	UInt64 nMagic;
-	UInt32 nEncoding;
-	Status status;
-
-	if ((status = Read(&nMagic, sizeof(nMagic))).IsNOK())
-	{
-		m_pInputStream = NULL;
-
-		return status;
-	}
-	if (Spec::MAGIC != nMagic)
-	{
-		m_pInputStream = NULL;
-
-		return Status(Status_OperationFailed, "Invalid magic value");
-	}
-	if ((status = Read(&nEncoding, sizeof(nEncoding))).IsNOK())
-	{
-		m_pInputStream = NULL;
-
-		return status;
-	}
-	if (Spec::ENCODING_NONE != nEncoding)
-	{
-		m_pInputStream = NULL;
-
-		return Status(Status_OperationFailed, "Invalid encoding value");
-	}
-
-	return Status();
+	CX_BINJSON_Reader_FreeBLOB(&m_reader, pData);
 }
 
-Status DataReader::ReadFooter(UInt32 *pnHash)
+void *DataReader::CustomAlloc(void *pUserContext, Size cbSize)
 {
-	Status status;
+	pUserContext;
 
-	if ((status = Read(pnHash, sizeof(*pnHash))).IsNOK())
-	{
-		m_pInputStream = NULL;
-
-		return status;
-	}
-
-	return Status();
+	return Alloc(cbSize);
 }
 
-Status DataReader::ReadEntryType()
+void *DataReader::CustomRealloc(void *pUserContext, void *pPtr, Size cbSize)
 {
-	Status status;
+	pUserContext;
 
-	if ((status = ReadEx(&m_nCrEntryType, sizeof(m_nCrEntryType))).IsNOK())
-	{
-		m_pInputStream = NULL;
-
-		return status;
-	}
-
-	return Status();
+	return Realloc(pPtr, cbSize);
 }
 
-Status DataReader::ReadStringData(String *psName)
+void DataReader::CustomFree(void *pUserContext, void *pPtr)
 {
-	UInt32 cNameLen;
-	Char   tmp[16384];
-	Char   *pTmp;
-	Status status;
+	pUserContext;
 
-	if ((status = ReadEx(&cNameLen, sizeof(cNameLen))).IsNOK())
-	{
-		return status;
-	}
-	if (cNameLen <= sizeof(tmp) / sizeof(tmp[0]))
-	{
-		pTmp = tmp;
-	}
-	else
-	{
-		if (NULL == (pTmp = (Char *)Alloc((cNameLen) * sizeof(Char))))
-		{
-			return Status(Status_MemAllocFailed, "Failed to allocate temp buffer");
-		}
-	}
-	if (0 < cNameLen)
-	{
-		if ((status = ReadEx(pTmp, cNameLen * sizeof(Char))).IsNOK())
-		{
-			return status;
-		}
-		psName->assign(pTmp, cNameLen);
-	}
-	else
-	{
-		psName->clear();
-	}
-	if (pTmp != tmp)
-	{
-		Free(pTmp);
-	}
-
-	return Status();
+	Free(pPtr);
 }
 
-Status DataReader::ReadObjectEntry(String *psName, Byte nType, void *pData, Size cbSize, 
-                                   void **ppData, Size *pcbSize)
+StatusCode DataReader::CustomRead(void *pUserContext, void *pData, CX_Size cbSize)
 {
-	Status status;
+	DataReader *pThis = (DataReader *)pUserContext;
+	Size       cbAckSize;
+	Status     status;
 
-	if (NULL == m_pInputStream)
+	if ((status = pThis->m_pInputStream->Read(pData, cbSize, &cbAckSize)).IsNOK())
 	{
-		return Status(Status_NotInitialized, "Not initialized");
-	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINROOTOBJECT && 
-	    m_stackEntries.top() != Spec::TYPE_BEGINOBJECT)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (Spec::TYPE_ENDROOTOBJECT == m_nCrEntryType || 
-	    Spec::TYPE_ENDROOTARRAY == m_nCrEntryType || 
-	    Spec::TYPE_ENDOBJECT == m_nCrEntryType || 
-	    Spec::TYPE_ENDARRAY == m_nCrEntryType)
-	{
-		return Status(Status_OutOfBounds, "Out of bounds");
-	}
-	if (nType != m_nCrEntryType)
-	{
-		if (!((Spec::TYPE_FALSE == m_nCrEntryType && Spec::TYPE_TRUE == nType) ||
-		     (Spec::TYPE_TRUE == m_nCrEntryType && Spec::TYPE_FALSE == nType)))
-		{
-			return Status(Status_InvalidCall, "Invalid type");
-		}
-	}
-	if ((status = ReadStringData(psName)).IsNOK())
-	{
-		return status;
-	}
-	if (Spec::TYPE_NULL != nType)
-	{
-		if (Spec::TYPE_FALSE == m_nCrEntryType)
-		{
-			*((Bool *)pData) = False;
-		}
-		else
-		if (Spec::TYPE_TRUE== m_nCrEntryType)
-		{
-			*((Bool *)pData) = True;
-		}
-		else
-		if (Spec::TYPE_STRING == m_nCrEntryType)
-		{
-			if ((status = ReadStringData((String *)pData)).IsNOK())
-			{
-				return status;
-			}
-		}
-		else
-		if (Spec::TYPE_BLOB == m_nCrEntryType)
-		{
-			UInt32 cbTmpSize;
-
-			if ((status = ReadEx(&cbTmpSize, sizeof(cbTmpSize))).IsNOK())
-			{
-				return status;
-			}
-			if (NULL == (*ppData = Alloc(cbTmpSize)))
-			{
-				return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", cbTmpSize);
-			}
-			if ((status = ReadEx(*ppData, cbTmpSize)).IsNOK())
-			{
-				return status;
-			}
-			*pcbSize = cbTmpSize;
-		}
-		else
-		{
-			if ((status = ReadEx(pData, cbSize)).IsNOK())
-			{
-				return status;
-			}
-		}
-	}
-
-	return ReadEntryType();
-}
-
-Status DataReader::ReadArrayEntry(Byte nType, void *pData, Size cbSize, 
-                                  void **ppData, Size *pcbSize)
-{
-	Status status;
-
-	if (NULL == m_pInputStream)
-	{
-		return Status(Status_NotInitialized, "Not initialized");
-	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINROOTARRAY && 
-	    m_stackEntries.top() != Spec::TYPE_BEGINARRAY)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (Spec::TYPE_ENDROOTOBJECT == m_nCrEntryType || 
-	    Spec::TYPE_ENDROOTARRAY == m_nCrEntryType || 
-	    Spec::TYPE_ENDOBJECT == m_nCrEntryType || 
-	    Spec::TYPE_ENDARRAY == m_nCrEntryType)
-	{
-		return Status(Status_OutOfBounds, "Out of bounds");
-	}
-	if (nType != m_nCrEntryType)
-	{
-		if (!((Spec::TYPE_FALSE == m_nCrEntryType && Spec::TYPE_TRUE == nType) ||
-		     (Spec::TYPE_TRUE == m_nCrEntryType && Spec::TYPE_FALSE == nType)))
-		{
-			return Status(Status_InvalidCall, "Invalid type");
-		}
-	}
-	if (Spec::TYPE_NULL != nType)
-	{
-		if (Spec::TYPE_FALSE == m_nCrEntryType)
-		{
-			*((Bool *)pData) = False;
-		}
-		else
-		if (Spec::TYPE_TRUE== m_nCrEntryType)
-		{
-			*((Bool *)pData) = True;
-		}
-		else
-		if (Spec::TYPE_STRING == nType)
-		{
-			if ((status = ReadStringData((String *)pData)).IsNOK())
-			{
-				return status;
-			}
-		}
-		else
-		if (Spec::TYPE_BLOB == nType)
-		{
-			UInt32 cbTmpSize;
-
-			if ((status = ReadEx(&cbTmpSize, sizeof(cbTmpSize))).IsNOK())
-			{
-				return status;
-			}
-			if (NULL == (*ppData = Alloc(cbTmpSize)))
-			{
-				return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", cbTmpSize);
-			}
-			if ((status = ReadEx(*ppData, cbTmpSize)).IsNOK())
-			{
-				return status;
-			}
-			*pcbSize = cbTmpSize;
-		}
-		else
-		{
-			if ((status = ReadEx(pData, cbSize)).IsNOK())
-			{
-				return status;
-			}
-		}
-	}
-
-	return ReadEntryType();
-}
-
-Status DataReader::Read(void *pData, Size cbSize)
-{
-	Size   cbAckSize;
-	Status status;
-
-	if ((status = m_pInputStream->Read(pData, cbSize, &cbAckSize)).IsNOK())
-	{
-		return status;
+		return status.GetCode();
 	}
 	if (cbSize != cbAckSize)
 	{
-		return Status(Status_ReadFailed, "Failed to read all bytes from stream");
+		return Status_ReadFailed;
 	}
 
-	return Status();
+	return Status_OK;
 }
 
-Status DataReader::ReadEx(void *pData, Size cbSize)
+StatusCode DataReader::CustomUTF8ToUTF16(void *pUserContext, const Char *szSrc,
+                                         WChar *wszDest, Size *pcDestLen)
 {
-	Status status;
+	pUserContext;
 
-	if ((status = Read(pData, cbSize)).IsNOK())
-	{
-		return status;
-	}
-	if ((status = m_hash.Update(pData, cbSize)).IsNOK())
-	{
-		return status;
-	}
+	return Str::UTF8::ToUTF16(szSrc, SIZET_MAX, wszDest, pcDestLen).GetCode();
+}
 
-	return Status();
+StatusCode DataReader::CustomUTF16ToUTF8(void *pUserContext, const WChar *wszSrc,
+                                         Char *szDest, Size *pcDestLen)
+{
+	pUserContext;
+
+	return Str::UTF8::FromUTF16(wszSrc, SIZET_MAX, szDest, pcDestLen).GetCode();
 }
 
 DataReader::EntryType DataReader::GetRootEntryType()
@@ -382,19 +130,8 @@ DataReader::EntryType DataReader::GetRootEntryType()
 	{
 		return EntryType_Invalid;
 	}
-	if (Spec::TYPE_BEGINROOTOBJECT == m_nRootEntryType)
-	{
-		return EntryType_Object;
-	}
-	else
-	if (Spec::TYPE_BEGINROOTARRAY == m_nRootEntryType)
-	{
-		return EntryType_Array;
-	}
-	else
-	{
-		return EntryType_Invalid;
-	}
+
+	return (DataReader::EntryType)CX_BINJSON_Reader_GetRootEntryType(&m_reader);
 }
 
 Status DataReader::BeginRootObject()
@@ -403,17 +140,8 @@ Status DataReader::BeginRootObject()
 	{
 		return Status(Status_NotInitialized, "Not initialized");
 	}
-	if (!m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (Spec::TYPE_BEGINROOTOBJECT != m_nRootEntryType)
-	{
-		return Status(Status_NotInitialized, "Not an object");
-	}
-	m_stackEntries.push(Spec::TYPE_BEGINROOTOBJECT);
 
-	return ReadEntryType();
+	return CX_BINJSON_Reader_BeginRootObject(&m_reader);
 }
 
 Status DataReader::EndRootObject()
@@ -422,44 +150,8 @@ Status DataReader::EndRootObject()
 	{
 		return Status(Status_NotInitialized, "Not initialized");
 	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINROOTOBJECT)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	m_stackEntries.pop();
-	if (!m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
 
-	UInt32 nHashInFile;
-	UInt32 nHashComputed;
-	Status status;
-
-	if ((status = ReadFooter(&nHashInFile)).IsNOK())
-	{
-		m_pInputStream = NULL;
-
-		return status;
-	}
-	if ((status = m_hash.Done(&nHashComputed)).IsNOK())
-	{
-		m_pInputStream = NULL;
-
-		return status;
-	}
-	if (nHashComputed != nHashInFile)
-	{
-		return Status(Status_OperationFailed, "Invalid checksum");
-	}
-
-	m_pInputStream = NULL;
-
-	return Status();
+	return CX_BINJSON_Reader_EndRootObject(&m_reader);
 }
 
 Status DataReader::BeginRootArray()
@@ -468,17 +160,8 @@ Status DataReader::BeginRootArray()
 	{
 		return Status(Status_NotInitialized, "Not initialized");
 	}
-	if (!m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (Spec::TYPE_BEGINROOTARRAY != m_nRootEntryType)
-	{
-		return Status(Status_NotInitialized, "Not an array");
-	}
-	m_stackEntries.push(Spec::TYPE_BEGINROOTARRAY);
 
-	return ReadEntryType();
+	return CX_BINJSON_Reader_BeginRootArray(&m_reader);
 }
 
 Status DataReader::EndRootArray()
@@ -487,44 +170,8 @@ Status DataReader::EndRootArray()
 	{
 		return Status(Status_NotInitialized, "Not initialized");
 	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINROOTARRAY)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	m_stackEntries.pop();
-	if (!m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
 
-	UInt32 nHashInFile;
-	UInt32 nHashComputed;
-	Status status;
-
-	if ((status = ReadFooter(&nHashInFile)).IsNOK())
-	{
-		m_pInputStream = NULL;
-
-		return status;
-	}
-	if ((status = m_hash.Done(&nHashComputed)).IsNOK())
-	{
-		m_pInputStream = NULL;
-
-		return status;
-	}
-	if (nHashComputed != nHashInFile)
-	{
-		return Status(Status_OperationFailed, "Invalid checksum");
-	}
-
-	m_pInputStream = NULL;
-
-	return Status();
+	return CX_BINJSON_Reader_EndRootArray(&m_reader);
 }
 
 DataReader::EntryType DataReader::GetEntryType()
@@ -533,160 +180,231 @@ DataReader::EntryType DataReader::GetEntryType()
 	{
 		return EntryType_Invalid;
 	}
-	if (Spec::TYPE_BEGINROOTOBJECT == m_nCrEntryType)
-	{
-		return EntryType_Object;
-	}
-	else
-	if (Spec::TYPE_BEGINROOTARRAY == m_nCrEntryType)
-	{
-		return EntryType_Array;
-	}
-	else
-	if (Spec::TYPE_BEGINOBJECT == m_nCrEntryType)
-	{
-		return EntryType_Object;
-	}
-	else
-	if (Spec::TYPE_BEGINARRAY == m_nCrEntryType)
-	{
-		return EntryType_Array;
-	}
-	else
-	if (Spec::TYPE_NULL == m_nCrEntryType)
-	{
-		return EntryType_Null;
-	}
-	else
-	if (Spec::TYPE_FALSE == m_nCrEntryType)
-	{
-		return EntryType_Bool;
-	}
-	else
-	if (Spec::TYPE_TRUE == m_nCrEntryType)
-	{
-		return EntryType_Bool;
-	}
-	else
-	if (Spec::TYPE_INT == m_nCrEntryType)
-	{
-		return EntryType_Int;
-	}
-	else
-	if (Spec::TYPE_REAL == m_nCrEntryType)
-	{
-		return EntryType_Real;
-	}
-	else
-	if (Spec::TYPE_STRING == m_nCrEntryType)
-	{
-		return EntryType_String;
-	}
-	else
-	if (Spec::TYPE_BLOB == m_nCrEntryType)
-	{
-		return EntryType_BLOB;
-	}
-	else
-	if (Spec::TYPE_ENDROOTOBJECT == m_nCrEntryType)
-	{
-		return EntryType_EOG;
-	}
-	else
-	if (Spec::TYPE_ENDROOTARRAY == m_nCrEntryType)
-	{
-		return EntryType_EOG;
-	}
-	else
-	if (Spec::TYPE_ENDOBJECT == m_nCrEntryType)
-	{
-		return EntryType_EOG;
-	}
-	else
-	if (Spec::TYPE_ENDARRAY == m_nCrEntryType)
-	{
-		return EntryType_EOG;
-	}
-	else
-	{
-		return EntryType_Invalid;
-	}
+
+	return (DataReader::EntryType)CX_BINJSON_Reader_GetEntryType(&m_reader);
 }
 
 //object member - will return Status_OutOfBounds at the end of the object
 Status DataReader::ReadNull(String *psName)
 {
-	return ReadObjectEntry(psName, Spec::TYPE_NULL, NULL, 0, NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	CX_BINJSON_Reader_String name;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjReadNull(&m_reader, &name)))
+	{
+		return Status(nStatus);
+	}
+	*psName = name.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+
+	return Status();
 }
 
 //array item - will return Status_OutOfBounds at the end of the array
 Status DataReader::ReadNull()
 {
-	return ReadArrayEntry(Spec::TYPE_NULL, NULL, 0, NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrReadNull(&m_reader)))
+	{
+		return Status(nStatus);
+	}
+
+	return Status();
 }
 
 //object member - will return Status_OutOfBounds at the end of the object
 Status DataReader::ReadBool(String *psName, Bool *pbValue)
 {
-	return ReadObjectEntry(psName, Spec::TYPE_FALSE, pbValue, sizeof(*pbValue), NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	CX_BINJSON_Reader_String name;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjReadBool(&m_reader, &name, pbValue)))
+	{
+		return Status(nStatus);
+	}
+	*psName = name.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+
+	return Status();
 }
 
 //array item - will return Status_OutOfBounds at the end of the array
 Status DataReader::ReadBool(Bool *pbValue)
 {
-	return ReadArrayEntry(Spec::TYPE_FALSE, pbValue, sizeof(*pbValue), NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrReadBool(&m_reader, pbValue)))
+	{
+		return Status(nStatus);
+	}
+
+	return Status();
 }
 
 //object member - will return Status_OutOfBounds at the end of the object
 Status DataReader::ReadInt(String *psName, Int64 *pnValue)
 {
-	return ReadObjectEntry(psName, Spec::TYPE_INT, pnValue, sizeof(*pnValue), NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	CX_BINJSON_Reader_String name;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjReadInt(&m_reader, &name, pnValue)))
+	{
+		return Status(nStatus);
+	}
+	*psName = name.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+
+	return Status();
 }
 
 //array item - will return Status_OutOfBounds at the end of the array
 Status DataReader::ReadInt(Int64 *pnValue)
 {
-	return ReadArrayEntry(Spec::TYPE_INT, pnValue, sizeof(*pnValue), NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrReadInt(&m_reader, pnValue)))
+	{
+		return Status(nStatus);
+	}
+
+	return Status();
 }
 
 //object member - will return Status_OutOfBounds at the end of the object
 Status DataReader::ReadReal(String *psName, Double *plfValue)
 {
-	return ReadObjectEntry(psName, Spec::TYPE_REAL, plfValue, sizeof(*plfValue), NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	CX_BINJSON_Reader_String name;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjReadReal(&m_reader, &name, plfValue)))
+	{
+		return Status(nStatus);
+	}
+	*psName = name.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+
+	return Status();
 }
 
 //array item - will return Status_OutOfBounds at the end of the array
 Status DataReader::ReadReal(Double *plfValue)
 {
-	return ReadArrayEntry(Spec::TYPE_REAL, plfValue, sizeof(*plfValue), NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrReadReal(&m_reader, plfValue)))
+	{
+		return Status(nStatus);
+	}
+
+	return Status();
 }
 
 //object member - will return Status_OutOfBounds at the end of the object
 Status DataReader::ReadString(String *psName, String *psValue)
 {
-	return ReadObjectEntry(psName, Spec::TYPE_STRING, psValue, 0, NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	CX_BINJSON_Reader_String name;
+	CX_BINJSON_Reader_String value;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjReadString(&m_reader, &name, &value)))
+	{
+		return Status(nStatus);
+	}
+	*psName  = name.pString;
+	*psValue = value.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+	CX_BINJSON_Reader_FreeString(&m_reader, &value);
+
+	return Status();
 }
 
 //array item - will return Status_OutOfBounds at the end of the array
 Status DataReader::ReadString(String *psValue)
 {
-	return ReadArrayEntry(Spec::TYPE_STRING, psValue, 0, NULL, NULL);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	CX_BINJSON_Reader_String value;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrReadString(&m_reader, &value)))
+	{
+		return Status(nStatus);
+	}
+	*psValue = value.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &value);
+
+	return Status();
 }
 
 //object member - will return Status_OutOfBounds at the end of the object
 Status DataReader::ReadWString(String *psName, WString *pwsValue)
 {
-	String sValue;
-	Status status;
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
 
-	if ((status = ReadString(psName, &sValue)).IsNOK())
+	CX_BINJSON_Reader_String  name;
+	CX_BINJSON_Reader_WString value;
+	StatusCode                nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjReadWString(&m_reader, &name, &value)))
 	{
-		return status;
+		return Status(nStatus);
 	}
-	if ((status = Str::UTF8::ToUTF16(sValue.c_str(), pwsValue)).IsNOK())
-	{
-		return status;
-	}
+	*psName   = name.pString;
+	*pwsValue = value.pWString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+	CX_BINJSON_Reader_FreeWString(&m_reader, &value);
 
 	return Status();
 }
@@ -694,17 +412,20 @@ Status DataReader::ReadWString(String *psName, WString *pwsValue)
 //array item - will return Status_OutOfBounds at the end of the array
 Status DataReader::ReadWString(WString *pwsValue)
 {
-	String sValue;
-	Status status;
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
 
-	if ((status = ReadString(&sValue)).IsNOK())
+	CX_BINJSON_Reader_WString value;
+	StatusCode                nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrReadWString(&m_reader, &value)))
 	{
-		return status;
+		return Status(nStatus);
 	}
-	if ((status = Str::UTF8::ToUTF16(sValue.c_str(), pwsValue)).IsNOK())
-	{
-		return status;
-	}
+	*pwsValue = value.pWString;
+	CX_BINJSON_Reader_FreeWString(&m_reader, &value);
 
 	return Status();
 }
@@ -712,171 +433,138 @@ Status DataReader::ReadWString(WString *pwsValue)
 //object member - will return Status_OutOfBounds at the end of the object; free using CX::Free
 Status DataReader::ReadBLOB(String *psName, void **ppData, Size *pcbSize)
 {
-	return ReadObjectEntry(psName, Spec::TYPE_BLOB, NULL, NULL, ppData, pcbSize);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	CX_BINJSON_Reader_String name;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjReadBLOB(&m_reader, &name, ppData, pcbSize)))
+	{
+		return Status(nStatus);
+	}
+	*psName = name.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+
+	return Status();
 }
 
 //array item - will return Status_OutOfBounds at the end of the array free using CX::Free
 Status DataReader::ReadBLOB(void **ppData, Size *pcbSize)
 {
-	return ReadArrayEntry(Spec::TYPE_BLOB, NULL, NULL, ppData, pcbSize);
+	if (NULL == m_pInputStream)
+	{
+		return EntryType_Invalid;
+	}
+
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrReadBLOB(&m_reader, ppData, pcbSize)))
+	{
+		return Status(nStatus);
+	}
+
+	return Status();
 }
 
 //object member
 Status DataReader::BeginObject(String *psName)
 {
-	Status status;
-
 	if (NULL == m_pInputStream)
 	{
-		return Status(Status_NotInitialized, "Not initialized");
+		return EntryType_Invalid;
 	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINROOTOBJECT && 
-	    m_stackEntries.top() != Spec::TYPE_BEGINOBJECT)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (Spec::TYPE_BEGINOBJECT != m_nCrEntryType)
-	{
-		return Status(Status_InvalidCall, "Not an object");
-	}
-	if ((status = ReadStringData(psName)).IsNOK())
-	{
-		return status;
-	}
-	m_stackEntries.push(Spec::TYPE_BEGINOBJECT);
 
-	return ReadEntryType();
+	CX_BINJSON_Reader_String name;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjBeginObject(&m_reader, &name)))
+	{
+		return Status(nStatus);
+	}
+	*psName = name.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+
+	return Status();
 }
 
 //array item
 Status DataReader::BeginObject()
 {
-	Status status;
-
 	if (NULL == m_pInputStream)
 	{
-		return Status(Status_NotInitialized, "Not initialized");
+		return EntryType_Invalid;
 	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINROOTARRAY &&
-	    m_stackEntries.top() != Spec::TYPE_BEGINARRAY)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (Spec::TYPE_BEGINOBJECT != m_nCrEntryType)
-	{
-		return Status(Status_InvalidCall, "Not an object");
-	}
-	m_stackEntries.push(Spec::TYPE_BEGINOBJECT);
 
-	return ReadEntryType();
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrBeginObject(&m_reader)))
+	{
+		return Status(nStatus);
+	}
+
+	return Status();
 }
 
 //object member
 Status DataReader::BeginArray(String *psName)
 {
-	Status status;
-
 	if (NULL == m_pInputStream)
 	{
-		return Status(Status_NotInitialized, "Not initialized");
+		return EntryType_Invalid;
 	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINROOTOBJECT &&
-	    m_stackEntries.top() != Spec::TYPE_BEGINOBJECT)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (Spec::TYPE_BEGINARRAY != m_nCrEntryType)
-	{
-		return Status(Status_InvalidCall, "Not an array");
-	}
-	if ((status = ReadStringData(psName)).IsNOK())
-	{
-		return status;
-	}
-	m_stackEntries.push(Spec::TYPE_BEGINARRAY);
 
-	return ReadEntryType();
+	CX_BINJSON_Reader_String name;
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjBeginArray(&m_reader, &name)))
+	{
+		return Status(nStatus);
+	}
+	*psName = name.pString;
+	CX_BINJSON_Reader_FreeString(&m_reader, &name);
+
+	return Status();
 }
 
 //array item
 Status DataReader::BeginArray()
 {
-	Status status;
-
 	if (NULL == m_pInputStream)
 	{
-		return Status(Status_NotInitialized, "Not initialized");
+		return EntryType_Invalid;
 	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINROOTARRAY && 
-	    m_stackEntries.top() != Spec::TYPE_BEGINARRAY)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (Spec::TYPE_BEGINARRAY != m_nCrEntryType)
-	{
-		return Status(Status_InvalidCall, "Not an array");
-	}
-	m_stackEntries.push(Spec::TYPE_BEGINARRAY);
 
-	return ReadEntryType();
+	StatusCode               nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrBeginArray(&m_reader)))
+	{
+		return Status(nStatus);
+	}
+
+	return Status();
 }
 
 Status DataReader::EndObject()
 {
-	Status status;
-
 	if (NULL == m_pInputStream)
 	{
-		return Status(Status_NotInitialized, "Not initialized");
+		return EntryType_Invalid;
 	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINOBJECT)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	m_stackEntries.pop();
 
-	return ReadEntryType();
+	return Status(CX_BINJSON_Reader_EndObject(&m_reader));
 }
 
 Status DataReader::EndArray()
 {
-	Status status;
-
 	if (NULL == m_pInputStream)
 	{
-		return Status(Status_NotInitialized, "Not initialized");
+		return EntryType_Invalid;
 	}
-	if (m_stackEntries.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	if (m_stackEntries.top() != Spec::TYPE_BEGINARRAY)
-	{
-		return Status(Status_InvalidCall, "Out of order");
-	}
-	m_stackEntries.pop();
 
-	return ReadEntryType();
+	return Status(CX_BINJSON_Reader_EndArray(&m_reader));
 }
 
 }//namespace BINJSON

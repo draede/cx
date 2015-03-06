@@ -31,9 +31,8 @@
 
 #include "CX/IO/IDataWriter.hpp"
 #include "CX/IO/IOutputStream.hpp"
-#include "CX/Hash/xxHash32.hpp"
 #include "CX/String.hpp"
-#include "CX/Stack.hpp"
+#include "../../../../Contrib/BINJSON/Include/BINJSONWriter.h"
 
 
 namespace CX
@@ -49,7 +48,16 @@ class CX_API DataWriter : public IO::IDataWriter
 {
 public:
 
-	DataWriter(IO::IOutputStream *pOutputStream);
+	typedef void * (* Alloc_Func)(void *pUserContext, Size cbSize);
+
+	typedef void * (* Realloc_Func)(void *pUserContext, void *pPtr, Size cbSize);
+
+	typedef void (* Free_Func)(void *pUserContext, void *pPtr);
+
+	DataWriter(IO::IOutputStream *pOutputStream, 
+	           Alloc_Func pfnAlloc = NULL, 
+	           Realloc_Func pfnRealloc = NULL, 
+	           Free_Func pfnFree = NULL);
 
 	virtual ~DataWriter();
 
@@ -121,32 +129,25 @@ public:
 
 private:
 
-	enum State
-	{
-		State_None,
-		State_RootObject,
-		State_RootArray,
-		State_Object,
-		State_Array,
-	};
-
-	typedef Stack<State>::Type     StatesStack;
-
 	IO::IOutputStream   *m_pOutputStream;
-	Hash::xxHash32      m_hash;
+	Alloc_Func          m_pfnAlloc;
+	Realloc_Func        m_pfnRealloc;
+	Free_Func           m_pfnFree;
+	CX_BINJSON_Writer   m_writer;
 
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	StatesStack         m_stackStates;
-#pragma warning(pop)
+	static void * CustomAlloc(void *pUserContext, Size cbSize);
 
-	Status Write(const void *pData, Size cbSize);
-	
-	Status WriteEx(const void *pData, Size cbSize);
+	static void * CustomRealloc(void *pUserContext, void *pPtr, Size cbSize);
 
-	Status WriteHeader();
+	static void CustomFree(void *pUserContext, void *pPtr);
 
-	Status WriteFooter(UInt32 nHash);
+	static StatusCode CustomWrite(void *pUserContext, const void *pData, CX_Size cbSize);
+
+	static StatusCode CustomUTF8ToUTF16(void *pUserContext, const Char *szSrc,
+	                                    WChar *wszDest, Size *pcDestLen);
+
+	static StatusCode CustomUTF16ToUTF8(void *pUserContext, const WChar *wszSrc,
+	                                    Char *szDest, Size *pcDestLen);
 
 };
 

@@ -27,35 +27,12 @@
  */ 
 
 #include "../Include/BINJSONWriter.h"
-#include "../../xxHash/Include/xxhash.h"
 #include "CX/C/Limits.h"
 #include "CX/C/string.h"
 #include "CX/C/Platform/Windows/windows.h"
 
 
-typedef enum _CX_BINJSON_State
-{
-	CX_BINJSON_State_None,
-	CX_BINJSON_State_RootObject,
-	CX_BINJSON_State_RootArray,
-	CX_BINJSON_State_Object,
-	CX_BINJSON_State_Array,
-}CX_BINJSON_State;
-
-#define CX_BINJSON_WRITER_MAX_DEPTH 1024
-
-typedef struct _CX_BINJSON_Writer
-{
-	CX_Byte                        stack[CX_BINJSON_WRITER_MAX_DEPTH];
-	CX_Size                        cDepth;
-	void                           *pUserContext;
-	CX_BINJSON_Writer_Write_Func   pfnWrite;
-	CX_BINJSON_HelperAPI           api;
-	XXH32_state_t                  hash;
-}CX_BINJSON_Writer;
-
-
-static CX_StatusCode CX_BINJSON_Writer_Write(struct _CX_BINJSON_Writer *pWriter, 
+static CX_StatusCode CX_BINJSON_Writer_Write(CX_BINJSON_Writer *pWriter, 
                                              const void *pData, CX_Size cbSize)
 {
 	CX_StatusCode   nStatus;
@@ -68,7 +45,7 @@ static CX_StatusCode CX_BINJSON_Writer_Write(struct _CX_BINJSON_Writer *pWriter,
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_BINJSON_Writer_WriteEx(struct _CX_BINJSON_Writer *pWriter, 
+static CX_StatusCode CX_BINJSON_Writer_WriteEx(CX_BINJSON_Writer *pWriter, 
                                                const void *pData, CX_Size cbSize)
 {
 	XXH_errorcode ec;
@@ -86,7 +63,7 @@ static CX_StatusCode CX_BINJSON_Writer_WriteEx(struct _CX_BINJSON_Writer *pWrite
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_BINJSON_Writer_WriteHeader(struct _CX_BINJSON_Writer *pWriter)
+static CX_StatusCode CX_BINJSON_Writer_WriteHeader(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -104,7 +81,7 @@ static CX_StatusCode CX_BINJSON_Writer_WriteHeader(struct _CX_BINJSON_Writer *pW
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_BINJSON_Writer_WriteFooter(struct _CX_BINJSON_Writer *pWriter, 
+static CX_StatusCode CX_BINJSON_Writer_WriteFooter(CX_BINJSON_Writer *pWriter, 
                                                    CX_UInt32 nHash)
 {
 	CX_StatusCode nStatus;
@@ -117,7 +94,7 @@ static CX_StatusCode CX_BINJSON_Writer_WriteFooter(struct _CX_BINJSON_Writer *pW
 	return CX_Status_OK;
 }
 
-CX_StatusCode CX_BINJSON_Writer_Init(struct _CX_BINJSON_Writer *pWriter, void *pUserContext, 
+CX_StatusCode CX_BINJSON_Writer_Init(CX_BINJSON_Writer *pWriter, void *pUserContext, 
                                      CX_BINJSON_HelperAPI *pHelperAPI,
                                      CX_BINJSON_Writer_Write_Func pfnWrite)
 {
@@ -136,7 +113,7 @@ CX_StatusCode CX_BINJSON_Writer_Init(struct _CX_BINJSON_Writer *pWriter, void *p
 	return CX_Status_OK;
 }
 
-CX_StatusCode CX_BINJSON_Writer_BeginRootObject(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_BeginRootObject(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -163,7 +140,7 @@ CX_StatusCode CX_BINJSON_Writer_BeginRootObject(struct _CX_BINJSON_Writer *pWrit
 	return CX_Status_OK;
 }
 
-CX_StatusCode CX_BINJSON_Writer_EndRootObject(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_EndRootObject(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -191,7 +168,7 @@ CX_StatusCode CX_BINJSON_Writer_EndRootObject(struct _CX_BINJSON_Writer *pWriter
 	return CX_Status_OK;
 }
 
-CX_StatusCode CX_BINJSON_Writer_BeginRootArray(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_BeginRootArray(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -218,7 +195,7 @@ CX_StatusCode CX_BINJSON_Writer_BeginRootArray(struct _CX_BINJSON_Writer *pWrite
 	return CX_Status_OK;
 }
 
-CX_StatusCode CX_BINJSON_Writer_EndRootArray(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_EndRootArray(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -247,7 +224,7 @@ CX_StatusCode CX_BINJSON_Writer_EndRootArray(struct _CX_BINJSON_Writer *pWriter)
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteNull(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjWriteNull(CX_BINJSON_Writer *pWriter,
                                              const CX_Char *szName)
 {
 	CX_UInt32     cNameLen;
@@ -284,7 +261,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteNull(struct _CX_BINJSON_Writer *pWriter,
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteNull(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_ArrWriteNull(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -303,7 +280,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrWriteNull(struct _CX_BINJSON_Writer *pWriter)
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteBool(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjWriteBool(CX_BINJSON_Writer *pWriter,
                                              const CX_Char *szName, CX_Bool bValue)
 {
 	CX_UInt32     cNameLen;
@@ -355,7 +332,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteBool(struct _CX_BINJSON_Writer *pWriter,
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteBool(struct _CX_BINJSON_Writer *pWriter, CX_Bool bValue)
+CX_StatusCode CX_BINJSON_Writer_ArrWriteBool(CX_BINJSON_Writer *pWriter, CX_Bool bValue)
 {
 	CX_StatusCode nStatus;
 
@@ -386,7 +363,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrWriteBool(struct _CX_BINJSON_Writer *pWriter,
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteInt(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjWriteInt(CX_BINJSON_Writer *pWriter,
                                             const CX_Char *szName, CX_Int64 nValue)
 {
 	CX_UInt32     cNameLen;
@@ -427,7 +404,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteInt(struct _CX_BINJSON_Writer *pWriter,
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteInt(struct _CX_BINJSON_Writer *pWriter, CX_Int64 nValue)
+CX_StatusCode CX_BINJSON_Writer_ArrWriteInt(CX_BINJSON_Writer *pWriter, CX_Int64 nValue)
 {
 	CX_StatusCode nStatus;
 
@@ -451,7 +428,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrWriteInt(struct _CX_BINJSON_Writer *pWriter, 
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteReal(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjWriteReal(CX_BINJSON_Writer *pWriter,
                                              const CX_Char *szName, CX_Double lfValue)
 {
 	CX_UInt32     cNameLen;
@@ -492,7 +469,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteReal(struct _CX_BINJSON_Writer *pWriter,
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteReal(struct _CX_BINJSON_Writer *pWriter, CX_Double lfValue)
+CX_StatusCode CX_BINJSON_Writer_ArrWriteReal(CX_BINJSON_Writer *pWriter, CX_Double lfValue)
 {
 	CX_StatusCode nStatus;
 
@@ -516,7 +493,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrWriteReal(struct _CX_BINJSON_Writer *pWriter,
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteString(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjWriteString(CX_BINJSON_Writer *pWriter,
                                                const CX_Char *szName, const CX_Char *szValue)
 {
 	CX_UInt32     cNameLen;
@@ -569,7 +546,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteString(struct _CX_BINJSON_Writer *pWrite
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteString(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ArrWriteString(CX_BINJSON_Writer *pWriter,
                                                const CX_Char *szValue)
 {
 	CX_UInt32     cValueLen;
@@ -606,7 +583,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrWriteString(struct _CX_BINJSON_Writer *pWrite
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteWString(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjWriteWString(CX_BINJSON_Writer *pWriter,
                                                 const CX_Char *szName, const CX_WChar *wszValue)
 {
 	CX_UInt32     cNameLen;
@@ -682,7 +659,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteWString(struct _CX_BINJSON_Writer *pWrit
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteWString(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ArrWriteWString(CX_BINJSON_Writer *pWriter,
                                                 const CX_WChar *wszValue)
 {
 	CX_UInt32     cValueLen;
@@ -742,7 +719,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrWriteWString(struct _CX_BINJSON_Writer *pWrit
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjWriteBLOB(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjWriteBLOB(CX_BINJSON_Writer *pWriter,
                                              const CX_Char *szName, const void *pData, 
                                              CX_Size cbSize)
 {
@@ -794,7 +771,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteBLOB(struct _CX_BINJSON_Writer *pWriter,
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrWriteBLOB(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ArrWriteBLOB(CX_BINJSON_Writer *pWriter,
                                              const void *pData, CX_Size cbSize)
 {
 	CX_UInt32     cbValueSize;
@@ -829,7 +806,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrWriteBLOB(struct _CX_BINJSON_Writer *pWriter,
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjBeginObject(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjBeginObject(CX_BINJSON_Writer *pWriter,
                                                const CX_Char *szName)
 {
 	CX_UInt32     cNameLen;
@@ -872,7 +849,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjBeginObject(struct _CX_BINJSON_Writer *pWrite
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrBeginObject(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_ArrBeginObject(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -898,7 +875,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrBeginObject(struct _CX_BINJSON_Writer *pWrite
 }
 
 //object member
-CX_StatusCode CX_BINJSON_Writer_ObjBeginArray(struct _CX_BINJSON_Writer *pWriter,
+CX_StatusCode CX_BINJSON_Writer_ObjBeginArray(CX_BINJSON_Writer *pWriter,
                                               const CX_Char *szName)
 {
 	CX_UInt32     cNameLen;
@@ -941,7 +918,7 @@ CX_StatusCode CX_BINJSON_Writer_ObjBeginArray(struct _CX_BINJSON_Writer *pWriter
 }
 
 //array item
-CX_StatusCode CX_BINJSON_Writer_ArrBeginArray(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_ArrBeginArray(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -966,7 +943,7 @@ CX_StatusCode CX_BINJSON_Writer_ArrBeginArray(struct _CX_BINJSON_Writer *pWriter
 	return CX_Status_OK;
 }
 
-CX_StatusCode CX_BINJSON_Writer_EndObject(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_EndObject(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 
@@ -984,7 +961,7 @@ CX_StatusCode CX_BINJSON_Writer_EndObject(struct _CX_BINJSON_Writer *pWriter)
 	return CX_Status_OK;
 }
 
-CX_StatusCode CX_BINJSON_Writer_EndArray(struct _CX_BINJSON_Writer *pWriter)
+CX_StatusCode CX_BINJSON_Writer_EndArray(CX_BINJSON_Writer *pWriter)
 {
 	CX_StatusCode nStatus;
 

@@ -6812,6 +6812,7 @@ namespace Catch {
 #endif // Platform
 
 #ifdef CATCH_PLATFORM_WINDOWS
+#pragma warning(suppress: 28251)
     extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA( const char* );
     namespace Catch {
         void writeToDebugConsole( std::string const& text ) {
