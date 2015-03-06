@@ -153,6 +153,10 @@ CX_StatusCode CX_BINJSON_Writer_BeginRootObject(struct _CX_BINJSON_Writer *pWrit
 	{
 		return nStatus;
 	}
+	if (pWriter->cDepth + 1 > CX_BINJSON_WRITER_MAX_DEPTH)
+	{
+		return CX_Status_OutOfBounds;
+	}
 	pWriter->stack[pWriter->cDepth] = CX_BINJSON_State_RootObject;
 	pWriter->cDepth++;
 
@@ -203,6 +207,10 @@ CX_StatusCode CX_BINJSON_Writer_BeginRootArray(struct _CX_BINJSON_Writer *pWrite
 	                                              sizeof(CX_BINJSON_TYPE_BEGINROOTARRAY))))
 	{
 		return nStatus;
+	}
+	if (pWriter->cDepth + 1 > CX_BINJSON_WRITER_MAX_DEPTH)
+	{
+		return CX_Status_OutOfBounds;
 	}
 	pWriter->stack[pWriter->cDepth] = CX_BINJSON_State_RootArray;
 	pWriter->cDepth++;
