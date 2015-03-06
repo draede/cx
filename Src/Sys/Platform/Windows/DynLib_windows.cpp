@@ -65,7 +65,7 @@ Status DynLib::Load(const Char *szPath)
 	WString wsPath;
 	Status  status;
 
-	status = Str::UTF8::ToWChar(szPath, &wsPath);
+	status = Str::UTF8::ToUTF16(szPath, &wsPath);
 	if (status.IsNOK())
 	{
 		return status;

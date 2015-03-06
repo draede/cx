@@ -52,10 +52,39 @@ typedef void (* TestVectorFunc)(CX::Vector<int>::Type *);
 typedef void * (* TestMemFunc)(CX::Size);
 
 
+#include "CX/Str/UTF8.hpp"
+
 int main(int argc, char *argv[])
 {
 	argc;
 	argv;
+
+	//test UTF8<->UTF16
+	{
+		CX::Char    szUTF8In[]   = {0xE4, 0xBD, 0xA0, 0xE5, 0xA5, 0xBD, 0xE4, 0xB8, 0x96, 0xE7, 
+		                            0x95, 0x8C, 0x0};
+		CX::WChar   wszUTF16In[] = {0x4F60, 0x597D, 0x4E16, 0x754C, 0x0};
+		CX::String  sUTF8Out;
+		CX::WString wsUTF16Out;
+		CX::Char    *szUTF8Out;
+		CX::WChar   *wszUTF16Out;
+		CX_Size     cLen;
+		CX::Status  status;
+
+		status = CX::Str::UTF8::ToUTF16(szUTF8In, &wsUTF16Out);
+		status = CX::Str::UTF8::FromUTF16(wszUTF16In, &sUTF8Out);
+
+		status = CX::Str::UTF8::ToUTF16(szUTF8In, CX::SIZET_MAX, NULL, &cLen);
+		wszUTF16Out = CX::NewArr<CX::WChar>(cLen);
+		status = CX::Str::UTF8::ToUTF16(szUTF8In, CX::SIZET_MAX, wszUTF16Out, &cLen);
+
+		status = CX::Str::UTF8::FromUTF16(wszUTF16In, CX::SIZET_MAX, NULL, &cLen);
+		szUTF8Out = CX::NewArr<CX::Char>(cLen);
+		status = CX::Str::UTF8::FromUTF16(wszUTF16In, CX::SIZET_MAX, szUTF8Out, &cLen);
+
+		CX::DeleteArr(wszUTF16Out);
+		CX::DeleteArr(szUTF8Out);
+	}
 
 	CX::Print(stdout, "{1} => '{2}'", 100, "a123b");
 

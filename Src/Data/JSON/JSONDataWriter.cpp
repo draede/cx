@@ -563,7 +563,7 @@ Status DataWriter::WriteWString(const Char *szName, const WChar *wszValue)
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::FromWChar(wszValue, &sTmpValue)).IsNOK())
+	if ((status = Str::UTF8::FromUTF16(wszValue, &sTmpValue)).IsNOK())
 	{
 		return status;
 	}
@@ -608,7 +608,7 @@ Status DataWriter::WriteWString(const WChar *wszValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call (must be called from an array)");
 	}
-	if ((status = Str::UTF8::FromWChar(wszValue, &sTmpValue)).IsNOK())
+	if ((status = Str::UTF8::FromUTF16(wszValue, &sTmpValue)).IsNOK())
 	{
 		return status;
 	}

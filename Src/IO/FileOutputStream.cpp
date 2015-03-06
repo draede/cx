@@ -41,7 +41,7 @@ FileOutputStream::FileOutputStream(const Char *szPath)
 {
 	WString wsPath;
 
-	if (Str::UTF8::ToWChar(szPath, &wsPath).IsOK())
+	if (Str::UTF8::ToUTF16(szPath, &wsPath).IsOK())
 	{
 #pragma warning(push)
 #pragma warning(disable: 4996)
@@ -69,7 +69,7 @@ FileOutputStream::FileOutputStream(const WChar *wszPath)
 		return;
 	}
 
-	Str::UTF8::FromWChar(wszPath, &m_sPath);
+	Str::UTF8::FromUTF16(wszPath, &m_sPath);
 }
 
 FileOutputStream::~FileOutputStream()

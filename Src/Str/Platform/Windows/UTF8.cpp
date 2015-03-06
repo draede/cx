@@ -53,117 +53,175 @@ UTF8::~UTF8()
 {
 }
 
-Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = SIZET_MAX*/)
+Status UTF8::ToUTF16(const Char *szUTF8, Size cUTF8Len, WChar *wszUTF16, Size *pcUTF16Len)
 {
 	int cSize;
 
-	if (SIZET_MAX == cUTF8Len)
+	if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8,
+	                                        SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
 	{
-		cUTF8Len = cx_strlen(szUTF8);
-	}
-	if (0 == cUTF8Len)
-	{
-		psWChar->clear();
+		if (NULL == wszUTF16)
+		{
+			*pcUTF16Len = (Size)(cSize + 1);
+
+			return Status();
+		}
+		if (*pcUTF16Len < (Size)cSize + 1)
+		{
+			return Status(Status_TooSmall, "Output buffer too small");
+		}
+		if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8,
+		                                       SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, wszUTF16, 
+		                                       cSize + 1)))
+		{
+			wszUTF16[cSize] = 0;
+
+			return Status();
+		}
+		else
+		{
+			return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}",
+			              GetLastError());
+		}
 	}
 	else
 	{
-		WChar *pOut = NULL;
-		WChar out[8192];
+		return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}",
+		              GetLastError());
+	}
+}
 
-		if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, (int)cUTF8Len, NULL, 0)))
+Status UTF8::FromUTF16(const WChar *wszUTF16, Size cUTF16Len, Char *szUTF8, Size *pcUTF8Len)
+{
+	int cSize;
+
+	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
+		                                    SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
+		                                    NULL, NULL)))
+	{
+		if (NULL == szUTF8)
 		{
-			if (cSize > 8192)
-			{
-				if (NULL == (pOut = NewArr<WChar>(cSize)))
-				{
-					return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", 
-					              cSize * sizeof(WChar));
-				}
-			}
-			else
-			{
-				pOut = out;
-			}
-			if (0 >= (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, (int)cUTF8Len, pOut, cSize)))
-			{
-				if (pOut != out)
-				{
-					DeleteArr(pOut);
-				}
+			*pcUTF8Len = (Size)(cSize + 1);
 
-				return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", 
-				              GetLastError());
-			}
-			psWChar->assign(pOut, cSize);
-			if (pOut != pOut)
+			return Status();
+		}
+		if (*pcUTF8Len < (Size)cSize + 1)
+		{
+			return Status(Status_TooSmall, "Output buffer too small");
+		}
+		if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
+		                                       SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, szUTF8, 
+			                                    cSize, NULL, NULL)))
+		{
+			szUTF8[cSize] = 0;
+
+			return Status();
+		}
+		else
+		{
+			return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}",
+			              GetLastError());
+		}
+	}
+	else
+	{
+		return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}",
+		              GetLastError());
+	}
+}
+
+Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = SIZET_MAX*/)
+{
+	int   cSize;
+	WChar *pOut = NULL;
+	WChar out[8192];
+
+	if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, 
+	                                       SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
+	{
+		if (cSize > 8192)
+		{
+			if (NULL == (pOut = NewArr<WChar>(cSize)))
 			{
-				DeleteArr(pOut);
+				return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", 
+				              cSize * sizeof(WChar));
 			}
 		}
 		else
 		{
+			pOut = out;
+		}
+		if (0 >= (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, 
+		                                    SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, pOut, cSize)))
+		{
+			if (pOut != out)
+			{
+				DeleteArr(pOut);
+			}
+			
 			return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", 
 			              GetLastError());
 		}
+		psUTF16->assign(pOut, cSize);
+		if (pOut != pOut)
+		{
+			DeleteArr(pOut);
+		}
+	}
+	else
+	{
+		return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", 
+		              GetLastError());
 	}
 
 	return Status();
 }
 
-Status UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* = SIZET_MAX*/)
+Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* = SIZET_MAX*/)
 {
 	int cSize;
 
-	if (SIZET_MAX == cWCharLen)
-	{
-		cWCharLen = wcslen(wszWChar);
-	}
-	if (0 == cWCharLen)
-	{
-		psUTF8->clear();
-	}
-	else
-	{
-		Char *pOut = NULL;
-		Char out[8192];
+	Char *pOut = NULL;
+	Char out[8192];
 
-		if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, (int)cWCharLen, NULL, 0, NULL, 
-		                                       NULL)))
+	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
+		                                    SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
+		                                    NULL, NULL)))
+	{
+		if (cSize > 8192)
 		{
-			if (cSize > 8192)
+			if (NULL == (pOut = NewArr<Char>(cSize)))
 			{
-				if (NULL == (pOut = NewArr<Char>(cSize)))
-				{
-					return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes",
-					              cSize * sizeof(Char));
-				}
-			}
-			else
-			{
-				pOut = out;
-			}
-			if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, (int)cWCharLen, pOut, 
-			                                        cSize, NULL, NULL)))
-			{
-				if (pOut != out)
-				{
-					DeleteArr(pOut);
-				}
-
-				return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", 
-				              GetLastError());
-			}
-			psUTF8->assign(pOut, cSize);
-			if (pOut != out)
-			{
-				DeleteArr(pOut);
+				return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes",
+					            cSize * sizeof(Char));
 			}
 		}
 		else
 		{
+			pOut = out;
+		}
+		if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
+		                                        SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, pOut, 
+			                                     cSize, NULL, NULL)))
+		{
+			if (pOut != out)
+			{
+				DeleteArr(pOut);
+			}
+
 			return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", 
 			              GetLastError());
 		}
+		psUTF8->assign(pOut, cSize);
+		if (pOut != out)
+		{
+			DeleteArr(pOut);
+		}
+	}
+	else
+	{
+		return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", 
+		              GetLastError());
 	}
 
 	return Status();

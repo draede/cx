@@ -683,7 +683,7 @@ Status DataReader::ReadWString(String *psName, WString *pwsValue)
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::ToWChar(sValue.c_str(), pwsValue)).IsNOK())
+	if ((status = Str::UTF8::ToUTF16(sValue.c_str(), pwsValue)).IsNOK())
 	{
 		return status;
 	}
@@ -701,7 +701,7 @@ Status DataReader::ReadWString(WString *pwsValue)
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::ToWChar(sValue.c_str(), pwsValue)).IsNOK())
+	if ((status = Str::UTF8::ToUTF16(sValue.c_str(), pwsValue)).IsNOK())
 	{
 		return status;
 	}

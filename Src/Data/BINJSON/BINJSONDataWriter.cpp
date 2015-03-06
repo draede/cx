@@ -641,7 +641,7 @@ Status DataWriter::WriteWString(const Char *szName, const WChar *wszValue)
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::FromWChar(wszValue, &sValue)).IsNOK())
+	if ((status = Str::UTF8::FromUTF16(wszValue, &sValue)).IsNOK())
 	{
 		return status;
 	}
@@ -682,7 +682,7 @@ Status DataWriter::WriteWString(const WChar *wszValue)
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::FromWChar(wszValue, &sValue)).IsNOK())
+	if ((status = Str::UTF8::FromUTF16(wszValue, &sValue)).IsNOK())
 	{
 		return status;
 	}
