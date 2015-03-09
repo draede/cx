@@ -53,7 +53,7 @@ const Char INPUT_JSON[] =
 "   \"int\": 123,\n"
 "   \"real\": 123.123000,\n"
 "   \"string\": \"teststr\",\n"
-"   \"wstring\": \"testwstr\",\n"
+"   \"wstring\": \"wstr://testwstr\",\n"
 "   \"blob\": \"blob://4HelloWorld\",\n"
 "   \"obj1\":\n"
 "   {\n"
@@ -62,7 +62,7 @@ const Char INPUT_JSON[] =
 "      \"int\": 123,\n"
 "      \"real\": 123.123000,\n"
 "      \"string\": \"teststr\",\n"
-"      \"wstring\": \"testwstr\",\n"
+"      \"wstring\": \"wstr://testwstr\",\n"
 "      \"blob\": \"blob://4HelloWorld\",\n"
 "      \"arr1\":\n"
 "      [\n"
@@ -71,7 +71,7 @@ const Char INPUT_JSON[] =
 "         123,\n"
 "         123.123000,\n"
 "         \"teststr\",\n"
-"         \"testwstr\",\n"
+"         \"wstr://testwstr\",\n"
 "         \"blob://4HelloWorld\"\n"
 "      ],\n"
 "      \"obj1\":\n"
@@ -81,7 +81,7 @@ const Char INPUT_JSON[] =
 "         \"int\": 123,\n"
 "         \"real\": 123.123000,\n"
 "         \"string\": \"teststr\",\n"
-"         \"wstring\": \"testwstr\",\n"
+"         \"wstring\": \"wstr://testwstr\",\n"
 "         \"blob\": \"blob://4HelloWorld\"\n"
 "      }\n"
 "   },\n"
@@ -92,7 +92,7 @@ const Char INPUT_JSON[] =
 "      123,\n"
 "      123.123000,\n"
 "      \"teststr\",\n"
-"      \"testwstr\",\n"
+"      \"wstr://testwstr\",\n"
 "      \"blob://4HelloWorld\",\n"
 "      {\n"
 "         \"null\": null,\n"
@@ -100,7 +100,7 @@ const Char INPUT_JSON[] =
 "         \"int\": 123,\n"
 "         \"real\": 123.123000,\n"
 "         \"string\": \"teststr\",\n"
-"         \"wstring\": \"testwstr\",\n"
+"         \"wstring\": \"wstr://testwstr\",\n"
 "         \"blob\": \"blob://4HelloWorld\"\n"
 "      },\n"
 "      [\n"
@@ -109,7 +109,7 @@ const Char INPUT_JSON[] =
 "         123,\n"
 "         123.123000,\n"
 "         \"teststr\",\n"
-"         \"testwstr\",\n"
+"         \"wstr://testwstr\",\n"
 "         \"blob://4HelloWorld\"\n"
 "      ]\n"
 "   ]\n"
@@ -219,6 +219,23 @@ Status HandleObject(Data::JSON::DataReader &r, Data::JSON::DataWriter &w)
 				}
 				status = w.WriteString(sName.c_str(), val.c_str());
 				SECTION("Object WriteString")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+			}
+			break;
+			case Data::JSON::DataReader::EntryType_WString:
+			{
+				String sName;
+				WString val;
+
+				status = r.ReadWString(&sName, &val);
+				SECTION("Object ReadWString")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = w.WriteWString(sName.c_str(), val.c_str());
+				SECTION("Object WriteWString")
 				{
 					REQUIRE(Status_OK == status.GetCode());
 				}
@@ -408,6 +425,22 @@ Status HandleArray(Data::JSON::DataReader &r, Data::JSON::DataWriter &w)
 				}
 				status = w.WriteString(val.c_str());
 				SECTION("Array WriteString")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+			}
+			break;
+			case Data::JSON::DataReader::EntryType_WString:
+			{
+				WString val;
+
+				status = r.ReadWString(&val);
+				SECTION("Array ReadWString")
+				{
+					REQUIRE(Status_OK == status.GetCode());
+				}
+				status = w.WriteWString(val.c_str());
+				SECTION("Array WriteWString")
 				{
 					REQUIRE(Status_OK == status.GetCode());
 				}

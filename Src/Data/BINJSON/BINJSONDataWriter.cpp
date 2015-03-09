@@ -54,8 +54,6 @@ DataWriter::DataWriter(IO::IOutputStream *pOutputStream,
 	api.Alloc        = m_pfnAlloc;
 	api.Realloc      = m_pfnRealloc;
 	api.Free         = m_pfnFree;
-	api.UTF8ToWUTF16 = &CustomUTF8ToUTF16;
-	api.UTF16ToWUTF8 = &CustomUTF16ToUTF8;
 
 	CX_BINJSON_Writer_Init(&m_writer, this, &api, &DataWriter::CustomWrite);
 }
@@ -101,22 +99,6 @@ StatusCode DataWriter::CustomWrite(void *pUserContext, const void *pData, CX_Siz
 	}
 
 	return Status_OK;
-}
-
-StatusCode DataWriter::CustomUTF8ToUTF16(void *pUserContext, const Char *szSrc,
-                                         WChar *wszDest, Size *pcDestLen)
-{
-	pUserContext;
-
-	return Str::UTF8::ToUTF16(szSrc, SIZET_MAX, wszDest, pcDestLen).GetCode();
-}
-
-StatusCode DataWriter::CustomUTF16ToUTF8(void *pUserContext, const WChar *wszSrc,
-                                        Char *szDest, Size *pcDestLen)
-{
-	pUserContext;
-
-	return Str::UTF8::FromUTF16(wszSrc, SIZET_MAX, szDest, pcDestLen).GetCode();
 }
 
 Status DataWriter::BeginRootObject()

@@ -574,7 +574,7 @@ Status DataWriter::WriteWString(const Char *szName, const WChar *wszValue)
 	if (m_bFirst)
 	{
 		if ((status =
-			Print(m_pOutputStream, "\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
+			Print(m_pOutputStream, "\n{1}\"{2}\": \"wstr://{3}\"", m_sIndent, sName, sValue)).IsNOK())
 		{
 			return status;
 		}
@@ -582,7 +582,7 @@ Status DataWriter::WriteWString(const Char *szName, const WChar *wszValue)
 	else
 	{
 		if ((status =
-			Print(m_pOutputStream, ",\n{1}\"{2}\": \"{3}\"", m_sIndent, sName, sValue)).IsNOK())
+			Print(m_pOutputStream, ",\n{1}\"{2}\": \"wstr://{3}\"", m_sIndent, sName, sValue)).IsNOK())
 		{
 			return status;
 		}
@@ -618,14 +618,14 @@ Status DataWriter::WriteWString(const WChar *wszValue)
 	}
 	if (m_bFirst)
 	{
-		if ((status = Print(m_pOutputStream, "\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
+		if ((status = Print(m_pOutputStream, "\n{1}\"wstr://{2}\"", m_sIndent, sValue)).IsNOK())
 		{
 			return status;
 		}
 	}
 	else
 	{
-		if ((status = Print(m_pOutputStream, ",\n{1}\"{2}\"", m_sIndent, sValue)).IsNOK())
+		if ((status = Print(m_pOutputStream, ",\n{1}\"wstr://{2}\"", m_sIndent, sValue)).IsNOK())
 		{
 			return status;
 		}

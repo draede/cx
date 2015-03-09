@@ -509,13 +509,19 @@ Status DataReader::ReadWString(String *psName, WString *pwsValue)
 	}
 	if (Var::Type_String != m_iterObject.Get().GetType())
 	{
-		return Status(Status_InvalidCall, "Not a string");
+		return Status(Status_InvalidCall, "Not a wstring");
 	}
+
+	if (0 != cx_strnicmp(m_iterObject.Get().GetString(), "wstr://", 7))
+	{
+		return Status(Status_InvalidCall, "Not a wstring");
+	}
+
 	*psName = m_iterObject.Get().GetName();
 
 	Status status;
 
-	if ((status = Str::UTF8::ToUTF16(m_iterObject.Get().GetString(), pwsValue)).IsNOK())
+	if ((status = Str::UTF8::ToUTF16(m_iterObject.Get().GetString() + 7, pwsValue)).IsNOK())
 	{
 		return status;
 	}
@@ -549,9 +555,14 @@ Status DataReader::ReadWString(WString *pwsValue)
 		return Status(Status_InvalidCall, "Not a string");
 	}
 
+	if (0 != cx_strnicmp(m_iterArray.Get().GetString(), "wstr://", 7))
+	{
+		return Status(Status_InvalidCall, "Not a wstring");
+	}
+
 	Status status;
 
-	if ((status = Str::UTF8::ToUTF16(m_iterObject.Get().GetString(), pwsValue)).IsNOK())
+	if ((status = Str::UTF8::ToUTF16(m_iterArray.Get().GetString() + 7, pwsValue)).IsNOK())
 	{
 		return status;
 	}

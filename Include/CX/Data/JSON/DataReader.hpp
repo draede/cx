@@ -159,8 +159,15 @@ private:
 				{
 					return EntryType_BLOB;
 				}
-
-				return EntryType_String;
+				else
+				if (0 == cx_strnicmp(var.GetString(), "wstr://", 7))
+				{
+					return EntryType_WString;
+				}
+				else
+				{
+					return EntryType_String;
+				}
 			}
 			case Var::Type_Object:  return EntryType_Object;
 			case Var::Type_Array:   return EntryType_Array;

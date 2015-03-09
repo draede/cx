@@ -53,6 +53,7 @@ public:
 		EntryType_Int,
 		EntryType_Real,
 		EntryType_String,
+		EntryType_WString,
 		EntryType_BLOB,
 		EntryType_Object,
 		EntryType_Array,

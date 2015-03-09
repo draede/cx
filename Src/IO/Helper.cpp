@@ -356,6 +356,52 @@ Status Helper::CopyData(IDataReader *pDataReader, IDataWriter *pDataWriter)
 				}
 			}
 			break;
+			case IDataReader::EntryType_WString:
+			{
+				WString val;
+
+				if (stack.top())
+				{
+					String sName;
+
+					if ((status = pDataReader->ReadWString(&sName, &val)).IsNOK())
+					{
+						if (status.GetCode() == Status_OutOfBounds)
+						{
+							break;
+						}
+						else
+						{
+							return status;
+						}
+					}
+					else
+					if ((status = pDataWriter->WriteWString(sName.c_str(), val.c_str())).IsNOK())
+					{
+						return status;
+					}
+				}
+				else
+				{
+					if ((status = pDataReader->ReadWString(&val)).IsNOK())
+					{
+						if (status.GetCode() == Status_OutOfBounds)
+						{
+							break;
+						}
+						else
+						{
+							return status;
+						}
+					}
+					else
+					if ((status = pDataWriter->WriteWString(val.c_str())).IsNOK())
+					{
+						return status;
+					}
+				}
+			}
+			break;
 			case IDataReader::EntryType_BLOB:
 			{
 				void *pData;

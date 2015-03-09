@@ -149,12 +149,6 @@ private:
 
 	static StatusCode CustomRead(void *pUserContext, void *pData, CX_Size cbSize);
 
-	static StatusCode CustomUTF8ToUTF16(void *pUserContext, const Char *szSrc,
-	                                    WChar *wszDest, Size *pcDestLen);
-
-	static StatusCode CustomUTF16ToUTF8(void *pUserContext, const WChar *wszSrc,
-	                                    Char *szDest, Size *pcDestLen);
-
 };
 
 }//namespace BINJSON

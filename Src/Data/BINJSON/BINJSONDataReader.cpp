@@ -54,14 +54,36 @@ DataReader::DataReader(IO::IInputStream *pInputStream,
 	api.Alloc        = m_pfnAlloc;
 	api.Realloc      = m_pfnRealloc;
 	api.Free         = m_pfnFree;
-	api.UTF8ToWUTF16 = &CustomUTF8ToUTF16;
-	api.UTF16ToWUTF8 = &CustomUTF16ToUTF8;
 
 	CX_BINJSON_Reader_Init(&m_reader, this, &api, &DataReader::CustomRead);
 }
 
 DataReader::~DataReader()
 {
+}
+
+CX_StatusCode CX_BINJSON_Reader_FreeString(CX_BINJSON_Reader *pReader, 
+                                           CX_BINJSON_Reader_String *pString)
+{
+	if (pString->pString != pString->buffer)
+	{
+		pReader->api.Free(pReader->pUserContext, pString->pString);
+		pString->pString = pString->buffer;
+	}
+
+	return CX_Status_OK;
+}
+
+CX_StatusCode CX_BINJSON_Reader_FreeWString(CX_BINJSON_Reader *pReader, 
+                                            CX_BINJSON_Reader_WString *pWString)
+{
+	if (pWString->pWString != pWString->buffer)
+	{
+		pReader->api.Free(pReader->pUserContext, pWString->pWString);
+		pWString->pWString = pWString->buffer;
+	}
+
+	return CX_Status_OK;
 }
 
 void DataReader::FreeBLOBMem(void *pData)
@@ -106,22 +128,6 @@ StatusCode DataReader::CustomRead(void *pUserContext, void *pData, CX_Size cbSiz
 	}
 
 	return Status_OK;
-}
-
-StatusCode DataReader::CustomUTF8ToUTF16(void *pUserContext, const Char *szSrc,
-                                         WChar *wszDest, Size *pcDestLen)
-{
-	pUserContext;
-
-	return Str::UTF8::ToUTF16(szSrc, SIZET_MAX, wszDest, pcDestLen).GetCode();
-}
-
-StatusCode DataReader::CustomUTF16ToUTF8(void *pUserContext, const WChar *wszSrc,
-                                         Char *szDest, Size *pcDestLen)
-{
-	pUserContext;
-
-	return Str::UTF8::FromUTF16(wszSrc, SIZET_MAX, szDest, pcDestLen).GetCode();
 }
 
 DataReader::EntryType DataReader::GetRootEntryType()

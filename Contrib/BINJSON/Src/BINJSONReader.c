@@ -142,6 +142,45 @@ static CX_StatusCode CX_BINJSON_Reader_ReadStringData(CX_BINJSON_Reader *pReader
 	return CX_Status_OK;
 }
 
+static CX_StatusCode CX_BINJSON_Reader_ReadWStringData(CX_BINJSON_Reader *pReader, 
+                                                      CX_BINJSON_Reader_WString *psName)
+{
+	CX_UInt32     cNameLen;
+	CX_StatusCode nStatus;
+
+	if (CXNOK(nStatus = CX_BINJSON_Reader_ReadEx(pReader, &cNameLen, sizeof(cNameLen))))
+	{
+		return nStatus;
+	}
+	if (cNameLen + 1 <= sizeof(psName->buffer) / sizeof(psName->buffer[0]))
+	{
+		psName->pWString = psName->buffer;
+	}
+	else
+	{
+		if (NULL == (psName->pWString = (CX_WChar *)pReader->api.Alloc(pReader->pUserContext, 
+		                                                           (cNameLen + 1)* sizeof(CX_WChar))))
+		{
+			return CX_Status_MemAllocFailed;
+		}
+	}
+	if (0 < cNameLen)
+	{
+		if (CXNOK(nStatus = CX_BINJSON_Reader_ReadEx(pReader, psName->pWString, 
+		                                             cNameLen * sizeof(CX_WChar))))
+		{
+			return nStatus;
+		}
+		psName->pWString[cNameLen] = 0;
+	}
+	else
+	{
+		psName->pWString[0] = 0;
+	}
+
+	return CX_Status_OK;
+}
+
 static CX_StatusCode CX_BINJSON_Reader_ReadObjectEntry(CX_BINJSON_Reader *pReader, 
                                                        CX_BINJSON_Reader_String *psName, 
                                                        CX_Byte nType, void *pData, CX_Size cbSize,
@@ -193,6 +232,15 @@ static CX_StatusCode CX_BINJSON_Reader_ReadObjectEntry(CX_BINJSON_Reader *pReade
 		{
 			if (CXNOK(nStatus = CX_BINJSON_Reader_ReadStringData(pReader, 
 			                                                     (CX_BINJSON_Reader_String *)pData)))
+			{
+				return nStatus;
+			}
+		}
+		else
+		if (CX_BINJSON_TYPE_WSTRING == pReader->nCrEntryType)
+		{
+			if (CXNOK(nStatus = CX_BINJSON_Reader_ReadWStringData(pReader, 
+			                                                      (CX_BINJSON_Reader_WString *)pData)))
 			{
 				return nStatus;
 			}
@@ -273,7 +321,16 @@ static CX_StatusCode CX_BINJSON_Reader_ReadArrayEntry(CX_BINJSON_Reader *pReader
 		if (CX_BINJSON_TYPE_STRING == nType)
 		{
 			if (CXNOK(nStatus = CX_BINJSON_Reader_ReadStringData(pReader, 
-			                                                    (CX_BINJSON_Reader_String *)pData)))
+			                                                     (CX_BINJSON_Reader_String *)pData)))
+			{
+				return nStatus;
+			}
+		}
+		else
+		if (CX_BINJSON_TYPE_WSTRING == nType)
+		{
+			if (CXNOK(nStatus = CX_BINJSON_Reader_ReadWStringData(pReader, 
+			                                                      (CX_BINJSON_Reader_WString *)pData)))
 			{
 				return nStatus;
 			}
@@ -307,30 +364,6 @@ static CX_StatusCode CX_BINJSON_Reader_ReadArrayEntry(CX_BINJSON_Reader *pReader
 	}
 
 	return CX_BINJSON_Reader_ReadEntryType(pReader);
-}
-
-CX_StatusCode CX_BINJSON_Reader_FreeString(CX_BINJSON_Reader *pReader, 
-                                           CX_BINJSON_Reader_String *pString)
-{
-	if (pString->pString != pString->buffer)
-	{
-		pReader->api.Free(pReader->pUserContext, pString->pString);
-		pString->pString = pString->buffer;
-	}
-
-	return CX_Status_OK;
-}
-
-CX_StatusCode CX_BINJSON_Reader_FreeWString(CX_BINJSON_Reader *pReader, 
-                                            CX_BINJSON_Reader_WString *pWString)
-{
-	if (pWString->pWString != pWString->buffer)
-	{
-		pReader->api.Free(pReader->pUserContext, pWString->pWString);
-		pWString->pWString = pWString->buffer;
-	}
-
-	return CX_Status_OK;
 }
 
 CX_StatusCode CX_BINJSON_Reader_FreeBLOB(CX_BINJSON_Reader *pReader, void *pPtr)
@@ -545,6 +578,11 @@ CX_BINJSON_EntryType CX_BINJSON_Reader_GetEntryType(CX_BINJSON_Reader *pReader)
 		return CX_BINJSON_EntryType_String;
 	}
 	else
+	if (CX_BINJSON_TYPE_WSTRING == pReader->nCrEntryType)
+	{
+		return CX_BINJSON_EntryType_WString;
+	}
+	else
 	if (CX_BINJSON_TYPE_BLOB == pReader->nCrEntryType)
 	{
 		return CX_BINJSON_EntryType_BLOB;
@@ -656,88 +694,16 @@ CX_StatusCode CX_BINJSON_Reader_ObjReadWString(CX_BINJSON_Reader *pReader,
                                                CX_BINJSON_Reader_String *psName, 
                                                CX_BINJSON_Reader_WString *pwsValue)
 {
-	CX_BINJSON_Reader_String value;
-	CX_Size                  cLen;
-	CX_StatusCode            nStatus;
-
-	if (CXNOK(nStatus = CX_BINJSON_Reader_ObjReadString(pReader, psName, &value)))
-	{
-		return nStatus;
-	}
-	if (CXNOK(nStatus = pReader->api.UTF8ToWUTF16(pReader->pUserContext, value.pString, NULL, &cLen)))
-	{
-		CX_BINJSON_Reader_FreeString(pReader, &value);
-
-		return nStatus;
-	}
-	if (cLen > sizeof(pwsValue->buffer[0]) / sizeof(pwsValue->buffer[0]))
-	{
-		if (NULL == (pwsValue->pWString = pReader->api.Alloc(pReader->pUserContext,
-			cLen * sizeof(CX_WChar))))
-		{
-			CX_BINJSON_Reader_FreeString(pReader, &value);
-
-			return CX_Status_MemAllocFailed;
-		}
-	}
-	else
-	{
-		pwsValue->pWString = pwsValue->buffer;
-	}
-	if (CXNOK(nStatus = pReader->api.UTF8ToWUTF16(pReader->pUserContext, value.pString,
-	                                              pwsValue->pWString, &cLen)))
-	{
-		CX_BINJSON_Reader_FreeString(pReader, &value);
-
-		return nStatus;
-	}
-	CX_BINJSON_Reader_FreeString(pReader, &value);
-
-	return CX_Status_OK;
+	return CX_BINJSON_Reader_ReadObjectEntry(pReader, psName, CX_BINJSON_TYPE_WSTRING, pwsValue, 0, 
+	                                         NULL, NULL);
 }
 
 //array item - will return Status_OutOfBounds at the end of the array
 CX_StatusCode CX_BINJSON_Reader_ArrReadWString(CX_BINJSON_Reader *pReader, 
                                                CX_BINJSON_Reader_WString *pwsValue)
 {
-	CX_BINJSON_Reader_String value;
-	CX_Size                  cLen;
-	CX_StatusCode            nStatus;
-
-	if (CXNOK(nStatus = CX_BINJSON_Reader_ArrReadString(pReader, &value)))
-	{
-		return nStatus;
-	}
-	if (CXNOK(nStatus = pReader->api.UTF8ToWUTF16(pReader->pUserContext, value.pString, NULL, &cLen)))
-	{
-		CX_BINJSON_Reader_FreeString(pReader, &value);
-
-		return nStatus;
-	}
-	if (cLen > sizeof(pwsValue->buffer[0]) / sizeof(pwsValue->buffer[0]))
-	{
-		if (NULL == (pwsValue->pWString = pReader->api.Alloc(pReader->pUserContext, 
-		                                                     cLen * sizeof(CX_WChar))))
-		{
-			CX_BINJSON_Reader_FreeString(pReader, &value);
-
-			return CX_Status_MemAllocFailed;
-		}
-	}
-	else
-	{
-		pwsValue->pWString = pwsValue->buffer;
-	}
-	if (CXNOK(nStatus = pReader->api.UTF8ToWUTF16(pReader->pUserContext, value.pString, 
-	                                              pwsValue->pWString, &cLen)))
-	{
-		CX_BINJSON_Reader_FreeString(pReader, &value);
-
-		return nStatus;
-	}
-	CX_BINJSON_Reader_FreeString(pReader, &value);
-
-	return CX_Status_OK;
+	return CX_BINJSON_Reader_ReadArrayEntry(pReader, CX_BINJSON_TYPE_WSTRING, pwsValue, 0,
+	                                        NULL, NULL);
 }
 
 //object member - will return Status_OutOfBounds at the end of the object; free using CX::Free

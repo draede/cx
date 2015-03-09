@@ -598,8 +598,8 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteWString(CX_BINJSON_Writer *pWriter,
 	{
 		return CX_Status_InvalidCall;
 	}
-	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, &CX_BINJSON_TYPE_STRING, 
-	                                              sizeof(CX_BINJSON_TYPE_STRING))))
+	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, &CX_BINJSON_TYPE_WSTRING, 
+	                                              sizeof(CX_BINJSON_TYPE_WSTRING))))
 	{
 		return nStatus;
 	}
@@ -618,42 +618,20 @@ CX_StatusCode CX_BINJSON_Writer_ObjWriteWString(CX_BINJSON_Writer *pWriter,
 		return nStatus;
 	}
 
-	CX_Char *pOut = NULL;
-
-	if (CXNOK(nStatus = pWriter->api.UTF16ToWUTF8(pWriter->pUserContext, wszValue, NULL, 
-	                                              &cTmpValueLen)))
-	{
-		return nStatus;
-	}
-	if (NULL == (pOut = pWriter->api.Alloc(pWriter->pUserContext, cTmpNameLen * sizeof(CX_Char))))
-	{
-		return CX_Status_MemAllocFailed;
-	}
-	if (CXNOK(nStatus = pWriter->api.UTF16ToWUTF8(pWriter->pUserContext, wszValue, pOut,
-	                                              &cTmpValueLen)))
-	{
-		return nStatus;
-	}
+	cTmpValueLen = cxw_strlen(wszValue);
 	if ((CX_Size)CX_UINT32_MAX < cTmpValueLen)
 	{
-		pWriter->api.Free(pWriter->pUserContext, pOut);
-
 		return CX_Status_OutOfBounds;
 	}
 	cValueLen = (CX_UInt32)cTmpValueLen;
-	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, &cValueLen, sizeof(cValueLen))))
+	if CXNOK((nStatus = CX_BINJSON_Writer_WriteEx(pWriter, &cValueLen, sizeof(cValueLen))))
 	{
-		pWriter->api.Free(pWriter->pUserContext, pOut);
-
 		return nStatus;
 	}
-	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, pOut, cValueLen * sizeof(CX_Char))))
+	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, wszValue, cValueLen * sizeof(CX_WChar))))
 	{
-		pWriter->api.Free(pWriter->pUserContext, pOut);
-
 		return nStatus;
 	}
-	pWriter->api.Free(pWriter->pUserContext, pOut);
 
 	return CX_Status_OK;
 }
@@ -672,48 +650,26 @@ CX_StatusCode CX_BINJSON_Writer_ArrWriteWString(CX_BINJSON_Writer *pWriter,
 	{
 		return CX_Status_InvalidCall;
 	}
-	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, &CX_BINJSON_TYPE_STRING, 
-	                                              sizeof(CX_BINJSON_TYPE_STRING))))
+	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, &CX_BINJSON_TYPE_WSTRING, 
+	                                              sizeof(CX_BINJSON_TYPE_WSTRING))))
 	{
 		return nStatus;
 	}
 
-	CX_Char *pOut = NULL;
-
-	if (CXNOK(nStatus = pWriter->api.UTF16ToWUTF8(pWriter->pUserContext, wszValue, NULL,
-	                                              &cTmpValueLen)))
-	{
-		return nStatus;
-	}
-	if (NULL == (pOut = pWriter->api.Alloc(pWriter->pUserContext, cTmpValueLen * sizeof(CX_Char))))
-	{
-		return CX_Status_MemAllocFailed;
-	}
-	if (CXNOK(nStatus = pWriter->api.UTF16ToWUTF8(pWriter->pUserContext, wszValue, pOut,
-		&cTmpValueLen)))
-	{
-		return nStatus;
-	}
+	cTmpValueLen = cxw_strlen(wszValue);
 	if ((CX_Size)CX_UINT32_MAX < cTmpValueLen)
 	{
-		pWriter->api.Free(pWriter->pUserContext, pOut);
-
 		return CX_Status_OutOfBounds;
 	}
 	cValueLen = (CX_UInt32)cTmpValueLen;
-	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, &cValueLen, sizeof(cValueLen))))
+	if CXNOK((nStatus = CX_BINJSON_Writer_WriteEx(pWriter, &cValueLen, sizeof(cValueLen))))
 	{
-		pWriter->api.Free(pWriter->pUserContext, pOut);
-
 		return nStatus;
 	}
-	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, pOut, cValueLen * sizeof(CX_Char))))
+	if (CXNOK(nStatus = CX_BINJSON_Writer_WriteEx(pWriter, wszValue, cValueLen * sizeof(CX_WChar))))
 	{
-		pWriter->api.Free(pWriter->pUserContext, pOut);
-
 		return nStatus;
 	}
-	pWriter->api.Free(pWriter->pUserContext, pOut);
 
 	return CX_Status_OK;
 }
