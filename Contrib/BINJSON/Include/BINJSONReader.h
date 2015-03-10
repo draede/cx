@@ -94,6 +94,12 @@ CX_StatusCode CX_BINJSON_Reader_Init(CX_BINJSON_Reader *pReader, void *pUserCont
                                      CX_BINJSON_HelperAPI *pHelperAPI, 
                                      CX_BINJSON_Reader_Read_Func pfnRead);
 
+CX_StatusCode CX_BINJSON_Reader_FreeString(CX_BINJSON_Reader *pReader,
+                                           CX_BINJSON_Reader_String *pString);
+
+CX_StatusCode CX_BINJSON_Reader_FreeWString(CX_BINJSON_Reader *pReader,
+                                            CX_BINJSON_Reader_WString *pWString);
+
 CX_StatusCode CX_BINJSON_Reader_FreeBLOB(CX_BINJSON_Reader *pReader, void *pPtr);
 
 CX_BINJSON_EntryType CX_BINJSON_Reader_GetRootEntryType(CX_BINJSON_Reader *pReader);

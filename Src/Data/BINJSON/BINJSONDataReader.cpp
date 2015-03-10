@@ -62,30 +62,6 @@ DataReader::~DataReader()
 {
 }
 
-CX_StatusCode CX_BINJSON_Reader_FreeString(CX_BINJSON_Reader *pReader, 
-                                           CX_BINJSON_Reader_String *pString)
-{
-	if (pString->pString != pString->buffer)
-	{
-		pReader->api.Free(pReader->pUserContext, pString->pString);
-		pString->pString = pString->buffer;
-	}
-
-	return CX_Status_OK;
-}
-
-CX_StatusCode CX_BINJSON_Reader_FreeWString(CX_BINJSON_Reader *pReader, 
-                                            CX_BINJSON_Reader_WString *pWString)
-{
-	if (pWString->pWString != pWString->buffer)
-	{
-		pReader->api.Free(pReader->pUserContext, pWString->pWString);
-		pWString->pWString = pWString->buffer;
-	}
-
-	return CX_Status_OK;
-}
-
 void DataReader::FreeBLOBMem(void *pData)
 {
 	CX_BINJSON_Reader_FreeBLOB(&m_reader, pData);

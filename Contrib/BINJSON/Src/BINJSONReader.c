@@ -366,13 +366,36 @@ static CX_StatusCode CX_BINJSON_Reader_ReadArrayEntry(CX_BINJSON_Reader *pReader
 	return CX_BINJSON_Reader_ReadEntryType(pReader);
 }
 
+CX_StatusCode CX_BINJSON_Reader_FreeString(CX_BINJSON_Reader *pReader,
+                                           CX_BINJSON_Reader_String *pString)
+{
+	if (pString->pString != pString->buffer)
+	{
+		pReader->api.Free(pReader->pUserContext, pString->pString);
+		pString->pString = pString->buffer;
+	}
+
+	return CX_Status_OK;
+}
+
+CX_StatusCode CX_BINJSON_Reader_FreeWString(CX_BINJSON_Reader *pReader,
+                                            CX_BINJSON_Reader_WString *pWString)
+{
+	if (pWString->pWString != pWString->buffer)
+	{
+		pReader->api.Free(pReader->pUserContext, pWString->pWString);
+		pWString->pWString = pWString->buffer;
+	}
+
+	return CX_Status_OK;
+}
+
 CX_StatusCode CX_BINJSON_Reader_FreeBLOB(CX_BINJSON_Reader *pReader, void *pPtr)
 {
 	pReader->api.Free(pReader->pUserContext, pPtr);
 
 	return CX_Status_OK;
 }
-
 
 CX_StatusCode CX_BINJSON_Reader_Init(CX_BINJSON_Reader *pReader, void *pUserContext, 
                                      CX_BINJSON_HelperAPI *pHelperAPI, 
