@@ -29,7 +29,7 @@
 #pragma once
 
 
-#include "CX/Platform.h"
+#include "CX/C/Platform.h"
 
 
 #if defined(CX_OS_WINDOWS)
