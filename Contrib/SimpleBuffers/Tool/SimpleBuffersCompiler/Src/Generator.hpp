@@ -68,7 +68,8 @@ public:
 		Print(out, "{{\n");
 		for (FieldsVector::const_iterator iter = pStruct->m_vectorFields.begin(); iter != pStruct->m_vectorFields.end(); ++iter)
 		{
-			Print(out, "\t{1} {2};\n", Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()), iter->m_sName);
+			Print(out, "\t{1} {2};\n", Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()), 
+			      iter->m_sName);
 		}
 		Print(out, "}{1};\n", pStruct->m_sName);
 		Print(out, "\n");
@@ -99,11 +100,13 @@ public:
 		Print(out, "\n");
 		Print(out, "{1} *{1}Array_Add({1}Array *pArray, CX_SB_Memory *pMem);\n", pStruct->m_sName);
 		Print(out, "\n");
-		Print(out, "CX_StatusCode {1}Array_Remove({1}Array *pArray, CX_Size cIndex, CX_Size cCount, CX_SB_Memory *pMem);\n", pStruct->m_sName);
+		Print(out, "CX_StatusCode {1}Array_Remove({1}Array *pArray, CX_Size cIndex, CX_Size cCount, CX_SB_Memory *pMem);\n", 
+		      pStruct->m_sName);
 		Print(out, "\n");
 		Print(out, "CX_StatusCode {1}Array_FreeUnusedMem({1}Array *pArray, CX_SB_Memory *pMem);\n", pStruct->m_sName);
 		Print(out, "\n");
-		Print(out, "CX_StatusCode {1}Array_Reserve({1}Array *pArray, CX_Size cTotalCount, CX_SB_Memory *pMem);\n", pStruct->m_sName);
+		Print(out, "CX_StatusCode {1}Array_Reserve({1}Array *pArray, CX_Size cTotalCount, CX_SB_Memory *pMem);\n", 
+		      pStruct->m_sName);
 		Print(out, "\n");
 
 		Print(out, "\n");
@@ -159,7 +162,8 @@ public:
 			}
 			else
 			{
-				Print(out, "\t{1}_Init(&pStruct->{2}, pMem);\n", Field::GetStringFromType(iter->m_nType, true, iter->m_sStructName.c_str()), iter->m_sName);
+				Print(out, "\t{1}_Init(&pStruct->{2}, pMem);\n", 
+				      Field::GetStringFromType(iter->m_nType, true, iter->m_sStructName.c_str()), iter->m_sName);
 			}
 		}
 		Print(out, "\n");
@@ -190,7 +194,8 @@ public:
 			}
 			else
 			{
-				Print(out, "\t{1}_Uninit(&pStruct->{2}, pMem);\n", Field::GetStringFromType(iter->m_nType, true, iter->m_sStructName.c_str()), iter->m_sName);
+				Print(out, "\t{1}_Uninit(&pStruct->{2}, pMem);\n", 
+				      Field::GetStringFromType(iter->m_nType, true, iter->m_sStructName.c_str()), iter->m_sName);
 			}
 		}
 		Print(out, "\n");
@@ -243,7 +248,8 @@ public:
 				{
 					case Field::Type_Bool:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pWriter->StructWriteBool(pWriter->pContext, \"{1}\", pStruct->{1})))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pWriter->StructWriteBool(pWriter->pContext, \"{1}\", pStruct->{1})))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -258,7 +264,9 @@ public:
 					case Field::Type_Int64:
 					case Field::Type_UInt64:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pWriter->StructWriteInt(pWriter->pContext, \"{1}\", (CX_Int64)pStruct->{1})))\n", iter->m_sName);
+						Print(out, 
+						      "\tif (CXNOK(nStatus = pWriter->StructWriteInt(pWriter->pContext, \"{1}\", (CX_Int64)pStruct->{1})))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -267,7 +275,9 @@ public:
 					case Field::Type_Float:
 					case Field::Type_Double:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pWriter->StructWriteReal(pWriter->pContext, \"{1}\", (CX_Double)pStruct->{1})))\n", iter->m_sName);
+						Print(out, 
+						     "\tif (CXNOK(nStatus = pWriter->StructWriteReal(pWriter->pContext, \"{1}\", (CX_Double)pStruct->{1})))\n", 
+						     iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -275,7 +285,8 @@ public:
 					break;
 					case Field::Type_String:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pWriter->StructWriteString(pWriter->pContext, \"{1}\", pStruct->{1})))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pWriter->StructWriteString(pWriter->pContext, \"{1}\", pStruct->{1})))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -283,7 +294,8 @@ public:
 					break;
 					case Field::Type_WString:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pWriter->StructWriteWString(pWriter->pContext, \"{1}\", pStruct->{1})))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pWriter->StructWriteWString(pWriter->pContext, \"{1}\", pStruct->{1})))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -296,7 +308,8 @@ public:
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
 
-						Print(out, "\tif (CXNOK(nStatus = {2}_Write(&pStruct->{1}, pWriter, pMem)))\n", iter->m_sName, iter->m_sStructName);
+						Print(out, "\tif (CXNOK(nStatus = {2}_Write(&pStruct->{1}, pWriter, pMem)))\n", iter->m_sName, 
+						      iter->m_sStructName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -321,7 +334,9 @@ public:
 				{
 					case Field::Type_Bool:
 					{
-						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteBool(pWriter->pContext, {2}_Get(&pStruct->{1}, cIndex, CX_False, pMem))))\n", iter->m_sName, Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
+						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteBool(pWriter->pContext, "
+						           "{2}_Get(&pStruct->{1}, cIndex, CX_False, pMem))))\n", iter->m_sName, 
+						      Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -336,7 +351,9 @@ public:
 					case Field::Type_Int64:
 					case Field::Type_UInt64:
 					{
-						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteInt(pWriter->pContext, (CX_Int64){2}_Get(&pStruct->{1}, cIndex, 0, pMem))))\n", iter->m_sName, Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
+						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteInt(pWriter->pContext, "
+						           "(CX_Int64){2}_Get(&pStruct->{1}, cIndex, 0, pMem))))\n", iter->m_sName, 
+						      Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -345,7 +362,9 @@ public:
 					case Field::Type_Float:
 					case Field::Type_Double:
 					{
-						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteReal(pWriter->pContext, (CX_Double){2}_Get(&pStruct->{1}, cIndex, 0, pMem))))\n", iter->m_sName, Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
+						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteReal(pWriter->pContext, "
+						           "(CX_Double){2}_Get(&pStruct->{1}, cIndex, 0, pMem))))\n", iter->m_sName, 
+						      Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -353,7 +372,9 @@ public:
 					break;
 					case Field::Type_String:
 					{
-						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteString(pWriter->pContext, {2}_Get(&pStruct->{1}, cIndex, \"\", pMem))))\n", iter->m_sName, Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
+						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteString(pWriter->pContext, "
+						           "{2}_Get(&pStruct->{1}, cIndex, \"\", pMem))))\n", iter->m_sName, 
+						      Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -361,7 +382,9 @@ public:
 					break;
 					case Field::Type_WString:
 					{
-						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteWString(pWriter->pContext, {2}_Get(&pStruct->{1}, cIndex, L\"\", pMem))))\n", iter->m_sName, Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
+						Print(out, "\t\tif (CXNOK(nStatus = pWriter->ArrayWriteWString(pWriter->pContext, "
+						           "{2}_Get(&pStruct->{1}, cIndex, L\"\", pMem))))\n", iter->m_sName, 
+						      Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()));
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -373,7 +396,10 @@ public:
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = {3}_Write({2}_Get(&pStruct->{1}, cIndex, pMem), pWriter, pMem)))\n", iter->m_sName, Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()), iter->m_sStructName);
+						Print(out, "\t\tif (CXNOK(nStatus = {3}_Write({2}_Get(&pStruct->{1}, cIndex, pMem), pWriter, pMem)))\n", 
+						      iter->m_sName, 
+						      Field::GetStringFromType(iter->m_nType, iter->m_bIsVector, iter->m_sStructName.c_str()), 
+						                               iter->m_sStructName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -485,7 +511,8 @@ public:
 				{
 					case Field::Type_Bool:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadBool(pReader->pContext, \"{1}\", &pStruct->{1})))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadBool(pReader->pContext, \"{1}\", &pStruct->{1})))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -493,7 +520,8 @@ public:
 					break;
 					case Field::Type_Int8:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -502,7 +530,8 @@ public:
 					break;
 					case Field::Type_UInt8:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -511,7 +540,8 @@ public:
 					break;
 					case Field::Type_Int16:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -520,7 +550,8 @@ public:
 					break;
 					case Field::Type_UInt16:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -529,7 +560,8 @@ public:
 					break;
 					case Field::Type_Int32:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -538,7 +570,8 @@ public:
 					break;
 					case Field::Type_UInt32:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -547,7 +580,8 @@ public:
 					break;
 					case Field::Type_Int64:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -556,7 +590,8 @@ public:
 					break;
 					case Field::Type_UInt64:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadInt(pReader->pContext, \"{1}\", &nIntVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -565,7 +600,8 @@ public:
 					break;
 					case Field::Type_Float:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadReal(pReader->pContext, \"{1}\", &nRealVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadReal(pReader->pContext, \"{1}\", &nRealVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -574,7 +610,8 @@ public:
 					break;
 					case Field::Type_Double:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadReal(pReader->pContext, \"{1}\", &nRealVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadReal(pReader->pContext, \"{1}\", &nRealVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -583,7 +620,8 @@ public:
 					break;
 					case Field::Type_String:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadString(pReader->pContext, \"{1}\", &szStrVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadString(pReader->pContext, \"{1}\", &szStrVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -605,7 +643,8 @@ public:
 					break;
 					case Field::Type_WString:
 					{
-						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadWString(pReader->pContext, \"{1}\", &wszStrVal)))\n", iter->m_sName);
+						Print(out, "\tif (CXNOK(nStatus = pReader->StructReadWString(pReader->pContext, \"{1}\", &wszStrVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -632,7 +671,8 @@ public:
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
 
-						Print(out, "\tif (CXNOK(nStatus = {2}_Read(&pStruct->{1}, pReader, pMem)))\n", iter->m_sName, iter->m_sStructName);
+						Print(out, "\tif (CXNOK(nStatus = {2}_Read(&pStruct->{1}, pReader, pMem)))\n", iter->m_sName, 
+						      iter->m_sStructName);
 						Print(out, "\t{{\n");
 						Print(out, "\t\treturn nStatus;\n");
 						Print(out, "\t}\n");
@@ -681,7 +721,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_Int8Array_Add(&pStruct->{1}, (CX_Int8)nIntVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_Int8Array_Add(&pStruct->{1}, (CX_Int8)nIntVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -697,7 +738,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_UInt8Array_Add(&pStruct->{1}, (CX_UInt8)nIntVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_UInt8Array_Add(&pStruct->{1}, (CX_UInt8)nIntVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -713,7 +755,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_Int16Array_Add(&pStruct->{1}, (CX_Int16)nIntVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_Int16Array_Add(&pStruct->{1}, (CX_Int16)nIntVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -729,7 +772,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_UInt16Array_Add(&pStruct->{1}, (CX_UInt16)nIntVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_UInt16Array_Add(&pStruct->{1}, (CX_UInt16)nIntVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -745,7 +789,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_Int32Array_Add(&pStruct->{1}, (CX_Int32)nIntVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_Int32Array_Add(&pStruct->{1}, (CX_Int32)nIntVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -761,7 +806,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_UInt32Array_Add(&pStruct->{1}, (CX_UInt32)nIntVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_UInt32Array_Add(&pStruct->{1}, (CX_UInt32)nIntVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -777,7 +823,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_Int64Array_Add(&pStruct->{1}, (CX_Int64)nIntVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_Int64Array_Add(&pStruct->{1}, (CX_Int64)nIntVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -793,7 +840,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_UInt64Array_Add(&pStruct->{1}, (CX_UInt64)nIntVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_UInt64Array_Add(&pStruct->{1}, (CX_UInt64)nIntVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -809,7 +857,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_FloatArray_Add(&pStruct->{1}, (CX_Float)nRealVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_FloatArray_Add(&pStruct->{1}, (CX_Float)nRealVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -825,7 +874,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_DoubleArray_Add(&pStruct->{1}, (CX_Double)nRealVal, pMem)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = CX_SB_DoubleArray_Add(&pStruct->{1}, (CX_Double)nRealVal, pMem)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -852,7 +902,8 @@ public:
 					break;
 					case Field::Type_WString:
 					{
-						Print(out, "\t\tif (CXNOK(nStatus = pReader->ArrayReadWString(pReader->pContext, &wszStrVal)))\n", iter->m_sName);
+						Print(out, "\t\tif (CXNOK(nStatus = pReader->ArrayReadWString(pReader->pContext, &wszStrVal)))\n", 
+						      iter->m_sName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\tif (CX_Status_OutOfBounds == nStatus)\n");
 						Print(out, "\t\t\t{{\n");
@@ -879,7 +930,8 @@ public:
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
-						Print(out, "\t\tif (CXNOK(nStatus = {2}_Read({2}Array_Add(&pStruct->{1}, pMem), pReader, pMem)))\n", iter->m_sName, iter->m_sStructName);
+						Print(out, "\t\tif (CXNOK(nStatus = {2}_Read({2}Array_Add(&pStruct->{1}, pMem), pReader, pMem)))\n", 
+						      iter->m_sName, iter->m_sStructName);
 						Print(out, "\t\t{{\n");
 						Print(out, "\t\t\treturn nStatus;\n");
 						Print(out, "\t\t}\n");
@@ -973,7 +1025,8 @@ public:
 		Print(out, "}\n");
 		Print(out, "\n");
 
-		Print(out, "CX_StatusCode {1}Array_Remove({1}Array *pArray, CX_Size cIndex, CX_Size cCount, CX_SB_Memory *pMem)\n", pStruct->m_sName);
+		Print(out, "CX_StatusCode {1}Array_Remove({1}Array *pArray, CX_Size cIndex, CX_Size cCount, CX_SB_Memory *pMem)\n", 
+		      pStruct->m_sName);
 		Print(out, "{{\n");
 		Print(out, "\tCX_Size i;\n");
 		Print(out, "\tCX_Size cSrcIndex;\n");
@@ -1023,7 +1076,8 @@ public:
 		Print(out, "\t{{\n");
 		Print(out, "\t\t{1}_Uninit(&pArray->values[i], pMem);\n", pStruct->m_sName);
 		Print(out, "\t}\n");
-		Print(out, "\tif (NULL == (pPtr = pMem->Realloc(pMem->pContext, pArray->values, sizeof({1}) * pArray->cUsedCount)))\n", pStruct->m_sName);
+		Print(out, "\tif (NULL == (pPtr = pMem->Realloc(pMem->pContext, pArray->values, sizeof({1}) * pArray->cUsedCount)))\n", 
+		      pStruct->m_sName);
 		Print(out, "\t{{\n");
 		Print(out, "\t\treturn CX_Status_MemAllocFailed;\n");
 		Print(out, "\t}\n");
@@ -1042,7 +1096,8 @@ public:
 		Print(out, "	{{\n");
 		Print(out, "		return CX_Status_OK;\n");
 		Print(out, "	}\n");
-		Print(out, "	if (NULL == (pPtr = pMem->Realloc(pMem->pContext, pArray->values, sizeof({1}) * cTotalCount)))\n", pStruct->m_sName);
+		Print(out, "	if (NULL == (pPtr = pMem->Realloc(pMem->pContext, pArray->values, sizeof({1}) * cTotalCount)))\n", 
+		      pStruct->m_sName);
 		Print(out, "	{{\n");
 		Print(out, "		return CX_Status_MemAllocFailed;\n");
 		Print(out, "	}\n");
@@ -1108,17 +1163,21 @@ public:
 			CX::Print(out, "\n");
 			CX::Print(out, "CX_Size CX_SB_{1}Array_GetCount(CX_SB_{1}Array *pArray, CX_SB_Memory *pMem);\n", types[i]);
 			CX::Print(out, "\n");
-			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Set(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_{1} val, CX_SB_Memory *pMem);\n", types[i]);
+			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Set(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_{1} val, "
+			               "CX_SB_Memory *pMem);\n", types[i]);
 			CX::Print(out, "\n");
-			CX::Print(out, "CX_{1} CX_SB_{1}Array_Get(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_{1} defval, CX_SB_Memory *pMem);\n", types[i]);
+			CX::Print(out, "CX_{1} CX_SB_{1}Array_Get(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_{1} defval, "
+			               "CX_SB_Memory *pMem);\n", types[i]);
 			CX::Print(out, "\n");
 			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Add(CX_SB_{1}Array *pArray, CX_{1} val, CX_SB_Memory *pMem);\n", types[i]);
 			CX::Print(out, "\n");
-			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Remove(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_Size cCount, CX_SB_Memory *pMem);\n", types[i]);
+			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Remove(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_Size cCount, "
+			               "CX_SB_Memory *pMem);\n", types[i]);
 			CX::Print(out, "\n");
 			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_FreeUnusedMem(CX_SB_{1}Array *pArray, CX_SB_Memory *pMem);\n", types[i]);
 			CX::Print(out, "\n");
-			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Reserve(CX_SB_{1}Array *pArray, CX_Size cTotalCount, CX_SB_Memory *pMem);\n", types[i]);
+			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Reserve(CX_SB_{1}Array *pArray, CX_Size cTotalCount, "
+			               "CX_SB_Memory *pMem);\n", types[i]);
 			CX::Print(out, "\n");
 			CX::Print(out, "\n");
 		}
@@ -1193,7 +1252,8 @@ public:
 			CX::Print(out, "}\n");
 			CX::Print(out, "\n");
 
-			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Set(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_{1} val, CX_SB_Memory *pMem)\n", types[i]);
+			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Set(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_{1} val, "
+			               "CX_SB_Memory *pMem)\n", types[i]);
 			CX::Print(out, "{{\n");
 			CX::Print(out, "\tpMem;\n");
 			CX::Print(out, "\n");
@@ -1207,7 +1267,8 @@ public:
 			CX::Print(out, "}\n");
 			CX::Print(out, "\n");
 
-			CX::Print(out, "CX_{1} CX_SB_{1}Array_Get(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_{1} defval, CX_SB_Memory *pMem)\n", types[i]);
+			CX::Print(out, "CX_{1} CX_SB_{1}Array_Get(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_{1} defval, CX_SB_Memory *pMem)\n", 
+			          types[i]);
 			CX::Print(out, "{{\n");
 			CX::Print(out, "\tpMem;\n");
 			CX::Print(out, "\n");
@@ -1238,7 +1299,8 @@ public:
 			CX::Print(out, "}\n");
 			CX::Print(out, "\n");
 
-			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Remove(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_Size cCount, CX_SB_Memory *pMem)\n", types[i]);
+			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Remove(CX_SB_{1}Array *pArray, CX_Size cIndex, CX_Size cCount, "
+			               "CX_SB_Memory *pMem)\n", types[i]);
 			CX::Print(out, "{{\n");
 			CX::Print(out, "\tCX_Size i;\n");
 			CX::Print(out, "\tCX_Size cSrcIndex;\n");
@@ -1278,7 +1340,8 @@ public:
 			CX::Print(out, "\t{{\n");
 			CX::Print(out, "\treturn CX_Status_OK;\n");
 			CX::Print(out, "\t}\n");
-			CX::Print(out, "\tif (NULL == (pPtr = pMem->Realloc(pMem->pContext, pArray->values, sizeof(CX_{1}) * pArray->cUsedCount)))\n", types[i]);
+			CX::Print(out, "\tif (NULL == (pPtr = pMem->Realloc(pMem->pContext, pArray->values, "
+			               "sizeof(CX_{1}) * pArray->cUsedCount)))\n", types[i]);
 			CX::Print(out, "\t{{\n");
 			CX::Print(out, "\treturn CX_Status_MemAllocFailed;\n");
 			CX::Print(out, "\t}\n");
@@ -1288,7 +1351,8 @@ public:
 			CX::Print(out, "}\n");
 			CX::Print(out, "\n");
 
-			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Reserve(CX_SB_{1}Array *pArray, CX_Size cTotalCount, CX_SB_Memory *pMem)\n", types[i]);
+			CX::Print(out, "CX_StatusCode CX_SB_{1}Array_Reserve(CX_SB_{1}Array *pArray, CX_Size cTotalCount, "
+			               "CX_SB_Memory *pMem)\n", types[i]);
 			CX::Print(out, "{{\n");
 			CX::Print(out, "\tvoid *pPtr;\n");
 			CX::Print(out, "\n");
@@ -1296,7 +1360,8 @@ public:
 			CX::Print(out, "\t{{\n");
 			CX::Print(out, "\t\treturn CX_Status_OK;\n");
 			CX::Print(out, "\t}\n");
-			CX::Print(out, "\tif (NULL == (pPtr = pMem->Realloc(pMem->pContext, pArray->values, sizeof(CX_{1}) * cTotalCount)))\n", types[i]);
+			CX::Print(out, "\tif (NULL == (pPtr = pMem->Realloc(pMem->pContext, pArray->values, "
+			               "sizeof(CX_{1}) * cTotalCount)))\n", types[i]);
 			CX::Print(out, "\t{{\n");
 			CX::Print(out, "\t\treturn CX_Status_MemAllocFailed;\n");
 			CX::Print(out, "\t}\n");

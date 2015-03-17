@@ -12,8 +12,7 @@ extern "C" {
 #include "OutputStream.h"
 
 
-CX_StatusCode  CX_SB_BinaryDataWriter_Create(CX_SB_DataWriter *pDataWriter, 
-                                             CX_SB_OutputStream *pOutputStream, 
+CX_StatusCode  CX_SB_BinaryDataWriter_Create(CX_SB_DataWriter *pDataWriter, CX_SB_OutputStream *pOutputStream, 
                                              CX_SB_Memory *pMem);
 
 CX_StatusCode  CX_SB_BinaryDataWriter_Destroy(CX_SB_DataWriter *pDataWriter);

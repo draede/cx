@@ -11,8 +11,7 @@ typedef struct _CX_SB_MemInputStream
 }CX_SB_MemInputStream;
 
 
-static CX_StatusCode CX_SB_MemInputStream_Read(void *pContext, void *pBuffer, 
-                                               CX_Size cbReqSize, CX_Size *pcbAckSize)
+static CX_StatusCode CX_SB_MemInputStream_Read(void *pContext, void *pBuffer, CX_Size cbReqSize, CX_Size *pcbAckSize)
 {
 	CX_SB_MemInputStream *pIS = (CX_SB_MemInputStream *)pContext;
 	CX_Byte              *pDst;
@@ -35,9 +34,11 @@ static CX_StatusCode CX_SB_MemInputStream_Read(void *pContext, void *pBuffer,
 	return CX_Status_OK;
 }
 
-CX_StatusCode  CX_SB_MemInputStream_Create(CX_SB_InputStream *pInputStream, const void *pBuffer, CX_Size cbSize, CX_SB_Memory *pMemory)
+CX_StatusCode  CX_SB_MemInputStream_Create(CX_SB_InputStream *pInputStream, const void *pBuffer, CX_Size cbSize, 
+                                           CX_SB_Memory *pMemory)
 {
-	if (NULL == (pInputStream->pContext = ( CX_SB_MemInputStream *)pMemory->Alloc(pMemory->pContext, sizeof(CX_SB_MemInputStream))))
+	if (NULL == (pInputStream->pContext = ( CX_SB_MemInputStream *)pMemory->Alloc(pMemory->pContext, 
+	                                                                              sizeof(CX_SB_MemInputStream))))
 	{
 		return CX_Status_OpenFailed;
 	}

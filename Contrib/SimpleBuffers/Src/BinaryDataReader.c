@@ -43,7 +43,8 @@ static CX_Bool CXSBBDREOF(CX_SB_BinaryDataReader *pReader)
 
 	if (0 == pReader->cbBufSize || pReader->cbBufOffset >= pReader->cbBufSize)
 	{
-		if (CXNOK(nStatus = pReader->pInputStream->Read(pReader->pInputStream->pContext, pReader->buffer, sizeof(pReader->buffer), &pReader->cbBufSize)))
+		if (CXNOK(nStatus = pReader->pInputStream->Read(pReader->pInputStream->pContext, pReader->buffer, sizeof(pReader->buffer), 
+		                                                &pReader->cbBufSize)))
 		{
 			return CX_True;
 		}
@@ -59,7 +60,8 @@ static int CXSBBDRGET(CX_SB_BinaryDataReader *pReader)
 
 	if (0 == pReader->cbBufSize || pReader->cbBufOffset >= pReader->cbBufSize)
 	{
-		if (CXNOK(nStatus = pReader->pInputStream->Read(pReader->pInputStream->pContext, pReader->buffer, sizeof(pReader->buffer), &pReader->cbBufSize)))
+		if (CXNOK(nStatus = pReader->pInputStream->Read(pReader->pInputStream->pContext, pReader->buffer, sizeof(pReader->buffer), 
+		                                                &pReader->cbBufSize)))
 		{
 			return -1;
 		}
@@ -79,7 +81,8 @@ static void CXSBBDRNEXT(CX_SB_BinaryDataReader *pReader)
 	}
 	else
 	{
-		if (CXNOK(nStatus = pReader->pInputStream->Read(pReader->pInputStream->pContext, pReader->buffer, sizeof(pReader->buffer), &pReader->cbBufSize)))
+		if (CXNOK(nStatus = pReader->pInputStream->Read(pReader->pInputStream->pContext, pReader->buffer, sizeof(pReader->buffer), 
+		                                                &pReader->cbBufSize)))
 		{
 			return;
 		}

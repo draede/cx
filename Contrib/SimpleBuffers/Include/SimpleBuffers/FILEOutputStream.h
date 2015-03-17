@@ -12,8 +12,7 @@ extern "C" {
 
 CX_StatusCode  CX_SB_FILEOutputStream_Create(CX_SB_OutputStream *pOutputStream, const CX_Char *szPath);
 
-CX_StatusCode  CX_SB_FILEOutputStream_CreateW(CX_SB_OutputStream *pOutputStream, 
-                                              const CX_WChar *wszPath);
+CX_StatusCode  CX_SB_FILEOutputStream_CreateW(CX_SB_OutputStream *pOutputStream, const CX_WChar *wszPath);
 
 CX_StatusCode  CX_SB_FILEOutputStream_Destroy(CX_SB_OutputStream *pOutputStream);
 

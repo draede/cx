@@ -455,8 +455,7 @@ static CX_StatusCode CX_SB_TextDataWriter_StructWriteBool(void *pContext, const 
 	{
 		return nStatus;
 	}
-	if (CXNOK(nStatus = CX_SB_OutputStream_Printf(pWriter->pOutputStream, "\"%s\": %s", szName, 
-	                                              bValue ? "true" : "false")))
+	if (CXNOK(nStatus = CX_SB_OutputStream_Printf(pWriter->pOutputStream, "\"%s\": %s", szName, bValue ? "true" : "false")))
 	{
 		return nStatus;
 	}
@@ -464,8 +463,7 @@ static CX_StatusCode CX_SB_TextDataWriter_StructWriteBool(void *pContext, const 
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_TextDataWriter_StructWriteInt(void *pContext, const CX_Char *szName, 
-                                                         CX_Int64 nValue)
+static CX_StatusCode CX_SB_TextDataWriter_StructWriteInt(void *pContext, const CX_Char *szName, CX_Int64 nValue)
 {
 	CX_SB_TextDataWriter   *pWriter = (CX_SB_TextDataWriter *)pContext;
 	CX_StatusCode          nStatus;
@@ -500,8 +498,7 @@ static CX_StatusCode CX_SB_TextDataWriter_StructWriteInt(void *pContext, const C
 	{
 		return nStatus;
 	}
-	if (CXNOK(nStatus = CX_SB_OutputStream_Printf(pWriter->pOutputStream, "\"%s\": %lld", szName,
-	                                              nValue)))
+	if (CXNOK(nStatus = CX_SB_OutputStream_Printf(pWriter->pOutputStream, "\"%s\": %lld", szName, nValue)))
 	{
 		return nStatus;
 	}
@@ -509,8 +506,7 @@ static CX_StatusCode CX_SB_TextDataWriter_StructWriteInt(void *pContext, const C
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_TextDataWriter_StructWriteReal(void *pContext, const CX_Char *szName, 
-                                                          CX_Double lfValue)
+static CX_StatusCode CX_SB_TextDataWriter_StructWriteReal(void *pContext, const CX_Char *szName, CX_Double lfValue)
 {
 	CX_SB_TextDataWriter   *pWriter = (CX_SB_TextDataWriter *)pContext;
 	CX_StatusCode          nStatus;
@@ -545,8 +541,7 @@ static CX_StatusCode CX_SB_TextDataWriter_StructWriteReal(void *pContext, const 
 	{
 		return nStatus;
 	}
-	if (CXNOK(nStatus = CX_SB_OutputStream_Printf(pWriter->pOutputStream, "\"%s\": %.10lf", szName,
-	                                              lfValue)))
+	if (CXNOK(nStatus = CX_SB_OutputStream_Printf(pWriter->pOutputStream, "\"%s\": %.10lf", szName, lfValue)))
 	{
 		return nStatus;
 	}
@@ -554,8 +549,7 @@ static CX_StatusCode CX_SB_TextDataWriter_StructWriteReal(void *pContext, const 
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_TextDataWriter_StructWriteString(void *pContext, const CX_Char *szName, 
-                                                            const CX_Char *szValue)
+static CX_StatusCode CX_SB_TextDataWriter_StructWriteString(void *pContext, const CX_Char *szName, const CX_Char *szValue)
 {
 	CX_SB_TextDataWriter   *pWriter = (CX_SB_TextDataWriter *)pContext;
 	CX_StatusCode          nStatus;
@@ -603,8 +597,7 @@ static CX_StatusCode CX_SB_TextDataWriter_StructWriteString(void *pContext, cons
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_TextDataWriter_StructWriteWString(void *pContext, const CX_Char *szName, 
-                                                             const CX_WChar *wszValue)
+static CX_StatusCode CX_SB_TextDataWriter_StructWriteWString(void *pContext, const CX_Char *szName, const CX_WChar *wszValue)
 {
 	CX_SB_TextDataWriter   *pWriter = (CX_SB_TextDataWriter *)pContext;
 	CX_Char                *szValue;
@@ -646,8 +639,7 @@ static CX_StatusCode CX_SB_TextDataWriter_StructWriteWString(void *pContext, con
 		return nStatus;
 	}
 
-	if (CXNOK(nStatus = pWriter->pUTFConv->UTF16toUTF8(pWriter->pUTFConv->pContext, wszValue, 
-	                                                   CX_SIZE_MAX, &szValue, NULL)))
+	if (CXNOK(nStatus = pWriter->pUTFConv->UTF16toUTF8(pWriter->pUTFConv->pContext, wszValue, CX_SIZE_MAX, &szValue, NULL)))
 	{
 		return nStatus;
 	}
@@ -874,8 +866,7 @@ static CX_StatusCode CX_SB_TextDataWriter_ArrayWriteBool(void *pContext, CX_Bool
 	{
 		return nStatus;
 	}
-	if (CXNOK(nStatus = CX_SB_OutputStream_Printf(pWriter->pOutputStream, "%s",
-	                                              bValue ? "true" : "false")))
+	if (CXNOK(nStatus = CX_SB_OutputStream_Printf(pWriter->pOutputStream, "%s", bValue ? "true" : "false")))
 	{
 		return nStatus;
 	}
@@ -1013,8 +1004,7 @@ static CX_StatusCode CX_SB_TextDataWriter_ArrayWriteString(void *pContext, const
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_TextDataWriter_ArrayWriteWString(void *pContext, 
-                                                                  const CX_WChar *wszValue)
+static CX_StatusCode CX_SB_TextDataWriter_ArrayWriteWString(void *pContext, const CX_WChar *wszValue)
 {
 	CX_SB_TextDataWriter   *pWriter = (CX_SB_TextDataWriter *)pContext;
 	CX_Char                *szValue;
@@ -1051,8 +1041,7 @@ static CX_StatusCode CX_SB_TextDataWriter_ArrayWriteWString(void *pContext,
 		return nStatus;
 	}
 
-	if (CXNOK(nStatus = pWriter->pUTFConv->UTF16toUTF8(pWriter->pUTFConv->pContext, wszValue, 
-	                                                   CX_SIZE_MAX, &szValue, NULL)))
+	if (CXNOK(nStatus = pWriter->pUTFConv->UTF16toUTF8(pWriter->pUTFConv->pContext, wszValue, CX_SIZE_MAX, &szValue, NULL)))
 	{
 		return nStatus;
 	}
@@ -1069,15 +1058,12 @@ static CX_StatusCode CX_SB_TextDataWriter_ArrayWriteWString(void *pContext,
 	return CX_Status_OK;
 }
 
-CX_StatusCode  CX_SB_TextDataWriter_Create(CX_SB_DataWriter *pDataWriter, 
-                                           CX_SB_OutputStream *pOutputStream, 
-                                           CX_SB_UTFConv *pUTFConv, 
-                                           CX_SB_Memory *pMem)
+CX_StatusCode  CX_SB_TextDataWriter_Create(CX_SB_DataWriter *pDataWriter, CX_SB_OutputStream *pOutputStream, 
+                                           CX_SB_UTFConv *pUTFConv, CX_SB_Memory *pMem)
 {
 	CX_SB_TextDataWriter *pWriter;
 
-	if (NULL == (pWriter = (CX_SB_TextDataWriter *)pMem->Alloc(pMem->pContext, 
-	                                                           sizeof(CX_SB_TextDataWriter))))
+	if (NULL == (pWriter = (CX_SB_TextDataWriter *)pMem->Alloc(pMem->pContext, sizeof(CX_SB_TextDataWriter))))
 	{
 		return CX_Status_MemAllocFailed;
 	}

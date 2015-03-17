@@ -12,9 +12,7 @@ extern "C" {
 #include "InputStream.h"
 
 
-CX_StatusCode  CX_SB_BinaryDataReader_Create(CX_SB_DataReader *pDataReader, 
-                                             CX_SB_InputStream *pInputStream, 
-                                             CX_SB_Memory *pMem);
+CX_StatusCode  CX_SB_BinaryDataReader_Create(CX_SB_DataReader *pDataReader, CX_SB_InputStream *pInputStream, CX_SB_Memory *pMem);
 
 CX_StatusCode  CX_SB_BinaryDataReader_Destroy(CX_SB_DataReader *pDataReader);
 

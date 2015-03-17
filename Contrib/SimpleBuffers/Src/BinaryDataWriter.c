@@ -150,7 +150,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_StructEndArray(void *pContext)
 
 	pWriter->cDepth--;
 
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayEnd, sizeof(CX_SB_BinaryDataWriter_ArrayEnd), &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayEnd, 
+	                                                  sizeof(CX_SB_BinaryDataWriter_ArrayEnd), &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -162,8 +163,7 @@ static CX_StatusCode CX_SB_BinaryDataWriter_StructEndArray(void *pContext)
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteBool(void *pContext, const CX_Char *szName, 
-                                                            CX_Bool bValue)
+static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteBool(void *pContext, const CX_Char *szName, CX_Bool bValue)
 {
 	CX_SB_BinaryDataWriter   *pWriter = (CX_SB_BinaryDataWriter *)pContext;
 	CX_Size                  cbAckSize;
@@ -194,8 +194,7 @@ static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteBool(void *pContext, cons
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteInt(void *pContext, const CX_Char *szName, 
-                                                           CX_Int64 nValue)
+static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteInt(void *pContext, const CX_Char *szName, CX_Int64 nValue)
 {
 	CX_SB_BinaryDataWriter   *pWriter = (CX_SB_BinaryDataWriter *)pContext;
 	CX_Size                  cbAckSize;
@@ -226,8 +225,7 @@ static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteInt(void *pContext, const
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteReal(void *pContext, const CX_Char *szName, 
-                                                            CX_Double lfValue)
+static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteReal(void *pContext, const CX_Char *szName, CX_Double lfValue)
 {
 	CX_SB_BinaryDataWriter   *pWriter = (CX_SB_BinaryDataWriter *)pContext;
 	CX_Size                  cbAckSize;
@@ -258,8 +256,7 @@ static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteReal(void *pContext, cons
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteString(void *pContext, const CX_Char *szName, 
-                                                              const CX_Char *szValue)
+static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteString(void *pContext, const CX_Char *szName, const CX_Char *szValue)
 {
 	CX_SB_BinaryDataWriter   *pWriter = (CX_SB_BinaryDataWriter *)pContext;
 	CX_Size                  cLen;
@@ -294,7 +291,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteString(void *pContext, co
 	{
 		return CX_Status_WriteFailed;
 	}
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, szValue, sizeof(CX_Char) * cLen, &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, szValue, sizeof(CX_Char) * cLen, 
+	                                                  &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -306,8 +304,7 @@ static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteString(void *pContext, co
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteWString(void *pContext, const CX_Char *szName, 
-                                                             const CX_WChar *wszValue)
+static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteWString(void *pContext, const CX_Char *szName, const CX_WChar *wszValue)
 {
 	CX_SB_BinaryDataWriter   *pWriter = (CX_SB_BinaryDataWriter *)pContext;
 	CX_Size                  cLen;
@@ -342,7 +339,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_StructWriteWString(void *pContext, c
 	{
 		return CX_Status_WriteFailed;
 	}
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, wszValue, sizeof(CX_WChar) * cLen, &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, wszValue, sizeof(CX_WChar) * cLen, 
+	                                                  &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -433,7 +431,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayEndArray(void *pContext)
 
 	pWriter->cDepth--;
 
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayEnd, sizeof(CX_SB_BinaryDataWriter_ArrayEnd), &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayEnd, 
+	                                                  sizeof(CX_SB_BinaryDataWriter_ArrayEnd), &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -463,7 +462,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteBool(void *pContext, CX_Bo
 
 	pWriter->stack[pWriter->cDepth - 1].cIndex++;
 
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, 
+	                                                  sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -500,7 +500,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteInt(void *pContext, CX_Int
 
 	pWriter->stack[pWriter->cDepth - 1].cIndex++;
 
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, 
+	                                                  sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -537,7 +538,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteReal(void *pContext, CX_Do
 
 	pWriter->stack[pWriter->cDepth - 1].cIndex++;
 
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, 
+	                                                  sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -576,7 +578,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteString(void *pContext, con
 
 	pWriter->stack[pWriter->cDepth - 1].cIndex++;
 
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, 
+	                                                  sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -598,7 +601,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteString(void *pContext, con
 	{
 		return CX_Status_WriteFailed;
 	}
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, szValue, sizeof(CX_Char) * cLen, &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, szValue, sizeof(CX_Char) * cLen, 
+	                                                  &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -610,8 +614,7 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteString(void *pContext, con
 	return CX_Status_OK;
 }
 
-static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteWString(void *pContext, 
-                                                                  const CX_WChar *wszValue)
+static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteWString(void *pContext, const CX_WChar *wszValue)
 {
 	CX_SB_BinaryDataWriter   *pWriter = (CX_SB_BinaryDataWriter *)pContext;
 	CX_Size                  cLen;
@@ -630,7 +633,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteWString(void *pContext,
 
 	pWriter->stack[pWriter->cDepth - 1].cIndex++;
 
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, &CX_SB_BinaryDataWriter_ArrayItem, 
+	                                                  sizeof(CX_SB_BinaryDataWriter_ArrayItem), &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -652,7 +656,8 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteWString(void *pContext,
 	{
 		return CX_Status_WriteFailed;
 	}
-	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, wszValue, sizeof(CX_WChar) * cLen, &cbAckSize)))
+	if (CXNOK(nStatus = pWriter->pOutputStream->Write(pWriter->pOutputStream->pContext, wszValue, sizeof(CX_WChar) * cLen, 
+	                                                  &cbAckSize)))
 	{
 		return nStatus;
 	}
@@ -664,14 +669,11 @@ static CX_StatusCode CX_SB_BinaryDataWriter_ArrayWriteWString(void *pContext,
 	return CX_Status_OK;
 }
 
-CX_StatusCode  CX_SB_BinaryDataWriter_Create(CX_SB_DataWriter *pDataWriter, 
-                                           CX_SB_OutputStream *pOutputStream, 
-                                           CX_SB_Memory *pMem)
+CX_StatusCode  CX_SB_BinaryDataWriter_Create(CX_SB_DataWriter *pDataWriter, CX_SB_OutputStream *pOutputStream, CX_SB_Memory *pMem)
 {
 	CX_SB_BinaryDataWriter *pWriter;
 
-	if (NULL == (pWriter = (CX_SB_BinaryDataWriter *)pMem->Alloc(pMem->pContext, 
-	                                                           sizeof(CX_SB_BinaryDataWriter))))
+	if (NULL == (pWriter = (CX_SB_BinaryDataWriter *)pMem->Alloc(pMem->pContext, sizeof(CX_SB_BinaryDataWriter))))
 	{
 		return CX_Status_MemAllocFailed;
 	}

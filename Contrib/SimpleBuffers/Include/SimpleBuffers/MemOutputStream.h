@@ -11,7 +11,8 @@ extern "C" {
 #include "Memory.h"
 
 
-CX_StatusCode  CX_SB_MemOutputStream_Create(CX_SB_OutputStream *pOutputStream, CX_Size cbInitialSize, CX_Size cbChunkSize, CX_Size cbMaxSize, CX_SB_Memory *pMem);
+CX_StatusCode  CX_SB_MemOutputStream_Create(CX_SB_OutputStream *pOutputStream, CX_Size cbInitialSize, CX_Size cbChunkSize, 
+                                            CX_Size cbMaxSize, CX_SB_Memory *pMem);
 
 void *CX_SB_MemOutputStream_GetBuffer(CX_SB_OutputStream *pOutputStream);
 

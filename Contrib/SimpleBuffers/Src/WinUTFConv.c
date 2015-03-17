@@ -12,10 +12,8 @@ typedef struct _CX_SB_WinUTFConv
 //if cUTF8Len == CX_SIZE_MAX => use null terminator
 //pcUTF16Len can be NULL
 //free with CX_SB_WString_Uninit
-static CX_StatusCode CX_SB_WinUTFConv_UTF8toUTF16(void *pContext, 
-                                                  const CX_Char *szUTF8, CX_Size cUTF8Len,
-                                                  CX_WChar **pwszUTF16, 
-                                                  CX_Size *pcUTF16Len)
+static CX_StatusCode CX_SB_WinUTFConv_UTF8toUTF16(void *pContext, const CX_Char *szUTF8, CX_Size cUTF8Len,
+                                                  CX_WChar **pwszUTF16, CX_Size *pcUTF16Len)
 {
 	CX_SB_WinUTFConv *pConv = (CX_SB_WinUTFConv *)pContext;
 	int              nRes;
@@ -37,8 +35,7 @@ static CX_StatusCode CX_SB_WinUTFConv_UTF8toUTF16(void *pContext,
 		return CX_Status_OK;
 	}
 
-	if (0 >= (nRes = MultiByteToWideChar(CP_UTF8, 0, szUTF8, 
-	                                     CX_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
+	if (0 >= (nRes = MultiByteToWideChar(CP_UTF8, 0, szUTF8, CX_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
 	{
 		return CX_Status_OperationFailed;
 	}
@@ -46,9 +43,7 @@ static CX_StatusCode CX_SB_WinUTFConv_UTF8toUTF16(void *pContext,
 	{
 		return CX_Status_MemAllocFailed;
 	}
-	if (0 >= (nRes = MultiByteToWideChar(CP_UTF8, 0, szUTF8, 
-	                                     CX_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, 
-	                                     *pwszUTF16, nRes)))
+	if (0 >= (nRes = MultiByteToWideChar(CP_UTF8, 0, szUTF8, CX_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, *pwszUTF16, nRes)))
 	{
 		pConv->pMem->Free(pConv->pMem->pContext, *pwszUTF16);
 
@@ -72,11 +67,8 @@ static CX_StatusCode CX_SB_WinUTFConv_UTF8toUTF16(void *pContext,
 //if cUTF16Len == CX_SIZE_MAX => use null terminator
 //pcUTF8Len can be NULL
 //free with CX_SB_String_Uninit
-static CX_StatusCode CX_SB_WinUTFConv_UTF16toUTF8(void *pContext, 
-                                                  const CX_WChar *wszUTF16, 
-                                                  CX_Size cUTF16Len,
-                                                  CX_Char **pszUTF8, 
-                                                  CX_Size *pcUTF8Len)
+static CX_StatusCode CX_SB_WinUTFConv_UTF16toUTF8(void *pContext, const CX_WChar *wszUTF16, CX_Size cUTF16Len,
+                                                  CX_Char **pszUTF8, CX_Size *pcUTF8Len)
 {
 	CX_SB_WinUTFConv *pConv = (CX_SB_WinUTFConv *)pContext;
 	int              nRes;
@@ -98,8 +90,7 @@ static CX_StatusCode CX_SB_WinUTFConv_UTF16toUTF8(void *pContext,
 		return CX_Status_OK;
 	}
 
-	if (0 >= (nRes = WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-	                                     CX_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, 
+	if (0 >= (nRes = WideCharToMultiByte(CP_UTF8, 0, wszUTF16, CX_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, 
 	                                     NULL, 0, NULL, NULL)))
 	{
 		return CX_Status_OperationFailed;
@@ -108,8 +99,7 @@ static CX_StatusCode CX_SB_WinUTFConv_UTF16toUTF8(void *pContext,
 	{
 		return CX_Status_MemAllocFailed;
 	}
-	if (0 >= (nRes = WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-	                                     CX_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, 
+	if (0 >= (nRes = WideCharToMultiByte(CP_UTF8, 0, wszUTF16, CX_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, 
 	                                     *pszUTF8, nRes, NULL, NULL)))
 	{
 		pConv->pMem->Free(pConv->pMem->pContext, *pszUTF8);

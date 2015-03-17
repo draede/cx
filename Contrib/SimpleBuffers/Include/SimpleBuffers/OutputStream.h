@@ -22,8 +22,7 @@ typedef struct _CX_SB_OutputStream
 }CX_SB_OutputStream;
 
 
-CX_StatusCode CX_SB_OutputStream_Printf(CX_SB_OutputStream *pOutputStream, 
-                                        const CX_Char *szFormat, ...);
+CX_StatusCode CX_SB_OutputStream_Printf(CX_SB_OutputStream *pOutputStream, const CX_Char *szFormat, ...);
 
 
 #ifdef __cplusplus

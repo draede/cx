@@ -15,37 +15,25 @@ typedef CX_StatusCode (* CX_SB_DataReader_Begin_Func)(void *pContext);
 
 typedef CX_StatusCode (* CX_SB_DataReader_End_Func)(void *pContext);
 
-typedef CX_StatusCode (* CX_SB_DataReader_StructBeginStruct_Func)(void *pContext, 
-                                                                  const CX_Char *szName);
+typedef CX_StatusCode (* CX_SB_DataReader_StructBeginStruct_Func)(void *pContext, const CX_Char *szName);
 
 typedef CX_StatusCode (* CX_SB_DataReader_StructEndStruct_Func)(void *pContext);
 
-typedef CX_StatusCode (* CX_SB_DataReader_StructBeginArray_Func)(void *pContext, 
-                                                                 const CX_Char *szName);
+typedef CX_StatusCode (* CX_SB_DataReader_StructBeginArray_Func)(void *pContext, const CX_Char *szName);
 
 typedef CX_StatusCode (* CX_SB_DataReader_StructEndArray_Func)(void *pContext);
 
-typedef CX_StatusCode (* CX_SB_DataReader_StructReadBool_Func)(void *pContext, 
-                                                               const CX_Char *szName, 
-                                                               CX_Bool *pbValue);
+typedef CX_StatusCode (* CX_SB_DataReader_StructReadBool_Func)(void *pContext, const CX_Char *szName, CX_Bool *pbValue);
 
-typedef CX_StatusCode (* CX_SB_DataReader_StructReadInt_Func)(void *pContext, 
-                                                               const CX_Char *szName, 
-                                                               CX_Int64 *pnValue);
+typedef CX_StatusCode (* CX_SB_DataReader_StructReadInt_Func)(void *pContext, const CX_Char *szName, CX_Int64 *pnValue);
 
-typedef CX_StatusCode (* CX_SB_DataReader_StructReadReal_Func)(void *pContext, 
-                                                               const CX_Char *szName, 
-                                                               CX_Double *plfValue);
+typedef CX_StatusCode (* CX_SB_DataReader_StructReadReal_Func)(void *pContext, const CX_Char *szName, CX_Double *plfValue);
 
 //free with CX_SB_DataReader_FreeString_Func
-typedef CX_StatusCode (* CX_SB_DataReader_StructReadString_Func)(void *pContext, 
-                                                                 const CX_Char *szName, 
-                                                                 CX_Char **pszValue);
+typedef CX_StatusCode (* CX_SB_DataReader_StructReadString_Func)(void *pContext, const CX_Char *szName, CX_Char **pszValue);
 
 //free with CX_SB_DataReader_FreeWString_Func
-typedef CX_StatusCode (* CX_SB_DataReader_StructReadWString_Func)(void *pContext, 
-                                                                  const CX_Char *szName, 
-                                                                  CX_WChar **pwszValue);
+typedef CX_StatusCode (* CX_SB_DataReader_StructReadWString_Func)(void *pContext, const CX_Char *szName, CX_WChar **pwszValue);
 
 typedef CX_StatusCode (* CX_SB_DataReader_ArrayBeginStruct_Func)(void *pContext);
 
@@ -55,22 +43,17 @@ typedef CX_StatusCode (* CX_SB_DataReader_ArrayBeginArray_Func)(void *pContext);
 
 typedef CX_StatusCode (* CX_SB_DataReader_ArrayEndArray_Func)(void *pContext);
 
-typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadBool_Func)(void *pContext, 
-                                                              CX_Bool *pbValue);
+typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadBool_Func)(void *pContext, CX_Bool *pbValue);
 
-typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadInt_Func)(void *pContext, 
-                                                             CX_Int64 *pnValue);
+typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadInt_Func)(void *pContext, CX_Int64 *pnValue);
 
-typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadReal_Func)(void *pContext, 
-                                                              CX_Double *plfValue);
+typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadReal_Func)(void *pContext, CX_Double *plfValue);
 
 //free with CX_SB_DataReader_FreeString_Func
-typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadString_Func)(void *pContext, 
-                                                                CX_Char **pszValue);
+typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadString_Func)(void *pContext, CX_Char **pszValue);
 
 //free with CX_SB_DataReader_FreeWString_Func
-typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadWString_Func)(void *pContext, 
-                                                                 CX_WChar **pwszValue);
+typedef CX_StatusCode (* CX_SB_DataReader_ArrayReadWString_Func)(void *pContext, CX_WChar **pwszValue);
 
 typedef CX_StatusCode (* CX_SB_DataReader_FreeString_Func)(void *pContext, CX_Char *szValue);
 

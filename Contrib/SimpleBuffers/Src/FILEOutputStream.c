@@ -3,8 +3,7 @@
 #include "CX/C/stdio.h"
 
 
-static CX_StatusCode CX_SB_FILEOutputStream_Write(void *pContext, const void *pBuffer, 
-                                                  CX_Size cbReqSize, CX_Size *pcbAckSize)
+static CX_StatusCode CX_SB_FILEOutputStream_Write(void *pContext, const void *pBuffer, CX_Size cbReqSize, CX_Size *pcbAckSize)
 {
 	FILE *pFile = (FILE *)pContext;
 
@@ -20,8 +19,7 @@ static CX_StatusCode CX_SB_FILEOutputStream_Write(void *pContext, const void *pB
 	return CX_Status_OK;
 }
 
-CX_StatusCode  CX_SB_FILEOutputStream_Create(CX_SB_OutputStream *pOutputStream, 
-                                             const CX_Char *szPath)
+CX_StatusCode  CX_SB_FILEOutputStream_Create(CX_SB_OutputStream *pOutputStream, const CX_Char *szPath)
 {
 #pragma warning(push)
 #pragma warning(disable: 4996)
@@ -35,8 +33,7 @@ CX_StatusCode  CX_SB_FILEOutputStream_Create(CX_SB_OutputStream *pOutputStream,
 	return CX_Status_OK;
 }
 
-CX_StatusCode  CX_SB_FILEOutputStream_CreateW(CX_SB_OutputStream *pOutputStream, 
-                                             const CX_WChar *wszPath)
+CX_StatusCode  CX_SB_FILEOutputStream_CreateW(CX_SB_OutputStream *pOutputStream, const CX_WChar *wszPath)
 {
 #pragma warning(push)
 #pragma warning(disable: 4996)

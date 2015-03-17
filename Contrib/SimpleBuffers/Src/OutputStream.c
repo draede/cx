@@ -7,8 +7,7 @@
 #define CX_SB_OUTPUTSTREAM_PRINTF_MAXBUFFERLEN     8192
 
 
-CX_StatusCode CX_SB_OutputStream_Printf(CX_SB_OutputStream *pOutputStream, 
-                                        const CX_Char *szFormat, ...)
+CX_StatusCode CX_SB_OutputStream_Printf(CX_SB_OutputStream *pOutputStream, const CX_Char *szFormat, ...)
 {
 	CX_Char         szBuffer[CX_SB_OUTPUTSTREAM_PRINTF_MAXBUFFERLEN];
 	va_list         vaList;

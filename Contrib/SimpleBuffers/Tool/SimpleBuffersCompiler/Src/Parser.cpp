@@ -67,34 +67,34 @@ Status Parser::EndParse()
 
 	for (StructsMap::iterator iterStructs = m_mapStructs.begin(); iterStructs != m_mapStructs.end(); iterStructs++)
 	{
-		for (FieldsVector::iterator iterFields = iterStructs->second.m_vectorFields.begin(); iterFields != iterStructs->second.m_vectorFields.end(); 
-		     iterFields++)
+		for (FieldsVector::iterator iterFields = iterStructs->second.m_vectorFields.begin(); 
+		     iterFields != iterStructs->second.m_vectorFields.end(); iterFields++)
 		{
 			if (Field::Type_Struct == iterFields->m_nType)
 			{
 				if (0 == cx_stricmp(iterFields->m_sStructName.c_str(), iterStructs->first.c_str()))
 				{
-					return Status(Status_ParseFailed, "Field '{1}'.'{2}' cannot be of type {3}", iterStructs->first, iterFields->m_sName,
-					              iterFields->m_sStructName);
+					return Status(Status_ParseFailed, "Field '{1}'.'{2}' cannot be of type {3}", iterStructs->first, 
+					              iterFields->m_sName, iterFields->m_sStructName);
 				}
 
 				StructsMap::iterator iter = m_mapStructs.find(iterFields->m_sStructName);
 
 				if (m_mapStructs.end() == iter)
 				{
-					return Status(Status_ParseFailed, "Unknown struct '{1}' used as '{2}'.'{3}' type", iterFields->m_sStructName, iterStructs->first, 
-					              iterFields->m_sName);
+					return Status(Status_ParseFailed, "Unknown struct '{1}' used as '{2}'.'{3}' type", iterFields->m_sStructName, 
+					              iterStructs->first, iterFields->m_sName);
 				}
 
-				for (FieldsVector::iterator iterFields2 = iter->second.m_vectorFields.begin(); iterFields2 != iter->second.m_vectorFields.end(); 
-				     iterFields2++)
+				for (FieldsVector::iterator iterFields2 = iter->second.m_vectorFields.begin(); 
+				     iterFields2 != iter->second.m_vectorFields.end(); iterFields2++)
 				{
 					if (Field::Type_Struct == iterFields2->m_nType)
 					{
 						if (0 == cx_stricmp(iterFields2->m_sStructName.c_str(), iterStructs->first.c_str()))
 						{
-							return Status(Status_ParseFailed, "Circular reference detector for structs '{1}' and '{2}'", iterFields2->m_sStructName, 
-							              iterStructs->first);
+							return Status(Status_ParseFailed, "Circular reference detector for structs '{1}' and '{2}'", 
+							              iterFields2->m_sStructName, iterStructs->first);
 						}
 					}
 				}
@@ -209,7 +209,8 @@ Status Parser::Parse(const void *pBuffer, Size cbSize)
 					}
 					else
 					{
-						return Status(Status_ParseFailed, "Expected 'struct' or 'import' at line {1}, column {2}", m_cLine, m_cColumn - m_sToken.size());
+						return Status(Status_ParseFailed, "Expected 'struct' or 'import' at line {1}, column {2}", 
+						              m_cLine, m_cColumn - m_sToken.size());
 					}
 				}
 			}

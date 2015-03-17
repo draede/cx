@@ -15,34 +15,23 @@ typedef CX_StatusCode (* CX_SB_DataWriter_Begin_Func)(void *pContext);
 
 typedef CX_StatusCode (* CX_SB_DataWriter_End_Func)(void *pContext);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_StructBeginStruct_Func)(void *pContext, 
-                                                                  const CX_Char *szName);
+typedef CX_StatusCode (* CX_SB_DataWriter_StructBeginStruct_Func)(void *pContext, const CX_Char *szName);
 
 typedef CX_StatusCode (* CX_SB_DataWriter_StructEndStruct_Func)(void *pContext);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_StructBeginArray_Func)(void *pContext, 
-                                                                 const CX_Char *szName);
+typedef CX_StatusCode (* CX_SB_DataWriter_StructBeginArray_Func)(void *pContext, const CX_Char *szName);
 
 typedef CX_StatusCode (* CX_SB_DataWriter_StructEndArray_Func)(void *pContext);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteBool_Func)(void *pContext, 
-                                                                const CX_Char *szName, 
-                                                                CX_Bool bValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteBool_Func)(void *pContext, const CX_Char *szName, CX_Bool bValue);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteInt_Func)(void *pContext, 
-                                                               const CX_Char *szName, 
-                                                               CX_Int64 nValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteInt_Func)(void *pContext, const CX_Char *szName, CX_Int64 nValue);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteReal_Func)(void *pContext, 
-                                                                const CX_Char *szName, 
-                                                                CX_Double lfValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteReal_Func)(void *pContext, const CX_Char *szName, CX_Double lfValue);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteString_Func)(void *pContext, 
-                                                                  const CX_Char *szName, 
-                                                                  const CX_Char *szValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteString_Func)(void *pContext, const CX_Char *szName, const CX_Char *szValue);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteWString_Func)(void *pContext, 
-                                                                   const CX_Char *szName, 
+typedef CX_StatusCode (* CX_SB_DataWriter_StructWriteWString_Func)(void *pContext, const CX_Char *szName, 
                                                                    const CX_WChar *wszValue);
 
 typedef CX_StatusCode (* CX_SB_DataWriter_ArrayBeginStruct_Func)(void *pContext);
@@ -53,20 +42,15 @@ typedef CX_StatusCode (* CX_SB_DataWriter_ArrayBeginArray_Func)(void *pContext);
 
 typedef CX_StatusCode (* CX_SB_DataWriter_ArrayEndArray_Func)(void *pContext);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteBool_Func)(void *pContext, 
-                                                               CX_Bool bValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteBool_Func)(void *pContext, CX_Bool bValue);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteInt_Func)(void *pContext, 
-                                                              CX_Int64 nValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteInt_Func)(void *pContext, CX_Int64 nValue);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteReal_Func)(void *pContext, 
-                                                               CX_Double lfValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteReal_Func)(void *pContext, CX_Double lfValue);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteString_Func)(void *pContext, 
-                                                                 const CX_Char *szValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteString_Func)(void *pContext, const CX_Char *szValue);
 
-typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteWString_Func)(void *pContext, 
-                                                                  const CX_WChar *wszValue);
+typedef CX_StatusCode (* CX_SB_DataWriter_ArrayWriteWString_Func)(void *pContext, const CX_WChar *wszValue);
 
 
 typedef struct _CX_SB_DataWriter

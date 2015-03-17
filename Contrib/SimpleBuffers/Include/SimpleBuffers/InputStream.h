@@ -11,8 +11,7 @@ extern "C" {
 #include "CX/C/StatusCodes.h"
 
 
-typedef CX_StatusCode (* CX_SB_InputStream_Read_Func)(void *pContext, void *pBuffer, 
-                                                      CX_Size cbReqSize, CX_Size *pcbAckSize);
+typedef CX_StatusCode (* CX_SB_InputStream_Read_Func)(void *pContext, void *pBuffer, CX_Size cbReqSize, CX_Size *pcbAckSize);
 
 
 typedef struct _CX_SB_InputStream

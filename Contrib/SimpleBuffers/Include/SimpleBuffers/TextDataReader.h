@@ -14,10 +14,8 @@ extern "C" {
 #include "CX/C/APIDefs.h"
 
 
-CX_StatusCode  CX_SB_TextDataReader_Create(CX_SB_DataReader *pDataReader, 
-                                           CX_SB_InputStream *pInputStream, 
-                                           CX_SB_UTFConv *pUTFConv,
-                                           CX_SB_Memory *pMem);
+CX_StatusCode  CX_SB_TextDataReader_Create(CX_SB_DataReader *pDataReader, CX_SB_InputStream *pInputStream, 
+                                           CX_SB_UTFConv *pUTFConv, CX_SB_Memory *pMem);
 
 CX_StatusCode  CX_SB_TextDataReader_Destroy(CX_SB_DataReader *pDataReader);
 

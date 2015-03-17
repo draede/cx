@@ -68,7 +68,8 @@ CX_StatusCode  CX_SB_MemOutputStream_Create(CX_SB_OutputStream *pOutputStream, C
 		return CX_Status_InvalidArg;
 	}
 
-	if (NULL == (pOutputStream->pContext = ( CX_SB_MemOutputStream *)pMemory->Alloc(pMemory->pContext, sizeof(CX_SB_MemOutputStream))))
+	if (NULL == (pOutputStream->pContext = ( CX_SB_MemOutputStream *)pMemory->Alloc(pMemory->pContext, 
+	                                                                                sizeof(CX_SB_MemOutputStream))))
 	{
 		return CX_Status_OpenFailed;
 	}
