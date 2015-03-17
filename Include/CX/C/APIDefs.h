@@ -32,10 +32,14 @@
 #include "CX/C/Platform.h"
 
 
-#ifdef CX_API_EXPORTS
+#ifdef CX_API_DYNAMIC
 	#define CX_API         CX_DLL_EXPORT
 #else
+#ifdef CX_API_STATIC
+	#define CX_API
+#else
 	#define CX_API         CX_DLL_IMPORT
+#endif
 #endif
 
 

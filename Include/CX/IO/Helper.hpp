@@ -31,8 +31,6 @@
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/IO/IDataReader.hpp"
-#include "CX/IO/IDataWriter.hpp"
 #include "CX/IO/IInputStream.hpp"
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
@@ -51,8 +49,6 @@ public:
 	static const Size COPY_STREAM_BUFFER = 8192;
 
 	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream);
-
-	static Status CopyData(IDataReader *pDataReader, IDataWriter *pDataWriter);
 
 private:
 

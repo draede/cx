@@ -163,17 +163,8 @@
     <Filter Include="Contrib\Z85">
       <UniqueIdentifier>{77433a82-b211-434d-9166-829847057fd6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Data\BINJSON">
-      <UniqueIdentifier>{1b0a97c3-d1cb-4ac8-9bbd-41043193be51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Data\BINJSON">
-      <UniqueIdentifier>{291b9ee8-b46e-4847-a2f2-b7bceead02a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contrib\xxHash">
       <UniqueIdentifier>{a71c9426-4c31-44fb-8cfc-690febfbeacc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contrib\BINJSON">
-      <UniqueIdentifier>{ad15d033-4e95-405c-9b93-106c84b14d8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -516,44 +507,17 @@
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h">
       <Filter>Contrib\Z85</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\IDataReader.hpp">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\IDataWriter.hpp">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\JSON\SAXParser.hpp">
       <Filter>Header Files\Data\JSON</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp">
       <Filter>Header Files\Data\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp">
-      <Filter>Header Files\Data\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\JSON\DataReader.hpp">
-      <Filter>Header Files\Data\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataWriter.hpp">
-      <Filter>Header Files\Data\BINJSON</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp">
       <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\BINJSON\DataReader.hpp">
-      <Filter>Header Files\Data\BINJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSONReader.h">
-      <Filter>Contrib\BINJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSONWriter.h">
-      <Filter>Contrib\BINJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\BINJSON\Include\BINJSON.h">
-      <Filter>Contrib\BINJSON</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -698,32 +662,14 @@
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c">
       <Filter>Contrib\Z85</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp">
-      <Filter>Source Files\Data\JSON</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Data\JSON\JSONDataReader.cpp">
-      <Filter>Source Files\Data\JSON</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c">
       <Filter>Contrib\xxHash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\xxHash32.cpp">
       <Filter>Source Files\Hash</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Data\BINJSON\BINJSONDataWriter.cpp">
-      <Filter>Source Files\Data\BINJSON</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\IO\Helper.cpp">
       <Filter>Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Data\BINJSON\BINJSONDataReader.cpp">
-      <Filter>Source Files\Data\BINJSON</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONReader.c">
-      <Filter>Contrib\BINJSON</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\BINJSON\Src\BINJSONWriter.c">
-      <Filter>Contrib\BINJSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

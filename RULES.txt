@@ -18,6 +18,6 @@ int test(int a,
 <tab>c = testfunc(a,
 <tab>.............b);
 }
-12. max line length = 100
+12. max line length = 150
 13. Only use Alloc/Realloc/Free/New/Delete/NewArr/DeleteArr for allocations
 
