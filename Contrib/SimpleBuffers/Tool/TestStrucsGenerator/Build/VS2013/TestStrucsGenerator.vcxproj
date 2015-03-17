@@ -20,18 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Main.cpp" />
-    <ClCompile Include="..\..\Src\Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Common\Field.hpp" />
     <ClInclude Include="..\..\..\Common\Struct.hpp" />
-    <ClInclude Include="..\..\Src\Generator.hpp" />
-    <ClInclude Include="..\..\Src\Parser.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{550212C2-F521-4675-8B68-38A63866047D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SimpleBuffersCompiler</RootNamespace>
+    <RootNamespace>TestStrucsGenerator</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
