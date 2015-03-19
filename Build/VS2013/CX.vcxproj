@@ -76,6 +76,8 @@
     <ClInclude Include="..\..\Include\CX\C\string.h" />
     <ClInclude Include="..\..\Include\CX\C\Types.h" />
     <ClInclude Include="..\..\Include\CX\C\Version.h" />
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\SAXParser.hpp" />
     <ClInclude Include="..\..\Include\CX\Deque.hpp" />
@@ -92,10 +94,17 @@
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\IDataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\IDataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Field.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Generator.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\ProtoParser.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Object.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Types.hpp" />
     <ClInclude Include="..\..\Include\CX\Limits.hpp" />
     <ClInclude Include="..\..\Include\CX\List.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.hpp" />
@@ -144,6 +153,7 @@
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\RndGen.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Var.hpp" />
@@ -235,6 +245,26 @@
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
     </ClCompile>
+    <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt32.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt64.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
     <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c" />
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c" />
     <ClCompile Include="..\..\Src\Alloc.cpp" />
@@ -248,6 +278,8 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">CompileAsC</CompileAs>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONDataReader.cpp" />
+    <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp" />
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />
@@ -262,6 +294,7 @@
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
     <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
+    <ClCompile Include="..\..\Src\IO\SimpleBuffers\ProtoParser.cpp" />
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
@@ -279,6 +312,7 @@
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp" />
+    <ClCompile Include="..\..\Src\Util\RndGen.cpp" />
     <ClCompile Include="..\..\Src\Var.cpp" />
     <ClCompile Include="..\..\Src\Version.cpp" />
   </ItemGroup>

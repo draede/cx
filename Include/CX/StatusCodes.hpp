@@ -66,6 +66,8 @@ static const StatusCode      Status_GetSize                 = CX_Status_GetSize;
 static const StatusCode      Status_Busy                    = CX_Status_Busy;
 static const StatusCode      Status_Cancelled               = CX_Status_Cancelled;
 static const StatusCode      Status_Denied                  = CX_Status_Denied;
+static const StatusCode      Status_NoMoreItems             = CX_Status_NoMoreItems;
+static const StatusCode      Status_NoMoreData              = CX_Status_NoMoreData;
 
 }//CX_API 
 

@@ -72,6 +72,8 @@ static const CX_StatusCode      CX_Status_GetSize                 = 27;
 static const CX_StatusCode      CX_Status_Busy                    = 28;
 static const CX_StatusCode      CX_Status_Cancelled               = 29;
 static const CX_StatusCode      CX_Status_Denied                  = 30;
+static const CX_StatusCode      CX_Status_NoMoreItems             = 31;
+static const CX_StatusCode      CX_Status_NoMoreData              = 32;
 
 
 #ifdef __cplusplus

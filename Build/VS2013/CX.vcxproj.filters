@@ -166,6 +166,15 @@
     <Filter Include="Contrib\xxHash">
       <UniqueIdentifier>{a71c9426-4c31-44fb-8cfc-690febfbeacc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IO\SimpleBuffers">
+      <UniqueIdentifier>{ebcff9c1-9c99-499d-9f3b-1d0e1c380081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\SimpleBuffers">
+      <UniqueIdentifier>{e3855182-ea63-457a-aadd-478fbdd6f9c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\TinyMT">
+      <UniqueIdentifier>{4a1e2c92-3ede-479e-a392-8f74afa37fcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -519,6 +528,36 @@
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IDataWriter.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IDataReader.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DataReader.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Field.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Object.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Generator.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\ProtoParser.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Types.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\RndGen.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -670,6 +709,24 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\Helper.cpp">
       <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONDataReader.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\SimpleBuffers\ProtoParser.cpp">
+      <Filter>Source Files\IO\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\RndGen.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt32.c">
+      <Filter>Contrib\TinyMT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt64.c">
+      <Filter>Contrib\TinyMT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
