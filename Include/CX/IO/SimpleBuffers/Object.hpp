@@ -32,6 +32,7 @@
 #include "CX/Types.hpp"
 #include "CX/String.hpp"
 #include "CX/Map.hpp"
+#include "CX/Vector.hpp"
 #include "CX/IO/SimpleBuffers/Field.hpp"
 
 
@@ -48,10 +49,13 @@ class Object
 {
 public:
 
+	typedef Vector<String>::Type NamespacesVector;
+
 #pragma warning(push)
 #pragma warning(disable: 4251)
-	String         m_sName;
-	FieldsVector   m_vectorFields;
+	NamespacesVector   m_vectorNamespaces;
+	String             m_sName;
+	FieldsVector       m_vectorFields;
 #pragma warning(pop)
 
 };

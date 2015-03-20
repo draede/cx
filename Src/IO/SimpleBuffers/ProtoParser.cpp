@@ -68,6 +68,9 @@ Status ProtoParser::BeginParse()
 	m_cColumn      = 1;
 	m_cImportDepth = 1;
 	m_sPath.clear();
+	m_object.m_sName.clear();
+	m_object.m_vectorFields.clear();
+	m_object.m_vectorNamespaces.clear();
 
 	return Status();
 }
@@ -238,6 +241,16 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 						m_sToken.clear();
 					}
 					else
+					if (0 == cx_strcmp(m_sToken.c_str(), "namespace"))
+					{
+						if (!m_object.m_vectorNamespaces.empty())
+						{
+							return Status(Status_ParseFailed, "Namespace has already been declared");
+						}
+						m_nState = State_BeforeNamespace;
+						m_sToken.clear();
+					}
+					else
 					{
 						return Status(Status_ParseFailed, "Expected 'object' or 'import' at line {1}, column {2}", 
 						              m_cLine, m_cColumn - m_sToken.size());
@@ -274,6 +287,33 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 				{
 					m_pPos++;
 					m_nState = State_AfterImport;
+				}
+			}
+			break;
+			case State_BeforeNamespace:
+			{
+				if ((status = WalkWhiteSpaces()).IsNOK())
+				{
+					return status;
+				}
+				if (m_pPos < m_pEnd)
+				{
+					m_nState = State_InNamespace;
+					m_sToken.clear();
+				}
+			}
+			break;
+			case State_InNamespace:
+			{
+				while (m_pPos < m_pEnd && ('.' == *m_pPos || '_' == *m_pPos || cx_isalnum(*m_pPos)))
+				{
+					m_sToken += *m_pPos;
+					m_pPos++;
+				}
+				if (m_pPos < m_pEnd)
+				{
+					m_pPos++;
+					m_nState = State_AfterNamespace;
 				}
 			}
 			break;
@@ -585,6 +625,37 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 					}
 				}
 
+				m_nState = State_BeforeDeclaration;
+				m_sToken.clear();
+			}
+			break;
+			case State_AfterNamespace:
+			{
+				String     sToken;
+				const Char *pPos;
+				
+				pPos = m_sToken.c_str();
+				while (0 != *pPos)
+				{
+					if ('.' == *pPos)
+					{
+						if (sToken.empty())
+						{
+							return Status(Status_ParseFailed, "Invalid namespace");
+						}
+						m_object.m_vectorNamespaces.push_back(sToken);
+						sToken.clear();
+					}
+					else
+					{
+						sToken += *pPos;
+					}
+					pPos++;
+				}
+				if (!sToken.empty())
+				{
+					m_object.m_vectorNamespaces.push_back(sToken);
+				}
 				m_nState = State_BeforeDeclaration;
 				m_sToken.clear();
 			}

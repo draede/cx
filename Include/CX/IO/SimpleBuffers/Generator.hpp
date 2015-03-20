@@ -78,6 +78,23 @@ public:
 		{
 			Print(out, "\n");
 		}
+		if (!pObject->m_vectorNamespaces.empty())
+		{
+			Print(out, "namespace ");
+			for (Object::NamespacesVector::iterator iter = pObject->m_vectorNamespaces.begin(); 
+			     iter != pObject->m_vectorNamespaces.end(); ++iter)
+			{
+				if (pObject->m_vectorNamespaces.begin() != iter)
+				{
+					Print(out, ".{1}", *iter);
+				}
+				else
+				{
+					Print(out, "{1}", *iter);
+				}
+			}
+			Print(out, "\n\n");
+		}
 		Print(out, "object {1}\n", pObject->m_sName);
 		Print(out, "{{\n");
 		for (FieldsVector::const_iterator iter = pObject->m_vectorFields.begin(); iter != pObject->m_vectorFields.end(); ++iter)

@@ -38,6 +38,9 @@ inline void IO_SimpleBuffers_Generator_Test1()
 	CX::IO::SimpleBuffers::Object obj1;
 
 	obj1.m_sName = "Test1Object";
+	obj1.m_vectorNamespaces.push_back("My");
+	obj1.m_vectorNamespaces.push_back("Test");
+	obj1.m_vectorNamespaces.push_back("NameSpace");
 	obj1.m_vectorFields.push_back(CX::IO::SimpleBuffers::Field("bool_val", CX::IO::SimpleBuffers::Field::Type_Bool));
 	obj1.m_vectorFields.push_back(CX::IO::SimpleBuffers::Field("int8_val", CX::IO::SimpleBuffers::Field::Type_Int8));
 	obj1.m_vectorFields.push_back(CX::IO::SimpleBuffers::Field("uint8_val", CX::IO::SimpleBuffers::Field::Type_UInt8));
@@ -71,6 +74,9 @@ inline void IO_SimpleBuffers_Generator_Test1()
 	CX::IO::SimpleBuffers::Object obj2;
 
 	obj2.m_sName = "Test2Object";
+	obj2.m_vectorNamespaces.push_back("My");
+	obj2.m_vectorNamespaces.push_back("Test");
+	obj2.m_vectorNamespaces.push_back("NameSpace");
 	obj2.m_vectorFields.push_back(CX::IO::SimpleBuffers::Field("bool_val", CX::IO::SimpleBuffers::Field::Type_Bool));
 	obj2.m_vectorFields.push_back(CX::IO::SimpleBuffers::Field("int8_val", CX::IO::SimpleBuffers::Field::Type_Int8));
 	obj2.m_vectorFields.push_back(CX::IO::SimpleBuffers::Field("uint8_val", CX::IO::SimpleBuffers::Field::Type_UInt8));

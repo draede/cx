@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
 
 	//Str_UTF8_Test1();
 	//Data_JSON_DataReaderDataWriter_Test1();
-	//IO_SimpleBuffers_Generator_Test1();
-	IO_SimpleBuffers_Test1();
+	IO_SimpleBuffers_Generator_Test1();
+	//IO_SimpleBuffers_Test1();
 
 	return 0;
 }
