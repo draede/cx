@@ -682,6 +682,7 @@ public:
 			memcpy(m_buffer + m_cLen, pBuffer + cPos, cSize);
 			m_cLen += cSize;
 			cLen -= cSize;
+			cPos += cSize;
 			if (BUFFER_LEN == m_cLen)
 			{
 				StatusCode nStatus;
@@ -754,6 +755,215 @@ typedef struct _Flags
 	}
 }Flags;
 
+
+template <typename O, typename T>
+class ArgPrinter
+{
+public:
+
+	static inline StatusCode PrintArg(O o, T p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+	{
+		Size       cLen;
+		Size       cPreLen;
+		Size       cPostLen;
+		StatusCode nStatus;
+
+		cLen    = 0;
+		nStatus = Status_NotImplemented;
+		nStatus = ToString(p, pBuf, cBufLen, &cLen, pFlags->cPrecision);
+
+		if (CXNOK(nStatus))
+		{
+			return Status_InvalidArg;
+		}
+
+		if (Align_Left == pFlags->nAlign)
+		{
+			cPreLen = 0;
+			cPostLen = (cLen < pFlags->cWidth ? pFlags->cWidth - cLen : 0);
+		}
+		else
+		if (Align_Center == pFlags->nAlign)
+		{
+			if (cLen < pFlags->cWidth)
+			{
+				cPreLen = cPostLen = (pFlags->cWidth - cLen) / 2;
+				cPreLen += (pFlags->cWidth - cLen) % 2;
+			}
+			else
+			{
+				cPreLen = 0;
+				cPostLen = 0;
+			}
+		}
+		else
+		{
+			cPreLen = (cLen < pFlags->cWidth ? pFlags->cWidth - cLen : 0);
+			cPostLen = 0;
+		}
+		for (Size i = 0; i < cPreLen; i++)
+		{
+			if (CXNOK(nStatus = pBuffer->Write(o, &pFlags->cFillChar, 1)))
+			{
+				return nStatus;
+			}
+		}
+		if (CXNOK(nStatus = pBuffer->Write(o, pBuf, cLen)))
+		{
+			return nStatus;
+		}
+		for (Size i = 0; i < cPostLen; i++)
+		{
+			if (CXNOK(nStatus = pBuffer->Write(o, &pFlags->cFillChar, 1)))
+			{
+				return nStatus;
+			}
+		}
+
+		return Status_OK;
+	}
+
+};
+
+template <typename O>
+class ArgPrinter<O, Char *>
+{
+public:
+
+	static inline StatusCode PrintArg(O o, Char *p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+	{
+		return ArgPrinter<O, const Char *>::PrintArg<o, const Char *>(o, p, pFlags, pBuf, cBufLen, pBuffer);
+	}
+
+};
+
+template <typename O>
+class ArgPrinter<O, const Char *>
+{
+public:
+
+	static inline StatusCode PrintArg(O o, const Char *p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+	{
+		const Char *pPos;
+		Size       cLen;
+		Size       cPreLen;
+		Size       cPostLen;
+		StatusCode nStatus;
+
+		pBuf;
+		cBufLen;
+
+		cLen    = 0;
+		nStatus = Status_NotImplemented;
+		pPos    = p;
+		while (0 != *pPos)
+		{
+			cLen++;
+			pPos++;
+		}
+
+		if (Align_Left == pFlags->nAlign)
+		{
+			cPreLen = 0;
+			cPostLen = (cLen < pFlags->cWidth ? pFlags->cWidth - cLen : 0);
+		}
+		else
+		if (Align_Center == pFlags->nAlign)
+		{
+			if (cLen < pFlags->cWidth)
+			{
+				cPreLen = cPostLen = (pFlags->cWidth - cLen) / 2;
+				cPreLen += (pFlags->cWidth - cLen) % 2;
+			}
+			else
+			{
+				cPreLen = 0;
+				cPostLen = 0;
+			}
+		}
+		else
+		{
+			cPreLen = (cLen < pFlags->cWidth ? pFlags->cWidth - cLen : 0);
+			cPostLen = 0;
+		}
+		for (Size i = 0; i < cPreLen; i++)
+		{
+			if (CXNOK(nStatus = pBuffer->Write(o, &pFlags->cFillChar, 1)))
+			{
+				return nStatus;
+			}
+		}
+		if (CXNOK(nStatus = pBuffer->Write(o, p, cLen)))
+		{
+			return nStatus;
+		}
+		for (Size i = 0; i < cPostLen; i++)
+		{
+			if (CXNOK(nStatus = pBuffer->Write(o, &pFlags->cFillChar, 1)))
+			{
+				return nStatus;
+			}
+		}
+
+		return Status_OK;
+	}
+
+};
+
+template <typename O>
+class ArgPrinter<O, String>
+{
+public:
+
+	static inline StatusCode PrintArg(O o, String p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+	{
+		return ArgPrinter<O, const Char *>::PrintArg(o, p.c_str(), pFlags, pBuf, cBufLen, pBuffer);
+	}
+
+};
+
+template <typename O>
+class ArgPrinter<O, String &>
+{
+public:
+
+	static inline StatusCode PrintArg(O o, String &p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+	{
+		return ArgPrinter<O, const Char *>::PrintArg(o, p.c_str(), pFlags, pBuf, cBufLen, pBuffer);
+	}
+
+};
+
+template <typename O>
+class ArgPrinter<typename O, const String>
+{
+public:
+
+	static inline StatusCode PrintArg(O o, const String p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+	{
+		return ArgPrinter::PrintArg(o, p.c_str(), pFlags, pBuf, cBufLen, pBuffer);
+	}
+
+};
+
+template <typename O>
+class ArgPrinter<O, const String &>
+{
+public:
+
+	static inline StatusCode PrintArg(O o, const String &p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+	{
+		return ArgPrinter::PrintArg(o, p.c_str(), pFlags, pBuf, cBufLen, pBuffer);
+	}
+
+};
+
+template <typename O, typename T>
+static inline StatusCode PrintArgHelper(O o, T p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+{
+	return ArgPrinter<O, T>::PrintArg(o, p, pFlags, pBuf, cBufLen, pBuffer);
+}
+
 //arg format = {$(argpos)[:[<|>]['$(fillchr)']]$(width)][.$(precision)]]}
 //align = < (left), > (right - default), | (center)
 //fillchr = default ' '
@@ -774,9 +984,6 @@ static inline StatusCode Print(O o, const Char *szFormat,
 	Size        cIndex;
 	UInt32      cWidth;
 	UInt32      cPrec;
-	Size        cLen;
-	Size        cPreLen;
-	Size        cPostLen;
 	Char        buf[1024];
 	StatusCode  nStatus;
 
@@ -908,71 +1115,27 @@ static inline StatusCode Print(O o, const Char *szFormat,
 			{
 				pszPos++;
 				
-				cLen    = 0;
 				nStatus = Status_NotImplemented;
-				if (0 == cIndex) { nStatus = ToString(p1, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (1 == cIndex) { nStatus = ToString(p2, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (2 == cIndex) { nStatus = ToString(p3, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (3 == cIndex) { nStatus = ToString(p4, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (4 == cIndex) { nStatus = ToString(p5, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (5 == cIndex) { nStatus = ToString(p6, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (6 == cIndex) { nStatus = ToString(p7, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (7 == cIndex) { nStatus = ToString(p8, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (8 == cIndex) { nStatus = ToString(p9, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (9 == cIndex) { nStatus = ToString(p10, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (10 == cIndex) { nStatus = ToString(p11, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (11 == cIndex) { nStatus = ToString(p12, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (12 == cIndex) { nStatus = ToString(p13, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (13 == cIndex) { nStatus = ToString(p14, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (14 == cIndex) { nStatus = ToString(p15, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				else if (15 == cIndex) { nStatus = ToString(p16, buf, sizeof(buf), &cLen, flags.cPrecision); }
-				
+				if (0 == cIndex) { nStatus = PrintArgHelper(o, p1, &flags, buf, sizeof(buf), &buffer); }
+				else if (1 == cIndex) { nStatus = PrintArgHelper(o, p2, &flags, buf, sizeof(buf), &buffer); }
+				else if (2 == cIndex) { nStatus = PrintArgHelper(o, p3, &flags, buf, sizeof(buf), &buffer); }
+				else if (3 == cIndex) { nStatus = PrintArgHelper(o, p4, &flags, buf, sizeof(buf), &buffer); }
+				else if (4 == cIndex) { nStatus = PrintArgHelper(o, p5, &flags, buf, sizeof(buf), &buffer); }
+				else if (5 == cIndex) { nStatus = PrintArgHelper(o, p6, &flags, buf, sizeof(buf), &buffer); }
+				else if (6 == cIndex) { nStatus = PrintArgHelper(o, p7, &flags, buf, sizeof(buf), &buffer); }
+				else if (7 == cIndex) { nStatus = PrintArgHelper(o, p8, &flags, buf, sizeof(buf), &buffer); }
+				else if (8 == cIndex) { nStatus = PrintArgHelper(o, p9, &flags, buf, sizeof(buf), &buffer); }
+				else if (9 == cIndex) { nStatus = PrintArgHelper(o, p10, &flags, buf, sizeof(buf), &buffer); }
+				else if (10 == cIndex) { nStatus = PrintArgHelper(o, p11, &flags, buf, sizeof(buf), &buffer); }
+				else if (11 == cIndex) { nStatus = PrintArgHelper(o, p12, &flags, buf, sizeof(buf), &buffer); }
+				else if (12 == cIndex) { nStatus = PrintArgHelper(o, p13, &flags, buf, sizeof(buf), &buffer); }
+				else if (13 == cIndex) { nStatus = PrintArgHelper(o, p14, &flags, buf, sizeof(buf), &buffer); }
+				else if (14 == cIndex) { nStatus = PrintArgHelper(o, p15, &flags, buf, sizeof(buf), &buffer); }
+				else if (15 == cIndex) { nStatus = PrintArgHelper(o, p16, &flags, buf, sizeof(buf), &buffer); }
+
 				if (CXNOK(nStatus))
 				{
-					return Status_InvalidArg;
-				}
-
-				if (Align_Left == flags.nAlign)
-				{
-					cPreLen  = 0;
-					cPostLen = (cLen < flags.cWidth ? flags.cWidth - cLen : 0);
-				}
-				else
-				if (Align_Center == flags.nAlign)
-				{
-					if (cLen < flags.cWidth)
-					{
-						cPreLen = cPostLen = (flags.cWidth - cLen) / 2;
-						cPreLen += (flags.cWidth - cLen) % 2;
-					}
-					else
-					{
-						cPreLen  = 0;
-						cPostLen = 0;
-					}
-				}
-				else
-				{
-					cPreLen  = (cLen < flags.cWidth ? flags.cWidth - cLen : 0);
-					cPostLen = 0;
-				}
-				for (Size i = 0; i < cPreLen; i++)
-				{
-					if (CXNOK(nStatus = buffer.Write(o, &flags.cFillChar, 1)))
-					{
-						return nStatus;
-					}
-				}
-				if (CXNOK(nStatus = buffer.Write(o, buf, cLen)))
-				{
 					return nStatus;
-				}
-				for (Size i = 0; i < cPostLen; i++)
-				{
-					if (CXNOK(nStatus = buffer.Write(o, &flags.cFillChar, 1)))
-					{
-						return nStatus;
-					}
 				}
 
 				pszStart = pszPos;

@@ -19,24 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\IO_SimpleBuffers_Generator.hpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />
-    <ClCompile Include="..\..\Src\Str_UTF8.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Field.hpp" />
     <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Generator.hpp" />
-    <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Object.hpp" />
-    <ClInclude Include="..\..\Src\Data_JSON_DataReaderDataWriter.hpp" />
-    <ClInclude Include="..\..\Src\IO_SimpleBuffers.hpp" />
-    <ClInclude Include="..\..\Src\Test1Object.hpp" />
-    <ClInclude Include="..\..\Src\Test2Object.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>PlayGround</RootNamespace>
-    <ProjectName>PlayGround</ProjectName>
+    <RootNamespace>SimpleBuffersTestGen</RootNamespace>
+    <ProjectName>SimpleBuffersTestGen</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -84,25 +76,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround</IntDir>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/SimpleBuffersTestGen</IntDir>
     <TargetName>console</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround</IntDir>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/SimpleBuffersTestGen</IntDir>
     <TargetName>console</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround</IntDir>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/SimpleBuffersTestGen</IntDir>
     <TargetName>console</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround</IntDir>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/SimpleBuffersTestGen</IntDir>
     <TargetName>console</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

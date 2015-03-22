@@ -29,6 +29,8 @@
 #include "CX/Util/RndGen.hpp"
 #include "../../Contrib/TinyMT/Include/tinymt32.h"
 #include "../../Contrib/TinyMT/Include/tinymt64.h"
+#include "CX/Util/Timer.hpp"
+#include "CX/Limits.hpp"
 
 
 namespace CX
@@ -41,8 +43,11 @@ RndGen::RndGen()
 {
 	m_pState32 = New<tinymt32_t>();
 	m_pState64 = New<tinymt64_t>();
-	Seed32((UInt32)this);
-	Seed64((UInt64)this);
+
+	Timer timer;
+
+	Seed32((UInt32)(((UInt64)this) / 23 + timer.GetTimeStamp() / 17));
+	Seed64((UInt64)(((UInt64)this) / 13 + timer.GetTimeStamp() / 29));
 }
 
 RndGen::~RndGen()
@@ -51,7 +56,7 @@ RndGen::~RndGen()
 	Delete((tinymt64_t *)m_pState64);
 }
 
-RndGen &RndGen::GetInstance()
+RndGen &RndGen::Get()
 {
 	static RndGen rndgen;
 
@@ -68,24 +73,90 @@ void RndGen::Seed64(UInt64 nSeed)
 	tinymt64_init((tinymt64_t *)m_pState64, nSeed);
 }
 
-UInt32 RndGen::GetRandUInt32()
+Bool RndGen::GetBool()
+{
+	return (0 == (GetUInt32() % 2));
+}
+
+Char RndGen::GetChar(const Char *szCharset/* = NULL*/)
+{
+	static const Char charset[] = 
+	"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+
+	if (NULL == szCharset)
+	{
+		szCharset = charset;
+	}
+
+	Size cChars = cx_strlen(szCharset);
+
+	return szCharset[GetUInt32() % cChars];
+}
+
+Int8 RndGen::GetInt8()
+{
+	return (Int8)(GetUInt8());
+}
+
+UInt8 RndGen::GetUInt8()
+{
+	return (GetUInt32() % CX::TYPE_UINT8_MAX);
+}
+
+Int16 RndGen::GetInt16()
+{
+	return (Int16)(GetUInt16());
+}
+
+UInt16 RndGen::GetUInt16()
+{
+	return (GetUInt32() % TYPE_UINT16_MAX);
+}
+
+Int32 RndGen::GetInt32()
+{
+	return (Int32)(GetUInt32());
+}
+
+UInt32 RndGen::GetUInt32()
 {
 	return tinymt32_generate_uint32((tinymt32_t *)m_pState32);
 }
 
-Float RndGen::GetRandFloat()
+Int64 RndGen::GetInt64()
 {
-	return tinymt32_generate_float((tinymt32_t *)m_pState32);
+	return (Int64)(GetUInt64());
 }
 
-UInt64 RndGen::GetRandUInt64()
+UInt64 RndGen::GetUInt64()
 {
 	return tinymt64_generate_uint64((tinymt64_t *)m_pState64);
 }
 
-Double RndGen::GetRandDouble()
+Float RndGen::GetFloat()
+{
+	return tinymt32_generate_float((tinymt32_t *)m_pState32);
+}
+
+Double RndGen::GetDouble()
 {
 	return tinymt64_generate_double((tinymt64_t *)m_pState64);
+}
+
+Size RndGen::GetSize()
+{
+	return (Size)GetUInt64();
+}
+
+void RndGen::GetString(String *psStr, Size cMinLen, Size cMaxLen, const Char *szCharset/* = NULL*/)
+{
+	Size cLen = cMinLen + (GetSize() % (cMaxLen - cMinLen + 1));
+
+	psStr->clear();
+	for (Size i = 0; i < cLen; i++)
+	{
+		*psStr += GetChar(szCharset);
+	}
 }
 
 }//namespace Util

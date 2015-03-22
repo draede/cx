@@ -74,6 +74,31 @@ public:
 	String  m_sObjectName;
 #pragma warning(pop)
 
+	bool operator==(const Field &field)
+	{
+		if (m_nType != field.m_nType)
+		{
+			return false;
+		}
+		if (0 != cx_strcmp(m_sName.c_str(), field.m_sName.c_str()))
+		{
+			return false;
+		}
+		if (m_bIsVector != field.m_bIsVector)
+		{
+			return false;
+		}
+		if (Type_Object == m_nType)
+		{
+			if (0 != cx_strcmp(m_sObjectName.c_str(), field.m_sObjectName.c_str()))
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	Field()
 	{
 	}
@@ -257,7 +282,29 @@ public:
 				case Type_Double:   return "CX::Double";
 				case Type_String:   return "CX::String";
 				case Type_WString:  return "CX::WString";
-				case Type_Object:   return szObjectName;
+				case Type_Object:
+				{
+					static String sStr;
+					const Char    *pPos;
+
+					sStr.clear();
+					pPos = szObjectName;
+					while (0 != *pPos)
+					{
+						if ('.' == *pPos)
+						{
+							sStr += "::";
+						}
+						else
+						{
+							sStr += *pPos;
+						}
+						pPos++;
+					}
+
+					return sStr.c_str();
+				}
+				break;
 			}
 		}
 		else
@@ -280,9 +327,23 @@ public:
 				case Type_Object:
 				{
 					static String sStr;
+					const Char    *pPos;
 
 					sStr.clear();
-					Print(&sStr, "{1}Array", szObjectName);
+					pPos = szObjectName;
+					while (0 != *pPos)
+					{
+						if ('.' == *pPos)
+						{
+							sStr += "::";
+						}
+						else
+						{
+							sStr += *pPos;
+						}
+						pPos++;
+					}
+					sStr += "Array";
 
 					return sStr.c_str();
 				}

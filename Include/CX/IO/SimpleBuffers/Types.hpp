@@ -34,6 +34,7 @@
 #include "CX/Vector.hpp"
 #include "CX/IO/IDataReader.hpp"
 #include "CX/IO/IDataWriter.hpp"
+#include "CX/Util/RndGen.hpp"
 #include "CX/Status.hpp"
 
 
@@ -68,6 +69,8 @@ public:
 	virtual ~IObject() { }
 
 	virtual void Reset() = 0;
+
+	virtual void SetupWithSomeValues() = 0;
 
 	virtual bool Compare(const IObject *pObj) = 0;
 

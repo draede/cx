@@ -124,10 +124,11 @@ private:
 	Size       m_cImportDepth;
 #pragma warning(push)
 #pragma warning(disable: 4251)
-	Field      m_field;
-	String     m_sPath;
-	String     m_sToken;
-	ObjectsMap m_mapObjects;
+	Field         m_field;
+	String        m_sPath;
+	String        m_sToken;
+	ObjectsMap    m_mapObjects;
+	String        m_sNamespace;
 #pragma warning(pop)
 
 	Status WalkWhiteSpaces();

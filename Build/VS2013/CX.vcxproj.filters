@@ -558,6 +558,9 @@
     <ClInclude Include="..\..\Include\CX\Util\RndGen.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\ObjectTester.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">

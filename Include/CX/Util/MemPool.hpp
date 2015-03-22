@@ -69,11 +69,11 @@ public:
 
 };
 
-class CX_API DynMemPool : IMemPool
+class CX_API DynMemPool : public IMemPool
 {
 public:
 
-	DynMemPool(Size cbMaxSize = SIZET_MAX);
+	DynMemPool(Size cbMaxSize = TYPE_SIZE_MAX);
 
 	~DynMemPool();
 
@@ -105,7 +105,7 @@ private:
 
 };
 
-class CX_API StaticMemPool : IMemPool
+class CX_API StaticMemPool : public IMemPool
 {
 public:
 

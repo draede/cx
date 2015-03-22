@@ -68,10 +68,10 @@ Status ProtoParser::BeginParse()
 	m_cColumn      = 1;
 	m_cImportDepth = 1;
 	m_sPath.clear();
+	m_sNamespace.clear();
 	m_object.m_sName.clear();
 	m_object.m_vectorFields.clear();
-	m_object.m_vectorNamespaces.clear();
-
+	
 	return Status();
 }
 
@@ -87,6 +87,9 @@ Status ProtoParser::BeginParseInternal(Size cImportDepth)
 	m_cColumn      = 1;
 	m_cImportDepth = cImportDepth + 1;
 	m_sPath.clear();
+	m_sNamespace.clear();
+	m_object.m_sName.clear();
+	m_object.m_vectorFields.clear();
 
 	return Status();
 }
@@ -110,7 +113,7 @@ Status ProtoParser::EndParse()
 					return Status(Status_ParseFailed, "Field '{1}'.'{2}' cannot be of type {3}", iterObjects->first, 
 					              iterFields->m_sName, iterFields->m_sObjectName);
 				}
-
+				
 				ObjectsMap::iterator iter = m_mapObjects.find(iterFields->m_sObjectName);
 
 				if (m_mapObjects.end() == iter)
@@ -126,7 +129,7 @@ Status ProtoParser::EndParse()
 					{
 						if (0 == cx_stricmp(iterFields2->m_sObjectName.c_str(), iterObjects->first.c_str()))
 						{
-							return Status(Status_ParseFailed, "Circular reference detector for objects '{1}' and '{2}'", 
+							return Status(Status_ParseFailed, "Circular reference detected for objects '{1}' and '{2}'", 
 							              iterFields2->m_sObjectName, iterObjects->first);
 						}
 					}
@@ -243,7 +246,7 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 					else
 					if (0 == cx_strcmp(m_sToken.c_str(), "namespace"))
 					{
-						if (!m_object.m_vectorNamespaces.empty())
+						if (!m_sNamespace.empty())
 						{
 							return Status(Status_ParseFailed, "Namespace has already been declared");
 						}
@@ -305,7 +308,7 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 			break;
 			case State_InNamespace:
 			{
-				while (m_pPos < m_pEnd && ('.' == *m_pPos || '_' == *m_pPos || cx_isalnum(*m_pPos)))
+				while (m_pPos < m_pEnd && ('.' == *m_pPos || '_' == *m_pPos || cx_isalnum((Byte)*m_pPos)))
 				{
 					m_sToken += *m_pPos;
 					m_pPos++;
@@ -446,7 +449,15 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 					{
 						return Status(Status_ParseFailed, "Expected field type at line {1}, column {2}", m_cLine, m_cColumn);
 					}
-					m_nState = State_BeforeArrayBegin;
+					if ('.' == *m_pPos)
+					{
+						m_sToken += ".";
+						m_pPos++;
+					}
+					else
+					{
+						m_nState = State_BeforeArrayBegin;
+					}
 				}
 			}
 			break;
@@ -549,11 +560,21 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 				{
 					return Status(Status_ParseFailed, "Invalid object name. '{1}' is a C/C++ reserved keyword", m_sToken);
 				}
-				if (m_mapObjects.end() != m_mapObjects.find(m_sToken))
+
+				String sName;
+
+				sName += m_sNamespace;
+				if (!sName.empty())
 				{
-					return Status(Status_ParseFailed, "Duplicate object name. '{1}' has already been declared", m_sToken);
+					sName += ".";
 				}
-				m_object.m_sName = m_sToken;
+				sName += m_sToken;
+
+				if (m_mapObjects.end() != m_mapObjects.find(sName))
+				{
+					return Status(Status_ParseFailed, "Duplicate object name. '{1}' has already been declared", sName);
+				}
+				m_object.m_sName = sName;
 				m_object.m_vectorFields.clear();
 				m_nState = State_BeforeObjectStart;
 				m_sToken.clear();
@@ -643,7 +664,15 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 						{
 							return Status(Status_ParseFailed, "Invalid namespace");
 						}
-						m_object.m_vectorNamespaces.push_back(sToken);
+						if (!m_sNamespace.empty())
+						{
+							m_sNamespace += ".";
+						}
+						if (IsReservedKeyword(sToken.c_str()))
+						{
+							return Status(Status_ParseFailed, "Invalid namespace part. '{1}' is a C/C++ reserved keyword", sToken);
+						}
+						m_sNamespace += sToken;
 						sToken.clear();
 					}
 					else
@@ -654,7 +683,15 @@ Status ProtoParser::Parse(const void *pBuffer, Size cbSize)
 				}
 				if (!sToken.empty())
 				{
-					m_object.m_vectorNamespaces.push_back(sToken);
+					if (!m_sNamespace.empty())
+					{
+						m_sNamespace += ".";
+					}
+					if (IsReservedKeyword(sToken.c_str()))
+					{
+						return Status(Status_ParseFailed, "Invalid namespace part. '{1}' is a C/C++ reserved keyword", sToken);
+					}
+					m_sNamespace += sToken;
 				}
 				m_nState = State_BeforeDeclaration;
 				m_sToken.clear();

@@ -34,6 +34,7 @@
 #include "CX/Map.hpp"
 #include "CX/Vector.hpp"
 #include "CX/IO/SimpleBuffers/Field.hpp"
+#include "CX/IO/SimpleBuffers/Types.hpp"
 
 
 namespace CX
@@ -49,14 +50,32 @@ class Object
 {
 public:
 
-	typedef Vector<String>::Type NamespacesVector;
-
 #pragma warning(push)
 #pragma warning(disable: 4251)
-	NamespacesVector   m_vectorNamespaces;
 	String             m_sName;
 	FieldsVector       m_vectorFields;
 #pragma warning(pop)
+
+	bool operator==(const Object &obj)
+	{
+		if (0 != cx_strcmp(m_sName.c_str(), obj.m_sName.c_str()))
+		{
+			return false;
+		}
+		if (m_vectorFields.size() != obj.m_vectorFields.size())
+		{
+			return false;
+		}
+		for (Size i = 0; i < m_vectorFields.size(); i++)
+		{
+			if (!(m_vectorFields[i] == obj.m_vectorFields[i]))
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 };
 

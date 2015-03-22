@@ -58,7 +58,7 @@ Status UTF8::ToUTF16(const Char *szUTF8, Size cUTF8Len, WChar *wszUTF16, Size *p
 	int cSize;
 
 	if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8,
-	                                        SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
+	                                        TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
 	{
 		if (NULL == wszUTF16)
 		{
@@ -71,7 +71,7 @@ Status UTF8::ToUTF16(const Char *szUTF8, Size cUTF8Len, WChar *wszUTF16, Size *p
 			return Status(Status_TooSmall, "Output buffer too small");
 		}
 		if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8,
-		                                       SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, wszUTF16, 
+		                                       TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, wszUTF16, 
 		                                       cSize + 1)))
 		{
 			wszUTF16[cSize] = 0;
@@ -96,7 +96,7 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, Size cUTF16Len, Char *szUTF8, Size
 	int cSize;
 
 	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-		                                    SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
+		                                    TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
 		                                    NULL, NULL)))
 	{
 		if (NULL == szUTF8)
@@ -110,7 +110,7 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, Size cUTF16Len, Char *szUTF8, Size
 			return Status(Status_TooSmall, "Output buffer too small");
 		}
 		if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-		                                       SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, szUTF8, 
+		                                       TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, szUTF8, 
 			                                    cSize, NULL, NULL)))
 		{
 			szUTF8[cSize] = 0;
@@ -130,14 +130,14 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, Size cUTF16Len, Char *szUTF8, Size
 	}
 }
 
-Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = SIZET_MAX*/)
+Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = TYPE_SIZE_MAX*/)
 {
 	int   cSize;
 	WChar *pOut = NULL;
 	WChar out[8000];
 
 	if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, 
-	                                       SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
+	                                       TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
 	{
 		if (cSize > 8000)
 		{
@@ -152,7 +152,7 @@ Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = SIZ
 			pOut = out;
 		}
 		if (0 >= (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, 
-		                                    SIZET_MAX == cUTF8Len ? -1 : (int)cUTF8Len, pOut, cSize)))
+		                                    TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, pOut, cSize)))
 		{
 			if (pOut != out)
 			{
@@ -177,7 +177,7 @@ Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = SIZ
 	return Status();
 }
 
-Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* = SIZET_MAX*/)
+Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* = TYPE_SIZE_MAX*/)
 {
 	int cSize;
 
@@ -185,7 +185,7 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* =
 	Char out[8000];
 
 	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-		                                    SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
+		                                    TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
 		                                    NULL, NULL)))
 	{
 		if (cSize > 8000)
@@ -201,7 +201,7 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* =
 			pOut = out;
 		}
 		if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-		                                        SIZET_MAX == cUTF16Len ? -1 : (int)cUTF16Len, pOut, 
+		                                        TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, pOut, 
 			                                     cSize, NULL, NULL)))
 		{
 			if (pOut != out)

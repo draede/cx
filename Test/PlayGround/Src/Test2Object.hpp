@@ -7,6 +7,15 @@
 #include "Test1Object.hpp"
 
 
+namespace My
+{
+
+namespace Test
+{
+
+namespace NameSpace
+{
+
 class Test2Object : public CX::IO::SimpleBuffers::IObject
 {
 public:
@@ -24,7 +33,7 @@ public:
 	CX::Double double_val;
 	CX::String string_val;
 	CX::WString wstring_val;
-	Test1Object obj1_val;
+	My::Test::NameSpace::Test1Object obj1_val;
 	CX::IO::SimpleBuffers::BoolArray bool_arr;
 	CX::IO::SimpleBuffers::Int8Array int8_arr;
 	CX::IO::SimpleBuffers::UInt8Array uint8_arr;
@@ -38,7 +47,7 @@ public:
 	CX::IO::SimpleBuffers::DoubleArray double_arr;
 	CX::IO::SimpleBuffers::StringArray string_arr;
 	CX::IO::SimpleBuffers::WStringArray wstring_arr;
-	Test1ObjectArray obj1_arr;
+	My::Test::NameSpace::Test1ObjectArray obj1_arr;
 
 	virtual void Reset()
 	{
@@ -70,6 +79,80 @@ public:
 		string_arr.clear();
 		wstring_arr.clear();
 		obj1_arr.clear();
+	}
+
+	virtual void SetupWithSomeValues()
+	{
+		Reset();
+		bool_val = true;
+		int8_val = -72;
+		uint8_val = 57;
+		int16_val = 5624;
+		uint16_val = 45406;
+		int32_val = -278133917;
+		uint32_val = 3130143205;
+		int64_val = 2055499496612306920;
+		uint64_val = 4251123706052777666;
+		float_val = 0.981898f;
+		double_val = 0.680597;
+		string_val = "g]gxwB[iM$@W8WD~cD_^zuE|Srk+_y>BSNt+L)dJ*te`p@6iP$2=9&";
+		wstring_val = L"VF]|IZGb2v/$";
+		obj1_val.SetupWithSomeValues();
+		for (CX::Size i = 0; i < 4; i++)
+		{
+			int8_arr.push_back(86);
+		}
+		for (CX::Size i = 0; i < 7; i++)
+		{
+			uint8_arr.push_back(15);
+		}
+		for (CX::Size i = 0; i < 13; i++)
+		{
+			int16_arr.push_back(-17049);
+		}
+		for (CX::Size i = 0; i < 2; i++)
+		{
+			uint16_arr.push_back(19603);
+		}
+		for (CX::Size i = 0; i < 5; i++)
+		{
+			int32_arr.push_back(576337358);
+		}
+		for (CX::Size i = 0; i < 8; i++)
+		{
+			uint32_arr.push_back(2868063281);
+		}
+		for (CX::Size i = 0; i < 14; i++)
+		{
+			int64_arr.push_back(-4163236853025903220);
+		}
+		for (CX::Size i = 0; i < 5; i++)
+		{
+			uint64_arr.push_back(8613499088194159208);
+		}
+		for (CX::Size i = 0; i < 3; i++)
+		{
+			float_arr.push_back(0.515141f);
+		}
+		for (CX::Size i = 0; i < 11; i++)
+		{
+			double_arr.push_back(0.140849);
+		}
+		for (CX::Size i = 0; i < 5; i++)
+		{
+			string_arr.push_back("ex\\G]?T*!wq6jHieep#5MFThUcFh.t)+MF(Hl)!PG1ML`T?VkcKO`,i");
+		}
+		for (CX::Size i = 0; i < 3; i++)
+		{
+			wstring_arr.push_back(L"cEe\"NXOwP*`\"c0s*j`@N?L-FYr3OHx\"Xiq%iXtc&L\"Y!Hk?fdeTpvZo");
+		}
+		for (CX::Size i = 0; i < 8; i++)
+		{
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
+		}
 	}
 
 	virtual bool Compare(const CX::IO::SimpleBuffers::IObject *pObj)
@@ -142,10 +225,10 @@ public:
 		}
 		for (CX::Size i = 0; i < bool_arr.size(); i++)
 		{
-		if (bool_arr[i] != pObject->bool_arr[i])
-		{
-			return false;
-		}
+			if (bool_arr[i] != pObject->bool_arr[i])
+			{
+				return false;
+			}
 		}
 		if (int8_arr.size() != pObject->int8_arr.size())
 		{
@@ -153,10 +236,10 @@ public:
 		}
 		for (CX::Size i = 0; i < int8_arr.size(); i++)
 		{
-		if (int8_arr[i] != pObject->int8_arr[i])
-		{
-			return false;
-		}
+			if (int8_arr[i] != pObject->int8_arr[i])
+			{
+				return false;
+			}
 		}
 		if (uint8_arr.size() != pObject->uint8_arr.size())
 		{
@@ -164,10 +247,10 @@ public:
 		}
 		for (CX::Size i = 0; i < uint8_arr.size(); i++)
 		{
-		if (uint8_arr[i] != pObject->uint8_arr[i])
-		{
-			return false;
-		}
+			if (uint8_arr[i] != pObject->uint8_arr[i])
+			{
+				return false;
+			}
 		}
 		if (int16_arr.size() != pObject->int16_arr.size())
 		{
@@ -175,10 +258,10 @@ public:
 		}
 		for (CX::Size i = 0; i < int16_arr.size(); i++)
 		{
-		if (int16_arr[i] != pObject->int16_arr[i])
-		{
-			return false;
-		}
+			if (int16_arr[i] != pObject->int16_arr[i])
+			{
+				return false;
+			}
 		}
 		if (uint16_arr.size() != pObject->uint16_arr.size())
 		{
@@ -186,10 +269,10 @@ public:
 		}
 		for (CX::Size i = 0; i < uint16_arr.size(); i++)
 		{
-		if (uint16_arr[i] != pObject->uint16_arr[i])
-		{
-			return false;
-		}
+			if (uint16_arr[i] != pObject->uint16_arr[i])
+			{
+				return false;
+			}
 		}
 		if (int32_arr.size() != pObject->int32_arr.size())
 		{
@@ -197,10 +280,10 @@ public:
 		}
 		for (CX::Size i = 0; i < int32_arr.size(); i++)
 		{
-		if (int32_arr[i] != pObject->int32_arr[i])
-		{
-			return false;
-		}
+			if (int32_arr[i] != pObject->int32_arr[i])
+			{
+				return false;
+			}
 		}
 		if (uint32_arr.size() != pObject->uint32_arr.size())
 		{
@@ -208,10 +291,10 @@ public:
 		}
 		for (CX::Size i = 0; i < uint32_arr.size(); i++)
 		{
-		if (uint32_arr[i] != pObject->uint32_arr[i])
-		{
-			return false;
-		}
+			if (uint32_arr[i] != pObject->uint32_arr[i])
+			{
+				return false;
+			}
 		}
 		if (int64_arr.size() != pObject->int64_arr.size())
 		{
@@ -219,10 +302,10 @@ public:
 		}
 		for (CX::Size i = 0; i < int64_arr.size(); i++)
 		{
-		if (int64_arr[i] != pObject->int64_arr[i])
-		{
-			return false;
-		}
+			if (int64_arr[i] != pObject->int64_arr[i])
+			{
+				return false;
+			}
 		}
 		if (uint64_arr.size() != pObject->uint64_arr.size())
 		{
@@ -230,10 +313,10 @@ public:
 		}
 		for (CX::Size i = 0; i < uint64_arr.size(); i++)
 		{
-		if (uint64_arr[i] != pObject->uint64_arr[i])
-		{
-			return false;
-		}
+			if (uint64_arr[i] != pObject->uint64_arr[i])
+			{
+				return false;
+			}
 		}
 		if (float_arr.size() != pObject->float_arr.size())
 		{
@@ -241,10 +324,10 @@ public:
 		}
 		for (CX::Size i = 0; i < float_arr.size(); i++)
 		{
-		if (float_arr[i] != pObject->float_arr[i])
-		{
-			return false;
-		}
+			if (float_arr[i] != pObject->float_arr[i])
+			{
+				return false;
+			}
 		}
 		if (double_arr.size() != pObject->double_arr.size())
 		{
@@ -252,10 +335,10 @@ public:
 		}
 		for (CX::Size i = 0; i < double_arr.size(); i++)
 		{
-		if (double_arr[i] != pObject->double_arr[i])
-		{
-			return false;
-		}
+			if (double_arr[i] != pObject->double_arr[i])
+			{
+				return false;
+			}
 		}
 		if (string_arr.size() != pObject->string_arr.size())
 		{
@@ -263,10 +346,10 @@ public:
 		}
 		for (CX::Size i = 0; i < string_arr.size(); i++)
 		{
-		if (0 != cx_strcmp(string_arr[i].c_str(), pObject->string_arr[i].c_str()))
-		{
-			return false;
-		}
+			if (0 != cx_strcmp(string_arr[i].c_str(), pObject->string_arr[i].c_str()))
+			{
+				return false;
+			}
 		}
 		if (wstring_arr.size() != pObject->wstring_arr.size())
 		{
@@ -274,10 +357,10 @@ public:
 		}
 		for (CX::Size i = 0; i < wstring_arr.size(); i++)
 		{
-		if (0 != cxw_strcmp(wstring_arr[i].c_str(), pObject->wstring_arr[i].c_str()))
-		{
-			return false;
-		}
+			if (0 != cxw_strcmp(wstring_arr[i].c_str(), pObject->wstring_arr[i].c_str()))
+			{
+				return false;
+			}
 		}
 		if (obj1_arr.size() != pObject->obj1_arr.size())
 		{
@@ -285,13 +368,13 @@ public:
 		}
 		for (CX::Size i = 0; i < obj1_arr.size(); i++)
 		{
-		if (!obj1_arr[i].Compare(&pObject->obj1_arr[i]))
-		{
-			return false;
-		}
+			if (!obj1_arr[i].Compare(&pObject->obj1_arr[i]))
+			{
+				return false;
+			}
 		}
 
-	return true;
+		return true;
 	}
 
 	virtual CX::Status Read(CX::IO::IDataReader *pReader)
@@ -378,9 +461,13 @@ public:
 		{
 			return status;
 		}
+		if ((status = pReader->BeginObjectArray("bool_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectBool("bool_arr", &bValue)).IsNOK())
+			if ((status = pReader->ReadArrayBool(&bValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -390,9 +477,17 @@ public:
 			}
 			bool_arr.push_back(bValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("int8_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectInt("int8_arr", &nValue)).IsNOK())
+			if ((status = pReader->ReadArrayInt(&nValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -402,9 +497,17 @@ public:
 			}
 			int8_arr.push_back((CX::Int8)nValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("uint8_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectInt("uint8_arr", &nValue)).IsNOK())
+			if ((status = pReader->ReadArrayInt(&nValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -414,9 +517,17 @@ public:
 			}
 			uint8_arr.push_back((CX::UInt8)nValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("int16_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectInt("int16_arr", &nValue)).IsNOK())
+			if ((status = pReader->ReadArrayInt(&nValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -426,9 +537,17 @@ public:
 			}
 			int16_arr.push_back((CX::Int16)nValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("uint16_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectInt("uint16_arr", &nValue)).IsNOK())
+			if ((status = pReader->ReadArrayInt(&nValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -438,9 +557,17 @@ public:
 			}
 			uint16_arr.push_back((CX::UInt16)nValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("int32_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectInt("int32_arr", &nValue)).IsNOK())
+			if ((status = pReader->ReadArrayInt(&nValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -450,9 +577,17 @@ public:
 			}
 			int32_arr.push_back((CX::Int32)nValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("uint32_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectInt("uint32_arr", &nValue)).IsNOK())
+			if ((status = pReader->ReadArrayInt(&nValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -462,9 +597,17 @@ public:
 			}
 			uint32_arr.push_back((CX::UInt32)nValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("int64_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectInt("int64_arr", &nValue)).IsNOK())
+			if ((status = pReader->ReadArrayInt(&nValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -474,9 +617,17 @@ public:
 			}
 			int64_arr.push_back((CX::Int64)nValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("uint64_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectInt("uint64_arr", &nValue)).IsNOK())
+			if ((status = pReader->ReadArrayInt(&nValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -486,9 +637,17 @@ public:
 			}
 			uint64_arr.push_back((CX::UInt64)nValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("float_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectReal("float_arr", &lfValue)).IsNOK())
+			if ((status = pReader->ReadArrayReal(&lfValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -496,11 +655,19 @@ public:
 				}
 				return status;
 			}
-			float_arr.push_back((CX::Float)nValue);
+			float_arr.push_back((CX::Float)lfValue);
+		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("double_arr")).IsNOK())
+		{
+			return status;
 		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectReal("double_arr", &lfValue)).IsNOK())
+			if ((status = pReader->ReadArrayReal(&lfValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -508,11 +675,19 @@ public:
 				}
 				return status;
 			}
-			double_arr.push_back((CX::Double)nValue);
+			double_arr.push_back((CX::Double)lfValue);
+		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("string_arr")).IsNOK())
+		{
+			return status;
 		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectString("string_arr", &sValue)).IsNOK())
+			if ((status = pReader->ReadArrayString(&sValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -522,9 +697,17 @@ public:
 			}
 			string_arr.push_back(sValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("wstring_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			if ((status = pReader->ReadObjectWString("wstring_arr", &wsValue)).IsNOK())
+			if ((status = pReader->ReadArrayWString(&wsValue)).IsNOK())
 			{
 				if (CX::Status_NoMoreItems == status.GetCode())
 				{
@@ -534,9 +717,17 @@ public:
 			}
 			wstring_arr.push_back(wsValue);
 		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
+		}
+		if ((status = pReader->BeginObjectArray("obj1_arr")).IsNOK())
+		{
+			return status;
+		}
 		for (;;)
 		{
-			Test1Object tmp;
+			My::Test::NameSpace::Test1Object tmp;
 
 			if ((status = pReader->BeginArrayObject()).IsNOK())
 			{
@@ -555,6 +746,10 @@ public:
 			{
 				return status;
 			}
+		}
+		if ((status = pReader->EndObjectArray()).IsNOK())
+		{
+			return status;
 		}
 
 		return CX::Status();
@@ -827,7 +1022,7 @@ public:
 		{
 			return status;
 		}
-		for (Test1ObjectArray::const_iterator iter = obj1_arr.begin(); iter != obj1_arr.end(); ++iter)
+		for (My::Test::NameSpace::Test1ObjectArray::const_iterator iter = obj1_arr.begin(); iter != obj1_arr.end(); ++iter)
 		{
 			if ((status = pWriter->BeginArrayObject()).IsNOK())
 			{
@@ -853,4 +1048,10 @@ public:
 };
 
 typedef CX::Vector<Test2Object>::Type Test2ObjectArray;
+
+}//namespace NameSpace
+
+}//namespace Test
+
+}//namespace My
 

@@ -50,19 +50,41 @@ class CX_API RndGen
 {
 public:
 
-	static RndGen &GetInstance();
+	static RndGen &Get();
+
+	Bool GetBool();
+
+	Char GetChar(const Char *szCharset = NULL);
+
+	Int8 GetInt8();
+
+	UInt8 GetUInt8();
+
+	Int16 GetInt16();
+
+	UInt16 GetUInt16();
+
+	Int32 GetInt32();
+
+	UInt32 GetUInt32();
+
+	Int64 GetInt64();
+
+	UInt64 GetUInt64();
+
+	Float GetFloat();
+
+	Double GetDouble();
+
+	Size GetSize();
+
+	void GetString(String *psStr, Size cMinLen, Size cMaxLen, const Char *szCharset = NULL);
+
+	//===
 
 	void Seed32(UInt32 nSeed);
 
 	void Seed64(UInt64 nSeed);
-
-	UInt32 GetRandUInt32();
-
-	Float GetRandFloat();
-
-	UInt64 GetRandUInt64();
-
-	Double GetRandDouble();
 
 private:
 

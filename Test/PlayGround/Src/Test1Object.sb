@@ -1,4 +1,6 @@
 
+namespace My.Test.NameSpace
+
 object Test1Object
 {
 	bool_val: bool;

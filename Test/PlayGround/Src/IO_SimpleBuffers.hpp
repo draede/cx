@@ -32,6 +32,8 @@
 #include "Test2Object.hpp"
 #include "CX/IO/MemInputStream.hpp"
 #include "CX/IO/MemOutputStream.hpp"
+#include "CX/IO/FileInputStream.hpp"
+#include "CX/IO/FileOutputStream.hpp"
 #include "CX/Data/JSON/DataReader.hpp"
 #include "CX/Data/JSON/DataWriter.hpp"
 #include "CX/Print.hpp"
@@ -175,18 +177,19 @@ inline void Internal_IO_SimpleBuffersSetupArray(TESTARR &arr, CX::Size cCount)
 
 inline void IO_SimpleBuffers_Test1()
 {
-	CX::String                   sOutput;
-	CX::String                   sOutput2;
-	Test2Object                  test2_1;
-	Test2Object                  test2_2;
-	CX::Status                   status;
+	CX::String                         sOutput;
+	CX::String                         sOutput2;
+	My::Test::NameSpace::Test2Object   test2_1;
+	My::Test::NameSpace::Test2Object   test2_2;
+	CX::Status                         status;
 
 	test2_1.Reset();
 	test2_2.Reset();
 
 	Internal_IO_SimpleBuffersSetup(test2_1);
 	Internal_IO_SimpleBuffersSetup(test2_1.obj1_val);
-	Internal_IO_SimpleBuffersSetupArray<Test1ObjectArray, Test1Object>(test2_1.obj1_arr, 3);
+	Internal_IO_SimpleBuffersSetupArray<My::Test::NameSpace::Test1ObjectArray, 
+	                                    My::Test::NameSpace::Test1Object>(test2_1.obj1_arr, 3);
 
 	{
 		CX::IO::MemOutputStream      mos(&sOutput);
@@ -204,6 +207,12 @@ inline void IO_SimpleBuffers_Test1()
 		{
 			CX::Print(stdout, "w.End1: error code {1}, error msg '{2}'\n", status.GetCode(), status.GetMsg());
 		}
+	}
+
+	{
+		CX::IO::FileOutputStream fos("test1.json");
+
+		CX::Print((CX::IO::IOutputStream *)&fos, "{1}", sOutput);
 	}
 
 	{
@@ -240,14 +249,25 @@ inline void IO_SimpleBuffers_Test1()
 		}
 	}
 
-	if (0 != cx_strcmp(sOutput.c_str(), sOutput2.c_str()))
 	{
-		CX::Print(stdout, "Outputs are different");
+		CX::IO::FileOutputStream fos("test2.json");
+
+		CX::Print((CX::IO::IOutputStream *)&fos, "{1}", sOutput2);
 	}
 
-	if (test2_1.Compare(&test2_2))
+	if (!test2_1.Compare(&test2_2))
 	{
-		CX::Print(stdout, "Objects are different");
+		CX::Print(stdout, "Objects are different\n");
+	}
+
+	if (sOutput.size() != sOutput2.size())
+	{
+		CX::Print(stdout, "Output sizes are different ({1} != {2})\n", sOutput.size(), sOutput2.size());
+	}
+
+	if (0 != cx_strcmp(sOutput.c_str(), sOutput2.c_str()))
+	{
+		CX::Print(stdout, "Outputs are different\n");
 	}
 }
 
