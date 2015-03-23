@@ -175,6 +175,12 @@
     <Filter Include="Contrib\TinyMT">
       <UniqueIdentifier>{4a1e2c92-3ede-479e-a392-8f74afa37fcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform">
+      <UniqueIdentifier>{a3d2af3b-1f9f-42df-b67e-2ec2ff5422b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform\Windows">
+      <UniqueIdentifier>{f4a4bb84-0f24-44a7-a935-96ba5abc0345}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -602,9 +608,6 @@
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc">
       <Filter>Contrib\DoubleConversion</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp">
-      <Filter>Source Files\Detail\DetailPrint</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp">
       <Filter>Source Files\Str\Platform\Windows</Filter>
     </ClCompile>
@@ -745,6 +748,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\SimpleBuffers\BinaryDataWriter.cpp">
       <Filter>Source Files\IO\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

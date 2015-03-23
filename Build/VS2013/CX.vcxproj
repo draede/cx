@@ -285,7 +285,7 @@
     <ClCompile Include="..\..\Src\Data\JSON\JSONDataReader.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
-    <ClCompile Include="..\..\Src\Detail\DetailPrint\DetailPrint.cpp" />
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp" />
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\SHA1Hash.cpp" />
@@ -501,6 +501,9 @@
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_MSC_VER=1800;_DEBUG</PreprocessorDefinitions>
     </ResourceCompile>
+    <Lib>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -585,6 +588,9 @@
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USING_V110_SDK71_;%(PreprocessorDefinitions);_MSC_VER=1800;</PreprocessorDefinitions>
     </ResourceCompile>
+    <Lib>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

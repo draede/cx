@@ -26,7 +26,6 @@
  * SOFTWARE.
  */ 
 
-
 #include "CX/Platform.hpp"
 
 
