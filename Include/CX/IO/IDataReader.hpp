@@ -68,10 +68,12 @@ public:
 
 	virtual Status ReadObjectWString(const Char *szName, WString *pwsValue) = 0;
 
+	//will return Status_NoMoreItems at the end of the array
 	virtual Status BeginArrayObject() = 0;
 
 	virtual Status EndArrayObject() = 0;
 
+	//will return Status_NoMoreItems at the end of the array
 	virtual Status BeginArrayArray() = 0;
 
 	virtual Status EndArrayArray() = 0;

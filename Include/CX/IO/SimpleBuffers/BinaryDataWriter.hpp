@@ -29,8 +29,9 @@
 #pragma once
 
 
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IDataReader.hpp"
+#include "CX/IO/IOutputStream.hpp"
+#include "CX/IO/IDataWriter.hpp"
+#include "CX/Hash/xxHash32.hpp"
 #include "CX/Stack.hpp"
 #include "CX/APIDefs.hpp"
 
@@ -38,19 +39,19 @@
 namespace CX
 {
 
-namespace Data
+namespace IO
 {
 
-namespace JSON
+namespace SimpleBuffers
 {
 
-class CX_API DataReader : public IO::IDataReader
+class CX_API BinaryDataWriter : public CX::IO::IDataWriter
 {
 public:
 
-	DataReader(IO::IInputStream *pInputStream);
+	BinaryDataWriter(IO::IOutputStream *pOutputStream);
 
-	~DataReader();
+	~BinaryDataWriter();
 
 	virtual Status Begin();
 
@@ -64,40 +65,33 @@ public:
 
 	virtual Status EndObjectArray();
 
-	virtual Status ReadObjectBool(const Char *szName, Bool *pbValue);
+	virtual Status WriteObjectBool(const Char *szName, Bool bValue);
 
-	virtual Status ReadObjectInt(const Char *szName, Int64 *pnValue);
+	virtual Status WriteObjectInt(const Char *szName, Int64 nValue);
 
-	virtual Status ReadObjectReal(const Char *szName, Double *plfValue);
+	virtual Status WriteObjectReal(const Char *szName, Double lfValue);
 
-	virtual Status ReadObjectString(const Char *szName, String *psValue);
+	virtual Status WriteObjectString(const Char *szName, const Char *szValue);
 
-	virtual Status ReadObjectWString(const Char *szName, WString *pwsValue);
+	virtual Status WriteObjectWString(const Char *szName, const WChar *wszValue);
 
-	//will return Status_NoMoreItems at the end of the array
 	virtual Status BeginArrayObject();
 
 	virtual Status EndArrayObject();
 
-	//will return Status_NoMoreItems at the end of the array
 	virtual Status BeginArrayArray();
 
 	virtual Status EndArrayArray();
 
-	//will return Status_NoMoreItems at the end of the array
-	virtual Status ReadArrayBool(Bool *pbValue);
+	virtual Status WriteArrayBool(Bool bValue);
 
-	//will return Status_NoMoreItems at the end of the array
-	virtual Status ReadArrayInt(Int64 *pnValue);
+	virtual Status WriteArrayInt(Int64 nValue);
 
-	//will return Status_NoMoreItems at the end of the array
-	virtual Status ReadArrayReal(Double *plfValue);
+	virtual Status WriteArrayReal(Double lfValue);
 
-	//will return Status_NoMoreItems at the end of the array
-	virtual Status ReadArrayString(String *psValue);
+	virtual Status WriteArrayString(const Char *szValue);
 
-	//will return Status_NoMoreItems at the end of the array
-	virtual Status ReadArrayWString(WString *pwsValue);
+	virtual Status WriteArrayWString(const WChar *wszValue);
 
 private:
 
@@ -125,48 +119,23 @@ private:
 
 	typedef Stack<StateData>::Type   StatesStack;
 
-	static const Size  READ_BUFFER_SIZE   = 16384;
-
-	IO::IInputStream *m_pInputStream;
-	Byte             *m_pBuffer;
-	Size             m_cbBufSize;
-	Size             m_cbBufUsedSize;
-	Size             m_cbBufOffset;
-	bool             m_bIsEOF;
+	IO::IOutputStream   *m_pOutputStream;
+	Hash::xxHash32       m_hash;
 #pragma warning(push)
 #pragma warning(disable: 4251)
 	StatesStack         m_stackStates;
+	String              m_sIndent;
 #pragma warning(push)
 
-	bool IsEOF();
+	Status Write(const void *pData, Size cbSize);
 
-	bool IsValid();
-
-	Byte Get();
-
-	Status Next();
-
-	Status SkipWhiteSpaces();
-
-	Status SkipChar(Char ch);
-
-	bool CheckArrayEnd();
-
-	Status Read();
-
-	Status ReadBool(Bool *pbValue);
-
-	Status ReadInt(Int64 *pnValue);
-
-	Status ReadReal(Double *plfValue);
-
-	Status ReadString(String *psValue);
+	Status WriteOp(UInt8 nOp);
 
 };
 
-}//namespace JSON
+}//namespace SimpleBuffers
 
-}//namespace Data
+}//namespace IO
 
 }//namespace CX
 

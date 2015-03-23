@@ -26,21 +26,20 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Data/JSON/DataReader.hpp"
-#include "CX/Str/UTF8.hpp"
-#include "CX/C/ctype.h"
+#include "CX/IO/SimpleBuffers/BinaryDataReader.hpp"
+#include "CX/IO/SimpleBuffers/BinaryData.hpp"
 
 
 namespace CX
 {
 
-namespace Data
+namespace IO
 {
 
-namespace JSON
+namespace SimpleBuffers
 {
 
-DataReader::DataReader(IO::IInputStream *pInputStream)
+BinaryDataReader::BinaryDataReader(IO::IInputStream *pInputStream)
 {
 	m_pInputStream    = pInputStream;
 	m_pBuffer         = NULL;
@@ -50,7 +49,7 @@ DataReader::DataReader(IO::IInputStream *pInputStream)
 	m_bIsEOF          = false;
 }
 
-DataReader::~DataReader()
+BinaryDataReader::~BinaryDataReader()
 {
 	if (NULL != m_pBuffer)
 	{
@@ -58,12 +57,16 @@ DataReader::~DataReader()
 	}
 }
 
-Status DataReader::Read()
+Status BinaryDataReader::Read(void *pData, Size cbSize)
 {
 	Size   cbReqSize;
 	Size   cbAckSize;
 	Status status;
 
+	if (m_bIsEOF)
+	{
+		return Status(Status_EOF, "End of stream reached");
+	}
 	if (NULL == m_pBuffer)
 	{
 		if (NULL == (m_pBuffer = (Byte *)Alloc(READ_BUFFER_SIZE)))
@@ -74,363 +77,50 @@ Status DataReader::Read()
 		m_cbBufOffset   = 0;
 		m_cbBufUsedSize = 0;
 	}
-	if (m_cbBufOffset >= m_cbBufUsedSize)
-	{
-		m_cbBufUsedSize = 0;
-		m_cbBufOffset   = 0;
-	}
-	if (m_cbBufUsedSize < m_cbBufSize)
-	{
-		cbReqSize = m_cbBufSize - m_cbBufUsedSize;
-		if ((status = m_pInputStream->Read(m_pBuffer + m_cbBufUsedSize, cbReqSize, &cbAckSize)).IsNOK())
-		{
-			if (status.GetCode() == Status_EOF)
-			{
-				m_bIsEOF = true;
-			}
 
-			return status;
+	Byte *pPos    = (Byte *)pData;
+	Size cbOffset = 0;
+
+	while (cbOffset < cbSize)
+	{
+		if (m_cbBufOffset >= m_cbBufUsedSize)
+		{
+			if ((status = m_pInputStream->Read(m_pBuffer, m_cbBufSize, &cbAckSize)).IsNOK())
+			{
+				if (status.GetCode() == Status_EOF)
+				{
+					m_bIsEOF = true;
+				}
+				m_hash.Update(pData, cbOffset);
+
+				return status;
+			}
+			m_cbBufUsedSize = cbAckSize;
+			m_cbBufOffset   = 0;
 		}
-		m_cbBufUsedSize += cbAckSize;
+		cbReqSize = m_cbBufUsedSize - m_cbBufOffset;
+		if (cbReqSize >= cbSize - cbOffset)
+		{
+			cbReqSize = cbSize - cbOffset;
+		}
+		memcpy(pPos, m_pBuffer + m_cbBufOffset, cbReqSize);
+		m_cbBufOffset += cbReqSize;
+		pPos += cbReqSize;
+		cbOffset += cbReqSize;
 	}
+	m_hash.Update(pData, cbSize);
 
 	return Status();
 }
 
-bool DataReader::IsEOF()
+Status BinaryDataReader::ReadOp(UInt8 nOp)
 {
-	return m_bIsEOF;
+	return m_hash.Update(&nOp, sizeof(nOp));
 }
 
-bool DataReader::IsValid()
+Status BinaryDataReader::Begin()
 {
-	if (m_bIsEOF)
-	{
-		return false;
-	}
-	if (m_cbBufOffset >= m_cbBufUsedSize)
-	{
-		Status status;
-
-		if ((status = Read()).IsNOK())
-		{
-			return false;
-		}
-	}
-
-	return (m_cbBufOffset < m_cbBufUsedSize);
-}
-
-Byte DataReader::Get()
-{
-	return m_pBuffer[m_cbBufOffset];
-}
-
-Status DataReader::Next()
-{
-	if (m_cbBufOffset >= m_cbBufUsedSize)
-	{
-		return Status(Status_InvalidCall, "Out of order call");
-	}
-	m_cbBufOffset++;
-
-	return Status();
-}
-
-Status DataReader::SkipWhiteSpaces()
-{
-	while (IsValid() && cx_isspace(Get()))
-	{
-		Next();
-	}
-
-	return Status();
-}
-
-Status DataReader::SkipChar(Char ch)
-{
-	Status status;
-
-	if ((status = SkipWhiteSpaces()).IsNOK())
-	{
-		return status;
-	}
-	if (!IsValid())
-	{
-		return Status(Status_ReadFailed, "Expected '{1}'", ch);
-	}
-	if ((Byte)ch != Get())
-	{
-		return Status(Status_ReadFailed, "Expected '{1}'", ch);
-	}
-	Next();
-
-	return Status();
-}
-
-bool DataReader::CheckArrayEnd()
-{
-	Status status;
-
-	if ((status = SkipWhiteSpaces()).IsNOK())
-	{
-		return false;
-	}
-	if (!IsValid())
-	{
-		return false;
-	}
-	if ((Byte)']' != Get())
-	{
-		return false;
-	}
-
-	return true;
-}
-
-Status DataReader::ReadBool(Bool *pbValue)
-{
-	String sToken;
-	Status status;
-
-	if ((status = SkipWhiteSpaces()).IsNOK())
-	{
-		return status;
-	}
-	while (IsValid() && cx_isalpha(Get()))
-	{
-		sToken += (Char )Get();
-		Next();
-	}
-	if (0 == cx_stricmp(sToken.c_str(), "false"))
-	{
-		*pbValue = false;
-
-		return Status();
-	}
-	else
-	if (0 == cx_stricmp(sToken.c_str(), "true"))
-	{
-		*pbValue = true;
-
-		return Status();
-	}
-	else
-	{
-		return Status(Status_ParseFailed, "Expected true or false");
-	}
-}
-
-Status DataReader::ReadInt(Int64 *pnValue)
-{
-	Size   cDigits;
-	Bool   bNeg;
-	Status status;
-
-	if ((status = SkipWhiteSpaces()).IsNOK())
-	{
-		return status;
-	}
-	cDigits  = 0;
-	bNeg     = false;
-	*pnValue = 0;
-	if (!IsValid())
-	{
-		return Status(Status_ParseFailed, "Expected int value");
-	}
-	if ((Byte)'-' == Get())
-	{
-		bNeg = true;
-		Next();
-	}
-	else
-	if ((Byte)'+' == Get())
-	{
-		Next();
-	}
-	while (IsValid() && cx_isdigit(Get()))
-	{
-		(*pnValue) *= 10;
-		(*pnValue) += Get() - '0';
-		cDigits++;
-		Next();
-	}
-	if (0 == cDigits)
-	{
-		return Status(Status_ParseFailed, "Expected int value");
-	}
-	if (bNeg)
-	{
-		(*pnValue) = -(*pnValue);
-	}
-
-	return Status();
-}
-
-Status DataReader::ReadReal(Double *plfValue)
-{
-	Size   cDigits;
-	Bool   bNeg;
-	Bool   bPoint;
-	Double lfFactor;
-	Status status;
-
-	if ((status = SkipWhiteSpaces()).IsNOK())
-	{
-		return status;
-	}
-	cDigits   = 0;
-	bNeg      = false;
-	*plfValue = 0.0;
-	lfFactor  = 1.0;
-	bPoint    = false;
-	if (!IsValid())
-	{
-		return Status(Status_ParseFailed, "Expected real value");
-	}
-	if ((Byte)'-' == Get())
-	{
-		bNeg = true;
-		Next();
-	}
-	else
-	if ((Byte)'+' == Get())
-	{
-		Next();
-	}
-	while (IsValid())
-	{
-		if ((Byte)'.' == Get())
-		{
-			if (bPoint)
-			{
-				return Status(Status_ParseFailed, "Invalid real value");
-			}
-			bPoint = true;
-			Next();
-		}
-		else
-		if (cx_isdigit(Get()))
-		{
-			(*plfValue) *= 10.0;
-			(*plfValue) += Get() - '0';
-			if (bPoint)
-			{
-				lfFactor *= 10.0;
-			}
-			cDigits++;
-			Next();
-		}
-		else
-		{
-			break;
-		}
-	}
-	if (0 == cDigits)
-	{
-		return Status(Status_ParseFailed, "Expected real value");
-	}
-	if (bPoint)
-	{
-		(*plfValue) /= lfFactor;
-	}
-	if (bNeg)
-	{
-		(*plfValue) = -(*plfValue);
-	}
-
-	return Status();
-}
-
-Status DataReader::ReadString(String *psValue)
-{
-	Status status;
-
-	if ((status = SkipWhiteSpaces()).IsNOK())
-	{
-		return status;
-	}
-	psValue->clear();
-	if ((status = SkipChar('"')).IsNOK())
-	{
-		return status;
-	}
-	for (;;)
-	{
-		if (!IsValid())
-		{
-			return Status(Status_ParseFailed, "Expected string value");
-		}
-		if ((Byte)'\\' == Get())
-		{
-			Next();
-			if (!IsValid())
-			{
-				return Status(Status_ParseFailed, "Expected string value");
-			}
-			if ((Byte)'\\' == Get() || (Byte)'"' == Get() || (Byte)'/' == Get())
-			{
-				*psValue += (Char)Get();
-				Next();
-			}
-			else
-			if ((Byte)'b' == Get())
-			{
-				*psValue += "\b";
-				Next();
-			}
-			else
-			if ((Byte)'f' == Get())
-			{
-				*psValue += "\f";
-				Next();
-			}
-			else
-			if ((Byte)'n' == Get())
-			{
-				*psValue += "\n";
-				Next();
-			}
-			else
-			if ((Byte)'r' == Get())
-			{
-				*psValue += "\r";
-				Next();
-			}
-			else
-			if ((Byte)'t' == Get())
-			{
-				*psValue += "\t";
-				Next();
-			}
-			else
-			{
-				*psValue += "\\";
-				*psValue += (Char)Get();
-				Next();
-			}
-		}
-		else
-		{
-			if ((Byte)'"' == Get())
-			{
-				Next();
-
-				break;
-			}
-			else
-			{
-				*psValue += (Char)Get();
-				Next();
-			}
-		}
-	}
-
-	return Status();
-}
-
-Status DataReader::Begin()
-{
+	UInt32 nMagic;
 	Status status;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
@@ -441,16 +131,94 @@ Status DataReader::Begin()
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if ((status = SkipChar('{')).IsNOK())
+	m_hash.Init();
+	if ((status = Read(&nMagic, sizeof(nMagic))).IsNOK())
 	{
 		return status;
 	}
+	if (BinaryData::MAGIC != nMagic)
+	{
+		return Status(Status_ParseFailed, "Invalid magic number");
+	}
+	if ((status = ReadOp(BinaryData::OP_BEGIN)).IsNOK())
+	{
+		return status;
+	}
+	m_nCrArrayItem = BinaryData::ARRAY_ITEM;
 	m_stackStates.push(StateData(State_Object));
 
 	return Status();
 }
 
-Status DataReader::End()
+Status BinaryDataReader::End()
+{
+	UInt32 nHash;
+	Status status;
+
+	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
+	{
+		return Status(Status_NotInitialized, "Input stream is not valid");
+	}
+	if (m_stackStates.empty())
+	{
+		return Status(Status_InvalidCall, "Out of order call");
+	}
+	if (State_Object != m_stackStates.top().nState)
+	{
+		return Status(Status_InvalidCall, "Out of order call");
+	}
+	if ((status = ReadOp(BinaryData::OP_END)).IsNOK())
+	{
+		return status;
+	}
+
+	UInt32 nComputedHash;
+
+	m_hash.Done(&nComputedHash);
+
+	if ((status = Read(&nHash, sizeof(nHash))).IsNOK())
+	{
+		return status;
+	}
+	if (nComputedHash != nHash)
+	{
+		return Status(Status_ParseFailed, "Checksum mismatched");
+	}
+
+	m_stackStates.pop();
+
+	return Status();
+}
+
+Status BinaryDataReader::BeginObjectObject(const Char *szName)
+{
+	Status status;
+
+	szName;
+
+	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
+	{
+		return Status(Status_NotInitialized, "Input stream is not valid");
+	}
+	if (m_stackStates.empty())
+	{
+		return Status(Status_InvalidCall, "Out of order call");
+	}
+	if (State_Object != m_stackStates.top().nState)
+	{
+		return Status(Status_InvalidCall, "Out of order call");
+	}
+	if ((status = ReadOp(BinaryData::OP_BEGINOBJECTOBJECT)).IsNOK())
+	{
+		return status;
+	}
+	m_stackStates.top().cCount++;
+	m_stackStates.push(StateData(State_Object));
+
+	return Status();
+}
+
+Status BinaryDataReader::EndObjectObject()
 {
 	Status status;
 
@@ -466,7 +234,7 @@ Status DataReader::End()
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if ((status = SkipChar('}')).IsNOK())
+	if ((status = ReadOp(BinaryData::OP_ENDOBJECTOBJECT)).IsNOK())
 	{
 		return status;
 	}
@@ -475,10 +243,11 @@ Status DataReader::End()
 	return Status();
 }
 
-Status DataReader::BeginObjectObject(const Char *szName)
+Status BinaryDataReader::BeginObjectArray(const Char *szName)
 {
-	String sName;
 	Status status;
+
+	szName;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
 	{
@@ -492,107 +261,17 @@ Status DataReader::BeginObjectObject(const Char *szName)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (0 < m_stackStates.top().cCount)
-	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
-	}
-	if ((status = ReadString(&sName)).IsNOK())
-	{
-		return status;
-	}
-	if (0 != cx_strcmp(sName.c_str(), szName))
-	{
-		return Status(Status_ParseFailed, "Expected '{1}'", szName);
-	}
-	if ((status = SkipChar(':')).IsNOK())
+	if ((status = ReadOp(BinaryData::OP_BEGINOBJECTARRAY)).IsNOK())
 	{
 		return status;
 	}
 	m_stackStates.top().cCount++;
-	if ((status = SkipChar('{')).IsNOK())
-	{
-		return status;
-	}
-	m_stackStates.push(StateData(State_Object));
-
-	return Status();
-}
-
-Status DataReader::EndObjectObject()
-{
-	Status status;
-
-	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
-	{
-		return Status(Status_NotInitialized, "Input stream is not valid");
-	}
-	if (m_stackStates.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order call");
-	}
-	if (State_Object != m_stackStates.top().nState)
-	{
-		return Status(Status_InvalidCall, "Out of order call");
-	}
-	if ((status = SkipChar('}')).IsNOK())
-	{
-		return status;
-	}
-	m_stackStates.pop();
-
-	return Status();
-}
-
-Status DataReader::BeginObjectArray(const Char *szName)
-{
-	String sName;
-	Status status;
-
-	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
-	{
-		return Status(Status_NotInitialized, "Input stream is not valid");
-	}
-	if (m_stackStates.empty())
-	{
-		return Status(Status_InvalidCall, "Out of order call");
-	}
-	if (State_Object != m_stackStates.top().nState)
-	{
-		return Status(Status_InvalidCall, "Out of order call");
-	}
-	if (0 < m_stackStates.top().cCount)
-	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
-	}
-	if ((status = ReadString(&sName)).IsNOK())
-	{
-		return status;
-	}
-	if (0 != cx_strcmp(sName.c_str(), szName))
-	{
-		return Status(Status_ParseFailed, "Expected '{1}'", szName);
-	}
-	if ((status = SkipChar(':')).IsNOK())
-	{
-		return status;
-	}
-	m_stackStates.top().cCount++;
-	if ((status = SkipChar('[')).IsNOK())
-	{
-		return status;
-	}
 	m_stackStates.push(StateData(State_Array));
 
 	return Status();
 }
 
-Status DataReader::EndObjectArray()
+Status BinaryDataReader::EndObjectArray()
 {
 	Status status;
 
@@ -608,7 +287,11 @@ Status DataReader::EndObjectArray()
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if ((status = SkipChar(']')).IsNOK())
+	if (BinaryData::ARRAY_END != m_nCrArrayItem)
+	{
+		return Status(Status_InvalidCall, "Out of order call");
+	}
+	if ((status = ReadOp(BinaryData::OP_ENDOBJECTARRAY)).IsNOK())
 	{
 		return status;
 	}
@@ -617,10 +300,11 @@ Status DataReader::EndObjectArray()
 	return Status();
 }
 
-Status DataReader::ReadObjectBool(const Char *szName, Bool *pbValue)
+Status BinaryDataReader::ReadObjectBool(const Char *szName, Bool *pbValue)
 {
-	String sName;
 	Status status;
+
+	szName;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
 	{
@@ -634,26 +318,11 @@ Status DataReader::ReadObjectBool(const Char *szName, Bool *pbValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (0 < m_stackStates.top().cCount)
-	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
-	}
-	if ((status = ReadString(&sName)).IsNOK())
+	if ((status = ReadOp(BinaryData::OP_OBJECTBOOL)).IsNOK())
 	{
 		return status;
 	}
-	if (0 != cx_strcmp(sName.c_str(), szName))
-	{
-		return Status(Status_ParseFailed, "Expected '{1}'", szName);
-	}
-	if ((status = SkipChar(':')).IsNOK())
-	{
-		return status;
-	}
-	if ((status = ReadBool(pbValue)).IsNOK())
+	if ((status = Read(pbValue, sizeof(*pbValue))).IsNOK())
 	{
 		return status;
 	}
@@ -662,10 +331,11 @@ Status DataReader::ReadObjectBool(const Char *szName, Bool *pbValue)
 	return Status();
 }
 
-Status DataReader::ReadObjectInt(const Char *szName, Int64 *pnValue)
+Status BinaryDataReader::ReadObjectInt(const Char *szName, Int64 *pnValue)
 {
-	String sName;
 	Status status;
+
+	szName;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
 	{
@@ -679,26 +349,11 @@ Status DataReader::ReadObjectInt(const Char *szName, Int64 *pnValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (0 < m_stackStates.top().cCount)
-	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
-	}
-	if ((status = ReadString(&sName)).IsNOK())
+	if ((status = ReadOp(BinaryData::OP_OBJECTINT)).IsNOK())
 	{
 		return status;
 	}
-	if (0 != cx_strcmp(sName.c_str(), szName))
-	{
-		return Status(Status_ParseFailed, "Expected '{1}'", szName);
-	}
-	if ((status = SkipChar(':')).IsNOK())
-	{
-		return status;
-	}
-	if ((status = ReadInt(pnValue)).IsNOK())
+	if ((status = Read(pnValue, sizeof(*pnValue))).IsNOK())
 	{
 		return status;
 	}
@@ -707,10 +362,11 @@ Status DataReader::ReadObjectInt(const Char *szName, Int64 *pnValue)
 	return Status();
 }
 
-Status DataReader::ReadObjectReal(const Char *szName, Double *plfValue)
+Status BinaryDataReader::ReadObjectReal(const Char *szName, Double *plfValue)
 {
-	String sName;
 	Status status;
+
+	szName;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
 	{
@@ -724,26 +380,11 @@ Status DataReader::ReadObjectReal(const Char *szName, Double *plfValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (0 < m_stackStates.top().cCount)
-	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
-	}
-	if ((status = ReadString(&sName)).IsNOK())
+	if ((status = ReadOp(BinaryData::OP_OBJECTREAL)).IsNOK())
 	{
 		return status;
 	}
-	if (0 != cx_strcmp(sName.c_str(), szName))
-	{
-		return Status(Status_ParseFailed, "Expected '{1}'", szName);
-	}
-	if ((status = SkipChar(':')).IsNOK())
-	{
-		return status;
-	}
-	if ((status = ReadReal(plfValue)).IsNOK())
+	if ((status = Read(plfValue, sizeof(*plfValue))).IsNOK())
 	{
 		return status;
 	}
@@ -752,10 +393,15 @@ Status DataReader::ReadObjectReal(const Char *szName, Double *plfValue)
 	return Status();
 }
 
-Status DataReader::ReadObjectString(const Char *szName, String *psValue)
+Status BinaryDataReader::ReadObjectString(const Char *szName, String *psValue)
 {
-	String sName;
+	Char   buffer[4096];
+	Size   cLenRead;
+	UInt32 cLenTmp;
+	Size   cLen;
 	Status status;
+
+	szName;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
 	{
@@ -769,39 +415,47 @@ Status DataReader::ReadObjectString(const Char *szName, String *psValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (0 < m_stackStates.top().cCount)
+	psValue->clear();
+	if ((status = ReadOp(BinaryData::OP_OBJECTSTRING)).IsNOK())
 	{
-		if ((status = SkipChar(',')).IsNOK())
+		return status;
+	}
+	if ((status = Read(&cLenTmp, sizeof(cLenTmp))).IsNOK())
+	{
+		return status;
+	}
+	cLen = (Size)cLenTmp;
+	while (0 < cLen)
+	{
+		if (sizeof(buffer) / sizeof(buffer[0]) >= cLen)
+		{
+			cLenRead = cLen;
+		}
+		else
+		{
+			cLenRead = sizeof(buffer) / sizeof(buffer[0]);
+		}
+		if ((status = Read(buffer, cLenRead * sizeof(Char))).IsNOK())
 		{
 			return status;
 		}
-	}
-	if ((status = ReadString(&sName)).IsNOK())
-	{
-		return status;
-	}
-	if (0 != cx_strcmp(sName.c_str(), szName))
-	{
-		return Status(Status_ParseFailed, "Expected '{1}'", szName);
-	}
-	if ((status = SkipChar(':')).IsNOK())
-	{
-		return status;
-	}
-	if ((status = ReadString(psValue)).IsNOK())
-	{
-		return status;
+		psValue->append(buffer, cLenRead);
+		cLen -= cLenRead;
 	}
 	m_stackStates.top().cCount++;
 
 	return Status();
 }
 
-Status DataReader::ReadObjectWString(const Char *szName, WString *pwsValue)
+Status BinaryDataReader::ReadObjectWString(const Char *szName, WString *pwsValue)
 {
-	String sName;
-	String sValue;
+	WChar  buffer[2048];
+	Size   cLenRead;
+	UInt32 cLenTmp;
+	Size   cLen;
 	Status status;
+
+	szName;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
 	{
@@ -815,39 +469,38 @@ Status DataReader::ReadObjectWString(const Char *szName, WString *pwsValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (0 < m_stackStates.top().cCount)
+	pwsValue->clear();
+	if ((status = ReadOp(BinaryData::OP_OBJECTWSTRING)).IsNOK())
 	{
-		if ((status = SkipChar(',')).IsNOK())
+		return status;
+	}
+	if ((status = Read(&cLenTmp, sizeof(cLenTmp))).IsNOK())
+	{
+		return status;
+	}
+	cLen = (Size)cLenTmp;
+	while (0 < cLen)
+	{
+		if (sizeof(buffer) / sizeof(buffer[0]) >= cLen)
+		{
+			cLenRead = cLen;
+		}
+		else
+		{
+			cLenRead = sizeof(buffer) / sizeof(buffer[0]);
+		}
+		if ((status = Read(buffer, cLenRead * sizeof(WChar))).IsNOK())
 		{
 			return status;
 		}
-	}
-	if ((status = ReadString(&sName)).IsNOK())
-	{
-		return status;
-	}
-	if (0 != cx_strcmp(sName.c_str(), szName))
-	{
-		return Status(Status_ParseFailed, "Expected '{1}'", szName);
-	}
-	if ((status = SkipChar(':')).IsNOK())
-	{
-		return status;
-	}
-	if ((status = ReadString(&sValue)).IsNOK())
-	{
-		return status;
-	}
-	if ((status = Str::UTF8::ToUTF16(sValue.c_str(), pwsValue)).IsNOK())
-	{
-		return status;
-	}
-	m_stackStates.top().cCount++;
+		pwsValue->append(buffer, cLenRead);
+		cLen -= cLenRead;
+	}	m_stackStates.top().cCount++;
 
 	return Status();
 }
 
-Status DataReader::BeginArrayObject()
+Status BinaryDataReader::BeginArrayObject()
 {
 	Status status;
 
@@ -863,28 +516,25 @@ Status DataReader::BeginArrayObject()
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (CheckArrayEnd())
-	{
-		return Status_NoMoreItems;
-	}
-	if (0 < m_stackStates.top().cCount)
-	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
-	}
-	m_stackStates.top().cCount++;
-	if ((status = SkipChar('{')).IsNOK())
+	if ((status = Read(&m_nCrArrayItem, sizeof(m_nCrArrayItem))).IsNOK())
 	{
 		return status;
 	}
+	if (BinaryData::ARRAY_END == m_nCrArrayItem)
+	{
+		return Status(Status_NoMoreItems, "End of array reached");
+	}
+	if ((status = ReadOp(BinaryData::OP_BEGINARRAYOBJECT)).IsNOK())
+	{
+		return status;
+	}
+	m_stackStates.top().cCount++;
 	m_stackStates.push(StateData(State_Object));
 
 	return Status();
 }
 
-Status DataReader::EndArrayObject()
+Status BinaryDataReader::EndArrayObject()
 {
 	Status status;
 
@@ -900,7 +550,7 @@ Status DataReader::EndArrayObject()
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if ((status = SkipChar('}')).IsNOK())
+	if ((status = ReadOp(BinaryData::OP_ENDARRAYOBJECT)).IsNOK())
 	{
 		return status;
 	}
@@ -909,7 +559,7 @@ Status DataReader::EndArrayObject()
 	return Status();
 }
 
-Status DataReader::BeginArrayArray()
+Status BinaryDataReader::BeginArrayArray()
 {
 	Status status;
 
@@ -925,28 +575,26 @@ Status DataReader::BeginArrayArray()
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (CheckArrayEnd())
-	{
-		return Status_NoMoreItems;
-	}
-	if (0 < m_stackStates.top().cCount)
-	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
-	}
-	m_stackStates.top().cCount++;
-	if ((status = SkipChar('[')).IsNOK())
+	if ((status = Read(&m_nCrArrayItem, sizeof(m_nCrArrayItem))).IsNOK())
 	{
 		return status;
 	}
+	if (BinaryData::ARRAY_END == m_nCrArrayItem)
+	{
+		return Status(Status_NoMoreItems, "End of array reached");
+	}
+
+	if ((status = ReadOp(BinaryData::OP_BEGINARRAYARRAY)).IsNOK())
+	{
+		return status;
+	}
+	m_stackStates.top().cCount++;
 	m_stackStates.push(StateData(State_Array));
 
 	return Status();
 }
 
-Status DataReader::EndArrayArray()
+Status BinaryDataReader::EndArrayArray()
 {
 	Status status;
 
@@ -962,7 +610,11 @@ Status DataReader::EndArrayArray()
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if ((status = SkipChar(']')).IsNOK())
+	if (BinaryData::ARRAY_END != m_nCrArrayItem)
+	{
+		return Status(Status_InvalidCall, "Out of order call");
+	}
+	if ((status = ReadOp(BinaryData::OP_ENDARRAYARRAY)).IsNOK())
 	{
 		return status;
 	}
@@ -972,7 +624,7 @@ Status DataReader::EndArrayArray()
 }
 
 //will return Status_NoMoreItems at the end of the array
-Status DataReader::ReadArrayBool(Bool *pbValue)
+Status BinaryDataReader::ReadArrayBool(Bool *pbValue)
 {
 	Status status;
 
@@ -988,18 +640,19 @@ Status DataReader::ReadArrayBool(Bool *pbValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (CheckArrayEnd())
+	if ((status = Read(&m_nCrArrayItem, sizeof(m_nCrArrayItem))).IsNOK())
+	{
+		return status;
+	}
+	if (BinaryData::ARRAY_END == m_nCrArrayItem)
 	{
 		return Status(Status_NoMoreItems, "End of array reached");
 	}
-	if (0 < m_stackStates.top().cCount)
+	if ((status = ReadOp(BinaryData::OP_ARRAYBOOL)).IsNOK())
 	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	if ((status = ReadBool(pbValue)).IsNOK())
+	if ((status = Read(pbValue, sizeof(*pbValue))).IsNOK())
 	{
 		return status;
 	}
@@ -1009,7 +662,7 @@ Status DataReader::ReadArrayBool(Bool *pbValue)
 }
 
 //will return Status_NoMoreItems at the end of the array
-Status DataReader::ReadArrayInt(Int64 *pnValue)
+Status BinaryDataReader::ReadArrayInt(Int64 *pnValue)
 {
 	Status status;
 
@@ -1025,18 +678,19 @@ Status DataReader::ReadArrayInt(Int64 *pnValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (CheckArrayEnd())
+	if ((status = Read(&m_nCrArrayItem, sizeof(m_nCrArrayItem))).IsNOK())
+	{
+		return status;
+	}
+	if (BinaryData::ARRAY_END == m_nCrArrayItem)
 	{
 		return Status(Status_NoMoreItems, "End of array reached");
 	}
-	if (0 < m_stackStates.top().cCount)
+	if ((status = ReadOp(BinaryData::OP_ARRAYINT)).IsNOK())
 	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	if ((status = ReadInt(pnValue)).IsNOK())
+	if ((status = Read(pnValue, sizeof(*pnValue))).IsNOK())
 	{
 		return status;
 	}
@@ -1046,7 +700,7 @@ Status DataReader::ReadArrayInt(Int64 *pnValue)
 }
 
 //will return Status_NoMoreItems at the end of the array
-Status DataReader::ReadArrayReal(Double *plfValue)
+Status BinaryDataReader::ReadArrayReal(Double *plfValue)
 {
 	Status status;
 
@@ -1062,18 +716,19 @@ Status DataReader::ReadArrayReal(Double *plfValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (CheckArrayEnd())
+	if ((status = Read(&m_nCrArrayItem, sizeof(m_nCrArrayItem))).IsNOK())
+	{
+		return status;
+	}
+	if (BinaryData::ARRAY_END == m_nCrArrayItem)
 	{
 		return Status(Status_NoMoreItems, "End of array reached");
 	}
-	if (0 < m_stackStates.top().cCount)
+	if ((status = ReadOp(BinaryData::OP_ARRAYREAL)).IsNOK())
 	{
-		if ((status = SkipChar(',')).IsNOK())
-		{
-			return status;
-		}
+		return status;
 	}
-	if ((status = ReadReal(plfValue)).IsNOK())
+	if ((status = Read(plfValue, sizeof(*plfValue))).IsNOK())
 	{
 		return status;
 	}
@@ -1083,8 +738,12 @@ Status DataReader::ReadArrayReal(Double *plfValue)
 }
 
 //will return Status_NoMoreItems at the end of the array
-Status DataReader::ReadArrayString(String *psValue)
+Status BinaryDataReader::ReadArrayString(String *psValue)
 {
+	Char   buffer[4096];
+	Size   cLenRead;
+	UInt32 cLenTmp;
+	Size   cLen;
 	Status status;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
@@ -1099,20 +758,40 @@ Status DataReader::ReadArrayString(String *psValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (CheckArrayEnd())
+	if ((status = Read(&m_nCrArrayItem, sizeof(m_nCrArrayItem))).IsNOK())
+	{
+		return status;
+	}
+	if (BinaryData::ARRAY_END == m_nCrArrayItem)
 	{
 		return Status(Status_NoMoreItems, "End of array reached");
 	}
-	if (0 < m_stackStates.top().cCount)
+	if ((status = ReadOp(BinaryData::OP_ARRAYSTRING)).IsNOK())
 	{
-		if ((status = SkipChar(',')).IsNOK())
+		return status;
+	}
+	psValue->clear();
+	if ((status = Read(&cLenTmp, sizeof(cLenTmp))).IsNOK())
+	{
+		return status;
+	}
+	cLen = (Size)cLenTmp;
+	while (0 < cLen)
+	{
+		if (sizeof(buffer) / sizeof(buffer[0]) >= cLen)
+		{
+			cLenRead = cLen;
+		}
+		else
+		{
+			cLenRead = sizeof(buffer) / sizeof(buffer[0]);
+		}
+		if ((status = Read(buffer, cLenRead * sizeof(Char))).IsNOK())
 		{
 			return status;
 		}
-	}
-	if ((status = ReadString(psValue)).IsNOK())
-	{
-		return status;
+		psValue->append(buffer, cLenRead);
+		cLen -= cLenRead;
 	}
 	m_stackStates.top().cCount++;
 
@@ -1120,9 +799,12 @@ Status DataReader::ReadArrayString(String *psValue)
 }
 
 //will return Status_NoMoreItems at the end of the array
-Status DataReader::ReadArrayWString(WString *pwsValue)
+Status BinaryDataReader::ReadArrayWString(WString *pwsValue)
 {
-	String sValue;
+	WChar  buffer[2048];
+	Size   cLenRead;
+	UInt32 cLenTmp;
+	Size   cLen;
 	Status status;
 
 	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
@@ -1137,33 +819,49 @@ Status DataReader::ReadArrayWString(WString *pwsValue)
 	{
 		return Status(Status_InvalidCall, "Out of order call");
 	}
-	if (CheckArrayEnd())
+	if ((status = Read(&m_nCrArrayItem, sizeof(m_nCrArrayItem))).IsNOK())
+	{
+		return status;
+	}
+	if (BinaryData::ARRAY_END == m_nCrArrayItem)
 	{
 		return Status(Status_NoMoreItems, "End of array reached");
 	}
-	if (0 < m_stackStates.top().cCount)
+	if ((status = ReadOp(BinaryData::OP_ARRAYWSTRING)).IsNOK())
 	{
-		if ((status = SkipChar(',')).IsNOK())
+		return status;
+	}
+	pwsValue->clear();
+	if ((status = Read(&cLenTmp, sizeof(cLenTmp))).IsNOK())
+	{
+		return status;
+	}
+	cLen = (Size)cLenTmp;
+	while (0 < cLen)
+	{
+		if (sizeof(buffer) / sizeof(buffer[0]) >= cLen)
+		{
+			cLenRead = cLen;
+		}
+		else
+		{
+			cLenRead = sizeof(buffer) / sizeof(buffer[0]);
+		}
+		if ((status = Read(buffer, cLenRead * sizeof(WChar))).IsNOK())
 		{
 			return status;
 		}
-	}
-	if ((status = ReadString(&sValue)).IsNOK())
-	{
-		return status;
-	}
-	if ((status = Str::UTF8::ToUTF16(sValue.c_str(), pwsValue)).IsNOK())
-	{
-		return status;
+		pwsValue->append(buffer, cLenRead);
+		cLen -= cLenRead;
 	}
 	m_stackStates.top().cCount++;
 
 	return Status();
 }
 
-}//namespace JSON
+}//namespace SimpleBuffers
 
-}//namespace Data
+}//namespace IO
 
 }//namespace CX
 

@@ -30,13 +30,7 @@
 
 
 #include "CX/Types.hpp"
-#include "CX/String.hpp"
-#include "CX/Vector.hpp"
-#include "CX/IO/IDataReader.hpp"
-#include "CX/IO/IDataWriter.hpp"
-#include "CX/Util/RndGen.hpp"
-#include "CX/Status.hpp"
-#include "CX/C/string.h"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX
@@ -48,39 +42,45 @@ namespace IO
 namespace SimpleBuffers
 {
 
-typedef Vector<Bool>::Type      BoolArray;
-typedef Vector<Int8>::Type      Int8Array;
-typedef Vector<UInt8>::Type     UInt8Array;
-typedef Vector<Int16>::Type     Int16Array;
-typedef Vector<UInt16>::Type    UInt16Array;
-typedef Vector<Int32>::Type     Int32Array;
-typedef Vector<UInt32>::Type    UInt32Array;
-typedef Vector<Int64>::Type     Int64Array;
-typedef Vector<UInt64>::Type    UInt64Array;
-typedef Vector<Float>::Type     FloatArray;
-typedef Vector<Double>::Type    DoubleArray;
-typedef Vector<String>::Type    StringArray;
-typedef Vector<WString>::Type   WStringArray;
-
-
-class IObject
+class CX_API BinaryData
 {
 public:
 
-	virtual ~IObject() { }
+	static const UInt32 MAGIC                = 0x42535843;
+	static const UInt8  ARRAY_ITEM           = 0x00;
+	static const UInt8  ARRAY_END            = 0xFF;
+	static const UInt8  OP_BEGIN             = 0x01;
+	static const UInt8  OP_END               = 0x02;
+	static const UInt8  OP_BEGINOBJECTOBJECT = 0x03;
+	static const UInt8  OP_ENDOBJECTOBJECT   = 0x04;
+	static const UInt8  OP_BEGINOBJECTARRAY  = 0x05;
+	static const UInt8  OP_ENDOBJECTARRAY    = 0x06;
+	static const UInt8  OP_OBJECTBOOL        = 0x07;
+	static const UInt8  OP_OBJECTINT         = 0x08;
+	static const UInt8  OP_OBJECTREAL        = 0x09;
+	static const UInt8  OP_OBJECTSTRING      = 0x0A;
+	static const UInt8  OP_OBJECTWSTRING     = 0x0B;
+	static const UInt8  OP_BEGINARRAYOBJECT  = 0x0C;
+	static const UInt8  OP_ENDARRAYOBJECT    = 0x0D;
+	static const UInt8  OP_BEGINARRAYARRAY   = 0x0E;
+	static const UInt8  OP_ENDARRAYARRAY     = 0x0F;
+	static const UInt8  OP_ARRAYBOOL         = 0x10;
+	static const UInt8  OP_ARRAYINT          = 0x11;
+	static const UInt8  OP_ARRAYREAL         = 0x12;
+	static const UInt8  OP_ARRAYSTRING       = 0x13;
+	static const UInt8  OP_ARRAYWSTRING      = 0x14;
 
-	virtual void Reset() = 0;
+private:
 
-	virtual void SetupWithSomeValues() = 0;
+	BinaryData()
+	{
+	}
 
-	virtual bool Compare(const IObject *pObj) = 0;
-
-	virtual Status Read(IDataReader *pReader) = 0;
-
-	virtual Status Write(IDataWriter *pWriter) const = 0;
+	~BinaryData()
+	{
+	}
 
 };
-
 
 }//namespace SimpleBuffers
 

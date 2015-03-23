@@ -92,10 +92,6 @@ Status FileOutputStream::Write(const void *pBuffer, Size cbReqSize, Size *pcbAck
 	{
 		return Status(Status_WriteFailed, "fread failed with error {1}", errno);
 	}
-	if (0 == *pcbAckSize)
-	{
-		return Status(Status_EOF, "End of stream reached");
-	}
 
 	return Status();
 }

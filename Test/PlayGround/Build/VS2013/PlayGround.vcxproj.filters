@@ -47,5 +47,8 @@
     <ClInclude Include="..\..\Src\Test2Object.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\IO_SimpleBuffers_Data.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

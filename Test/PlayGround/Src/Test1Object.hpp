@@ -3,7 +3,6 @@
 
 
 #include "CX/IO/SimpleBuffers/Types.hpp"
-#include "CX/C/string.h"
 
 
 namespace My
@@ -79,59 +78,119 @@ public:
 	virtual void SetupWithSomeValues()
 	{
 		Reset();
-		bool_val = false;
-		int8_val = -42;
-		uint8_val = 169;
-		int16_val = 23030;
-		uint16_val = 6877;
-		int32_val = 1939755188;
-		uint32_val = 3083821276;
-		int64_val = 8506281018836646116;
-		uint64_val = 1811896136366853252;
-		float_val = 0.587185f;
-		double_val = 0.575792;
-		string_val = "$djvfB<r2A=nd`YDC";
-		wstring_val = L"f[%Zd!uuQU@bapLH\"R";
-		for (CX::Size i = 0; i < 3; i++)
-		{
-			bool_arr.push_back(true);
-		}
-		for (CX::Size i = 0; i < 5; i++)
-		{
-			int8_arr.push_back(-96);
-		}
-		for (CX::Size i = 0; i < 5; i++)
-		{
-			int16_arr.push_back(-9566);
-		}
-		for (CX::Size i = 0; i < 14; i++)
-		{
-			uint16_arr.push_back(29108);
-		}
-		for (CX::Size i = 0; i < 5; i++)
-		{
-			uint32_arr.push_back(1374447249);
-		}
-		for (CX::Size i = 0; i < 4; i++)
-		{
-			uint64_arr.push_back(9211205268677728790);
-		}
-		for (CX::Size i = 0; i < 15; i++)
-		{
-			float_arr.push_back(0.897287f);
-		}
-		for (CX::Size i = 0; i < 4; i++)
-		{
-			double_arr.push_back(0.344338);
-		}
-		for (CX::Size i = 0; i < 16; i++)
-		{
-			string_arr.push_back("NR!Jc@\\7E/[.9ZPn9%]wk:D5Khtv|o`dq(DQ#;/x>+1P}T");
-		}
-		for (CX::Size i = 0; i < 12; i++)
-		{
-			wstring_arr.push_back(L"&vs:5(b|_ub|ec'f+1Jo=n+pO5P3qf{HQ4C,KKu2MmS4.tOKltC8h76&\\t");
-		}
+		bool_val = true;
+		int8_val = 37;
+		uint8_val = 154;
+		int16_val = 28908;
+		uint16_val = 56571;
+		int32_val = 429078343;
+		uint32_val = 1064296322;
+		int64_val = 7155689572760980160;
+		uint64_val = 15549531131302430372;
+		float_val = 0.636964f;
+		double_val = 0.217706;
+		string_val = "1\"akC\"skC7)!";
+		wstring_val = L"j.ghOj>xOQF6}^Bbk6#!Je\\Z[g9%nbNyhlMv~0A'J3i8GP*Un1X9n'X'JOvTE3GK";
+		bool_arr.push_back(false);
+		bool_arr.push_back(false);
+		bool_arr.push_back(false);
+		bool_arr.push_back(true);
+		bool_arr.push_back(false);
+		bool_arr.push_back(false);
+		bool_arr.push_back(true);
+		bool_arr.push_back(false);
+		bool_arr.push_back(true);
+		bool_arr.push_back(false);
+		int8_arr.push_back(-37);
+		int8_arr.push_back(-68);
+		int8_arr.push_back(-93);
+		int8_arr.push_back(-102);
+		int8_arr.push_back(31);
+		int8_arr.push_back(97);
+		int8_arr.push_back(31);
+		int8_arr.push_back(89);
+		int8_arr.push_back(-91);
+		uint8_arr.push_back(39);
+		uint8_arr.push_back(232);
+		uint8_arr.push_back(97);
+		uint8_arr.push_back(109);
+		uint8_arr.push_back(104);
+		uint8_arr.push_back(48);
+		uint8_arr.push_back(31);
+		uint8_arr.push_back(209);
+		uint8_arr.push_back(179);
+		uint8_arr.push_back(97);
+		uint8_arr.push_back(196);
+		uint8_arr.push_back(191);
+		uint8_arr.push_back(91);
+		uint8_arr.push_back(210);
+		uint8_arr.push_back(144);
+		uint8_arr.push_back(42);
+		int16_arr.push_back(27298);
+		int16_arr.push_back(25550);
+		int16_arr.push_back(32288);
+		int16_arr.push_back(-7950);
+		int16_arr.push_back(32426);
+		int16_arr.push_back(-15493);
+		int16_arr.push_back(-24025);
+		int16_arr.push_back(-12974);
+		int16_arr.push_back(8099);
+		int16_arr.push_back(-26422);
+		int16_arr.push_back(-15125);
+		int16_arr.push_back(28553);
+		uint16_arr.push_back(26943);
+		uint16_arr.push_back(6303);
+		uint16_arr.push_back(44035);
+		uint16_arr.push_back(7231);
+		uint16_arr.push_back(16709);
+		uint16_arr.push_back(11808);
+		uint16_arr.push_back(5293);
+		uint32_arr.push_back(317307840);
+		uint32_arr.push_back(2320612170);
+		uint32_arr.push_back(4192374014);
+		uint32_arr.push_back(3357191780);
+		uint32_arr.push_back(3364972132);
+		uint32_arr.push_back(3224077993);
+		uint32_arr.push_back(2926185186);
+		uint32_arr.push_back(3779684566);
+		uint32_arr.push_back(667343246);
+		uint64_arr.push_back(11255548767725194022);
+		uint64_arr.push_back(8334678534081577490);
+		float_arr.push_back(0.139890f);
+		double_arr.push_back(0.073859);
+		double_arr.push_back(0.197018);
+		double_arr.push_back(0.081132);
+		double_arr.push_back(0.799313);
+		double_arr.push_back(0.248596);
+		double_arr.push_back(0.328050);
+		double_arr.push_back(0.615630);
+		double_arr.push_back(0.416947);
+		double_arr.push_back(0.727105);
+		double_arr.push_back(0.985389);
+		string_arr.push_back("0Q{9Xn.w$0O<|Hr9yV8$skgRpAw-SL(N");
+		string_arr.push_back(".LHp*qGH(jd@ePXy9Yx<~0VY`)8bKac1");
+		string_arr.push_back("QgL\"ER.P]e(VT>F{%qHD%gAQ0N[4:[Myk");
+		string_arr.push_back("KRp[6'S,Ldc?hN>$40J+_eGp$OX}.Vi");
+		string_arr.push_back("BR[kqBr_*TNgFEE9RJ\\By8N$K4o7&hSV\\;:L0<");
+		string_arr.push_back(";9Y/j::");
+		string_arr.push_back("50NQp?]a1^VOK{.@Nlk*AHD");
+		string_arr.push_back("v#9>JJ'G.*Q&YFL");
+		string_arr.push_back("47>m*CIU~}N@'G:)HH{bw90QV'oU^^~vQ#?ZUfurP<'_2K6l#6Bc&aehW]H3_aC");
+		string_arr.push_back("LP99f9nFuz{`H$gA|m@3ji<-`ktbSlPi#7c:UT7=%dvD%");
+		string_arr.push_back("Uh=/Tv@:+f60Hekse]g#^<");
+		string_arr.push_back("3x>/6\"Dx_l?;vz+`ck");
+		string_arr.push_back("E%?~(p7x>l){xk3*jY,gC&O/!~(%JO&CGl0VPpBq.Gf}N:P\\+");
+		wstring_arr.push_back(L"a`Eb");
+		wstring_arr.push_back(L"\"27");
+		wstring_arr.push_back(L"P\"25oq[?Y'j@{D+~T7*V{0z$?ER&O5#PESe@Jh4?|;k_{yCmMKj[F4V#@^8");
+		wstring_arr.push_back(L"X*G8jAZYu}lOL}kd:fka+B(\"o?Z1_C6}IB-S/V-Fc%R!^Lq^+>QAUumt%,N!\\@p");
+		wstring_arr.push_back(L"r`aKT{I3$Q*+:L(R?R$$k_\"MnYU\",yIVb");
+		wstring_arr.push_back(L"Ejg+Q-pTgL2\"a48S,Y,\"pzfI7(-9i@S5nC'&");
+		wstring_arr.push_back(L"w~$<*bD15]Yn");
+		wstring_arr.push_back(L"+=h-)qLJ0$h|Ez%@jyKs:pDJ`vB5*e$,5Eoj#mevK2*EX");
+		wstring_arr.push_back(L"E'U}_ftH+EzK4|U</`pvgcy-Q+m6d]>'Gkhx:");
+		wstring_arr.push_back(L"u)-LPFQN,]?V'JC04BzOK)/LY)di)e");
+		wstring_arr.push_back(L"h06kFNW.Zqh~");
 	}
 
 	virtual bool Compare(const CX::IO::SimpleBuffers::IObject *pObj)

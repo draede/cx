@@ -100,6 +100,9 @@
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryData.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryDataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryDataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Field.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Generator.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\ObjectTester.hpp" />
@@ -295,6 +298,8 @@
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
     <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
+    <ClCompile Include="..\..\Src\IO\SimpleBuffers\BinaryDataReader.cpp" />
+    <ClCompile Include="..\..\Src\IO\SimpleBuffers\BinaryDataWriter.cpp" />
     <ClCompile Include="..\..\Src\IO\SimpleBuffers\ProtoParser.cpp" />
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />

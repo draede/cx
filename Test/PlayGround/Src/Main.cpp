@@ -30,6 +30,7 @@
 #include "Data_JSON_DataReaderDataWriter.hpp"
 #include "IO_SimpleBuffers_Generator.hpp"
 #include "IO_SimpleBuffers.hpp"
+#include "IO_SimpleBuffers_Data.hpp"
 
 
 int main(int argc, char *argv[])
@@ -40,7 +41,8 @@ int main(int argc, char *argv[])
 	//Str_UTF8_Test1();
 	//Data_JSON_DataReaderDataWriter_Test1();
 	//IO_SimpleBuffers_Generator_Test1();
-	IO_SimpleBuffers_Test1();
+	//IO_SimpleBuffers_Test1();
+	IO_SimpleBuffers_Data_Test1();
 
 	return 0;
 }

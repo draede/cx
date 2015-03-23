@@ -162,7 +162,6 @@ public:
 		Print(out, "\n");
 		Print(out, "\n");
 		Print(out, "#include \"CX/IO/SimpleBuffers/Types.hpp\"\n");
-		Print(out, "#include \"CX/C/string.h\"\n");
 		for (FieldsVector::const_iterator iter = pObject->m_vectorFields.begin(); iter != pObject->m_vectorFields.end(); ++iter)
 		{
 			if (Field::Type_Object == iter->m_nType && setIncludes.end() == setIncludes.find(iter->m_sObjectName))
@@ -403,65 +402,63 @@ public:
 			{
 				Size cCount = Util::RndGen::Get().GetSize() % 17;
 
-				if (0 < cCount)
+				for (Size i = 0; i < cCount; i++)
 				{
-					Print(out, "\t\tfor (CX::Size i = 0; i < {1}; i++)\n", cCount);
-					Print(out, "\t\t{{\n");
 					switch (iter->m_nType)
 					{
 						case Field::Type_Bool:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetBool());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetBool());
 						}
 						break;
 						case Field::Type_Int8:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetInt8());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetInt8());
 						}
 						break;
 						case Field::Type_UInt8:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetUInt8());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetUInt8());
 						}
 						break;
 						case Field::Type_Int16:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetInt16());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetInt16());
 						}
 						break;
 						case Field::Type_UInt16:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetUInt16());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetUInt16());
 						}
 						break;
 						case Field::Type_Int32:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetInt32());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetInt32());
 						}
 						break;
 						case Field::Type_UInt32:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetUInt32());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetUInt32());
 						}
 						break;
 						case Field::Type_Int64:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetInt64());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetInt64());
 						}
 						break;
 						case Field::Type_UInt64:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetUInt64());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetUInt64());
 						}
 						break;
 						case Field::Type_Float:
 						{
-							Print(out, "\t\t\t{1}.push_back({2}f);\n", iter->m_sName, Util::RndGen::Get().GetFloat());
+							Print(out, "\t\t{1}.push_back({2}f);\n", iter->m_sName, Util::RndGen::Get().GetFloat());
 						}
 						break;
 						case Field::Type_Double:
 						{
-							Print(out, "\t\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetDouble());
+							Print(out, "\t\t{1}.push_back({2});\n", iter->m_sName, Util::RndGen::Get().GetDouble());
 						}
 						break;
 						case Field::Type_String:
@@ -478,7 +475,7 @@ public:
 								}
 								sTmp2 += sTmp1[i];
 							}
-							Print(out, "\t\t\t{1}.push_back(\"{2}\");\n", iter->m_sName, sTmp2);
+							Print(out, "\t\t{1}.push_back(\"{2}\");\n", iter->m_sName, sTmp2);
 						}
 						break;
 						case Field::Type_WString:
@@ -495,19 +492,20 @@ public:
 								}
 								sTmp2 += sTmp1[i];
 							}
-							Print(out, "\t\t\t{1}.push_back(L\"{2}\");\n", iter->m_sName, sTmp2);
+							Print(out, "\t\t{1}.push_back(L\"{2}\");\n", iter->m_sName, sTmp2);
 						}
 						break;
 						case Field::Type_Object:
 						{
+							Print(out, "\t\t{{\n");
 							Print(out, "\t\t\t{1} v;\n", Field::GetStringFromType(iter->m_nType, false, iter->m_sObjectName.c_str()));
 							Print(out, "\n");
 							Print(out, "\t\t\tv.SetupWithSomeValues();\n");
 							Print(out, "\t\t\t{1}.push_back(v);\n", iter->m_sName);
+							Print(out, "\t\t}\n");
 						}
 						break;
 					}
-					Print(out, "\t\t}\n");
 				}
 			}
 		}
@@ -836,6 +834,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back(bValue);\n", iter->m_sName);
@@ -849,6 +848,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::Int8)nValue);\n", iter->m_sName);
@@ -862,6 +862,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::UInt8)nValue);\n", iter->m_sName);
@@ -875,6 +876,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::Int16)nValue);\n", iter->m_sName);
@@ -888,6 +890,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::UInt16)nValue);\n", iter->m_sName);
@@ -901,6 +904,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::Int32)nValue);\n", iter->m_sName);
@@ -914,6 +918,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::UInt32)nValue);\n", iter->m_sName);
@@ -927,6 +932,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::Int64)nValue);\n", iter->m_sName);
@@ -940,6 +946,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::UInt64)nValue);\n", iter->m_sName);
@@ -953,6 +960,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::Float)lfValue);\n", iter->m_sName);
@@ -966,6 +974,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back((CX::Double)lfValue);\n", iter->m_sName);
@@ -979,6 +988,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back(sValue);\n", iter->m_sName);
@@ -992,6 +1002,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\t{1}.push_back(wsValue);\n", iter->m_sName);
@@ -1007,6 +1018,7 @@ public:
 						Print(out, "\t\t\t\t{{\n");
 						Print(out, "\t\t\t\t\tbreak;\n");
 						Print(out, "\t\t\t\t}\n");
+						Print(out, "\n");
 						Print(out, "\t\t\t\treturn status;\n");
 						Print(out, "\t\t\t}\n");
 						Print(out, "\t\t\tif ((status = tmp.Read(pReader)).IsNOK())\n");

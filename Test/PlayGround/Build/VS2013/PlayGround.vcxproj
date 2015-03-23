@@ -29,6 +29,7 @@
     <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Object.hpp" />
     <ClInclude Include="..\..\Src\Data_JSON_DataReaderDataWriter.hpp" />
     <ClInclude Include="..\..\Src\IO_SimpleBuffers.hpp" />
+    <ClInclude Include="..\..\Src\IO_SimpleBuffers_Data.hpp" />
     <ClInclude Include="..\..\Src\Test1Object.hpp" />
     <ClInclude Include="..\..\Src\Test2Object.hpp" />
   </ItemGroup>
@@ -84,25 +85,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround</IntDir>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround/</IntDir>
     <TargetName>console</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround</IntDir>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround/</IntDir>
     <TargetName>console</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround</IntDir>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround/</IntDir>
     <TargetName>console</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround</IntDir>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/PlayGround/</IntDir>
     <TargetName>console</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

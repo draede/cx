@@ -3,7 +3,6 @@
 
 
 #include "CX/IO/SimpleBuffers/Types.hpp"
-#include "CX/C/string.h"
 #include "Test1Object.hpp"
 
 
@@ -85,68 +84,171 @@ public:
 	{
 		Reset();
 		bool_val = true;
-		int8_val = -72;
-		uint8_val = 57;
-		int16_val = 5624;
-		uint16_val = 45406;
-		int32_val = -278133917;
-		uint32_val = 3130143205;
-		int64_val = 2055499496612306920;
-		uint64_val = 4251123706052777666;
-		float_val = 0.981898f;
-		double_val = 0.680597;
-		string_val = "g]gxwB[iM$@W8WD~cD_^zuE|Srk+_y>BSNt+L)dJ*te`p@6iP$2=9&";
-		wstring_val = L"VF]|IZGb2v/$";
+		int8_val = -76;
+		uint8_val = 60;
+		int16_val = -13938;
+		uint16_val = 47380;
+		int32_val = -1520684287;
+		uint32_val = 4860881;
+		int64_val = 7605027460018408644;
+		uint64_val = 15908131033522207010;
+		float_val = 0.342128f;
+		double_val = 0.180525;
+		string_val = "rg=vzTFv7wl>L%}-tgU<u@ga3,KzX):gKeKvGuh!fhN{2e[Eeb@{nVEA";
+		wstring_val = L"zD{?UV|2=DH!$";
 		obj1_val.SetupWithSomeValues();
-		for (CX::Size i = 0; i < 4; i++)
+		int8_arr.push_back(17);
+		int8_arr.push_back(24);
+		int8_arr.push_back(-58);
+		uint8_arr.push_back(238);
+		uint8_arr.push_back(99);
+		uint8_arr.push_back(141);
+		int16_arr.push_back(24420);
+		int16_arr.push_back(-20510);
+		int16_arr.push_back(-8790);
+		int16_arr.push_back(-6564);
+		int16_arr.push_back(22423);
+		int16_arr.push_back(20711);
+		int16_arr.push_back(-11461);
+		int16_arr.push_back(25155);
+		int16_arr.push_back(20293);
+		int16_arr.push_back(-20246);
+		uint16_arr.push_back(17335);
+		int32_arr.push_back(1854367863);
+		int32_arr.push_back(1546297437);
+		int32_arr.push_back(-669895169);
+		int32_arr.push_back(-2034133410);
+		int32_arr.push_back(1169026095);
+		int32_arr.push_back(-851237635);
+		int32_arr.push_back(-442647294);
+		int32_arr.push_back(1158647828);
+		int32_arr.push_back(-952488603);
+		int32_arr.push_back(-1272244980);
+		int32_arr.push_back(1534945582);
+		int32_arr.push_back(725098854);
+		int32_arr.push_back(193981055);
+		uint32_arr.push_back(887904401);
+		uint32_arr.push_back(642128002);
+		uint32_arr.push_back(431249111);
+		uint32_arr.push_back(1970460851);
+		uint32_arr.push_back(1112670331);
+		uint32_arr.push_back(3705503716);
+		uint32_arr.push_back(1681152367);
+		uint32_arr.push_back(1133642960);
+		uint32_arr.push_back(197090958);
+		int64_arr.push_back(7481962392306822546);
+		int64_arr.push_back(962401622083955450);
+		int64_arr.push_back(-7420189838855115594);
+		int64_arr.push_back(7866372933069231266);
+		int64_arr.push_back(-2857311654917044708);
+		int64_arr.push_back(374072189081915454);
+		int64_arr.push_back(6692001381333596330);
+		int64_arr.push_back(-244514102260245640);
+		int64_arr.push_back(4448842413213428198);
+		uint64_arr.push_back(13595318351870493168);
+		uint64_arr.push_back(1540131550239531026);
+		float_arr.push_back(0.892526f);
+		float_arr.push_back(0.828401f);
+		double_arr.push_back(0.387467);
+		double_arr.push_back(0.654012);
+		double_arr.push_back(0.257065);
+		double_arr.push_back(0.569768);
+		double_arr.push_back(0.235761);
+		double_arr.push_back(0.530244);
+		double_arr.push_back(0.075887);
+		string_arr.push_back("$F<GcZUIf-KG3s*Z,\\&(Ksz}TV1M+i1/(=>j$1pzX4{8p(437P@30");
+		string_arr.push_back("]");
+		string_arr.push_back("[r;9VKzx/ckL=LDw!'!aMu)]roPoyKlD");
+		string_arr.push_back("sP-4ZGk_R@+dSXx-#fS$8B={BV{ZIzN647|Pga7Q9Iqqx\"Wnp0`,Mm\\Q(@");
+		string_arr.push_back("CKckGO`<ae%n5@3W.f^QvrkU'S(rZz,0-%CYKR>");
+		string_arr.push_back("KQnvm=_]0>Z{El0{(Vs|9,V_P(/F/T%:b7Q$3`.h~\"O=0'[2Ymi66$_)=Y]u==W");
+		string_arr.push_back("Z%RwqISN~'~kBz-!|\"NX>3Vr");
+		string_arr.push_back("4td|}X4D+XF6u^eFD.$*'5$nwC4GW0K#Fe\"?7r-3!B+)fx>$:\"/9tyc");
+		wstring_arr.push_back(L"");
+		wstring_arr.push_back(L"#zP}Bc}Fz81{;yb$I&V^JVNd1[w6M8}FLu`Xkn<jufa8E70:U&P)Z}S[Fhv]#@t");
+		wstring_arr.push_back(L"7B}eb|?t@7?~DFXUtaps-H&");
+		wstring_arr.push_back(L"CDUoLRMNfrg]wD{G3YT[-|o`MRsl(\\B}8m*?Uztxm8Z)WDP\"0|6A~N*a~^");
+		wstring_arr.push_back(L"^`#!3{ejUi>>4<_{NW)X&.xl8.TQ;`u./,6Dp,8d9");
+		wstring_arr.push_back(L"'?UBF%{9phke;OEiF{:yZ+9hE");
+		wstring_arr.push_back(L"yV4O7Y\"fO.1;l:zcno~.z-3,#${aBE__)X\"n~bbxzSOiT[(st");
+		wstring_arr.push_back(L"U]`]o&3uu[0.S0KBg0B7~s<elz07;#FZESWk_IqUBz`D8BsZc?7YKLMmMDh}?6");
+		wstring_arr.push_back(L"@;RX%`X8\\H(YN<v'i5Cp&N~P?^Nw^{-C@qR<<fA~y,#9<g|8G6BQb&?;yl':V8A");
+		wstring_arr.push_back(L"-*4lp<vi1=KScC0;5g70y{81RJ@7WD&julopDo{gDilF>AL`T[L[=ZFU/rADH9;l");
+		wstring_arr.push_back(L"(e^jSb]_p1|(hPQZd$2FS]q31M$MvV|H($`|-2?Z-G");
+		wstring_arr.push_back(L"KgXiBt@F;'.DxX%fE<tn}I:fDfe/");
+		wstring_arr.push_back(L"i~CwH-%LoINV(&)=_Ptl'$$=+[3:Qz,JnY90;r}rRh8$ZTcPo(tQ|MgwiprR+t");
 		{
-			int8_arr.push_back(86);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 7; i++)
 		{
-			uint8_arr.push_back(15);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 13; i++)
 		{
-			int16_arr.push_back(-17049);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 2; i++)
 		{
-			uint16_arr.push_back(19603);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 5; i++)
 		{
-			int32_arr.push_back(576337358);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 8; i++)
 		{
-			uint32_arr.push_back(2868063281);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 14; i++)
 		{
-			int64_arr.push_back(-4163236853025903220);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 5; i++)
 		{
-			uint64_arr.push_back(8613499088194159208);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 3; i++)
 		{
-			float_arr.push_back(0.515141f);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 11; i++)
 		{
-			double_arr.push_back(0.140849);
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 5; i++)
 		{
-			string_arr.push_back("ex\\G]?T*!wq6jHieep#5MFThUcFh.t)+MF(Hl)!PG1ML`T?VkcKO`,i");
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 3; i++)
 		{
-			wstring_arr.push_back(L"cEe\"NXOwP*`\"c0s*j`@N?L-FYr3OHx\"Xiq%iXtc&L\"Y!Hk?fdeTpvZo");
+			My::Test::NameSpace::Test1Object v;
+
+			v.SetupWithSomeValues();
+			obj1_arr.push_back(v);
 		}
-		for (CX::Size i = 0; i < 8; i++)
 		{
 			My::Test::NameSpace::Test1Object v;
 

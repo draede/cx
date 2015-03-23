@@ -561,6 +561,15 @@
     <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\ObjectTester.hpp">
       <Filter>Header Files\IO\SimpleBuffers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryDataReader.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryDataWriter.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryData.hpp">
+      <Filter>Header Files\IO\SimpleBuffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -730,6 +739,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt64.c">
       <Filter>Contrib\TinyMT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\SimpleBuffers\BinaryDataReader.cpp">
+      <Filter>Source Files\IO\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\SimpleBuffers\BinaryDataWriter.cpp">
+      <Filter>Source Files\IO\SimpleBuffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

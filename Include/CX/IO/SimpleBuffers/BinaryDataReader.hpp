@@ -31,6 +31,7 @@
 
 #include "CX/IO/IInputStream.hpp"
 #include "CX/IO/IDataReader.hpp"
+#include "CX/Hash/xxHash32.hpp"
 #include "CX/Stack.hpp"
 #include "CX/APIDefs.hpp"
 
@@ -38,19 +39,19 @@
 namespace CX
 {
 
-namespace Data
+namespace IO
 {
 
-namespace JSON
+namespace SimpleBuffers
 {
 
-class CX_API DataReader : public IO::IDataReader
+class CX_API BinaryDataReader : public IO::IDataReader
 {
 public:
 
-	DataReader(IO::IInputStream *pInputStream);
+	BinaryDataReader(IO::IInputStream *pInputStream);
 
-	~DataReader();
+	~BinaryDataReader();
 
 	virtual Status Begin();
 
@@ -133,40 +134,22 @@ private:
 	Size             m_cbBufUsedSize;
 	Size             m_cbBufOffset;
 	bool             m_bIsEOF;
+	Hash::xxHash32   m_hash;
+	Byte             m_nCrArrayItem;
 #pragma warning(push)
 #pragma warning(disable: 4251)
 	StatesStack         m_stackStates;
 #pragma warning(push)
 
-	bool IsEOF();
+	Status Read(void *pData, Size cbSize);
 
-	bool IsValid();
-
-	Byte Get();
-
-	Status Next();
-
-	Status SkipWhiteSpaces();
-
-	Status SkipChar(Char ch);
-
-	bool CheckArrayEnd();
-
-	Status Read();
-
-	Status ReadBool(Bool *pbValue);
-
-	Status ReadInt(Int64 *pnValue);
-
-	Status ReadReal(Double *plfValue);
-
-	Status ReadString(String *psValue);
+	Status ReadOp(UInt8 nOp);
 
 };
 
-}//namespace JSON
+}//namespace SimpleBuffers
 
-}//namespace Data
+}//namespace IO
 
 }//namespace CX
 
