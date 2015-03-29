@@ -54,7 +54,16 @@ Bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision)
 	                   "#", "*", 'E', 0, 0, 0, 0);
 	double_conversion::StringBuilder             sb(szOutput, (int)cLen);
 
-	return cvt.ToFixed(lfValue, (int)cPrecision, &sb);
+	if (cvt.ToFixed(lfValue, (int)cPrecision, &sb))
+	{
+		return true;
+	}
+	if (cvt.ToExponential(lfValue, (int)cPrecision, &sb))
+	{
+		return true;
+	}
+
+	return false;
 }
 
 CX_API Bool UTF8toUTF16(const Char *szUTF8, WString *pwsUTF16, Size cUTF8Len/* = TYPE_SIZE_MAX*/)

@@ -61,6 +61,8 @@ public:
 
 	virtual Status Done(void *pCrypt);
 
+	static UInt32 Hash(const void *pData, Size cbSize, UInt32 nSeed = 0);
+
 private:
 
 	XXH32_state_t   m_state;

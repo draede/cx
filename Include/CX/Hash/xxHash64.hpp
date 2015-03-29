@@ -26,8 +26,12 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/xxHash32.hpp"
-#include "CX/Status.hpp"
+#pragma once
+
+
+#include "CX/Hash/IHash.hpp"
+#include "CX/APIDefs.hpp"
+#include "../../../Contrib/xxHash/Include/xxHash.h"
 
 
 namespace CX
@@ -36,71 +40,34 @@ namespace CX
 namespace Hash
 {
 
-const Char xxHash32::NAME[] = "xxHash32";
-
-xxHash32::xxHash32()
+class CX_API xxHash64 : public IHash
 {
-	Init();
-}
+public:
 
-xxHash32::~xxHash32()
-{
-}
+	static const Char     NAME[];
+	static const Size     SIZE   = 8;
 
-const Char *xxHash32::GetName()
-{
-	return NAME;
-}
+	xxHash64();
 
-Size xxHash32::GetSize()
-{
-	return SIZE;
-}
+	virtual ~xxHash64();
 
-Status xxHash32::Init(const void *pHash/* = NULL*/)
-{
-	XXH_errorcode ec;
+	virtual const Char *GetName();
 
-	if (NULL != pHash)
-	{
-		ec = XXH32_reset(&m_state, *((UInt32 *)pHash));
-	}
-	else
-	{
-		ec = XXH32_reset(&m_state, 0);
-	}
-	if (XXH_OK != ec)
-	{
-		return Status(Status_OperationFailed, "XXH32_reset failed with code {1}", (int)ec);
-	}
+	virtual Size GetSize();
 
-	return Status();
-}
+	virtual Status Init(const void *pCrypt = NULL);
 
-Status xxHash32::Update(const void *pBuffer, Size cbSize)
-{
-	XXH_errorcode ec;
+	virtual Status Update(const void *pBuffer, Size cbSize);
 
-	ec = XXH32_update(&m_state, pBuffer, cbSize);
-	if (XXH_OK != ec)
-	{
-		return Status(Status_OperationFailed, "XXH32_update failed with code {1}", (int)ec);
-	}
+	virtual Status Done(void *pCrypt);
 
-	return Status();
-}
+	static UInt64 Hash(const void *pData, Size cbSize, UInt64 nSeed = 0);
 
-Status xxHash32::Done(void *pHash)
-{
-	*((UInt32 *)pHash) = XXH32_digest(&m_state);
+private:
 
-	return Status();
-}
+	XXH64_state_t   m_state;
 
-UInt32 xxHash32::Hash(const void *pData, Size cbSize, UInt32 nSeed/* = 0*/)
-{
-	return XXH32(pData, cbSize, nSeed);
-}
+};
 
 }//namespace Hash
 

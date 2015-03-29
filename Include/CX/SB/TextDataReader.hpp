@@ -29,62 +29,76 @@
 #pragma once
 
 
-#include "CX/Types.hpp"
-#include "CX/String.hpp"
-#include "CX/Vector.hpp"
-#include "CX/IO/IDataReader.hpp"
-#include "CX/IO/IDataWriter.hpp"
-#include "CX/Util/RndGen.hpp"
-#include "CX/Status.hpp"
-#include "CX/C/string.h"
+#include "CX/SB/IDataReader.hpp"
+#include "CX/SB/Readers.hpp"
+#include "CX/IO/IInputStream.hpp"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace SB
 {
 
-namespace SimpleBuffers
-{
-
-typedef Vector<Bool>::Type      BoolArray;
-typedef Vector<Int8>::Type      Int8Array;
-typedef Vector<UInt8>::Type     UInt8Array;
-typedef Vector<Int16>::Type     Int16Array;
-typedef Vector<UInt16>::Type    UInt16Array;
-typedef Vector<Int32>::Type     Int32Array;
-typedef Vector<UInt32>::Type    UInt32Array;
-typedef Vector<Int64>::Type     Int64Array;
-typedef Vector<UInt64>::Type    UInt64Array;
-typedef Vector<Float>::Type     FloatArray;
-typedef Vector<Double>::Type    DoubleArray;
-typedef Vector<String>::Type    StringArray;
-typedef Vector<WString>::Type   WStringArray;
-
-
-class IObject
+class CX_API TextDataReader : public IDataReader
 {
 public:
 
-	virtual ~IObject() { }
+	TextDataReader(IO::IInputStream *pInputStream);
 
-	virtual void Reset() = 0;
+	~TextDataReader();
 
-	virtual void SetupWithSomeValues() = 0;
+	virtual Status BeginMember(const Char *szName);
 
-	virtual bool Compare(const IObject *pObj) = 0;
+	virtual Status EndMember();
 
-	virtual Status Read(IDataReader *pReader) = 0;
+	virtual Status BeginItem();
 
-	virtual Status Write(IDataWriter *pWriter) const = 0;
+	virtual Status EndItem();
+
+	virtual Status BeginObject(Size *pcCount);
+
+	virtual Status EndObject();
+
+	virtual Status BeginArray(Size *pcCount);
+
+	virtual Status EndArray();
+
+	virtual Status ReadBool(Bool *pbValue);
+
+	virtual Status ReadInt8(Int8 *pnValue);
+
+	virtual Status ReadUInt8(UInt8 *puValue);
+
+	virtual Status ReadInt16(Int16 *pnValue);
+
+	virtual Status ReadUInt16(UInt16 *puValue);
+
+	virtual Status ReadInt32(Int32 *pnValue);
+
+	virtual Status ReadUInt32(UInt32 *puValue);
+
+	virtual Status ReadInt64(Int64 *pnValue);
+
+	virtual Status ReadUInt64(UInt64 *puValue);
+
+	virtual Status ReadFloat(Float *pfValue);
+
+	virtual Status ReadDouble(Double *plfValue);
+
+	virtual Status ReadString(String *psValue);
+
+	virtual Status ReadWString(WString *pwsValue);
+
+private:
+
+
+	void   *m_pHelper;
 
 };
 
-
-}//namespace SimpleBuffers
-
-}//namespace IO
+}//namespace SB
 
 }//namespace CX
 

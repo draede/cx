@@ -26,83 +26,31 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/xxHash32.hpp"
+#pragma once
+
+
+#include "CX/Types.hpp"
 #include "CX/Status.hpp"
+#include "CX/Vector.hpp"
+#include "CX/Set.hpp"
+#include "CX/Map.hpp"
+#include "CX/Util/RndGen.hpp"
+#include "CX/Print.hpp"
+#include "sparsehash/sparse_hash_set"
+#include "sparsehash/sparse_hash_map"
+#include "CX/SB/SparseHashAllocator.hpp"
+#include "CX/SB/BoolForVector.h"
 
 
 namespace CX
 {
 
-namespace Hash
+namespace SB
 {
 
-const Char xxHash32::NAME[] = "xxHash32";
+template <typename T> static inline void TestInit(T &p);
 
-xxHash32::xxHash32()
-{
-	Init();
-}
-
-xxHash32::~xxHash32()
-{
-}
-
-const Char *xxHash32::GetName()
-{
-	return NAME;
-}
-
-Size xxHash32::GetSize()
-{
-	return SIZE;
-}
-
-Status xxHash32::Init(const void *pHash/* = NULL*/)
-{
-	XXH_errorcode ec;
-
-	if (NULL != pHash)
-	{
-		ec = XXH32_reset(&m_state, *((UInt32 *)pHash));
-	}
-	else
-	{
-		ec = XXH32_reset(&m_state, 0);
-	}
-	if (XXH_OK != ec)
-	{
-		return Status(Status_OperationFailed, "XXH32_reset failed with code {1}", (int)ec);
-	}
-
-	return Status();
-}
-
-Status xxHash32::Update(const void *pBuffer, Size cbSize)
-{
-	XXH_errorcode ec;
-
-	ec = XXH32_update(&m_state, pBuffer, cbSize);
-	if (XXH_OK != ec)
-	{
-		return Status(Status_OperationFailed, "XXH32_update failed with code {1}", (int)ec);
-	}
-
-	return Status();
-}
-
-Status xxHash32::Done(void *pHash)
-{
-	*((UInt32 *)pHash) = XXH32_digest(&m_state);
-
-	return Status();
-}
-
-UInt32 xxHash32::Hash(const void *pData, Size cbSize, UInt32 nSeed/* = 0*/)
-{
-	return XXH32(pData, cbSize, nSeed);
-}
-
-}//namespace Hash
+}//namespace SB
 
 }//namespace CX
 

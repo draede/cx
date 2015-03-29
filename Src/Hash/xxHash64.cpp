@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/xxHash32.hpp"
+#include "CX/Hash/xxHash64.hpp"
 #include "CX/Status.hpp"
 
 
@@ -36,70 +36,70 @@ namespace CX
 namespace Hash
 {
 
-const Char xxHash32::NAME[] = "xxHash32";
+const Char xxHash64::NAME[] = "xxHash64";
 
-xxHash32::xxHash32()
+xxHash64::xxHash64()
 {
 	Init();
 }
 
-xxHash32::~xxHash32()
+xxHash64::~xxHash64()
 {
 }
 
-const Char *xxHash32::GetName()
+const Char *xxHash64::GetName()
 {
 	return NAME;
 }
 
-Size xxHash32::GetSize()
+Size xxHash64::GetSize()
 {
 	return SIZE;
 }
 
-Status xxHash32::Init(const void *pHash/* = NULL*/)
+Status xxHash64::Init(const void *pHash/* = NULL*/)
 {
 	XXH_errorcode ec;
 
 	if (NULL != pHash)
 	{
-		ec = XXH32_reset(&m_state, *((UInt32 *)pHash));
+		ec = XXH64_reset(&m_state, *((UInt64 *)pHash));
 	}
 	else
 	{
-		ec = XXH32_reset(&m_state, 0);
+		ec = XXH64_reset(&m_state, 0);
 	}
 	if (XXH_OK != ec)
 	{
-		return Status(Status_OperationFailed, "XXH32_reset failed with code {1}", (int)ec);
+		return Status(Status_OperationFailed, "XXH64_reset failed with code {1}", (int)ec);
 	}
 
 	return Status();
 }
 
-Status xxHash32::Update(const void *pBuffer, Size cbSize)
+Status xxHash64::Update(const void *pBuffer, Size cbSize)
 {
 	XXH_errorcode ec;
 
-	ec = XXH32_update(&m_state, pBuffer, cbSize);
+	ec = XXH64_update(&m_state, pBuffer, cbSize);
 	if (XXH_OK != ec)
 	{
-		return Status(Status_OperationFailed, "XXH32_update failed with code {1}", (int)ec);
+		return Status(Status_OperationFailed, "XXH64_update failed with code {1}", (int)ec);
 	}
 
 	return Status();
 }
 
-Status xxHash32::Done(void *pHash)
+Status xxHash64::Done(void *pHash)
 {
-	*((UInt32 *)pHash) = XXH32_digest(&m_state);
+	*((UInt64 *)pHash) = XXH64_digest(&m_state);
 
 	return Status();
 }
 
-UInt32 xxHash32::Hash(const void *pData, Size cbSize, UInt32 nSeed/* = 0*/)
+UInt64 xxHash64::Hash(const void *pData, Size cbSize, UInt64 nSeed/* = 0*/)
 {
-	return XXH32(pData, cbSize, nSeed);
+	return XXH64(pData, cbSize, nSeed);
 }
 
 }//namespace Hash

@@ -30,58 +30,51 @@
 
 
 #include "CX/Types.hpp"
+#include "CX/Status.hpp"
 #include "CX/String.hpp"
-#include "CX/Map.hpp"
 #include "CX/Vector.hpp"
-#include "CX/IO/SimpleBuffers/Field.hpp"
-#include "CX/IO/SimpleBuffers/Types.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace SB
 {
 
-namespace SimpleBuffers
-{
-
-class Object
+class Member
 {
 public:
 
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	String             m_sName;
-	FieldsVector       m_vectorFields;
-#pragma warning(pop)
-
-	bool operator==(const Object &obj)
+	enum Type
 	{
-		if (0 != cx_strcmp(m_sName.c_str(), obj.m_sName.c_str()))
-		{
-			return false;
-		}
-		if (m_vectorFields.size() != obj.m_vectorFields.size())
-		{
-			return false;
-		}
-		for (Size i = 0; i < m_vectorFields.size(); i++)
-		{
-			if (!(m_vectorFields[i] == obj.m_vectorFields[i]))
-			{
-				return false;
-			}
-		}
+		Type_Scalar,  //def => name: m_sValType;
+		Type_Vector,  //def => name: vector<m_sValType>;
+		Type_Set,     //def => name: set<m_sKeyType>;
+		Type_Map,     //def => name: map<m_sKeyType, m_sValType>;
+		Type_HashSet, //def => name: hashset<m_sKeyType>;
+		Type_HashMap, //def => name: hashmap<m_sKeyType, m_sValType>;
+	};
 
-		return true;
+	String  m_sName;
+	Type    m_nType;
+	String  m_sKeyType;
+	String  m_sValType;
+
+	Member()
+	{
+	}
+
+	Member(const Char *szName, const Char *szKeyType, Type nType = Type_Scalar, const Char *szValType = "")
+	{
+		m_sName    = szName;
+		m_nType    = nType;
+		m_sKeyType = szKeyType;
+		m_sValType = szValType;
 	}
 
 };
 
-typedef Map<String, Object>::Type   ObjectsMap;
-
-}//namespace SimpleBuffers
+typedef CX::Vector<Member>::Type   MembersVector;
 
 }//namespace SB
 

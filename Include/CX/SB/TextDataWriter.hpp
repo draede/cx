@@ -29,9 +29,9 @@
 #pragma once
 
 
+#include "CX/SB/IDataWriter.hpp"
+#include "CX/SB/Writers.hpp"
 #include "CX/IO/IOutputStream.hpp"
-#include "CX/IO/IDataWriter.hpp"
-#include "CX/Hash/xxHash32.hpp"
 #include "CX/Stack.hpp"
 #include "CX/APIDefs.hpp"
 
@@ -39,59 +39,58 @@
 namespace CX
 {
 
-namespace IO
+namespace SB
 {
 
-namespace SimpleBuffers
-{
-
-class CX_API BinaryDataWriter : public CX::IO::IDataWriter
+class CX_API TextDataWriter : public IDataWriter
 {
 public:
 
-	BinaryDataWriter(IO::IOutputStream *pOutputStream);
+	TextDataWriter(IO::IOutputStream *pOutputStream);
 
-	~BinaryDataWriter();
+	~TextDataWriter();
 
-	virtual Status Begin();
+	virtual Status BeginMember(const Char *szName);
 
-	virtual Status End();
+	virtual Status EndMember();
 
-	virtual Status BeginObjectObject(const Char *szName);
+	virtual Status BeginItem();
 
-	virtual Status EndObjectObject();
+	virtual Status EndItem();
 
-	virtual Status BeginObjectArray(const Char *szName);
+	virtual Status BeginObject(Size cCount);
 
-	virtual Status EndObjectArray();
+	virtual Status EndObject();
 
-	virtual Status WriteObjectBool(const Char *szName, Bool bValue);
+	virtual Status BeginArray(Size cCount);
 
-	virtual Status WriteObjectInt(const Char *szName, Int64 nValue);
+	virtual Status EndArray();
 
-	virtual Status WriteObjectReal(const Char *szName, Double lfValue);
+	virtual Status WriteBool(Bool bValue);
 
-	virtual Status WriteObjectString(const Char *szName, const Char *szValue);
+	virtual Status WriteInt8(Int8 nValue);
 
-	virtual Status WriteObjectWString(const Char *szName, const WChar *wszValue);
+	virtual Status WriteUInt8(UInt8 uValue);
 
-	virtual Status BeginArrayObject();
+	virtual Status WriteInt16(Int16 nValue);
 
-	virtual Status EndArrayObject();
+	virtual Status WriteUInt16(UInt16 uValue);
 
-	virtual Status BeginArrayArray();
+	virtual Status WriteInt32(Int32 nValue);
 
-	virtual Status EndArrayArray();
+	virtual Status WriteUInt32(UInt32 uValue);
 
-	virtual Status WriteArrayBool(Bool bValue);
+	virtual Status WriteInt64(Int64 nValue);
 
-	virtual Status WriteArrayInt(Int64 nValue);
+	virtual Status WriteUInt64(UInt64 uValue);
 
-	virtual Status WriteArrayReal(Double lfValue);
+	virtual Status WriteFloat(Float fValue);
 
-	virtual Status WriteArrayString(const Char *szValue);
+	virtual Status WriteDouble(Double lfValue);
 
-	virtual Status WriteArrayWString(const WChar *wszValue);
+	virtual Status WriteString(const Char *szValue);
+
+	virtual Status WriteWString(const WChar *wszValue);
 
 private:
 
@@ -99,6 +98,8 @@ private:
 	{
 		State_Object,
 		State_Array,
+		State_Member,
+		State_Item,
 	};
 
 	typedef struct _StateData
@@ -111,31 +112,55 @@ private:
 		{
 			this->nState = nState;
 			this->cCount = 0;
+			this->cIndex = 0;
+		}
+
+		_StateData(State nState, Size cCount)
+		{
+			this->nState = nState;
+			this->cCount = cCount;
+			this->cIndex = 0;
 		}
 
 		State nState;
 		Size  cCount;
+		Size  cIndex;
 	}StateData;
 
 	typedef Stack<StateData>::Type   StatesStack;
 
-	IO::IOutputStream   *m_pOutputStream;
-	Hash::xxHash32       m_hash;
 #pragma warning(push)
 #pragma warning(disable: 4251)
 	StatesStack         m_stackStates;
 	String              m_sIndent;
-#pragma warning(push)
+#pragma warning(pop)
+	Size                m_cIndent;
+	IO::IOutputStream   *m_pOutputStream;
 
-	Status Write(const void *pData, Size cbSize);
+	Status WriteIndent();
 
-	Status WriteOp(UInt8 nOp);
+	template <typename T>
+	inline Status WriteValue(T p)
+	{
+		if (NULL == m_pOutputStream || !m_pOutputStream->IsOK())
+		{
+			return Status(Status_NotInitialized, "Invalid output stream");
+		}
+		if (m_stackStates.empty())
+		{
+			return Status(Status_InvalidCall, "Out of order");
+		}
+		if (State_Member != m_stackStates.top().nState && State_Item != m_stackStates.top().nState)
+		{
+			return Status(Status_InvalidCall, "Out of order");
+		}
+
+		return Print(m_pOutputStream, "{1}", p);
+	}
 
 };
 
-}//namespace SimpleBuffers
-
-}//namespace IO
+}//namespace SB
 
 }//namespace CX
 

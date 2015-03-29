@@ -26,83 +26,62 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/xxHash32.hpp"
+#pragma once
+
+
+#include "CX/Types.hpp"
 #include "CX/Status.hpp"
+#include "CX/Alloc.hpp"
+#include "CX/SB/Comparators.hpp"
+#include "CX/SB/Hashers.hpp"
+#include "CX/SB/BoolForVector.hpp"
 
 
 namespace CX
 {
 
-namespace Hash
+namespace SB
 {
 
-const Char xxHash32::NAME[] = "xxHash32";
-
-xxHash32::xxHash32()
+template <typename T, typename A = STLAlloc<T> >
+struct Vector
 {
-	Init();
-}
+	typedef std::vector<T, A>   Type;
+};
 
-xxHash32::~xxHash32()
+template <>
+struct Vector<Bool>
 {
-}
+	typedef std::vector<BoolForVector, STLAlloc<BoolForVector> >     Type;
+};
 
-const Char *xxHash32::GetName()
+template <typename K, typename C = Less<K>, typename A = STLAlloc<K> >
+struct Set
 {
-	return NAME;
-}
+	typedef std::set<K, C, A>   Type;
+};
 
-Size xxHash32::GetSize()
+template <typename K, typename V, typename C = Less<K>, typename A = STLAlloc<std::pair<const K, V> > > 
+struct Map
 {
-	return SIZE;
-}
+	typedef std::map<K, V, C, A>   Type;
+};
 
-Status xxHash32::Init(const void *pHash/* = NULL*/)
+
+template <typename K, typename H = Hasher<K>, typename E = Comparator<K>, typename A = SparseHashAllocator<K> >
+struct HashSet
 {
-	XXH_errorcode ec;
+	typedef google::sparse_hash_set<K, H, E, A>   Type;
+};
 
-	if (NULL != pHash)
-	{
-		ec = XXH32_reset(&m_state, *((UInt32 *)pHash));
-	}
-	else
-	{
-		ec = XXH32_reset(&m_state, 0);
-	}
-	if (XXH_OK != ec)
-	{
-		return Status(Status_OperationFailed, "XXH32_reset failed with code {1}", (int)ec);
-	}
-
-	return Status();
-}
-
-Status xxHash32::Update(const void *pBuffer, Size cbSize)
+template <typename K, typename V, typename H = Hasher<K>, typename E = Comparator<K>, 
+          typename A = SparseHashAllocator<std::pair<const K, V> > > 
+struct HashMap
 {
-	XXH_errorcode ec;
+	typedef google::sparse_hash_map<K, V, H, E, A>   Type;
+};
 
-	ec = XXH32_update(&m_state, pBuffer, cbSize);
-	if (XXH_OK != ec)
-	{
-		return Status(Status_OperationFailed, "XXH32_update failed with code {1}", (int)ec);
-	}
-
-	return Status();
-}
-
-Status xxHash32::Done(void *pHash)
-{
-	*((UInt32 *)pHash) = XXH32_digest(&m_state);
-
-	return Status();
-}
-
-UInt32 xxHash32::Hash(const void *pData, Size cbSize, UInt32 nSeed/* = 0*/)
-{
-	return XXH32(pData, cbSize, nSeed);
-}
-
-}//namespace Hash
+}//namespace SB
 
 }//namespace CX
 

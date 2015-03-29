@@ -76,8 +76,6 @@
     <ClInclude Include="..\..\Include\CX\C\string.h" />
     <ClInclude Include="..\..\Include\CX\C\Types.h" />
     <ClInclude Include="..\..\Include\CX\C\Version.h" />
-    <ClInclude Include="..\..\Include\CX\Data\JSON\DataReader.hpp" />
-    <ClInclude Include="..\..\Include\CX\Data\JSON\DataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\SAXParser.hpp" />
     <ClInclude Include="..\..\Include\CX\Deque.hpp" />
@@ -91,6 +89,7 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA384Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp" />
+    <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp" />
@@ -100,15 +99,6 @@
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryData.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryDataReader.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\BinaryDataWriter.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Field.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Generator.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\ObjectTester.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\ProtoParser.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Object.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\SimpleBuffers\Types.hpp" />
     <ClInclude Include="..\..\Include\CX\Limits.hpp" />
     <ClInclude Include="..\..\Include\CX\List.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.hpp" />
@@ -123,6 +113,26 @@
     <ClInclude Include="..\..\Include\CX\Platform.hpp" />
     <ClInclude Include="..\..\Include\CX\Print.hpp" />
     <ClInclude Include="..\..\Include\CX\Queue.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\BinaryData.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\BinaryDataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\BinaryDataWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\BoolForVector.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Comparators.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\DefIniters.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Generator.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Hashers.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\IDataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\IDataWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Member.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Object.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Parser.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Readers.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\SparseHashAllocator.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\TestIniters.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\TextDataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\TextDataWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Types.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Writers.hpp" />
     <ClInclude Include="..\..\Include\CX\Set.hpp" />
     <ClInclude Include="..\..\Include\CX\Slice.hpp" />
     <ClInclude Include="..\..\Include\CX\Stack.hpp" />
@@ -282,8 +292,6 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Data\JSON\JSONDataReader.cpp" />
-    <ClCompile Include="..\..\Src\Data\JSON\JSONDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp" />
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />
@@ -293,20 +301,23 @@
     <ClCompile Include="..\..\Src\Hash\SHA384Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash32.cpp" />
+    <ClCompile Include="..\..\Src\Hash\xxHash64.cpp" />
     <ClCompile Include="..\..\Src\IO\FileInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FileOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
     <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
-    <ClCompile Include="..\..\Src\IO\SimpleBuffers\BinaryDataReader.cpp" />
-    <ClCompile Include="..\..\Src\IO\SimpleBuffers\BinaryDataWriter.cpp" />
-    <ClCompile Include="..\..\Src\IO\SimpleBuffers\ProtoParser.cpp" />
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
+    <ClCompile Include="..\..\Src\SB\BinaryDataReader.cpp" />
+    <ClCompile Include="..\..\Src\SB\BinaryDataWriter.cpp" />
+    <ClCompile Include="..\..\Src\SB\Parser.cpp" />
+    <ClCompile Include="..\..\Src\SB\TextDataReader.cpp" />
+    <ClCompile Include="..\..\Src\SB\TextDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
     <ClCompile Include="..\..\Src\Str\HexBinStr.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp" />
@@ -469,9 +480,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -488,9 +499,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -510,9 +521,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -529,9 +540,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -550,9 +561,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -573,9 +584,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -599,9 +610,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -622,9 +633,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;FARMHASH_OPTIONAL_BUILTIN_EXPECT;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -84,7 +84,18 @@ int main(int argc, char *argv[])
 				sPath += "\\";
 			}
 		}
-		sPath += iter->first;
+
+		const Char *pPos = cx_strrchr(iter->first.c_str(), '.');
+
+		if (NULL == pPos)
+		{
+			sPath += iter->first;
+		}
+		else
+		{
+			sPath += pPos + 1;
+		}
+
 		sPath += ".hpp";
 
 		if ((status = IO::SimpleBuffers::Generator::GenerateCPPWithPath(&iter->second, sPath.c_str())).IsNOK())

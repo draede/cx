@@ -26,83 +26,60 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/xxHash32.hpp"
-#include "CX/Status.hpp"
+#pragma once
+
+
+#include "CX/Types.hpp"
 
 
 namespace CX
 {
 
-namespace Hash
+namespace SB
 {
 
-const Char xxHash32::NAME[] = "xxHash32";
-
-xxHash32::xxHash32()
+//thanks for the std::vector<bool> !!!
+//http://stackoverflow.com/questions/670308/alternative-to-vectorbool
+class BoolForVector
 {
-	Init();
-}
+public:
 
-xxHash32::~xxHash32()
-{
-}
-
-const Char *xxHash32::GetName()
-{
-	return NAME;
-}
-
-Size xxHash32::GetSize()
-{
-	return SIZE;
-}
-
-Status xxHash32::Init(const void *pHash/* = NULL*/)
-{
-	XXH_errorcode ec;
-
-	if (NULL != pHash)
+	BoolForVector()
 	{
-		ec = XXH32_reset(&m_state, *((UInt32 *)pHash));
-	}
-	else
-	{
-		ec = XXH32_reset(&m_state, 0);
-	}
-	if (XXH_OK != ec)
-	{
-		return Status(Status_OperationFailed, "XXH32_reset failed with code {1}", (int)ec);
 	}
 
-	return Status();
-}
-
-Status xxHash32::Update(const void *pBuffer, Size cbSize)
-{
-	XXH_errorcode ec;
-
-	ec = XXH32_update(&m_state, pBuffer, cbSize);
-	if (XXH_OK != ec)
+	BoolForVector(bool bValue)
 	{
-		return Status(Status_OperationFailed, "XXH32_update failed with code {1}", (int)ec);
+		m_bValue = bValue;
 	}
 
-	return Status();
-}
+	BoolForVector(const BoolForVector &bfv)
+	{
+		m_bValue = bfv.m_bValue;
+	}
 
-Status xxHash32::Done(void *pHash)
-{
-	*((UInt32 *)pHash) = XXH32_digest(&m_state);
+	operator Bool() const
+	{
+		return m_bValue;
+	}
 
-	return Status();
-}
+	Bool *operator&()
+	{
+		return &m_bValue;
+	}
 
-UInt32 xxHash32::Hash(const void *pData, Size cbSize, UInt32 nSeed/* = 0*/)
-{
-	return XXH32(pData, cbSize, nSeed);
-}
+	const Bool *const operator&() const
+	{
+		return &m_bValue;
+	}
 
-}//namespace Hash
+private:
+
+	Bool m_bValue;
+
+};
+
+}//namespace SB
 
 }//namespace CX
 
