@@ -19,17 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\IO_SimpleBuffers_Generator.hpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />
     <ClCompile Include="..\..\Src\Str_UTF8.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Field.hpp" />
-    <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Generator.hpp" />
-    <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Object.hpp" />
-    <ClInclude Include="..\..\Src\Data_JSON_DataReaderDataWriter.hpp" />
-    <ClInclude Include="..\..\Src\IO_SimpleBuffers.hpp" />
-    <ClInclude Include="..\..\Src\IO_SimpleBuffers_Data.hpp" />
     <ClInclude Include="..\..\Src\Test1Object.hpp" />
     <ClInclude Include="..\..\Src\Test2Object.hpp" />
   </ItemGroup>

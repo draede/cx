@@ -22,7 +22,7 @@
     <ClCompile Include="..\..\Src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Generator.hpp" />
+    <ClInclude Include="..\..\..\..\Include\CX\SB\Generator.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>

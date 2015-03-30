@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Include\CX\IO\SimpleBuffers\Generator.hpp">
+    <ClInclude Include="..\..\..\..\Include\CX\SB\Generator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

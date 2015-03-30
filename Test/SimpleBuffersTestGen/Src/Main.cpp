@@ -27,17 +27,205 @@
  */ 
 
 #include "CX/Util/RndGen.hpp"
-#include "CX/IO/SimpleBuffers/Object.hpp"
-#include "CX/IO/SimpleBuffers/Generator.hpp"
-#include "CX/IO/SimpleBuffers/ProtoParser.hpp"
+#include "CX/SB/Object.hpp"
+#include "CX/SB/Generator.hpp"
+#include "CX/SB/Parser.hpp"
 #include "CX/C/ctype.h"
 
 
-void GenerateObject(CX::IO::SimpleBuffers::ObjectsMap *pMapSimpleObjects, 
-                    CX::IO::SimpleBuffers::ObjectsMap *pMapComplexObjects,
+using namespace CX;
+
+
+const Char *GetSimpleType()
+{
+	UInt32 nType = Util::RndGen::Get().GetUInt32() % 16;
+
+	switch (nType)
+	{
+		case 0: return "bool";
+		case 1: return "int8";
+		case 2: return "uint8";
+		case 3: return "int16";
+		case 4: return "uint16";
+		case 5: return "int32";
+		case 6: return "uint32";
+		case 7: return "int64";
+		case 8: return "uint64";
+		case 9: return "float";
+		case 10: return "double";
+		case 11: return "string";
+		case 12: return "wstring";
+	}
+
+	return "";
+}
+
+const Char *GetType(const SB::ObjectsMap &mapSimpleObjects, const SB::ObjectsMap &mapComplexObjects, 
+                    bool bForceBase, bool bForceUseObj, bool bUseComplex)
+{
+	bool bBase;
+	bool bComplex;
+
+	if (bForceBase)
+	{
+		bBase    = true;
+		bComplex = false;
+	}
+	else
+	{
+		if (bForceUseObj)
+		{
+			if (bUseComplex)
+			{
+				if (!mapComplexObjects.empty())
+				{
+					bBase    = false;
+					bComplex = true;
+				}
+				else
+				if (!mapSimpleObjects.empty())
+				{
+					bBase    = false;
+					bComplex = false;
+				}
+				else
+				{
+					bBase    = true;
+					bComplex = false;
+				}
+			}
+			else
+			{
+				if (!mapSimpleObjects.empty())
+				{
+					bBase    = false;
+					bComplex = false;
+				}
+				else
+				if (!mapComplexObjects.empty())
+				{
+					bBase    = false;
+					bComplex = true;
+				}
+				else
+				{
+					bBase    = true;
+					bComplex = false;
+				}
+			}
+		}
+		else
+		{
+			bBase = Util::RndGen::Get().GetBool();
+			if (bBase)
+			{
+				bComplex = false;
+			}
+			else
+			{
+				if (!mapSimpleObjects.empty())
+				{
+					bComplex = false;
+				}
+				else
+				if (!mapComplexObjects.empty())
+				{
+					bComplex = true;
+				}
+				else
+				{
+					bBase    = true;
+					bComplex = false;
+				}
+			}
+		}
+	}
+
+	if (bBase)
+	{
+		return GetSimpleType();
+	}
+	else
+	{
+		if (bComplex)
+		{
+			SB::ObjectsMap::const_iterator iter   = mapComplexObjects.begin();
+			Size                           cIndex = Util::RndGen::Get().GetSize() % mapComplexObjects.size();
+
+			for (Size i = 0; i < cIndex; i++)
+			{
+				++iter;
+			}
+
+			return iter->second.m_sName.c_str();
+		}
+		else
+		{
+			SB::ObjectsMap::const_iterator iter   = mapSimpleObjects.begin();
+			Size                           cIndex = Util::RndGen::Get().GetSize() % mapSimpleObjects.size();
+
+			for (Size i = 0; i < cIndex; i++)
+			{
+				++iter;
+			}
+
+			return iter->second.m_sName.c_str();
+		}
+	}
+
+	UInt32 nType = Util::RndGen::Get().GetUInt32() % 16;
+
+	switch (nType)
+	{
+		case 0: return "bool";
+		case 1: return "int8";
+		case 2: return "uint8";
+		case 3: return "int16";
+		case 4: return "uint16";
+		case 5: return "int32";
+		case 6: return "uint32";
+		case 7: return "int64";
+		case 8: return "uint64";
+		case 9: return "float";
+		case 10: return "double";
+		case 11: return "string";
+		case 12: return "wstring";
+	}
+
+	return "";
+}
+
+bool IsSimpleType(const Char *szType)
+{
+	if (0 == cx_strcmp(szType, "bool")) return true;
+	else if (0 == cx_strcmp(szType, "int8")) return true;
+	else if (0 == cx_strcmp(szType, "uint8")) return true;
+	else if (0 == cx_strcmp(szType, "int16")) return true;
+	else if (0 == cx_strcmp(szType, "uint16")) return true;
+	else if (0 == cx_strcmp(szType, "int32")) return true;
+	else if (0 == cx_strcmp(szType, "uint32")) return true;
+	else if (0 == cx_strcmp(szType, "int64")) return true;
+	else if (0 == cx_strcmp(szType, "uint64")) return true;
+	else if (0 == cx_strcmp(szType, "float")) return true;
+	else if (0 == cx_strcmp(szType, "double")) return true;
+	else if (0 == cx_strcmp(szType, "string")) return true;
+	else if (0 == cx_strcmp(szType, "wstring")) return true;
+	else return false;
+}
+
+void GenerateObject(SB::ObjectsMap &mapSimpleObjects, SB::ObjectsMap &mapComplexObjects,
                     CX::Size cMinFields, CX::Size cMaxFields, bool bComplex)
 {
-	CX::IO::SimpleBuffers::Object obj;
+	SB::Object obj;
+	bool       bForce;
+	bool       bIsComplex;
+
+	if (mapSimpleObjects.empty() && mapComplexObjects.empty())
+	{
+		bComplex = false;
+	}
+
+	bIsComplex = false;
 
 	for (;;)
 	{
@@ -49,11 +237,11 @@ void GenerateObject(CX::IO::SimpleBuffers::ObjectsMap *pMapSimpleObjects,
 		sName       += obj.m_sName;
 		obj.m_sName = sName;
 
-		if (pMapSimpleObjects->end() != pMapSimpleObjects->find(obj.m_sName))
+		if (mapSimpleObjects.end() != mapSimpleObjects.find(obj.m_sName))
 		{
 			continue;
 		}
-		if (pMapComplexObjects->end() != pMapComplexObjects->find(obj.m_sName))
+		if (mapComplexObjects.end() != mapComplexObjects.find(obj.m_sName))
 		{
 			continue;
 		}
@@ -65,33 +253,170 @@ void GenerateObject(CX::IO::SimpleBuffers::ObjectsMap *pMapSimpleObjects,
 
 	for (CX::Size i = 0; i < cFields; i++)
 	{
-		CX::IO::SimpleBuffers::Field field;
+		SB::Member member;
 
 		for (;;)
 		{
-			CX::Util::RndGen::Get().GetString(&field.m_sName, 1, 64, 
+			CX::Util::RndGen::Get().GetString(&member.m_sName, 1, 64, 
 			                                  "_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
 
 			CX::String sName;
 
-			sName         = "sbt_";
-			sName         += field.m_sName;
-			field.m_sName = sName;
+			sName          = "sbt_";
+			sName          += member.m_sName;
+			member.m_sName = sName;
 
-			if (pMapSimpleObjects->end() != pMapSimpleObjects->find(field.m_sName))
+			if (mapSimpleObjects.end() != mapSimpleObjects.find(member.m_sName))
 			{
 				continue;
 			}
-			if (pMapComplexObjects->end() != pMapComplexObjects->find(field.m_sName))
+			if (mapComplexObjects.end() != mapComplexObjects.find(member.m_sName))
 			{
 				continue;
+			}
+
+			member.m_nType = (SB::Member::Type)(Util::RndGen::Get().GetSize() % 6);
+
+			bForce = false;
+			if (bComplex)
+			{
+				bForce = true;
+				for (SB::MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
+				{
+					if (SB::Member::Type_Scalar == member.m_nType)
+					{
+						if (!IsSimpleType(iter->m_sValType.c_str()))
+						{
+							bForce = false;
+							break;
+						}
+					}
+					else
+					if (SB::Member::Type_Vector == member.m_nType)
+					{
+						if (!IsSimpleType(iter->m_sValType.c_str()))
+						{
+							bForce = false;
+							break;
+						}
+					}
+					else
+					if (SB::Member::Type_Set == member.m_nType)
+					{
+						if (!IsSimpleType(iter->m_sKeyType.c_str()))
+						{
+							bForce = false;
+							break;
+						}
+					}
+					else
+					if (SB::Member::Type_Map == member.m_nType)
+					{
+						if (!IsSimpleType(iter->m_sKeyType.c_str()))
+						{
+							bForce = false;
+							break;
+						}
+						if (!IsSimpleType(iter->m_sValType.c_str()))
+						{
+							bForce = false;
+							break;
+						}
+					}
+					else
+					if (SB::Member::Type_HashSet == member.m_nType)
+					{
+						if (!IsSimpleType(iter->m_sKeyType.c_str()))
+						{
+							bForce = false;
+							break;
+						}
+					}
+					else
+					if (SB::Member::Type_HashMap == member.m_nType)
+					{
+						if (!IsSimpleType(iter->m_sKeyType.c_str()))
+						{
+							bForce = false;
+							break;
+						}
+						if (!IsSimpleType(iter->m_sValType.c_str()))
+						{
+							bForce = false;
+							break;
+						}
+					}
+				}
+			}
+
+			if (SB::Member::Type_Scalar == member.m_nType)
+			{
+				member.m_sValType = GetType(mapSimpleObjects, mapComplexObjects, false, bForce, bComplex);
+				if (IsSimpleType(member.m_sValType.c_str()))
+				{
+					bIsComplex = true;
+				}
+			}
+			else
+			if (SB::Member::Type_Vector == member.m_nType)
+			{
+				member.m_sValType = GetType(mapSimpleObjects, mapComplexObjects, false, bForce, bComplex);
+				if (IsSimpleType(member.m_sValType.c_str()))
+				{
+					bIsComplex = true;
+				}
+			}
+			else
+			if (SB::Member::Type_Set == member.m_nType)
+			{
+				member.m_sKeyType = GetType(mapSimpleObjects, mapComplexObjects, true, false, false);
+				if (IsSimpleType(member.m_sKeyType.c_str()))
+				{
+					bIsComplex = true;
+				}
+			}
+			else
+			if (SB::Member::Type_Map == member.m_nType)
+			{
+				member.m_sKeyType = GetType(mapSimpleObjects, mapComplexObjects, true, false, false);
+				member.m_sValType = GetType(mapSimpleObjects, mapComplexObjects, false, bForce, bComplex);
+				if (IsSimpleType(member.m_sKeyType.c_str()))
+				{
+					bIsComplex = true;
+				}
+				if (IsSimpleType(member.m_sValType.c_str()))
+				{
+					bIsComplex = true;
+				}
+			}
+			else
+			if (SB::Member::Type_HashSet == member.m_nType)
+			{
+				member.m_sKeyType = GetType(mapSimpleObjects, mapComplexObjects, true, false, false);
+				if (IsSimpleType(member.m_sKeyType.c_str()))
+				{
+					bIsComplex = true;
+				}
+			}
+			else
+			if (SB::Member::Type_HashMap == member.m_nType)
+			{
+				member.m_sKeyType = GetType(mapSimpleObjects, mapComplexObjects, true, false, false);
+				member.m_sValType = GetType(mapSimpleObjects, mapComplexObjects, false, bForce, bComplex);
+				if (IsSimpleType(member.m_sKeyType.c_str()))
+				{
+					bIsComplex = true;
+				}
+				if (IsSimpleType(member.m_sValType.c_str()))
+				{
+					bIsComplex = true;
+				}
 			}
 
 			CX::Bool bContinue = false;
-			for (CX::IO::SimpleBuffers::FieldsVector::iterator iter = obj.m_vectorFields.begin(); 
-			     iter != obj.m_vectorFields.end(); ++iter)
+			for (SB::MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 			{
-				if (0 == cx_strcmp(iter->m_sName.c_str(), field.m_sName.c_str()))
+				if (0 == cx_strcmp(iter->m_sName.c_str(), member.m_sName.c_str()))
 				{
 					bContinue = true;
 					break;
@@ -105,104 +430,20 @@ void GenerateObject(CX::IO::SimpleBuffers::ObjectsMap *pMapSimpleObjects,
 			break;
 		}
 		
-		field.m_bIsVector = CX::Util::RndGen::Get().GetBool();
-
-		if (bComplex && !pMapSimpleObjects->empty())
-		{
-			field.m_nType = (CX::IO::SimpleBuffers::Field::Type)((int)CX::IO::SimpleBuffers::Field::Type_Bool + 
-			                                                     (CX::Util::RndGen::Get().GetUInt32() % 13));
-
-			if (i + 1 == cFields && CX::IO::SimpleBuffers::Field::Type_Object != field.m_nType)
-			{
-				CX::Bool bHasComplex = false;
-
-				for (CX::Size k = 0; k < i; k++)
-				{
-					if (CX::IO::SimpleBuffers::Field::Type_Object == obj.m_vectorFields[k].m_nType)
-					{
-						bHasComplex = true;
-						break;
-					}
-				}
-				if (!bHasComplex)
-				{
-					field.m_nType = CX::IO::SimpleBuffers::Field::Type_Object;
-				}
-			}
-
-			if (CX::IO::SimpleBuffers::Field::Type_Object == field.m_nType)
-			{
-				CX::Bool bComplexField = CX::Util::RndGen::Get().GetBool();
-
-				CX::IO::SimpleBuffers::ObjectsMap::iterator iter;
-				CX::Size                                    cIndex;
-
-				if (pMapComplexObjects->empty())
-				{
-					bComplexField = false;
-				}
-				if (bComplexField)
-				{
-					iter   = pMapComplexObjects->begin();
-					if (0 == pMapComplexObjects->size())
-					{
-						cIndex = 0;
-					}
-					else
-					{
-						cIndex = CX::Util::RndGen::Get().GetSize() % pMapComplexObjects->size();
-					}
-				}
-				else
-				{
-					iter   = pMapSimpleObjects->begin();
-					if (0 == pMapSimpleObjects->size())
-					{
-						cIndex = 0;
-					}
-					else
-					{
-						cIndex = CX::Util::RndGen::Get().GetSize() % pMapSimpleObjects->size();
-					}
-				}
-				while (0 < cIndex)
-				{
-					iter++;
-					cIndex--;
-				}
-				field.m_sObjectName = iter->second.m_sName;
-			}
-		}
-		else
-		{
-			field.m_nType = (CX::IO::SimpleBuffers::Field::Type)((int)CX::IO::SimpleBuffers::Field::Type_Bool + 
-			                                                     (CX::Util::RndGen::Get().GetUInt32() % 12));
-
-			//for now avoid issue with float/double conversion
-			if (CX::IO::SimpleBuffers::Field::Type_Float == field.m_nType)
-			{
-				field.m_nType = CX::IO::SimpleBuffers::Field::Type_UInt32;
-			}
-			else
-			if (CX::IO::SimpleBuffers::Field::Type_Double == field.m_nType)
-			{
-				field.m_nType = CX::IO::SimpleBuffers::Field::Type_UInt64;
-			}
-		}
-
-		obj.m_vectorFields.push_back(field);
+		obj.m_vectorMembers.push_back(member);
 	}
 
-	if (bComplex)
+	if (bIsComplex)
 	{
-		(*pMapComplexObjects)[obj.m_sName] = obj;
+		mapComplexObjects[obj.m_sName] = obj;
 	}
 	else
 	{
-		(*pMapSimpleObjects)[obj.m_sName] = obj;
+		mapSimpleObjects[obj.m_sName] = obj;
 	}
 }
 
+/*
 void GenerateProto(CX::IO::SimpleBuffers::ObjectsMap *pMapObjects)
 {
 	CX::Status status;
@@ -322,26 +563,27 @@ void GenerateTester(CX::IO::SimpleBuffers::ObjectsMap *pMapSimpleObjects,
 
 	CX::Print(pOS, "\n");
 }
+*/
 
 int main(int argc, char *argv[])
 {
 	argc;
 	argv;
 
-	CX::IO::SimpleBuffers::ObjectsMap mapSimpleObjects;
-	CX::IO::SimpleBuffers::ObjectsMap mapComplexObjects;
+	SB::ObjectsMap mapSimpleObjects;
+	SB::ObjectsMap mapComplexObjects;
 
-	CX::Size cMinSimpleObjects = 200;
-	CX::Size cMaxSimpleObjects = 200;
+	CX::Size cMinSimpleObjects = 1;
+	CX::Size cMaxSimpleObjects = 1;
 	CX::Size cSimpleObjects    = cMinSimpleObjects + 
 	                             CX::Util::RndGen::Get().GetSize() % (cMaxSimpleObjects - cMinSimpleObjects + 1);
 
-	CX::Size cMinComplexObjects = 200;
-	CX::Size cMaxComplexObjects = 200;
+	CX::Size cMinComplexObjects = 1;
+	CX::Size cMaxComplexObjects = 1;
 	CX::Size cComplexObjects    = cMinComplexObjects + 
 	                              CX::Util::RndGen::Get().GetSize() % (cMaxComplexObjects - cMinComplexObjects + 1);
 
-
+	/*
 	for (CX::Size i = 0; i < cSimpleObjects; i++)
 	{
 		GenerateObject(&mapSimpleObjects, &mapComplexObjects, 0, 30, false);
@@ -359,7 +601,8 @@ int main(int argc, char *argv[])
 	GenerateCPP(&mapComplexObjects);
 
 	GenerateTester(&mapSimpleObjects, &mapComplexObjects);
-	
+	*/
+
 	return 0;
 }
 

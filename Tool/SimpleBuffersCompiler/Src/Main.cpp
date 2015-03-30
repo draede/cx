@@ -26,8 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/IO/SimpleBuffers/ProtoParser.hpp"
-#include "CX/IO/SimpleBuffers/Generator.hpp"
+#include "CX/SB/Parser.hpp"
+#include "CX/SB/Generator.hpp"
 #include "CX/Print.hpp"
 
 
@@ -36,7 +36,7 @@ using namespace CX;
 
 void Usage()
 {
-	Print(stdout, "USAGE: sbc <input_proto_file> [<output_dir>]\n");
+	Print(stdout, "USAGE: sbc <input_proto_file> [<output_path>]\n");
 }
 
 
@@ -49,30 +49,18 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	IO::SimpleBuffers::ProtoParser parser;
-	Status                         status;
+	SB::Parser         parser;
+	SB::Parser::Data   data;
+	Status             status;
 
-	if ((status = parser.BeginParse()).IsNOK())
-	{
-		Print(stdout, "Failed to begin parsing : error {1}, message \"{2}\"\n", status.GetCode(), status.GetMsg());
-
-		return 2;
-	}
-	if ((status = parser.Parse(argv[1])).IsNOK())
+	if ((status = parser.Parse(argv[1], data)).IsNOK())
 	{
 		Print(stdout, "Parse failed : error {1}, message \"{2}\"\n", status.GetCode(), status.GetMsg());
 
 		return 3;
 	}
-	if ((status = parser.EndParse()).IsNOK())
-	{
-		Print(stdout, "Failed to end parsing : error {1}, message \"{2}\"\n", status.GetCode(), status.GetMsg());
 
-		return 4;
-	}
-
-	for (IO::SimpleBuffers::ObjectsMap::const_iterator iter = parser.GetObjects().begin(); 
-	     iter != parser.GetObjects().end(); ++iter)
+	for (SB::ObjectsMap::const_iterator iter =data.mapObjects.begin(); iter != data.mapObjects.end(); ++iter)
 	{
 		String sPath;
 
@@ -98,7 +86,7 @@ int main(int argc, char *argv[])
 
 		sPath += ".hpp";
 
-		if ((status = IO::SimpleBuffers::Generator::GenerateCPPWithPath(&iter->second, sPath.c_str())).IsNOK())
+		if ((status = SB::Generator::GenerateWithPath(iter->second, sPath.c_str())).IsNOK())
 		{
 			Print(stdout, "Generate({3}) : error {1}, message \"{2}\"\n", status.GetCode(), status.GetMsg(), iter->first);
 

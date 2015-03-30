@@ -33,6 +33,7 @@
 #include "CX/IO/FileOutputStream.hpp"
 #include "CX/Print.hpp"
 #include "CX/SB/Object.hpp"
+#include "CX/Util/RndGen.hpp"
 
 
 namespace CX
@@ -113,6 +114,36 @@ public:
 		Print(out, "}//namespace SB\n");
 		Print(out, "\n");
 		Print(out, "}//namespace CX\n");
+		Print(out, "\n");
+
+		return Status();
+	}
+
+	static Status GenerateProtoWithPath(const Object &obj, const Char *szPath)
+	{
+		IO::FileOutputStream fos(szPath);
+
+		if (!fos.IsOK())
+		{
+			return Status(Status_CreateFailed, "Failed to create file '{1}'", szPath);
+		}
+
+		return GenerateProto((IO::IOutputStream *)&fos, obj);
+	}
+
+	template <typename OUTPUT>
+	static Status GenerateProto(OUTPUT out, const Object &obj)
+	{
+		Status status;
+
+		Print(out, "\n");
+		Print(out, "object {1}\n", obj.m_sName);
+		Print(out, "{{\n");
+		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
+		{
+			Print(out, "\t{1}: {2};\n", iter->m_sName, GetProtoType(*iter));
+		}
+		Print(out, "}\n");
 		Print(out, "\n");
 
 		return Status();
@@ -302,6 +333,51 @@ private:
 	}
 
 	static const Char *GetCPPType(const Member &member)
+	{
+		static String sType;
+
+		sType.clear();
+		if (Member::Type_HashMap == member.m_nType)
+		{
+			Print(&sType, "hashmap<{1}, {2}>", member.m_sKeyType.c_str(), member.m_sValType.c_str());
+
+			return sType.c_str();
+		}
+		else
+		if (Member::Type_HashSet == member.m_nType)
+		{
+			Print(&sType, "hashset<{1}>", member.m_sKeyType.c_str());
+
+			return sType.c_str();
+		}
+		else
+		if (Member::Type_Map == member.m_nType)
+		{
+			Print(&sType, "map<{1}, {2}>", member.m_sKeyType.c_str(), member.m_sValType.c_str());
+
+			return sType.c_str();
+		}
+		else
+		if (Member::Type_Set == member.m_nType)
+		{
+			Print(&sType, "set<{1}>", member.m_sKeyType.c_str());
+
+			return sType.c_str();
+		}
+		else
+		if (Member::Type_Vector == member.m_nType)
+		{
+			Print(&sType, "vector<{1}>", member.m_sValType.c_str());
+
+			return sType.c_str();
+		}
+		else
+		{
+			return member.m_sValType.c_str();
+		}
+	}
+
+	static const Char *GetProtoType(const Member &member)
 	{
 		static String sType;
 
