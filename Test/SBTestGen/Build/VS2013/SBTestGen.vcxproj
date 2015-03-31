@@ -21,11 +21,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Include\CX\SB\Generator.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SimpleBuffersCompiler</RootNamespace>
-    <ProjectName>SimpleBuffersCompiler</ProjectName>
+    <RootNamespace>SimpleBuffersTestGen</RootNamespace>
+    <ProjectName>SBTestGen</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -73,26 +76,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Tool/SimpleBuffersCompiler/</IntDir>
-    <TargetName>sbc</TargetName>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/SBTestGen/</IntDir>
+    <TargetName>sbtestgen</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Tool/SimpleBuffersCompiler/</IntDir>
-    <TargetName>sbc</TargetName>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/SBTestGen/</IntDir>
+    <TargetName>sbtestgen</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Tool/SimpleBuffersCompiler/</IntDir>
-    <TargetName>sbc</TargetName>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/SBTestGen/</IntDir>
+    <TargetName>sbtestgen</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../../../Bin/VS2013/$(Platform)/$(Configuration)/</OutDir>
-    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Tool/SimpleBuffersCompiler/</IntDir>
-    <TargetName>sbc</TargetName>
+    <IntDir>../../../../Temp/VS2013/$(Platform)/$(Configuration)/Test/SBTestGen/</IntDir>
+    <TargetName>sbtestgen</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,7 +104,9 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,7 +122,9 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,7 +142,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,7 +164,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

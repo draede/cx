@@ -46,6 +46,22 @@ class Generator
 {
 public:
 
+	typedef struct _TestGenRules
+	{
+		Size cMinObjectsCount;
+		Size cMaxObjectsCount;
+		Size cMinObjectNameLen;
+		Size cMaxObjectNameLen;
+		Size cMinMembersCount;
+		Size cMaxMembersCount;
+		Size cMinMemberNameLen;
+		Size cMaxMemberNameLen;
+		Size cMinStringLen;
+		Size cMaxStringLen;
+		Size cMinItemsCount;
+		Size cMaxItemsCount;
+	}TestGenRules;
+
 	static Status GenerateWithPath(const Object &obj, const Char *szPath)
 	{
 		IO::FileOutputStream fos(szPath);
@@ -61,18 +77,83 @@ public:
 	template <typename OUTPUT>
 	static Status Generate(OUTPUT out, const Object &obj)
 	{
-		Status status;
+		Set<String>::Type setIncludes;
+		Status            status;
 
 		Print(out, "\n");
 		Print(out, "#pragma once\n");
 		Print(out, "\n");
 		Print(out, "\n");
 		Print(out, "#include \"CX/SB/Types.hpp\"\n");
-		Print(out, "#include \"Comparators.hpp\"\n");
+		Print(out, "#include \"CX/SB/Comparators.hpp\"\n");
 		Print(out, "#include \"CX/SB/Hashers.hpp\"\n");
 		Print(out, "#include \"CX/SB/DefIniters.hpp\"\n");
 		Print(out, "#include \"CX/SB/Readers.hpp\"\n");
 		Print(out, "#include \"CX/SB/Writers.hpp\"\n");
+		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
+		{
+			if (Member::Type_Scalar == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sValType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sValType))
+				{
+					Print(out, "#include \"{1}.hpp\"\n", GetInclude(iter->m_sValType.c_str()));
+					setIncludes.insert(iter->m_sValType);
+				}
+			}
+			else
+			if (Member::Type_Vector == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sValType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sValType))
+				{
+					Print(out, "#include \"{1}.hpp\"\n", GetInclude(iter->m_sValType.c_str()));
+					setIncludes.insert(iter->m_sValType);
+				}
+			}
+			else
+			if (Member::Type_Set == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sKeyType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sKeyType))
+				{
+					Print(out, "#include \"{1}.hpp\"\n", GetInclude(iter->m_sKeyType.c_str()));
+					setIncludes.insert(iter->m_sKeyType);
+				}
+			}
+			if (Member::Type_Map == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sKeyType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sKeyType))
+				{
+					Print(out, "#include \"{1}.hpp\"\n", GetInclude(iter->m_sKeyType.c_str()));
+					setIncludes.insert(iter->m_sKeyType);
+				}
+				if (!IsSimpleType(iter->m_sValType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sValType))
+				{
+					Print(out, "#include \"{1}.hpp\"\n", GetInclude(iter->m_sValType.c_str()));
+					setIncludes.insert(iter->m_sValType);
+				}
+			}
+			else
+			if (Member::Type_HashSet == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sKeyType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sKeyType))
+				{
+					Print(out, "#include \"{1}.hpp\"\n", GetInclude(iter->m_sKeyType.c_str()));
+					setIncludes.insert(iter->m_sKeyType);
+				}
+			}
+			if (Member::Type_HashMap == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sKeyType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sKeyType))
+				{
+					Print(out, "#include \"{1}.hpp\"\n", GetInclude(iter->m_sKeyType.c_str()));
+					setIncludes.insert(iter->m_sKeyType);
+				}
+				if (!IsSimpleType(iter->m_sValType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sValType))
+				{
+					Print(out, "#include \"{1}.hpp\"\n", GetInclude(iter->m_sValType.c_str()));
+					setIncludes.insert(iter->m_sValType);
+				}
+			}
+		}
 		Print(out, "\n");
 		Print(out, "\n");
 		if ((status = GenerateCPPClass(out, obj)).IsNOK())
@@ -149,7 +230,7 @@ public:
 		return Status();
 	}
 
-	static Status GenerateTestWithPath(const Object &obj, const Char *szPath)
+	static Status GenerateTestWithPath(const Object &obj, const Char *szPath, const TestGenRules &rules)
 	{
 		IO::FileOutputStream fos(szPath);
 
@@ -158,12 +239,13 @@ public:
 			return Status(Status_CreateFailed, "Failed to create file '{1}'", szPath);
 		}
 
-		return GenerateTest((IO::IOutputStream *)&fos, obj);
+		return GenerateTest((IO::IOutputStream *)&fos, obj, rules);
 	}
 
 	template <typename OUTPUT>
-	static Status GenerateTest(OUTPUT out, const Object &obj)
+	static Status GenerateTest(OUTPUT out, const Object &obj, const TestGenRules &rules)
 	{
+		Set<String>::Type    setIncludes;
 		Vector<String>::Type vectorNSs;
 		String               sName;
 		const Char           *pPos;
@@ -200,7 +282,71 @@ public:
 		Print(out, "\n");
 		Print(out, "\n");
 		Print(out, "#include \"{1}.hpp\"\n", sName);
-		Print(out, "#include \"CX/SB/TestIniters.hpp\"\n");
+		Print(out, "#include \"CX/Util/RndGen.hpp\"\n", sName);
+		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
+		{
+			if (Member::Type_Scalar == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sValType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sValType))
+				{
+					Print(out, "#include \"{1}Test.hpp\"\n", GetInclude(iter->m_sValType.c_str()));
+					setIncludes.insert(iter->m_sValType);
+				}
+			}
+			else
+				if (Member::Type_Vector == iter->m_nType)
+				{
+					if (!IsSimpleType(iter->m_sValType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sValType))
+					{
+						Print(out, "#include \"{1}Test.hpp\"\n", GetInclude(iter->m_sValType.c_str()));
+						setIncludes.insert(iter->m_sValType);
+					}
+				}
+				else
+					if (Member::Type_Set == iter->m_nType)
+					{
+						if (!IsSimpleType(iter->m_sKeyType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sKeyType))
+						{
+							Print(out, "#include \"{1}Test.hpp\"\n", GetInclude(iter->m_sKeyType.c_str()));
+							setIncludes.insert(iter->m_sKeyType);
+						}
+					}
+			if (Member::Type_Map == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sKeyType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sKeyType))
+				{
+					Print(out, "#include \"{1}Test.hpp\"\n", GetInclude(iter->m_sKeyType.c_str()));
+					setIncludes.insert(iter->m_sKeyType);
+				}
+				if (!IsSimpleType(iter->m_sValType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sValType))
+				{
+					Print(out, "#include \"{1}Test.hpp\"\n", GetInclude(iter->m_sValType.c_str()));
+					setIncludes.insert(iter->m_sValType);
+				}
+			}
+			else
+				if (Member::Type_HashSet == iter->m_nType)
+				{
+					if (!IsSimpleType(iter->m_sKeyType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sKeyType))
+					{
+						Print(out, "#include \"{1}Test.hpp\"\n", GetInclude(iter->m_sKeyType.c_str()));
+						setIncludes.insert(iter->m_sKeyType);
+					}
+				}
+			if (Member::Type_HashMap == iter->m_nType)
+			{
+				if (!IsSimpleType(iter->m_sKeyType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sKeyType))
+				{
+					Print(out, "#include \"{1}Test.hpp\"\n", GetInclude(iter->m_sKeyType.c_str()));
+					setIncludes.insert(iter->m_sKeyType);
+				}
+				if (!IsSimpleType(iter->m_sValType.c_str()) && setIncludes.end() == setIncludes.find(iter->m_sValType))
+				{
+					Print(out, "#include \"{1}Test.hpp\"\n", GetInclude(iter->m_sValType.c_str()));
+					setIncludes.insert(iter->m_sValType);
+				}
+			}
+		}
 		Print(out, "\n");
 		Print(out, "\n");
 		Print(out, "namespace CX\n");
@@ -209,7 +355,12 @@ public:
 		Print(out, "namespace SB\n");
 		Print(out, "{{\n");
 		Print(out, "\n");
-		if ((status = GenerateCPPTestInitFunc(out, obj)).IsNOK())
+		if ((status = GenerateCPPTestInitFunc(out, obj, rules)).IsNOK())
+		{
+			return status;
+		}
+		Print(out, "\n");
+		if ((status = GenerateCPPRandInitFunc(out, obj, rules)).IsNOK())
 		{
 			return status;
 		}
@@ -224,11 +375,6 @@ public:
 
 private:
 
-	static const Size MIN_STRING_LEN  = 0;
-	static const Size MAX_STRING_LEN  = 40;
-	static const Size MIN_ITEMS_COUNT = 0;
-	static const Size MAX_ITEMS_COUNT = 20;
-
 	static const Char *GetCharset()
 	{
 		return "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
@@ -240,6 +386,47 @@ private:
 
 	~Generator()
 	{
+	}
+
+	static const Char *GetInclude(const Char *szType)
+	{
+		static String sTmp;
+		const Char    *pPos;
+
+		sTmp.clear();
+		pPos = szType;
+		while (0 != *pPos)
+		{
+			if ('.' == *pPos)
+			{
+				sTmp += "/";
+			}
+			else
+			{
+				sTmp += *pPos;
+			}
+			pPos++;
+		}
+
+		return sTmp.c_str();
+	}
+
+	static bool IsSimpleType(const Char *szType)
+	{
+		if (0 == cx_strcmp(szType, "bool")) return true;
+		else if (0 == cx_strcmp(szType, "int8")) return true;
+		else if (0 == cx_strcmp(szType, "uint8")) return true;
+		else if (0 == cx_strcmp(szType, "int16")) return true;
+		else if (0 == cx_strcmp(szType, "uint16")) return true;
+		else if (0 == cx_strcmp(szType, "int32")) return true;
+		else if (0 == cx_strcmp(szType, "uint32")) return true;
+		else if (0 == cx_strcmp(szType, "int64")) return true;
+		else if (0 == cx_strcmp(szType, "uint64")) return true;
+		else if (0 == cx_strcmp(szType, "float")) return true;
+		else if (0 == cx_strcmp(szType, "double")) return true;
+		else if (0 == cx_strcmp(szType, "string")) return true;
+		else if (0 == cx_strcmp(szType, "wstring")) return true;
+		else return false;
 	}
 
 	static const Char *GetCPPScalarType(const Char *szStr)
@@ -339,6 +526,57 @@ private:
 		sType.clear();
 		if (Member::Type_HashMap == member.m_nType)
 		{
+			String sKey = GetCPPScalarType(member.m_sKeyType.c_str());
+			String sVal = GetCPPScalarType(member.m_sValType.c_str());
+
+			Print(&sType, "CX::SB::HashMap<{1}, {2}>::Type", sKey, sVal);
+
+			return sType.c_str();
+		}
+		else
+		if (Member::Type_HashSet == member.m_nType)
+		{
+			Print(&sType, "CX::SB::HashSet<{1}>::Type", GetCPPScalarType(member.m_sKeyType.c_str()));
+
+			return sType.c_str();
+		}
+		else
+		if (Member::Type_Map == member.m_nType)
+		{
+			String sKey = GetCPPScalarType(member.m_sKeyType.c_str());
+			String sVal = GetCPPScalarType(member.m_sValType.c_str());
+
+			Print(&sType, "CX::SB::Map<{1}, {2}>::Type", sKey, sVal);
+
+			return sType.c_str();
+		}
+		else
+		if (Member::Type_Set == member.m_nType)
+		{
+			Print(&sType, "CX::SB::Set<{1}>::Type", GetCPPScalarType(member.m_sKeyType.c_str()));
+
+			return sType.c_str();
+		}
+		else
+		if (Member::Type_Vector == member.m_nType)
+		{
+			Print(&sType, "CX::SB::Vector<{1}>::Type", GetCPPScalarType(member.m_sValType.c_str()));
+
+			return sType.c_str();
+		}
+		else
+		{
+			return GetCPPScalarType(member.m_sValType.c_str());
+		}
+	}
+
+	static const Char *GetProtoType(const Member &member)
+	{
+		static String sType;
+
+		sType.clear();
+		if (Member::Type_HashMap == member.m_nType)
+		{
 			Print(&sType, "hashmap<{1}, {2}>", member.m_sKeyType.c_str(), member.m_sValType.c_str());
 
 			return sType.c_str();
@@ -377,54 +615,7 @@ private:
 		}
 	}
 
-	static const Char *GetProtoType(const Member &member)
-	{
-		static String sType;
-
-		sType.clear();
-		if (Member::Type_HashMap == member.m_nType)
-		{
-			Print(&sType, "CX::SB::HashMap<{1}, {2}>::Type", GetCPPScalarType(member.m_sKeyType.c_str()), 
-			      GetCPPScalarType(member.m_sValType.c_str()));
-
-			return sType.c_str();
-		}
-		else
-		if (Member::Type_HashSet == member.m_nType)
-		{
-			Print(&sType, "CX::SB::HashSet<{1}>::Type", GetCPPScalarType(member.m_sKeyType.c_str()));
-
-			return sType.c_str();
-		}
-		else
-		if (Member::Type_Map == member.m_nType)
-		{
-			Print(&sType, "CX::SB::Map<{1}, {2}>::Type", GetCPPScalarType(member.m_sKeyType.c_str()), 
-			      GetCPPScalarType(member.m_sValType.c_str()));
-
-			return sType.c_str();
-		}
-		else
-		if (Member::Type_Set == member.m_nType)
-		{
-			Print(&sType, "CX::SB::Set<{1}>::Type", GetCPPScalarType(member.m_sKeyType.c_str()));
-
-			return sType.c_str();
-		}
-		else
-		if (Member::Type_Vector == member.m_nType)
-		{
-			Print(&sType, "CX::SB::Vector<{1}>::Type", GetCPPScalarType(member.m_sValType.c_str()));
-
-			return sType.c_str();
-		}
-		else
-		{
-			return GetCPPScalarType(member.m_sValType.c_str());
-		}
-	}
-
-	static const Char *GetRndInit(const Char *szStr)
+	static const Char *GetRndInit(const Char *szStr, Size cMinStringLen, Size cMaxStringLen)
 	{
 		static String sStr;
 
@@ -488,7 +679,7 @@ private:
 		{
 			String sTmp;
 
-			Util::RndGen::Get().GetString(&sTmp, MIN_STRING_LEN, MAX_STRING_LEN, GetCharset());
+			Util::RndGen::Get().GetString(&sTmp, cMinStringLen, cMaxStringLen, GetCharset());
 			sStr += "\"";
 			for (Size i = 0; i < sTmp.size(); i++)
 			{
@@ -513,7 +704,7 @@ private:
 		{
 			String sTmp;
 
-			Util::RndGen::Get().GetString(&sTmp, MIN_STRING_LEN, MAX_STRING_LEN, GetCharset());
+			Util::RndGen::Get().GetString(&sTmp, cMinStringLen, cMaxStringLen, GetCharset());
 			sStr += "L\"";
 			for (Size i = 0; i < sTmp.size(); i++)
 			{
@@ -533,6 +724,87 @@ private:
 			}
 			sStr += "\"";
 
+		}
+		else
+		{
+			return NULL;
+		}
+
+		return sStr.c_str();
+	}
+
+	static const Char *GetRndExInit(const Char *szStr, Size cMinStringLen, Size cMaxStringLen)
+	{
+		static String sStr;
+
+		sStr.clear();
+		if (0 == cx_strcmp(szStr, "bool"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetBool()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "int8"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetInt8()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "uint8"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetUInt8()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "int16"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetInt16()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "uint16"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetUInt16()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "int32"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetInt32()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "uint32"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetUInt32()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "int64"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetInt64()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "uint64"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetUInt64()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "float"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetFloat()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "double"))
+		{
+			Print(&sStr, "CX::Util::RndGen::Get().GetDouble()");
+		}
+		else
+		if (0 == cx_strcmp(szStr, "string"))
+		{
+			Print(&sStr, "Util::RndGen::Get().GetString({1}, {2}, "
+			             "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{{|}~\")", 
+			      cMinStringLen, cMaxStringLen);
+		}
+		else
+		if (0 == cx_strcmp(szStr, "wstring"))
+		{
+			Print(&sStr, "Util::RndGen::Get().GetWString({1}, {2}, "
+			             "L\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{{|}~\")", 
+			      cMinStringLen, cMaxStringLen);
 		}
 		else
 		{
@@ -736,16 +1008,15 @@ private:
 	}
 
 	template <typename OUTPUT>
-	static Status GenerateCPPTestInitFunc(OUTPUT out, const Object &obj)
+	static Status GenerateCPPTestInitFunc(OUTPUT out, const Object &obj, const TestGenRules &rules)
 	{
-		Print(out, "template <> static inline void TestInit<{1}>({1} &p)\n", 
-		      GetCPPScalarType(obj.m_sName.c_str()));
+		Print(out, "static inline void TestInit({1} &p)\n", GetCPPScalarType(obj.m_sName.c_str()));
 		Print(out, "{{\n");
 		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 		{
 			if (Member::Type_Scalar == iter->m_nType)
 			{
-				const Char *szStr = GetRndInit(iter->m_sValType.c_str());
+				const Char *szStr = GetRndInit(iter->m_sValType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
 
 				if (NULL == szStr)
 				{
@@ -759,11 +1030,12 @@ private:
 			else
 			if (Member::Type_Vector == iter->m_nType)
 			{
-				Size cCount = MIN_ITEMS_COUNT + (Util::RndGen::Get().GetSize() % (MAX_ITEMS_COUNT - MIN_ITEMS_COUNT + 1));
+				Size cCount = rules.cMinItemsCount + 
+				              (Util::RndGen::Get().GetSize() % (rules.cMaxItemsCount - rules.cMinItemsCount + 1));
 
 				for (Size i = 0; i < cCount; i++)
 				{
-					const Char *szStr = GetRndInit(iter->m_sValType.c_str());
+					const Char *szStr = GetRndInit(iter->m_sValType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
 
 					if (NULL == szStr)
 					{
@@ -783,11 +1055,12 @@ private:
 			else
 			if (Member::Type_Set == iter->m_nType || Member::Type_HashSet == iter->m_nType)
 			{
-				Size cCount = MIN_ITEMS_COUNT + (Util::RndGen::Get().GetSize() % (MAX_ITEMS_COUNT - MIN_ITEMS_COUNT + 1));
+				Size cCount = rules.cMinItemsCount + 
+				              (Util::RndGen::Get().GetSize() % (rules.cMaxItemsCount - rules.cMinItemsCount + 1));
 
 				for (Size i = 0; i < cCount; i++)
 				{
-					const Char *szStr = GetRndInit(iter->m_sKeyType.c_str());
+					const Char *szStr = GetRndInit(iter->m_sKeyType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
 
 					if (NULL == szStr)
 					{
@@ -807,15 +1080,16 @@ private:
 			else
 			if (Member::Type_Map == iter->m_nType || Member::Type_HashMap == iter->m_nType)
 			{
-				Size cCount = MIN_ITEMS_COUNT + (Util::RndGen::Get().GetSize() % (MAX_ITEMS_COUNT - MIN_ITEMS_COUNT + 1));
+				Size cCount = rules.cMinItemsCount + 
+				              (Util::RndGen::Get().GetSize() % (rules.cMaxItemsCount - rules.cMinItemsCount + 1));
 
 				for (Size i = 0; i < cCount; i++)
 				{
 					const Char *szStr;
 
-					szStr = GetRndInit(iter->m_sKeyType.c_str());
+					szStr = GetRndInit(iter->m_sKeyType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
 					String sStrKey = NULL == szStr ? "" : szStr;
-					szStr = GetRndInit(iter->m_sValType.c_str());
+					szStr = GetRndInit(iter->m_sValType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
 					String sStrVal = NULL == szStr ? "" : szStr;
 
 					if (sStrKey.empty())
@@ -837,6 +1111,138 @@ private:
 							Print(out, "\t\t{1} k;\n", GetCPPScalarType(iter->m_sKeyType.c_str()));
 							Print(out, "\n");
 							Print(out, "\t\tTestInit(k);\n");
+							Print(out, "\t\tp.{1}[k] = {2};\n", iter->m_sName, sStrVal);
+							Print(out, "\t}\n");
+						}
+					}
+					else
+					{
+						if (sStrVal.empty())
+						{
+							Print(out, "\t{{\n");
+							Print(out, "\t\t{1} v;\n", GetCPPScalarType(iter->m_sValType.c_str()));
+							Print(out, "\n");
+							Print(out, "\t\tTestInit(v);\n");
+							Print(out, "\t\tp.{1}[{2}] = v;\n", iter->m_sName, sStrKey);
+							Print(out, "\t}\n");
+						}
+						else
+						{
+							Print(out, "\tp.{1}[{2}] = {3};\n", iter->m_sName, sStrKey, sStrVal);
+						}
+					}
+				}
+			}
+		}
+		Print(out, "}\n");
+
+		return Status();
+	}
+
+	template <typename OUTPUT>
+	static Status GenerateCPPRandInitFunc(OUTPUT out, const Object &obj, const TestGenRules &rules)
+	{
+		Print(out, "static inline void RandInit({1} &p)\n", GetCPPScalarType(obj.m_sName.c_str()));
+		Print(out, "{{\n");
+		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
+		{
+			if (Member::Type_Scalar == iter->m_nType)
+			{
+				const Char *szStr = GetRndExInit(iter->m_sValType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
+
+				if (NULL == szStr)
+				{
+					Print(out, "\tRandInit(p.{1});\n", iter->m_sName);
+				}
+				else
+				{
+					Print(out, "\tp.{1} = {2};\n", iter->m_sName, szStr);
+				}
+			}
+			else
+			if (Member::Type_Vector == iter->m_nType)
+			{
+				Size cCount = rules.cMinItemsCount + 
+				              (Util::RndGen::Get().GetSize() % (rules.cMaxItemsCount - rules.cMinItemsCount + 1));
+
+				for (Size i = 0; i < cCount; i++)
+				{
+					const Char *szStr = GetRndExInit(iter->m_sValType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
+
+					if (NULL == szStr)
+					{
+						Print(out, "\t{{\n");
+						Print(out, "\t\t{1} k;\n", GetCPPScalarType(iter->m_sValType.c_str()));
+						Print(out, "\n");
+						Print(out, "\t\tTestInit(k);\n");
+						Print(out, "\t\tp.{1}.push_back(k);\n", iter->m_sName);
+						Print(out, "\t}\n");
+					}
+					else
+					{
+						Print(out, "\tp.{1}.push_back({2});\n", iter->m_sName, szStr);
+					}
+				}
+			}
+			else
+			if (Member::Type_Set == iter->m_nType || Member::Type_HashSet == iter->m_nType)
+			{
+				Size cCount = rules.cMinItemsCount + 
+				              (Util::RndGen::Get().GetSize() % (rules.cMaxItemsCount - rules.cMinItemsCount + 1));
+
+				for (Size i = 0; i < cCount; i++)
+				{
+					const Char *szStr = GetRndExInit(iter->m_sKeyType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
+
+					if (NULL == szStr)
+					{
+						Print(out, "\t{{\n");
+						Print(out, "\t\t{1} k;\n", GetCPPScalarType(iter->m_sKeyType.c_str()));
+						Print(out, "\n");
+						Print(out, "\t\tRandInit(k);\n");
+						Print(out, "\t\tp.{1}.insert(k);\n", iter->m_sName);
+						Print(out, "\t}\n");
+					}
+					else
+					{
+						Print(out, "\tp.{1}.insert({2});\n", iter->m_sName, szStr);
+					}
+				}
+			}
+			else
+			if (Member::Type_Map == iter->m_nType || Member::Type_HashMap == iter->m_nType)
+			{
+				Size cCount = rules.cMinItemsCount + 
+				              (Util::RndGen::Get().GetSize() % (rules.cMaxItemsCount - rules.cMinItemsCount + 1));
+
+				for (Size i = 0; i < cCount; i++)
+				{
+					const Char *szStr;
+
+					szStr = GetRndExInit(iter->m_sKeyType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
+					String sStrKey = NULL == szStr ? "" : szStr;
+					szStr = GetRndExInit(iter->m_sValType.c_str(), rules.cMinStringLen, rules.cMaxStringLen);
+					String sStrVal = NULL == szStr ? "" : szStr;
+
+					if (sStrKey.empty())
+					{
+						if (sStrVal.empty())
+						{
+							Print(out, "\t{{\n");
+							Print(out, "\t\t{1} k;\n", GetCPPScalarType(iter->m_sKeyType.c_str()));
+							Print(out, "\t\t{1} v;\n", GetCPPScalarType(iter->m_sValType.c_str()));
+							Print(out, "\n");
+							Print(out, "\t\tRandInit(k);\n");
+							Print(out, "\t\tTestInit(v);\n");
+							Print(out, "\t\tp.{1}[k] = v;\n", iter->m_sName);
+							Print(out, "\t}\n");
+						}
+						else
+						{
+							Print(out, "\t{{\n");
+							Print(out, "\t\t{1} k;\n", GetCPPScalarType(iter->m_sKeyType.c_str()));
+							Print(out, "\n");
+							Print(out, "\t\tRandInit(k);\n");
 							Print(out, "\t\tp.{1}[k] = {2};\n", iter->m_sName, sStrVal);
 							Print(out, "\t}\n");
 						}

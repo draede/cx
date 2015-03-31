@@ -591,9 +591,6 @@
     <ClInclude Include="..\..\Include\CX\SB\SparseHashAllocator.hpp">
       <Filter>Header Files\SB</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\TestIniters.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\SB\TextDataReader.hpp">
       <Filter>Header Files\SB</Filter>
     </ClInclude>
@@ -604,6 +601,18 @@
       <Filter>Header Files\SB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\SB\Writers.hpp">
+      <Filter>Header Files\SB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SB\Tester.hpp">
+      <Filter>Header Files\SB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SB\StatsDataReader.hpp">
+      <Filter>Header Files\SB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SB\StatsDataWriter.hpp">
+      <Filter>Header Files\SB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SB\StatsData.hpp">
       <Filter>Header Files\SB</Filter>
     </ClInclude>
   </ItemGroup>
@@ -783,6 +792,12 @@
       <Filter>Source Files\SB</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\SB\TextDataWriter.cpp">
+      <Filter>Source Files\SB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SB\StatsDataReader.cpp">
+      <Filter>Source Files\SB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SB\StatsDataWriter.cpp">
       <Filter>Source Files\SB</Filter>
     </ClCompile>
   </ItemGroup>

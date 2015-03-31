@@ -26,16 +26,79 @@
  * SOFTWARE.
  */ 
 
-#include "simplebuffers_test.hpp"
+#pragma once
 
 
-int main(int argc, char *argv[])
+#include "CX/SB/IDataReader.hpp"
+#include "CX/SB/StatsData.hpp"
+#include "CX/APIDefs.hpp"
+
+
+namespace CX
 {
-	argc;
-	argv;
 
-	DoSimpleBuffersTest();
-	
-	return 0;
-}
+namespace SB
+{
+
+class CX_API StatsDataReader : public IDataReader
+{
+public:
+
+	StatsData m_data;
+
+	StatsDataReader(IDataReader *pDataReader);
+
+	~StatsDataReader();
+
+	virtual Status BeginMember(const Char *szName);
+
+	virtual Status EndMember();
+
+	virtual Status BeginItem();
+
+	virtual Status EndItem();
+
+	virtual Status BeginObject(Size *pcCount);
+
+	virtual Status EndObject();
+
+	virtual Status BeginArray(Size *pcCount);
+
+	virtual Status EndArray();
+
+	virtual Status ReadBool(Bool *pbValue);
+
+	virtual Status ReadInt8(Int8 *pnValue);
+
+	virtual Status ReadUInt8(UInt8 *puValue);
+
+	virtual Status ReadInt16(Int16 *pnValue);
+
+	virtual Status ReadUInt16(UInt16 *puValue);
+
+	virtual Status ReadInt32(Int32 *pnValue);
+
+	virtual Status ReadUInt32(UInt32 *puValue);
+
+	virtual Status ReadInt64(Int64 *pnValue);
+
+	virtual Status ReadUInt64(UInt64 *puValue);
+
+	virtual Status ReadFloat(Float *pfValue);
+
+	virtual Status ReadDouble(Double *plfValue);
+
+	virtual Status ReadString(String *psValue);
+
+	virtual Status ReadWString(WString *pwsValue);
+
+private:
+
+	IDataReader *m_pDataReader;
+
+};
+
+}//namespace SB
+
+}//namespace CX
 

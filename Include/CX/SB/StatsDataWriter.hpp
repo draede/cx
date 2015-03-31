@@ -29,17 +29,9 @@
 #pragma once
 
 
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/Vector.hpp"
-#include "CX/Set.hpp"
-#include "CX/Map.hpp"
-#include "CX/Util/RndGen.hpp"
-#include "CX/Print.hpp"
-#include "sparsehash/sparse_hash_set"
-#include "sparsehash/sparse_hash_map"
-#include "CX/SB/SparseHashAllocator.hpp"
-#include "CX/SB/BoolForVector.h"
+#include "CX/SB/IDataWriter.hpp"
+#include "CX/SB/StatsData.hpp"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX
@@ -48,7 +40,63 @@ namespace CX
 namespace SB
 {
 
-template <typename T> static inline void TestInit(T &p);
+class CX_API StatsDataWriter : public IDataWriter
+{
+public:
+
+	StatsData m_data;
+
+	StatsDataWriter(IDataWriter *pDataWriter);
+
+	~StatsDataWriter();
+
+	virtual Status BeginMember(const Char *szName);
+
+	virtual Status EndMember();
+
+	virtual Status BeginItem();
+
+	virtual Status EndItem();
+
+	virtual Status BeginObject(Size cCount);
+
+	virtual Status EndObject();
+
+	virtual Status BeginArray(Size cCount);
+
+	virtual Status EndArray();
+
+	virtual Status WriteBool(Bool bValue);
+
+	virtual Status WriteInt8(Int8 nValue);
+
+	virtual Status WriteUInt8(UInt8 uValue);
+
+	virtual Status WriteInt16(Int16 nValue);
+
+	virtual Status WriteUInt16(UInt16 uValue);
+
+	virtual Status WriteInt32(Int32 nValue);
+
+	virtual Status WriteUInt32(UInt32 uValue);
+
+	virtual Status WriteInt64(Int64 nValue);
+
+	virtual Status WriteUInt64(UInt64 uValue);
+
+	virtual Status WriteFloat(Float fValue);
+
+	virtual Status WriteDouble(Double lfValue);
+
+	virtual Status WriteString(const Char *szValue);
+
+	virtual Status WriteWString(const WChar *wszValue);
+
+private:
+
+	IDataWriter *m_pDataWriter;
+
+};
 
 }//namespace SB
 

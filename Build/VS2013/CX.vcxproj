@@ -128,7 +128,10 @@
     <ClInclude Include="..\..\Include\CX\SB\Parser.hpp" />
     <ClInclude Include="..\..\Include\CX\SB\Readers.hpp" />
     <ClInclude Include="..\..\Include\CX\SB\SparseHashAllocator.hpp" />
-    <ClInclude Include="..\..\Include\CX\SB\TestIniters.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\StatsData.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\StatsDataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\StatsDataWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\SB\Tester.hpp" />
     <ClInclude Include="..\..\Include\CX\SB\TextDataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\SB\TextDataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\SB\Types.hpp" />
@@ -316,6 +319,8 @@
     <ClCompile Include="..\..\Src\SB\BinaryDataReader.cpp" />
     <ClCompile Include="..\..\Src\SB\BinaryDataWriter.cpp" />
     <ClCompile Include="..\..\Src\SB\Parser.cpp" />
+    <ClCompile Include="..\..\Src\SB\StatsDataReader.cpp" />
+    <ClCompile Include="..\..\Src\SB\StatsDataWriter.cpp" />
     <ClCompile Include="..\..\Src\SB\TextDataReader.cpp" />
     <ClCompile Include="..\..\Src\SB\TextDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />

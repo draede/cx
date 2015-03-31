@@ -90,7 +90,34 @@ Char RndGen::GetChar(const Char *szCharset/* = NULL*/)
 
 	Size cChars = cx_strlen(szCharset);
 
-	return szCharset[GetUInt32() % cChars];
+	return szCharset[GetSize() % cChars];
+}
+
+WChar RndGen::GetWChar(const WChar *wszCharset/* = NULL*/)
+{
+	static const WChar charset[] =
+		L"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+
+	if (NULL == wszCharset)
+	{
+		wszCharset = charset;
+	}
+
+	Size cChars = cxw_strlen(wszCharset);
+
+	return wszCharset[GetSize() % cChars];
+}
+
+Char RndGen::GetCharRange(Char nMin, Char nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetChar() % (nMax - nMin + 1)));
+	}
 }
 
 Int8 RndGen::GetInt8()
@@ -98,9 +125,33 @@ Int8 RndGen::GetInt8()
 	return (Int8)(GetUInt8());
 }
 
+Int8 RndGen::GetInt8Range(Int8 nMin, Int8 nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetInt8() % (nMax - nMin + 1)));
+	}
+}
+
 UInt8 RndGen::GetUInt8()
 {
 	return (GetUInt32() % CX::TYPE_UINT8_MAX);
+}
+
+UInt8 RndGen::GetUInt8Range(UInt8 nMin, UInt8 nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetUInt8() % (nMax - nMin + 1)));
+	}
 }
 
 Int16 RndGen::GetInt16()
@@ -108,9 +159,33 @@ Int16 RndGen::GetInt16()
 	return (Int16)(GetUInt16());
 }
 
+Int16 RndGen::GetInt16Range(Int16 nMin, Int16 nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetInt16() % (nMax - nMin + 1)));
+	}
+}
+
 UInt16 RndGen::GetUInt16()
 {
 	return (GetUInt32() % TYPE_UINT16_MAX);
+}
+
+UInt16 RndGen::GetUInt16Range(UInt16 nMin, UInt16 nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetUInt16() % (nMax - nMin + 1)));
+	}
 }
 
 Int32 RndGen::GetInt32()
@@ -118,9 +193,33 @@ Int32 RndGen::GetInt32()
 	return (Int32)(GetUInt32());
 }
 
+Int32 RndGen::GetInt32Range(Int32 nMin, Int32 nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetInt32() % (nMax - nMin + 1)));
+	}
+}
+
 UInt32 RndGen::GetUInt32()
 {
 	return tinymt32_generate_uint32((tinymt32_t *)m_pState32);
+}
+
+UInt32 RndGen::GetUInt32Range(UInt32 nMin, UInt32 nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetUInt32() % (nMax - nMin + 1)));
+	}
 }
 
 Int64 RndGen::GetInt64()
@@ -128,9 +227,33 @@ Int64 RndGen::GetInt64()
 	return (Int64)(GetUInt64());
 }
 
+Int64 RndGen::GetInt64Range(Int64 nMin, Int64 nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetInt64() % (nMax - nMin + 1)));
+	}
+}
+
 UInt64 RndGen::GetUInt64()
 {
 	return tinymt64_generate_uint64((tinymt64_t *)m_pState64);
+}
+
+UInt64 RndGen::GetUInt64Range(UInt64 nMin, UInt64 nMax)
+{
+	if (nMin >= nMax)
+	{
+		return nMin;
+	}
+	else
+	{
+		return (nMin + (GetUInt64() % (nMax - nMin + 1)));
+	}
 }
 
 Float RndGen::GetFloat()
@@ -158,6 +281,36 @@ void RndGen::GetString(String *psStr, Size cMinLen, Size cMaxLen, const Char *sz
 		*psStr += GetChar(szCharset);
 	}
 }
+
+void RndGen::GetWString(WString *pwsStr, Size cMinLen, Size cMaxLen, const WChar *wszCharset/* = NULL*/)
+{
+	Size cLen = cMinLen + (GetSize() % (cMaxLen - cMinLen + 1));
+
+	pwsStr->clear();
+	for (Size i = 0; i < cLen; i++)
+	{
+		*pwsStr += GetWChar(wszCharset);
+	}
+}
+
+const Char *RndGen::GetString(Size cMinLen, Size cMaxLen, const Char *szCharset/* = NULL*/)
+{
+	static String sTmp;
+
+	GetString(&sTmp, cMinLen, cMaxLen, szCharset);
+
+	return sTmp.c_str();
+}
+
+const WChar *RndGen::GetWString(Size cMinLen, Size cMaxLen, const WChar *wszCharset/* = NULL*/)
+{
+	static WString wsTmp;
+
+	GetWString(&wsTmp, cMinLen, cMaxLen, wszCharset);
+
+	return wsTmp.c_str();
+}
+
 
 }//namespace Util
 
