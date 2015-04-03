@@ -110,6 +110,7 @@
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Map.hpp" />
+    <ClInclude Include="..\..\Include\CX\Object.hpp" />
     <ClInclude Include="..\..\Include\CX\Platform.hpp" />
     <ClInclude Include="..\..\Include\CX\Print.hpp" />
     <ClInclude Include="..\..\Include\CX\Queue.hpp" />
@@ -315,6 +316,7 @@
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
+    <ClCompile Include="..\..\Src\Object.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
     <ClCompile Include="..\..\Src\SB\BinaryDataReader.cpp" />
     <ClCompile Include="..\..\Src\SB\BinaryDataWriter.cpp" />

@@ -32,13 +32,13 @@
 #include "CX/C/Platform.h"
 
 
-#define CX_VER_MAJOR               1
-#define CX_VER_MINOR               0
-#define CX_VER_REVISION            1
-#define CX_VER_BUILD               101
+#define CX_VER_MAJOR               0
+#define CX_VER_MINOR               1
+#define CX_VER_REVISION            0
+#define CX_VER_BUILD               11
 
 #define CX_VER_NAME                "CX" 
-#define CX_VER_COPYRIGHT           "Copyright (C) 2014, 2015 - draede"
+#define CX_VER_COPYRIGHT           "Copyright (C) 2014 - draede"
 #define CX_VER_COMPANY             "draede"         
 
 #ifdef CX_DEBUG

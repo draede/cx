@@ -698,9 +698,6 @@ TextDataReader::TextDataReader(IO::IInputStream *pInputStream)
 
 	if (pHelper->m_doc.HasParseError())
 	{
-		Print(stdout, "PARSE ERROR = {1}\n", (int)pHelper->m_doc.GetParseError());
-		Print(stdout, "PARSE OFFSET = {1}\n", pHelper->m_doc.GetErrorOffset());
-
 		Delete(pHelper);
 		m_pHelper = NULL;
 	}

@@ -319,6 +319,8 @@ public:
 
 	Bool IsNOK();
 
+	void Clear();
+
 private:
 
 	StatusCode   m_nCode;

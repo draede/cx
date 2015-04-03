@@ -3,3 +3,6 @@
 3. Fix SB when we have hashset<object> or hashmap<object>
 4. Check SB hashset/hashmap for empty_key usage
 5. Issues with DynMemPool (can be reproduced with SB gen tests)
+6. SB Compiler - add custom types includes in c++ class
+7. SB Compiler add checks for circular ref and check type exists (also see external)
+8. SB Compiler - add aliases (different names in proto than hpp)

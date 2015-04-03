@@ -615,6 +615,9 @@
     <ClInclude Include="..\..\Include\CX\SB\StatsData.hpp">
       <Filter>Header Files\SB</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Object.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -799,6 +802,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\SB\StatsDataWriter.cpp">
       <Filter>Source Files\SB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Object.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
