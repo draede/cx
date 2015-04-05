@@ -142,7 +142,15 @@ public:
 		Print(out, "{{\n");
 		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 		{
-			Print(out, "\t{1}: {2};\n", iter->m_sName, GetProtoType(*iter));
+			if (iter->m_sAlias.empty())
+			{
+				Print(out, "\t{1}: {2};\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias, GetProtoType(*iter));
+			}
+			else
+			{
+				Print(out, "\t{1}({2}): {3};\n", 
+				      iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias, iter->m_sAlias, GetProtoType(*iter));
+			}
 		}
 		Print(out, "}\n");
 		Print(out, "\n");
@@ -650,7 +658,14 @@ private:
 		Print(out, "\n");
 		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 		{
-			Print(out, "\t{1} {2};\n", GetCPPType(*iter), iter->m_sName);
+			if (iter->m_sAlias.empty())
+			{
+				Print(out, "\t{1} {2};\n", GetCPPType(*iter), iter->m_sName);
+			}
+			else
+			{
+				Print(out, "\t{1} {2}; //{3}\n", GetCPPType(*iter), iter->m_sAlias, iter->m_sName);
+			}
 		}
 		Print(out, "\n");
 		Print(out, "};\n");
@@ -667,13 +682,14 @@ private:
 	template <typename OUTPUT>
 	static Status GenerateCPPCompareFunc(OUTPUT out, const Object &obj)
 	{
-		Print(out, "template <> static inline int Compare<{1}>(const {1} &a, const {1} &b)\n", GetCPPScalarType(obj.m_sName.c_str()));
+		Print(out, "template <> static inline int Compare<{1}>(const {1} &a, const {1} &b)\n", 
+		      GetCPPScalarType(obj.m_sName.c_str()));
 		Print(out, "{{\n");
 		Print(out, "\tint nCmp;\n");
 		Print(out, "\n");
 		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 		{
-			Print(out, "\tif (0 != (nCmp = Compare(a.{1}, b.{1})))\n", iter->m_sName);
+			Print(out, "\tif (0 != (nCmp = Compare(a.{1}, b.{1})))\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 			Print(out, "\t{{\n");
 			Print(out, "\t\treturn nCmp;\n");
 			Print(out, "\t}\n");
@@ -688,7 +704,8 @@ private:
 	template <typename OUTPUT>
 	static Status GenerateCPPHashFunc(OUTPUT out, const Object &obj)
 	{
-		Print(out, "template <> static inline Size Hash<{1}>(const {1} &p, HasherHelper *pHasher)\n", GetCPPScalarType(obj.m_sName.c_str()));
+		Print(out, "template <> static inline Size Hash<{1}>(const {1} &p, HasherHelper *pHasher)\n", 
+		      GetCPPScalarType(obj.m_sName.c_str()));
 		Print(out, "{{\n");
 		Print(out, "\tHasherHelper hh;\n");
 		Print(out, "\n");
@@ -699,7 +716,7 @@ private:
 		Print(out, "\t}\n");
 		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 		{
-			Print(out, "\tHash(p.{1}, pHasher);\n", iter->m_sName);
+			Print(out, "\tHash(p.{1}, pHasher);\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 		}
 		Print(out, "\tif (&hh == pHasher)\n");
 		Print(out, "\t{{\n");
@@ -730,7 +747,8 @@ private:
 		Print(out, "\t}\n");
 		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 		{
-			Print(out, "\tif ((status = pDataWriter->WriteMember(\"{1}\", p.{1})).IsNOK())\n", iter->m_sName);
+			Print(out, "\tif ((status = pDataWriter->WriteMember(\"{1}\", p.{2})).IsNOK())\n", 
+			      iter->m_sName, iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 			Print(out, "\t{{\n");
 			Print(out, "\t	return status;\n");
 			Print(out, "\t}\n");
@@ -767,7 +785,8 @@ private:
 		Print(out, "\t}\n");
 		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 		{
-			Print(out, "\tif ((status = pDataReader->ReadMember(\"{1}\", p.{1})).IsNOK())\n", iter->m_sName);
+			Print(out, "\tif ((status = pDataReader->ReadMember(\"{1}\", p.{2})).IsNOK())\n", 
+			      iter->m_sName, iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 			Print(out, "\t{{\n");
 			Print(out, "\t	return status;\n");
 			Print(out, "\t}\n");
@@ -791,7 +810,7 @@ private:
 		Print(out, "{{\n");
 		for (MembersVector::const_iterator iter = obj.m_vectorMembers.begin(); iter != obj.m_vectorMembers.end(); ++iter)
 		{
-			Print(out, "\tDefInit(p.{1});\n", iter->m_sName);
+			Print(out, "\tDefInit(p.{1});\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 		}
 		Print(out, "}\n");
 
@@ -812,11 +831,11 @@ private:
 
 				if (NULL == szStr)
 				{
-					Print(out, "\tTestInit(p.{1});\n", iter->m_sName);
+					Print(out, "\tTestInit(p.{1});\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 				}
 				else
 				{
-					Print(out, "\tp.{1} = {2};\n", iter->m_sName, szStr);
+					Print(out, "\tp.{1} = {2};\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias, szStr);
 				}
 			}
 			else
@@ -834,12 +853,12 @@ private:
 						Print(out, "\t\t{1} k;\n", GetCPPScalarType(iter->m_sValType.c_str()));
 						Print(out, "\n");
 						Print(out, "\t\tTestInit(k);\n");
-						Print(out, "\t\tp.{1}.push_back(k);\n", iter->m_sName);
+						Print(out, "\t\tp.{1}.push_back(k);\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 						Print(out, "\t}\n");
 					}
 					else
 					{
-						Print(out, "\tp.{1}.push_back({2});\n", iter->m_sName, szStr);
+						Print(out, "\tp.{1}.push_back({2});\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias, szStr);
 					}
 				}
 			}
@@ -858,12 +877,12 @@ private:
 						Print(out, "\t\t{1} k;\n", GetCPPScalarType(iter->m_sKeyType.c_str()));
 						Print(out, "\n");
 						Print(out, "\t\tTestInit(k);\n");
-						Print(out, "\t\tp.{1}.insert(k);\n", iter->m_sName);
+						Print(out, "\t\tp.{1}.insert(k);\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 						Print(out, "\t}\n");
 					}
 					else
 					{
-						Print(out, "\tp.{1}.insert({2});\n", iter->m_sName, szStr);
+						Print(out, "\tp.{1}.insert({2});\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias, szStr);
 					}
 				}
 			}
@@ -891,7 +910,7 @@ private:
 							Print(out, "\n");
 							Print(out, "\t\tTestInit(k);\n");
 							Print(out, "\t\tTestInit(v);\n");
-							Print(out, "\t\tp.{1}[k] = v;\n", iter->m_sName);
+							Print(out, "\t\tp.{1}[k] = v;\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias);
 							Print(out, "\t}\n");
 						}
 						else
@@ -900,7 +919,7 @@ private:
 							Print(out, "\t\t{1} k;\n", GetCPPScalarType(iter->m_sKeyType.c_str()));
 							Print(out, "\n");
 							Print(out, "\t\tTestInit(k);\n");
-							Print(out, "\t\tp.{1}[k] = {2};\n", iter->m_sName, sStrVal);
+							Print(out, "\t\tp.{1}[k] = {2};\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias, sStrVal);
 							Print(out, "\t}\n");
 						}
 					}
@@ -912,12 +931,13 @@ private:
 							Print(out, "\t\t{1} v;\n", GetCPPScalarType(iter->m_sValType.c_str()));
 							Print(out, "\n");
 							Print(out, "\t\tTestInit(v);\n");
-							Print(out, "\t\tp.{1}[{2}] = v;\n", iter->m_sName, sStrKey);
+							Print(out, "\t\tp.{1}[{2}] = v;\n", iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias, sStrKey);
 							Print(out, "\t}\n");
 						}
 						else
 						{
-							Print(out, "\tp.{1}[{2}] = {3};\n", iter->m_sName, sStrKey, sStrVal);
+							Print(out, "\tp.{1}[{2}] = {3};\n", 
+							      iter->m_sAlias.empty() ? iter->m_sName : iter->m_sAlias, sStrKey, sStrVal);
 						}
 					}
 				}

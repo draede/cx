@@ -28,7 +28,9 @@
 
 #include "CX/SB/Parser.hpp"
 #include "CX/SB/Generator.hpp"
+#include "CX/IO/FileInputStream.hpp"
 #include "CX/Print.hpp"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 using namespace CX;
@@ -36,7 +38,94 @@ using namespace CX;
 
 void Usage()
 {
-	Print(stdout, "USAGE: sbc <input_proto_file> [<output_path>]\n");
+	Print(stdout, "USAGE: sbc <input_proto_file(s)> [<output_path>]\n");
+}
+
+int HandleFile(const Char *szPath, const Char *szOutPath)
+{
+	IO::FileInputStream    fis(szPath);
+	SB::Parser             parser;
+	SB::Parser::Data       data;
+	const Char             *pPos;
+	Status                 status;
+
+	if (!fis.IsOK())
+	{
+		Print(stdout, "Failed to open '{1}'\n", szPath);
+	}
+	if ((status = parser.Parse(&fis, data)).IsNOK())
+	{
+		Print(stdout, "Parse ('{1}') : error {2}, message \"{3}\"\n", szPath, status.GetCode(), status.GetMsg());
+
+		return 2;
+	}
+
+	for (SB::ObjectsMap::const_iterator iter = data.mapObjects.begin(); iter != data.mapObjects.end(); ++iter)
+	{
+		String sOutPath;
+
+		sOutPath = szOutPath;
+		if (!sOutPath.empty() && '\\' != *sOutPath.rbegin() && '/' != *sOutPath.rbegin())
+		{
+			sOutPath += "\\";
+		}
+
+		pPos = cx_strrchr(iter->first.c_str(), '.');
+
+		if (NULL == pPos)
+		{
+			sOutPath += iter->first;
+		}
+		else
+		{
+			sOutPath += pPos + 1;
+		}
+
+		sOutPath += ".hpp";
+
+		if ((status = SB::Generator::GenerateWithPath(iter->second, sOutPath.c_str())).IsNOK())
+		{
+			Print(stdout, "Generate ('{1}') : error {2}, message \"{3}\"\n", iter->first, status.GetCode(), status.GetMsg());
+
+			return 3;
+		}
+	}
+	
+	return 0;
+}
+
+void SearchFiles(const Char *szMask, const Char *szOutPath)
+{
+	WIN32_FIND_DATA   data;
+	HANDLE            hFind;
+	String            sBasePath;
+	const Char        *pPos;
+
+	pPos = cx_strrchr(szMask, '\\');
+	if (NULL == pPos)
+	{
+		pPos = cx_strrchr(szMask, '/');
+	}
+	if (NULL != pPos)
+	{
+		sBasePath.assign(szMask, pPos - szMask);
+		sBasePath += "\\";
+	}
+	if (INVALID_HANDLE_VALUE != (hFind = FindFirstFile(szMask, &data)))
+	{
+		for (;;)
+		{
+			String sPath = sBasePath;
+
+			sPath += data.cFileName;
+			HandleFile(sPath.c_str(), szOutPath);
+			if (!FindNextFile(hFind, &data))
+			{
+				break;
+			}
+		}
+		FindClose(hFind);
+	}
 }
 
 
@@ -48,51 +137,7 @@ int main(int argc, char *argv[])
 
 		return 1;
 	}
-
-	SB::Parser         parser;
-	SB::Parser::Data   data;
-	Status             status;
-
-	if ((status = parser.Parse(argv[1], data)).IsNOK())
-	{
-		Print(stdout, "Parse failed : error {1}, message \"{2}\"\n", status.GetCode(), status.GetMsg());
-
-		return 3;
-	}
-
-	for (SB::ObjectsMap::const_iterator iter =data.mapObjects.begin(); iter != data.mapObjects.end(); ++iter)
-	{
-		String sPath;
-
-		if (3 <= argc)
-		{
-			sPath += argv[2];
-			if (!sPath.empty() && '\\' != *sPath.rbegin() && '/' != *sPath.rbegin())
-			{
-				sPath += "\\";
-			}
-		}
-
-		const Char *pPos = cx_strrchr(iter->first.c_str(), '.');
-
-		if (NULL == pPos)
-		{
-			sPath += iter->first;
-		}
-		else
-		{
-			sPath += pPos + 1;
-		}
-
-		sPath += ".hpp";
-
-		if ((status = SB::Generator::GenerateWithPath(iter->second, sPath.c_str())).IsNOK())
-		{
-			Print(stdout, "Generate({3}) : error {1}, message \"{2}\"\n", status.GetCode(), status.GetMsg(), iter->first);
-
-			return 5;
-		}
-	}
+	SearchFiles(argv[1], 3 <= argc ? argv[2] : "");
 
 	return 0;
 }

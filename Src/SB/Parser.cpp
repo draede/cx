@@ -323,7 +323,7 @@ Status Parser::ParseMember(Member &member)
 	{
 		return Status(Status_ParseFailed, "Unexpected EOF");
 	}
-	if ((status = ParseIdentifier(member.m_sName)).IsNOK())
+	if ((status = ParseMemberName(member.m_sName, member.m_sAlias)).IsNOK())
 	{
 		return status;
 	}
@@ -550,6 +550,69 @@ Status Parser::ParseExternal(String &sType)
 	}
 	Next();
 
+	return Status();
+}
+
+Status Parser::ParseMemberName(String &sName, String &sAlias)
+{
+	Status status;
+
+	sName.clear();
+	sAlias.clear();
+	if ((status = ParseWhiteSpace()).IsNOK())
+	{
+		return status;
+	}
+	if ((status = ParseIdentifier(sName)).IsNOK())
+	{
+		return status;
+	}
+	if (sName.empty())
+	{
+		return Status(Status_ParseFailed, "Expected member name at line {1}, column {2}", m_cLine, m_cColumn);
+	}
+	if ((status = ParseWhiteSpace()).IsNOK())
+	{
+		return status;
+	}
+	if (IsEOF())
+	{
+		return Status(Status_ParseFailed, "Expected '(' or ':' at line {1}, column {2}", m_cLine, m_cColumn);
+	}
+	if ('(' == Get())
+	{
+		Next();
+		if ((status = ParseWhiteSpace()).IsNOK())
+		{
+			return status;
+		}
+		if (IsEOF())
+		{
+			return Status(Status_ParseFailed, "Expected member alias at line {1}, column {2}", m_cLine, m_cColumn);
+		}
+		if ((status = ParseIdentifier(sAlias)).IsNOK())
+		{
+			return status;
+		}
+		if (sAlias.empty())
+		{
+			return Status(Status_ParseFailed, "Expected member alias at line {1}, column {2}", m_cLine, m_cColumn);
+		}
+		if ((status = ParseWhiteSpace()).IsNOK())
+		{
+			return status;
+		}
+		if (IsEOF())
+		{
+			return Status(Status_ParseFailed, "Expected ')' at line {1}, column {2}", m_cLine, m_cColumn);
+		}
+		if (')' != Get())
+		{
+			return Status(Status_ParseFailed, "Expected ')' at line {1}, column {2}", m_cLine, m_cColumn);
+		}
+		Next();
+	}
+	
 	return Status();
 }
 

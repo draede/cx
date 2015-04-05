@@ -56,6 +56,7 @@ public:
 	};
 
 	String  m_sName;
+	String  m_sAlias;
 	Type    m_nType;
 	String  m_sKeyType;
 	String  m_sValType;

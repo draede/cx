@@ -113,7 +113,7 @@ private:
 
 	Status ParseExternal(String &sType);
 
-	Status ParseMemberType(String &sType);
+	Status ParseMemberName(String &sName, String &sAlias);
 
 	Status ParseScalarType(String &sType);
 
