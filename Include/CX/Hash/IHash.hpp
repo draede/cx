@@ -32,6 +32,7 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -40,7 +41,7 @@ namespace CX
 namespace Hash
 {
 
-class CX_API IHash
+class CX_API IHash : public IObject
 {
 public:
 

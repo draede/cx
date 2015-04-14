@@ -30,7 +30,8 @@
 
 
 #include "sparsehash/internal/sparseconfig.h"
-#include "CX/Alloc.hpp"
+#include "CX/Mem.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -40,7 +41,7 @@ namespace SB
 {
 
 template<class T>
-class SparseHashAllocator 
+class SparseHashAllocator : public IObject 
 {
 public:
 
@@ -77,17 +78,17 @@ public:
 
 	pointer allocate(size_type n, const_pointer = 0) 
 	{
-		return static_cast<pointer>(Alloc(n * sizeof(value_type)));
+		return static_cast<pointer>(Mem::Alloc(n * sizeof(value_type)));
 	}
 
 	void deallocate(pointer p, size_type) 
 	{
-		Free(p);
+		Mem::Free(p);
 	}
 
 	pointer reallocate(pointer p, size_type n) 
 	{
-		return static_cast<pointer>(Realloc(p, n * sizeof(value_type)));
+		return static_cast<pointer>(Mem::Realloc(p, n * sizeof(value_type)));
 	}
 
 	size_type max_size() const  
@@ -121,7 +122,7 @@ public:
 };
 
 template<>
-class SparseHashAllocator<void> 
+class SparseHashAllocator<void> : public IObject 
 {
 public:
 

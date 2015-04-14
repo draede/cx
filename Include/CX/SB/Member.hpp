@@ -33,6 +33,7 @@
 #include "CX/Status.hpp"
 #include "CX/String.hpp"
 #include "CX/Vector.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -41,7 +42,7 @@ namespace CX
 namespace SB
 {
 
-class Member
+class Member : public IObject
 {
 public:
 

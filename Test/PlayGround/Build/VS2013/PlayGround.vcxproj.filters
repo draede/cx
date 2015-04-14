@@ -21,12 +21,17 @@
     <ClCompile Include="..\..\Src\Str_UTF8.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Util_StackTrace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\Test1Object.hpp">
+    <None Include="..\..\Src\Util_StackTrace.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Test2Object.hpp">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Src\Mem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

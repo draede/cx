@@ -34,6 +34,7 @@
 #include "CX/Print.hpp"
 #include "CX/SB/Object.hpp"
 #include "CX/Util/RndGen.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -42,7 +43,7 @@ namespace CX
 namespace SB
 {
 
-class Generator
+class Generator : public IObject
 {
 public:
 
@@ -67,6 +68,7 @@ public:
 		Print(out, "#pragma once\n");
 		Print(out, "\n");
 		Print(out, "\n");
+		Print(out, "#include \"CX/IOBject.hpp\"\n");
 		Print(out, "#include \"CX/SB/Types.hpp\"\n");
 		Print(out, "#include \"CX/SB/Comparators.hpp\"\n");
 		Print(out, "#include \"CX/SB/Hashers.hpp\"\n");
@@ -652,7 +654,7 @@ private:
 			Print(out, "{{\n");
 			Print(out, "\n");
 		}
-		Print(out, "class {1}\n", sName);
+		Print(out, "class {1} : public CX::IObject\n", sName);
 		Print(out, "{{\n");
 		Print(out, "public:\n");
 		Print(out, "\n");

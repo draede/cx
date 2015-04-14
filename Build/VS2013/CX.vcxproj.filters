@@ -142,9 +142,6 @@
     <Filter Include="Source Files\Hash">
       <UniqueIdentifier>{5fa311d1-83f4-42dc-9f11-b90e9b008fdd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contrib\CRC32Slice8">
-      <UniqueIdentifier>{99a94ef4-0951-486c-8326-64d8a99160ea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contrib\MD5">
       <UniqueIdentifier>{01faf7f2-ea37-4b4a-a2c5-2853e2e64a63}</UniqueIdentifier>
     </Filter>
@@ -180,6 +177,18 @@
     </Filter>
     <Filter Include="Source Files\SB">
       <UniqueIdentifier>{51960fa0-4e67-41a7-a587-cb29e4b8b0f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\ForestDB">
+      <UniqueIdentifier>{ee6db378-5c57-45b9-8950-854a29b78c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\CRC32Slice8">
+      <UniqueIdentifier>{1bbfa48c-4ef5-4fe2-abbb-4889c91f5e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\KVDB">
+      <UniqueIdentifier>{f85f231f-fb1c-4f64-ae9e-59f8d07eeb9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KVDB">
+      <UniqueIdentifier>{ecebb1d7-fa51-452f-91b6-da3a0063dacd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -259,9 +268,6 @@
       <Filter>Contrib\Mintomic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Alloc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Status.hpp">
@@ -615,8 +621,62 @@
     <ClInclude Include="..\..\Include\CX\SB\StatsData.hpp">
       <Filter>Header Files\SB</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Object.hpp">
+    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
+      <Filter>Contrib\CRC32Slice8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Component.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBDatabase.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBDatabaseConfig.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBTable.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBTableConfig.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\IDatabase.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\IDatabaseConfig.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\ITable.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\ITableConfig.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\KVDB\FDBStatus.hpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\IIterator.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBIterator.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\IRecord.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBRecord.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Mem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\StackTrace.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\StackTrace.hpp">
+      <Filter>Header Files\Util\Platform\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -713,9 +773,6 @@
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp">
       <Filter>Source Files\Hash</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32.cpp">
-      <Filter>Contrib\CRC32Slice8</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp">
       <Filter>Source Files\Hash</Filter>
     </ClCompile>
@@ -742,9 +799,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp">
       <Filter>Source Files\Hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Alloc.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
       <Filter>Source Files\C\Platform\Windows</Filter>
@@ -803,7 +857,133 @@
     <ClCompile Include="..\..\Src\SB\StatsDataWriter.cpp">
       <Filter>Source Files\SB</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Object.cpp">
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\api_wrapper.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\atomic.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\avltree.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\blockcache.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btree.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btree_fast_str_kv.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btree_kv.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btree_str_kv.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btreeblock.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\compactor.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\configuration.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\docio.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\fdb_errors.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\filemgr.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\filemgr_ops.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\filemgr_ops_windows.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\forestdb.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\hash.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\hash_functions.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\hbtrie.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\iterator.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\kv_instance.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\list.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\snapshot.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\transaction.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\wal.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\adler32.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\debug.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\gettimeofday_vs.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\iniparser.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\memleak.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\partiallock.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\time_utils.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\crc32.cc">
+      <Filter>Contrib\ForestDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32_internal.cpp">
+      <Filter>Contrib\CRC32Slice8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\KVDB\FDBDatabase.cpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\KVDB\FDBTable.cpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\KVDB\FDBIterator.cpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\KVDB\FDBRecord.cpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\StackTrace_windows.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Mem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

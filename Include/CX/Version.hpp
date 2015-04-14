@@ -34,12 +34,13 @@
 #include "CX/Types.hpp"
 #include "CX/String.hpp"
 #include "CX/C/Version.h"
+#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
-class CX_API Version
+class CX_API Version : public IObject
 {
 public:
 
@@ -100,7 +101,7 @@ private:
 
 };
 
-class CX_API CXVersion
+class CX_API CXVersion : public IObject
 {
 public:
 

@@ -31,6 +31,7 @@
 
 #include "CX/Types.hpp"
 #include "../../../Contrib/Mintomic/Include/mintomic.h"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -50,7 +51,7 @@ typedef mint_atomicPtr_t	AtomicPtr;
 	typedef mint_atomic64_t		AtomicCmpExcUInt;
 #endif
 
-class Atomic
+class Atomic : public IObject
 {
 public:
 

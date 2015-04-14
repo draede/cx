@@ -41,7 +41,7 @@ namespace CX
 namespace SB
 {
 
-class Helper
+class Helper : public IObject
 {
 public:
 
@@ -683,7 +683,7 @@ public:
 TextDataReader::TextDataReader(IO::IInputStream *pInputStream)
 {
 	Data::JSON::RapidJSONInputStream str(pInputStream);
-	Helper                           *pHelper = New<Helper>();
+	Helper                           *pHelper = new Helper();
 
 	pHelper->m_doc.ParseStream<0>(str);
 
@@ -698,7 +698,7 @@ TextDataReader::TextDataReader(IO::IInputStream *pInputStream)
 
 	if (pHelper->m_doc.HasParseError())
 	{
-		Delete(pHelper);
+		delete(pHelper);
 		m_pHelper = NULL;
 	}
 	else
@@ -714,7 +714,7 @@ TextDataReader::~TextDataReader()
 
 	if (NULL != pHelper)
 	{
-		Delete(pHelper);
+		delete(pHelper);
 		pHelper = NULL;
 	}
 }

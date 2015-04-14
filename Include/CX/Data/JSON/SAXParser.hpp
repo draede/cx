@@ -36,6 +36,7 @@
 #include "CX/Status.hpp"
 #include "CX/Util/IFunction.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 struct CX_Data_JSON_SAX_Handler;
@@ -50,7 +51,7 @@ namespace Data
 namespace JSON
 {
 
-class CX_API SAXParser
+class CX_API SAXParser : public IObject
 {
 public:
 

@@ -31,7 +31,7 @@
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/Alloc.hpp"
+#include "CX/Mem.hpp"
 #include "CX/SB/Comparators.hpp"
 #include "CX/SB/Hashers.hpp"
 #include "CX/SB/BoolForVector.hpp"

@@ -33,13 +33,12 @@
 #include "CX/Sys/Atomic.hpp"
 #include "CX/C/string.h"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
-#define CX_OBJECT_INTERFACE(name)   static const CX::Char *ID() { return #name; }
+#define CX_COMPONENT(name)   static const CX::Char *ID() { return #name; }
 
-#define CX_OBJECT_BEGIN(name)                                                                                                    \
-friend name *CX::New<name>();                                                                                                    \
-friend void CX::Delete<name>(name *);                                                                                            \
+#define CX_COMPONENT_BEGIN(name)                                                                                                 \
 name()                                                                                                                           \
 {                                                                                                                                \
 }                                                                                                                                \
@@ -49,35 +48,35 @@ name()                                                                          
 virtual void *GetInterface(const CX::Char *szID)                                                                                 \
 {
 
-#define CX_OBJECT_DEF_INTERFACE(name)                                                                                            \
+#define CX_COMPONENT_INTERFACE(name)                                                                                             \
 if (0 == cx_strcmp(szID, name::ID()))                                                                                            \
 {                                                                                                                                \
 	return (name *)this;                                                                                                          \
 }
 
-#define CX_OBJECT_END()                                                                                                          \
+#define CX_COMPONENT_END()                                                                                                       \
 	return NULL;                                                                                                                  \
 }
 
 namespace CX
 {
 
-class CX_API Object
+class CX_API Component : public IObject
 {
 public:
 
-	Object();
+	Component();
 
-	virtual ~Object();
+	virtual ~Component();
 
 	template <typename T> static T *Create()
 	{
-		T      *pInst = New<T>();
-		Object *pObj  = (Object *)dynamic_cast<T *>(pInst);
+		T         *pInst = new T();
+		Component *pObj  = (Component *)dynamic_cast<T *>(pInst);
 
 		if (NULL == pObj)
 		{
-			Delete(pInst);
+			delete(pInst);
 
 			return NULL;
 		}

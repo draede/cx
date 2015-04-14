@@ -31,6 +31,7 @@
 
 #include "CX/Types.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -42,7 +43,7 @@ namespace Data
 namespace JSON
 {
 
-class CX_API ISAXParserObserver
+class CX_API ISAXParserObserver : public IObject
 {
 public:
 

@@ -48,8 +48,8 @@ namespace SB
 template <typename T>
 Status TestSerialize(StatsData &readdata, StatsData &writedata)
 {
-	T                *pP1 = New<T>();
-	T                *pP2 = New<T>();
+	T                *pP1 = new T();
+	T                *pP2 = new T();
 	String           s1;
 	Status           status;
 
@@ -63,8 +63,8 @@ Status TestSerialize(StatsData &readdata, StatsData &writedata)
 
 		if ((status = Write(*pP1, &sw)).IsNOK())
 		{
-			Delete(pP1);
-			Delete(pP2);
+			delete(pP1);
+			delete(pP2);
 
 			return status;
 		}
@@ -78,8 +78,8 @@ Status TestSerialize(StatsData &readdata, StatsData &writedata)
 
 		if ((status = Read(*pP2, &sr)).IsNOK())
 		{
-			Delete(pP1);
-			Delete(pP2);
+			delete(pP1);
+			delete(pP2);
 
 			return status;
 		}
@@ -87,13 +87,13 @@ Status TestSerialize(StatsData &readdata, StatsData &writedata)
 	}
 	if (0 != Compare(*pP1, *pP2))
 	{
-		Delete(pP1);
-		Delete(pP2);
+		delete(pP1);
+		delete(pP2);
 
 		return Status(Status_OperationFailed, "Objects are different");
 	}
-	Delete(pP1);
-	Delete(pP2);
+	delete(pP1);
+	delete(pP2);
 
 	return Status();
 }

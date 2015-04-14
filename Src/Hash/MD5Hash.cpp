@@ -41,7 +41,7 @@ const Char MD5Hash::NAME[] = "MD5";
 
 MD5Hash::MD5Hash()
 {
-	if (NULL == (m_pCTX = New<MD5_CTX>()))
+	if (NULL == (m_pCTX = new MD5_CTX()))
 	{
 		return;
 	}
@@ -51,7 +51,7 @@ MD5Hash::MD5Hash()
 
 MD5Hash::~MD5Hash()
 {
-	Delete((MD5_CTX *)m_pCTX);
+	delete (MD5_CTX *)m_pCTX;
 }
 
 const Char *MD5Hash::GetName()

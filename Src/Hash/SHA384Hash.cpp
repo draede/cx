@@ -41,7 +41,7 @@ const Char SHA384Hash::NAME[] = "SHA384";
 
 SHA384Hash::SHA384Hash()
 {
-	if (NULL == (m_pCTX = New<SHA384_CTX>()))
+	if (NULL == (m_pCTX = new SHA384_CTX()))
 	{
 		return;
 	}
@@ -51,7 +51,7 @@ SHA384Hash::SHA384Hash()
 
 SHA384Hash::~SHA384Hash()
 {
-	Delete((SHA384_CTX *)m_pCTX);
+	delete (SHA384_CTX *)m_pCTX;
 }
 
 const Char *SHA384Hash::GetName()

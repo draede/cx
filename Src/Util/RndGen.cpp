@@ -41,8 +41,8 @@ namespace Util
 
 RndGen::RndGen()
 {
-	m_pState32 = New<tinymt32_t>();
-	m_pState64 = New<tinymt64_t>();
+	m_pState32 = new tinymt32_t();
+	m_pState64 = new tinymt64_t();
 
 	Timer timer;
 
@@ -52,8 +52,8 @@ RndGen::RndGen()
 
 RndGen::~RndGen()
 {
-	Delete((tinymt32_t *)m_pState32);
-	Delete((tinymt64_t *)m_pState64);
+	delete (tinymt32_t *)m_pState32;
+	delete (tinymt64_t *)m_pState64;
 }
 
 RndGen &RndGen::Get()

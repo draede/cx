@@ -37,6 +37,7 @@
 #include "CX/Slice.hpp"
 #include "CX/Limits.hpp"
 #include "CX/C/ctype.h"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -58,8 +59,94 @@ namespace CX
 namespace Detail
 {
 
+enum ExtraFlags
+{
+	ExtraFlag_None,
+	ExtraFlag_HexLower,
+	ExtraFlag_HexUpper,
+};
+
 namespace DetailPrint
 {
+
+static inline StatusCode HexPrintHelper(const void *p, Size cbSize, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        bool bReverse = true, bool bUpperCase = true)
+{
+	static const Char hexdigits1[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	static const Char hexdigits2[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	Char              *hexdigits;
+	Char              *pPos;
+	bool              bZero;
+
+	if (2 * cbSize + 1 > cLen)
+	{
+		return Status_TooSmall;
+	}
+	bZero = true;
+	pPos  = szOutput;
+	if (bUpperCase)
+	{
+		hexdigits = (Char *)hexdigits1;
+	}
+	else
+	{
+		hexdigits = (Char *)hexdigits2;
+	}
+	*pcFinalLen = 0;
+	for (Size i = 0; i < cbSize; i++)
+	{
+		if (!bReverse)
+		{
+			*pPos = hexdigits[(*((Byte *)p + i)) / 16];
+			pPos++;
+			(*pcFinalLen)++;
+			*pPos = hexdigits[(*((Byte *)p + i)) % 16];
+			pPos++;
+			(*pcFinalLen)++;
+		}
+		else
+		{
+			Byte hi = (*((Byte *)p + cbSize - i - 1)) / 16;
+			Byte lo = (*((Byte *)p + cbSize - i - 1)) % 16;
+
+			if (bZero)
+			{
+				if (0 < hi)
+				{
+					*pPos = hexdigits[hi];
+					pPos++;
+					(*pcFinalLen)++;
+					bZero = false;
+				}
+			}
+			else
+			{
+				*pPos = hexdigits[hi];
+				pPos++;
+				(*pcFinalLen)++;
+			}
+			if (bZero)
+			{
+				if (0 < lo)
+				{
+					*pPos = hexdigits[lo];
+					pPos++;
+					(*pcFinalLen)++;
+					bZero = false;
+				}
+			}
+			else
+			{
+				*pPos = hexdigits[lo];
+				pPos++;
+				(*pcFinalLen)++;
+			}
+		}
+	}
+	*pPos = 0;
+
+	return Status_OK;
+}
 
 CX_API Bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision);
 
@@ -242,12 +329,14 @@ static inline Size UInt64ToString(UInt64 nValue, Char *szDst, Size cPreCalcLen =
 }//namespace Detail
 
 template <typename T>
-static inline StatusCode ToString(T p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision);
+static inline StatusCode ToString(T p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision);
 
 template <>
-static inline StatusCode ToString<EmptyType>(EmptyType p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<EmptyType>(EmptyType p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                             Size cPrecision)
 {
 	p;
+	nExtraFlags;
 	szOutput;
 	cLen;
 	pcFinalLen;
@@ -257,8 +346,10 @@ static inline StatusCode ToString<EmptyType>(EmptyType p, Char *szOutput, Size c
 }
 
 template <>
-static inline StatusCode ToString<Char>(Char p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Char>(Char p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
 {
+	nExtraFlags;
 	cPrecision;
 
 	if (cLen < 2)
@@ -273,8 +364,10 @@ static inline StatusCode ToString<Char>(Char p, Char *szOutput, Size cLen, Size 
 }
 
 template <>
-static inline StatusCode ToString<Bool>(Bool p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Bool>(Bool p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
 {
+	nExtraFlags;
 	cPrecision;
 
 	if (p)
@@ -304,11 +397,57 @@ static inline StatusCode ToString<Bool>(Bool p, Char *szOutput, Size cLen, Size 
 }
 
 template <>
-static inline StatusCode ToString<Int8>(Int8 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Int8>(Int8 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
 {
 	cPrecision;
 
-	if (0 <= p)
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
+	{
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true, 
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+	}
+	else
+	{
+		if (0 <= p)
+		{
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
+			if (*pcFinalLen + 1 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+			szOutput[*pcFinalLen] = 0;
+		}
+		else
+		{
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+			if (*pcFinalLen + 2 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			*szOutput = '-';
+			Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+			(*pcFinalLen)++;
+			szOutput[*pcFinalLen] = 0;
+		}
+
+		return Status_OK;
+	}
+}
+
+template <>
+static inline StatusCode ToString<UInt8>(UInt8 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
+{
+	cPrecision;
+
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
+	{
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true,
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+	}
+	else
 	{
 		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
@@ -317,45 +456,63 @@ static inline StatusCode ToString<Int8>(Int8 p, Char *szOutput, Size cLen, Size 
 		}
 		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
+
+		return Status_OK;
+	}
+}
+
+template <>
+static inline StatusCode ToString<Int16>(Int16 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
+{
+	cPrecision;
+
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
+	{
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true,
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
-		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
-		if (*pcFinalLen + 2 > cLen)
+		if (0 <= p)
 		{
-			return Status_TooSmall;
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
+			if (*pcFinalLen + 1 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+			szOutput[*pcFinalLen] = 0;
 		}
-		*szOutput = '-';
-		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		(*pcFinalLen)++;
-		szOutput[*pcFinalLen] = 0;
-	}
+		else
+		{
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+			if (*pcFinalLen + 2 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			*szOutput = '-';
+			Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+			(*pcFinalLen)++;
+			szOutput[*pcFinalLen] = 0;
+		}
 
-	return Status_OK;
+		return Status_OK;
+	}
 }
 
 template <>
-static inline StatusCode ToString<UInt8>(UInt8 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<UInt16>(UInt16 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	cPrecision;
 
-	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
-	if (*pcFinalLen + 1 > cLen)
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Status_TooSmall;
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true,
+			(Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
-	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
-	szOutput[*pcFinalLen] = 0;
-
-	return Status_OK;
-}
-
-template <>
-static inline StatusCode ToString<Int16>(Int16 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
-{
-	cPrecision;
-
-	if (0 <= p)
+	else
 	{
 		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
@@ -364,45 +521,63 @@ static inline StatusCode ToString<Int16>(Int16 p, Char *szOutput, Size cLen, Siz
 		}
 		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
+
+		return Status_OK;
+	}
+}
+
+template <>
+static inline StatusCode ToString<Int32>(Int32 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
+{
+	cPrecision;
+
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
+	{
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true,
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
-		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
-		if (*pcFinalLen + 2 > cLen)
+		if (0 <= p)
 		{
-			return Status_TooSmall;
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
+			if (*pcFinalLen + 1 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+			szOutput[*pcFinalLen] = 0;
 		}
-		*szOutput = '-';
-		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		(*pcFinalLen)++;
-		szOutput[*pcFinalLen] = 0;
-	}
+		else
+		{
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+			if (*pcFinalLen + 2 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			*szOutput = '-';
+			Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+			(*pcFinalLen)++;
+			szOutput[*pcFinalLen] = 0;
+		}
 
-	return Status_OK;
+		return Status_OK;
+	}
 }
 
 template <>
-static inline StatusCode ToString<UInt16>(UInt16 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<UInt32>(UInt32 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	cPrecision;
 
-	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
-	if (*pcFinalLen + 1 > cLen)
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Status_TooSmall;
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true,
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
-	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
-	szOutput[*pcFinalLen] = 0;
-
-	return Status_OK;
-}
-
-template <>
-static inline StatusCode ToString<Int32>(Int32 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
-{
-	cPrecision;
-
-	if (0 <= p)
+	else
 	{
 		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
@@ -411,45 +586,63 @@ static inline StatusCode ToString<Int32>(Int32 p, Char *szOutput, Size cLen, Siz
 		}
 		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
+
+		return Status_OK;
+	}
+}
+
+template <>
+static inline StatusCode ToString<Int64>(Int64 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
+{
+	cPrecision;
+
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
+	{
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true, 
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
-		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
-		if (*pcFinalLen + 2 > cLen)
+		if (0 <= p)
 		{
-			return Status_TooSmall;
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
+			if (*pcFinalLen + 1 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+			szOutput[*pcFinalLen] = 0;
 		}
-		*szOutput = '-';
-		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		(*pcFinalLen)++;
-		szOutput[*pcFinalLen] = 0;
-	}
+		else
+		{
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+			if (*pcFinalLen + 2 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			*szOutput = '-';
+			Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+			(*pcFinalLen)++;
+			szOutput[*pcFinalLen] = 0;
+		}
 
-	return Status_OK;
+		return Status_OK;
+	}
 }
 
 template <>
-static inline StatusCode ToString<UInt32>(UInt32 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<UInt64>(UInt64 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
 	cPrecision;
 
-	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
-	if (*pcFinalLen + 1 > cLen)
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Status_TooSmall;
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true,
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
-	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
-	szOutput[*pcFinalLen] = 0;
-
-	return Status_OK;
-}
-
-template <>
-static inline StatusCode ToString<Int64>(Int64 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
-{
-	cPrecision;
-
-	if (0 <= p)
+	else
 	{
 		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
@@ -458,42 +651,17 @@ static inline StatusCode ToString<Int64>(Int64 p, Char *szOutput, Size cLen, Siz
 		}
 		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
-	}
-	else
-	{
-		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
-		if (*pcFinalLen + 2 > cLen)
-		{
-			return Status_TooSmall;
-		}
-		*szOutput = '-';
-		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		(*pcFinalLen)++;
-		szOutput[*pcFinalLen] = 0;
-	}
 
-	return Status_OK;
+		return Status_OK;
+	}
 }
 
 template <>
-static inline StatusCode ToString<UInt64>(UInt64 p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Float>(Float p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                         Size cPrecision)
 {
-	cPrecision;
+	nExtraFlags;
 
-	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
-	if (*pcFinalLen + 1 > cLen)
-	{
-		return Status_TooSmall;
-	}
-	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
-	szOutput[*pcFinalLen] = 0;
-
-	return Status_OK;
-}
-
-template <>
-static inline StatusCode ToString<Float>(Float p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
-{
 	if (!Detail::DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
 	{
 		return Status_ConversionFailed;
@@ -515,8 +683,11 @@ static inline StatusCode ToString<Float>(Float p, Char *szOutput, Size cLen, Siz
 }
 
 template <>
-static inline StatusCode ToString<Double>(Double p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Double>(Double p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
+	nExtraFlags;
+
 	if (!Detail::DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
 	{
 		return Status_ConversionFailed;
@@ -538,11 +709,57 @@ static inline StatusCode ToString<Double>(Double p, Char *szOutput, Size cLen, S
 }
 
 template <>
-static inline StatusCode ToString<long>(long p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<long>(long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
 {
 	cPrecision;
 
-	if (0 <= p)
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
+	{
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true, 
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+	}
+	else
+	{
+		if (0 <= p)
+		{
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
+			if (*pcFinalLen + 1 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
+			szOutput[*pcFinalLen] = 0;
+		}
+		else
+		{
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+			if (*pcFinalLen + 2 > cLen)
+			{
+				return Status_TooSmall;
+			}
+			*szOutput = '-';
+			Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+			(*pcFinalLen)++;
+			szOutput[*pcFinalLen] = 0;
+		}
+
+		return Status_OK;
+	}
+}
+
+template <>
+static inline StatusCode ToString<unsigned long>(unsigned long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                                 Size *pcFinalLen, Size cPrecision)
+{
+	cPrecision;
+
+	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
+	{
+		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, true, 
+		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+	}
+	else
 	{
 		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
 		if (*pcFinalLen + 1 > cLen)
@@ -551,42 +768,16 @@ static inline StatusCode ToString<long>(long p, Char *szOutput, Size cLen, Size 
 		}
 		Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
 		szOutput[*pcFinalLen] = 0;
-	}
-	else
-	{
-		*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
-		if (*pcFinalLen + 2 > cLen)
-		{
-			return Status_TooSmall;
-		}
-		*szOutput = '-';
-		Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
-		(*pcFinalLen)++;
-		szOutput[*pcFinalLen] = 0;
-	}
 
-	return Status_OK;
+		return Status_OK;
+	}
 }
 
 template <>
-static inline StatusCode ToString<unsigned long>(unsigned long p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<const Char *>(const Char *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                                Size *pcFinalLen, Size cPrecision)
 {
-	cPrecision;
-
-	*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)p);
-	if (*pcFinalLen + 1 > cLen)
-	{
-		return Status_TooSmall;
-	}
-	Detail::DetailPrint::UInt64ToString((UInt64)p, szOutput, *pcFinalLen);
-	szOutput[*pcFinalLen] = 0;
-
-	return Status_OK;
-}
-
-template <>
-static inline StatusCode ToString<const Char *>(const Char *p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
-{
+	nExtraFlags;
 	cPrecision;
 
 	if (!Detail::DetailPrint::StrCopy(szOutput, cLen, p, pcFinalLen))
@@ -600,14 +791,17 @@ static inline StatusCode ToString<const Char *>(const Char *p, Char *szOutput, S
 }
 
 template <>
-static inline StatusCode ToString<Char *>(Char *p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<Char *>(Char *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
-	return ToString<const Char *>(p, szOutput, cLen, pcFinalLen, cPrecision);
+	return ToString<const Char *>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<const String &>(const String &p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<const String &>(const String &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                                  Size *pcFinalLen, Size cPrecision)
 {
+	nExtraFlags;
 	cPrecision;
 
 	if (!Detail::DetailPrint::StrCopy(szOutput, cLen, p.c_str(), pcFinalLen))
@@ -621,19 +815,22 @@ static inline StatusCode ToString<const String &>(const String &p, Char *szOutpu
 }
 
 template <>
-static inline StatusCode ToString<String &>(String &p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<String &>(String &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                            Size cPrecision)
 {
-	return ToString<const String &>(p, szOutput, cLen, pcFinalLen, cPrecision);
+	return ToString<const String &>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<String>(String p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<String>(String p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                          Size cPrecision)
 {
-	return ToString<const String &>(p, szOutput, cLen, pcFinalLen, cPrecision);
+	return ToString<const String &>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<const WChar *>(const WChar *p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<const WChar *>(const WChar *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                                 Size *pcFinalLen, Size cPrecision)
 {
 	String sTmp;
 
@@ -644,11 +841,12 @@ static inline StatusCode ToString<const WChar *>(const WChar *p, Char *szOutput,
 		return Status_ConversionFailed;
 	}
 
-	return ToString<const String &>(sTmp, szOutput, cLen, pcFinalLen, cPrecision);
+	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<WChar *>(WChar *p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<WChar *>(WChar *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                           Size cPrecision)
 {
 	String sTmp;
 
@@ -659,12 +857,13 @@ static inline StatusCode ToString<WChar *>(WChar *p, Char *szOutput, Size cLen, 
 		return Status_ConversionFailed;
 	}
 
-	return ToString<const String &>(sTmp, szOutput, cLen, pcFinalLen, cPrecision);
+	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 
 }
 
 template <>
-static inline StatusCode ToString<const WString &>(const WString &p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<const WString &>(const WString &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                                   Size *pcFinalLen, Size cPrecision)
 {
 	String sTmp;
 
@@ -675,11 +874,12 @@ static inline StatusCode ToString<const WString &>(const WString &p, Char *szOut
 		return Status_ConversionFailed;
 	}
 
-	return ToString<const String &>(sTmp, szOutput, cLen, pcFinalLen, cPrecision);
+	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<WString &>(WString &p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<WString &>(WString &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                             Size cPrecision)
 {
 	String sTmp;
 
@@ -690,12 +890,13 @@ static inline StatusCode ToString<WString &>(WString &p, Char *szOutput, Size cL
 		return Status_ConversionFailed;
 	}
 
-	return ToString<const String &>(sTmp, szOutput, cLen, pcFinalLen, cPrecision);
+	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 
 }
 
 template <>
-static inline StatusCode ToString<WString>(WString p, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision)
+static inline StatusCode ToString<WString>(WString p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                           Size cPrecision)
 {
 	String sTmp;
 
@@ -706,7 +907,104 @@ static inline StatusCode ToString<WString>(WString p, Char *szOutput, Size cLen,
 		return Status_ConversionFailed;
 	}
 
-	return ToString<const String &>(sTmp, szOutput, cLen, pcFinalLen, cPrecision);
+	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
+}
+
+template <>
+static inline StatusCode ToString<const std::string &>(const std::string &p, unsigned int nExtraFlags, Char *szOutput, 
+                                                       Size cLen, Size *pcFinalLen, Size cPrecision)
+{
+	cPrecision;
+
+	nExtraFlags;
+	if (!Detail::DetailPrint::StrCopy(szOutput, cLen, p.c_str(), pcFinalLen))
+	{
+		return Status_TooSmall;
+	}
+	else
+	{
+		return Status_OK;
+	}
+}
+
+template <>
+static inline StatusCode ToString<std::string &>(std::string &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                                 Size *pcFinalLen, Size cPrecision)
+{
+	return ToString<const std::string &>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
+}
+
+template <>
+static inline StatusCode ToString<std::string>(std::string p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                               Size *pcFinalLen, Size cPrecision)
+{
+	return ToString<const std::string &>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
+}
+
+template <>
+static inline StatusCode ToString<const std::wstring &>(const std::wstring &p, unsigned int nExtraFlags, Char *szOutput, 
+                                                        Size cLen, Size *pcFinalLen, Size cPrecision)
+{
+	String sTmp;
+
+	cPrecision;
+
+	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	{
+		return Status_ConversionFailed;
+	}
+
+	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
+}
+
+template <>
+static inline StatusCode ToString<std::wstring &>(std::wstring &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                                  Size *pcFinalLen, Size cPrecision)
+{
+	String sTmp;
+
+	cPrecision;
+
+	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	{
+		return Status_ConversionFailed;
+	}
+
+	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
+
+}
+
+template <>
+static inline StatusCode ToString<std::wstring>(std::wstring p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                                Size *pcFinalLen, Size cPrecision)
+{
+	String sTmp;
+
+	cPrecision;
+
+	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	{
+		return Status_ConversionFailed;
+	}
+
+	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
+}
+
+template <>
+static inline StatusCode ToString<void *>(void *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+                                          Size *pcFinalLen, Size cPrecision)
+{
+	cPrecision;
+
+	if (Detail::ExtraFlag_HexLower != nExtraFlags || Detail::ExtraFlag_HexLower != nExtraFlags)
+	{
+		nExtraFlags = Detail::ExtraFlag_HexUpper;
+	}
+
+	Size cAddr = (Size)p;
+
+	return Detail::DetailPrint::HexPrintHelper(&cAddr, sizeof(cAddr), szOutput, cLen, pcFinalLen, true, 
+	                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
 }
 
 #endif
@@ -717,7 +1015,7 @@ namespace Detail
 namespace DetailPrint
 {
 
-class Buffer
+class Buffer : public IObject
 {
 public:
 
@@ -807,10 +1105,11 @@ typedef struct _Flags
 	static const UInt32  DEFAULT_PRECISION  = 6;
 	static const Align   DEFAULT_ALIGN      = Align_Right;
 
-	Char     cFillChar;
-	UInt32   cWidth;
-	UInt32   cPrecision;
-	Align    nAlign;
+	Char         cFillChar;
+	UInt32       cWidth;
+	UInt32       cPrecision;
+	Align        nAlign;
+	unsigned int nExtraFlags;
 
 	_Flags()
 	{
@@ -823,12 +1122,13 @@ typedef struct _Flags
 		cWidth      = DEFAULT_WIDTH;
 		cPrecision  = DEFAULT_PRECISION;
 		nAlign      = DEFAULT_ALIGN;
+		nExtraFlags = 0;
 	}
 }Flags;
 
 
 template <typename O, typename T>
-class ArgPrinter
+class ArgPrinter : public IObject
 {
 public:
 
@@ -841,7 +1141,7 @@ public:
 
 		cLen    = 0;
 		nStatus = Status_NotImplemented;
-		nStatus = ToString(p, pBuf, cBufLen, &cLen, pFlags->cPrecision);
+		nStatus = ToString(p, pFlags->nExtraFlags, pBuf, cBufLen, &cLen, pFlags->cPrecision);
 
 		if (CXNOK(nStatus))
 		{
@@ -897,7 +1197,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, Char *>
+class ArgPrinter<O, Char *> : public IObject
 {
 public:
 
@@ -909,7 +1209,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, const Char *>
+class ArgPrinter<O, const Char *> : public IObject
 {
 public:
 
@@ -982,7 +1282,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, String>
+class ArgPrinter<O, String> : public IObject
 {
 public:
 
@@ -994,7 +1294,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, String &>
+class ArgPrinter<O, String &> : public IObject
 {
 public:
 
@@ -1006,7 +1306,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<typename O, const String>
+class ArgPrinter<typename O, const String> : public IObject
 {
 public:
 
@@ -1018,7 +1318,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, const String &>
+class ArgPrinter<O, const String &> : public IObject
 {
 public:
 
@@ -1035,7 +1335,9 @@ static inline StatusCode PrintArgHelper(O o, T p, Flags *pFlags, Char *pBuf, Siz
 	return ArgPrinter<O, T>::PrintArg(o, p, pFlags, pBuf, cBufLen, pBuffer);
 }
 
-//arg format = {$(argpos)[:[<|>]['$(fillchr)']]$(width)][.$(precision)]]}
+//arg format = {$(argpos)[:[extraflags:][<|>]['$(fillchr)']]$(width)][.$(precision)]]}
+//extraflags: 'x' = hex print lowercase - ignored on non integral types or non pointers 
+//extraflags: 'X' = hex print uppercase - ignored on non integral types or non pointers 
 //align = < (left), > (right - default), | (center)
 //fillchr = default ' '
 //width = default 0 (= arg width)
@@ -1058,8 +1360,8 @@ static inline StatusCode Print(O o, const Char *szFormat,
 	Char        buf[1024];
 	StatusCode  nStatus;
 
-	pszPos   = szFormat;
-	pszStart = szFormat;
+	pszPos    = szFormat;
+	pszStart  = szFormat;
 
 	for (;;)
 	{
@@ -1113,6 +1415,36 @@ static inline StatusCode Print(O o, const Char *szFormat,
 			if (':' == *pszPos)
 			{
 				pszPos++;
+
+				if ('x' == *pszPos)
+				{
+					pszPos++;
+					if (':' == *pszPos)
+					{
+						pszPos++;
+					}
+					else
+					if ('}' != *pszPos)
+					{
+						return Status_InvalidArg;
+					}
+					flags.nExtraFlags = ExtraFlag_HexLower;
+				}
+				else
+				if ('X' == *pszPos)
+				{
+					pszPos++;
+					if (':' == *pszPos)
+					{
+						pszPos++;
+					}
+					else
+					if ('}' != *pszPos)
+					{
+						return Status_InvalidArg;
+					}
+					flags.nExtraFlags = ExtraFlag_HexUpper;
+				}
 
 				// align
 				if ('<' == *pszPos)

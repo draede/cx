@@ -21,10 +21,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Main.cpp" />
     <ClCompile Include="..\..\Src\Str_UTF8.hpp" />
+    <ClCompile Include="..\..\Src\Util_StackTrace.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\Test1Object.hpp" />
-    <ClInclude Include="..\..\Src\Test2Object.hpp" />
+    <None Include="..\..\Src\Util_StackTrace.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Src\Mem.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>
@@ -106,7 +109,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +125,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,7 +143,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,7 +163,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

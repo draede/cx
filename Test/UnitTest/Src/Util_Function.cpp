@@ -568,7 +568,7 @@ int fr16(MyT1 p1, MyT2 p2, MyT3 p3, MyT4 p4, MyT5 p5, MyT6 p6, MyT7 p7, MyT8 p8,
 	return 123;
 }
 
-class Test
+class Test : public IObject
 {
 public:
 

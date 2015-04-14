@@ -140,7 +140,7 @@ Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = TYP
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = NewArr<WChar>(cSize)))
+			if (NULL == (pOut = new WChar[cSize]))
 			{
 				return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", 
 				              cSize * sizeof(WChar));
@@ -155,7 +155,7 @@ Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = TYP
 		{
 			if (pOut != out)
 			{
-				DeleteArr(pOut);
+				delete [] pOut;
 			}
 			
 			return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", 
@@ -164,7 +164,7 @@ Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = TYP
 		psUTF16->assign(pOut, cSize);
 		if (pOut != pOut)
 		{
-			DeleteArr(pOut);
+			delete [] pOut;
 		}
 	}
 	else
@@ -189,7 +189,7 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* =
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = NewArr<Char>(cSize)))
+			if (NULL == (pOut = new Char[cSize]))
 			{
 				return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes",
 					            cSize * sizeof(Char));
@@ -205,7 +205,7 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* =
 		{
 			if (pOut != out)
 			{
-				DeleteArr(pOut);
+				delete [] pOut;
 			}
 
 			return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", 
@@ -214,7 +214,7 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* =
 		psUTF8->assign(pOut, cSize);
 		if (pOut != out)
 		{
-			DeleteArr(pOut);
+			delete [] pOut;
 		}
 	}
 	else

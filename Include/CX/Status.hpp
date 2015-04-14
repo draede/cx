@@ -34,12 +34,13 @@
 #include "CX/Slice.hpp"
 #include "CX/Detail/DetailPrint/DetailPrint.hpp"
 #include "CX/StatusCodes.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
-class CX_API Status
+class CX_API Status : public IObject
 {
 public:
 
@@ -56,11 +57,170 @@ public:
 	template <typename T1>
 	Status(StatusCode nCode, const Char *szFormat, T1 p1)
 	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1);
+	}
+
+	template <typename T1, typename T2>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2);
+	}
+
+	template <typename T1, typename T2, typename T3>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8, typename T9>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8, typename T9, typename T10>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8, typename T9, typename T10, typename T11>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10, T11 p11)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
+	       T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+	          typename T13>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+	          typename T13, typename T14>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+	          typename T13, typename T14, typename T15>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
+	}
+
+	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
+	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
+	          typename T13, typename T14, typename T15, typename T16>
+	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
+	       T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
+	{
+		m_nCode = nCode;
+		Set(nCode, szFormat, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16);
+	}
+
+	~Status()
+	{
+	}
+
+	Status &operator=(const Status &status)
+	{
+		m_nCode = status.m_nCode;
+		memcpy(m_szMsg, status.m_szMsg, (MAX_MSG_LEN + 1) * sizeof(Char));
+
+		return *this;
+	}
+
+	void Set(StatusCode nStatusCode, const Char *szMsg);
+
+	StatusCode GetCode() const;
+
+	const Char *GetMsg() const;
+
+	Bool IsOK() const;
+
+	Bool IsNOK() const;
+
+	void Clear();
+
+	template <typename T1>
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1)
+	{
 		CX::EmptyType et;
 		Slice         slice(m_szMsg, MAX_MSG_LEN);
 
 		m_nCode = nCode;
-		if (CXNOK(Detail::DetailPrint::Print<1>(&slice, szFormat, p1, et, et, et, et, et, et, et, 
+		if (CXNOK(Detail::DetailPrint::Print<1>(&slice, szFormat, p1, et, et, et, et, et, et, et,
 		                                        et, et, et, et, et, et, et, et)))
 		{
 			m_szMsg[0] = 0;
@@ -68,7 +228,7 @@ public:
 	}
 
 	template <typename T1, typename T2>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2)
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2)
 	{
 		CX::EmptyType et;
 		Slice         slice(m_szMsg, MAX_MSG_LEN);
@@ -82,7 +242,7 @@ public:
 	}
 
 	template <typename T1, typename T2, typename T3>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3)
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3)
 	{
 		CX::EmptyType et;
 		Slice         slice(m_szMsg, MAX_MSG_LEN);
@@ -96,7 +256,7 @@ public:
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4)
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4)
 	{
 		CX::EmptyType et;
 		Slice         slice(m_szMsg, MAX_MSG_LEN);
@@ -110,7 +270,7 @@ public:
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
 	{
 		CX::EmptyType et;
 		Slice         slice(m_szMsg, MAX_MSG_LEN);
@@ -124,7 +284,7 @@ public:
 	}
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 	{
 		CX::EmptyType et;
 		Slice         slice(m_szMsg, MAX_MSG_LEN);
@@ -139,7 +299,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 	{
 		CX::EmptyType et;
 		Slice         slice(m_szMsg, MAX_MSG_LEN);
@@ -154,7 +314,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
 	       T8 p8)
 	{
 		CX::EmptyType et;
@@ -170,7 +330,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
 	       T8 p8, T9 p9)
 	{
 		CX::EmptyType et;
@@ -186,7 +346,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
 	       T8 p8, T9 p9, T10 p10)
 	{
 		CX::EmptyType et;
@@ -202,7 +362,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
 	       T8 p8, T9 p9, T10 p10, T11 p11)
 	{
 		CX::EmptyType et;
@@ -218,7 +378,7 @@ public:
 
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
 	       T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
 	{
 		CX::EmptyType et;
@@ -235,7 +395,7 @@ public:
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
 	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13)
 	{
 		CX::EmptyType et;
@@ -252,7 +412,7 @@ public:
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
 	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14)
 	{
 		CX::EmptyType et;
@@ -269,7 +429,7 @@ public:
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, 
 	       T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15)
 	{
 		CX::EmptyType et;
@@ -286,7 +446,7 @@ public:
 	template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
 	          typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
 	          typename T13, typename T14, typename T15, typename T16>
-	Status(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
+	void Set(StatusCode nCode, const Char *szFormat, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
 	       T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 	{
 		Slice slice(m_szMsg, MAX_MSG_LEN);
@@ -298,28 +458,6 @@ public:
 			m_szMsg[0] = 0;
 		}
 	}
-
-	~Status()
-	{
-	}
-
-	Status &operator=(const Status &status)
-	{
-		m_nCode = status.m_nCode;
-		memcpy(m_szMsg, status.m_szMsg, (MAX_MSG_LEN + 1) * sizeof(Char));
-
-		return *this;
-	}
-
-	StatusCode GetCode();
-
-	const Char *GetMsg();
-
-	Bool IsOK();
-
-	Bool IsNOK();
-
-	void Clear();
 
 private:
 

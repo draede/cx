@@ -26,63 +26,8 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Object.hpp"
-#include "CX/Alloc.hpp"
+#pragma once
 
 
-namespace CX
-{
-
-Object::Object()
-{
-}
-
-Object::~Object() 
-{ 
-}
-
-bool Object::Destroy(bool bForce/* = false*/)
-{
-	if (bForce)
-	{
-		Delete(this);
-
-		return true;
-	}
-	else
-	{
-		return Release();
-	}
-}
-
-Size Object::GetRefCount()
-{
-	return (Size)Sys::Atomic::Load(&m_refcnt);
-}
-
-void Object::Init()
-{
-	Sys::Atomic::Store(&m_refcnt, 1);
-}
-
-void Object::Retain()
-{
-	Sys::Atomic::FetchAdd(&m_refcnt, 1);
-}
-
-bool Object::Release()
-{
-	if (1 == Sys::Atomic::FetchAdd(&m_refcnt, -1))
-	{
-		Delete(this);
-
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-}//namespace CX
+void Util_StackTrace_Test1();
 

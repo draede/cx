@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\Src\Print.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Alloc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Hash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -40,7 +41,7 @@ namespace SB
 
 //thanks for the std::vector<bool> !!!
 //http://stackoverflow.com/questions/670308/alternative-to-vectorbool
-class BoolForVector
+class BoolForVector : public IObject
 {
 public:
 

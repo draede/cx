@@ -40,6 +40,7 @@
 #include "CX/String.hpp"
 #include "CX/Limits.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -48,7 +49,7 @@ namespace CX
 namespace Str
 {
 
-class CX_API UTF8
+class CX_API UTF8 : public IObject
 {
 public:
 

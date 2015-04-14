@@ -39,6 +39,7 @@
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/C/Platform/Windows/windows.h"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -47,7 +48,7 @@ namespace CX
 namespace Sys
 {
 
-class CX_API DynLib
+class CX_API DynLib : public IObject
 {
 public:
 

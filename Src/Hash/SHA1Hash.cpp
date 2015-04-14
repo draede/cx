@@ -41,7 +41,7 @@ const Char SHA1Hash::NAME[] = "SHA1";
 
 SHA1Hash::SHA1Hash()
 {
-	if (NULL == (m_pCTX = New<SHA_CTX>()))
+	if (NULL == (m_pCTX = new SHA_CTX()))
 	{
 		Status(Status_MemAllocFailed, "Failed to allocate context");
 		return;
@@ -52,7 +52,7 @@ SHA1Hash::SHA1Hash()
 
 SHA1Hash::~SHA1Hash()
 {
-	Delete((SHA_CTX *)m_pCTX);
+	delete (SHA_CTX *)m_pCTX;
 }
 
 const Char *SHA1Hash::GetName()

@@ -27,7 +27,7 @@
  */ 
 
 #include "CX/Log/StreamOutput.hpp"
-#include "CX/Alloc.hpp"
+#include "CX/Mem.hpp"
 #include "CX/Status.hpp"
 
 
@@ -46,7 +46,7 @@ StreamOutput::~StreamOutput()
 {
 	if (NULL != m_pOutputStream)
 	{
-		Delete(m_pOutputStream);
+		delete(m_pOutputStream);
 	}
 }
 

@@ -76,7 +76,7 @@ CX_API Bool UTF8toUTF16(const Char *szUTF8, WString *pwsUTF16, Size cUTF8Len/* =
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = NewArr<WChar>(cSize)))
+			if (NULL == (pOut = new WChar[cSize]))
 			{
 				return false;
 			}
@@ -89,7 +89,7 @@ CX_API Bool UTF8toUTF16(const Char *szUTF8, WString *pwsUTF16, Size cUTF8Len/* =
 		{
 			if (pOut != out)
 			{
-				DeleteArr(pOut);
+				delete [] pOut;
 			}
 			
 			return false;
@@ -97,7 +97,7 @@ CX_API Bool UTF8toUTF16(const Char *szUTF8, WString *pwsUTF16, Size cUTF8Len/* =
 		pwsUTF16->append(pOut, cSize);
 		if (pOut != pOut)
 		{
-			DeleteArr(pOut);
+			delete [] pOut;
 		}
 	}
 	else
@@ -120,7 +120,7 @@ CX_API Bool UTF16toUTF8(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* 
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = NewArr<Char>(cSize)))
+			if (NULL == (pOut = new Char[cSize]))
 			{
 				return false;
 			}
@@ -134,7 +134,7 @@ CX_API Bool UTF16toUTF8(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* 
 		{
 			if (pOut != out)
 			{
-				DeleteArr(pOut);
+				delete [] pOut;
 			}
 
 			return false;
@@ -142,7 +142,7 @@ CX_API Bool UTF16toUTF8(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* 
 		psUTF8->append(pOut, cSize);
 		if (pOut != out)
 		{
-			DeleteArr(pOut);
+			delete [] pOut;
 		}
 	}
 	else

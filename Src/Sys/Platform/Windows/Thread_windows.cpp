@@ -106,7 +106,7 @@ DWORD Thread::ThreadProc(void *pArg)
 
 	pHelper->Run();
 
-	Delete(pHelper);
+	delete(pHelper);
 
 	return 0;
 }

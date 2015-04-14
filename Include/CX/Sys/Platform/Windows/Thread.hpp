@@ -41,6 +41,7 @@
 #include "CX/Util/IFunction.hpp"
 #include "CX/Util/Function.hpp"
 #include "CX/C/Platform/Windows/windows.h"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -52,7 +53,7 @@ namespace Sys
 typedef UInt64       TID;
 typedef UInt64       PID;
 
-class CX_API Thread
+class CX_API Thread : public IObject
 {
 public:
 
@@ -72,7 +73,7 @@ public:
 
 	static void Sleep(Size cMilliseconds);
 
-	//the pFunction will be deleted with Delete<pFunction> when done
+	//the pFunction will be deleted with delete<pFunction> when done
 	template <typename R>
 	Status Run(Util::IFunction<R> *pFunction)
 	{
@@ -82,10 +83,9 @@ public:
 		}
 
 		DWORD      dwID;
-		Helper<R>  *pHelper = New<Helper<R> >(pFunction);
+		Helper<R>  *pHelper = new Helper<R>(pFunction);
 
-		if (NULL != (m_hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&ThreadProc, 
-		                                      pHelper, 0, &dwID)))
+		if (NULL != (m_hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&ThreadProc, pHelper, 0, &dwID)))
 		{
 			m_nID = (TID)dwID;
 
@@ -93,7 +93,7 @@ public:
 		}
 		else
 		{
-			Delete(pHelper);
+			delete(pHelper);
 
 			return Status(Status_OpenFailed, "CreateThread failed with error {1}", GetLastError());
 		}
@@ -102,71 +102,62 @@ public:
 	template <typename R>
 	void Run(R (*pfnProc)())
 	{
-		Run(New<Util::Function<R> >(pfnProc));
+		Run(new Util::Function<R>(pfnProc));
 	}
 
 	template <typename R, typename T1>
 	void Run(R (*pfnProc)(T1), T1 p1)
 	{
-		Run(New<Util::Function<R, T1> >(pfnProc, p1));
+		Run(new Util::Function<R, T1>(pfnProc, p1));
 	}
 
 	template <typename R, typename T1, typename T2>
 	void Run(R (*pfnProc)(T1, T2), T1 p1, T2 p2)
 	{
-		Run(New<Util::Function<R, T1, T2> >(pfnProc, p1, p2));
+		Run(new Util::Function<R, T1, T2>(pfnProc, p1, p2));
 	}
 
 	template <typename R, typename T1, typename T2, typename T3>
 	void Run(R (*pfnProc)(T1, T2, T3), T1 p1, T2 p2, T3 p3)
 	{
-		Run(New<Util::Function<R, T1, T2, T3> >(pfnProc, p1, p2, p3));
+		Run(new Util::Function<R, T1, T2, T3>(pfnProc, p1, p2, p3));
 	}
 
 	template <typename R, typename T1, typename T2, typename T3, typename T4>
 	void Run(R (*pfnProc)(T1, T2, T3, T4), T1 p1, T2 p2, T3 p3, T4 p4)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4> >(pfnProc, p1, p2, p3, p4));
+		Run(new Util::Function<R, T1, T2, T3, T4>(pfnProc, p1, p2, p3, p4));
 	}
 
 	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5>
 	void Run(R (*pfnProc)(T1, T2, T3, T4, T5), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5> >(pfnProc, p1, p2, p3, p4, p5));
+		Run(new Util::Function<R, T1, T2, T3, T4, T5>(pfnProc, p1, p2, p3, p4, p5));
 	}
 
-	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, 
-	          typename T6>
+	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
 	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6> >(pfnProc, p1, p2, p3, p4, p5, p6));
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6>(pfnProc, p1, p2, p3, p4, p5, p6));
 	}
 
-	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, 
-	          typename T6, typename T7>
-	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
-	         T7 p7)
+	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
+	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7> >
-			(pfnProc, p1, p2, p3, p4, p5, p6, p7));
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7>(pfnProc, p1, p2, p3, p4, p5, p6, p7));
 	}
 
-	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, 
-	          typename T6, typename T7, typename T8>
-	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, 
-	         T7 p7, T8 p8)
+	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
+	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8> >
-			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8));
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8>(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8));
 	}
 
 	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, 
 	          typename T6, typename T7, typename T8, typename T9>
-	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, 
-	         T6 p6, T7 p7, T8 p8, T9 p9)
+	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> >
-			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9));
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9));
 	}
 
 	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, 
@@ -174,8 +165,7 @@ public:
 	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10), T1 p1, T2 p2, T3 p3, T4 p4, T5 
 	         p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> >
-			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10));
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10));
 	}
 
 	template <typename R, typename T1, typename T2, typename T3, typename T4, typename T5, 
@@ -183,7 +173,7 @@ public:
 	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11), T1 p1, T2 p2, T3 p3, T4 p4, 
 	         T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> >
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>
 			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 	}
 
@@ -193,7 +183,7 @@ public:
 	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12), T1 p1, T2 p2, T3 p3, 
 	         T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> >
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12));
 	}
 
@@ -203,7 +193,7 @@ public:
 	void Run(R (*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13), T1 p1, T2 p2, 
 	         T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 p13)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> >
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>
 			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13));
 	}
 
@@ -214,7 +204,7 @@ public:
 	         p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, T13 
 	         p13, T14 p14)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> >
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14));
 	}
 
@@ -225,8 +215,7 @@ public:
 	         T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12, 
 	         T13 p13, T14 p14, T15 p15)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, 
-		                       T15> >
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>
 			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15));
 	}
 
@@ -237,46 +226,45 @@ public:
 	         T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	         T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 	{
-		Run(New<Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, 
-		                       T15, T16> >
+		Run(new Util::Function<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>
 			(pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16));
 	}
 
 	template <typename T, typename R>
 	void Run(T *pInst, R (T::*pfnProc)())
 	{
-		Run(New<Util::MemberFunction<T, R> >(pInst, pfnProc));
+		Run(new Util::MemberFunction<T, R>(pInst, pfnProc));
 	}
 
 	template <typename T, typename R, typename T1>
 	void Run(T *pInst, R (T::*pfnProc)(T1), T1 p1)
 	{
-		Run(New<Util::MemberFunction<T, R, T1> >(pInst, pfnProc, p1));
+		Run(new Util::MemberFunction<T, R, T1>(pInst, pfnProc, p1));
 	}
 
 	template <typename T, typename R, typename T1, typename T2>
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2), T1 p1, T2 p2)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2> >(pInst, pfnProc, p1, p2));
+		Run(new Util::MemberFunction<T, R, T1, T2>(pInst, pfnProc, p1, p2));
 	}
 
 	template <typename T, typename R, typename T1, typename T2, typename T3>
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3), T1 p1, T2 p2, T3 p3)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3> >(pInst, pfnProc, p1, p2, p3));
+		Run(new Util::MemberFunction<T, R, T1, T2, T3>(pInst, pfnProc, p1, p2, p3));
 	}
 
 	template <typename T, typename R, typename T1, typename T2, typename T3, typename T4>
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4), T1 p1, T2 p2, T3 p3, T4 p4)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4> >(pInst, pfnProc, p1, p2, p3, p4));
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4>(pInst, pfnProc, p1, p2, p3, p4));
 	}
 
 	template <typename T, typename R, typename T1, typename T2, typename T3, typename T4, 
 	          typename T5>
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4, T5), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5));
 	}
 
@@ -285,7 +273,7 @@ public:
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4, T5, T6), T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, 
 	         T6 p6)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6));
 	}
 
@@ -294,7 +282,7 @@ public:
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4, T5, T6, T7), T1 p1, T2 p2, T3 p3, T4 p4, 
 	         T5 p5, T6 p6, T7 p7)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7));
 	}
 
@@ -303,7 +291,7 @@ public:
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8), T1 p1, T2 p2, T3 p3, T4 p4, 
 	         T5 p5, T6 p6, T7 p7, T8 p8)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8));
 	}
 
@@ -312,7 +300,7 @@ public:
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9), T1 p1, T2 p2, T3 p3, 
 	         T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9));
 	}
 
@@ -321,7 +309,7 @@ public:
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10), T1 p1, T2 p2, 
 	         T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10));
 	}
 
@@ -331,7 +319,7 @@ public:
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11), T1 p1, T2 p2, 
 	         T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 	}
 
@@ -341,7 +329,7 @@ public:
 	void Run(T *pInst, R (T::*pfnProc)(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12), T1 p1, 
 	         T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, T12 p12)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12));
 	}
 
@@ -352,8 +340,8 @@ public:
 	         T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	         T12 p12, T13 p13)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, 
-		                             T13> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, 
+		                             T13>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13));
 	}
 
@@ -364,8 +352,8 @@ public:
 	         T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	         T12 p12, T13 p13, T14 p14)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
-		                             T14> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
+		                             T14>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14));
 	}
 
@@ -377,8 +365,8 @@ public:
 	         T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	         T12 p12, T13 p13, T14 p14, T15 p15)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
-		                             T14, T15> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
+		                             T14, T15>
 		    (pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15));
 	}
 
@@ -390,8 +378,8 @@ public:
 	         T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, T10 p10, T11 p11, 
 	         T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 	{
-		Run(New<Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
-		                             T14, T15, T16> >
+		Run(new Util::MemberFunction<T, R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
+		                             T14, T15, T16>
 			(pInst, pfnProc, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16));
 	}
 
@@ -400,7 +388,7 @@ private:
 	HANDLE   m_hThread;
 	TID      m_nID;
 
-	class IHelper
+	class IHelper : public IObject
 	{
 	public:
 
@@ -422,7 +410,7 @@ private:
 
 		~Helper() 
 		{
-			Delete(m_pFunction);
+			delete(m_pFunction);
 		}
 
 		virtual void Run()

@@ -48,7 +48,7 @@ DynMemPool::~DynMemPool()
 {
 	if (NULL != m_pMem)
 	{
-		Free(m_pMem);
+		Mem::Free(m_pMem);
 	}
 }
 
@@ -102,7 +102,7 @@ Status DynMemPool::SetSize(Size cbSize)
 
 	void *pFinalMem;
 
-	if (NULL == (pFinalMem = Realloc(m_pMem, cbFinalSize)))
+	if (NULL == (pFinalMem = Mem::Realloc(m_pMem, cbFinalSize)))
 	{
 		return Status(Status_MemAllocFailed, "Failed to allocate memory");
 	}

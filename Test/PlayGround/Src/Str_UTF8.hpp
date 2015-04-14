@@ -47,14 +47,14 @@ inline void Str_UTF8_Test1()
 	status = CX::Str::UTF8::FromUTF16(wszUTF16In, &sUTF8Out);
 
 	status = CX::Str::UTF8::ToUTF16((const CX::Char *)szUTF8In, CX::TYPE_SIZE_MAX, NULL, &cLen);
-	wszUTF16Out = CX::NewArr<CX::WChar>(cLen);
+	wszUTF16Out = new CX::WChar[cLen];
 	status = CX::Str::UTF8::ToUTF16((const CX::Char *)szUTF8In, CX::TYPE_SIZE_MAX, wszUTF16Out, &cLen);
 
 	status = CX::Str::UTF8::FromUTF16(wszUTF16In, CX::TYPE_SIZE_MAX, NULL, &cLen);
-	szUTF8Out = CX::NewArr<CX::Char>(cLen);
+	szUTF8Out = new CX::Char[cLen];
 	status = CX::Str::UTF8::FromUTF16(wszUTF16In, CX::TYPE_SIZE_MAX, szUTF8Out, &cLen);
 
-	CX::DeleteArr(wszUTF16Out);
-	CX::DeleteArr(szUTF8Out);
+	delete [] wszUTF16Out;
+	delete [] szUTF8Out;
 }
 

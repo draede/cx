@@ -26,46 +26,48 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Platform.hpp"
+#pragma once
 
 
-#if defined(CX_OS_WINDOWS)
-
-
-#include "CX/Alloc.hpp"
-#include "CX/C/Platform/Windows/windows.h"
+#include "CX/KVDB/IDatabaseConfig.hpp"
 
 
 namespace CX
 {
 
-void *Alloc(Size cbSize)
+namespace KVDB
 {
-	return HeapAlloc(GetProcessHeap(), 0, cbSize);
-}
 
-void *Realloc(void *pPtr, Size cbSize)
+class CX_API FDBDatabaseConfig : public IDatabaseConfig
 {
-	if (NULL == pPtr)
+public:
+	
+	enum Durability
 	{
-		return HeapAlloc(GetProcessHeap(), 0, cbSize);
-	}
-	else
-	{
-		return HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
-	}
-}
+		Durability_None,          //Synchronous commit through OS page cache
+		Durability_Direct,        //Synchronous commit through the direct IO option to bypass the OS page cache
+		Durability_Async,         //Asynchronous commit through OS page cache
+		Durability_DirectAsync,   //Asynchronous commit through the direct IO option to bypass the OS page cache
+	};
 
-void Free(void *pPtr)
-{
-	if (NULL != pPtr)
+	static const bool         DEFAULT_READONLY = false;
+	static const UInt64       DEFAULT_BUFFER_CACHE_SIZE = 4194304;
+	static const Durability   DEFAULT_DURABILITY = Durability_Async;
+
+	FDBDatabaseConfig()
 	{
-		HeapFree(GetProcessHeap(), 0, pPtr);
+		m_bReadOnly         = DEFAULT_READONLY;
+		m_cbBufferCacheSize = DEFAULT_BUFFER_CACHE_SIZE;
+		m_nDurability       = DEFAULT_DURABILITY;
 	}
-}
+
+	bool         m_bReadOnly;
+	UInt64       m_cbBufferCacheSize;
+	Durability   m_nDurability;
+
+};
+
+}//namespace KVDB
 
 }//namespace CX
-
-
-#endif
 

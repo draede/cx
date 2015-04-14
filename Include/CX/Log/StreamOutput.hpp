@@ -46,7 +46,6 @@ class CX_API StreamOutput : public IOutput
 {
 public:
 
-	//pOutput was allocated with New...
 	StreamOutput(IO::IOutputStream *pOutputStream);
 
 	~StreamOutput();

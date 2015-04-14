@@ -31,6 +31,7 @@
 
 #include "CX/Types.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -39,7 +40,7 @@ namespace CX
 namespace SB
 {
 
-class CX_API StatsData
+class CX_API StatsData : public IObject
 {
 public:
 

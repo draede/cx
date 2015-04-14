@@ -32,6 +32,7 @@
 #include "CX/Types.hpp"
 #include "CX/Map.hpp"
 #include "CX/SB/Member.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -40,7 +41,7 @@ namespace CX
 namespace SB
 {
 
-class Object
+class Object : public IObject
 {
 public:
 

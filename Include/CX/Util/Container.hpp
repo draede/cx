@@ -28,6 +28,7 @@
 
 #include "CX/Types.hpp"
 #include "CX/EmptyType.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -45,7 +46,7 @@ template <typename T1 = EmptyType, typename T2 = EmptyType, typename T3 = EmptyT
 class Container;
 
 template < >
-class Container< >
+class Container< > : public IObject
 {
 public:
 
@@ -80,7 +81,7 @@ public:
 };
 
 template <typename T1>
-class Container<T1>
+class Container<T1> : public IObject
 {
 public:
 
@@ -129,7 +130,7 @@ public:
 };
 
 template <typename T1, typename T2>
-class Container<T1, T2>
+class Container<T1, T2> : public IObject
 {
 public:
 
@@ -187,7 +188,7 @@ public:
 };
 
 template <typename T1, typename T2, typename T3>
-class Container<T1, T2, T3>
+class Container<T1, T2, T3> : public IObject
 {
 public:
 
@@ -254,7 +255,7 @@ public:
 };
 
 template <typename T1, typename T2, typename T3, typename T4>
-class Container<T1, T2, T3, T4>
+class Container<T1, T2, T3, T4> : public IObject
 {
 public:
 
@@ -330,7 +331,7 @@ public:
 };
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5>
-class Container<T1, T2, T3, T4, T5>
+class Container<T1, T2, T3, T4, T5> : public IObject
 {
 public:
 
@@ -415,7 +416,7 @@ public:
 };
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-class Container<T1, T2, T3, T4, T5, T6>
+class Container<T1, T2, T3, T4, T5, T6> : public IObject
 {
 public:
 
@@ -510,7 +511,7 @@ public:
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7>
-class Container<T1, T2, T3, T4, T5, T6, T7>
+class Container<T1, T2, T3, T4, T5, T6, T7> : public IObject
 {
 public:
 
@@ -614,7 +615,7 @@ public:
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8>
-class Container<T1, T2, T3, T4, T5, T6, T7, T8>
+class Container<T1, T2, T3, T4, T5, T6, T7, T8> : public IObject
 {
 public:
 
@@ -727,7 +728,7 @@ public:
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9>
-class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9>
+class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9> : public IObject
 {
 public:
 
@@ -849,7 +850,7 @@ public:
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10>
-class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>
+class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public IObject
 {
 public:
 
@@ -980,7 +981,7 @@ public:
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11>
-class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>
+class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public IObject
 {
 public:
 
@@ -1120,7 +1121,7 @@ public:
 
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
-class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
+class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public IObject
 {
 public:
 
@@ -1271,7 +1272,7 @@ public:
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
           typename T13>
-class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>
+class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public IObject
 {
 public:
 
@@ -1431,7 +1432,7 @@ public:
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
           typename T13, typename T14>
-class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
+class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : public IObject
 {
 public:
 
@@ -1600,7 +1601,7 @@ public:
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
           typename T13, typename T14, typename T15>
-class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>
+class Container<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : public IObject
 {
 public:
 
@@ -1778,7 +1779,7 @@ public:
 template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
           typename T13, typename T14, typename T15, typename T16>
-class Container
+class Container : public IObject
 {
 public:
 

@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h" />
+    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum-dtoa.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h" />
     <ClInclude Include="..\..\Contrib\DoubleConversion\Include\cached-powers.h" />
@@ -53,7 +54,6 @@
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\mintomic_msvc.h" />
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h" />
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
-    <ClInclude Include="..\..\Include\CX\Alloc.hpp" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
     <ClInclude Include="..\..\Include\CX\CX.hpp" />
     <ClInclude Include="..\..\Include\CX\C\Alloc.h" />
@@ -90,6 +90,7 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp" />
+    <ClInclude Include="..\..\Include\CX\IObject.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp" />
@@ -99,6 +100,18 @@
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBDatabase.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBDatabaseConfig.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBIterator.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBRecord.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBTable.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\FDBTableConfig.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\IDatabase.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\IDatabaseConfig.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\IIterator.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\IRecord.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\ITable.hpp" />
+    <ClInclude Include="..\..\Include\CX\KVDB\ITableConfig.hpp" />
     <ClInclude Include="..\..\Include\CX\Limits.hpp" />
     <ClInclude Include="..\..\Include\CX\List.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.hpp" />
@@ -110,7 +123,8 @@
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Map.hpp" />
-    <ClInclude Include="..\..\Include\CX\Object.hpp" />
+    <ClInclude Include="..\..\Include\CX\Component.hpp" />
+    <ClInclude Include="..\..\Include\CX\Mem.hpp" />
     <ClInclude Include="..\..\Include\CX\Platform.hpp" />
     <ClInclude Include="..\..\Include\CX\Print.hpp" />
     <ClInclude Include="..\..\Include\CX\Queue.hpp" />
@@ -169,9 +183,11 @@
     <ClInclude Include="..\..\Include\CX\Util\Function.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\IFunction.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\StackTrace.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\RndGen.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\StackTrace.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Var.hpp" />
@@ -179,10 +195,11 @@
     <ClInclude Include="..\..\Include\CX\Version.hpp" />
     <ClInclude Include="..\..\Src\Data\JSON\RapidJSONStreams.hpp" />
     <ClInclude Include="..\..\Src\IO\Scope.hpp" />
+    <ClInclude Include="..\..\Src\KVDB\FDBStatus.hpp" />
     <ClInclude Include="..\..\Src\Platform\Windows\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32.cpp" />
+    <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32_internal.cpp" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\cached-powers.cc" />
@@ -191,6 +208,618 @@
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fast-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fixed-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc" />
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\api_wrapper.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\atomic.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\avltree.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\blockcache.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btree.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btreeblock.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btree_fast_str_kv.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btree_kv.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\btree_str_kv.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\compactor.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\configuration.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\docio.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\fdb_errors.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\filemgr.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\filemgr_ops.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\filemgr_ops_windows.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\forestdb.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\hash.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\hash_functions.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\hbtrie.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\iterator.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\kv_instance.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\list.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\snapshot.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\transaction.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\src\wal.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\adler32.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\crc32.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\debug.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\gettimeofday_vs.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\iniparser.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\memleak.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\partiallock.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ForestDB\Src\utils\time_utils.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
     <ClCompile Include="..\..\Contrib\MD5\Src\md5.c">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
@@ -285,7 +914,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c" />
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c" />
-    <ClCompile Include="..\..\Src\Alloc.cpp" />
     <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">CompileAsC</CompileAs>
@@ -306,17 +934,23 @@
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash32.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash64.cpp" />
+    <ClCompile Include="..\..\Src\IObject.cpp" />
     <ClCompile Include="..\..\Src\IO\FileInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FileOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
     <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
+    <ClCompile Include="..\..\Src\KVDB\FDBDatabase.cpp" />
+    <ClCompile Include="..\..\Src\KVDB\FDBIterator.cpp" />
+    <ClCompile Include="..\..\Src\KVDB\FDBRecord.cpp" />
+    <ClCompile Include="..\..\Src\KVDB\FDBTable.cpp" />
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
-    <ClCompile Include="..\..\Src\Object.cpp" />
+    <ClCompile Include="..\..\Src\Component.cpp" />
+    <ClCompile Include="..\..\Src\Mem.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
     <ClCompile Include="..\..\Src\SB\BinaryDataReader.cpp" />
     <ClCompile Include="..\..\Src\SB\BinaryDataWriter.cpp" />
@@ -334,6 +968,7 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\StackTrace_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\RndGen.cpp" />
@@ -489,7 +1124,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/ForestDB/Include;../../Contrib/ForestDB/Src/src;../../Contrib/ForestDB/Src/option;../../Contrib/ForestDB/Src/utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -508,7 +1143,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/ForestDB/Include;../../Contrib/ForestDB/Src/src;../../Contrib/ForestDB/Src/option;../../Contrib/ForestDB/Src/utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -530,7 +1165,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/ForestDB/Include;../../Contrib/ForestDB/Src/src;../../Contrib/ForestDB/Src/option;../../Contrib/ForestDB/Src/utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -549,7 +1184,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/ForestDB/Include;../../Contrib/ForestDB/Src/src;../../Contrib/ForestDB/Src/option;../../Contrib/ForestDB/Src/utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -570,7 +1205,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/ForestDB/Include;../../Contrib/ForestDB/Src/src;../../Contrib/ForestDB/Src/option;../../Contrib/ForestDB/Src/utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -593,7 +1228,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/ForestDB/Include;../../Contrib/ForestDB/Src/src;../../Contrib/ForestDB/Src/option;../../Contrib/ForestDB/Src/utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -619,7 +1254,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/ForestDB/Include;../../Contrib/ForestDB/Src/src;../../Contrib/ForestDB/Src/option;../../Contrib/ForestDB/Src/utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -642,7 +1277,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/ForestDB/Include;../../Contrib/ForestDB/Src/src;../../Contrib/ForestDB/Src/option;../../Contrib/ForestDB/Src/utils</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

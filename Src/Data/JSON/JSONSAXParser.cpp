@@ -256,7 +256,7 @@ namespace JSON
 
 SAXParser::SAXParser()
 {
-	if (NULL != (m_pHandler = New<CX_Data_JSON_SAX_Handler>()))
+	if (NULL != (m_pHandler = new CX_Data_JSON_SAX_Handler()))
 	{
 		m_pHandler->m_pVectorObservers = &m_vectorObservers;
 	}
@@ -266,7 +266,7 @@ SAXParser::~SAXParser()
 {
 	if (NULL != m_pHandler)
 	{
-		Delete(m_pHandler);
+		delete(m_pHandler);
 	}
 }
 

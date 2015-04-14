@@ -41,7 +41,7 @@ const Char SHA512Hash::NAME[] = "SHA512";
 
 SHA512Hash::SHA512Hash()
 {
-	if (NULL == (m_pCTX = New<SHA512_CTX>()))
+	if (NULL == (m_pCTX = new SHA512_CTX()))
 	{
 		return;
 	}
@@ -51,7 +51,7 @@ SHA512Hash::SHA512Hash()
 
 SHA512Hash::~SHA512Hash()
 {
-	Delete((SHA512_CTX *)m_pCTX);
+	delete (SHA512_CTX *)m_pCTX;
 }
 
 const Char *SHA512Hash::GetName()

@@ -40,6 +40,7 @@
 #include "CX/Vector.hpp"
 #include "CX/Scope.hpp"
 #include "CX/Status.hpp"
+#include "CX/IObject.hpp"
 
 
 #ifndef CX_LOG_LEVEL
@@ -103,7 +104,7 @@ namespace CX
 namespace Log
 {
 
-class CX_API Logger
+class CX_API Logger : public IObject
 {
 public:
 
@@ -117,12 +118,10 @@ public:
 
 	Level GetLevel() const;
 
-	//pFormatter was created with New
 	Status SetFormatter(IFormatter *pFormatter);
 
 	IFormatter *GetFormatter();
 
-	//pOutput was created with New
 	Status AddOutput(IOutput *pOutput);
 
 	Status RemoveOutputs();

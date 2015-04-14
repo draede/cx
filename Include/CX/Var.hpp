@@ -29,7 +29,7 @@
 #pragma once
 
 
-#include "CX/Alloc.hpp"
+#include "CX/Mem.hpp"
 #include "CX/Types.hpp"
 #include "CX/String.hpp"
 #include "CX/Map.hpp"
@@ -38,12 +38,13 @@
 #include "CX/IO/IInputStream.hpp"
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
-class CX_API Var
+class CX_API Var : public IObject
 {
 private:
 
@@ -191,7 +192,7 @@ public:
 
 	Var *GetParent() const;
 
-	class ObjectIterator
+	class ObjectIterator : public IObject
 	{
 	public:
 
@@ -218,7 +219,7 @@ public:
 
 	};
 
-	class ObjectConstIterator
+	class ObjectConstIterator : public IObject
 	{
 	public:
 
@@ -249,7 +250,7 @@ public:
 
 	ObjectConstIterator GetObjectConstIterator() const;
 
-	class ArrayIterator
+	class ArrayIterator : public IObject
 	{
 	public:
 
@@ -276,7 +277,7 @@ public:
 
 	};
 
-	class ArrayConstIterator
+	class ArrayConstIterator : public IObject
 	{
 	public:
 

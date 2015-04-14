@@ -35,6 +35,7 @@
 #include "CX/IO/IInputStream.hpp"
 #include "CX/SB/Object.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -43,7 +44,7 @@ namespace CX
 namespace SB
 {
 
-class CX_API Parser
+class CX_API Parser : public IObject
 {
 public:
 

@@ -54,6 +54,11 @@ Status::Status(StatusCode nCode)
 
 Status::Status(StatusCode nCode, const Char *szMsg)
 {
+	Set(nCode, szMsg);
+}
+
+void Status::Set(StatusCode nCode, const Char *szMsg)
+{
 	Char       *pDst;
 	Char       *pMaxDst;
 	const Char *pSrc;
@@ -81,24 +86,30 @@ Status::Status(StatusCode nCode, const Char *szMsg)
 	}
 }
 
-StatusCode Status::GetCode()
+StatusCode Status::GetCode() const
 {
 	return m_nCode;
 }
 
-const Char *Status::GetMsg()
+const Char *Status::GetMsg() const
 {
 	return m_szMsg;
 }
 
-Bool Status::IsOK()
+Bool Status::IsOK() const
 {
 	return CXOK(m_nCode);
 }
 
-Bool Status::IsNOK()
+Bool Status::IsNOK() const
 {
 	return CXNOK(m_nCode);
+}
+
+void Status::Clear()
+{
+	m_nCode    = Status_OK;
+	m_szMsg[0] = 0;
 }
 
 }//namespace CX

@@ -29,6 +29,9 @@
 #pragma once
 
 
+#include "CX/IObject.hpp"
+
+
 namespace CX
 {
 
@@ -36,7 +39,7 @@ namespace Util
 {
 
 template <typename R>
-class IFunction
+class IFunction : public IObject
 {
 public:
 

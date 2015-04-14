@@ -4,119 +4,43 @@
 // see http://create.stephan-brumme.com/disclaimer.html
 //
 
-// g++ -o Crc32 Crc32.cpp -O3 -march=native -mtune=native
-
-
-#include "../Include/crc32.h"
-
+/*
+ * modified by Jung-Sang Ahn in 2013.
+ */
 
 #include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
 
-// define endianess and some integer data types
-#ifdef _MSC_VER
-  #define __LITTLE_ENDIAN 1234
-  #define __BIG_ENDIAN    4321
-  #define __BYTE_ORDER    __LITTLE_ENDIAN
-#else
-  // uint8_t, uint32_t, in32_t
-  #include <stdint.h>
-  // defines __BYTE_ORDER as __LITTLE_ENDIAN or __BIG_ENDIAN
-#include <endian.h>
-#endif
-
-/// zlib's CRC32 polynomial
-const uint32_t Polynomial = 0xEDB88320;
-
-/// swap endianess
-static inline uint32_t swap(uint32_t x)
-{
-#if defined(__GNUC__) || defined(__clang__)
-  return __builtin_bswap32(x);
-#else
-  return (x >> 24) |
-        ((x >>  8) & 0x0000FF00) |
-        ((x <<  8) & 0x00FF0000) |
-         (x << 24);
-#endif
-}
-
-/// forward declaration, table is at the end of this file
-extern const uint32_t Crc32Lookup[8][256]; // extern is needed to keep compiler happey
-
-/// compute CRC32 (Slicing-by-8 algorithm)
-uint32_t crc32_8bytes(const void* data, size_t length, uint32_t previousCrc32/* = 0*/)
-{
-  uint32_t crc = ~previousCrc32; // same as previousCrc32 ^ 0xFFFFFFFF
-  const uint32_t* current = (const uint32_t*) data;
-
-  // process eight bytes at once (Slicing-by-8)
-  while (length >= 8)
-  {
-#if __BYTE_ORDER == __BIG_ENDIAN
-    uint32_t one = *current++ ^ swap(crc);
-    uint32_t two = *current++;
-    crc  = Crc32Lookup[0][ two      & 0xFF] ^
-           Crc32Lookup[1][(two>> 8) & 0xFF] ^
-           Crc32Lookup[2][(two>>16) & 0xFF] ^
-           Crc32Lookup[3][(two>>24) & 0xFF] ^
-           Crc32Lookup[4][ one      & 0xFF] ^
-           Crc32Lookup[5][(one>> 8) & 0xFF] ^
-           Crc32Lookup[6][(one>>16) & 0xFF] ^
-           Crc32Lookup[7][(one>>24) & 0xFF];
-#else
-    uint32_t one = *current++ ^ crc;
-    uint32_t two = *current++;
-    crc  = Crc32Lookup[0][(two>>24) & 0xFF] ^
-           Crc32Lookup[1][(two>>16) & 0xFF] ^
-           Crc32Lookup[2][(two>> 8) & 0xFF] ^
-           Crc32Lookup[3][ two      & 0xFF] ^
-           Crc32Lookup[4][(one>>24) & 0xFF] ^
-           Crc32Lookup[5][(one>>16) & 0xFF] ^
-           Crc32Lookup[6][(one>> 8) & 0xFF] ^
-           Crc32Lookup[7][ one      & 0xFF];
-#endif
-
-    length -= 8;
-  }
-
-  const uint8_t* currentChar = (const uint8_t*) current;
-  // remaining 1 to 7 bytes (standard algorithm)
-  while (length-- > 0)
-    crc = (crc >> 8) ^ Crc32Lookup[0][(crc & 0xFF) ^ *currentChar++];
-
-  return ~crc; // same as crc ^ 0xFFFFFFFF
-}
-
-
-// //////////////////////////////////////////////////////////
-// constants
+#include "crc32.h"
+#include "arch.h"
 
 
 /// look-up table, already declared above
-const uint32_t Crc32Lookup[8][256] =
+const uint32_t crc_lookup[8][256] =
 {
-  //// same algorithm as crc32_bitwise
-  //for (int i = 0; i <= 0xFF; i++)
-  //{
-  //  uint32_t crc = i;
-  //  for (int j = 0; j < 8; j++)
-  //    crc = (crc >> 1) ^ ((crc & 1) * Polynomial);
-  //  Crc32Lookup[0][i] = crc;
-  //}
-  //// ... and the following slicing-by-8 algorithm (from Intel):
-  //// http://www.intel.com/technology/comms/perfnet/download/CRC_generators.pdf
-  //// http://sourceforge.net/projects/slicing-by-8/
-  //for (int i = 0; i <= 0xFF; i++)
-  //{
-  //  Crc32Lookup[1][i] = (Crc32Lookup[0][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[0][i] & 0xFF];
-  //  Crc32Lookup[2][i] = (Crc32Lookup[1][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[1][i] & 0xFF];
-  //  Crc32Lookup[3][i] = (Crc32Lookup[2][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[2][i] & 0xFF];
+//// same algorithm as crc32_bitwise
+//for (int i = 0; i <= 0xFF; i++)
+//{
+//  uint32_t crc = i;
+//  for (int j = 0; j < 8; j++)
+//    crc = (crc >> 1) ^ ((crc & 1) * Polynomial);
+//  Crc32Lookup[0][i] = crc;
+//}
+//// ... and the following slicing-by-8 algorithm (from Intel):
+//// http://www.intel.com/technology/comms/perfnet/download/CRC_generators.pdf
+//// http://sourceforge.net/projects/slicing-by-8/
+//for (int i = 0; i <= 0xFF; i++)
+//{
+//  Crc32Lookup[1][i] = (Crc32Lookup[0][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[0][i] & 0xFF];
+//  Crc32Lookup[2][i] = (Crc32Lookup[1][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[1][i] & 0xFF];
+//  Crc32Lookup[3][i] = (Crc32Lookup[2][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[2][i] & 0xFF];
 
-  //  Crc32Lookup[4][i] = (Crc32Lookup[3][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[3][i] & 0xFF];
-  //  Crc32Lookup[5][i] = (Crc32Lookup[4][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[4][i] & 0xFF];
-  //  Crc32Lookup[6][i] = (Crc32Lookup[5][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[5][i] & 0xFF];
-  //  Crc32Lookup[7][i] = (Crc32Lookup[6][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[6][i] & 0xFF];
-  //}
+//  Crc32Lookup[4][i] = (Crc32Lookup[3][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[3][i] & 0xFF];
+//  Crc32Lookup[5][i] = (Crc32Lookup[4][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[4][i] & 0xFF];
+//  Crc32Lookup[6][i] = (Crc32Lookup[5][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[5][i] & 0xFF];
+//  Crc32Lookup[7][i] = (Crc32Lookup[6][i] >> 8) ^ Crc32Lookup[0][Crc32Lookup[6][i] & 0xFF];
+//}
   { 0x00000000,0x77073096,0xEE0E612C,0x990951BA,0x076DC419,0x706AF48F,0xE963A535,0x9E6495A3,
     0x0EDB8832,0x79DCB8A4,0xE0D5E91E,0x97D2D988,0x09B64C2B,0x7EB17CBD,0xE7B82D07,0x90BF1D91,
     0x1DB71064,0x6AB020F2,0xF3B97148,0x84BE41DE,0x1ADAD47D,0x6DDDE4EB,0xF4D4B551,0x83D385C7,
@@ -381,3 +305,70 @@ const uint32_t Crc32Lookup[8][256] =
     0xFF6B144A,0x33C114D4,0xBD4E1337,0x71E413A9,0x7B211AB0,0xB78B1A2E,0x39041DCD,0xF5AE1D53,
     0x2C8E0FFF,0xE0240F61,0x6EAB0882,0xA201081C,0xA8C40105,0x646E019B,0xEAE10678,0x264B06E6 }
 };
+
+#define MIN(a,b) (((a)<(b))?(a):(b))
+
+uint32_t crc32_1(void* data, size_t len, uint32_t prev_value)
+{
+    uint32_t crc = ~prev_value;
+    const uint8_t* cur = (const uint8_t*) data;
+
+    while (len-- > 0)
+        crc = (crc >> 8) ^ crc_lookup[0][(crc & 0xFF) ^ *cur++];
+
+    return ~crc;
+}
+
+uint32_t crc32_8(void* data, size_t len, uint32_t prev_value)
+{
+    uint32_t *cur = (uint32_t*) data;
+    uint32_t crc = ~prev_value;
+
+    while (len >= 8) {
+#ifdef _BIG_ENDIAN
+        uint32_t one = *cur++ ^ bitswap32(crc);
+        uint32_t two = *cur++;
+        crc =
+            crc_lookup[7][(one>>24) & 0xFF] ^
+            crc_lookup[6][(one>>16) & 0xFF] ^
+            crc_lookup[5][(one>> 8) & 0xFF] ^
+            crc_lookup[4][(one    ) & 0xFF] ^
+            crc_lookup[3][(two>>24) & 0xFF] ^
+            crc_lookup[2][(two>>16) & 0xFF] ^
+            crc_lookup[1][(two>> 8) & 0xFF] ^
+            crc_lookup[0][(two    ) & 0xFF];
+#else
+        uint32_t one = *cur++ ^ crc;
+        uint32_t two = *cur++;
+        crc =
+            crc_lookup[7][(one    ) & 0xFF] ^
+            crc_lookup[6][(one>> 8) & 0xFF] ^
+            crc_lookup[5][(one>>16) & 0xFF] ^
+            crc_lookup[4][(one>>24) & 0xFF] ^
+            crc_lookup[3][(two    ) & 0xFF] ^
+            crc_lookup[2][(two>> 8) & 0xFF] ^
+            crc_lookup[1][(two>>16) & 0xFF] ^
+            crc_lookup[0][(two>>24) & 0xFF];
+#endif
+        len -= 8;
+    }
+
+    unsigned char *cur_byte = (unsigned char*) cur;
+    while (len--)
+        crc = (crc >> 8) ^ crc_lookup[0][(crc & 0xFF) ^ *cur_byte++];
+
+    return ~crc;
+}
+
+uint32_t crc32_8_last8(void *data, size_t len, uint32_t prev_value)
+{
+    size_t min = MIN(len, 8);
+    void *src = (char*)data + (len-min);
+#ifdef _ALIGN_MEM_ACCESS
+    uint64_t temp; // aligned
+    memcpy(&temp, src, min);
+    src = &temp;
+#endif
+    return crc32_8(src, min, prev_value);
+}
+

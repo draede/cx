@@ -40,6 +40,7 @@
 #include "CX/SB/BoolForVector.hpp"
 #include "CX/Hash/xxHash32.hpp"
 #include "CX/Hash/xxHash64.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -59,7 +60,7 @@ struct Hasher
 
 };
 
-class HasherHelperSeed
+class HasherHelperSeed : public IObject
 {
 public:
 
@@ -102,7 +103,7 @@ private:
 
 };
 
-class HasherHelper
+class HasherHelper : public IObject
 {
 public:
 

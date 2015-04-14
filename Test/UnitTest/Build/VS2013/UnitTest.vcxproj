@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\Alloc.cpp" />
     <ClCompile Include="..\..\Src\Hash.cpp" />
     <ClCompile Include="..\..\Src\Log_Logger.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />

@@ -34,6 +34,7 @@
 #include "CX/String.hpp"
 #include "CX/Vector.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -42,7 +43,7 @@ namespace CX
 namespace Str
 {
 
-class CX_API IBinStr
+class CX_API IBinStr : public IObject
 {
 public:
 
@@ -72,7 +73,7 @@ public:
 		}
 		else
 		{
-			if (NULL == (pTmp = (Char *)Alloc((cStrOutputLen + 1) * sizeof(Char))))
+			if (NULL == (pTmp = (Char *)Mem::Alloc((cStrOutputLen + 1) * sizeof(Char))))
 			{
 				return Status(Status_MemAllocFailed, "Failed to allocate temp buffer");
 			}
@@ -81,7 +82,7 @@ public:
 		{
 			if (pTmp != tmp)
 			{
-				Free(pTmp);
+				Mem::Free(pTmp);
 			}
 
 			return status;
@@ -89,7 +90,7 @@ public:
 		psStrOutput->append(pTmp, cStrOutputLen);
 		if (pTmp != tmp)
 		{
-			Free(pTmp);
+			Mem::Free(pTmp);
 		}
 
 		return Status();

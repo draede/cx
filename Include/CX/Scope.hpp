@@ -30,13 +30,14 @@
 
 
 #include "CX/C/Scope.h"
+#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
 template <typename T, void (T::*pfnEnter)() = &T::Enter, void (T::*pfnLeave)() = &T::Leave>
-class Scope
+class Scope : public IObject
 {
 public:
 

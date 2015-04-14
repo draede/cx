@@ -26,27 +26,55 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Alloc.hpp"
-#include "CX/C/Alloc.h"
+#pragma once
+
+
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/IObject.hpp"
+#include "CX/KVDB/IRecord.hpp"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX
 {
 
-void *Alloc(Size cbSize)
+namespace KVDB
 {
-	return CX_Alloc(cbSize);
-}
 
-void *Realloc(void *pPtr, Size cbSize)
-{
-	return CX_Realloc(pPtr, cbSize);
-}
+class ITable;
 
-void Free(void *pPtr)
+class CX_API IIterator : public IObject
 {
-	CX_Free(pPtr);
-}
+public:
+
+	enum SeekAprox
+	{
+		SeekAprox_Lower,
+		SeekAprox_Higher,
+	};
+
+	virtual ~IIterator() { }
+
+	virtual Status Get(IRecord **ppRecord) = 0;
+
+	virtual Status FreeRecordMem(IRecord *pRecord) = 0;
+
+	virtual Status Prev() = 0;
+
+	virtual Status Next() = 0;
+
+	virtual Status First() = 0;
+
+	virtual Status Last() = 0;
+
+	virtual Status Seek(const void *pKey, Size cbKeySize, SeekAprox nSeekAprox = SeekAprox_Higher) = 0; 
+
+	virtual ITable *GetTable() = 0;
+
+};
+
+}//namespace KVDB
 
 }//namespace CX
 

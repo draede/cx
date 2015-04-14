@@ -30,6 +30,7 @@
 
 
 #include "CX/Types.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -38,7 +39,7 @@ namespace CX
 namespace Sys
 {
 
-class BOM
+class BOM : public IObject
 {
 public:
 

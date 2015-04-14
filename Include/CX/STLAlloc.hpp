@@ -29,7 +29,8 @@
 #pragma once
 
 
-#include "CX/Alloc.hpp"
+#include "CX/Mem.hpp"
+#include "CX/IObject.hpp"
 #include <new>
 #include <cstddef>
 #include <limits>
@@ -63,7 +64,7 @@ public:
 };
 
 template <class T> 
-class STLAlloc 
+class STLAlloc : public IObject 
 {
 public:
 
@@ -120,14 +121,14 @@ public:
 	{
 		hint;
 
-		return (pointer)Alloc(n * sizeof(T));
+		return (pointer)Mem::Alloc(n * sizeof(T));
 	}
 
 	void deallocate(pointer p, size_type n)
 	{
 		n;
 
-		Free(p);
+		Mem::Free(p);
 	}
 
 	size_type max_size() const

@@ -41,7 +41,7 @@ const Char SHA256Hash::NAME[] = "SHA256";
 
 SHA256Hash::SHA256Hash()
 {
-	if (NULL == (m_pCTX = New<SHA256_CTX>()))
+	if (NULL == (m_pCTX = new SHA256_CTX()))
 	{
 		return;
 	}
@@ -51,7 +51,7 @@ SHA256Hash::SHA256Hash()
 
 SHA256Hash::~SHA256Hash()
 {
-	Delete((SHA256_CTX *)m_pCTX);
+	delete (SHA256_CTX *)m_pCTX;
 }
 
 const Char *SHA256Hash::GetName()

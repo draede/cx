@@ -61,7 +61,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 {
 	SECTION("no args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -145,7 +145,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("1 arg")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -229,7 +229,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("2 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -313,7 +313,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("3 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -397,7 +397,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("4 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -481,7 +481,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("5 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -565,7 +565,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("6 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -676,7 +676,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("7 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -787,7 +787,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("8 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -898,7 +898,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("9 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -1009,7 +1009,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("10 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -1120,7 +1120,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("11 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -1231,7 +1231,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("12 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -1342,7 +1342,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("13 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -1462,7 +1462,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("14 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -1588,7 +1588,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("15 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 
@@ -1716,7 +1716,7 @@ TEST_CASE("Log::Logger tests", "[CX::Log::Logger]")
 
 	SECTION("16 args")
 	{
-		MyOutput *pOutput = New<MyOutput>();
+		MyOutput *pOutput = new MyOutput();
 
 		((Log::DefaultFormatter *)Log::Logger::GetDefaultLogger().GetFormatter())->
 		     SetFlags(Log::DefaultFormatter::Show_Tag | Log::DefaultFormatter::Show_Level | 

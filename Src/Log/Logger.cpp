@@ -39,7 +39,7 @@ namespace Log
 Logger::Logger()
 {
 	m_nLevel = Level_Info;
-	if (NULL == (m_pFormatter = New<DefaultFormatter>()))
+	if (NULL == (m_pFormatter = new DefaultFormatter()))
 	{
 		//
 	}
@@ -76,7 +76,7 @@ Status Logger::SetFormatter(IFormatter *pFormatter)
 
 	if (NULL != m_pFormatter)
 	{
-		Delete(m_pFormatter);
+		delete m_pFormatter;
 		m_pFormatter = NULL;
 	}
 	m_pFormatter = pFormatter;
@@ -107,7 +107,7 @@ Status Logger::RemoveOutputs()
 	for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
 	     iter != m_vectorOutputs.end(); ++iter)
 	{
-		Delete(*iter);
+		delete *iter;
 	}
 	m_vectorOutputs.clear();
 

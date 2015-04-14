@@ -34,6 +34,7 @@
 #include "CX/Log/Level.hpp"
 #include "CX/Print.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -42,7 +43,7 @@ namespace CX
 namespace Log
 {
 
-class CX_API IOutput
+class CX_API IOutput : public IObject
 {
 public:
 
