@@ -26,90 +26,15 @@
  * SOFTWARE.
  */ 
 
+#pragma once
+
+
 #include "CX/Platform.hpp"
 
 
 #if defined(CX_OS_WINDOWS)
-
-
-#include "CX/Sys/Thread.hpp"
-#include "CX/Status.hpp"
-
-
-namespace CX
-{
-
-namespace Sys
-{
-
-Thread::Thread()
-{
-	m_hThread = NULL;
-	m_nID     = 0;
-}
-
-Thread::~Thread()
-{
-}
-
-Status Thread::Wait()
-{
-	if (NULL == m_hThread)
-	{
-		return Status(Status_NotInitialized, "Thread not started");
-	}
-	if (WAIT_OBJECT_0 == WaitForSingleObject(m_hThread, INFINITE))
-	{
-		CloseHandle(m_hThread);
-		m_hThread = NULL;
-
-		return Status();
-	}
-
-	return Status(Status_OperationFailed, "WaitForSingleObject failed with error {1}", 
-	                   GetLastError());
-}
-
-Bool Thread::IsRunning()
-{
-	return (NULL != m_hThread);
-}
-
-Thread::ID Thread::GetID()
-{
-	if (NULL == m_hThread)
-	{
-		return 0;
-	}
-
-	return m_nID;
-}
-
-Thread::ID Thread::GetCurrentThreadID()
-{
-	return (Thread::ID)GetCurrentThreadId();
-}
-
-void Thread::Sleep(Size cMilliseconds)
-{
-	::Sleep((DWORD)cMilliseconds);
-}
-
-DWORD Thread::ThreadProc(void *pArg)
-{
-	IHelper *pHelper = (IHelper *)pArg;
-
-	pHelper->Run();
-
-	delete(pHelper);
-
-	return 0;
-}
-
-}//namespace Sys
-
-}//namespace CX
-
-
+	#include "CX/Sys/Platform/Windows/Process.hpp"
+#else	
+	#error "Process.h not implemented on this platform"
 #endif
 

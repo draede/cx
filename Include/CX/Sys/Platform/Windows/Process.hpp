@@ -26,15 +26,19 @@
  * SOFTWARE.
  */ 
 
+#pragma once
+
+
 #include "CX/Platform.hpp"
 
 
 #if defined(CX_OS_WINDOWS)
 
 
-#include "CX/Sys/DynLib.hpp"
-#include "CX/Str/UTF8.hpp"
+#include "CX/Types.hpp"
 #include "CX/Status.hpp"
+#include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -43,73 +47,29 @@ namespace CX
 namespace Sys
 {
 
-DynLib::DynLib()
+class CX_API Process : public IObject
 {
-	Status::Clear();
+public:
 
-	m_hHandle = NULL;
-}
+	typedef UInt64    ID;
 
-DynLib::~DynLib()
-{
-	Status::Clear();
+	static ID GetCurrentProcessID();
 
-	Unload();
-}
+	static Status GetCurrentProcessPath(String &sPath);
 
-Bool DynLib::IsOK()
-{
-	Status::Clear();
+	static Status GetCurrentProcessPathW(WString &wsPath);
 
-	return (NULL != m_hHandle);
-}
+	static Status GetCurrentProcessDir(String &sDir);
 
-StatusCode DynLib::Load(const Char *szPath)
-{
-	Unload();
-	Status::Clear();
+	static Status GetCurrentProcessDirW(WString &wsDir);
 
-	WString wsPath;
+private:
 
-	if (CXNOK(Str::UTF8::ToWChar(szPath, &wsPath)))
-	{
-		return Status::GetCode();
-	}
-
-	if (NULL == (m_hHandle = LoadLibraryW(wsPath.c_str())))
-	{
-		return Status::Set(Status_FileNotFound, "Failed to load library");
-	}
-
-	return Status_OK;
-}
-
-StatusCode DynLib::Unload()
-{
-	Status::Clear();
-
-	if (NULL != m_hHandle)
-	{
-		FreeLibrary(m_hHandle);
-	}
+	Process();
 	
-	return Status_OK;
-}
+	~Process();
 
-void *DynLib::GetFunc(const Char *szName)
-{
-	Status::Clear();
-
-	if (NULL == m_hHandle)
-	{
-		Status::Set(Status_NotInitialized, "");
-
-		return NULL;
-	}
-
-	return GetProcAddress(m_hHandle, szName);
-}
-
+};
 
 }//namespace Sys
 

@@ -50,12 +50,11 @@ namespace CX
 namespace Sys
 {
 
-typedef UInt64       TID;
-typedef UInt64       PID;
-
 class CX_API Thread : public IObject
 {
 public:
+
+	typedef UInt64    ID;  
 
 	Thread();
 
@@ -65,11 +64,9 @@ public:
 
 	Bool IsRunning();
 
-	TID GetID();
+	ID GetID();
 
-	static PID GetCurrentProcessID();
-
-	static TID GetCurrentThreadID();
+	static ID GetCurrentThreadID();
 
 	static void Sleep(Size cMilliseconds);
 
@@ -386,7 +383,7 @@ public:
 private:
 
 	HANDLE   m_hThread;
-	TID      m_nID;
+	ID       m_nID;
 
 	class IHelper : public IObject
 	{

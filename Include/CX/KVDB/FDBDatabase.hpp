@@ -77,8 +77,11 @@ public:
 private:
 
 	void     *m_pDB;
-	String   m_sPath;
 	bool     m_bReadOnly;
+#pragma warning(push)
+#pragma warning(disable: 4251)
+	String   m_sPath;
+#pragma warning(pop)
 
 };
 

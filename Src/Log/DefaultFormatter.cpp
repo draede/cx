@@ -29,6 +29,7 @@
 #include "CX/Log/DefaultFormatter.hpp"
 #include "CX/Status.hpp"
 #include "CX/Util/Time.hpp"
+#include "CX/Sys/Process.hpp"
 #include "CX/Sys/Thread.hpp"
 
 
@@ -82,7 +83,7 @@ Status DefaultFormatter::Write(IOutput *pOutput, Level nLevel, const Char *szTag
 	}
 	if (Show_PID == (m_nFlags & Show_PID))
 	{
-		Print(&sOutput, "[{1:' '6}] ", (UInt64)Sys::Thread::GetCurrentProcessID());
+		Print(&sOutput, "[{1:' '6}] ", (UInt64)Sys::Process::GetCurrentProcessID());
 	}
 	if (Show_TID == (m_nFlags & Show_TID))
 	{
