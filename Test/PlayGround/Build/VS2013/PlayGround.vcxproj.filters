@@ -34,5 +34,8 @@
     <ClInclude Include="..\..\Src\Mem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\MultiHashSetAndHashMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -110,9 +110,14 @@
     <ClInclude Include="..\..\Include\CX\C\Version.h" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\SAXParser.hpp" />
+    <ClInclude Include="..\..\Include\CX\DenseHashMap.hpp" />
+    <ClInclude Include="..\..\Include\CX\DenseHashSet.hpp" />
+    <ClInclude Include="..\..\Include\CX\DenseMultiHashMap.hpp" />
+    <ClInclude Include="..\..\Include\CX\DenseMultiHashSet.hpp" />
     <ClInclude Include="..\..\Include\CX\Deque.hpp" />
     <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.hpp" />
     <ClInclude Include="..\..\Include\CX\EmptyType.hpp" />
+    <ClInclude Include="..\..\Include\CX\GSHAlloc.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\CRC32Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\IHash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.hpp" />
@@ -185,6 +190,10 @@
     <ClInclude Include="..\..\Include\CX\SB\Writers.hpp" />
     <ClInclude Include="..\..\Include\CX\Set.hpp" />
     <ClInclude Include="..\..\Include\CX\Slice.hpp" />
+    <ClInclude Include="..\..\Include\CX\SparseHashMap.hpp" />
+    <ClInclude Include="..\..\Include\CX\SparseHashSet.hpp" />
+    <ClInclude Include="..\..\Include\CX\SparseMultiHashMap.hpp" />
+    <ClInclude Include="..\..\Include\CX\SparseMultiHashSet.hpp" />
     <ClInclude Include="..\..\Include\CX\Stack.hpp" />
     <ClInclude Include="..\..\Include\CX\Status.hpp" />
     <ClInclude Include="..\..\Include\CX\StatusCodes.hpp" />

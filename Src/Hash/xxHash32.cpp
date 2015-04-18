@@ -97,7 +97,7 @@ Status xxHash32::Done(void *pHash)
 	return Status();
 }
 
-UInt32 xxHash32::Hash(const void *pData, Size cbSize, UInt32 nSeed/* = 0*/)
+UInt32 xxHash32::DoHash(const void *pData, Size cbSize, UInt32 nSeed/* = 0*/)
 {
 	return XXH32(pData, cbSize, nSeed);
 }

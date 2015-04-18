@@ -110,9 +110,9 @@ public:
 	static Size Hash(const void *pData, Size cbSize)
 	{
 #ifdef CX_32BIT_ARCH
-		return (Size)Hash::xxHash32::Hash(pData, cbSize, HasherHelperSeed::GetSeed());
+		return (Size)CX::Hash::xxHash32::DoHash(pData, cbSize, HasherHelperSeed::GetSeed());
 #else
-		return (Size)Hash::xxHash64::Hash(pData, cbSize, HasherHelperSeed::GetSeed());
+		return (Size)CX::Hash::xxHash64::DoHash(pData, cbSize, HasherHelperSeed::GetSeed());
 #endif
 	}
 

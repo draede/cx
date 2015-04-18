@@ -61,7 +61,7 @@ public:
 
 	virtual Status Done(void *pCrypt);
 
-	static UInt64 Hash(const void *pData, Size cbSize, UInt64 nSeed = 0);
+	static UInt64 DoHash(const void *pData, Size cbSize, UInt64 nSeed = 0);
 
 private:
 

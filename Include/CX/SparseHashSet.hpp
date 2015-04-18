@@ -29,47 +29,19 @@
 #pragma once
 
 
-#include "CX/Hash/IHash.hpp"
-#include "CX/APIDefs.hpp"
-#include "../../../Contrib/xxHash/Include/xxHash.h"
+#include "CX/STLAlloc.hpp"
+#include "CX/GSHAlloc.hpp"
+#include "sparsehash/sparse_hash_set"
 
 
 namespace CX
 {
 
-namespace Hash
+template <typename K, typename H = SPARSEHASH_HASH<K>, typename E = std::equal_to<K>, typename A = GSHAlloc<K> >
+struct SparseHashSet
 {
-
-class CX_API xxHash32 : public IHash
-{
-public:
-
-	static const Char     NAME[];
-	static const Size     SIZE   = 4;
-
-	xxHash32();
-
-	virtual ~xxHash32();
-
-	virtual const Char *GetName();
-
-	virtual Size GetSize();
-
-	virtual Status Init(const void *pCrypt = NULL);
-
-	virtual Status Update(const void *pBuffer, Size cbSize);
-
-	virtual Status Done(void *pCrypt);
-
-	static UInt32 DoHash(const void *pData, Size cbSize, UInt32 nSeed = 0);
-
-private:
-
-	XXH32_state_t   m_state;
-
+	typedef google::sparse_hash_set<K, H, E, A>   Type;
 };
-
-}//namespace Hash
 
 }//namespace CX
 

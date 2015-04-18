@@ -29,11 +29,10 @@
 #include "Str_UTF8.hpp"
 #include "Util_StackTrace.hpp"
 #include "Mem.hpp"
+#include "MultiHashSetAndHashMap.h"
 
 
-//static vars will cause false leak detections
-//#include "CX/Vector.hpp"
-//static CX::Vector<CX::Int8>::Type   g_test;
+using namespace CX;
 
 
 int main(int argc, char *argv[])
@@ -44,12 +43,9 @@ int main(int argc, char *argv[])
 	//Str_UTF8_Test1();
 	//Util_StackTrace_Test1();
 
-	//CX::Mem::SetFlags(CX::Mem::Flag_SourceMemTrack);
-	//g_test.push_back(1);
-	//g_test.push_back(2);
-	//g_test.push_back(3);
+	//Mem_Test1();
 
-	Mem_Test1();
+	MultiHashSetAndHashMap_Test1();
 
 	return 0;
 }
