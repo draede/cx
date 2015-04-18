@@ -729,7 +729,7 @@ private:
 		Print(out, "\t\treturn 0;\n");
 		Print(out, "\t}\n");
 		Print(out, "\n");
-		Print(out, "\treturn true;\n");
+		Print(out, "\treturn 0;\n");
 		Print(out, "}\n");
 
 		return Status();
