@@ -1,5 +1,5 @@
 /* 
- * CX - C++ framework for general purpose developement
+ * CX - C++ framework for general purpose development
  *
  * https://github.com/draede/cx
  * 
@@ -75,9 +75,12 @@ public:
 	}
 
 	template <Size INDEX>
-	const typename MapType<INDEX>::Type &Get()
+	typename const MapType<INDEX>::Type &Get() const;
+
+	template <>
+	typename const MapType<1>::Type &Get<1>() const
 	{
-		return GetEx<INDEX>();
+		return m_map1;
 	}
 
 	void SetDeletedKeys(const K1 &k1)
@@ -90,12 +93,12 @@ public:
 		m_map1.set_empty_key(k1);
 	}
 
-	Size GetCount()
+	Size GetCount() const
 	{
 		return m_vectorData.size();
 	}
 
-	bool IsEmpty()
+	bool IsEmpty() const
 	{
 		return (0 == GetCount());
 	}
@@ -112,7 +115,7 @@ public:
 	}
 
 	template <Size INDEX>
-	const Data *Search(const typename KeyType<INDEX>::Type &p)
+	const Data *Search(const typename KeyType<INDEX>::Type &p) const
 	{
 		typename MapType<INDEX>::Type::const_iterator iter = Get<INDEX>().find(p);
 
@@ -125,7 +128,7 @@ public:
 	}
 
 	template <Size INDEX>
-	bool Contains(const typename KeyType<INDEX>::Type &p)
+	bool Contains(const typename KeyType<INDEX>::Type &p) const
 	{
 		return (NULL != Search<INDEX>(p));
 	}
@@ -201,9 +204,18 @@ public:
 	}
 
 	template <Size INDEX>
-	const typename MapType<INDEX>::Type &Get()
+	typename const MapType<INDEX>::Type &Get() const;
+
+	template <>
+	typename const MapType<1>::Type &Get<1>() const
 	{
-		return GetEx<INDEX>();
+		return m_map1;
+	}
+
+	template <>
+	typename const MapType<2>::Type &Get<2>() const
+	{
+		return m_map2;
 	}
 
 	void SetDeletedKeys(const K1 &k1, const K2 &k2)
@@ -218,12 +230,12 @@ public:
 		m_map2.set_empty_key(k2);
 	}
 
-	Size GetCount()
+	Size GetCount() const
 	{
 		return m_vectorData.size();
 	}
 
-	bool IsEmpty()
+	bool IsEmpty() const
 	{
 		return (0 == GetCount());
 	}
@@ -242,7 +254,7 @@ public:
 	}
 
 	template <Size INDEX>
-	const Data *Search(const typename KeyType<INDEX>::Type &p)
+	const Data *Search(const typename KeyType<INDEX>::Type &p) const
 	{
 		typename MapType<INDEX>::Type::const_iterator iter = Get<INDEX>().find(p);
 
@@ -255,7 +267,7 @@ public:
 	}
 
 	template <Size INDEX>
-	bool Contains(const typename KeyType<INDEX>::Type &p)
+	bool Contains(const typename KeyType<INDEX>::Type &p) const
 	{
 		return (NULL != Search<INDEX>(p));
 	}
@@ -287,7 +299,7 @@ private:
 	typename MapType<2>::Type &GetEx<2>()
 	{
 		return m_map2;
-	}	
+	}
 
 	DataVector                  m_vectorData;
 	typename MapType<1>::Type   m_map1;
@@ -345,9 +357,24 @@ public:
 	}
 
 	template <Size INDEX>
-	const typename MapType<INDEX>::Type &Get()
+	typename const MapType<INDEX>::Type &Get() const;
+
+	template <>
+	typename const MapType<1>::Type &Get<1>() const
 	{
-		return GetEx<INDEX>();
+		return m_map1;
+	}
+
+	template <>
+	typename const MapType<2>::Type &Get<2>() const
+	{
+		return m_map2;
+	}
+
+	template <>
+	typename const MapType<3>::Type &Get<3>() const
+	{
+		return m_map3;
 	}
 
 	void SetDeletedKeys(const K1 &k1, const K2 &k2, const K3 &k3)
@@ -364,12 +391,12 @@ public:
 		m_map3.set_empty_key(k3);
 	}
 
-	Size GetCount()
+	Size GetCount() const
 	{
 		return m_vectorData.size();
 	}
 
-	bool IsEmpty()
+	bool IsEmpty() const
 	{
 		return (0 == GetCount());
 	}
@@ -390,7 +417,7 @@ public:
 	}
 
 	template <Size INDEX>
-	const Data *Search(const typename KeyType<INDEX>::Type &p)
+	const Data *Search(const typename KeyType<INDEX>::Type &p) const
 	{
 		typename MapType<INDEX>::Type::const_iterator iter = Get<INDEX>().find(p);
 
@@ -403,7 +430,7 @@ public:
 	}
 
 	template <Size INDEX>
-	bool Contains(const typename KeyType<INDEX>::Type &p)
+	bool Contains(const typename KeyType<INDEX>::Type &p) const
 	{
 		return (NULL != Search<INDEX>(p));
 	}
@@ -507,9 +534,30 @@ public:
 	}
 
 	template <Size INDEX>
-	const typename MapType<INDEX>::Type &Get()
+	typename const MapType<INDEX>::Type &Get() const;
+
+	template <>
+	typename const MapType<1>::Type &Get<1>() const
 	{
-		return GetEx<INDEX>();
+		return m_map1;
+	}
+
+	template <>
+	typename const MapType<2>::Type &Get<2>() const
+	{
+		return m_map2;
+	}
+
+	template <>
+	typename const MapType<3>::Type &Get<3>() const
+	{
+		return m_map3;
+	}
+
+	template <>
+	typename const MapType<4>::Type &Get<4>() const
+	{
+		return m_map4;
 	}
 
 	void SetDeletedKeys(const K1 &k1, const K2 &k2, const K3 &k3, const K4 &k4)
@@ -528,12 +576,12 @@ public:
 		m_map4.set_empty_key(k4);
 	}
 
-	Size GetCount()
+	Size GetCount() const
 	{
 		return m_vectorData.size();
 	}
 
-	bool IsEmpty()
+	bool IsEmpty() const
 	{
 		return (0 == GetCount());
 	}
@@ -556,7 +604,7 @@ public:
 	}
 
 	template <Size INDEX>
-	const Data *Search(const typename KeyType<INDEX>::Type &p)
+	const Data *Search(const typename KeyType<INDEX>::Type &p) const
 	{
 		typename MapType<INDEX>::Type::const_iterator iter = Get<INDEX>().find(p);
 
@@ -569,7 +617,7 @@ public:
 	}
 
 	template <Size INDEX>
-	bool Contains(const typename KeyType<INDEX>::Type &p)
+	bool Contains(const typename KeyType<INDEX>::Type &p) const
 	{
 		return (NULL != Search<INDEX>(p));
 	}
@@ -614,7 +662,7 @@ private:
 	{
 		return m_map4;
 	}
-	
+
 	DataVector                  m_vectorData;
 	typename MapType<1>::Type   m_map1;
 	typename MapType<2>::Type   m_map2;

@@ -1,6 +1,6 @@
  CX
 ====
 
-CX - C++ framework for general purpose developement
+CX - C++ framework for general purpose development
 
 

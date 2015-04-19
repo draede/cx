@@ -1,5 +1,5 @@
 /* 
- * CX - C++ framework for general purpose developement
+ * CX - C++ framework for general purpose development
  *
  * https://github.com/draede/cx
  * 
