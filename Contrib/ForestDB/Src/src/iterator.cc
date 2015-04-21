@@ -261,6 +261,7 @@ fdb_status fdb_iterator_init(fdb_kvs_handle *handle,
 
     iterator->_key = (void*)malloc(FDB_MAX_KEYLEN_INTERNAL);
     // set to zero the first <chunksize> bytes
+#pragma warning(suppress: 6387)
     memset(iterator->_key, 0x0, iterator->handle->config.chunksize);
     iterator->_keylen = 0;
     iterator->_offset = BLK_NOT_FOUND;
@@ -275,11 +276,13 @@ fdb_status fdb_iterator_init(fdb_kvs_handle *handle,
         uint8_t *start_key_temp, *end_key_temp;
 
         if (start_key == NULL) {
+#pragma warning(suppress: 6255)
             start_key_temp = alca(uint8_t, size_chunk);
             kvid2buf(size_chunk, iterator->handle->kvs->id, start_key_temp);
             start_key = start_key_temp;
             start_keylen = size_chunk;
         } else {
+#pragma warning(suppress: 6255)
             start_key_temp = alca(uint8_t, size_chunk + start_keylen);
             kvid2buf(size_chunk, iterator->handle->kvs->id, start_key_temp);
             memcpy(start_key_temp + size_chunk, start_key, start_keylen);
@@ -291,11 +294,13 @@ fdb_status fdb_iterator_init(fdb_kvs_handle *handle,
             // set end_key as NULL key of the next KV ID.
             // NULL key doesn't actually exist so that the iterator ends
             // at the last key of the current KV ID.
+#pragma warning(suppress: 6255)
             end_key_temp = alca(uint8_t, size_chunk);
             kvid2buf(size_chunk, iterator->handle->kvs->id+1, end_key_temp);
             end_key = end_key_temp;
             end_keylen = size_chunk;
         } else {
+#pragma warning(suppress: 6255)
             end_key_temp = alca(uint8_t, size_chunk + end_keylen);
             kvid2buf(size_chunk, iterator->handle->kvs->id, end_key_temp);
             memcpy(end_key_temp + size_chunk, end_key, end_keylen);
@@ -317,6 +322,7 @@ fdb_status fdb_iterator_init(fdb_kvs_handle *handle,
             iterator->start_keylen = 0;
         } else {
             iterator->start_key = (void*)malloc(start_keylen);
+#pragma warning(suppress: 6387)
             memcpy(iterator->start_key, start_key, start_keylen);
             iterator->start_keylen = start_keylen;
         }
@@ -326,6 +332,7 @@ fdb_status fdb_iterator_init(fdb_kvs_handle *handle,
             end_keylen = 0;
         }else{
             iterator->end_key = (void*)malloc(end_keylen);
+#pragma warning(suppress: 6387)
             memcpy(iterator->end_key, end_key, end_keylen);
         }
         iterator->end_keylen = end_keylen;
@@ -519,6 +526,7 @@ fdb_status fdb_iterator_sequence_init(fdb_kvs_handle *handle,
     } else {
         // Snapshot handle exists
         // We don't need to open a new handle.. just point to the snapshot handle.
+#pragma warning(suppress: 6011)
         iterator->handle = handle;
         // link new file if wal_tree points to the new file
         if (handle->shandle->type == FDB_SNAP_COMPACTION) {
@@ -548,6 +556,7 @@ fdb_status fdb_iterator_sequence_init(fdb_kvs_handle *handle,
 
     if (iterator->handle->kvs) {
         // create an iterator handle for hb-trie
+#pragma warning(suppress: 6255)
         start_seq_kv = alca(uint8_t, size_id + size_seq);
         _kv_id = _endian_encode(iterator->handle->kvs->id);
         memcpy(start_seq_kv, &_kv_id, size_id);
@@ -624,8 +633,10 @@ fdb_status fdb_iterator_sequence_init(fdb_kvs_handle *handle,
                         }
                         snap_item = (struct snap_wal_entry*)
                             malloc(sizeof(struct snap_wal_entry));
+#pragma warning(suppress: 6011)
                         snap_item->keylen = wal_item_header->keylen;
                         snap_item->key = (void*)malloc(snap_item->keylen);
+#pragma warning(suppress: 6387)
                         memcpy(snap_item->key, wal_item_header->key, snap_item->keylen);
                         snap_item->seqnum = wal_item->seqnum;
                         snap_item->action = wal_item->action;
@@ -1008,6 +1019,7 @@ fdb_status fdb_iterator_seek(fdb_iterator *iterator,
 
     if (iterator->handle->kvs) {
         seek_keylen_kv = seek_keylen + size_chunk;
+#pragma warning(suppress: 6255)
         seek_key_kv = alca(uint8_t, seek_keylen_kv);
         kvid2buf(size_chunk, iterator->handle->kvs->id, seek_key_kv);
         memcpy(seek_key_kv + size_chunk, seek_key, seek_keylen);
@@ -1511,6 +1523,7 @@ static fdb_status _fdb_iterator_seq_prev(fdb_iterator *iterator)
 
     size_id = sizeof(fdb_kvs_id_t);
     size_seq = sizeof(fdb_seqnum_t);
+#pragma warning(suppress: 6255)
     seq_kv = alca(uint8_t, size_id + size_seq);
 
     // in forward iteration, cursor points to the next key to be returned
@@ -1641,6 +1654,7 @@ start_seq:
             free(_doc.meta);
             goto start_seq;
         } else { // If present in HB-trie ensure it's seqnum is in range
+#pragma warning(suppress: 6246)
             uint64_t _offset;
             _hbdoc.key = _doc.key;
             _hbdoc.meta = NULL;
@@ -1687,6 +1701,7 @@ static fdb_status _fdb_iterator_seq_next(fdb_iterator *iterator)
 
     size_id = sizeof(fdb_kvs_id_t);
     size_seq = sizeof(fdb_seqnum_t);
+#pragma warning(suppress: 6255)
     seq_kv = alca(uint8_t, size_id + size_seq);
 
     if (iterator->direction == FDB_ITR_REVERSE) {
@@ -1833,6 +1848,7 @@ start_seq:
             free(_doc.meta);
             goto start_seq;
         } else { // If present in HB-trie ensure it's seqnum is in range
+#pragma warning(suppress: 6246)
             uint64_t _offset;
             _hbdoc.key = _doc.key;
             _hbdoc.meta = NULL;

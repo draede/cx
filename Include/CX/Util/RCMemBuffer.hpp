@@ -29,47 +29,57 @@
 #pragma once
 
 
-#include "CX/KVDB/IIterator.hpp"
+#include "CX/String.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
-namespace KVDB
+namespace Util
 {
 
-class CX_API FDBIterator : public IIterator
+class RCMemBuffer : public IObject
 {
 public:
 
-	virtual Status Get(IRecord **ppRecord);
+	RCMemBuffer();
 
-	virtual Status FreeRecordMem(IRecord *pRecord);
+	RCMemBuffer(const RCMemBuffer &mb);
 
-	virtual Status Next();
+	RCMemBuffer(Size cbSize);
 
-	virtual Status Reset();
+	RCMemBuffer(const void *pMem, Size cbSize, bool bStatic = false);
 
-	virtual ITable *GetTable();
+	RCMemBuffer(const Char *szStr, bool bStatic = false);
+
+	RCMemBuffer(const WChar *wszStr, bool bStatic = false);
+
+	RCMemBuffer(const String &sStr, bool bStatic = false);
+
+	RCMemBuffer(const WString &wsStr, bool bStatic = false);
+
+	virtual ~RCMemBuffer();
+
+	RCMemBuffer &operator=(const RCMemBuffer &mb);
+
+	void *GetMem() const;
+
+	Size GetSize() const;
 
 protected:
 
-	friend class FDBTable;
-
-	FDBIterator(ITable *pTable, void *pIter);
-
-	~FDBIterator();
-
-	void *GetIter();
+	bool IsStatic();
 
 private:
 
-	ITable   *m_pTable;
-	void     *m_pIter;
+	void   *m_pMem;
+	Size   m_cbSize;
+	bool   m_bStatic;
 
 };
 
-}//namespace KVDB
+}//namespace Util
 
 }//namespace CX
 

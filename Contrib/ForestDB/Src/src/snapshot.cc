@@ -132,6 +132,7 @@ fdb_status snap_insert(struct snap_handle *shandle, fdb_doc *doc,
 
     if (!node) {
         item = (struct snap_wal_entry *) malloc(sizeof(struct snap_wal_entry));
+#pragma warning(suppress: 6011)
         item->keylen = doc->keylen;
         item->key = doc->key;
         item->seqnum = doc->seqnum;

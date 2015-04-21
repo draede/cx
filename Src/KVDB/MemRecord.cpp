@@ -26,10 +26,7 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
-#include "CX/KVDB/IIterator.hpp"
+#include "CX/KVDB/MemRecord.hpp"
 
 
 namespace CX
@@ -38,36 +35,43 @@ namespace CX
 namespace KVDB
 {
 
-class CX_API FDBIterator : public IIterator
+MemRecord::MemRecord(IIterator *pIterator, void *pKey, Size cbKeySize, void *pValue, Size cbValueSize)
 {
-public:
+	m_pIterator   = pIterator;
+	m_pKey        = pKey;
+	m_cbKeySize   = cbKeySize;
+	m_pValue      = pValue;
+	m_cbValueSize = cbValueSize;
+}
 
-	virtual Status Get(IRecord **ppRecord);
+MemRecord::~MemRecord()
+{
+}
 
-	virtual Status FreeRecordMem(IRecord *pRecord);
+IIterator *MemRecord::GetIterator()
+{
+	return m_pIterator;
+}
 
-	virtual Status Next();
+const void *MemRecord::GetKey()
+{
+	return m_pKey;
+}
 
-	virtual Status Reset();
+Size MemRecord::GetKeySize()
+{
+	return m_cbValueSize;
+}
 
-	virtual ITable *GetTable();
+const void *MemRecord::GetValue()
+{
+	return m_pValue;
+}
 
-protected:
-
-	friend class FDBTable;
-
-	FDBIterator(ITable *pTable, void *pIter);
-
-	~FDBIterator();
-
-	void *GetIter();
-
-private:
-
-	ITable   *m_pTable;
-	void     *m_pIter;
-
-};
+Size MemRecord::GetValueSize()
+{
+	return m_cbValueSize;
+}
 
 }//namespace KVDB
 

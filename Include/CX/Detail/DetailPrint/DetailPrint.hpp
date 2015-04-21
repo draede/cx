@@ -996,6 +996,7 @@ static inline StatusCode ToString<void *>(void *p, unsigned int nExtraFlags, Cha
 {
 	cPrecision;
 
+#pragma warning(suppress: 6287)
 	if (Detail::ExtraFlag_HexLower != nExtraFlags || Detail::ExtraFlag_HexLower != nExtraFlags)
 	{
 		nExtraFlags = Detail::ExtraFlag_HexUpper;

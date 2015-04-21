@@ -220,6 +220,7 @@ static void * mem_double(void * ptr, int size)
     void *newptr;
 
     newptr = calloc(2*size, 1);
+#pragma warning(suppress: 6387)
     memcpy(newptr, ptr, size);
     free(ptr);
     return newptr ;
@@ -282,6 +283,7 @@ static dictionary * dictionary_new(int size)
     if (size<DICTMINSZ) size=DICTMINSZ ;
 
     d = (dictionary *)calloc(1, sizeof(dictionary));
+#pragma warning(suppress: 6011)
     d->size = size ;
     d->val  = (char **)calloc(size, sizeof(char*));
     d->key  = (char **)calloc(size, sizeof(char*));
@@ -307,8 +309,10 @@ static void dictionary_del(dictionary * d)
 
     if (d==NULL) return ;
     for (i=0 ; i<d->size ; i++) {
+#pragma warning(suppress: 6001)
         if (d->key[i]!=NULL)
             free(d->key[i]);
+#pragma warning(suppress: 6001)
         if (d->val[i]!=NULL)
             free(d->val[i]);
     }
@@ -956,6 +960,7 @@ dictionary * iniparser_new(char *ininame)
                  * sscanf cannot handle "" or '' as empty value,
                  * this is done here
                  */
+#pragma warning(suppress: 6054)
                 if (!strcmp(val, "\"\"") || !strcmp(val, "''")) {
                     val[0] = (char)0;
                 } else {

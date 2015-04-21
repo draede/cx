@@ -38,7 +38,7 @@ namespace CX
 namespace KVDB
 {
 
-class CX_API FDBIterator : public IIterator
+class CX_API MemIterator : public IIterator
 {
 public:
 
@@ -54,17 +54,16 @@ public:
 
 protected:
 
-	friend class FDBTable;
+	friend class MemTable;
 
-	FDBIterator(ITable *pTable, void *pIter);
+	MemIterator(ITable *pTable, void *pMap);
 
-	~FDBIterator();
-
-	void *GetIter();
+	~MemIterator();
 
 private:
 
 	ITable   *m_pTable;
+	void     *m_pMap;
 	void     *m_pIter;
 
 };

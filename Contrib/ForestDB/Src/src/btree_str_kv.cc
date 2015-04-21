@@ -63,6 +63,7 @@ static void _get_str_kv(struct bnode *node, idx_t idx, void *key, void *value)
     key_ptr = (void*)malloc(sizeof(key_len_t) + keylen);
 
     // copy key
+#pragma warning(suppress: 6387)
     memcpy(key_ptr, &_keylen, sizeof(key_len_t));
     memcpy((uint8_t*)key_ptr + sizeof(key_len_t),
            (uint8_t*)ptr+offset+sizeof(key_len_t), keylen);
@@ -114,6 +115,7 @@ static void _set_str_kv(struct bnode *node, idx_t idx, void *key, void *value)
             offset += sizeof(key_len_t) + keylen + vsize;
         }
         // move
+#pragma warning(suppress: 6001)
         memmove((uint8_t*)ptr + offset_next + (keylen_ins - keylen_idx),
             (uint8_t*)ptr + offset_next, next_len);
     }
@@ -327,6 +329,7 @@ static void _set_str_key(struct btree *tree, void *dst, void *src)
     keylen_alloc = (keylen_new == inflen)?(0):(keylen_new);
     key_ptr_old = (void*)malloc(size_key + keylen_alloc);
     // copy keylen
+#pragma warning(suppress: 6387)
     memcpy(key_ptr_old, key_ptr_new, size_key);
     if (keylen_alloc) {
         memcpy((uint8_t*)key_ptr_old + size_key,
@@ -362,6 +365,7 @@ void btree_str_kv_set_key(void *key, void *str, size_t len)
 
     key_ptr = (void *)malloc(sizeof(key_len_t) + keylen);
     _keylen = _endian_encode(keylen);
+#pragma warning(suppress: 6387)
     memcpy(key_ptr, &_keylen, sizeof(key_len_t));
     memcpy((uint8_t*)key_ptr + sizeof(key_len_t), str, keylen);
     memcpy(key, &key_ptr, sizeof(void *));
@@ -379,6 +383,7 @@ void btree_str_kv_set_inf_key(void *key)
     key_ptr = (void *)malloc(sizeof(key_len_t));
     memset(&keylen, 0xff, sizeof(key_len_t));
     _keylen = _endian_encode(keylen);
+#pragma warning(suppress: 6387)
     memcpy(key_ptr, &_keylen, sizeof(key_len_t));
     memcpy(key, &key_ptr, sizeof(void *));
 }
@@ -497,6 +502,7 @@ struct btree_kv_ops * btree_str_kv_get_kb64_vb64(struct btree_kv_ops *kv_ops)
         btree_kv_ops = (struct btree_kv_ops *)malloc(sizeof(struct btree_kv_ops));
     }
 
+#pragma warning(suppress: 6011)
     btree_kv_ops->get_kv = _get_str_kv;
     btree_kv_ops->set_kv = _set_str_kv;
     btree_kv_ops->ins_kv = _ins_str_kv;

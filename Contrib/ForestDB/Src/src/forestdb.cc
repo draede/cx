@@ -122,10 +122,13 @@ size_t _fdb_readseq_wrap(void *handle, uint64_t offset, void *buf)
     return size_id + size_seq;
 }
 
+#pragma warning(suppress: 6262)
 int _fdb_custom_cmp_wrap(void *key1, void *key2, void *aux)
 {
     int is_key1_inf, is_key2_inf;
+#pragma warning(suppress: 6255)
     uint8_t *keystr1 = alca(uint8_t, FDB_MAX_KEYLEN_INTERNAL);
+#pragma warning(suppress: 6255)
     uint8_t *keystr2 = alca(uint8_t, FDB_MAX_KEYLEN_INTERNAL);
     size_t keylen1, keylen2;
     btree_cmp_args *args = (btree_cmp_args *)aux;
@@ -615,9 +618,11 @@ fdb_status fdb_init(fdb_config *config)
         if (InterlockedCompareExchange(&initial_lock_status, 1, 0) == 0) {
             // atomically initialize spin lock only once
             spin_init(&initial_lock);
+#pragma warning(suppress: 28112)
             initial_lock_status = 2;
         } else {
             // the others .. wait until initializing 'initial_lock' is done
+#pragma warning(suppress: 28112)
             while (initial_lock_status != 2) {
                 Sleep(1);
             }
@@ -1257,6 +1262,7 @@ fdb_status _fdb_open(fdb_kvs_handle *handle,
     }
 
     if (handle->filename) {
+#pragma warning(suppress: 6308)
         handle->filename = (char *)realloc(handle->filename,
                                            strlen(target_filename)+1);
     } else {
@@ -1655,6 +1661,7 @@ fdb_status _fdb_open(fdb_kvs_handle *handle,
                                            prev_filename)) {
                 // Open the old file with read-only mode.
                 fconfig.options = FILEMGR_READONLY;
+#pragma warning(suppress: 6246)
                 filemgr_open_result result = filemgr_open(prev_filename,
                                                           handle->fileops,
                                                           &fconfig,
@@ -1858,6 +1865,7 @@ INLINE fdb_status _fdb_wal_flush_func(void *voidhandle, struct wal_item *item)
     fdb_seqnum_t _seqnum;
     fdb_kvs_id_t kv_id;
     fdb_status fs = FDB_RESULT_SUCCESS;
+#pragma warning(suppress: 6255)
     uint8_t *var_key = alca(uint8_t, handle->config.chunksize);
     uint64_t old_offset, _offset;
     int delta, r;
@@ -1905,6 +1913,7 @@ INLINE fdb_status _fdb_wal_flush_func(void *voidhandle, struct wal_item *item)
 
                 size_id = sizeof(fdb_kvs_id_t);
                 size_seq = sizeof(fdb_seqnum_t);
+#pragma warning(suppress: 6255)
                 kvid_seqnum = alca(uint8_t, size_id + size_seq);
                 kvid2buf(size_id, kv_id, kvid_seqnum);
                 memcpy(kvid_seqnum + size_id, &_seqnum, size_seq);
@@ -2047,6 +2056,7 @@ fdb_status fdb_check_file_reopen(fdb_kvs_handle *handle, file_status_t *status)
         size_t header_len;
         char *new_filename;
         char *prev_filename = NULL;
+#pragma warning(suppress: 6255)
         uint8_t *buf = alca(uint8_t, handle->config.blocksize);
         bid_t trie_root_bid, seq_root_bid;
         fdb_config config = handle->config;
@@ -2170,6 +2180,7 @@ INLINE void _fdb_link_new_file(fdb_kvs_handle *handle)
     handle->new_file = result.file;
     handle->new_dhandle = (struct docio_handle *)
                           calloc(1, sizeof(struct docio_handle));
+#pragma warning(suppress: 6011)
     handle->new_dhandle->log_callback = &handle->log_callback;
     docio_init(handle->new_dhandle,
                handle->new_file,
@@ -2255,6 +2266,7 @@ fdb_status fdb_get(fdb_kvs_handle *handle, fdb_doc *doc)
         // multi KV instance mode
         int size_chunk = handle->config.chunksize;
         doc_kv.keylen = doc->keylen + size_chunk;
+#pragma warning(suppress: 6255)
         doc_kv.key = alca(uint8_t, doc_kv.keylen);
         kvid2buf(size_chunk, handle->kvs->id, doc_kv.key);
         memcpy((uint8_t*)doc_kv.key + size_chunk, doc->key, doc->keylen);
@@ -2383,6 +2395,7 @@ fdb_status fdb_get_metaonly(fdb_kvs_handle *handle, fdb_doc *doc)
         // multi KV instance mode
         int size_chunk = handle->config.chunksize;
         doc_kv.keylen = doc->keylen + size_chunk;
+#pragma warning(suppress: 6255)
         doc_kv.key = alca(uint8_t, doc_kv.keylen);
         kvid2buf(size_chunk, handle->kvs->id, doc_kv.key);
         memcpy((uint8_t*)doc_kv.key + size_chunk, doc->key, doc->keylen);
@@ -2550,6 +2563,7 @@ fdb_status fdb_get_byseq(fdb_kvs_handle *handle, fdb_doc *doc)
             _kv_id = _endian_encode(handle->kvs->id);
             size_id = sizeof(fdb_kvs_id_t);
             size_seq = sizeof(fdb_seqnum_t);
+#pragma warning(suppress: 6255)
             kv_seqnum = alca(uint8_t, size_id + size_seq);
             memcpy(kv_seqnum, &_kv_id, size_id);
             memcpy(kv_seqnum + size_id, &_seqnum, size_seq);
@@ -2595,6 +2609,7 @@ fdb_status fdb_get_byseq(fdb_kvs_handle *handle, fdb_doc *doc)
             int size_chunk = handle->config.chunksize;
             doc->keylen = _doc.length.keylen - size_chunk;
             if (doc->key) { // doc->key is given by user
+#pragma warning(suppress: 6387)
                 memcpy(doc->key, (uint8_t*)_doc.key + size_chunk, doc->keylen);
                 free_docio_object(&_doc, 1, 0, 0);
             } else {
@@ -2694,6 +2709,7 @@ fdb_status fdb_get_metaonly_byseq(fdb_kvs_handle *handle, fdb_doc *doc)
             _kv_id = _endian_encode(handle->kvs->id);
             size_id = sizeof(fdb_kvs_id_t);
             size_seq = sizeof(fdb_seqnum_t);
+#pragma warning(suppress: 6255)
             kv_seqnum = alca(uint8_t, size_id + size_seq);
             memcpy(kv_seqnum, &_kv_id, size_id);
             memcpy(kv_seqnum + size_id, &_seqnum, size_seq);
@@ -2734,6 +2750,7 @@ fdb_status fdb_get_metaonly_byseq(fdb_kvs_handle *handle, fdb_doc *doc)
             int size_chunk = handle->config.chunksize;
             doc->keylen = _doc.length.keylen - size_chunk;
             if (doc->key) { // doc->key is given by user
+#pragma warning(suppress: 6387)
                 memcpy(doc->key, (uint8_t*)_doc.key + size_chunk, doc->keylen);
                 free_docio_object(&_doc, 1, 0, 0);
             } else {
@@ -2935,6 +2952,7 @@ fdb_status fdb_set(fdb_kvs_handle *handle, fdb_doc *doc)
         // allocate more (temporary) space for key, to store ID number
         int size_chunk = handle->config.chunksize;
         _doc.length.keylen = doc->keylen + size_chunk;
+#pragma warning(suppress: 6255)
         _doc.key = alca(uint8_t, _doc.length.keylen);
         // copy ID
         kvid2buf(size_chunk, handle->kvs->id, _doc.key);
@@ -3184,6 +3202,7 @@ uint64_t fdb_set_file_header(fdb_kvs_handle *handle)
         _fdb_redirect_header() in forestdb.cc
         filemgr_destory_file() in filemgr.cc
     */
+#pragma warning(suppress: 6255)
     uint8_t *buf = alca(uint8_t, handle->config.blocksize);
     uint16_t new_filename_len = 0;
     uint16_t old_filename_len = 0;
@@ -3898,6 +3917,7 @@ static fdb_status _fdb_compact_move_docs(fdb_kvs_handle *handle,
 
         if ( hr != HBTRIE_RESULT_FAIL ) {
             // add to offset array
+#pragma warning(suppress: 6011)
             offset_array[c] = offset;
             c++;
         }
@@ -4392,8 +4412,10 @@ fdb_status fdb_compact_file(fdb_file_handle *fhandle,
 
     // create new hb-trie and related handles
     new_bhandle = (struct btreeblk_handle *)calloc(1, sizeof(struct btreeblk_handle));
+#pragma warning(suppress: 6011)
     new_bhandle->log_callback = &handle->log_callback;
     new_dhandle = (struct docio_handle *)calloc(1, sizeof(struct docio_handle));
+#pragma warning(suppress: 6011)
     new_dhandle->log_callback = &handle->log_callback;
 
     docio_init(new_dhandle, new_file, handle->config.compress_document_body);
@@ -4407,6 +4429,7 @@ fdb_status fdb_compact_file(fdb_file_handle *fhandle,
 
     hbtrie_set_leaf_cmp(new_trie, _fdb_custom_cmp_wrap);
     // set aux
+#pragma warning(suppress: 6011)
     new_trie->flag = handle->trie->flag;
     new_trie->leaf_height_limit = handle->trie->leaf_height_limit;
     new_trie->map = handle->trie->map;
@@ -4566,6 +4589,7 @@ fdb_status _fdb_compact_file(fdb_kvs_handle *handle,
 
     old_filename_len = strlen(old_file->filename) + 1;
     old_filename = (char *) malloc(old_filename_len);
+#pragma warning(suppress: 6387)
     strncpy(old_filename, old_file->filename, old_filename_len);
     filemgr_update_file_status(new_file, FILE_NORMAL, old_filename);
 
@@ -4687,6 +4711,7 @@ catch_up_compaction:
         ++hdr_idx;
         if (hdr_idx >= hdr_array_len) { // grow the vector of header bids
             hdr_array_len *= 2;
+#pragma warning(suppress: 6308)
             hdr_info = (struct hdr_info_t *) realloc(hdr_info,
                                     hdr_array_len * sizeof(struct hdr_info_t));
         }
@@ -4740,9 +4765,11 @@ catch_up_compaction:
         // create new hb-trie and related handles
         new_bhandle = (struct btreeblk_handle *)calloc(1,
                                                sizeof(struct btreeblk_handle));
+#pragma warning(suppress: 6011)
         new_bhandle->log_callback = log_callback;
         new_dhandle = (struct docio_handle *)calloc(1,
                                                   sizeof(struct docio_handle));
+#pragma warning(suppress: 6011)
         new_dhandle->log_callback = log_callback;
 
         docio_init(new_dhandle, new_file,
@@ -4757,6 +4784,7 @@ catch_up_compaction:
 
         hbtrie_set_leaf_cmp(new_trie, _fdb_custom_cmp_wrap);
         // set aux
+#pragma warning(suppress: 6011)
         new_trie->flag = rhandle->trie->flag;
         new_trie->leaf_height_limit = rhandle->trie->leaf_height_limit;
         new_trie->map = rhandle->trie->map;
@@ -4922,6 +4950,7 @@ catch_up_compaction:
         btreeblk_end(handle.bhandle);
 
         // Commit the current file handle to record the compaction filename
+#pragma warning(suppress: 6246)
         fdb_status fs = filemgr_commit(handle.file, log_callback);
         if (fs != FDB_RESULT_SUCCESS) {
             _fdb_cleanup_compact_err(&handle, new_file, true, true, new_bhandle,
@@ -5203,6 +5232,7 @@ fdb_status fdb_destroy(const char *fname,
     fdb_config config;
     struct filemgr_config fconfig;
     fdb_status status = FDB_RESULT_SUCCESS;
+#pragma warning(suppress: 6255)
     char *filename = (char *)alca(uint8_t, FDB_MAX_FILENAME_LEN);
 
     if (fdbconfig) {
@@ -5407,6 +5437,7 @@ fdb_status fdb_get_all_snap_markers(fdb_file_handle *fhandle,
                          &nlivenodes, &datasize, &last_wal_flush_hdr_bid,
                          &kv_info_offset, &header_flags, &compacted_filename,
                          NULL);
+#pragma warning(suppress: 6386)
         markers[i].marker = (fdb_snapshot_marker_t)hdr_bid;
         if (kv_info_offset == BLK_NOT_FOUND) { // Single kv instance mode
             markers[i].num_kvs_markers = 1;
@@ -5440,6 +5471,7 @@ fdb_status fdb_get_all_snap_markers(fdb_file_handle *fhandle,
                 markers[i].kvs_markers[idx].kv_store_name = NULL;
             } else {
                 // do not count default KVS .. decrease it by one.
+#pragma warning(suppress: 6385)
                 markers[i].num_kvs_markers--;
             }
             free_docio_object(&doc, 1, 1, 1);
@@ -5495,24 +5527,32 @@ fdb_status fdb_shutdown()
 void _fdb_dump_handle(fdb_kvs_handle *h) {
     fprintf(stderr, "filename: %s\n", h->filename);
 
+#pragma warning(suppress: 6340)
     fprintf(stderr, "config: chunksize %d\n", h->config.chunksize);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "config: blocksize %d\n", h->config.blocksize);
     fprintf(stderr, "config: buffercache_size %llu\n",
            h->config.buffercache_size);
     fprintf(stderr, "config: wal_threshold %llu\n", h->config.wal_threshold);
     fprintf(stderr, "config: wal_flush_before_commit %d\n",
            h->config.wal_flush_before_commit);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "config: purging_interval %d\n", h->config.purging_interval);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "config: seqtree_opt %d\n", h->config.seqtree_opt);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "config: durability_opt %d\n", h->config.durability_opt);
     fprintf(stderr, "config: open_flags %x\n", h->config.flags);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "config: compaction_buf_maxsize %d\n",
            h->config.compaction_buf_maxsize);
     fprintf(stderr, "config: cleanup_cache_onclose %d\n",
            h->config.cleanup_cache_onclose);
     fprintf(stderr, "config: compress body %d\n",
            h->config.compress_document_body);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "config: compaction_mode %d\n", h->config.compaction_mode);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "config: compaction_threshold %d\n",
            h->config.compaction_threshold);
     fprintf(stderr, "config: compactor_sleep_duration %llu\n",
@@ -5522,6 +5562,7 @@ void _fdb_dump_handle(fdb_kvs_handle *h) {
            h->kvs_config.create_if_missing);
 
     fprintf(stderr, "kvs: id = %llu\n", h->kvs->id);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "kvs: type = %d\n", h->kvs->type);
     fprintf(stderr, "kvs: root_handle %p\n", h->kvs->root);
 
@@ -5552,11 +5593,14 @@ void _fdb_dump_handle(fdb_kvs_handle *h) {
     fprintf(stderr, "seqtrie: readkey %p\n", h->seqtrie->readkey);
 
     fprintf(stderr, "file: filename %s\n", h->file->filename);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "file: ref_count %d\n", h->file->ref_count);
     fprintf(stderr, "file: fflags %x\n", h->file->fflags);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "file: blocksize %d\n", h->file->blocksize);
     fprintf(stderr, "file: fd %d\n", h->file->fd);
     fprintf(stderr, "file: pos %llu\n", h->file->pos.val);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "file: status %d\n", h->file->status.val);
     fprintf(stderr, "file: config: blocksize %d\n", h->file->config->blocksize);
     fprintf(stderr, "file: config: ncacheblock %d\n",
@@ -5566,8 +5610,10 @@ void _fdb_dump_handle(fdb_kvs_handle *h) {
     fprintf(stderr, "file: config: options %x\n", h->file->config->options);
     fprintf(stderr, "file: config: prefetch_duration %llu\n",
            h->file->config->prefetch_duration);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "file: config: num_wal_shards %d\n",
            h->file->config->num_wal_shards);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "file: config: num_bcache_shards %d\n",
            h->file->config->num_bcache_shards);
     fprintf(stderr, "file: new_file %p\n", h->file->new_file);
@@ -5576,6 +5622,7 @@ void _fdb_dump_handle(fdb_kvs_handle *h) {
     fprintf(stderr, "file: global_txn: handle %p\n", h->file->global_txn.handle);
     fprintf(stderr, "file: global_txn: prev_hdr_bid %llu\n",
            h->file->global_txn.prev_hdr_bid);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "file: global_txn: isolation %d\n",
            h->file->global_txn.isolation);
     fprintf(stderr, "file: in_place_compaction: %d\n",
@@ -5587,6 +5634,7 @@ void _fdb_dump_handle(fdb_kvs_handle *h) {
     fprintf(stderr, "docio_handle: %p\n", h->dhandle);
     fprintf(stderr, "dhandle: file: filename %s\n", h->dhandle->file->filename);
     fprintf(stderr, "dhandle: curblock %llu\n", h->dhandle->curblock);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "dhandle: curpos %d\n", h->dhandle->curpos);
     fprintf(stderr, "dhandle: lastbid %llu\n", h->dhandle->lastbid);
     fprintf(stderr, "dhandle: readbuffer %p\n", h->dhandle->readbuffer);
@@ -5595,10 +5643,13 @@ void _fdb_dump_handle(fdb_kvs_handle *h) {
     fprintf(stderr, "new_dhandle %p\n", h->dhandle);
 
     fprintf(stderr, "btreeblk_handle bhanlde %p\n", h->bhandle);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "bhandle: nodesize %d\n", h->bhandle->nodesize);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "bhandle: nnodeperblock %d\n", h->bhandle->nnodeperblock);
     fprintf(stderr, "bhandle: nlivenodes %llu\n", h->bhandle->nlivenodes);
     fprintf(stderr, "bhandle: file %s\n", h->bhandle->file->filename);
+#pragma warning(suppress: 6340)
     fprintf(stderr, "bhandle: nsb %d\n", h->bhandle->nsb);
 
     fprintf(stderr, "multi_kv_instances: %d\n", h->config.multi_kv_instances);
@@ -5611,7 +5662,9 @@ void _fdb_dump_handle(fdb_kvs_handle *h) {
 
     fprintf(stderr, "snap_handle: %p\n", h->shandle);
     if (h->shandle) {
+#pragma warning(suppress: 6340)
         fprintf(stderr, "shandle: ref_cnt %d\n", h->shandle->ref_cnt);
+#pragma warning(suppress: 6340)
         fprintf(stderr, "shandle: type %d\n", h->shandle->type);
         fprintf(stderr, "shandle: kvs_stat: nlivenodes %llu\n",
                h->shandle->stat.nlivenodes);
@@ -5631,8 +5684,10 @@ void _fdb_dump_handle(fdb_kvs_handle *h) {
     if (h->txn) {
         fprintf(stderr, "txn: handle %p\n", h->txn->handle);
         fprintf(stderr, "txn: prev_hdr_bid %llu\n", h->txn->prev_hdr_bid);
+#pragma warning(suppress: 6340)
         fprintf(stderr, "txn: isolation %d\n", h->txn->isolation);
     }
+#pragma warning(suppress: 6340)
     fprintf(stderr, "dirty_updates %d\n", h->dirty_updates);
 }
 

@@ -112,6 +112,7 @@ INLINE struct kv_ins_item * _kv_ins_item_create(
 {
     struct kv_ins_item *item;
     item = (struct kv_ins_item*)malloc(sizeof(struct kv_ins_item));
+#pragma warning(suppress: 6011)
     item->key = (void *)malloc(btree->ksize);
     item->value = (void *)malloc(btree->vsize);
 
@@ -232,6 +233,7 @@ INLINE size_t _btree_get_nsplitnode(struct btree *btree, bid_t bid, struct bnode
 #endif
 
     if (node->flag & BNODE_MASK_METADATA) {
+#pragma warning(suppress: 6246)
         metasize_t size;
         memcpy(&size, (uint8_t *)node + sizeof(struct bnode), sizeof(metasize_t));
         size = _endian_decode(size);
@@ -291,6 +293,7 @@ void btree_update_meta(struct btree *btree, struct btree_meta *meta)
         metasize = meta->size;
 
         // new meta size cannot be larger than old meta size
+#pragma warning(suppress: 6001)
         fdb_assert(metasize <= old_metasize, metasize, old_metasize);
         (void)metasize;
 
@@ -425,6 +428,7 @@ return: 1 (index# of the key '4')
 static idx_t _btree_find_entry(struct btree *btree, struct bnode *node, void *key)
 {
     idx_t start, end, middle, temp;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
     int cmp;
     #ifdef __BIT_CMP
@@ -486,6 +490,7 @@ static idx_t _btree_find_entry(struct btree *btree, struct bnode *node, void *ke
 static idx_t _btree_add_entry(struct btree *btree, struct bnode *node, void *key, void *value)
 {
     idx_t idx, idx_insert;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
 
     if (btree->kv_ops->init_kv_var) btree->kv_ops->init_kv_var(btree, k, NULL);
@@ -564,7 +569,9 @@ static void _btree_print_node(struct btree *btree, int depth,
                               bid_t bid, btree_print_func func)
 {
     int i;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
+#pragma warning(suppress: 6255)
     uint8_t *v = alca(uint8_t, btree->vsize);
     void *addr;
     bid_t _bid;
@@ -575,6 +582,7 @@ static void _btree_print_node(struct btree *btree, int depth,
     addr = btree->blk_ops->blk_read(btree->blk_handle, bid);
     node = _fetch_bnode(btree, addr, depth);
 
+#pragma warning(suppress: 6340)
     fprintf(stderr, "[d:%d n:%d f:%x b:%" _F64 " ", node->level, node->nentry, node->flag, bid);
 
     for (i=0;i<node->nentry;++i){
@@ -598,6 +606,7 @@ static void _btree_print_node(struct btree *btree, int depth,
 
 void btree_print_node(struct btree *btree, btree_print_func func)
 {
+#pragma warning(suppress: 6340)
     fprintf(stderr, "tree height: %d\n", btree->height);
     _btree_print_node(btree, btree->height, btree->root_bid, func);
 }
@@ -606,7 +615,9 @@ btree_result btree_get_key_range(
     struct btree *btree, idx_t num, idx_t den, void *key_begin, void *key_end)
 {
     void *addr;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
+#pragma warning(suppress: 6255)
     uint8_t *v = alca(uint8_t, btree->vsize);
     idx_t idx_begin, idx_end, idx;
     bid_t bid;
@@ -666,10 +677,15 @@ btree_result btree_get_key_range(
 btree_result btree_find(struct btree *btree, void *key, void *value_buf)
 {
     void *addr;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
+#pragma warning(suppress: 6255)
     uint8_t *v = alca(uint8_t, btree->vsize);
+#pragma warning(suppress: 6255)
     idx_t *idx = alca(idx_t, btree->height);
+#pragma warning(suppress: 6255)
     bid_t *bid = alca(bid_t, btree->height);
+#pragma warning(suppress: 6255)
     struct bnode **node = alca(struct bnode *, btree->height);
     int i;
 
@@ -731,12 +747,17 @@ static int _btree_split_node(
 {
     void *addr;
     size_t nnode = nsplitnode;
+#pragma warning(suppress: 6255)
     int j, *nentry = alca(int, nnode);
     bid_t _bid;
+#pragma warning(suppress: 6255)
     bid_t *new_bid = alca(bid_t, nnode);
+#pragma warning(suppress: 6255)
     idx_t *split_idx = alca(idx_t, nnode+1);
+#pragma warning(suppress: 6255)
     idx_t *idx_ins = alca(idx_t, btree->height);
     struct list_elem *e;
+#pragma warning(suppress: 6255)
     struct bnode **new_node = alca(struct bnode *, nnode);
     struct kv_ins_item *kv_item;
 
@@ -818,6 +839,7 @@ static int _btree_split_node(
         // allocate new block for new root node
         bid_t new_root_bid;
         struct bnode *new_root;
+#pragma warning(suppress: 6255)
         uint8_t *buf = alca(uint8_t, btree->blksize);
         struct btree_meta meta;
 
@@ -901,26 +923,37 @@ btree_result btree_insert(struct btree *btree, void *key, void *value)
 {
     void *addr;
     size_t nsplitnode = 1;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
+#pragma warning(suppress: 6255)
     uint8_t *v = alca(uint8_t, btree->vsize);
     // index# and block ID for each level
+#pragma warning(suppress: 6255)
     idx_t *idx = alca(idx_t, btree->height);
+#pragma warning(suppress: 6255)
     bid_t *bid = alca(bid_t, btree->height);
     bid_t _bid;
     // flags
+#pragma warning(suppress: 6255)
     int8_t *modified = alca(int8_t, btree->height);
+#pragma warning(suppress: 6255)
     int8_t *moved = alca(int8_t, btree->height);
+#pragma warning(suppress: 6255)
     int8_t *ins = alca(int8_t, btree->height);
+#pragma warning(suppress: 6255)
     int8_t *minkey_replace = alca(int8_t, btree->height);
     int8_t height_growup;
 
     // key, value to be inserted
+#pragma warning(suppress: 6255)
     struct list *kv_ins_list = alca(struct list, btree->height);
     struct kv_ins_item *kv_item;
     struct list_elem *e;
 
     // index# where kv is inserted
+#pragma warning(suppress: 6255)
     idx_t *idx_ins = alca(idx_t, btree->height);
+#pragma warning(suppress: 6255)
     struct bnode **node = alca(struct bnode *, btree->height);
     int i, j, _is_update = 0;
 
@@ -1124,20 +1157,31 @@ btree_result btree_insert(struct btree *btree, void *key, void *value)
 btree_result btree_remove(struct btree *btree, void *key)
 {
     void *addr;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
+#pragma warning(suppress: 6255)
     uint8_t *v= alca(uint8_t, btree->vsize);
+#pragma warning(suppress: 6255)
     uint8_t *kk = alca(uint8_t, btree->ksize);
+#pragma warning(suppress: 6255)
     uint8_t *vv = alca(uint8_t, btree->vsize);
     // index# and block ID for each level
+#pragma warning(suppress: 6255)
     idx_t *idx = alca(idx_t, btree->height);
+#pragma warning(suppress: 6255)
     bid_t *bid= alca(bid_t, btree->height);
     bid_t _bid;
     // flags
+#pragma warning(suppress: 6255)
     int8_t *modified = alca(int8_t, btree->height);
+#pragma warning(suppress: 6255)
     int8_t *moved = alca(int8_t, btree->height);
+#pragma warning(suppress: 6255)
     int8_t *rmv = alca(int8_t, btree->height);
     // index# of removed key
+#pragma warning(suppress: 6255)
     idx_t *idx_rmv = alca(idx_t, btree->height);
+#pragma warning(suppress: 6255)
     struct bnode **node = alca(struct bnode *, btree->height);
     int i;
 
@@ -1245,6 +1289,7 @@ btree_result btree_remove(struct btree *btree, void *key)
             }
         }
 
+#pragma warning(suppress: 6385)
         if (modified[i]) {
             // when node is modified
             if (!btree->blk_ops->blk_is_writable(btree->blk_handle, bid[i])) {
@@ -1254,6 +1299,7 @@ btree_result btree_remove(struct btree *btree, void *key)
                 addr = btree->blk_ops->blk_move(btree->blk_handle, bid[i],
                                                 &bid[i]);
                 node[i] = _fetch_bnode(btree, addr, i+1);
+#pragma warning(suppress: 6386)
                 moved[i] = 1;
 
                 if (i+1 == btree->height)
@@ -1314,10 +1360,14 @@ btree_result btree_iterator_init(struct btree *btree,
 
     for (i=0;i<btree->height;++i){
         it->bid[i] = BTREE_BLK_NOT_FOUND;
+#pragma warning(suppress: 6011)
         it->idx[i] = BTREE_IDX_NOT_FOUND;
+#pragma warning(suppress: 6011)
         it->node[i] = NULL;
+#pragma warning(suppress: 6011)
         it->addr[i] = NULL;
     }
+#pragma warning(suppress: 6011)
     it->bid[btree->height-1] = btree->root_bid;
     it->flags = 0;
 
@@ -1347,7 +1397,9 @@ static btree_result _btree_prev(struct btree_iterator *it, void *key_buf,
     struct btree *btree;
     btree = &it->btree;
     int i;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
+#pragma warning(suppress: 6255)
     uint8_t *v = alca(uint8_t, btree->vsize);
     void *addr;
     struct bnode *node;
@@ -1496,7 +1548,9 @@ static btree_result _btree_next(struct btree_iterator *it, void *key_buf,
     struct btree *btree;
     btree = &it->btree;
     int i;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, btree->ksize);
+#pragma warning(suppress: 6255)
     uint8_t *v = alca(uint8_t, btree->vsize);
     void *addr;
     struct bnode *node;

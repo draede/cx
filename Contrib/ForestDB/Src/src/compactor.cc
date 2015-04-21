@@ -293,6 +293,7 @@ void compactor_get_next_filename(char *file, char *nextfile)
     char str_no[24];
 
     if (prefix_len > 0 && _allDigit(file + prefix_len)) {
+#pragma warning(suppress: 6031)
         sscanf(file+prefix_len, "%d", &compaction_no);
         strncpy(nextfile, file, prefix_len);
         do {
@@ -431,9 +432,11 @@ void compactor_init(struct compactor_config *config)
         if (InterlockedCompareExchange(&init_lock_status, 1, 0) == 0) {
             // atomically initialize spin lock only once
             spin_init(&cpt_lock);
+#pragma warning(suppress: 28112)
             init_lock_status = 2;
         } else {
             // the others .. wait until initializing 'cpt_lock' is done
+#pragma warning(suppress: 28112)
             while (init_lock_status != 2) {
                 Sleep(1);
             }
@@ -538,6 +541,7 @@ fdb_status compactor_register_file(struct filemgr *file,
         struct compactor_meta meta;
 
         elem = (struct openfiles_elem *)malloc(sizeof(struct openfiles_elem));
+#pragma warning(suppress: 6011)
         elem->file = file;
         elem->config = *config;
         elem->register_count = 1;
@@ -605,6 +609,8 @@ struct compactor_meta * _compactor_read_metafile(char *metafile,
 {
     int fd_meta, fd_db;
     ssize_t ret;
+#pragma warning(suppress: 6260)
+#pragma warning(suppress: 6255)
     uint8_t *buf = alca(uint8_t, sizeof(struct compactor_meta));
     uint32_t crc;
     char fullpath[MAX_FNAMELEN];
@@ -815,6 +821,7 @@ fdb_status compactor_get_actual_filename(const char *filename,
         while (hfind != INVALID_HANDLE_VALUE) {
             if (!strncmp(filedata.cFileName, prefix, strlen(prefix))) {
                 compaction_no = -1;
+#pragma warning(suppress: 6031)
                 sscanf(filedata.cFileName + strlen(prefix), "%d", &compaction_no);
                 if (compaction_no >= 0) {
                     if (compaction_no > max_compaction_no) {

@@ -163,6 +163,7 @@ INLINE void * _btreeblk_alloc(void *voidhandle, bid_t *bid, int sb_no)
     // allocate new block from file manager
     block = (struct btreeblk_block *)mempool_alloc(sizeof(struct btreeblk_block));
     _btreeblk_get_aligned_block(handle, block);
+#pragma warning(suppress: 6011)
     block->sb_no = sb_no;
     block->pos = handle->nodesize;
     block->bid = filemgr_alloc(handle->file, handle->log_callback);
@@ -380,6 +381,7 @@ INLINE void * _btreeblk_read(void *voidhandle, bid_t bid, int sb_no)
     // there is no block in lists
     // if miss, read from file and add item into read list
     block = (struct btreeblk_block *)mempool_alloc(sizeof(struct btreeblk_block));
+#pragma warning(suppress: 6011)
     block->sb_no = (subblock)?(sb):(sb_no);
     block->pos = (handle->file->blocksize);
     block->bid = filebid;
@@ -1016,6 +1018,7 @@ fdb_status btreeblk_create_dirty_snapshot(struct btreeblk_handle *handle)
     }
     handle->dirty_snapshot = (struct avl_tree*)calloc(1, sizeof(struct avl_tree));
 
+#pragma warning(suppress: 6255)
     marker = alca(uint8_t, BLK_MARKER_SIZE);
     memset(marker, BLK_MARKER_BNODE, BLK_MARKER_SIZE);
 
@@ -1051,6 +1054,7 @@ fdb_status btreeblk_create_dirty_snapshot(struct btreeblk_handle *handle)
             // alloc new block
             block = (struct btreeblk_block*)
                     calloc(1, sizeof(struct btreeblk_block));
+#pragma warning(suppress: 6011)
             malloc_align(block->addr, FDB_SECTOR_SIZE, handle->file->blocksize);
         }
     }
@@ -1086,7 +1090,9 @@ void btreeblk_clone_dirty_snapshot(struct btreeblk_handle *dst,
         // alloc new block
         block_copy = (struct btreeblk_block*)
                      calloc(1, sizeof(struct btreeblk_block));
+#pragma warning(suppress: 6011)
         malloc_align(block_copy->addr, FDB_SECTOR_SIZE, src->file->blocksize);
+#pragma warning(suppress: 6387)
         memcpy(block_copy->addr, block->addr, src->file->blocksize);
         block_copy->bid = block->bid;
 
@@ -1183,10 +1189,12 @@ void btreeblk_init(struct btreeblk_handle *handle, struct filemgr *file, int nod
         // initialize each subblock set
         _nodesize = BTREEBLK_MIN_SUBBLOCK;
         for (i=0;i<handle->nsb;++i){
+#pragma warning(suppress: 6011)
             handle->sb[i].bid = BLK_NOT_FOUND;
             handle->sb[i].sb_size = _nodesize;
             handle->sb[i].nblocks = nodesize / _nodesize;
             handle->sb[i].bitmap = (uint8_t*)malloc(handle->sb[i].nblocks);
+#pragma warning(suppress: 6387)
             memset(handle->sb[i].bitmap, 0, handle->sb[i].nblocks);
             _nodesize = _nodesize << 1;
         }

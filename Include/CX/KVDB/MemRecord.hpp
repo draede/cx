@@ -29,7 +29,7 @@
 #pragma once
 
 
-#include "CX/KVDB/IIterator.hpp"
+#include "CX/KVDB/IRecord.hpp"
 
 
 namespace CX
@@ -38,34 +38,35 @@ namespace CX
 namespace KVDB
 {
 
-class CX_API FDBIterator : public IIterator
+class CX_API MemRecord : public IRecord
 {
 public:
 
-	virtual Status Get(IRecord **ppRecord);
+	virtual const void *GetKey();
 
-	virtual Status FreeRecordMem(IRecord *pRecord);
+	virtual Size GetKeySize();
 
-	virtual Status Next();
+	virtual const void *GetValue();
 
-	virtual Status Reset();
+	virtual Size GetValueSize();
 
-	virtual ITable *GetTable();
+	virtual IIterator *GetIterator();
 
 protected:
 
-	friend class FDBTable;
+	friend class MemIterator;
 
-	FDBIterator(ITable *pTable, void *pIter);
+	MemRecord(IIterator *pIterator, void *pKey, Size cbKeySize, void *pValue, Size cbValueSize);
 
-	~FDBIterator();
-
-	void *GetIter();
+	~MemRecord();
 
 private:
 
-	ITable   *m_pTable;
-	void     *m_pIter;
+	IIterator   *m_pIterator;
+	void        *m_pKey;
+	Size        m_cbKeySize;
+	void        *m_pValue;
+	Size        m_cbValueSize;
 
 };
 

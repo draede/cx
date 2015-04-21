@@ -124,6 +124,7 @@ void fdb_file_handle_parse_cmp_func(fdb_file_handle *fhandle,
             strcpy(node->kvs_name, kvs_names[i]);
         } else {
             // NULL .. default KVS
+#pragma warning(suppress: 6011)
             node->kvs_name = NULL;
         }
         node->func = functions[i];
@@ -154,6 +155,7 @@ void fdb_file_handle_clone_cmp_func_list(fdb_file_handle *fhandle,
             dst->kvs_name = (char*)calloc(1, strlen(src->kvs_name)+1);
             strcpy(dst->kvs_name, src->kvs_name);
         } else {
+#pragma warning(suppress: 6011)
             dst->kvs_name = NULL; // default KVS
         }
         dst->func = src->func;
@@ -180,6 +182,7 @@ void fdb_file_handle_add_cmp_func(fdb_file_handle *fhandle,
         strcpy(node->kvs_name, kvs_name);
     } else {
         // default KVS
+#pragma warning(suppress: 6011)
         node->kvs_name = NULL;
     }
     node->func = cmp_func;
@@ -406,6 +409,7 @@ void fdb_kvs_info_create(fdb_kvs_handle *root_handle,
         _fdb_kvs_init_root(handle, file);
     } else {
         // 'handle' is a sub handle (i.e., KV instance in a DB instance)
+#pragma warning(suppress: 6011)
         handle->kvs->type = KVS_SUB;
         handle->kvs->root = root_handle;
 
@@ -433,6 +437,7 @@ void fdb_kvs_info_create(fdb_kvs_handle *root_handle,
 
         opened_node = (struct kvs_opened_node *)
                calloc(1, sizeof(struct kvs_opened_node));
+#pragma warning(suppress: 6011)
         opened_node->handle = handle;
 
         handle->node = opened_node;
@@ -460,6 +465,7 @@ void _fdb_kvs_header_create(struct kvs_header **kv_header_ptr)
     *kv_header_ptr = kv_header;
 
     // KV ID '0' is reserved for default KV instance (super handle)
+#pragma warning(suppress: 6011)
     kv_header->id_counter = 1;
     kv_header->default_kvs_cmp = NULL;
     kv_header->custom_cmp_enabled = 0;
@@ -687,7 +693,9 @@ void _fdb_kvs_header_import(struct kvs_header *kv_header,
         name_len = _endian_decode(_name_len);
 
         // name
+#pragma warning(suppress: 6011)
         node->kvs_name = (char *)malloc(name_len);
+#pragma warning(suppress: 6387)
         memcpy(node->kvs_name, (uint8_t*)data + offset, name_len);
         offset += name_len;
 
@@ -765,6 +773,7 @@ fdb_status _fdb_kvs_get_snap_info(void *data,
                             + sizeof(uint64_t); // skip over flags
 
     for (i = 0; i < n_kv-1; ++i){
+#pragma warning(suppress: 6011)
         fdb_kvs_commit_marker_t *info = &snap_info->kvs_markers[i];
         // Read the kv store name length
         memcpy(&_name_len, (uint8_t*)data + offset, sizeof(_name_len));
@@ -773,6 +782,7 @@ fdb_status _fdb_kvs_get_snap_info(void *data,
 
         // Retrieve the KV Store name
         info->kv_store_name = (char *)malloc(name_len); // TODO: cleanup if err
+#pragma warning(suppress: 6387)
         memcpy(info->kv_store_name, (uint8_t*)data + offset, name_len);
         offset += name_len;
 
@@ -793,6 +803,7 @@ fdb_status _fdb_kvs_get_snap_info(void *data,
 uint64_t fdb_kvs_header_append(struct filemgr *file,
                                   struct docio_handle *dhandle)
 {
+#pragma warning(suppress: 6255)
     char *doc_key = alca(char, 32);
     void *data;
     size_t len;
@@ -1026,6 +1037,7 @@ fdb_kvs_create_start:
 
     // create a kvs_node and insert
     node = (struct kvs_node *)calloc(1, sizeof(struct kvs_node));
+#pragma warning(suppress: 6011)
     node->id = kv_header->id_counter++;
     node->seqnum = 0;
     node->flags = 0x0;
@@ -1273,6 +1285,7 @@ fdb_status fdb_kvs_open(fdb_file_handle *fhandle,
             // open new default KV store handle
             spin_unlock(&fhandle->lock);
             handle = (fdb_kvs_handle*)calloc(1, sizeof(fdb_kvs_handle));
+#pragma warning(suppress: 6011)
             handle->kvs_config = config_local;
 
             if (root_handle->file->kv_header) {
@@ -1292,6 +1305,7 @@ fdb_status fdb_kvs_open(fdb_file_handle *fhandle,
                 struct kvs_opened_node *node;
                 node = (struct kvs_opened_node *)
                        calloc(1, sizeof(struct kvs_opened_node));
+#pragma warning(suppress: 6011)
                 node->handle = handle;
                 spin_lock(&fhandle->lock);
                 list_push_front(fhandle->handles, &node->le);
@@ -1634,12 +1648,14 @@ fdb_kvs_remove_start:
     size_chunk = root_handle->trie->chunksize;
 
     // remove from super handle's HB+trie
+#pragma warning(suppress: 6255)
     _kv_id = alca(uint8_t, size_chunk);
     kvid2buf(size_chunk, kv_id, _kv_id);
     hbtrie_remove_partial(root_handle->trie, _kv_id, size_chunk);
     btreeblk_end(root_handle->bhandle);
 
     if (root_handle->config.seqtree_opt == FDB_SEQTREE_USE) {
+#pragma warning(suppress: 6255)
         _kv_id = alca(uint8_t, size_id);
         kvid2buf(size_id, kv_id, _kv_id);
         hbtrie_remove_partial(root_handle->seqtrie, _kv_id, size_id);
@@ -1778,6 +1794,7 @@ fdb_status fdb_kvs_rollback(fdb_kvs_handle **handle_ptr, fdb_seqnum_t seqnum)
 
         // read root BID of the KV instance from the old handle
         // and overwrite into the current handle
+#pragma warning(suppress: 6255)
         _kv_id = alca(uint8_t, size_chunk);
         kvid2buf(size_chunk, handle->kvs->id, _kv_id);
         hr = hbtrie_find_partial(handle->trie, _kv_id,
@@ -1791,6 +1808,7 @@ fdb_status fdb_kvs_rollback(fdb_kvs_handle **handle_ptr, fdb_seqnum_t seqnum)
         }
 
         // same as above for seq-trie
+#pragma warning(suppress: 6255)
         _kv_id = alca(uint8_t, size_id);
         kvid2buf(size_id, handle->kvs->id, _kv_id);
         hr = hbtrie_find_partial(handle->seqtrie, _kv_id,
@@ -1973,6 +1991,7 @@ fdb_status fdb_get_kvs_name_list(fdb_file_handle *fhandle,
 
     // copy default KVS name
     strcpy(ptr + offset, default_kvs_name);
+#pragma warning(suppress: 6011)
     segment[num] = ptr + offset;
     num++;
     offset += strlen(default_kvs_name) + 1;

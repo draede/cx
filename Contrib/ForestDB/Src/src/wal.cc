@@ -130,8 +130,10 @@ fdb_status wal_init(struct filemgr *file, int nbucket)
             // WAL shard for compactor .. use more buckets
             num_hash_buckets = nbucket;
         }
+#pragma warning(suppress: 6011)
         hash_init(&file->wal->key_shards[i].hash_bykey, num_hash_buckets,
                   _wal_hash_bykey, _wal_cmp_bykey);
+#pragma warning(suppress: 6011)
         hash_init(&file->wal->seq_shards[i].hash_byseq, num_hash_buckets,
                   _wal_hash_byseq, _wal_cmp_byseq);
         list_init(&file->wal->key_shards[i].list);
@@ -193,6 +195,7 @@ void wal_release_keystr_files(struct filemgr *file)
             if (header->mmap) {
                 old_ptr = header->key;
                 header->key = (void *)malloc(header->keylen);
+#pragma warning(suppress: 6387)
                 memcpy(header->key, old_ptr, header->keylen);
                 header->mmap = 0;
             }
@@ -336,6 +339,7 @@ fdb_status wal_insert(fdb_txn *txn,
         // not exist .. create new one
         // create new header and new item
         header = (struct wal_item_header*)malloc(sizeof(struct wal_item_header));
+#pragma warning(suppress: 6011)
         list_init(&header->items);
         header->chunksize = file->config->chunksize;
         header->keylen = keylen;
@@ -347,6 +351,7 @@ fdb_status wal_insert(fdb_txn *txn,
             header->key = (void *)malloc(header->keylen);
             header->mmap = 0;
         }
+#pragma warning(suppress: 6387)
         memcpy(header->key, key, header->keylen);
 
         hash_insert_by_hash_val(&file->wal->key_shards[shard_num].hash_bykey,
@@ -357,6 +362,7 @@ fdb_status wal_insert(fdb_txn *txn,
         if (is_compactor) {
             item->flag = WAL_ITEM_COMMITTED | WAL_ITEM_BY_COMPACTOR;
         } else {
+#pragma warning(suppress: 6011)
             item->flag = 0x0;
         }
         if (file->kv_header) { // multi KV instance mode
@@ -460,6 +466,7 @@ static fdb_status _wal_find(fdb_txn *txn,
         struct wal_item_header temp_header;
 
         if (file->kv_header) { // multi KV instance mode
+#pragma warning(suppress: 6255)
             temp_header.key = (void*)alca(uint8_t, file->config->chunksize);
             kvid2buf(file->config->chunksize, kv_id, temp_header.key);
             item_query.header = &temp_header;
@@ -943,6 +950,7 @@ fdb_status wal_snapshot(struct filemgr *file,
 
                 doc.keylen = item->header->keylen;
                 doc.key = malloc(doc.keylen); // (freed in fdb_snapshot_close)
+#pragma warning(suppress: 6387)
                 memcpy(doc.key, item->header->key, doc.keylen);
                 doc.seqnum = item->seqnum;
                 doc.deleted = (item->action == WAL_ACT_LOGICAL_REMOVE ||

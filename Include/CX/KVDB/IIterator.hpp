@@ -48,27 +48,15 @@ class CX_API IIterator : public IObject
 {
 public:
 
-	enum SeekAprox
-	{
-		SeekAprox_Lower,
-		SeekAprox_Higher,
-	};
-
 	virtual ~IIterator() { }
 
 	virtual Status Get(IRecord **ppRecord) = 0;
 
 	virtual Status FreeRecordMem(IRecord *pRecord) = 0;
 
-	virtual Status Prev() = 0;
-
 	virtual Status Next() = 0;
 
-	virtual Status First() = 0;
-
-	virtual Status Last() = 0;
-
-	virtual Status Seek(const void *pKey, Size cbKeySize, SeekAprox nSeekAprox = SeekAprox_Higher) = 0; 
+	virtual Status Reset() = 0;
 
 	virtual ITable *GetTable() = 0;
 

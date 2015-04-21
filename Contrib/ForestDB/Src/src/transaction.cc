@@ -68,8 +68,10 @@ fdb_status fdb_begin_transaction(fdb_file_handle *fhandle,
     }
 
     handle->txn = (fdb_txn*)malloc(sizeof(fdb_txn));
+#pragma warning(suppress: 6011)
     handle->txn->wrapper = (struct wal_txn_wrapper *)
                            malloc(sizeof(struct wal_txn_wrapper));
+#pragma warning(suppress: 6011)
     handle->txn->wrapper->txn = handle->txn;
     handle->txn->handle = handle;
     if (filemgr_get_file_status(handle->file) != FILE_COMPACT_OLD) {

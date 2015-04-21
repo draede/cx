@@ -26,10 +26,9 @@
  * SOFTWARE.
  */ 
 
-#include "CX/KVDB/FDBIterator.hpp"
-#include "CX/KVDB/FDBRecord.hpp"
-#include "FDBStatus.hpp"
-#include "libforestdb/forestdb.h"
+#include "CX/KVDB/MemIterator.hpp"
+#include "CX/KVDB/MemRecord.hpp"
+#include "CX/KVDB/MemTable.hpp"
 
 
 namespace CX
@@ -38,87 +37,70 @@ namespace CX
 namespace KVDB
 {
 
-FDBIterator::FDBIterator(ITable *pTable, void *pIter)
+MemIterator::MemIterator(ITable *pTable, void *pMap)
 {
 	m_pTable = pTable;
-	m_pIter  = pIter;
+	m_pMap   = pMap;
+	m_pIter  = new MemTable::RecordsMap::iterator();
+	*((MemTable::RecordsMap::iterator *)m_pIter) = ((MemTable::RecordsMap *)m_pMap)->begin();
 }
 
-FDBIterator::~FDBIterator()
+MemIterator::~MemIterator()
 {
+	delete (MemTable::RecordsMap::iterator *)m_pIter;
 }
 
-void *FDBIterator::GetIter()
+Status MemIterator::Get(IRecord **ppRecord)
 {
-	return m_pIter;
-}
+	MemTable::RecordsMap::iterator *pIter = (MemTable::RecordsMap::iterator *)m_pIter;
 
-Status FDBIterator::Get(IRecord **ppRecord)
-{	
-	fdb_doc    *pDoc = NULL;
-	fdb_status nStatus;
-
-	if (FDB_RESULT_SUCCESS != (nStatus = fdb_iterator_get((fdb_iterator *)m_pIter, &pDoc)))
+	if (NULL == (*ppRecord = new MemRecord(this, (*pIter)->first.GetMem(), (*pIter)->first.GetSize(), 
+	                                         (*pIter)->second.GetMem(), (*pIter)->second.GetSize())))
 	{
-		return FDBStatus(nStatus);
-	}
-
-	if (NULL == (*ppRecord = new FDBRecord(this, pDoc)))
-	{
-		fdb_doc_free(pDoc);
-
 		return Status(Status_MemAllocFailed, "Failed to allocate record");
 	}
 
 	return Status();
 }
 
-Status FDBIterator::FreeRecordMem(IRecord *pRecord)
+Status MemIterator::FreeRecordMem(IRecord *pRecord)
 {
-	FDBRecord *pRealRecord = dynamic_cast<FDBRecord *>(pRecord);
+	MemRecord *pRealRecord = dynamic_cast<MemRecord *>(pRecord);
 
 	if (NULL == pRealRecord)
 	{
 		return Status(Status_InvalidArg, "Not a valid record");
 	}
+	delete pRealRecord;
 
-	fdb_status nStatus;
+	return Status();
+}
 
-	if (FDB_RESULT_SUCCESS != (nStatus = fdb_doc_free((fdb_doc *)pRealRecord->GetDoc())))
-	{
-		return FDBStatus(nStatus);
-	}
+Status MemIterator::Next()
+{
+	MemTable::RecordsMap::iterator iter = *((MemTable::RecordsMap::iterator *)m_pIter);
 	
-	delete pRecord;
-
-	return Status();
-}
-
-Status FDBIterator::Next()
-{
-	fdb_status nStatus;
-
-	if (FDB_RESULT_SUCCESS != (nStatus = fdb_iterator_next((fdb_iterator *)m_pIter)))
+	if (((MemTable::RecordsMap *)m_pMap)->end() == *((MemTable::RecordsMap::iterator *)m_pIter))
 	{
-		return FDBStatus(nStatus);
+		return Status(Status_NoMoreItems, "No more records");
+	}
+	(*((MemTable::RecordsMap::iterator *)m_pIter))++;
+	if (((MemTable::RecordsMap *)m_pMap)->end() == *((MemTable::RecordsMap::iterator *)m_pIter))
+	{
+		return Status(Status_NoMoreItems, "No more records");
 	}
 
 	return Status();
 }
 
-Status FDBIterator::Reset()
+Status MemIterator::Reset()
 {
-	fdb_status nStatus;
-
-	if (FDB_RESULT_SUCCESS != (nStatus = fdb_iterator_seek_to_min((fdb_iterator *)m_pIter)))
-	{
-		return FDBStatus(nStatus);
-	}
+	*((MemTable::RecordsMap::iterator *)m_pIter) = ((MemTable::RecordsMap *)m_pMap)->begin();
 
 	return Status();
 }
 
-ITable *FDBIterator::GetTable()
+ITable *MemIterator::GetTable()
 {
 	return m_pTable;
 }

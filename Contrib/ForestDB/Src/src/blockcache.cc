@@ -368,6 +368,7 @@ INLINE int _dirty_bid_cmp(struct avl_node *a, struct avl_node *b, void *aux)
 static void _free_dirty_blocks(struct dirty_bid **dirty_bids, size_t n) {
     size_t i = 0;
     for (; i < n; ++i) {
+#pragma warning(suppress: 6001)
         if (dirty_bids[i]) {
             mempool_free(dirty_bids[i]);
         }
@@ -394,6 +395,7 @@ static fdb_status _flush_dirty_blocks(struct fnamedic_item *fname_item,
     bool data_block_completed = false;
     struct avl_tree dirty_blocks; // Cross-shard dirty block list for sequential writes.
 
+#pragma warning(suppress: 6313)
     if (fname_item->curfile->config->flag & _ARCH_O_DIRECT) {
         o_direct = true;
     }
@@ -412,6 +414,7 @@ static fdb_status _flush_dirty_blocks(struct fnamedic_item *fname_item,
     // Try to flush the dirty data blocks first and then index blocks.
     size_t i = 0;
     bool consecutive_blocks = true;
+#pragma warning(suppress: 6255)
     struct dirty_bid **dirty_bids = alca(struct dirty_bid *, fname_item->num_shards);
     memset(dirty_bids, 0x0, sizeof(dirty_bid *) * fname_item->num_shards);
     while (1) {
@@ -430,6 +433,7 @@ static fdb_status _flush_dirty_blocks(struct fnamedic_item *fname_item,
                         dirty_bids[i] = (struct dirty_bid *)
                             mempool_alloc(sizeof(struct dirty_bid));
                     }
+#pragma warning(suppress: 6011)
                     dirty_bids[i]->bid = _get_entry(node, struct dirty_item, avl)->item->bid;
                     avl_insert(&dirty_blocks, &dirty_bids[i]->avl, _dirty_bid_cmp);
                 }
@@ -737,9 +741,12 @@ static struct fnamedic_item * _fname_create(struct filemgr *file) {
     struct fnamedic_item *fname_new;
     fname_new = (struct fnamedic_item *)malloc(sizeof(struct fnamedic_item));
 
+#pragma warning(suppress: 6011)
     fname_new->filename_len = strlen(file->filename);
     fname_new->filename = (char *)malloc(fname_new->filename_len + 1);
+#pragma warning(suppress: 6387)
     memcpy(fname_new->filename, file->filename, fname_new->filename_len);
+#pragma warning(suppress: 6011)
     fname_new->filename[fname_new->filename_len] = 0;
 
     // calculate hash value
@@ -763,6 +770,7 @@ static struct fnamedic_item * _fname_create(struct filemgr *file) {
     int i = 0;
     for (; i < fname_new->num_shards; ++i) {
         // initialize tree
+#pragma warning(suppress: 6011)
         avl_init(&fname_new->shards[i].tree, NULL);
         avl_init(&fname_new->shards[i].tree_idx, NULL);
         // initialize clean list
@@ -1012,6 +1020,7 @@ int bcache_write(struct filemgr *file,
 
             ditem = (struct dirty_item *)
                     mempool_alloc(sizeof(struct dirty_item));
+#pragma warning(suppress: 6011)
             ditem->item = item;
 
             marker = *((uint8_t*)buf + bcache_blocksize-1);
@@ -1096,6 +1105,7 @@ int bcache_write_partial(struct filemgr *file,
         list_remove(&fname_new->shards[shard_num].cleanlist, &item->list_elem);
 
         ditem = (struct dirty_item *)mempool_alloc(sizeof(struct dirty_item));
+#pragma warning(suppress: 6011)
         ditem->item = item;
 
         // insert into tree
@@ -1250,6 +1260,7 @@ void bcache_init(int nblock, int blocksize)
     for (i=0;i<nblock;++i){
         item = (struct bcache_item *)malloc(sizeof(struct bcache_item));
 
+#pragma warning(suppress: 6011)
         item->bid = BLK_NOT_FOUND;
         item->flag = 0x0 | BCACHE_FREE;
         item->score = 0;
@@ -1311,6 +1322,7 @@ scan:
         nfileitems = nclean = ndirty = 0;
         docs_local = bnodes_local = 0;
 
+#pragma warning(suppress: 6246)
         size_t i = 0;
         for (; i < fname->num_shards; ++i) {
             ee = list_begin(&fname->shards[i].cleanlist);

@@ -29,47 +29,38 @@
 #pragma once
 
 
-#include "CX/KVDB/IIterator.hpp"
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
-namespace KVDB
+namespace IO
 {
 
-class CX_API FDBIterator : public IIterator
+class IFileSysHelper : public IObject
 {
 public:
 
-	virtual Status Get(IRecord **ppRecord);
+	virtual ~IFileSysHelper() { }
 
-	virtual Status FreeRecordMem(IRecord *pRecord);
+	virtual Status CopyFile(const Char *szOldPath, const Char *szNewPath) = 0;
 
-	virtual Status Next();
+	virtual Status RenameFile(const Char *szOldPath, const Char *szNewPath) = 0;
 
-	virtual Status Reset();
+	virtual Status RemoveFile(const Char *szPath) = 0;
 
-	virtual ITable *GetTable();
+	virtual Status CreateFolder(const Char *szPath) = 0;
 
-protected:
+	virtual Status RenameFolder(const Char *szOldPath, const Char *szNewPath) = 0;
 
-	friend class FDBTable;
-
-	FDBIterator(ITable *pTable, void *pIter);
-
-	~FDBIterator();
-
-	void *GetIter();
-
-private:
-
-	ITable   *m_pTable;
-	void     *m_pIter;
+	virtual Status RemoveFolder(const Char *szPath) = 0;
 
 };
 
-}//namespace KVDB
+}//namespace IO
 
 }//namespace CX
 

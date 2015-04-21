@@ -94,10 +94,12 @@ static void spin_destroy_wrap(void *lock) {
 }
 
 static void spin_lock_wrap(void *lock) {
+#pragma warning(suppress: 26135)
     spin_lock((spin_t*)lock);
 }
 
 static void spin_unlock_wrap(void *lock) {
+#pragma warning(suppress: 26135)
     spin_unlock((spin_t*)lock);
 }
 
@@ -110,10 +112,12 @@ static void mutex_destroy_wrap(void *lock) {
 }
 
 static void mutex_lock_wrap(void *lock) {
+#pragma warning(suppress: 26135)
     mutex_lock((mutex_t*)lock);
 }
 
 static void mutex_unlock_wrap(void *lock) {
+#pragma warning(suppress: 26135)
     mutex_unlock((mutex_t*)lock);
 }
 
@@ -171,6 +175,7 @@ static void _log_errno_str(struct filemgr_ops *ops,
     }
 }
 
+#pragma warning(suppress: 6244)
 static uint32_t _file_hash(struct hash *hash, struct hash_elem *e)
 {
     struct filemgr *file = _get_entry(e, struct filemgr, e);
@@ -196,9 +201,11 @@ void filemgr_init(struct filemgr_config *config)
         if (InterlockedCompareExchange(&initial_lock_status, 1, 0) == 0) {
             // atomically initialize spin lock only once
             spin_init(&initial_lock);
+#pragma warning(suppress: 28112)
             initial_lock_status = 2;
         } else {
             // the others .. wait until initializing 'initial_lock' is done
+#pragma warning(suppress: 28112)
             while (initial_lock_status != 2) {
                 Sleep(1);
             }
@@ -243,6 +250,7 @@ static void * _filemgr_get_temp_buf()
         malloc_align(addr, FDB_SECTOR_SIZE, global_config.blocksize + sizeof(struct temp_buf_item));
 
         item = (struct temp_buf_item *)((uint8_t *) addr + global_config.blocksize);
+#pragma warning(suppress: 6011)
         item->addr = addr;
     }
     spin_unlock(&temp_buf_lock);
@@ -407,6 +415,7 @@ struct filemgr_prefetch_args {
 static void *_filemgr_prefetch_thread(void *voidargs)
 {
     struct filemgr_prefetch_args *args = (struct filemgr_prefetch_args*)voidargs;
+#pragma warning(suppress: 6255)
     uint8_t *buf = alca(uint8_t, args->file->blocksize);
     uint64_t cur_pos = 0, i;
     uint64_t bcache_free_space;
@@ -484,6 +493,7 @@ void filemgr_prefetch(struct filemgr *file,
         struct filemgr_prefetch_args *args;
         args = (struct filemgr_prefetch_args *)
                calloc(1, sizeof(struct filemgr_prefetch_args));
+#pragma warning(suppress: 6011)
         args->file = file;
         args->duration = config->prefetch_duration;
 
@@ -616,12 +626,14 @@ filemgr_open_result filemgr_open(char *filename, struct filemgr_ops *ops,
     file->ref_count = 1;
 
     file->wal = (struct wal *)calloc(1, sizeof(struct wal));
+#pragma warning(suppress: 6011)
     file->wal->flag = 0;
 
     file->ops = ops;
     file->blocksize = global_config.blocksize;
     atomic_init_uint8_t(&file->status, FILE_NORMAL);
     file->config = (struct filemgr_config*)malloc(sizeof(struct filemgr_config));
+#pragma warning(suppress: 6011)
     *file->config = *config;
     file->config->blocksize = global_config.blocksize;
     file->config->ncacheblock = global_config.ncacheblock;
@@ -714,6 +726,7 @@ filemgr_open_result filemgr_open(char *filename, struct filemgr_ops *ops,
     // init global transaction for the file
     file->global_txn.wrapper = (struct wal_txn_wrapper*)
                                malloc(sizeof(struct wal_txn_wrapper));
+#pragma warning(suppress: 6011)
     file->global_txn.wrapper->txn = &file->global_txn;
     file->global_txn.handle = NULL;
     if (file->pos.val) {
@@ -752,8 +765,11 @@ uint64_t filemgr_update_header(struct filemgr *file, void *buf, size_t len)
     if (file->header.data == NULL) {
         file->header.data = (void *)malloc(len);
     }else if (file->header.size < len){
+#pragma warning(suppress: 6308)
         file->header.data = (void *)realloc(file->header.data, len);
     }
+#pragma warning(suppress: 6387)
+#pragma warning(suppress: 28183)
     memcpy(file->header.data, buf, len);
     file->header.size = len;
     ++(file->header.revnum);
@@ -1106,6 +1122,7 @@ static void _filemgr_free_func(struct hash_elem *h)
 
     // free filename and header
     free(file->filename);
+#pragma warning(suppress: 6001)
     if (file->header.data) free(file->header.data);
     // free old filename if any
     free(file->old_filename);
@@ -1707,6 +1724,7 @@ char *filemgr_redirect_old_file(struct filemgr *very_old_file,
     // As we are going to change the new_filename field in the DB header of the
     // very_old_file, maybe reallocate DB header buf to accomodate bigger value
     if (new_header_len > old_header_len) {
+#pragma warning(suppress: 6308)
         very_old_file->header.data = realloc(very_old_file->header.data,
                 new_header_len);
     }
@@ -1808,6 +1826,7 @@ fdb_status filemgr_destroy_file(char *filename,
             }
         }
     } else { // file not in memory, read on-disk to destroy older versions..
+#pragma warning(suppress: 6255)
         file = (struct filemgr *)alca(struct filemgr, 1);
         file->filename = filename;
         file->ops = get_filemgr_ops();
@@ -1901,6 +1920,7 @@ void filemgr_set_in_place_compaction(struct filemgr *file,
     spin_unlock(&file->lock);
 }
 
+#pragma warning(suppress: 26135)
 void filemgr_mutex_openlock(struct filemgr_config *config)
 {
     filemgr_init(config);
@@ -1910,9 +1930,11 @@ void filemgr_mutex_openlock(struct filemgr_config *config)
 
 void filemgr_mutex_openunlock(void)
 {
+#pragma warning(suppress: 26135)
     spin_unlock(&filemgr_openlock);
 }
 
+#pragma warning(suppress: 26135)
 void filemgr_mutex_lock(struct filemgr *file)
 {
 #ifdef __FILEMGR_MUTEX_LOCK
@@ -1922,6 +1944,7 @@ void filemgr_mutex_lock(struct filemgr *file)
 #endif
 }
 
+#pragma warning(suppress: 26135)
 void filemgr_mutex_unlock(struct filemgr *file)
 {
 #ifdef __FILEMGR_MUTEX_LOCK
@@ -1947,7 +1970,10 @@ void *filemgr_add_keystr_file(struct filemgr *file, uint64_t size)
     struct keystr_file *keystr_file;
     keystr_file = (struct keystr_file *)calloc(1, sizeof(struct keystr_file));
 
+#pragma warning(suppress: 6011)
     keystr_file->filename = (char*)malloc(file->filename_len + 32);
+#pragma warning(suppress: 6387)
+#pragma warning(suppress: 6340)
     sprintf(keystr_file->filename, "%s.wal_index_%05d", file->filename, file->n_keystr_files);
     keystr_file->fd = file->ops->open(keystr_file->filename,
                                       O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -2082,6 +2108,7 @@ void filemgr_scan_remove_keystr_files(struct filemgr *file)
     while (hfind != INVALID_HANDLE_VALUE) {
         if (!strncmp(filedata.cFileName, prefix, prefix_size)) {
             item = (struct filename_item*)calloc(1, sizeof(struct filename_item));
+#pragma warning(suppress: 6011)
             item->filename = (char*)malloc(strlen(filedata.cFileName)+1);
             strcpy(item->filename, filedata.cFileName);
             list_push_front(&filelist, &item->le);

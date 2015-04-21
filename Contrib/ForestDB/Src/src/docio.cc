@@ -302,6 +302,7 @@ INLINE bid_t _docio_append_doc(struct docio_handle *handle, struct docio_object 
     // calculate checksum of LENGTH using crc
     _length.checksum = _docio_length_checksum(_length);
 
+#pragma warning(suppress: 6387)
     memcpy((uint8_t *)buf + offset, &_length, sizeof(struct docio_length));
     offset += sizeof(struct docio_length);
 
@@ -374,6 +375,7 @@ bid_t docio_append_commit_mark(struct docio_handle *handle, uint64_t doc_offset)
     // calculate checksum of LENGTH using crc
     _length.checksum = _docio_length_checksum(_length);
 
+#pragma warning(suppress: 6387)
     memcpy((uint8_t *)buf + offset, &_length, sizeof(struct docio_length));
     offset += sizeof(struct docio_length);
 

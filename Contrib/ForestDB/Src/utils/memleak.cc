@@ -203,6 +203,7 @@ void _memleak_add_to_index(void *addr, size_t size, char *file, size_t line, uin
 {
     DBG("malloc at %s:%ld, size %ld\n", file, line, size);
     struct memleak_item *item = (struct memleak_item *)malloc(sizeof(struct memleak_item));
+#pragma warning(suppress: 6011)
     item->addr = (uint64_t)addr;
     item->file = file;
     item->line = line;

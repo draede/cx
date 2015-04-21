@@ -74,6 +74,7 @@ static void _get_fast_str_kv(struct bnode *node, idx_t idx, void *key, void *val
 
     // copy key
     _keylen = _endian_encode(keylen);
+#pragma warning(suppress: 6387)
     memcpy(key_ptr, &_keylen, sizeof(key_len_t));
     memcpy((uint8_t*)key_ptr + sizeof(key_len_t),
            (uint8_t*)ptr + offset, keylen);
@@ -301,6 +302,7 @@ static void _copy_fast_str_kv(struct bnode *node_dst,
     }
 
     // copy
+#pragma warning(suppress: 6387)
     memcpy((uint8_t*)ptr_dst + dst_offset,
            (uint8_t*)ptr_src + src_offset, src_len);
 
@@ -308,11 +310,14 @@ static void _copy_fast_str_kv(struct bnode *node_dst,
     for (i=0;i<=len;++i){
         offset = _endian_decode(_src_offset_arr[src_idx + i]);
         offset = offset + dst_offset - src_offset;
+#pragma warning(suppress: 6011)
         _dst_offset_arr[dst_idx + i] = _endian_encode(offset);
     }
 
     if (node_dst == node_src) {
         // copy to the original node and free
+#pragma warning(suppress: 6387)
+#pragma warning(suppress: 6001)
         memcpy(ptr_swap, ptr_dst, dst_offset + src_len);
         free(ptr_dst);
     }
@@ -419,6 +424,7 @@ static void _set_fast_str_key(struct btree *tree, void *dst, void *src)
     keylen_alloc = (keylen_new == inflen)?(0):(keylen_new);
     key_ptr_old = (void*)malloc(size_key + keylen_alloc);
     // copy keylen
+#pragma warning(suppress: 6387)
     memcpy(key_ptr_old, key_ptr_new, size_key);
     if (keylen_alloc) {
         memcpy((uint8_t*)key_ptr_old + size_key,
@@ -452,6 +458,7 @@ void btree_fast_str_kv_set_key(void *key, void *str, size_t len)
 
     key_ptr = (void *)malloc(sizeof(key_len_t) + keylen);
     _keylen = _endian_encode(keylen);
+#pragma warning(suppress: 6387)
     memcpy(key_ptr, &_keylen, sizeof(key_len_t));
     memcpy((uint8_t*)key_ptr + sizeof(key_len_t), str, keylen);
     memcpy(key, &key_ptr, sizeof(void *));
@@ -468,6 +475,7 @@ void btree_fast_str_kv_set_inf_key(void *key)
     key_ptr = (void *)malloc(sizeof(key_len_t));
     memset(&keylen, 0xff, sizeof(key_len_t));
     _keylen = _endian_encode(keylen);
+#pragma warning(suppress: 6387)
     memcpy(key_ptr, &_keylen, sizeof(key_len_t));
     memcpy(key, &key_ptr, sizeof(void *));
 }
@@ -584,6 +592,7 @@ struct btree_kv_ops * btree_fast_str_kv_get_kb64_vb64(struct btree_kv_ops *kv_op
         btree_kv_ops = (struct btree_kv_ops *)malloc(sizeof(struct btree_kv_ops));
     }
 
+#pragma warning(suppress: 6011)
     btree_kv_ops->get_kv = _get_fast_str_kv;
     btree_kv_ops->set_kv = _set_fast_str_kv;
     btree_kv_ops->ins_kv = _ins_fast_str_kv;

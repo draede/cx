@@ -189,6 +189,7 @@ void _filemgr_win_get_errno_str(char *buf, size_t size)
                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
                    (LPTSTR) &win_msg,
                    0, NULL);
+#pragma warning(suppress: 6340)
     _snprintf(buf, size, "errno = %d: '%s'", err, win_msg);
     LocalFree(win_msg);
 }

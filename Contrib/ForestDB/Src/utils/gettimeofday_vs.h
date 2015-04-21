@@ -8,6 +8,7 @@
 extern "C" {
 #endif
 
+#pragma warning(suppress: 6244)
 struct timezone
 {
     int  tz_minuteswest; /* minutes W of Greenwich */

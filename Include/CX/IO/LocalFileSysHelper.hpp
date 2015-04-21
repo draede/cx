@@ -29,47 +29,13 @@
 #pragma once
 
 
-#include "CX/KVDB/IIterator.hpp"
+#include "CX/Platform.hpp"
 
 
-namespace CX
-{
+#if defined(CX_OS_WINDOWS)
+	#include "CX/IO/Platform/Windows/LocalFileSysHelper.hpp"
+#else	
+	#error "LocalFileSysHelper.h not implemented on this platform"
+#endif
 
-namespace KVDB
-{
-
-class CX_API FDBIterator : public IIterator
-{
-public:
-
-	virtual Status Get(IRecord **ppRecord);
-
-	virtual Status FreeRecordMem(IRecord *pRecord);
-
-	virtual Status Next();
-
-	virtual Status Reset();
-
-	virtual ITable *GetTable();
-
-protected:
-
-	friend class FDBTable;
-
-	FDBIterator(ITable *pTable, void *pIter);
-
-	~FDBIterator();
-
-	void *GetIter();
-
-private:
-
-	ITable   *m_pTable;
-	void     *m_pIter;
-
-};
-
-}//namespace KVDB
-
-}//namespace CX
 

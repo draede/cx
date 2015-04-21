@@ -190,6 +190,18 @@
     <Filter Include="Source Files\KVDB">
       <UniqueIdentifier>{ecebb1d7-fa51-452f-91b6-da3a0063dacd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IO\Platform">
+      <UniqueIdentifier>{ce8bdf95-6245-4c54-bbde-7e33fc5f13e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Platform\Windows">
+      <UniqueIdentifier>{820a8f08-d433-4c24-85fc-27c15318ad16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform">
+      <UniqueIdentifier>{d0f82553-9ed3-4f4e-a952-068ba93c0195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform\Windows">
+      <UniqueIdentifier>{43d75adf-2a54-4261-ad01-01a8ef124bd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -711,6 +723,42 @@
     <ClInclude Include="..\..\Include\CX\SparseMultiHashSet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\MemDatabase.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\MemIterator.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\MemRecord.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\MemTable.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\MemDatabaseConfig.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\KVDB\MemTableConfig.hpp">
+      <Filter>Header Files\KVDB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\RCMemBuffer.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\RCMemBufferMgr.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IFileSysHelper.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\KVDB\MemDBSerialize.hpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -1021,6 +1069,27 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\RCMemBuffer.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\RCMemBufferMgr.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\KVDB\MemDatabase.cpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\KVDB\MemIterator.cpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\KVDB\MemRecord.cpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\KVDB\MemTable.cpp">
+      <Filter>Source Files\KVDB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

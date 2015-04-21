@@ -128,6 +128,8 @@ Status FDBTable::CloseIterator(IIterator *pIterator)
 		return FDBStatus(nStatus);
 	}
 
+	delete pRealIterator;
+
 	return Status();
 }
 

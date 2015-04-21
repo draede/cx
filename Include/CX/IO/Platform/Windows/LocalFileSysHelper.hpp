@@ -29,47 +29,42 @@
 #pragma once
 
 
-#include "CX/KVDB/IIterator.hpp"
+#include "CX/IO/IFileSysHelper.hpp"
 
 
 namespace CX
 {
 
-namespace KVDB
+namespace IO
 {
 
-class CX_API FDBIterator : public IIterator
+class LocalFileSysHelper : public IFileSysHelper
 {
 public:
 
-	virtual Status Get(IRecord **ppRecord);
+	static LocalFileSysHelper &Get();
 
-	virtual Status FreeRecordMem(IRecord *pRecord);
+	virtual Status CopyFile(const Char *szOldPath, const Char *szNewPath);
 
-	virtual Status Next();
+	virtual Status RenameFile(const Char *szOldPath, const Char *szNewPath);
 
-	virtual Status Reset();
+	virtual Status RemoveFile(const Char *szPath);
 
-	virtual ITable *GetTable();
+	virtual Status CreateFolder(const Char *szPath);
 
-protected:
+	virtual Status RenameFolder(const Char *szOldPath, const Char *szNewPath);
 
-	friend class FDBTable;
-
-	FDBIterator(ITable *pTable, void *pIter);
-
-	~FDBIterator();
-
-	void *GetIter();
+	virtual Status RemoveFolder(const Char *szPath);
 
 private:
 
-	ITable   *m_pTable;
-	void     *m_pIter;
+	LocalFileSysHelper();
+
+	~LocalFileSysHelper();
 
 };
 
-}//namespace KVDB
+}//namespace IO
 
 }//namespace CX
 

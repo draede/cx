@@ -29,47 +29,70 @@
 #pragma once
 
 
-#include "CX/KVDB/IIterator.hpp"
+#include "CX/IObject.hpp"
+#include "CX/SparseHashMap.hpp"
 
 
 namespace CX
 {
 
-namespace KVDB
+namespace Util
 {
 
-class CX_API FDBIterator : public IIterator
+class RCMemBufferMgr : public IObject
 {
 public:
 
-	virtual Status Get(IRecord **ppRecord);
+	static RCMemBufferMgr &Get();
 
-	virtual Status FreeRecordMem(IRecord *pRecord);
+	void *Alloc(Size cbSize);
 
-	virtual Status Next();
+	void Retain(void *pMem);
 
-	virtual Status Reset();
+	void Release(void *pMem);
 
-	virtual ITable *GetTable();
+	//will free all mem (even if used)
+	void Cleanup();
 
-protected:
-
-	friend class FDBTable;
-
-	FDBIterator(ITable *pTable, void *pIter);
-
-	~FDBIterator();
-
-	void *GetIter();
+	Size GetAllocsSize() const;
 
 private:
 
-	ITable   *m_pTable;
-	void     *m_pIter;
+	struct Hasher
+	{
+		size_t operator()(const void *p) const
+		{
+			return (size_t)p;
+		}
+	};
+
+	struct Comparator
+	{
+		bool operator() (const void *a, const void *b) const
+		{
+			return (a == b);
+		}
+	};
+
+	typedef struct _MemBuffer
+	{
+		Size cbSize;
+		Size cRefCount;
+	}MemBuffer;
+
+	typedef SparseHashMap<void *, MemBuffer, Hasher, Comparator>::Type   MemBuffersMap;
+
+	MemBuffersMap   m_mapMemBuffers;
+	Size            m_cbAllocsSize;
+
+	RCMemBufferMgr();
+
+	~RCMemBufferMgr();
 
 };
 
-}//namespace KVDB
+
+}//namespace Util
 
 }//namespace CX
 

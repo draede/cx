@@ -250,6 +250,7 @@ struct btree_kv_ops * btree_kv_get_kb64_vb64(struct btree_kv_ops *kv_ops)
         btree_kv_ops = (struct btree_kv_ops *)malloc(sizeof(struct btree_kv_ops));
     }
 
+#pragma warning(suppress: 6011)
     btree_kv_ops->get_kv = _get_kv;
     btree_kv_ops->set_kv = _set_kv;
     btree_kv_ops->ins_kv = _ins_kv;
@@ -281,6 +282,7 @@ struct btree_kv_ops * btree_kv_get_kb32_vb64(struct btree_kv_ops *kv_ops)
         btree_kv_ops = (struct btree_kv_ops *)malloc(sizeof(struct btree_kv_ops));
     }
 
+#pragma warning(suppress: 6011)
     btree_kv_ops->get_kv = _get_kv;
     btree_kv_ops->set_kv = _set_kv;
     btree_kv_ops->ins_kv = _ins_kv;
@@ -312,6 +314,7 @@ struct btree_kv_ops * btree_kv_get_kbn_vb64(struct btree_kv_ops *kv_ops)
         btree_kv_ops = (struct btree_kv_ops *)malloc(sizeof(struct btree_kv_ops));
     }
 
+#pragma warning(suppress: 6011)
     btree_kv_ops->get_kv = _get_kv;
     btree_kv_ops->set_kv = _set_kv;
     btree_kv_ops->ins_kv = _ins_kv;

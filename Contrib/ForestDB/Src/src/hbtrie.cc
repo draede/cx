@@ -166,6 +166,7 @@ void hbtrie_init(struct hbtrie *trie, int chunksize, int valuelen,
     trie->readkey = readkey;
     trie->map = NULL;
     trie->last_map_chunk = (void *)malloc(chunksize);
+#pragma warning(suppress: 6387)
     memset(trie->last_map_chunk, 0xff, chunksize); // set 0xffff...
 }
 
@@ -361,6 +362,7 @@ hbtrie_result hbtrie_iterator_init(struct hbtrie *trie,
 
     // MUST NOT affect the original trie due to sharing the same memory segment
     it->trie.last_map_chunk = (void *)malloc(it->trie.chunksize);
+#pragma warning(suppress: 6387)
     memset(it->trie.last_map_chunk, 0xff, it->trie.chunksize);
 
     it->curkey = (void *)malloc(HBTRIE_MAX_KEYLEN);
@@ -371,6 +373,7 @@ hbtrie_result hbtrie_iterator_init(struct hbtrie *trie,
         memset((uint8_t*)it->curkey + it->keylen, 0, trie->chunksize);
     }else{
         it->keylen = 0;
+#pragma warning(suppress: 6387)
         memset(it->curkey, 0, trie->chunksize);
     }
     list_init(&it->btreeit_list);
@@ -407,10 +410,12 @@ hbtrie_result hbtrie_last(struct hbtrie_iterator *it)
     it->trie = temp.trie;
     // MUST NOT affect the original trie due to sharing the same memory segment
     it->trie.last_map_chunk = (void *)malloc(it->trie.chunksize);
+#pragma warning(suppress: 6387)
     memset(it->trie.last_map_chunk, 0xff, it->trie.chunksize);
 
     it->curkey = (void *)malloc(HBTRIE_MAX_KEYLEN);
     // init with the infinite (0xff..) key without reforming
+#pragma warning(suppress: 6387)
     memset(it->curkey, 0xff, it->trie.chunksize);
     it->keylen = it->trie.chunksize;
 
@@ -439,7 +444,9 @@ static hbtrie_result _hbtrie_prev(struct hbtrie_iterator *it,
     struct hbtrie_meta hbmeta;
     struct btree_meta bmeta;
     void *chunk;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, trie->chunksize);
+#pragma warning(suppress: 6255)
     uint8_t *v = alca(uint8_t, trie->valuelen);
     bid_t bid;
     uint64_t offset;
@@ -580,11 +587,14 @@ static hbtrie_result _hbtrie_prev(struct hbtrie_iterator *it,
                         } else if (chunkcmp > 0) {
                             // start_key's prefix is gerater than the skipped prefix
                             // set largest key for next B+tree
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
                             chunk = alca(uint8_t, trie->chunksize);
                             memset(chunk, 0xff, trie->chunksize);
                             break;
                         }
                     }
+#pragma warning(suppress: 6001)
                     if (chunkcmp < 0) {
                         // go back to parent B+tree
                         continue;
@@ -607,11 +617,15 @@ static hbtrie_result _hbtrie_prev(struct hbtrie_iterator *it,
                     continue;
                 }
                 // set largest key
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
                 chunk = alca(uint8_t, trie->chunksize);
                 memset(chunk, 0xff, trie->chunksize);
             }
 
             if (item_new->leaf && chunk) {
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
                 uint8_t *k_temp = alca(uint8_t, trie->chunksize);
                 size_t _leaf_keylen, _leaf_keylen_raw = 0;
 
@@ -721,7 +735,9 @@ static hbtrie_result _hbtrie_next(struct hbtrie_iterator *it,
     struct hbtrie_meta hbmeta;
     struct btree_meta bmeta;
     void *chunk;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, trie->chunksize);
+#pragma warning(suppress: 6255)
     uint8_t *v = alca(uint8_t, trie->valuelen);
     bid_t bid;
     uint64_t offset;
@@ -865,6 +881,7 @@ static hbtrie_result _hbtrie_next(struct hbtrie_iterator *it,
                             break;
                         }
                     }
+#pragma warning(suppress: 6001)
                     if (chunkcmp > 0) {
                         // go back to parent B+tree
                         continue;
@@ -877,6 +894,8 @@ static hbtrie_result _hbtrie_next(struct hbtrie_iterator *it,
             }
 
             if (item_new->leaf && chunk) {
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
                 uint8_t *k_temp = alca(uint8_t, trie->chunksize);
                 size_t _leaf_keylen, _leaf_keylen_raw = 0;
 
@@ -1044,6 +1063,7 @@ static void _hbtrie_btree_cascaded_update(struct hbtrie *trie,
     }
 }
 
+#pragma warning(suppress: 6262)
 static hbtrie_result _hbtrie_find(struct hbtrie *trie, void *key, int keylen,
                                   void *valuebuf, struct list *btreelist, uint8_t flag)
 {
@@ -1056,8 +1076,11 @@ static hbtrie_result _hbtrie_find(struct hbtrie *trie, void *key, int keylen,
     struct hbtrie_meta hbmeta;
     struct btree_meta meta;
     struct btreelist_item *btreeitem = NULL;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, trie->chunksize);
+#pragma warning(suppress: 6255)
     uint8_t *buf = alca(uint8_t, trie->btree_nodesize);
+#pragma warning(suppress: 6255)
     uint8_t *btree_value = alca(uint8_t, trie->valuelen);
     void *chunk = NULL;
     void *void_cmp;
@@ -1187,6 +1210,7 @@ static hbtrie_result _hbtrie_find(struct hbtrie *trie, void *key, int keylen,
                     btreeitem->child_rootbid = bid_new;
                     btreeitem = (struct btreelist_item *)
                                 mempool_alloc(sizeof(struct btreelist_item));
+#pragma warning(suppress: 6011)
                     list_push_back(btreelist, &btreeitem->e);
                     btree = &btreeitem->btree;
                 }
@@ -1201,7 +1225,11 @@ static hbtrie_result _hbtrie_find(struct hbtrie *trie, void *key, int keylen,
             } else {
                 // this is offset of document (as it is)
                 // read entire key
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
                 uint8_t *docrawkey = alca(uint8_t, HBTRIE_MAX_KEYLEN);
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
                 uint8_t *dockey = alca(uint8_t, HBTRIE_MAX_KEYLEN);
                 uint32_t docrawkeylen, dockeylen;
                 uint64_t offset;
@@ -1243,6 +1271,7 @@ hbtrie_result hbtrie_find(struct hbtrie *trie, void *rawkey,
                           int rawkeylen, void *valuebuf)
 {
     int nchunk = _get_nchunk_raw(trie, rawkey, rawkeylen);
+#pragma warning(suppress: 6255)
     uint8_t *key = alca(uint8_t, nchunk * trie->chunksize);
     int keylen;
 
@@ -1254,6 +1283,7 @@ hbtrie_result hbtrie_find_offset(struct hbtrie *trie, void *rawkey,
                                  int rawkeylen, void *valuebuf)
 {
     int nchunk = _get_nchunk_raw(trie, rawkey, rawkeylen);
+#pragma warning(suppress: 6255)
     uint8_t *key = alca(uint8_t, nchunk * trie->chunksize);
     int keylen;
 
@@ -1266,6 +1296,7 @@ hbtrie_result hbtrie_find_partial(struct hbtrie *trie, void *rawkey,
                                   int rawkeylen, void *valuebuf)
 {
     int nchunk = _get_nchunk_raw(trie, rawkey, rawkeylen);
+#pragma warning(suppress: 6255)
     uint8_t *key = alca(uint8_t, nchunk * trie->chunksize);
     int keylen;
 
@@ -1280,7 +1311,9 @@ INLINE hbtrie_result _hbtrie_remove(struct hbtrie *trie,
 {
     int nchunk = _get_nchunk_raw(trie, rawkey, rawkeylen);
     int keylen;
+#pragma warning(suppress: 6255)
     uint8_t *key = alca(uint8_t, nchunk * trie->chunksize);
+#pragma warning(suppress: 6255)
     uint8_t *valuebuf = alca(uint8_t, trie->valuelen);
     hbtrie_result r;
     btree_result br;
@@ -1304,6 +1337,7 @@ INLINE hbtrie_result _hbtrie_remove(struct hbtrie *trie,
             struct hbtrie_meta hbmeta;
             struct btree_meta meta;
             hbmeta_opt opt;
+#pragma warning(suppress: 6255)
             uint8_t *buf = alca(uint8_t, trie->btree_nodesize);
 
             meta.data = buf;
@@ -1320,6 +1354,7 @@ INLINE hbtrie_result _hbtrie_remove(struct hbtrie *trie,
         } else {
             if (btreeitem->leaf) {
                 // leaf b-tree
+#pragma warning(suppress: 6255)
                 uint8_t *k = alca(uint8_t, trie->chunksize);
                 _set_leaf_key(k, key + btreeitem->chunkno * trie->chunksize,
                     rawkeylen - btreeitem->chunkno * trie->chunksize);
@@ -1366,6 +1401,7 @@ struct _key_item {
     struct list_elem le;
 };
 
+#pragma warning(suppress: 6262)
 static void _hbtrie_extend_leaf_tree(struct hbtrie *trie,
                                      struct list *btreelist,
                                      struct btreelist_item *btreeitem,
@@ -1381,9 +1417,13 @@ static void _hbtrie_extend_leaf_tree(struct hbtrie *trie,
     struct hbtrie_meta hbmeta;
     btree_result br;
     void *prefix = NULL, *meta_value = NULL;
+#pragma warning(suppress: 6255)
     uint8_t *key_str = alca(uint8_t, HBTRIE_MAX_KEYLEN);
+#pragma warning(suppress: 6255)
     uint8_t *key_buf = alca(uint8_t, trie->chunksize);
+#pragma warning(suppress: 6255)
     uint8_t *value_buf = alca(uint8_t, trie->valuelen);
+#pragma warning(suppress: 6255)
     uint8_t *buf = alca(uint8_t, trie->btree_nodesize);
     size_t keylen, minchunkno = 0, chunksize;
 
@@ -1449,10 +1489,12 @@ static void _hbtrie_extend_leaf_tree(struct hbtrie *trie,
         // insert tree's prefix into the list
         item = (struct _key_item *)malloc(sizeof(struct _key_item));
 
+#pragma warning(suppress: 6011)
         item->key = NULL;
         item->keylen = 0;
 
         item->value = (void *)malloc(trie->valuelen);
+#pragma warning(suppress: 6387)
         memcpy(item->value, hbmeta.value, trie->valuelen);
 
         list_push_back(&keys, &item->le);
@@ -1510,6 +1552,7 @@ static void _hbtrie_extend_leaf_tree(struct hbtrie *trie,
 
 // suppose that VALUE and OLDVALUE_OUT are based on the same endian in hb+trie
 #define HBTRIE_PARTIAL_UPDATE (0x1)
+#pragma warning(suppress: 6262)
 INLINE hbtrie_result _hbtrie_insert(struct hbtrie *trie,
                                     void *rawkey, int rawkeylen,
                                     void *value, void *oldvalue_out,
@@ -1530,6 +1573,7 @@ INLINE hbtrie_result _hbtrie_insert(struct hbtrie *trie,
     int prevchunkno, curchunkno;
     int cpt_node = 0;
     int leaf_cond = 0;
+#pragma warning(suppress: 6255)
     uint8_t *k = alca(uint8_t, trie->chunksize);
 
     struct list btreelist;
@@ -1546,8 +1590,11 @@ INLINE hbtrie_result _hbtrie_insert(struct hbtrie *trie,
 
     nchunk = _get_nchunk_raw(trie, rawkey, rawkeylen);
 
+#pragma warning(suppress: 6255)
     uint8_t *key = alca(uint8_t, nchunk * trie->chunksize);
+#pragma warning(suppress: 6255)
     uint8_t *buf = alca(uint8_t, trie->btree_nodesize);
+#pragma warning(suppress: 6255)
     uint8_t *btree_value = alca(uint8_t, trie->valuelen);
     void *chunk, *chunk_new;
     bid_t bid_new, _bid;
@@ -1630,10 +1677,14 @@ INLINE hbtrie_result _hbtrie_insert(struct hbtrie *trie,
                                         (diffchunkno+1));
                 // backup old prefix
                 int old_prefixlen = hbmeta.prefix_len;
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
                 uint8_t *old_prefix = alca(uint8_t, old_prefixlen);
                 memcpy(old_prefix, hbmeta.prefix, old_prefixlen);
 
                 if (new_prefixlen > 0) {
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
                     uint8_t *new_prefix = alca(uint8_t, new_prefixlen);
                     memcpy(new_prefix,
                            (uint8_t*)hbmeta.prefix +
@@ -1803,7 +1854,11 @@ INLINE hbtrie_result _hbtrie_insert(struct hbtrie *trie,
         // create new sub-tree
 
         // read entire key
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
         uint8_t *docrawkey = alca(uint8_t, HBTRIE_MAX_KEYLEN);
+#pragma warning(suppress: 6263)
+#pragma warning(suppress: 6255)
         uint8_t *dockey = alca(uint8_t, HBTRIE_MAX_KEYLEN);
         uint32_t docrawkeylen, dockeylen, minrawkeylen;
         uint64_t offset;
@@ -2010,6 +2065,7 @@ INLINE hbtrie_result _hbtrie_insert(struct hbtrie *trie,
 
             btreeitem_new = (struct btreelist_item *)
                             mempool_alloc(sizeof(struct btreelist_item));
+#pragma warning(suppress: 6011)
             btreeitem_new->chunkno = newchunkno;
             r = btree_init(&btreeitem_new->btree, trie->btreeblk_handle,
                            trie->btree_blk_ops, kv_ops,
@@ -2055,6 +2111,7 @@ INLINE hbtrie_result _hbtrie_insert(struct hbtrie *trie,
 
         // update previous (parent) b-tree
         bid_new = btreeitem_new->btree.root_bid;
+#pragma warning(suppress: 6011)
         btreeitem->child_rootbid = bid_new;
 
         // set MSB

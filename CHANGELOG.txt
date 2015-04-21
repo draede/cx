@@ -1,3 +1,8 @@
+0.1.8 - 2015-04-21
+  - Added RCMemBuffer
+  - Added Mem KVDB (not ready for use)
+  - Fixed VS Code Analysis warnings for ForestDB
+  - Added FileSysHelper
 0.1.7 - 2015-04-19
   - Fixed Sparse/Dense MultiHashSet/MultiHashMap
   - Fixed typo in description
