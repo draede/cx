@@ -46,6 +46,12 @@ public:
 
 	virtual ~IFileSysHelper() { }
 
+	virtual const Char *GetPathSep() = 0;
+
+	virtual Status AppendPath(String &sPath, const Char *szStr) = 0;
+
+	virtual bool IsAbsPath(const Char *szPath) = 0;
+
 	virtual Status CopyFile(const Char *szOldPath, const Char *szNewPath) = 0;
 
 	virtual Status RenameFile(const Char *szOldPath, const Char *szNewPath) = 0;

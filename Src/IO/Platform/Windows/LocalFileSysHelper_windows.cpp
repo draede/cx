@@ -61,6 +61,44 @@ LocalFileSysHelper &LocalFileSysHelper::Get()
 	return helper;
 }
 
+const Char *LocalFileSysHelper::GetPathSep()
+{
+	return "\\";
+}
+
+Status LocalFileSysHelper::AppendPath(String &sPath, const Char *szStr)
+{
+	if (!sPath.empty() && '\\' != *sPath.rbegin() && '/' != *sPath.rbegin() &&'\\' != *szStr && '/' != *szStr)
+	{
+		sPath += "\\";
+	}
+	sPath += szStr;
+
+	return Status();
+}
+
+bool LocalFileSysHelper::IsAbsPath(const Char *szPath)
+{
+	if (0 == *szPath)
+	{
+		return false;
+	}
+	if ('\\' == *szPath)
+	{
+		return true;
+	}
+	if ('/' == *szPath)
+	{
+		return true;
+	}
+	if (NULL != (cx_strchr(szPath, ':')))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 Status LocalFileSysHelper::CopyFile(const Char *szOldPath, const Char *szNewPath)
 {
 	WString wsOldPath;

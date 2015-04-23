@@ -44,6 +44,12 @@ public:
 
 	static LocalFileSysHelper &Get();
 
+	virtual const Char *GetPathSep();
+
+	virtual Status AppendPath(String &sPath, const Char *szStr);
+
+	virtual bool IsAbsPath(const Char *szPath);
+
 	virtual Status CopyFile(const Char *szOldPath, const Char *szNewPath);
 
 	virtual Status RenameFile(const Char *szOldPath, const Char *szNewPath);

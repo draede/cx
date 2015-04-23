@@ -105,7 +105,14 @@ Status DefaultFormatter::Write(IOutput *pOutput, Level nLevel, const Char *szTag
 	{
 		Print(&sOutput, "[{1:|' '12}] ", szTag);
 	}
-	Print(&sOutput, " : {1}", pBuffer);
+	if (sOutput.empty())
+	{
+		Print(&sOutput, "{1}", pBuffer);
+	}
+	else
+	{
+		Print(&sOutput, ": {1}", pBuffer);
+	}
 	if (Show_NewLine == (m_nFlags & Show_NewLine))
 	{
 		Print(&sOutput, "\n");

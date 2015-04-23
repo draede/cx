@@ -1,3 +1,14 @@
+0.1.9 - 2015-04-23
+  - PDB files are copied next to cx libs
+  - Added IO::IFileSysHelper::GetPathSep
+  - Added IO::IFileSysHelper::AppendPath
+  - Added IO::IFileSysHelper::IsAbsPath
+  - Fixed KVDB::MemDatabase save & load
+  - Fixed KVDB::MemIterator::Get
+  - Fixed KVDB::MemIterator::GetKeySize
+  - Fixed KVDB::MemTable not using set_deleted_key
+  - Fixed KVDB::MemDatabase not using set_deleted_key
+  - Small fix in Log::DefaultFormatter (extra space in output)
 0.1.8 - 2015-04-21
   - Added RCMemBuffer
   - Added Mem KVDB (not ready for use)

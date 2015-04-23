@@ -101,9 +101,9 @@ private:
 
 #pragma warning(push)
 #pragma warning(disable: 4251)
-	String       m_sPath;
-#pragma warning(pop)
+	String      m_sPath;
 	TablesMap   m_mapTables;
+#pragma warning(pop)
 
 	void FreeMem();
 

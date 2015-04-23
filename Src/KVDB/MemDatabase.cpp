@@ -46,6 +46,7 @@ const MemTableConfig      MemDatabase::DEFAULT_TABLE_CONFIG;
 
 MemDatabase::MemDatabase()
 {
+	m_mapTables.set_deleted_key("~~~~~~~~~~~~~~~~~~~~~~~~");
 }
 
 MemDatabase::~MemDatabase()
@@ -173,8 +174,6 @@ bool MemDatabase::IsReadOnly() const
 
 Status MemDatabase::Save()
 {
-	return Status();
-
 	if (m_sPath.empty())
 	{
 		return Status();
@@ -186,8 +185,6 @@ Status MemDatabase::Save()
 
 Status MemDatabase::Save(const Char *szPath)
 {
-	return Status();
-
 	String sTmpPath;
 	Status status;
 
@@ -211,8 +208,6 @@ Status MemDatabase::Save(const Char *szPath)
 
 Status MemDatabase::Save(IO::IOutputStream *pOutputStream)
 {
-	return Status();
-
 	Hash::CRC32Hash   hash;
 	Byte              hashdata[Hash::CRC32Hash::SIZE];
 	Status            status;
@@ -245,15 +240,11 @@ Status MemDatabase::Save(IO::IOutputStream *pOutputStream)
 
 Status MemDatabase::Load()
 {
-	return Status();
-
 	return Load(m_sPath.c_str());
 }
 
 Status MemDatabase::Load(const Char *szPath)
 {
-	return Status();
-
 	IO::FileInputStream fis(szPath);
 
 	if (!fis.IsOK())
@@ -266,8 +257,6 @@ Status MemDatabase::Load(const Char *szPath)
 
 Status MemDatabase::Load(IO::IInputStream *pInputStream)
 {
-	return Status();
-
 	Hash::CRC32Hash   hash;
 	MagicType         nMagic;
 	Size              cTablesCount;

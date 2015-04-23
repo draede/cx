@@ -54,6 +54,10 @@ Status MemIterator::Get(IRecord **ppRecord)
 {
 	MemTable::RecordsMap::iterator *pIter = (MemTable::RecordsMap::iterator *)m_pIter;
 
+	if (((MemTable::RecordsMap *)m_pMap)->end() == *pIter)
+	{
+		return Status(Status_NoMoreItems, "No more records");
+	}
 	if (NULL == (*ppRecord = new MemRecord(this, (*pIter)->first.GetMem(), (*pIter)->first.GetSize(), 
 	                                         (*pIter)->second.GetMem(), (*pIter)->second.GetSize())))
 	{
@@ -78,8 +82,6 @@ Status MemIterator::FreeRecordMem(IRecord *pRecord)
 
 Status MemIterator::Next()
 {
-	MemTable::RecordsMap::iterator iter = *((MemTable::RecordsMap::iterator *)m_pIter);
-	
 	if (((MemTable::RecordsMap *)m_pMap)->end() == *((MemTable::RecordsMap::iterator *)m_pIter))
 	{
 		return Status(Status_NoMoreItems, "No more records");

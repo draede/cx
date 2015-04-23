@@ -41,6 +41,10 @@ MemTable::MemTable(IDatabase *pDatabase, const Char *szName)
 {
 	m_pDB    = pDatabase;
 	m_sName  = szName;
+
+	Util::RCMemBuffer delkey(NULL, 0, true);
+
+	m_mapRecords.set_deleted_key(delkey);
 }
 
 MemTable::~MemTable()
@@ -178,7 +182,6 @@ Status MemTable::Load(IO::IInputStream *pInputStream, Hash::IHash *pHash)
 	}
 	for (Size i = 0; i < cRecordsCount; i++)
 	{
-		/*
 		Util::RCMemBuffer key;
 		Util::RCMemBuffer val;
 
@@ -191,7 +194,6 @@ Status MemTable::Load(IO::IInputStream *pInputStream, Hash::IHash *pHash)
 			return status;
 		}
 		m_mapRecords[key] = val;
-		*/
 	}
 
 	return Status();

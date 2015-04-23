@@ -112,9 +112,9 @@ private:
 	static const Size MAX_RECORDS_COUNT = 2000000000;
 
 	IDatabase    *m_pDB;
-	RecordsMap   m_mapRecords;
 #pragma warning(push)
 #pragma warning(disable: 4251)
+	RecordsMap   m_mapRecords;
 	String       m_sName;
 #pragma warning(pop)
 

@@ -60,7 +60,7 @@ const void *MemRecord::GetKey()
 
 Size MemRecord::GetKeySize()
 {
-	return m_cbValueSize;
+	return m_cbKeySize;
 }
 
 const void *MemRecord::GetValue()
