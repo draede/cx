@@ -29,31 +29,14 @@
 #pragma once
 
 
-#include "CX/Log/IOutput.hpp"
-#include "CX/APIDefs.hpp"
+#include "CX/Platform.hpp"
 
 
-namespace CX
-{
-
-namespace Log
-{
-
-class CX_API SystemOutput : public IOutput
-{
-public:
-
-	SystemOutput();
-
-	~SystemOutput();
-
-	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
-
-private:
-
-};
-
-}//namespace Log
-
-}//namespace CX
+#if defined(CX_OS_WINDOWS)
+	#include "CX/Log/Platform/Windows/SystemOutput.hpp"
+#elif defined(CX_OS_POSIX)
+	#include "CX/Log/Platform/Posix/SystemOutput.hpp"
+#else
+	#error "SystemOutput.h not implemented on this platform"
+#endif
 

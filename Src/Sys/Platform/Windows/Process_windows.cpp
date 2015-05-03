@@ -67,7 +67,7 @@ Status Process::GetCurrentProcessPath(String &sPath)
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::FromUTF16(wsPath.c_str(), &sPath, wsPath.size())).IsNOK())
+	if ((status = Str::UTF8::FromWChar(wsPath.c_str(), &sPath, wsPath.size())).IsNOK())
 	{
 		return status;
 	}

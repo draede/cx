@@ -29,7 +29,7 @@
 #include "CX/Util/RndGen.hpp"
 #include "../../Contrib/TinyMT/Include/tinymt32.h"
 #include "../../Contrib/TinyMT/Include/tinymt64.h"
-#include "CX/Util/Timer.hpp"
+#include "CX/Util/Time.hpp"
 #include "CX/Limits.hpp"
 
 
@@ -44,10 +44,10 @@ RndGen::RndGen()
 	m_pState32 = new tinymt32_t();
 	m_pState64 = new tinymt64_t();
 
-	Timer timer;
+	Time t;
 
-	Seed32((UInt32)(((UInt64)this) / 23 + timer.GetTimeStamp() / 17));
-	Seed64((UInt64)(((UInt64)this) / 13 + timer.GetTimeStamp() / 29));
+	Seed32((UInt32)(((UInt64)this) / 23 + t.GetTimeStampMS() / 17));
+	Seed64((UInt64)(((UInt64)this) / 13 + t.GetTimeStampMS() / 29));
 }
 
 RndGen::~RndGen()

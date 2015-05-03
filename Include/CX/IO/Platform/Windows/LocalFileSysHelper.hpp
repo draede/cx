@@ -29,6 +29,12 @@
 #pragma once
 
 
+#include "CX/Platform.hpp"
+
+
+#if defined(CX_OS_WINDOWS)
+
+
 #include "CX/IO/IFileSysHelper.hpp"
 
 
@@ -73,4 +79,7 @@ private:
 }//namespace IO
 
 }//namespace CX
+
+
+#endif
 

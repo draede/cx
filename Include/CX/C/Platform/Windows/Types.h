@@ -44,7 +44,7 @@ extern "C" {
 #include <stddef.h>
 
 
-// EXAMPLE for DRIVERS
+// EXAMPLE for no default bool type
 /*
 #define CX_CUSTOM_BOOL_TYPE    unsigned char
 #define CX_CUSTOM_BOOL_FALSE   0

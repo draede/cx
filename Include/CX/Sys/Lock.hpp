@@ -34,7 +34,9 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Sys/Platform/Windows/Lock.hpp"
-#else	
+#elif defined(CX_OS_POSIX)
+	#include "CX/Sys/Platform/Posix/Lock.hpp"
+#else
 	#error "Lock.h not implemented on this platform"
 #endif
 

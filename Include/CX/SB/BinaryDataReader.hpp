@@ -162,111 +162,111 @@ private:
 		return Status();
 	}
 
-	template <>
-	Status Read<String>(String *p)
-	{
-		Char   buffer[8192];
-		Size   cLen;
-		UInt32 cLenTmp;
-		Size   cReqLen;
-		Size   cbAckSize;
-		Status status;
-
-		if (NULL == m_pInputStream || !m_pInputStream->IsOK())
-		{
-			return Status(Status_NotInitialized, "Invalid input stream");
-		}
-		if ((status = m_pInputStream->Read(&cLenTmp, sizeof(cLenTmp), &cbAckSize)).IsNOK())
-		{
-			return status;
-		}
-		if (sizeof(cLenTmp) != cbAckSize)
-		{
-			return Status(Status_ReadFailed, "Failed to read {1} bytes", sizeof(cLenTmp));
-		}
-		m_chksum.Update(&cLenTmp, sizeof(cLenTmp));
-		cLen = (Size)cLenTmp;
-		if (BinaryData::MAX_STRING_LEN < cLen)
-		{
-			return Status(Status_TooBig, "String too big (max len is {1})", BinaryData::MAX_STRING_LEN);
-		}
-		p->clear();
-		while (0 < cLen)
-		{
-			cReqLen = sizeof(buffer) / sizeof(buffer[0]);
-			if (cReqLen > cLen)
-			{
-				cReqLen = cLen;
-			}
-			if ((status = m_pInputStream->Read(buffer, cReqLen * sizeof(Char), &cbAckSize)).IsNOK())
-			{
-				return status;
-			}
-			if (cReqLen * sizeof(Char) != cbAckSize)
-			{
-				return Status(Status_ReadFailed, "Failed to read {1} bytes", cReqLen * sizeof(Char));
-			}
-			m_chksum.Update(buffer, cReqLen * sizeof(Char));
-			p->append(buffer, cReqLen);
-			cLen -= cReqLen;
-		}
-
-		return Status();
-	}
-
-	template <>
-	Status Read<WString>(WString *p)
-	{
-		WChar  buffer[4096];
-		Size   cLen;
-		UInt32 cLenTmp;
-		Size   cReqLen;
-		Size   cbAckSize;
-		Status status;
-
-		if (NULL == m_pInputStream || !m_pInputStream->IsOK())
-		{
-			return Status(Status_NotInitialized, "Invalid input stream");
-		}
-		if ((status = m_pInputStream->Read(&cLenTmp, sizeof(cLenTmp), &cbAckSize)).IsNOK())
-		{
-			return status;
-		}
-		if (sizeof(cLenTmp) != cbAckSize)
-		{
-			return Status(Status_ReadFailed, "Failed to read {1} bytes", sizeof(cLenTmp));
-		}
-		m_chksum.Update(&cLenTmp, sizeof(cLenTmp));
-		cLen = (Size)cLenTmp;
-		if (BinaryData::MAX_STRING_LEN < cLen)
-		{
-			return Status(Status_TooBig, "String too big (max len is {1})", BinaryData::MAX_STRING_LEN);
-		}
-		p->clear();
-		while (0 < cLen)
-		{
-			cReqLen = sizeof(buffer) / sizeof(buffer[0]);
-			if (cReqLen > cLen)
-			{
-				cReqLen = cLen;
-			}
-			if ((status = m_pInputStream->Read(buffer, cReqLen * sizeof(WChar), &cbAckSize)).IsNOK())
-			{
-				return status;
-			}
-			if (cReqLen * sizeof(WChar) != cbAckSize)
-			{
-				return Status(Status_ReadFailed, "Failed to read {1} bytes", cReqLen * sizeof(WChar));
-			}
-			m_chksum.Update(buffer, cReqLen * sizeof(WChar));
-			p->append(buffer, cReqLen);
-			cLen -= cReqLen;
-		}
-
-		return Status();
-	}
-
 };
+
+template <>
+Status BinaryDataReader::Read<String>(String *p)
+{
+	Char   buffer[8192];
+	Size   cLen;
+	UInt32 cLenTmp;
+	Size   cReqLen;
+	Size   cbAckSize;
+	Status status;
+
+	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
+	{
+		return Status(Status_NotInitialized, "Invalid input stream");
+	}
+	if ((status = m_pInputStream->Read(&cLenTmp, sizeof(cLenTmp), &cbAckSize)).IsNOK())
+	{
+		return status;
+	}
+	if (sizeof(cLenTmp) != cbAckSize)
+	{
+		return Status(Status_ReadFailed, "Failed to read {1} bytes", sizeof(cLenTmp));
+	}
+	m_chksum.Update(&cLenTmp, sizeof(cLenTmp));
+	cLen = (Size)cLenTmp;
+	if (BinaryData::MAX_STRING_LEN < cLen)
+	{
+		return Status(Status_TooBig, "String too big (max len is {1})", BinaryData::MAX_STRING_LEN);
+	}
+	p->clear();
+	while (0 < cLen)
+	{
+		cReqLen = sizeof(buffer) / sizeof(buffer[0]);
+		if (cReqLen > cLen)
+		{
+			cReqLen = cLen;
+		}
+		if ((status = m_pInputStream->Read(buffer, cReqLen * sizeof(Char), &cbAckSize)).IsNOK())
+		{
+			return status;
+		}
+		if (cReqLen * sizeof(Char) != cbAckSize)
+		{
+			return Status(Status_ReadFailed, "Failed to read {1} bytes", cReqLen * sizeof(Char));
+		}
+		m_chksum.Update(buffer, cReqLen * sizeof(Char));
+		p->append(buffer, cReqLen);
+		cLen -= cReqLen;
+	}
+
+	return Status();
+}
+
+template <>
+Status BinaryDataReader::Read<WString>(WString *p)
+{
+	WChar  buffer[4096];
+	Size   cLen;
+	UInt32 cLenTmp;
+	Size   cReqLen;
+	Size   cbAckSize;
+	Status status;
+
+	if (NULL == m_pInputStream || !m_pInputStream->IsOK())
+	{
+		return Status(Status_NotInitialized, "Invalid input stream");
+	}
+	if ((status = m_pInputStream->Read(&cLenTmp, sizeof(cLenTmp), &cbAckSize)).IsNOK())
+	{
+		return status;
+	}
+	if (sizeof(cLenTmp) != cbAckSize)
+	{
+		return Status(Status_ReadFailed, "Failed to read {1} bytes", sizeof(cLenTmp));
+	}
+	m_chksum.Update(&cLenTmp, sizeof(cLenTmp));
+	cLen = (Size)cLenTmp;
+	if (BinaryData::MAX_STRING_LEN < cLen)
+	{
+		return Status(Status_TooBig, "String too big (max len is {1})", BinaryData::MAX_STRING_LEN);
+	}
+	p->clear();
+	while (0 < cLen)
+	{
+		cReqLen = sizeof(buffer) / sizeof(buffer[0]);
+		if (cReqLen > cLen)
+		{
+			cReqLen = cLen;
+		}
+		if ((status = m_pInputStream->Read(buffer, cReqLen * sizeof(WChar), &cbAckSize)).IsNOK())
+		{
+			return status;
+		}
+		if (cReqLen * sizeof(WChar) != cbAckSize)
+		{
+			return Status(Status_ReadFailed, "Failed to read {1} bytes", cReqLen * sizeof(WChar));
+		}
+		m_chksum.Update(buffer, cReqLen * sizeof(WChar));
+		p->append(buffer, cReqLen);
+		cLen -= cReqLen;
+	}
+
+	return Status();
+}
 
 }//namespace SB
 

@@ -33,8 +33,10 @@
 
 
 #if defined(CX_OS_WINDOWS)
-   #include "CX/Sys/Platform/Windows/DynLib.hpp"
-#else	
+	#include "CX/Sys/Platform/Windows/DynLib.hpp"
+#elif defined(CX_OS_POSIX)
+	#include "CX/Sys/Platform/Posix/DynLib.hpp"
+#else
 	#error "DynLib.h not implemented on this platform"
 #endif
 

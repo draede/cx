@@ -34,7 +34,9 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Sys/Platform/Windows/RWLock.hpp"
-#else	
+#elif defined(CX_OS_POSIX)
+	#include "CX/Sys/Platform/Posix/RWLock.hpp"
+#else
 	#error "RWLock.h not implemented on this platform"
 #endif
 

@@ -39,7 +39,7 @@
 	#define CX_DLL_IMPORT   __declspec(dllimport)
 	#define CX_INLINE       __inline
 #ifdef _UNICODE
-	#define CX_UNICODE
+	#define CX_WCHAR_IS_DEFAULT
 #endif
 #if _MSC_VER == 1400
 	#define CX_BUILDSYS_VS2005
@@ -86,6 +86,9 @@
 	#define CX_DLL_IMPORT
 	//Android
 	#define CX_OS_ANDROID
+	#define CX_OS_POSIX
+	#define CX_BUILDSYS_NDK
+	#define CX_BUILDSYS     "NDK"
 #endif
 
 #if defined(__linux__)
@@ -94,22 +97,30 @@
 	#define CX_DLL_IMPORT
 	//Linux
 	#define CX_OS_LINUX
+	#define CX_OS_POSIX
+	#define CX_BUILDSYS_GCC
+	#define CX_BUILDSYS     "GCC"
 #endif
 
 #if defined(__APPLE__) && defined(__MACH__)
 	#define CX_TLS          __thread
 	#define CX_DLL_EXPORT
 	#define CX_DLL_IMPORT
+	#define CX_BUILDSYS_CLANG
+	#define CX_BUILDSYS     "CLANG"
 #include <TargetConditionals.h>
 #if TARGET_OS_MAC == 1
 	//OSX
 	#define CX_OS_OSX
+	#define CX_OS_POSIX
 #elif TARGET_IPHONE_SIMULATOR == 1
 	//iOS Simulator
 	#define CX_OS_IOSSIM
+	#define CX_OS_POSIX
 #elif TARGET_OS_IPHONE == 1
 	//iOS
 	#define CX_OS_IOS
+	#define CX_OS_POSIX
 #endif
 #endif
 

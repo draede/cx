@@ -60,10 +60,6 @@ public:
 
 	double GetElapsedTime() const;
 
-	UInt64 GetTimeStamp();
-
-	UInt64 GetResolution();
-
 private:
 
 	LARGE_INTEGER m_liTimerResolution;

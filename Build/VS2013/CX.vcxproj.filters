@@ -202,6 +202,51 @@
     <Filter Include="Source Files\IO\Platform\Windows">
       <UniqueIdentifier>{43d75adf-2a54-4261-ad01-01a8ef124bd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\C\Platform\Posix">
+      <UniqueIdentifier>{b419a5b6-9a6a-456d-8100-cfa2062bbbf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform\Posix">
+      <UniqueIdentifier>{ce69c311-abc8-4a6a-93a2-cdd87d194217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform\Posix">
+      <UniqueIdentifier>{b7732209-1e85-4807-ba71-a725fc6272c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform\Posix">
+      <UniqueIdentifier>{97abae2e-9b57-42ac-8851-62ffb4243021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform\Posix">
+      <UniqueIdentifier>{c5d3da98-d897-405e-bcf3-33035b90a989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform\Posix">
+      <UniqueIdentifier>{e969d6f5-ff7f-4b6c-acf0-310bb38bf9ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform\Posix">
+      <UniqueIdentifier>{8bb3b450-3195-4377-9b27-40ad7d7710c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform\Posix">
+      <UniqueIdentifier>{907f17c3-f539-49a7-824c-e0177a033904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform\Posix">
+      <UniqueIdentifier>{c58842c4-6e27-41a8-b0a2-84213b9d66d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Platform\Posix">
+      <UniqueIdentifier>{3f92c816-82db-4cf6-8453-f9a7ea45c5aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform\Posix">
+      <UniqueIdentifier>{45ebb771-0b12-46da-adae-13114fddcdac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform\Posix">
+      <UniqueIdentifier>{ad28a16c-26a9-48c9-9232-5ef45efb82ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform">
+      <UniqueIdentifier>{fc72f02c-b630-48b6-961c-ee026638810e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform\Posix">
+      <UniqueIdentifier>{7011339e-5c91-4982-9c39-459143708eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform\Windows">
+      <UniqueIdentifier>{f9fef98d-8936-4e0d-96d8-5d9d4e29e5ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -464,9 +509,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp">
       <Filter>Header Files\Hash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Alloc.hpp">
-      <Filter>Header Files\C\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\C\Alloc.h">
       <Filter>Header Files\C</Filter>
@@ -759,6 +801,72 @@
     <ClInclude Include="..\..\Src\KVDB\MemDBSerialize.hpp">
       <Filter>Source Files\KVDB</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\ctype.h">
+      <Filter>Header Files\C\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdarg.h">
+      <Filter>Header Files\C\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdio.h">
+      <Filter>Header Files\C\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdlib.h">
+      <Filter>Header Files\C\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\string.h">
+      <Filter>Header Files\C\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\Types.h">
+      <Filter>Header Files\C\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\StackTrace.hpp">
+      <Filter>Header Files\Util\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\Time.hpp">
+      <Filter>Header Files\Util\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\Timer.hpp">
+      <Filter>Header Files\Util\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\DynLib.hpp">
+      <Filter>Header Files\Sys\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Lock.hpp">
+      <Filter>Header Files\Sys\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Process.hpp">
+      <Filter>Header Files\Sys\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\RWLock.hpp">
+      <Filter>Header Files\Sys\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Thread.hpp">
+      <Filter>Header Files\Sys\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Posix\UTF8.hpp">
+      <Filter>Header Files\Str\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileInputStream.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileOutputStream.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\FileInputStream.hpp">
+      <Filter>Header Files\IO\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\FileOutputStream.hpp">
+      <Filter>Header Files\IO\Platform\Posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\SystemOutput.hpp">
+      <Filter>Header Files\Log\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Posix\SystemOutput.hpp">
+      <Filter>Header Files\Log\Platform\Posix</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -791,19 +899,10 @@
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc">
       <Filter>Contrib\DoubleConversion</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp">
-      <Filter>Source Files\Str\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp">
       <Filter>Source Files\Util\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp">
-      <Filter>Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\FileInputStream.cpp">
-      <Filter>Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\FileOutputStream.cpp">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp">
@@ -1090,6 +1189,57 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Posix\StackTrace_posix.cpp">
+      <Filter>Source Files\Util\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Posix\Time_posix.cpp">
+      <Filter>Source Files\Util\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Posix\Timer_posix.cpp">
+      <Filter>Source Files\Util\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\DynLib_posix.cpp">
+      <Filter>Source Files\Sys\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Lock_posix.cpp">
+      <Filter>Source Files\Sys\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Process_posix.cpp">
+      <Filter>Source Files\Sys\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\RWLock_posix.cpp">
+      <Filter>Source Files\Sys\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Thread_posix.cpp">
+      <Filter>Source Files\Sys\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8_windows.cpp">
+      <Filter>Source Files\Str\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\Posix\UTF8_posix.cpp">
+      <Filter>Source Files\Str\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Posix\DetailPrint_posix.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Posix\LocalFileSysHelper_posix.cpp">
+      <Filter>Source Files\IO\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Posix\FileInputStream_posix.cpp">
+      <Filter>Source Files\IO\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Posix\FileOutputStream_posix.cpp">
+      <Filter>Source Files\IO\Platform\Posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileInputStream_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Posix\SystemOutput_posix.cpp">
+      <Filter>Source Files\Log\Platform\Posix</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

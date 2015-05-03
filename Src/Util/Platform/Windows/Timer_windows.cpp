@@ -74,23 +74,6 @@ double Timer::GetElapsedTime() const
 	return (double)(lint.QuadPart - m_liStartTimer.QuadPart) / m_liTimerResolution.QuadPart;
 }
 
-UInt64 Timer::GetTimeStamp()
-{
-	LARGE_INTEGER lint;
-
-	if (!QueryPerformanceCounter(&lint))
-	{
-		return 0;
-	}
-
-	return (UInt64)lint.QuadPart;
-}
-
-UInt64 Timer::GetResolution()
-{
-	return (UInt64)m_liTimerResolution.QuadPart;
-}	
-
 }//namespace Util
 
 }//namespace CX

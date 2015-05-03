@@ -34,7 +34,9 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Util/Platform/Windows/Timer.hpp"
-#else	
+#elif defined (CX_OS_POSIX)
+	#include "CX/Util/Platform/Posix/Timer.hpp"
+#else
 	#error "Timer.h not implemented on this platform"
 #endif
 

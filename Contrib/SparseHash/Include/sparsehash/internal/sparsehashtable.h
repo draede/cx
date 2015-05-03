@@ -841,10 +841,7 @@ class sparse_hashtable {
     size_type bucknum = hash(key) & bucket_count_minus_one;
     size_type insert_pos = ILLEGAL_BUCKET; // where we would insert
     SPARSEHASH_STAT_UPDATE(total_lookups += 1);
-#pragma warning(push)
-#pragma warning(disable: 4127)
-    while ( 1 ) {                          // probe until something happens
-#pragma warning(pop)
+    for (;;) {                          // probe until something happens
       if ( !table.test(bucknum) ) {        // bucket is empty
         SPARSEHASH_STAT_UPDATE(total_probes += num_probes);
         if ( insert_pos == ILLEGAL_BUCKET )  // found no prior place to insert

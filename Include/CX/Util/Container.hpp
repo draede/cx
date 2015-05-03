@@ -116,18 +116,8 @@ public:
 		return 1;
 	}
 
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
 };
+
 
 template <typename T1, typename T2>
 class Container<T1, T2> : public IObject
@@ -167,23 +157,6 @@ public:
 	{
 		return 2;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
 
 };
 
@@ -228,29 +201,6 @@ public:
 	{
 		return 3;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
 
 };
 
@@ -298,35 +248,6 @@ public:
 	{
 		return 4;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
 
 };
 
@@ -377,41 +298,6 @@ public:
 	{
 		return 5;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
 
 };
 
@@ -465,47 +351,6 @@ public:
 	{
 		return 6;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
 
 };
 
@@ -563,53 +408,6 @@ public:
 	{
 		return 7;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
 
 };
 
@@ -670,59 +468,6 @@ public:
 	{
 		return 8;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
 
 };
 
@@ -786,65 +531,6 @@ public:
 	{
 		return 9;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
-
-	template <>
-	struct TypeAt<8>
-	{
-		typedef T9 Type;
-	};
 
 };
 
@@ -911,71 +597,6 @@ public:
 	{
 		return 10;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
-
-	template <>
-	struct TypeAt<8>
-	{
-		typedef T9 Type;
-	};
-
-	template <>
-	struct TypeAt <9>
-	{
-		typedef T10 Type;
-	};
 
 };
 
@@ -1045,77 +666,6 @@ public:
 	{
 		return 11;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
-
-	template <>
-	struct TypeAt<8>
-	{
-		typedef T9 Type;
-	};
-
-	template <>
-	struct TypeAt <9>
-	{
-		typedef T10 Type;
-	};
-
-	template <>
-	struct TypeAt <10>
-	{
-		typedef T11 Type;
-	};
 
 };
 
@@ -1189,83 +739,6 @@ public:
 	{
 		return 12;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
-
-	template <>
-	struct TypeAt<8>
-	{
-		typedef T9 Type;
-	};
-
-	template <>
-	struct TypeAt <9>
-	{
-		typedef T10 Type;
-	};
-
-	template <>
-	struct TypeAt <10>
-	{
-		typedef T11 Type;
-	};
-
-	template <>
-	struct TypeAt <11>
-	{
-		typedef T12 Type;
-	};
 
 };
 
@@ -1343,89 +816,6 @@ public:
 	{
 		return 13;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
-
-	template <>
-	struct TypeAt<8>
-	{
-		typedef T9 Type;
-	};
-
-	template <>
-	struct TypeAt <9>
-	{
-		typedef T10 Type;
-	};
-
-	template <>
-	struct TypeAt <10>
-	{
-		typedef T11 Type;
-	};
-
-	template <>
-	struct TypeAt <11>
-	{
-		typedef T12 Type;
-	};
-
-	template <>
-	struct TypeAt <12>
-	{
-		typedef T13 Type;
-	};
 
 };
 
@@ -1506,95 +896,6 @@ public:
 	{
 		return 14;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
-
-	template <>
-	struct TypeAt<8>
-	{
-		typedef T9 Type;
-	};
-
-	template <>
-	struct TypeAt <9>
-	{
-		typedef T10 Type;
-	};
-
-	template <>
-	struct TypeAt <10>
-	{
-		typedef T11 Type;
-	};
-
-	template <>
-	struct TypeAt <11>
-	{
-		typedef T12 Type;
-	};
-
-	template <>
-	struct TypeAt <12>
-	{
-		typedef T13 Type;
-	};
-
-	template <>
-	struct TypeAt <13>
-	{
-		typedef T14 Type;
-	};
 
 };
 
@@ -1678,101 +979,6 @@ public:
 	{
 		return 15;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
-
-	template <>
-	struct TypeAt<8>
-	{
-		typedef T9 Type;
-	};
-
-	template <>
-	struct TypeAt <9>
-	{
-		typedef T10 Type;
-	};
-
-	template <>
-	struct TypeAt <10>
-	{
-		typedef T11 Type;
-	};
-
-	template <>
-	struct TypeAt <11>
-	{
-		typedef T12 Type;
-	};
-
-	template <>
-	struct TypeAt <12>
-	{
-		typedef T13 Type;
-	};
-
-	template <>
-	struct TypeAt <13>
-	{
-		typedef T14 Type;
-	};
-
-	template <>
-	struct TypeAt <14>
-	{
-		typedef T15 Type;
-	};
 
 };
 
@@ -1860,107 +1066,6 @@ public:
 	{
 		return 16;
 	}
-
-	template <Size cIndex>
-	struct TypeAt
-	{
-	};
-
-	template <>
-	struct TypeAt<0>
-	{
-		typedef T1 Type;
-	};
-
-	template <>
-	struct TypeAt<1>
-	{
-		typedef T2 Type;
-	};
-
-	template <>
-	struct TypeAt<2>
-	{
-		typedef T3 Type;
-	};
-
-	template <>
-	struct TypeAt<3>
-	{
-		typedef T4 Type;
-	};
-
-	template <>
-	struct TypeAt<4>
-	{
-		typedef T5 Type;
-	};
-
-	template <>
-	struct TypeAt<5>
-	{
-		typedef T6 Type;
-	};
-
-	template <>
-	struct TypeAt<6>
-	{
-		typedef T7 Type;
-	};
-
-	template <>
-	struct TypeAt<7>
-	{
-		typedef T8 Type;
-	};
-
-	template <>
-	struct TypeAt<8>
-	{
-		typedef T9 Type;
-	};
-
-	template <>
-	struct TypeAt <9>
-	{
-		typedef T10 Type;
-	};
-
-	template <>
-	struct TypeAt <10>
-	{
-		typedef T11 Type;
-	};
-
-	template <>
-	struct TypeAt <11>
-	{
-		typedef T12 Type;
-	};
-
-	template <>
-	struct TypeAt <12>
-	{
-		typedef T13 Type;
-	};
-
-	template <>
-	struct TypeAt <13>
-	{
-		typedef T14 Type;
-	};
-
-	template <>
-	struct TypeAt <14>
-	{
-		typedef T15 Type;
-	};
-
-	template <>
-	struct TypeAt <15>
-	{
-		typedef T16 Type;
-	};
 
 };
 

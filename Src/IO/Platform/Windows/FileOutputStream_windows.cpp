@@ -26,9 +26,17 @@
  * SOFTWARE.
  */ 
 
+#include "CX/Platform.hpp"
+
+
+#if defined(CX_OS_WINDOWS)
+
+
 #include "CX/IO/FileOutputStream.hpp"
 #include "CX/Str/UTF8.hpp"
+#include "CX/C/stdio.h"
 #include "CX/Status.hpp"
+#include "CX/C/stdio.h"
 
 
 namespace CX
@@ -41,11 +49,11 @@ FileOutputStream::FileOutputStream(const Char *szPath)
 {
 	WString wsPath;
 
-	if (Str::UTF8::ToUTF16(szPath, &wsPath).IsOK())
+	if (Str::UTF8::ToWChar(szPath, &wsPath).IsOK())
 	{
 #pragma warning(push)
 #pragma warning(disable: 4996)
-		if (NULL == (m_pFile = cxw_fopen(wsPath.c_str(), CX_WFILE_WFLAGS)))
+		if (NULL == (m_pFile = _wfopen(wsPath.c_str(), L"wb")))
 #pragma warning(pop)
 		{
 			return;
@@ -63,20 +71,20 @@ FileOutputStream::FileOutputStream(const WChar *wszPath)
 {
 #pragma warning(push)
 #pragma warning(disable: 4996)
-	if (NULL == (m_pFile = cxw_fopen(wszPath, CX_WFILE_WFLAGS)))
+	if (NULL == (m_pFile = _wfopen(wszPath, L"wb")))
 #pragma warning(pop)
 	{
 		return;
 	}
 
-	Str::UTF8::FromUTF16(wszPath, &m_sPath);
+	Str::UTF8::FromWChar(wszPath, &m_sPath);
 }
 
 FileOutputStream::~FileOutputStream()
 {
 	if (NULL != m_pFile)
 	{
-		fclose(m_pFile);
+		cx_fclose(m_pFile);
 		m_pFile = NULL;
 	}
 }
@@ -103,9 +111,9 @@ Status FileOutputStream::GetSize(UInt64 *pcbSize) const
 		return Status(Status_NotInitialized, "File not opened");
 	}
 
-	cx_statstruct buf;
+	cx_stat64struct buf;
 
-	if (0 != cx_fstat(cx_fileno(m_pFile), &buf))
+	if (0 != cx_stat64(cx_fileno(m_pFile), &buf))
 	{
 		return Status(Status_GetSize, "fstat failed with error {1}", errno);
 	}
@@ -132,4 +140,7 @@ const Char *FileOutputStream::GetPath() const
 }//namespace IO
 
 }//namespace CX
+
+
+#endif
 

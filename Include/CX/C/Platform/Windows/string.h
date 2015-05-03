@@ -39,122 +39,123 @@
 #include <wchar.h>
 
 
-#define cx_strcat                    strcat
-#define cx_strchr                    strchr
-#define cx_strcmp                    strcmp
-#define cx_strcoll                   strcoll
-#define cx_strcpy                    strcpy
-#define cx_strcspn                   strcspn
-#define cx_strdup                    strdup
-#define cx_strerror                  strerror
-#define cx_stricmp                   _stricmp
-#define cx_stricoll                  _stricoll
-#define cx_strlen                    strlen
-#define cx_strlwr                    _strlwr
-#define cx_strncat                   strncat
-#define cx_strncmp                   strncmp
-#define cx_strncoll                  _strncoll
-#define cx_strncpy                   strncpy
-#define cx_strnicmp                  _strnicmp
-#define cx_strnicoll                 _strnicoll
-#define cx_strnset                   _strnset
-#define cx_strpbrk                   strpbrk
-#define cx_strrev                    _strrev
-#define cx_strrchr                   strrchr
-#define cx_strset                    _strset
-#define cx_strspn                    strspn
-#define cx_strstr                    strstr
-#define cx_strtok                    strtok
-#define cx_strupr                    _strupr
-#define cx_strxfrm                   strxfrm
+//http://en.wikipedia.org/wiki/C_string_handling
 
-#define cxw_strcat                   wcscat
-#define cxw_strchr                   wcschr
-#define cxw_strcmp                   wcscmp
-#define cxw_strcoll                  wcscoll
-#define cxw_strcpy                   wcscpy
-#define cxw_strcspn                  wcscspn
-#define cxw_strdup                   _wcsdup
-#define cxw_strerror                 wcserror
-#define cxw_stricmp                  _wcsicmp
-#define cxw_stricoll                 _wcsicoll
-#define cxw_strlen                   wcslen
-#define cxw_strlwr                   _wcslwr
-#define cxw_strncat                  wcsncat
-#define cxw_strncmp                  wcsncmp
-#define cxw_strncoll                 _wcsncoll
-#define cxw_strncpy                  wcsncpy
-#define cxw_strnicmp                 _wcsnicmp
-#define cxw_strnicoll                _wcsnicoll
-#define cxw_strnset                  _wcsnset
-#define cxw_strpbrk                  wcspbrk
-#define cxw_strrchr                  wcsrchr
-#define cxw_strrev                   _wcsrev
-#define cxw_strspn                   wcsspn
-#define cxw_strset                   _wcsset
-#define cxw_strstr                   wcsstr
-#define cxw_strtok                   wcstok
-#define cxw_strupr                   _wcsupr
-#define cxw_strxfrm                  wcsxfrm
 
-#ifndef CX_UNICODE
-#define cxt_strcat                   cx_strcat
-#define cxt_strchr                   cx_strchr
-#define cxt_strcmp                   cx_strcmp
-#define cxt_strcoll                  cx_strcoll
-#define cxt_strcpy                   cx_strcpy
-#define cxt_strcspn                  cx_strcspn
-#define cxt_strdup                   cx_strdup
-#define cxt_strerror                 cx_strerror
-#define cxt_stricmp                  cx_stricmp
-#define cxt_stricoll                 cx_stricoll
-#define cxt_strlen                   cx_strlen
-#define cxt_strlwr                   cx_strlwr
-#define cxt_strncat                  cx_wcsncat
-#define cxt_strncmp                  cx_strncmp
-#define cxt_strncoll                 cx_strncoll
-#define cxt_strncpy                  cx_strncpy
-#define cxt_strnicmp                 cx_strnicmp
-#define cxt_strnicoll                cx_strnicoll
-#define cxt_strnset                  cx_strnset
-#define cxt_strpbrk                  cx_strpbrk
-#define cxt_strrchr                  cx_strrchr
-#define cxt_strrev                   cx_strrev
-#define cxt_strspn                   cx_strspn
-#define cxt_strset                   cx_strset
-#define cxt_strstr                   cx_strstr
-#define cxt_strtok                   cx_strtok
-#define cxt_strupr                   cx_strupr
-#define cxt_strxfrm                  cx_strxfrm
+//String manipulation
+#define cx_strcpy          strcpy
+#define cxw_strcpy         wcscpy
+#define cx_strncpy         strncpy
+#define cxw_strncpy        wcsncpy
+#define cx_strcat          strcat
+#define cxw_strcat         wcscat
+#define cx_strncat         strncat
+#define cxw_strncat        wcsncat
+#define cx_strxfrm         strxfrm
+#define cxw_strxfrm        wcsxfrm
+
+#ifndef CX_WCHAR_IS_DEFAULT
+#define cxt_strcpy         cxw_strcpy
+#define cxt_strncpy        cxw_strncpy
+#define cxt_strcat         cxw_strcat
+#define cxt_strncat        cxw_strncat
+#define cxt_strxfrm        cxw_strxfrm
 #else
-#define cxt_strcat                   cxw_strcat
-#define cxt_strchr                   cxw_strchr
-#define cxt_strcmp                   cxw_strcmp
-#define cxt_strcoll                  cxw_strcoll
-#define cxt_strcpy                   cxw_strcpy
-#define cxt_strcspn                  cxw_strcspn
-#define cxt_strdup                   cxw_strdup
-#define cxt_strerror                 cxw_strerror
-#define cxt_stricmp                  cxw_stricmp
-#define cxt_stricoll                 cxw_stricoll
-#define cxt_strlen                   cxw_strlen
-#define cxt_strlwr                   cxw_strlwr
-#define cxt_strncat                  cxw_wcsncat
-#define cxt_strncmp                  cxw_strncmp
-#define cxt_strncoll                 cxw_strncoll
-#define cxt_strncpy                  cxw_strncpy
-#define cxt_strnicmp                 cxw_strnicmp
-#define cxt_strnicoll                cxw_strnicoll
-#define cxt_strnset                  cxw_strnset
-#define cxt_strpbrk                  cxw_strpbrk
-#define cxt_strrchr                  cxw_strrchr
-#define cxt_strrev                   cxw_strrev
-#define cxt_strspn                   cxw_strspn
-#define cxt_strset                   cxw_strset
-#define cxt_strstr                   cxw_strstr
-#define cxt_strtok                   cxw_strtok
-#define cxt_strupr                   cxw_strupr
-#define cxt_strxfrm                  cxw_strxfrm
+#define cxt_strcpy         cx_strcpy
+#define cxt_strncpy        cx_strncpy
+#define cxt_strcat         cx_strcat
+#define cxt_strncat        cx_strncat
+#define cxt_strxfrm        cx_strxfrm
+#endif
+
+
+//String examination
+#define cx_strlen          strlen
+#define cxw_strlen         wcslen
+#define cx_strcmp          strcmp
+#define cxw_strcmp         wcscmp
+#define cx_strncmp         strncmp
+#define cxw_strncmp        wcsncmp
+#define cx_stricmp         stricmp
+#define cxw_stricmp        wcsicmp
+#define cx_strnicmp        strnicmp
+#define cxw_strnicmp       wcsnicmp
+#define cx_strcoll         strcoll
+#define cxw_strcoll        wcscoll
+#define cx_strchr          strchr
+#define cxw_strchr         wcschr
+#define cx_strrchr         strrchr
+#define cxw_strrchr        wcsrchr
+#define cx_strspn          strspn
+#define cxw_strspn         wcsspn
+#define cx_strcspn         strcspn
+#define cxw_strcspn        wcscspn
+#define cx_strpbrk         strpbrk
+#define cxw_wcspbrk        wcspbrk
+#define cx_strstr          strstr
+#define cxw_wcsstr         wcsstr
+#define cx_strtok          strtok
+#define cxw_wcstok         wcstok
+
+#ifndef CX_WCHAR_IS_DEFAULT
+#define cxt_strlen         cxw_strlen
+#define cxt_strcmp         cxw_strcmp
+#define cxt_strncmp        cxw_strncmp
+#define cxt_stricmp        cxw_stricmp
+#define cxt_strnicmp       cxw_strnicmp
+#define cxt_strcoll        cxw_strcoll
+#define cxt_strchr         cxw_strchr
+#define cxt_strrchr        cxw_strrchr
+#define cxt_strspn         cxw_strspn
+#define cxt_strcspn        cxw_strcspn
+#define cxt_strpbrk        cxw_strpbrk
+#define cxt_strstr         cxw_strstr
+#define cxt_strtok         cxw_strtok
+#else
+#define cxt_strlen         cx_strlen
+#define cxt_strcmp         cx_strcmp
+#define cxt_strncmp        cx_strncmp
+#define cxt_stricmp        cx_stricmp
+#define cxt_strnicmp       cx_strnicmp
+#define cxt_strcoll        cx_strcoll
+#define cxt_strchr         cx_strchr
+#define cxt_strrchr        cx_strrchr
+#define cxt_strspn         cx_strspn
+#define cxt_strcspn        cx_strcspn
+#define cxt_strpbrk        cx_strpbrk
+#define cxt_strstr         cx_strstr
+#define cxt_strtok         cx_strtok
+#endif
+
+
+//Miscellaneous
+#define cx_strerror        strerror
+
+
+//Memory manipulation
+#define cx_memset          memset
+#define cxw_memset         wmemset
+#define cx_memcpy          memcpy
+#define cxw_memcpy         wmemcpy
+#define cx_memmove         memmove
+#define cxw_memmove        wmemmove
+#define cx_memcmp          memcmp
+#define cxw_memcmp         wmemcmp
+#define cx_memchr          memchr
+#define cxw_memchr         wmemchr
+
+#ifndef CX_WCHAR_IS_DEFAULT
+#define cxt_memset         cxw_memset
+#define cxt_memcpy         cxw_memcpy
+#define cxt_memmove        cxw_memmove
+#define cxt_memcmp         cxw_memcmp
+#define cxt_memchr         cxw_memchr
+#else
+#define cxt_memset         cx_memset
+#define cxt_memcpy         cx_memcpy
+#define cxt_memmove        cx_memmove
+#define cxt_memcmp         cx_memcmp
+#define cxt_memchr         cx_memchr
 #endif
 
 

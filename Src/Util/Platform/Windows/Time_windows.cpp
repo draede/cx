@@ -224,6 +224,22 @@ unsigned Time::GetMillisecond() const
 	return m_nMillisecond;
 }
 
+UInt64 Time::GetTimeStampMS()
+{
+	UInt64 nTSMS;
+
+	nTSMS = 0;
+	nTSMS += (UInt64)m_nMillisecond;
+	nTSMS += ((UInt64)m_nSecond << 16);
+	nTSMS += ((UInt64)m_nMinute << 24);
+	nTSMS += ((UInt64)m_nHour << 32);
+	nTSMS += ((UInt64)m_nDay << 40);
+	nTSMS += ((UInt64)m_nMonth << 48);
+	nTSMS += ((UInt64)(m_nYear - 1900) << 56);
+	
+	return nTSMS;
+}
+
 }//namespace Util
 
 }//namespace CX

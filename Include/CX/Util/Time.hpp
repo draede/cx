@@ -34,7 +34,9 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Util/Platform/Windows/Time.hpp"
-#else	
+#elif defined(CX_OS_POSIX)
+	#include "CX/Util/Platform/Posix/Time.hpp"
+#else
 	#error "Time.h not implemented on this platform"
 #endif
 

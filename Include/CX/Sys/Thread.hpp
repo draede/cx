@@ -34,7 +34,9 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Sys/Platform/Windows/Thread.hpp"
-#else	
+#elif defined(CX_OS_POSIX)
+	#include "CX/Sys/Platform/Posix/Thread.hpp"
+#else
 	#error "Thread.h not implemented on this platform"
 #endif
 

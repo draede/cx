@@ -105,11 +105,11 @@ Status LocalFileSysHelper::CopyFile(const Char *szOldPath, const Char *szNewPath
 	WString wsNewPath;
 	Status  status;
 
-	if ((status = Str::UTF8::ToUTF16(szOldPath, &wsOldPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szOldPath, &wsOldPath)).IsNOK())
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::ToUTF16(szNewPath, &wsNewPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szNewPath, &wsNewPath)).IsNOK())
 	{
 		return status;
 	}
@@ -127,11 +127,11 @@ Status LocalFileSysHelper::RenameFile(const Char *szOldPath, const Char *szNewPa
 	WString wsNewPath;
 	Status  status;
 
-	if ((status = Str::UTF8::ToUTF16(szOldPath, &wsOldPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szOldPath, &wsOldPath)).IsNOK())
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::ToUTF16(szNewPath, &wsNewPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szNewPath, &wsNewPath)).IsNOK())
 	{
 		return status;
 	}
@@ -148,7 +148,7 @@ Status LocalFileSysHelper::RemoveFile(const Char *szPath)
 	WString wsPath;
 	Status  status;
 
-	if ((status = Str::UTF8::ToUTF16(szPath, &wsPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szPath, &wsPath)).IsNOK())
 	{
 		return status;
 	}
@@ -165,7 +165,7 @@ Status LocalFileSysHelper::CreateFolder(const Char *szPath)
 	WString wsPath;
 	Status  status;
 
-	if ((status = Str::UTF8::ToUTF16(szPath, &wsPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szPath, &wsPath)).IsNOK())
 	{
 		return status;
 	}
@@ -183,11 +183,11 @@ Status LocalFileSysHelper::RenameFolder(const Char *szOldPath, const Char *szNew
 	WString wsNewPath;
 	Status  status;
 
-	if ((status = Str::UTF8::ToUTF16(szOldPath, &wsOldPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szOldPath, &wsOldPath)).IsNOK())
 	{
 		return status;
 	}
-	if ((status = Str::UTF8::ToUTF16(szNewPath, &wsNewPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szNewPath, &wsNewPath)).IsNOK())
 	{
 		return status;
 	}
@@ -204,7 +204,7 @@ Status LocalFileSysHelper::RemoveFolder(const Char *szPath)
 	WString wsPath;
 	Status  status;
 
-	if ((status = Str::UTF8::ToUTF16(szPath, &wsPath)).IsNOK())
+	if ((status = Str::UTF8::ToWChar(szPath, &wsPath)).IsNOK())
 	{
 		return status;
 	}

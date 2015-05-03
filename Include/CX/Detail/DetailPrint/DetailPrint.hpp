@@ -36,6 +36,7 @@
 #include "CX/EmptyType.hpp"
 #include "CX/Slice.hpp"
 #include "CX/Limits.hpp"
+#include <stdio.h>
 #include "CX/C/ctype.h"
 #include "CX/IObject.hpp"
 
@@ -69,7 +70,7 @@ enum ExtraFlags
 namespace DetailPrint
 {
 
-static inline StatusCode HexPrintHelper(const void *p, Size cbSize, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode HexPrintHelper(const void *p, Size cbSize, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         bool bReverse = true, bool bUpperCase = true)
 {
 	static const Char hexdigits1[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
@@ -150,9 +151,13 @@ static inline StatusCode HexPrintHelper(const void *p, Size cbSize, Char *szOutp
 
 CX_API Bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision);
 
-CX_API Bool UTF8toUTF16(const Char *szUTF8, WString *pwsUTF16, Size cUTF8Len = TYPE_SIZE_MAX);
+CX_API Bool UTF8toWChar(const Char *szUTF8, WString *pwsWChar, Size cUTF8Len = TYPE_SIZE_MAX);
 
-CX_API Bool UTF16toUTF8(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len = TYPE_SIZE_MAX);
+CX_API Bool WChartoUTF8(const WChar *wszWChar, String *psUTF8, Size cWCharLen = TYPE_SIZE_MAX);
+
+CX_API Bool UTF8toWCharx(const Char *szUTF8, std::wstring *pwsWChar, Size cUTF8Len = TYPE_SIZE_MAX);
+
+CX_API Bool WChartoUTF8x(const WChar *wszWChar, std::string *psUTF8, Size cWCharLen = TYPE_SIZE_MAX);
 
 CX_API StatusCode WriteStream(IO::IOutputStream *pOutputStream, const Char *pBuffer, Size cLen);
 
@@ -163,12 +168,12 @@ CX_API StatusCode WriteStream(IO::IOutputStream *pOutputStream, const Char *pBuf
 #ifndef CX_USE_CUSTOM_PRINTOUTPUT
 
 template <typename T> 
-static inline StatusCode PrintOutput(T o, const Char *pBuffer, Size cLen);
+inline StatusCode PrintOutput(T o, const Char *pBuffer, Size cLen);
 
 template <> 
-static inline StatusCode PrintOutput<FILE *>(FILE *pFile, const Char *pBuffer, Size cLen)
+inline StatusCode PrintOutput<FILE *>(FILE *pFile, const Char *pBuffer, Size cLen)
 {
-	if (cLen * sizeof(Char) != fwrite(pBuffer, 1, cLen * sizeof(Char), pFile))
+	if (cLen * sizeof(Char) != ::fwrite(pBuffer, 1, cLen * sizeof(Char), pFile))
 	{
 		return Status_WriteFailed;
 	}
@@ -177,14 +182,14 @@ static inline StatusCode PrintOutput<FILE *>(FILE *pFile, const Char *pBuffer, S
 }
 
 template <>
-static inline StatusCode PrintOutput<IO::IOutputStream *>(IO::IOutputStream *pOutputStream,
+inline StatusCode PrintOutput<IO::IOutputStream *>(IO::IOutputStream *pOutputStream,
                                                           const Char *pBuffer, Size cLen)
 {
 	return Detail::DetailPrint::WriteStream(pOutputStream, pBuffer, cLen);
 }
 
 template <>
-static inline StatusCode PrintOutput<String *>(String *psStr, const Char *pBuffer, Size cLen)
+inline StatusCode PrintOutput<String *>(String *psStr, const Char *pBuffer, Size cLen)
 {
 	psStr->append(pBuffer, cLen);
 
@@ -192,9 +197,9 @@ static inline StatusCode PrintOutput<String *>(String *psStr, const Char *pBuffe
 }
 
 template <>
-static inline StatusCode PrintOutput<WString *>(WString *pwsStr, const Char *pBuffer, Size cLen)
+inline StatusCode PrintOutput<WString *>(WString *pwsStr, const Char *pBuffer, Size cLen)
 {
-	if (!Detail::DetailPrint::UTF8toUTF16(pBuffer, pwsStr, cLen))
+	if (!Detail::DetailPrint::UTF8toWChar(pBuffer, pwsStr, cLen))
 	{
 		return Status_ConversionFailed;
 	}
@@ -203,7 +208,26 @@ static inline StatusCode PrintOutput<WString *>(WString *pwsStr, const Char *pBu
 }
 
 template <>
-static inline StatusCode PrintOutput<Slice *>(Slice *pSlice, const Char *pBuffer, Size cLen)
+inline StatusCode PrintOutput<std::string *>(std::string *psStr, const Char *pBuffer, Size cLen)
+{
+	psStr->append(pBuffer, cLen);
+
+	return Status_OK;
+}
+
+template <>
+inline StatusCode PrintOutput<std::wstring *>(std::wstring *pwsStr, const Char *pBuffer, Size cLen)
+{
+	if (!Detail::DetailPrint::UTF8toWCharx(pBuffer, pwsStr, cLen))
+	{
+		return Status_ConversionFailed;
+	}
+
+	return Status_OK;
+}
+
+template <>
+inline StatusCode PrintOutput<Slice *>(Slice *pSlice, const Char *pBuffer, Size cLen)
 {
 	if (pSlice->cbSize + 1 < cLen)
 	{
@@ -216,7 +240,7 @@ static inline StatusCode PrintOutput<Slice *>(Slice *pSlice, const Char *pBuffer
 }
 
 template <>
-static inline StatusCode PrintOutput<Slice &>(Slice &slice, const Char *pBuffer, Size cLen)
+inline StatusCode PrintOutput<Slice &>(Slice &slice, const Char *pBuffer, Size cLen)
 {
 	if (slice.cbSize + 1 < cLen)
 	{
@@ -329,10 +353,10 @@ static inline Size UInt64ToString(UInt64 nValue, Char *szDst, Size cPreCalcLen =
 }//namespace Detail
 
 template <typename T>
-static inline StatusCode ToString(T p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision);
+inline StatusCode ToString(T p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, Size cPrecision);
 
 template <>
-static inline StatusCode ToString<EmptyType>(EmptyType p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<EmptyType>(EmptyType p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                              Size cPrecision)
 {
 	p;
@@ -346,7 +370,7 @@ static inline StatusCode ToString<EmptyType>(EmptyType p, unsigned int nExtraFla
 }
 
 template <>
-static inline StatusCode ToString<Char>(Char p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Char>(Char p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
 	nExtraFlags;
@@ -364,7 +388,7 @@ static inline StatusCode ToString<Char>(Char p, unsigned int nExtraFlags, Char *
 }
 
 template <>
-static inline StatusCode ToString<Bool>(Bool p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Bool>(Bool p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
 	nExtraFlags;
@@ -397,7 +421,7 @@ static inline StatusCode ToString<Bool>(Bool p, unsigned int nExtraFlags, Char *
 }
 
 template <>
-static inline StatusCode ToString<Int8>(Int8 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Int8>(Int8 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
 	cPrecision;
@@ -437,7 +461,7 @@ static inline StatusCode ToString<Int8>(Int8 p, unsigned int nExtraFlags, Char *
 }
 
 template <>
-static inline StatusCode ToString<UInt8>(UInt8 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<UInt8>(UInt8 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
 	cPrecision;
@@ -462,7 +486,7 @@ static inline StatusCode ToString<UInt8>(UInt8 p, unsigned int nExtraFlags, Char
 }
 
 template <>
-static inline StatusCode ToString<Int16>(Int16 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Int16>(Int16 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
 	cPrecision;
@@ -502,7 +526,7 @@ static inline StatusCode ToString<Int16>(Int16 p, unsigned int nExtraFlags, Char
 }
 
 template <>
-static inline StatusCode ToString<UInt16>(UInt16 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<UInt16>(UInt16 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
 	cPrecision;
@@ -527,7 +551,7 @@ static inline StatusCode ToString<UInt16>(UInt16 p, unsigned int nExtraFlags, Ch
 }
 
 template <>
-static inline StatusCode ToString<Int32>(Int32 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Int32>(Int32 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
 	cPrecision;
@@ -567,7 +591,7 @@ static inline StatusCode ToString<Int32>(Int32 p, unsigned int nExtraFlags, Char
 }
 
 template <>
-static inline StatusCode ToString<UInt32>(UInt32 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<UInt32>(UInt32 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
 	cPrecision;
@@ -592,7 +616,7 @@ static inline StatusCode ToString<UInt32>(UInt32 p, unsigned int nExtraFlags, Ch
 }
 
 template <>
-static inline StatusCode ToString<Int64>(Int64 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Int64>(Int64 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
 	cPrecision;
@@ -632,7 +656,7 @@ static inline StatusCode ToString<Int64>(Int64 p, unsigned int nExtraFlags, Char
 }
 
 template <>
-static inline StatusCode ToString<UInt64>(UInt64 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<UInt64>(UInt64 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
 	cPrecision;
@@ -657,7 +681,7 @@ static inline StatusCode ToString<UInt64>(UInt64 p, unsigned int nExtraFlags, Ch
 }
 
 template <>
-static inline StatusCode ToString<Float>(Float p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Float>(Float p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
 	nExtraFlags;
@@ -683,7 +707,7 @@ static inline StatusCode ToString<Float>(Float p, unsigned int nExtraFlags, Char
 }
 
 template <>
-static inline StatusCode ToString<Double>(Double p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Double>(Double p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
 	nExtraFlags;
@@ -708,8 +732,10 @@ static inline StatusCode ToString<Double>(Double p, unsigned int nExtraFlags, Ch
 	}
 }
 
+#ifdef CX_OS_WINDOWS
+
 template <>
-static inline StatusCode ToString<long>(long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<long>(long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
 	cPrecision;
@@ -749,7 +775,7 @@ static inline StatusCode ToString<long>(long p, unsigned int nExtraFlags, Char *
 }
 
 template <>
-static inline StatusCode ToString<unsigned long>(unsigned long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<unsigned long>(unsigned long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                  Size *pcFinalLen, Size cPrecision)
 {
 	cPrecision;
@@ -773,8 +799,10 @@ static inline StatusCode ToString<unsigned long>(unsigned long p, unsigned int n
 	}
 }
 
+#endif
+
 template <>
-static inline StatusCode ToString<const Char *>(const Char *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<const Char *>(const Char *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                 Size *pcFinalLen, Size cPrecision)
 {
 	nExtraFlags;
@@ -791,14 +819,14 @@ static inline StatusCode ToString<const Char *>(const Char *p, unsigned int nExt
 }
 
 template <>
-static inline StatusCode ToString<Char *>(Char *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<Char *>(Char *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
 	return ToString<const Char *>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<const String &>(const String &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<const String &>(const String &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                   Size *pcFinalLen, Size cPrecision)
 {
 	nExtraFlags;
@@ -815,28 +843,28 @@ static inline StatusCode ToString<const String &>(const String &p, unsigned int 
 }
 
 template <>
-static inline StatusCode ToString<String &>(String &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<String &>(String &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                             Size cPrecision)
 {
 	return ToString<const String &>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<String>(String p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<String>(String p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
 	return ToString<const String &>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<const WChar *>(const WChar *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<const WChar *>(const WChar *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                  Size *pcFinalLen, Size cPrecision)
 {
 	String sTmp;
 
 	cPrecision;
 
-	if (!Detail::DetailPrint::UTF16toUTF8(p, &sTmp))
+	if (!Detail::DetailPrint::WChartoUTF8(p, &sTmp))
 	{
 		return Status_ConversionFailed;
 	}
@@ -845,14 +873,14 @@ static inline StatusCode ToString<const WChar *>(const WChar *p, unsigned int nE
 }
 
 template <>
-static inline StatusCode ToString<WChar *>(WChar *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<WChar *>(WChar *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                            Size cPrecision)
 {
 	String sTmp;
 
 	cPrecision;
 
-	if (!Detail::DetailPrint::UTF16toUTF8(p, &sTmp))
+	if (!Detail::DetailPrint::WChartoUTF8(p, &sTmp))
 	{
 		return Status_ConversionFailed;
 	}
@@ -862,14 +890,14 @@ static inline StatusCode ToString<WChar *>(WChar *p, unsigned int nExtraFlags, C
 }
 
 template <>
-static inline StatusCode ToString<const WString &>(const WString &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<const WString &>(const WString &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                    Size *pcFinalLen, Size cPrecision)
 {
 	String sTmp;
 
 	cPrecision;
 
-	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
 		return Status_ConversionFailed;
 	}
@@ -878,14 +906,14 @@ static inline StatusCode ToString<const WString &>(const WString &p, unsigned in
 }
 
 template <>
-static inline StatusCode ToString<WString &>(WString &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<WString &>(WString &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                              Size cPrecision)
 {
 	String sTmp;
 
 	cPrecision;
 
-	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
 		return Status_ConversionFailed;
 	}
@@ -895,14 +923,14 @@ static inline StatusCode ToString<WString &>(WString &p, unsigned int nExtraFlag
 }
 
 template <>
-static inline StatusCode ToString<WString>(WString p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+inline StatusCode ToString<WString>(WString p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                            Size cPrecision)
 {
 	String sTmp;
 
 	cPrecision;
 
-	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
 		return Status_ConversionFailed;
 	}
@@ -911,7 +939,7 @@ static inline StatusCode ToString<WString>(WString p, unsigned int nExtraFlags, 
 }
 
 template <>
-static inline StatusCode ToString<const std::string &>(const std::string &p, unsigned int nExtraFlags, Char *szOutput, 
+inline StatusCode ToString<const std::string &>(const std::string &p, unsigned int nExtraFlags, Char *szOutput, 
                                                        Size cLen, Size *pcFinalLen, Size cPrecision)
 {
 	cPrecision;
@@ -928,28 +956,28 @@ static inline StatusCode ToString<const std::string &>(const std::string &p, uns
 }
 
 template <>
-static inline StatusCode ToString<std::string &>(std::string &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<std::string &>(std::string &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                  Size *pcFinalLen, Size cPrecision)
 {
 	return ToString<const std::string &>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<std::string>(std::string p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<std::string>(std::string p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                Size *pcFinalLen, Size cPrecision)
 {
 	return ToString<const std::string &>(p, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
 template <>
-static inline StatusCode ToString<const std::wstring &>(const std::wstring &p, unsigned int nExtraFlags, Char *szOutput, 
+inline StatusCode ToString<const std::wstring &>(const std::wstring &p, unsigned int nExtraFlags, Char *szOutput, 
                                                         Size cLen, Size *pcFinalLen, Size cPrecision)
 {
 	String sTmp;
 
 	cPrecision;
 
-	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
 		return Status_ConversionFailed;
 	}
@@ -958,14 +986,14 @@ static inline StatusCode ToString<const std::wstring &>(const std::wstring &p, u
 }
 
 template <>
-static inline StatusCode ToString<std::wstring &>(std::wstring &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<std::wstring &>(std::wstring &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                   Size *pcFinalLen, Size cPrecision)
 {
 	String sTmp;
 
 	cPrecision;
 
-	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
 		return Status_ConversionFailed;
 	}
@@ -975,14 +1003,14 @@ static inline StatusCode ToString<std::wstring &>(std::wstring &p, unsigned int 
 }
 
 template <>
-static inline StatusCode ToString<std::wstring>(std::wstring p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<std::wstring>(std::wstring p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                 Size *pcFinalLen, Size cPrecision)
 {
 	String sTmp;
 
 	cPrecision;
 
-	if (!Detail::DetailPrint::UTF16toUTF8(p.c_str(), &sTmp))
+	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
 		return Status_ConversionFailed;
 	}
@@ -991,7 +1019,7 @@ static inline StatusCode ToString<std::wstring>(std::wstring p, unsigned int nEx
 }
 
 template <>
-static inline StatusCode ToString<void *>(void *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
+inline StatusCode ToString<void *>(void *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                           Size *pcFinalLen, Size cPrecision)
 {
 	cPrecision;
@@ -1204,7 +1232,7 @@ public:
 
 	static inline StatusCode PrintArg(O o, Char *p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
 	{
-		return ArgPrinter<O, const Char *>::PrintArg<o, const Char *>(o, p, pFlags, pBuf, cBufLen, pBuffer);
+		return ArgPrinter<O, const Char *>::PrintArg(o, p, pFlags, pBuf, cBufLen, pBuffer);
 	}
 
 };
@@ -1307,7 +1335,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<typename O, const String> : public IObject
+class ArgPrinter<O, const String> : public IObject
 {
 public:
 
@@ -1331,7 +1359,7 @@ public:
 };
 
 template <typename O, typename T>
-static inline StatusCode PrintArgHelper(O o, T p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
+inline StatusCode PrintArgHelper(O o, T p, Flags *pFlags, Char *pBuf, Size cBufLen, Buffer *pBuffer)
 {
 	return ArgPrinter<O, T>::PrintArg(o, p, pFlags, pBuf, cBufLen, pBuffer);
 }
@@ -1347,7 +1375,7 @@ template <Size ARGC, typename O,
           typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, 
           typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, 
           typename T13, typename T14, typename T15,	typename T16>
-static inline StatusCode Print(O o, const Char *szFormat, 
+inline StatusCode Print(O o, const Char *szFormat, 
                                T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8, T9 p9, 
                                T10 p10, T11 p11, T12 p12, T13 p13, T14 p14, T15 p15, T16 p16)
 {

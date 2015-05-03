@@ -74,24 +74,80 @@ RCMemBuffer::RCMemBuffer(const void *pMem, Size cbSize, bool bStatic/* = false*/
 	}
 }
 
-RCMemBuffer::RCMemBuffer(const Char *szStr, bool bStatic/* = false*/) 
- : RCMemBuffer(szStr, cx_strlen(szStr) * sizeof(Char), bStatic)
+RCMemBuffer::RCMemBuffer(const Char *szStr, bool bStatic/* = false*/)
 {
+	const void   *pMem  = szStr;
+	Size         cbSize = cx_strlen(szStr) * sizeof(Char);
+
+	m_bStatic = bStatic;
+	if (m_bStatic)
+	{
+		m_pMem = (void *)pMem;
+		m_cbSize = cbSize;
+	}
+	else
+	{
+		m_pMem = RCMemBufferMgr::Get().Alloc(cbSize);
+		m_cbSize = cbSize;
+		memcpy(m_pMem, pMem, cbSize);
+	}
 }
 
 RCMemBuffer::RCMemBuffer(const WChar *wszStr, bool bStatic/* = false*/) 
- : RCMemBuffer(wszStr, cxw_strlen(wszStr) * sizeof(WChar), bStatic)
 {
+	const void   *pMem  = wszStr;
+	Size         cbSize = cxw_strlen(wszStr) * sizeof(WChar);
+
+	m_bStatic = bStatic;
+	if (m_bStatic)
+	{
+		m_pMem = (void *)pMem;
+		m_cbSize = cbSize;
+	}
+	else
+	{
+		m_pMem = RCMemBufferMgr::Get().Alloc(cbSize);
+		m_cbSize = cbSize;
+		memcpy(m_pMem, pMem, cbSize);
+	}
 }
 
 RCMemBuffer::RCMemBuffer(const String &sStr, bool bStatic/* = false*/) 
- : RCMemBuffer(sStr.c_str(), sStr.size() * sizeof(Char), bStatic)
 {
+	const void   *pMem  = sStr.c_str();
+	Size         cbSize = sStr.size() * sizeof(Char);
+
+	m_bStatic = bStatic;
+	if (m_bStatic)
+	{
+		m_pMem = (void *)pMem;
+		m_cbSize = cbSize;
+	}
+	else
+	{
+		m_pMem = RCMemBufferMgr::Get().Alloc(cbSize);
+		m_cbSize = cbSize;
+		memcpy(m_pMem, pMem, cbSize);
+	}
 }
 
-RCMemBuffer::RCMemBuffer(const WString &wsStr, bool bStatic/* = false*/) 
- : RCMemBuffer(wsStr.c_str(), wsStr.size() * sizeof(WChar), bStatic)
+RCMemBuffer::RCMemBuffer(const WString &wsStr, bool bStatic/* = false*/)
 {
+	const void   *pMem  = wsStr.c_str();
+	Size         cbSize = wsStr.size() * sizeof(WChar);
+
+	m_bStatic = bStatic;
+	if (m_bStatic)
+	{
+		m_pMem = (void *)pMem;
+		m_cbSize = cbSize;
+	}
+	else
+	{
+		m_pMem = RCMemBufferMgr::Get().Alloc(cbSize);
+		m_cbSize = cbSize;
+		memcpy(m_pMem, pMem, cbSize);
+	}
 }
 
 RCMemBuffer::~RCMemBuffer()

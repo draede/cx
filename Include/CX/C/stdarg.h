@@ -33,7 +33,9 @@
 
 
 #if defined(CX_OS_WINDOWS)
-   #include "CX/C/Platform/Windows/stdarg.h"
-#else	
+	#include "CX/C/Platform/Windows/stdarg.h"
+#elif defined(CX_OS_POSIX)
+	#include "CX/C/Platform/Posix/stdarg.h"
+#else
 	#error "stdarg.h not implemented on this platform"
 #endif

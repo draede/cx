@@ -29,48 +29,13 @@
 #pragma once
 
 
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/C/stdio.h"
-#include "CX/String.hpp"
-#include "CX/APIDefs.hpp"
+#include "CX/Platform.hpp"
 
 
-namespace CX
-{
-
-namespace IO
-{
-
-class CX_API FileOutputStream : public IOutputStream
-{
-public:
-
-	FileOutputStream(const Char *szPath);
-
-	FileOutputStream(const WChar *wszPath);
-
-	~FileOutputStream();
-
-	virtual Status Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize);
-
-	virtual Status GetSize(UInt64 *pcbSize) const;
-
-	virtual Bool IsOK() const;
-
-	virtual const Char *GetPath() const;
-
-private:
-
-	FILE     *m_pFile;
-
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	String   m_sPath;
-#pragma warning(pop)
-
-};
-
-}//namespace IO
-
-}//namespace CX
-
+#if defined(CX_OS_WINDOWS)
+	#include "CX/IO/Platform/Windows/FileOutputStream.hpp"
+#elif defined(CX_OS_POSIX)
+	#include "CX/IO/Platform/Posix/FileOutputStream.hpp"
+#else
+	#error "FileOutputStream.h not implemented on this platform"
+#endif

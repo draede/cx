@@ -65,7 +65,7 @@ Status DynLib::Load(const Char *szPath)
 	WString wsPath;
 	Status  status;
 
-	status = Str::UTF8::ToUTF16(szPath, &wsPath);
+	status = Str::UTF8::ToWChar(szPath, &wsPath);
 	if (status.IsNOK())
 	{
 		return status;
@@ -84,6 +84,7 @@ Status DynLib::Unload()
 	if (NULL != m_hHandle)
 	{
 		FreeLibrary(m_hHandle);
+		m_hHandle = NULL;
 	}
 	
 	return Status();

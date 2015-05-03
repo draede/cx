@@ -34,7 +34,9 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/IO/Platform/Windows/LocalFileSysHelper.hpp"
-#else	
+#elif defined(CX_OS_POSIX)
+	#include "CX/IO/Platform/Posix/LocalFileSysHelper.hpp"
+#else
 	#error "LocalFileSysHelper.h not implemented on this platform"
 #endif
 

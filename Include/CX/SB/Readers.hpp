@@ -42,79 +42,79 @@ namespace CX
 namespace SB
 {
 
-template <typename T> static inline Status Read(T &p, IDataReader *pDataReader);
+template <typename T> inline Status Read(T &p, IDataReader *pDataReader);
 
-template <> static inline Status Read<Bool>(Bool &p, IDataReader *pDataReader)
+template <> inline Status Read<Bool>(Bool &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadBool(&p);
 }
 
-template <> static inline Status Read<BoolForVector>(BoolForVector &p, IDataReader *pDataReader)
+template <> inline Status Read<BoolForVector>(BoolForVector &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadBool(&p);
 }
 
-template <> static inline Status Read<Int8>(Int8 &p, IDataReader *pDataReader)
+template <> inline Status Read<Int8>(Int8 &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadInt8(&p);
 }
 
-template <> static inline Status Read<UInt8>(UInt8 &p, IDataReader *pDataReader)
+template <> inline Status Read<UInt8>(UInt8 &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadUInt8(&p);
 }
 
-template <> static inline Status Read<Int16>(Int16 &p, IDataReader *pDataReader)
+template <> inline Status Read<Int16>(Int16 &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadInt16(&p);
 }
 
-template <> static inline Status Read<UInt16>(UInt16 &p, IDataReader *pDataReader)
+template <> inline Status Read<UInt16>(UInt16 &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadUInt16(&p);
 }
 
-template <> static inline Status Read<Int32>(Int32 &p, IDataReader *pDataReader)
+template <> inline Status Read<Int32>(Int32 &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadInt32(&p);
 }
 
-template <> static inline Status Read<UInt32>(UInt32 &p, IDataReader *pDataReader)
+template <> inline Status Read<UInt32>(UInt32 &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadUInt32(&p);
 }
 
-template <> static inline Status Read<Int64>(Int64 &p, IDataReader *pDataReader)
+template <> inline Status Read<Int64>(Int64 &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadInt64(&p);
 }
 
-template <> static inline Status Read<UInt64>(UInt64 &p, IDataReader *pDataReader)
+template <> inline Status Read<UInt64>(UInt64 &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadUInt64(&p);
 }
 
-template <> static inline Status Read<Float>(Float &p, IDataReader *pDataReader)
+template <> inline Status Read<Float>(Float &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadFloat(&p);
 }
 
-template <> static inline Status Read<Double>(Double &p, IDataReader *pDataReader)
+template <> inline Status Read<Double>(Double &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadDouble(&p);
 }
 
-template <> static inline Status Read<String>(String &p, IDataReader *pDataReader)
+template <> inline Status Read<String>(String &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadString(&p);
 }
 
-template <> static inline Status Read<WString>(WString &p, IDataReader *pDataReader)
+template <> inline Status Read<WString>(WString &p, IDataReader *pDataReader)
 {
 	return pDataReader->ReadWString(&p);
 }
 
-template <typename T, typename A = STLAlloc<T> > static inline Status Read(std::vector<T, A> &p, IDataReader *pDataReader)
+template <typename T> inline Status Read(std::vector<T, STLAlloc<T> > &p, IDataReader *pDataReader)
 {
 	Size   cCount;
 	Status status;
@@ -142,8 +142,8 @@ template <typename T, typename A = STLAlloc<T> > static inline Status Read(std::
 }
 
 
-template <typename K, typename C = Less<K>, typename A = STLAlloc<K> > 
-static inline Status Read(std::set<K, C, A> &p, IDataReader *pDataReader)
+template <typename K> 
+inline Status Read(std::set<K, Less<K>, STLAlloc<K> > &p, IDataReader *pDataReader)
 {
 	Size   cCount;
 	Status status;
@@ -170,8 +170,8 @@ static inline Status Read(std::set<K, C, A> &p, IDataReader *pDataReader)
 	return Status();
 }
 
-template <typename K, typename V, typename C = Less<K>, typename A = STLAlloc<std::pair<const K, V> > > 
-static inline Status Read(std::map<K, V, C, A> &p, IDataReader *pDataReader)
+template <typename K, typename V> 
+inline Status Read(std::map<K, V, Less<K>, STLAlloc<std::pair<const K, V> > > &p, IDataReader *pDataReader)
 {
 	Size   cCount;
 	Size   cCount2;
@@ -224,8 +224,8 @@ static inline Status Read(std::map<K, V, C, A> &p, IDataReader *pDataReader)
 	return Status();
 }
 
-template <typename K, typename H = Hasher<K>, typename E = Comparator<K>, typename A = SparseHashAllocator<K> > 
-static inline Status Read(google::sparse_hash_set<K, H, E, A> &p, IDataReader *pDataReader)
+template <typename K> 
+inline Status Read(google::sparse_hash_set<K, Hasher<K>, Comparator<K>, SparseHashAllocator<K> > &p, IDataReader *pDataReader)
 {
 	Size   cCount;
 	Status status;
@@ -252,9 +252,9 @@ static inline Status Read(google::sparse_hash_set<K, H, E, A> &p, IDataReader *p
 	return Status();
 }
 
-template <typename K, typename V, typename H = Hasher<K>, typename E = Comparator<K>, 
-          typename A = SparseHashAllocator<std::pair<const K, V> > > 
-static inline Status Read(google::sparse_hash_map<K, V, H, E, A> &p, IDataReader *pDataReader)
+template <typename K, typename V> 
+inline Status Read(google::sparse_hash_map<K, V, Hasher<K>, Comparator<K>, SparseHashAllocator<std::pair<const K, V> > > &p, 
+                   IDataReader *pDataReader)
 {
 	Size   cCount;
 	Size   cCount2;

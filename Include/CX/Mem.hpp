@@ -31,6 +31,7 @@
 
 #include "CX/Types.hpp"
 #include "CX/IObject.hpp"
+#include <string>
 #include <map>
 #include <vector>
 #include "CX/Platform.hpp"
@@ -91,106 +92,7 @@ public:
 
 	static void GetCurrentAllocs(AllocsVector &vectorAllocs);
 
-	template <typename OUTPUT>
-	static void PrintAllocs(OUTPUT out, const AllocsVector &vectorAllocs)
-	{
-		if (vectorAllocs.empty())
-		{
-			Print(out, "No allocations found!\n");
-			return;
-		}
-		for (AllocsVector::const_iterator iter = vectorAllocs.begin(); iter != vectorAllocs.end(); ++iter)
-		{
-			static const Char hexdigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-
-			if (vectorAllocs.begin() != iter)
-			{
-				Print(out, "\n");
-			}
-#ifdef CX_64BIT_ARCH
-			CX::Print(out, "Detected {1} bytes at 0x{2:'0'16}\n", iter->cbSize, (void *)iter->pMem);
-#else
-			CX::Print(out, "Detected {1} bytes at 0x{2:'0'8}\n", iter->cbSize, (void *)iter->pMem);
-#endif
-
-			String     sContent;
-			Size       cIndex = 0;
-			const Byte *pPos  = (const Byte *)iter->pMem;
-
-			while (cIndex < iter->cbSize)
-			{
-				if (!sContent.empty())
-				{
-					sContent += "\n";
-				}
-
-				sContent += "[";
-
-				for (Size i = 0; i < 16; i++)
-				{
-					if (cIndex + i < iter->cbSize)
-					{
-						if (32 > *(pPos + i) || 127 < *(pPos + i))
-						{
-							sContent += ".";
-						}
-						else
-						{
-							sContent += *(pPos + i);
-						}
-					}
-					else
-					{
-						sContent += " ";
-					}
-				}
-
-				sContent += "] [";
-
-				for (Size i = 0; i < 16; i++)
-				{
-					if (cIndex + i < iter->cbSize)
-					{
-						if (0 < i)
-						{
-							sContent += " ";
-						}
-						sContent += hexdigits[(*(pPos + i)) / 16];
-						sContent += hexdigits[(*(pPos + i)) % 16];
-					}
-					else
-					{
-						if (0 < i)
-						{
-							sContent += " ";
-						}
-						sContent += "  ";
-					}
-				}
-
-				sContent += "]";
-
-				cIndex += 16;
-				pPos += 16;
-			}
-
-			Print(out, "{1}\n", sContent);
-
-			Size cCount = iter->vectorCalls.size();
-
-			if (0 == cCount)
-			{
-				Print(out, "<no stack trace available>\n");
-
-				return;
-			}
-			for (Size i = 0; i < cCount; i++)
-			{
-				Print(out, "[{1}]: {2} - {3}:{4}\n", cCount - i - 1, 
-				      iter->vectorCalls[i].sFunction, iter->vectorCalls[i].sFile, iter->vectorCalls[i].cLine);
-			}
-		}
-	}
+	static void PrintAllocs(std::string &sOut, const AllocsVector &vectorAllocs);
 
 private:
 

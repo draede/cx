@@ -826,10 +826,7 @@ class dense_hashtable {
     const size_type bucket_count_minus_one = bucket_count() - 1;
     size_type bucknum = hash(key) & bucket_count_minus_one;
     size_type insert_pos = ILLEGAL_BUCKET; // where we would insert
-#pragma warning(push)
-#pragma warning(disable: 4127)
     while ( 1 ) {                          // probe until something happens
-#pragma warning(pop)
       if ( test_empty(bucknum) ) {         // bucket is empty
         if ( insert_pos == ILLEGAL_BUCKET )   // found no prior place to insert
           return std::pair<size_type,size_type>(ILLEGAL_BUCKET, bucknum);

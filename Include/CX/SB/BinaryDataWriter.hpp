@@ -140,109 +140,112 @@ private:
 	void WriteState(Byte nState);
 
 	template <typename T>
-	Status Write(T p)
-	{
-		Size   cbAckSize;
-		Status status;
-
-		if (NULL == m_pOutputStream || !m_pOutputStream->IsOK())
-		{
-			return Status(Status_NotInitialized, "Invalid output stream");
-		}
-		if ((status = m_pOutputStream->Write(&p, sizeof(p), &cbAckSize)).IsNOK())
-		{
-			return status;
-		}
-		if (sizeof(p) != cbAckSize)
-		{
-			return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(p));
-		}
-		m_chksum.Update(&p, sizeof(p));
-
-		return Status();
-	}
-
-	template <>
-	Status Write<const Char *>(const Char *p)
-	{
-		Size   cLen;
-		UInt32 cLenTmp;
-		Size   cbAckSize;
-		Status status;
-
-		if (NULL == m_pOutputStream || !m_pOutputStream->IsOK())
-		{
-			return Status(Status_NotInitialized, "Invalid output stream");
-		}
-		cLen = cx_strlen(p);
-		if (BinaryData::MAX_STRING_LEN < cLen)
-		{
-			return Status(Status_TooBig, "String too big (max len is {1})", BinaryData::MAX_STRING_LEN);
-		}
-		cLenTmp = (UInt32)cLen;
-		if ((status = m_pOutputStream->Write(&cLenTmp, sizeof(cLenTmp), &cbAckSize)).IsNOK())
-		{
-			return status;
-		}
-		if (sizeof(cLenTmp) != cbAckSize)
-		{
-			return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(cLenTmp));
-		}
-		m_chksum.Update(&cLenTmp, sizeof(cLenTmp));
-		if ((status = m_pOutputStream->Write(p, sizeof(Char) * cLen, &cbAckSize)).IsNOK())
-		{
-			return status;
-		}
-		if (sizeof(Char) * cLen != cbAckSize)
-		{
-			return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(Char) * cLen);
-		}
-		m_chksum.Update(p, sizeof(Char) * cLen);
-
-		return Status();
-	}
-
-	template <>
-	Status Write<const WChar *>(const WChar *p)
-	{
-		Size   cLen;
-		UInt32 cLenTmp;
-		Size   cbAckSize;
-		Status status;
-
-		if (NULL == m_pOutputStream || !m_pOutputStream->IsOK())
-		{
-			return Status(Status_NotInitialized, "Invalid output stream");
-		}
-		cLen = cxw_strlen(p);
-		if (BinaryData::MAX_STRING_LEN < cLen)
-		{
-			return Status(Status_TooBig, "String too big (max len is {1})", BinaryData::MAX_STRING_LEN);
-		}
-		cLenTmp = (UInt32)cLen;
-		if ((status = m_pOutputStream->Write(&cLenTmp, sizeof(cLenTmp), &cbAckSize)).IsNOK())
-		{
-			return status;
-		}
-		if (sizeof(cLenTmp) != cbAckSize)
-		{
-			return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(cLenTmp));
-		}
-		m_chksum.Update(&cLenTmp, sizeof(cLenTmp));
-		if ((status = m_pOutputStream->Write(p, sizeof(WChar) * cLen, &cbAckSize)).IsNOK())
-		{
-			return status;
-		}
-		if (sizeof(WChar) * cLen != cbAckSize)
-		{
-			return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(WChar) * cLen);
-		}
-		m_chksum.Update(p, sizeof(WChar) * cLen);
-
-		return Status();
-	}
+	Status Write(T p);
 
 };
+
+template <typename T>
+Status BinaryDataWriter::Write(T p)
+{
+	Size   cbAckSize;
+	Status status;
+
+	if (NULL == m_pOutputStream || !m_pOutputStream->IsOK())
+	{
+		return Status(Status_NotInitialized, "Invalid output stream");
+	}
+	if ((status = m_pOutputStream->Write(&p, sizeof(p), &cbAckSize)).IsNOK())
+	{
+		return status;
+	}
+	if (sizeof(p) != cbAckSize)
+	{
+		return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(p));
+	}
+	m_chksum.Update(&p, sizeof(p));
+
+	return Status();
+}
+
+template <>
+Status BinaryDataWriter::Write<const Char *>(const Char *p)
+{
+	Size   cLen;
+	UInt32 cLenTmp;
+	Size   cbAckSize;
+	Status status;
+
+	if (NULL == m_pOutputStream || !m_pOutputStream->IsOK())
+	{
+		return Status(Status_NotInitialized, "Invalid output stream");
+	}
+	cLen = cx_strlen(p);
+	if (BinaryData::MAX_STRING_LEN < cLen)
+	{
+		return Status(Status_TooBig, "String too big (max len is {1})", BinaryData::MAX_STRING_LEN);
+	}
+	cLenTmp = (UInt32)cLen;
+	if ((status = m_pOutputStream->Write(&cLenTmp, sizeof(cLenTmp), &cbAckSize)).IsNOK())
+	{
+		return status;
+	}
+	if (sizeof(cLenTmp) != cbAckSize)
+	{
+		return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(cLenTmp));
+	}
+	m_chksum.Update(&cLenTmp, sizeof(cLenTmp));
+	if ((status = m_pOutputStream->Write(p, sizeof(Char) * cLen, &cbAckSize)).IsNOK())
+	{
+		return status;
+	}
+	if (sizeof(Char) * cLen != cbAckSize)
+	{
+		return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(Char) * cLen);
+	}
+	m_chksum.Update(p, sizeof(Char) * cLen);
+
+	return Status();
+}
+
+template <>
+Status BinaryDataWriter::Write<const WChar *>(const WChar *p)
+{
+	Size   cLen;
+	UInt32 cLenTmp;
+	Size   cbAckSize;
+	Status status;
+
+	if (NULL == m_pOutputStream || !m_pOutputStream->IsOK())
+	{
+		return Status(Status_NotInitialized, "Invalid output stream");
+	}
+	cLen = cxw_strlen(p);
+	if (BinaryData::MAX_STRING_LEN < cLen)
+	{
+		return Status(Status_TooBig, "String too big (max len is {1})", BinaryData::MAX_STRING_LEN);
+	}
+	cLenTmp = (UInt32)cLen;
+	if ((status = m_pOutputStream->Write(&cLenTmp, sizeof(cLenTmp), &cbAckSize)).IsNOK())
+	{
+		return status;
+	}
+	if (sizeof(cLenTmp) != cbAckSize)
+	{
+		return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(cLenTmp));
+	}
+	m_chksum.Update(&cLenTmp, sizeof(cLenTmp));
+	if ((status = m_pOutputStream->Write(p, sizeof(WChar) * cLen, &cbAckSize)).IsNOK())
+	{
+		return status;
+	}
+	if (sizeof(WChar) * cLen != cbAckSize)
+	{
+		return Status(Status_WriteFailed, "Failed to write {1} bytes", sizeof(WChar) * cLen);
+	}
+	m_chksum.Update(p, sizeof(WChar) * cLen);
+
+	return Status();
+}
 
 }//namespace SB
 

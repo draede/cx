@@ -52,28 +52,28 @@ UTF8::~UTF8()
 {
 }
 
-Status UTF8::ToUTF16(const Char *szUTF8, Size cUTF8Len, WChar *wszUTF16, Size *pcUTF16Len)
+Status UTF8::ToWChar(const Char *szUTF8, Size cUTF8Len, WChar *wszWChar, Size *pcWCharLen)
 {
 	int cSize;
 
 	if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8,
 	                                        TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
 	{
-		if (NULL == wszUTF16)
+		if (NULL == wszWChar)
 		{
-			*pcUTF16Len = (Size)(cSize + 1);
+			*pcWCharLen = (Size)(cSize + 1);
 
 			return Status();
 		}
-		if (*pcUTF16Len < (Size)cSize + 1)
+		if (*pcWCharLen < (Size)cSize + 1)
 		{
 			return Status(Status_TooSmall, "Output buffer too small");
 		}
 		if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8,
-		                                       TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, wszUTF16, 
+		                                       TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, wszWChar, 
 		                                       cSize + 1)))
 		{
-			wszUTF16[cSize] = 0;
+			wszWChar[cSize] = 0;
 
 			return Status();
 		}
@@ -90,12 +90,12 @@ Status UTF8::ToUTF16(const Char *szUTF8, Size cUTF8Len, WChar *wszUTF16, Size *p
 	}
 }
 
-Status UTF8::FromUTF16(const WChar *wszUTF16, Size cUTF16Len, Char *szUTF8, Size *pcUTF8Len)
+Status UTF8::FromWChar(const WChar *wszWChar, Size cWCharLen, Char *szUTF8, Size *pcUTF8Len)
 {
 	int cSize;
 
-	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-		                                    TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
+	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, 
+		                                    TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, NULL, 0, 
 		                                    NULL, NULL)))
 	{
 		if (NULL == szUTF8)
@@ -108,8 +108,8 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, Size cUTF16Len, Char *szUTF8, Size
 		{
 			return Status(Status_TooSmall, "Output buffer too small");
 		}
-		if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-		                                       TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, szUTF8, 
+		if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, 
+		                                       TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, szUTF8, 
 			                                    cSize, NULL, NULL)))
 		{
 			szUTF8[cSize] = 0;
@@ -129,7 +129,7 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, Size cUTF16Len, Char *szUTF8, Size
 	}
 }
 
-Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = TYPE_SIZE_MAX*/)
+Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = TYPE_SIZE_MAX*/)
 {
 	int   cSize;
 	WChar *pOut = NULL;
@@ -161,7 +161,7 @@ Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = TYP
 			return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", 
 			              GetLastError());
 		}
-		psUTF16->assign(pOut, cSize);
+		psWChar->assign(pOut, cSize);
 		if (pOut != pOut)
 		{
 			delete [] pOut;
@@ -176,15 +176,15 @@ Status UTF8::ToUTF16(const Char *szUTF8, WString *psUTF16, Size cUTF8Len/* = TYP
 	return Status();
 }
 
-Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* = TYPE_SIZE_MAX*/)
+Status UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* = TYPE_SIZE_MAX*/)
 {
 	int cSize;
 
 	Char *pOut = NULL;
 	Char out[8000];
 
-	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-		                                    TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
+	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, 
+		                                    TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, NULL, 0, 
 		                                    NULL, NULL)))
 	{
 		if (cSize > 8000)
@@ -199,8 +199,8 @@ Status UTF8::FromUTF16(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* =
 		{
 			pOut = out;
 		}
-		if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, 
-		                                        TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, pOut, 
+		if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, 
+		                                        TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, pOut, 
 			                                     cSize, NULL, NULL)))
 		{
 			if (pOut != out)

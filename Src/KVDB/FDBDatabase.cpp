@@ -140,7 +140,7 @@ Status FDBDatabase::OpenTable(ITable **ppTable, const ITableConfig &config, cons
 	{
 		cfg.create_if_missing = conf.m_bCreateIfMissing;
 	}
-	if (NULL != conf.m_bCreateIfMissing)
+	if (NULL != conf.m_pfnKeyComparator)
 	{
 		cfg.custom_cmp = conf.m_pfnKeyComparator;
 	}

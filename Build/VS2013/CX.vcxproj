@@ -93,7 +93,12 @@
     <ClInclude Include="..\..\Include\CX\C\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Limits.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform.h" />
-    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Alloc.hpp" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\ctype.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdarg.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdio.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdlib.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\string.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\Types.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdarg.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdio.h" />
@@ -139,6 +144,11 @@
     <ClInclude Include="..\..\Include\CX\IO\LocalFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\FileInputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\FileOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\LocalFileSysHelper.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileInputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\KVDB\FDBDatabase.hpp" />
     <ClInclude Include="..\..\Include\CX\KVDB\FDBDatabaseConfig.hpp" />
@@ -166,6 +176,8 @@
     <ClInclude Include="..\..\Include\CX\Log\IOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Level.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Logger.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Posix\SystemOutput.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Map.hpp" />
@@ -210,6 +222,7 @@
     <ClInclude Include="..\..\Include\CX\String.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\HexBinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\IBinStr.hpp" />
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Posix\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Z85BinStr.hpp" />
@@ -218,6 +231,11 @@
     <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\DynLib.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Lock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\DynLib.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Lock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Process.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\RWLock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Thread.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Process.hpp" />
@@ -235,6 +253,9 @@
     <ClInclude Include="..\..\Include\CX\Util\Function.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\IFunction.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\StackTrace.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\Time.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\StackTrace.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.hpp" />
@@ -1612,6 +1633,7 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">CompileAsC</CompileAs>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Posix\DetailPrint_posix.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp" />
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp" />
@@ -1622,11 +1644,14 @@
     <ClCompile Include="..\..\Src\Hash\xxHash32.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash64.cpp" />
     <ClCompile Include="..\..\Src\IObject.cpp" />
-    <ClCompile Include="..\..\Src\IO\FileInputStream.cpp" />
-    <ClCompile Include="..\..\Src\IO\FileOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
     <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Posix\FileInputStream_posix.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Posix\FileOutputStream_posix.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Posix\LocalFileSysHelper_posix.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileInputStream_windows.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp" />
     <ClCompile Include="..\..\Src\KVDB\FDBDatabase.cpp" />
     <ClCompile Include="..\..\Src\KVDB\FDBIterator.cpp" />
@@ -1639,6 +1664,7 @@
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
+    <ClCompile Include="..\..\Src\Log\Platform\Posix\SystemOutput_posix.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Component.cpp" />
@@ -1653,14 +1679,23 @@
     <ClCompile Include="..\..\Src\SB\TextDataWriter.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
     <ClCompile Include="..\..\Src\Str\HexBinStr.cpp" />
-    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp" />
+    <ClCompile Include="..\..\Src\Str\Platform\Posix\UTF8_posix.cpp" />
+    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8_windows.cpp" />
     <ClCompile Include="..\..\Src\Str\Z85BinStr.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\DynLib_posix.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Lock_posix.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Process_posix.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\RWLock_posix.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Thread_posix.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Posix\StackTrace_posix.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Posix\Timer_posix.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Posix\Time_posix.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\StackTrace_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp" />

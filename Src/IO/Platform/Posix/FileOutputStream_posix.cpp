@@ -26,11 +26,17 @@
  * SOFTWARE.
  */ 
 
-#include "CX/IO/FileInputStream.hpp"
+#include "CX/Platform.hpp"
+
+
+#if defined(CX_OS_POSIX)
+
+
+#include "CX/IO/FileOutputStream.hpp"
 #include "CX/Str/UTF8.hpp"
 #include "CX/Status.hpp"
-#include <sys/types.h>
-#include <sys/stat.h>
+#include "CX/C/stdio.h"
+#include <errno.h>
 
 
 namespace CX
@@ -39,108 +45,73 @@ namespace CX
 namespace IO
 {
 
-FileInputStream::FileInputStream(const Char *szPath)
+FileOutputStream::FileOutputStream(const Char *szPath)
 {
-	WString wsPath;
-
-	if (Str::UTF8::ToUTF16(szPath, &wsPath).IsOK())
-	{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-		if (NULL == (m_pFile = cxw_fopen(wsPath.c_str(), CX_WFILE_RFLAGS)))
-#pragma warning(pop)
-		{
-			return;
-		}
-
-		m_sPath = szPath;
-	}
-	else
-	{
-		m_pFile = NULL;
-	}
-}
-
-FileInputStream::FileInputStream(const WChar *wszPath)
-{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-	if (NULL == (m_pFile = cxw_fopen(wszPath, CX_WFILE_RFLAGS)))
+	if (NULL == (m_pFile = cx_fopen(szPath, "wb")))
 #pragma warning(pop)
 	{
 		return;
 	}
 
-	Str::UTF8::FromUTF16(wszPath, &m_sPath);
+	m_sPath = szPath;
 }
 
-FileInputStream::~FileInputStream()
+FileOutputStream::FileOutputStream(const WChar *wszPath)
+{
+	String sPath;
+
+	if (Str::UTF8::FromWChar(wszPath, &sPath).IsOK())
+	{
+#pragma warning(push)
+#pragma warning(disable: 4996)
+		if (NULL == (m_pFile = cx_fopen(sPath.c_str(), "wb")))
+#pragma warning(pop)
+		{
+			return;
+		}
+
+		m_sPath = sPath;
+	}
+	else
+	{
+		m_pFile = NULL;
+	}	
+}
+
+FileOutputStream::~FileOutputStream()
 {
 	if (NULL != m_pFile)
 	{
-		fclose(m_pFile);
+		cx_fclose(m_pFile);
 		m_pFile = NULL;
 	}
 }
 
-Status FileInputStream::Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize)
+Status FileOutputStream::Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize)
 {
 	if (NULL == m_pFile)
 	{
 		return Status(Status_NotInitialized, "File not opened");
 	}
-	*pcbAckSize = fread(pBuffer, 1, cbReqSize, m_pFile);
+	*pcbAckSize = fwrite(pBuffer, 1, cbReqSize, m_pFile);
 	if (ferror(m_pFile))
 	{
-		return Status(Status_ReadFailed, "fread failed with error {1}", errno);
-	}
-	if (0 == *pcbAckSize)
-	{
-		return Status(Status_EOF, "End of stream reached");
+		return Status(Status_WriteFailed, "fread failed with error {1}", errno);
 	}
 
 	return Status();
 }
 
-Status FileInputStream::SetPos(UInt64 cbPos)
-{
-	if (NULL == m_pFile)
-	{
-		return Status(Status_NotInitialized, "File not opened");
-	}
-	if (0 != cx_fseek(m_pFile, cbPos, CX_SEEK_SET))
-	{
-		return Status(Status_SetPos, "fseek failed with error {1}", errno);
-	}
-
-	return Status();
-}
-
-Status FileInputStream::GetPos(UInt64 *pcbPos) const
-{
-	if (NULL == m_pFile)
-	{
-		return Status(Status_NotInitialized, "File not opened");
-	}
-	*pcbPos = cx_ftell(m_pFile);
-	if (ferror(m_pFile))
-	{
-		return Status(Status_GetPos, "ftell failed with error {1}", errno);
-	}
-
-	return Status();
-}
-
-Status FileInputStream::GetSize(UInt64 *pcbSize) const
+Status FileOutputStream::GetSize(UInt64 *pcbSize) const
 {
 	if (NULL == m_pFile)
 	{
 		return Status(Status_NotInitialized, "File not opened");
 	}
 
-	cx_statstruct buf;
+	cx_stat64struct buf;
 
-	if (0 != cx_fstat(cx_fileno(m_pFile), &buf))
+	if (0 != cx_stat64(cx_fileno(m_pFile), &buf))
 	{
 		return Status(Status_GetSize, "fstat failed with error {1}", errno);
 	}
@@ -149,22 +120,12 @@ Status FileInputStream::GetSize(UInt64 *pcbSize) const
 	return Status();
 }
 
-Bool FileInputStream::IsEOF() const
-{
-	if (NULL == m_pFile)
-	{
-		return True;
-	}
-
-	return (0 != feof(m_pFile));
-}
-
-Bool FileInputStream::IsOK() const
+Bool FileOutputStream::IsOK() const
 {
 	return (NULL != m_pFile);
 }
 
-const Char *FileInputStream::GetPath() const
+const Char *FileOutputStream::GetPath() const
 {
 	if (NULL == m_pFile)
 	{
@@ -177,4 +138,7 @@ const Char *FileInputStream::GetPath() const
 }//namespace IO
 
 }//namespace CX
+
+
+#endif
 

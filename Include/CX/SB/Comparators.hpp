@@ -46,6 +46,22 @@ namespace CX
 namespace SB
 {
 
+
+class HasherHelper;
+
+template <typename T> inline Size Hash(const T &p, HasherHelper *pHasher = NULL);
+
+template <typename T>
+struct Hasher
+{
+	
+	size_t operator()(const T &p) const 
+	{
+		return Hash(p);
+	}
+
+};
+
 template <typename T>
 struct Comparator
 {
@@ -64,7 +80,7 @@ struct Less
 	}
 };
 
-template <typename T> static inline int Compare(const T &a, const T &b)
+template <typename T> inline int Compare(const T &a, const T &b)
 {
 	if (a < b)
 	{
@@ -81,7 +97,7 @@ template <typename T> static inline int Compare(const T &a, const T &b)
 	}
 }
 
-template <> static inline int Compare<Float>(const Float &a, const Float &b)
+template <> inline int Compare<Float>(const Float &a, const Float &b)
 {
 	if (a < b)
 	{
@@ -112,7 +128,7 @@ template <> static inline int Compare<Float>(const Float &a, const Float &b)
 	}
 }
 
-template <> static inline int Compare<Double>(const Double &a, const Double &b)
+template <> inline int Compare<Double>(const Double &a, const Double &b)
 {
 	if (a < b)
 	{
@@ -143,22 +159,22 @@ template <> static inline int Compare<Double>(const Double &a, const Double &b)
 	}
 }
 
-template <> static inline int Compare<String>(const String &a, const String &b)
+template <> inline int Compare<String>(const String &a, const String &b)
 {
 	return cx_strcmp(a.c_str(), b.c_str());
 }
 
-template <> static inline int Compare<WString>(const WString &a, const WString &b)
+template <> inline int Compare<WString>(const WString &a, const WString &b)
 {
 	return cxw_strcmp(a.c_str(), b.c_str());
 }
 
-template <typename T, typename A = STLAlloc<T> > 
-static inline int Compare(const std::vector<T, A> &a, const std::vector<T, A> &b)
+template <typename T> 
+inline int Compare(const std::vector<T, STLAlloc<T> > &a, const std::vector<T, STLAlloc<T> > &b)
 {
-	std::vector<T, A>::const_iterator iterA;
-	std::vector<T, A>::const_iterator iterB;
-	int                               nCmp;
+	typename std::vector<T, STLAlloc<T> >::const_iterator   iterA;
+	typename std::vector<T, STLAlloc<T> >::const_iterator   iterB;
+	int                                                     nCmp;
 
 	iterA = a.begin();
 	iterB = b.begin();
@@ -183,12 +199,12 @@ static inline int Compare(const std::vector<T, A> &a, const std::vector<T, A> &b
 	return 0;
 }
 
-template <typename K, typename C = Less<K>, typename A = STLAlloc<K> > 
-static inline int Compare(const std::set<K, C, A> &a, const std::set<K, C, A> &b)
+template <typename K> 
+inline int Compare(const std::set<K, Less<K>, STLAlloc<K> > &a, const std::set<K, Less<K>, STLAlloc<K> > &b)
 {
-	std::set<K, C, A>::const_iterator iterA;
-	std::set<K, C, A>::const_iterator iterB;
-	int                               nCmp;
+	typename std::set<K, Less<K>, STLAlloc<K> >::const_iterator   iterA;
+	typename std::set<K, Less<K>, STLAlloc<K> >::const_iterator   iterB;
+	int                                                           nCmp;
 
 	iterA = a.begin();
 	iterB = b.begin();
@@ -213,12 +229,13 @@ static inline int Compare(const std::set<K, C, A> &a, const std::set<K, C, A> &b
 	return 0;
 }
 
-template <typename K, typename V, typename C = Less<K>, typename A = STLAlloc<std::pair<const K, V> > > 
-static inline int Compare(const std::map<K, V, C, A> &a, const std::map<K, V, C, A> &b)
+template <typename K, typename V> 
+inline int Compare(const std::map<K, V, Less<K>, STLAlloc<std::pair<const K, V> > > &a, const std::map<K, V, Less<K>, 
+                   STLAlloc<std::pair<const K, V> > > &b)
 {
-	std::map<K, V, C, A>::const_iterator iterA;
-	std::map<K, V, C, A>::const_iterator iterB;
-	int                                  nCmp;
+	typename std::map<K, V, Less<K>, STLAlloc<std::pair<const K, V> > >::const_iterator   iterA;
+	typename std::map<K, V, Less<K>, STLAlloc<std::pair<const K, V> > >::const_iterator   iterB;
+	int                                                                                   nCmp;
 
 	iterA = a.begin();
 	iterB = b.begin();
@@ -247,8 +264,9 @@ static inline int Compare(const std::map<K, V, C, A> &a, const std::map<K, V, C,
 	return 0;
 }
 
-template <typename K, typename H = Hasher<K>, typename E = Comparator<K>, typename A = SparseHashAllocator<K> > 
-static inline int Compare(const google::sparse_hash_set<K, H, E, A> &a, const google::sparse_hash_set<K, H, E, A> &b)
+template <typename K> 
+inline int Compare(const google::sparse_hash_set<K, Hasher<K>, Comparator<K>, SparseHashAllocator<K> > &a, 
+                   const google::sparse_hash_set<K, Hasher<K>, Comparator<K>, SparseHashAllocator<K> > &b)
 {
 	if (a.size() < b.size())
 	{
@@ -260,9 +278,11 @@ static inline int Compare(const google::sparse_hash_set<K, H, E, A> &a, const go
 		return 1;
 	}
 
-	for (google::sparse_hash_set<K, H, E, A>::const_iterator iterA = a.begin(); iterA != a.end(); ++iterA)
+	for (typename google::sparse_hash_set<K, Hasher<K>, Comparator<K>, SparseHashAllocator<K> >::const_iterator iterA = a.begin(); 
+	     iterA != a.end(); ++iterA)
 	{
-		google::sparse_hash_set<K, H, E, A>::const_iterator iterB = b.find(*iterA);
+		typename google::sparse_hash_set<K, Hasher<K>, Comparator<K>, SparseHashAllocator<K> >::const_iterator iterB = 
+		                                                                                                             b.find(*iterA);
 
 		if (b.end() == iterB)
 		{
@@ -273,9 +293,10 @@ static inline int Compare(const google::sparse_hash_set<K, H, E, A> &a, const go
 	return 0;
 }
 
-template <typename K, typename V, typename H = Hasher<K>, typename E = Comparator<K>, 
-          typename A = SparseHashAllocator<std::pair<const K, V> > > 
-static inline int Compare(const google::sparse_hash_map<K, V, H, E, A> &a, const google::sparse_hash_map<K, V, H, E, A> &b)
+template <typename K, typename V> 
+inline int Compare(const google::sparse_hash_map<K, V, Hasher<K>, Comparator<K>, SparseHashAllocator<std::pair<const K, V> > > 
+                   &a, const google::sparse_hash_map<K, V, Hasher<K>, Comparator<K>, 
+                   SparseHashAllocator<std::pair<const K, V> > > &b)
 {
 	if (a.size() < b.size())
 	{
@@ -289,9 +310,11 @@ static inline int Compare(const google::sparse_hash_map<K, V, H, E, A> &a, const
 
 	int nCmp;
 
-	for (google::sparse_hash_map<K, V, H, E, A>::const_iterator iterA = a.begin(); iterA != a.end(); ++iterA)
+	for (typename google::sparse_hash_map<K, V, Hasher<K>, Comparator<K>, SparseHashAllocator<std::pair<const K, V> > >::const_iterator 
+	     iterA = a.begin(); iterA != a.end(); ++iterA)
 	{
-		google::sparse_hash_map<K, V, H, E, A>::const_iterator iterB = b.find(iterA->first);
+		typename google::sparse_hash_map<K, V, Hasher<K>, Comparator<K>, SparseHashAllocator<std::pair<const K, V> > >::const_iterator 
+		                                                                                               iterB = b.find(iterA->first);
 
 		if (b.end() == iterB)
 		{

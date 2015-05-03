@@ -29,12 +29,6 @@
 #pragma once
 
 
-#include "CX/Platform.hpp"
-
-
-#if defined(CX_OS_WINDOWS)
-
-
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
@@ -129,7 +123,4 @@ private:
 }//namespace Util
 
 }//namespace CX
-
-
-#endif
 

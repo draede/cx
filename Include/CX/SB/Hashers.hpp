@@ -41,6 +41,7 @@
 #include "CX/Hash/xxHash32.hpp"
 #include "CX/Hash/xxHash64.hpp"
 #include "CX/IObject.hpp"
+#include "CX/SB/Comparators.hpp"
 
 
 namespace CX
@@ -48,17 +49,6 @@ namespace CX
 
 namespace SB
 {
-
-template <typename T>
-struct Hasher
-{
-	
-	size_t operator()(const T &p) const 
-	{
-		return Hash(p);
-	}
-
-};
 
 class HasherHelperSeed : public IObject
 {
@@ -154,7 +144,7 @@ private:
 
 };
 
-template <typename T> static inline Size Hash(const T &p, HasherHelper *pHasher = NULL)
+template <typename T> inline Size Hash(const T &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -168,7 +158,7 @@ template <typename T> static inline Size Hash(const T &p, HasherHelper *pHasher 
 	}
 }
 
-template <> static inline Size Hash<Bool>(const Bool &p, HasherHelper *pHasher)
+template <> inline Size Hash<Bool>(const Bool &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -182,12 +172,12 @@ template <> static inline Size Hash<Bool>(const Bool &p, HasherHelper *pHasher)
 	}
 }
 
-template <> static inline Size Hash<BoolForVector>(const BoolForVector &p, HasherHelper *pHasher)
+template <> inline Size Hash<BoolForVector>(const BoolForVector &p, HasherHelper *pHasher)
 {
 	return Hash((Bool)p, pHasher);
 }
 
-template <> static inline Size Hash<Int8>(const Int8 &p, HasherHelper *pHasher)
+template <> inline Size Hash<Int8>(const Int8 &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -201,7 +191,7 @@ template <> static inline Size Hash<Int8>(const Int8 &p, HasherHelper *pHasher)
 	}
 }
 
-template <> static inline Size Hash<UInt8>(const UInt8 &p, HasherHelper *pHasher)
+template <> inline Size Hash<UInt8>(const UInt8 &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -215,7 +205,7 @@ template <> static inline Size Hash<UInt8>(const UInt8 &p, HasherHelper *pHasher
 	}
 }
 
-template <> static inline Size Hash<Int16>(const Int16 &p, HasherHelper *pHasher)
+template <> inline Size Hash<Int16>(const Int16 &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -229,7 +219,7 @@ template <> static inline Size Hash<Int16>(const Int16 &p, HasherHelper *pHasher
 	}
 }
 
-template <> static inline Size Hash<UInt16>(const UInt16 &p, HasherHelper *pHasher)
+template <> inline Size Hash<UInt16>(const UInt16 &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -243,7 +233,7 @@ template <> static inline Size Hash<UInt16>(const UInt16 &p, HasherHelper *pHash
 	};
 }
 
-template <> static inline Size Hash<Int32>(const Int32 &p, HasherHelper *pHasher)
+template <> inline Size Hash<Int32>(const Int32 &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -257,7 +247,7 @@ template <> static inline Size Hash<Int32>(const Int32 &p, HasherHelper *pHasher
 	}
 }
 
-template <> static inline Size Hash<UInt32>(const UInt32 &p, HasherHelper *pHasher)
+template <> inline Size Hash<UInt32>(const UInt32 &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -271,7 +261,7 @@ template <> static inline Size Hash<UInt32>(const UInt32 &p, HasherHelper *pHash
 	}
 }
 
-template <> static inline Size Hash<String>(const String &p, HasherHelper *pHasher)
+template <> inline Size Hash<String>(const String &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -285,7 +275,7 @@ template <> static inline Size Hash<String>(const String &p, HasherHelper *pHash
 	}
 }
 
-template <> static inline Size Hash<WString>(const WString &p, HasherHelper *pHasher)
+template <> inline Size Hash<WString>(const WString &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -299,8 +289,8 @@ template <> static inline Size Hash<WString>(const WString &p, HasherHelper *pHa
 	}
 }
 
-template <typename T, typename A = STLAlloc<T> > 
-static inline Size Hash(const std::vector<T, A> &p, HasherHelper *pHasher)
+template <typename T> 
+inline Size Hash(const std::vector<T, STLAlloc<T> > &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -308,7 +298,7 @@ static inline Size Hash(const std::vector<T, A> &p, HasherHelper *pHasher)
 
 		hasher.Init();
 		
-		for (std::vector<T, A>::const_iterator iter = p.begin(); iter != p.end(); ++iter)
+		for (typename std::vector<T, STLAlloc<T> >::const_iterator iter = p.begin(); iter != p.end(); ++iter)
 		{
 			Hash(*iter, &hasher);
 		}
@@ -317,7 +307,7 @@ static inline Size Hash(const std::vector<T, A> &p, HasherHelper *pHasher)
 	}
 	else
 	{
-		for (std::vector<T, A>::const_iterator iter = p.begin(); iter != p.end(); ++iter)
+		for (typename std::vector<T, STLAlloc<T> >::const_iterator iter = p.begin(); iter != p.end(); ++iter)
 		{
 			Hash(*iter, pHasher);
 		}
@@ -326,8 +316,8 @@ static inline Size Hash(const std::vector<T, A> &p, HasherHelper *pHasher)
 	}
 }
 
-template <typename K, typename C = Less<K>, typename A = STLAlloc<K> > 
-static inline Size Hash(std::set<K, C, A> &p, HasherHelper *pHasher)
+template <typename K> 
+inline Size Hash(std::set<K, Less<K>, STLAlloc<K> > &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -335,7 +325,7 @@ static inline Size Hash(std::set<K, C, A> &p, HasherHelper *pHasher)
 
 		hasher.Init();
 
-		for (std::set<K, C, A>::const_iterator iter = p.begin(); iter != p.end(); ++iter)
+		for (typename std::set<K, Less<K>, STLAlloc<K> >::const_iterator iter = p.begin(); iter != p.end(); ++iter)
 		{
 			Hash(*iter, &hasher);
 		}
@@ -344,7 +334,7 @@ static inline Size Hash(std::set<K, C, A> &p, HasherHelper *pHasher)
 	}
 	else
 	{
-		for (std::set<K, C, A>::const_iterator iter = p.begin(); iter != p.end(); ++iter)
+		for (typename std::set<K, Less<K>, STLAlloc<K> >::const_iterator iter = p.begin(); iter != p.end(); ++iter)
 		{
 			Hash(*iter, pHasher);
 		}
@@ -353,8 +343,8 @@ static inline Size Hash(std::set<K, C, A> &p, HasherHelper *pHasher)
 	}
 }
 
-template <typename K, typename V, typename C = Less<K>, typename A = STLAlloc<std::pair<const K, V> > > 
-static inline Size Hash(std::map<K, V, C, A> &p, HasherHelper *pHasher)
+template <typename K, typename V> 
+inline Size Hash(std::map<K, V, Less<K>, STLAlloc<std::pair<const K, V> > > &p, HasherHelper *pHasher)
 {
 	if (NULL == pHasher)
 	{
@@ -362,7 +352,8 @@ static inline Size Hash(std::map<K, V, C, A> &p, HasherHelper *pHasher)
 
 		hasher.Init();
 
-		for (std::map<K, V, C, A>::const_iterator iter = p.begin(); iter != p.end(); ++iter)
+		for (typename std::map<K, V, Less<K>, STLAlloc<std::pair<const K, V> > >::const_iterator iter = p.begin(); 
+		     iter != p.end(); ++iter)
 		{
 			Hash(iter->first, &hasher);
 			Hash(iter->second, &hasher);
@@ -372,7 +363,8 @@ static inline Size Hash(std::map<K, V, C, A> &p, HasherHelper *pHasher)
 	}
 	else
 	{
-		for (std::map<K, V, C, A>::const_iterator iter = p.begin(); iter != p.end(); ++iter)
+		for (typename std::map<K, V, Less<K>, STLAlloc<std::pair<const K, V> > >::const_iterator iter = p.begin(); 
+		     iter != p.end(); ++iter)
 		{
 			Hash(iter->first, pHasher);
 			Hash(iter->second, pHasher);
@@ -383,12 +375,13 @@ static inline Size Hash(std::map<K, V, C, A> &p, HasherHelper *pHasher)
 }
 
 //not a good idea to use this as a key
-template <typename K, typename H = Hasher<T>, typename E = Comparator<K>, typename A = SparseHashAllocator<K> > 
-static inline Size Hash(const google::sparse_hash_set<K, H, E, A> &p, HasherHelper *pHasher)
+template <typename K> 
+inline Size Hash(const google::sparse_hash_set<K, Hasher<K>, Comparator<K>, SparseHashAllocator<K> > &p, HasherHelper *pHasher)
 {
 	Size cChkSum = 0;
 
-	for (google::sparse_hash_set<K, H, E, A>::const_iterator iter = p.begin(); iter != p.end(); ++iter)
+	for (typename google::sparse_hash_set<K, Hasher<K>, Comparator<K>, SparseHashAllocator<K> >::const_iterator iter = p.begin(); 
+	     iter != p.end(); ++iter)
 	{
 		HasherHelper hh;
 
@@ -410,13 +403,14 @@ static inline Size Hash(const google::sparse_hash_set<K, H, E, A> &p, HasherHelp
 }
 
 //not a good idea to use this as a key
-template <typename K, typename V, typename H = Hasher<K>, typename E = Comparator<K>, 
-          typename A = SparseHashAllocator<std::pair<const K, V> > > 
-static inline Size Hash(const google::sparse_hash_map<K, V, H, E, A> &p, HasherHelper *pHasher)
+template <typename K, typename V> 
+inline Size Hash(const google::sparse_hash_map<K, V, Hasher<K>, Comparator<K>, SparseHashAllocator<std::pair<const K, V> > > &p, 
+                 HasherHelper *pHasher)
 {
 	Size cChkSum = 0;
 
-	for (google::sparse_hash_map<K, V, H, E, A>::const_iterator iter = p.begin(); iter != p.end(); ++iter)
+	for (typename google::sparse_hash_map<K, V, Hasher<K>, Comparator<K>, 
+	     SparseHashAllocator<std::pair<const K, V> > >::const_iterator iter = p.begin(); iter != p.end(); ++iter)
 	{
 		HasherHelper hh;
 

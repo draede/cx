@@ -32,7 +32,7 @@
 #include "arch.h"
 #include "debug.h"
 #include "bitwise_utils.h"
-#include "crc32.h"
+#include "../utils/crc32.h"
 #include "adler32.h"
 
 #ifndef _MEMPOOL

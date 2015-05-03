@@ -33,7 +33,9 @@
 
 
 #if defined(CX_OS_WINDOWS)
-   #include "CX/C/Platform/Windows/stdio.h"
-#else	
+	#include "CX/C/Platform/Windows/stdio.h"
+#elif defined(CX_OS_POSIX)
+	#include "CX/C/Platform/Posix/stdio.h"
+#else
 	#error "stdio.h not implemented on this platform"
 #endif

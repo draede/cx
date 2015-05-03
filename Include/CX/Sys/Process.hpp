@@ -34,7 +34,9 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Sys/Platform/Windows/Process.hpp"
-#else	
+#elif defined(CX_OS_POSIX)
+	#include "CX/Sys/Platform/Posix/Process.hpp"
+#else
 	#error "Process.h not implemented on this platform"
 #endif
 

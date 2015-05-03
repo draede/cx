@@ -33,8 +33,10 @@
 
 
 #if defined(CX_OS_WINDOWS)
-   #include "CX/C/Platform/Windows/ctype.h"
-#else	
+	#include "CX/C/Platform/Windows/ctype.h"
+#elif defined(CX_OS_POSIX)
+	#include "CX/C/Platform/Posix/ctype.h"
+#else
 	#error "ctype.h not implemented on this platform"
 #endif
 

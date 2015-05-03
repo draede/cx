@@ -109,6 +109,8 @@ public:
 
 	unsigned GetMillisecond() const;
 
+	UInt64 GetTimeStampMS();
+
 private:
 
 	unsigned    m_nYear;

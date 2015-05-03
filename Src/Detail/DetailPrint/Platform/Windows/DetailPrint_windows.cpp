@@ -66,7 +66,7 @@ Bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision)
 	return false;
 }
 
-CX_API Bool UTF8toUTF16(const Char *szUTF8, WString *pwsUTF16, Size cUTF8Len/* = TYPE_SIZE_MAX*/)
+CX_API Bool UTF8toWChar(const Char *szUTF8, WString *pwsWChar, Size cUTF8Len/* = TYPE_SIZE_MAX*/)
 {
 	int   cSize;
 	WChar *pOut = NULL;
@@ -94,7 +94,7 @@ CX_API Bool UTF8toUTF16(const Char *szUTF8, WString *pwsUTF16, Size cUTF8Len/* =
 			
 			return false;
 		}
-		pwsUTF16->append(pOut, cSize);
+		pwsWChar->append(pOut, cSize);
 		if (pOut != pOut)
 		{
 			delete [] pOut;
@@ -108,14 +108,14 @@ CX_API Bool UTF8toUTF16(const Char *szUTF8, WString *pwsUTF16, Size cUTF8Len/* =
 	return true;
 }
 
-CX_API Bool UTF16toUTF8(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* = TYPE_SIZE_MAX*/)
+CX_API Bool WChartoUTF8(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* = TYPE_SIZE_MAX*/)
 {
 	int cSize;
 
 	Char *pOut = NULL;
 	Char out[8000];
 
-	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, NULL, 0, 
+	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, NULL, 0, 
 		                                    NULL, NULL)))
 	{
 		if (cSize > 8000)
@@ -129,7 +129,94 @@ CX_API Bool UTF16toUTF8(const WChar *wszUTF16, String *psUTF8, Size cUTF16Len/* 
 		{
 			pOut = out;
 		}
-		if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszUTF16, TYPE_SIZE_MAX == cUTF16Len ? -1 : (int)cUTF16Len, pOut, 
+		if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, pOut, 
+			                                     cSize, NULL, NULL)))
+		{
+			if (pOut != out)
+			{
+				delete [] pOut;
+			}
+
+			return false;
+		}
+		psUTF8->append(pOut, cSize);
+		if (pOut != out)
+		{
+			delete [] pOut;
+		}
+	}
+	else
+	{
+		return false;
+	}
+
+	return true;
+}
+
+CX_API Bool UTF8toWCharx(const Char *szUTF8, std::wstring *pwsWChar, Size cUTF8Len/* = TYPE_SIZE_MAX*/)
+{
+	int   cSize;
+	WChar *pOut = NULL;
+	WChar out[8000];
+
+	if (0 < (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, NULL, 0)))
+	{
+		if (cSize > 8000)
+		{
+			if (NULL == (pOut = new WChar[cSize]))
+			{
+				return false;
+			}
+		}
+		else
+		{
+			pOut = out;
+		}
+		if (0 >= (cSize = ::MultiByteToWideChar(CP_UTF8, 0, szUTF8, TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, pOut, cSize)))
+		{
+			if (pOut != out)
+			{
+				delete [] pOut;
+			}
+			
+			return false;
+		}
+		pwsWChar->append(pOut, cSize);
+		if (pOut != pOut)
+		{
+			delete [] pOut;
+		}
+	}
+	else
+	{
+		return false;
+	}
+
+	return true;
+}
+
+CX_API Bool WChartoUTF8x(const WChar *wszWChar, std::string *psUTF8, Size cWCharLen/* = TYPE_SIZE_MAX*/)
+{
+	int cSize;
+
+	Char *pOut = NULL;
+	Char out[8000];
+
+	if (0 < (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, NULL, 0, 
+		                                    NULL, NULL)))
+	{
+		if (cSize > 8000)
+		{
+			if (NULL == (pOut = new Char[cSize]))
+			{
+				return false;
+			}
+		}
+		else
+		{
+			pOut = out;
+		}
+		if (0 >= (cSize = ::WideCharToMultiByte(CP_UTF8, 0, wszWChar, TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, pOut, 
 			                                     cSize, NULL, NULL)))
 		{
 			if (pOut != out)

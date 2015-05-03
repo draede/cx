@@ -1,4 +1,4 @@
-#include <mintomic/core.h>
+#include "core.h"
 
 #if MINT_COMPILER_GCC && MINT_CPU_ARM && (MINT_CPU_ARM_VERSION == 6) && MINT_CPU_ARM_THUMB  // ARMv6 Thumb mode
 
