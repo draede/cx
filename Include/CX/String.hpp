@@ -45,7 +45,10 @@ struct CaseInsensitiveOrderPolicy
 {
 	Bool operator()(const String &s1, const String &s2) const
 	{
+#pragma warning(push)
+#pragma warning(disable: 4996)
 		return (0 > cx_stricmp(s1.c_str(), s2.c_str()));
+#pragma warning(pop)
 	}
 };
 
