@@ -35,3 +35,4 @@ ipch/
 Bin/
 Lib/
 Temp/
+*.suo
