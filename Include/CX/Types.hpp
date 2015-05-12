@@ -83,6 +83,12 @@ typedef CX_WChar               WChar;
 //platform specific mem buffer size type (4 bytes on 32 bit, 8 bytes on 64 bit)
 typedef CX_Size                Size;
 
+// intptr
+typedef CX_IntPtr              IntPtr;
+
+// intptr
+typedef CX_UIntPtr             UIntPtr;
+
 // pointer diff
 typedef CX_PtrDiff             PtrDiff;
 
