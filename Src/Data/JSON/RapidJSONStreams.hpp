@@ -190,6 +190,7 @@ struct RapidJSONInputStream
 			{
 				return '\0';
 			}
+			bufoffset_ = 0;
 		}
 		bufoffset_++;
 		offset_++;
