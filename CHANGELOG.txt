@@ -1,3 +1,9 @@
+0.1.11 - 2015-06-08
+  - Moved json input stream header from src to include
+  - Reduced json input stream stack usage from 16KB to 8KB
+  - Removed SB
+  - Added doc for CX::Mem::PrintAllocs
+  - Fixed PlayGround tester (usage of CX::Mem::PrintAllocs)
 0.1.10 - 2015-05-03
   - Initial support for GCC / linux build
 0.1.9 - 2015-04-23

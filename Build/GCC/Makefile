@@ -137,13 +137,6 @@ all: \
 	$(SRCPATH)/Log/DefaultFormatter.cpp \
 	$(SRCPATH)/Log/Logger.cpp \
 	$(SRCPATH)/Log/StreamOutput.cpp \
-	$(SRCPATH)/SB/BinaryDataReader.cpp \
-	$(SRCPATH)/SB/BinaryDataWriter.cpp \
-	$(SRCPATH)/SB/Parser.cpp \
-	$(SRCPATH)/SB/StatsDataReader.cpp \
-	$(SRCPATH)/SB/StatsDataWriter.cpp \
-	$(SRCPATH)/SB/TextDataReader.cpp \
-	$(SRCPATH)/SB/TextDataWriter.cpp \
 	$(SRCPATH)/Str/Platform/Posix/UTF8_posix.cpp \
 	$(SRCPATH)/Str/HexBinStr.cpp \
 	$(SRCPATH)/Str/Z85BinStr.cpp \
@@ -249,13 +242,6 @@ all: \
 	$(CXX) $(MYFLAGS) -c $(SRCPATH)/Log/DefaultFormatter.cpp -o $(TMPPATH)/DefaultFormatter.o
 	$(CXX) $(MYFLAGS) -c $(SRCPATH)/Log/Logger.cpp -o $(TMPPATH)/Logger.o
 	$(CXX) $(MYFLAGS) -c $(SRCPATH)/Log/StreamOutput.cpp -o $(TMPPATH)/StreamOutput.o
-	$(CXX) $(MYFLAGS) -c $(SRCPATH)/SB/BinaryDataReader.cpp -o $(TMPPATH)/BinaryDataReader.o
-	$(CXX) $(MYFLAGS) -c $(SRCPATH)/SB/BinaryDataWriter.cpp -o $(TMPPATH)/BinaryDataWriter.o
-	$(CXX) $(MYFLAGS) -c $(SRCPATH)/SB/Parser.cpp -o $(TMPPATH)/StreamOutput.o
-	$(CXX) $(MYFLAGS) -c $(SRCPATH)/SB/StatsDataReader.cpp -o $(TMPPATH)/StatsDataReader.o
-	$(CXX) $(MYFLAGS) -c $(SRCPATH)/SB/StatsDataWriter.cpp -o $(TMPPATH)/StatsDataWriter.o
-	$(CXX) $(MYFLAGS) -c $(SRCPATH)/SB/TextDataReader.cpp -o $(TMPPATH)/TextDataReader.o
-	$(CXX) $(MYFLAGS) -c $(SRCPATH)/SB/TextDataWriter.cpp -o $(TMPPATH)/TextDataWriter.o
 	$(CXX) $(MYFLAGS) -c $(SRCPATH)/Str/Platform/Posix/UTF8_posix.cpp -o $(TMPPATH)/UTF8_posix.o
 	$(CXX) $(MYFLAGS) -c $(SRCPATH)/Str/HexBinStr.cpp -o $(TMPPATH)/HexBinStr.o
 	$(CXX) $(MYFLAGS) -c $(SRCPATH)/Str/Z85BinStr.cpp -o $(TMPPATH)/Z85BinStr.o

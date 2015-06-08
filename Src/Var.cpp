@@ -32,7 +32,7 @@
 #include "CX/IO/MemOutputStream.hpp"
 #include "CX/Data/JSON/SAXParser.hpp"
 #include "CX/Data/JSON/ISAXParserObserver.hpp"
-#include "Data/JSON/RapidJSONStreams.hpp"
+#include "CX/Data/JSON/RapidJSONStreams.hpp"
 
 
 namespace CX

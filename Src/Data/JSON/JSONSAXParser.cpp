@@ -28,9 +28,9 @@
 
 #include "CX/Data/JSON/SAXParser.hpp"
 #include "CX/Status.hpp"
-#include "../../../Contrib/RapidJSON/Include/rapidjson.h"
-#include "../../../Contrib/RapidJSON/Include/reader.h"
-#include "RapidJSONStreams.hpp"
+#include "rapidjson.h"
+#include "reader.h"
+#include "CX/Data/JSON/RapidJSONStreams.hpp"
 
 
 struct CX_Data_JSON_SAX_Handler

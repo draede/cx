@@ -92,6 +92,7 @@ public:
 
 	static void GetCurrentAllocs(AllocsVector &vectorAllocs);
 
+	//using std::string & AllocsVector so no internal allocs are generated
 	static void PrintAllocs(std::string &sOut, const AllocsVector &vectorAllocs);
 
 private:

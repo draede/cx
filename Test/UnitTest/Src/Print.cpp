@@ -45,7 +45,7 @@ const Char *ToString(T p, Size cPrec = 0)
 	static Char   szOutput[100];
 	Size          cLen;
 
-	ToString(p, szOutput, 100, &cLen, cPrec);
+	CX::ToString(p, 0, szOutput, 100, &cLen, cPrec);
 
 	return szOutput;
 }

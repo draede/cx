@@ -221,7 +221,7 @@ void Mem::PrintAllocs(std::string &sOut, const AllocsVector &vectorAllocs)
 {
 	if (vectorAllocs.empty())
 	{
-		Print(&sOut, "No allocations found!\n");
+		Print(&sOut, "No allocations found at this moment!\n");
 		return;
 	}
 	for (AllocsVector::const_iterator iter = vectorAllocs.begin(); iter != vectorAllocs.end(); ++iter)

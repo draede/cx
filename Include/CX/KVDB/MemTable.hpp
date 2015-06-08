@@ -34,9 +34,9 @@
 #include "CX/Util/RCMemBuffer.hpp"
 #include "CX/IO/IInputStream.hpp"
 #include "CX/IO/IOutputStream.hpp"
-#include "CX/Hash/IHash.hpp"
+#include "CX/Hash/xxHash32.hpp"
+#include "CX/Hash/xxHash64.hpp"
 #include "CX/SparseHashMap.hpp"
-#include "CX/SB/Hashers.hpp"
 
 
 namespace CX
@@ -78,7 +78,11 @@ protected:
 	{
 		size_t operator()(const Key &p) const
 		{
-			return SB::HasherHelper::Hash(p.GetMem(), p.GetSize());
+#ifdef CX_64BIT_ARCH
+			return (size_t)Hash::xxHash64::DoHash(p.GetMem(), p.GetSize(), 0);
+#else
+			return (size_t)Hash::xxHash32::DoHash(p.GetMem(), p.GetSize(), 0);
+#endif
 		}
 	};
 

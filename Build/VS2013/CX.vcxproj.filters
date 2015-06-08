@@ -172,12 +172,6 @@
     <Filter Include="Source Files\Detail\DetailPrint\Platform\Windows">
       <UniqueIdentifier>{f4a4bb84-0f24-44a7-a935-96ba5abc0345}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\SB">
-      <UniqueIdentifier>{3c4de11d-2155-4dd3-a5b8-696f85663c51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\SB">
-      <UniqueIdentifier>{51960fa0-4e67-41a7-a587-cb29e4b8b0f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contrib\ForestDB">
       <UniqueIdentifier>{ee6db378-5c57-45b9-8950-854a29b78c0c}</UniqueIdentifier>
     </Filter>
@@ -444,9 +438,6 @@
     <ClInclude Include="..\..\Include\CX\Var.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Data\JSON\RapidJSONStreams.hpp">
-      <Filter>Source Files\Data\JSON</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Log\Level.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
@@ -605,75 +596,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp">
       <Filter>Header Files\Hash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\BinaryData.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\BinaryDataReader.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\BinaryDataWriter.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\BoolForVector.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Comparators.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\DefIniters.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Generator.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Hashers.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\IDataReader.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\IDataWriter.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Member.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Object.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Parser.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Readers.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\SparseHashAllocator.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\TextDataReader.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\TextDataWriter.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Types.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Writers.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\Tester.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\StatsDataReader.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\StatsDataWriter.hpp">
-      <Filter>Header Files\SB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SB\StatsData.hpp">
-      <Filter>Header Files\SB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
       <Filter>Contrib\CRC32Slice8</Filter>
@@ -867,6 +789,9 @@
     <ClInclude Include="..\..\Include\CX\Log\Platform\Posix\SystemOutput.hpp">
       <Filter>Header Files\Log\Platform\Posix</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\RapidJSONStreams.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -1012,27 +937,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\xxHash64.cpp">
       <Filter>Source Files\Hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SB\BinaryDataReader.cpp">
-      <Filter>Source Files\SB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SB\BinaryDataWriter.cpp">
-      <Filter>Source Files\SB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SB\Parser.cpp">
-      <Filter>Source Files\SB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SB\TextDataReader.cpp">
-      <Filter>Source Files\SB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SB\TextDataWriter.cpp">
-      <Filter>Source Files\SB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SB\StatsDataReader.cpp">
-      <Filter>Source Files\SB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SB\StatsDataWriter.cpp">
-      <Filter>Source Files\SB</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\ForestDB\Src\src\api_wrapper.cc">
       <Filter>Contrib\ForestDB</Filter>

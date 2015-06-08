@@ -186,8 +186,10 @@ inline void MultiHashSetAndHashMap_Test1()
 	}
 
 	CX::Mem::AllocsVector vectorAllocs;
+	std::string           sOut;
 
 	CX::Mem::GetCurrentAllocs(vectorAllocs);
-	CX::Mem::PrintAllocs(stdout, vectorAllocs);
+	CX::Mem::PrintAllocs(sOut, vectorAllocs);
+	CX::Print(stdout, "{1}\n", sOut.c_str());
 }
 

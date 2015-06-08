@@ -43,16 +43,16 @@ inline void Str_UTF8_Test1()
 	CX_Size     cLen;
 	CX::Status  status;
 
-	status = CX::Str::UTF8::ToUTF16((const CX::Char *)szUTF8In, &wsUTF16Out);
-	status = CX::Str::UTF8::FromUTF16(wszUTF16In, &sUTF8Out);
+	status = CX::Str::UTF8::ToWChar((const CX::Char *)szUTF8In, &wsUTF16Out);
+	status = CX::Str::UTF8::FromWChar(wszUTF16In, &sUTF8Out);
 
-	status = CX::Str::UTF8::ToUTF16((const CX::Char *)szUTF8In, CX::TYPE_SIZE_MAX, NULL, &cLen);
+	status = CX::Str::UTF8::ToWChar((const CX::Char *)szUTF8In, CX::TYPE_SIZE_MAX, NULL, &cLen);
 	wszUTF16Out = new CX::WChar[cLen];
-	status = CX::Str::UTF8::ToUTF16((const CX::Char *)szUTF8In, CX::TYPE_SIZE_MAX, wszUTF16Out, &cLen);
+	status = CX::Str::UTF8::ToWChar((const CX::Char *)szUTF8In, CX::TYPE_SIZE_MAX, wszUTF16Out, &cLen);
 
-	status = CX::Str::UTF8::FromUTF16(wszUTF16In, CX::TYPE_SIZE_MAX, NULL, &cLen);
+	status = CX::Str::UTF8::FromWChar(wszUTF16In, CX::TYPE_SIZE_MAX, NULL, &cLen);
 	szUTF8Out = new CX::Char[cLen];
-	status = CX::Str::UTF8::FromUTF16(wszUTF16In, CX::TYPE_SIZE_MAX, szUTF8Out, &cLen);
+	status = CX::Str::UTF8::FromWChar(wszUTF16In, CX::TYPE_SIZE_MAX, szUTF8Out, &cLen);
 
 	delete [] wszUTF16Out;
 	delete [] szUTF8Out;

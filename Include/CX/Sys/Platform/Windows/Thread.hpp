@@ -84,7 +84,7 @@ public:
 
 		if (NULL != (m_hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&ThreadProc, pHelper, 0, &dwID)))
 		{
-			m_nID = (TID)dwID;
+			m_nID = (ID)dwID;
 
 			return Status();
 		}

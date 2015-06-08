@@ -37,10 +37,11 @@
 inline void Mem_DumpAllocs()
 {
 	CX::Mem::AllocsVector vectorAllocs;
+	std::string           sOut;
 
 	CX::Mem::GetCurrentAllocs(vectorAllocs);
-	CX::Mem::PrintAllocs(stdout, vectorAllocs);
-	CX::Print(stdout, "\n");
+	CX::Mem::PrintAllocs(sOut, vectorAllocs);
+	CX::Print(stdout, "{1}\n", sOut.c_str());
 }
 
 class MemTest: public CX::IObject
