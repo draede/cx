@@ -45,8 +45,8 @@ INCPATH = -I../../Include \
 				-I$(CNTPATH)/xxHash/Include \
 				-I$(CNTPATH)/Z85/Include
 SRCPATH = ../../Src
-TMPPATH = ../../Temp/GCC/Linux/$(TARGET_OUTPATH)
-OUTPATH = ../../Lib/GCC/Linux/$(TARGET_OUTPATH)
+TMPPATH = ../../Temp/GCC/$(TARGET_OUTPATH)
+OUTPATH = ../../Lib/GCC/$(TARGET_OUTPATH)
 MYFLAGS = $(TARGET_FLAGS) $(INCPATH)
 
 x86dbg: all

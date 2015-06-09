@@ -186,11 +186,17 @@
 
 //others
 #define cx_fileno          fileno
+#ifdef CX_OS_ANDROID
+#define cx_stat64struct    struct stat
+#define cx_stat64          fstat
+#define cx_fseek64         fseek
+#define cx_ftell64         ftell
+#else
 #define cx_stat64struct    struct stat64
 #define cx_stat64          fstat64
 #define cx_fseek64         fseeko64
 #define cx_ftell64         ftello64
-
+#endif
 
 #endif
 

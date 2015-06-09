@@ -1,3 +1,5 @@
+0.1.12 - 2015-06-09
+  - Initial support for NDK build sys
 0.1.11 - 2015-06-08
   - Moved json input stream header from src to include
   - Reduced json input stream stack usage from 16KB to 8KB

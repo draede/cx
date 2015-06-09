@@ -19,6 +19,10 @@
 #include <stdint.h>
 #include <inttypes.h>
 
+#ifndef UINT32_C
+#define UINT32_C(c) c ## UL
+#endif
+
 #define TINYMT32_MEXP 127
 #define TINYMT32_SH0 1
 #define TINYMT32_SH1 10

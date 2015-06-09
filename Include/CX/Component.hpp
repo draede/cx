@@ -30,7 +30,9 @@
 
 
 #include "CX/Types.hpp"
+#ifndef CX_OS_ANDROID
 #include "CX/Sys/Atomic.hpp"
+#endif
 #include "CX/C/string.h"
 #include "CX/APIDefs.hpp"
 #include "CX/IObject.hpp"
@@ -119,8 +121,12 @@ protected:
 
 private:
 
+#ifdef CX_OS_ANDROID
+	UInt32   m_refcnt;
+#else
 	Sys::AtomicUInt32   m_refcnt;
-
+#endif
+	
 	void Init();
 
 	void Retain();

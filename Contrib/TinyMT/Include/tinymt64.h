@@ -19,6 +19,10 @@
 #include <stdint.h>
 #include <inttypes.h>
 
+#ifndef UINT64_C
+#define UINT64_C(c) c ## ULL
+#endif
+
 #define TINYMT64_MEXP 127
 #define TINYMT64_SH0 12
 #define TINYMT64_SH1 11

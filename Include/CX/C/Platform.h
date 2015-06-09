@@ -91,7 +91,7 @@
 	#define CX_BUILDSYS     "NDK"
 #endif
 
-#if defined(__linux__)
+#if defined(__linux__) && !defined(__ANDROID__)
 	#define CX_TLS		__thread
 	#define CX_DLL_EXPORT
 	#define CX_DLL_IMPORT
