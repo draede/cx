@@ -26,19 +26,43 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Lock.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Lock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Lock.hpp"
-#else
-	#error "Lock.h not implemented on this platform"
+#if defined(CX_OS_ANDROID)
+
+
+#include "CX/Sys/Lock.hpp"
+#include "CX/Status.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+Lock::Lock()
+{
+	m_bMutexIsOK = false;
+}
+
+Lock::~Lock()
+{
+}
+
+void Lock::Enter()
+{
+}
+
+void Lock::Leave()
+{
+}
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
 

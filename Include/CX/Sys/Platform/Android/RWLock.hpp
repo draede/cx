@@ -32,13 +32,50 @@
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Lock.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Lock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Lock.hpp"
-#else
-	#error "Lock.h not implemented on this platform"
+#if defined(CX_OS_ANDROID)
+
+
+#include "CX/Types.hpp"
+#include "CX/Scope.hpp"
+#include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+class CX_API RWLock : public IObject
+{
+public:
+
+	RWLock();
+
+	virtual ~RWLock();
+
+	void EnterRead();
+
+	void LeaveRead();
+
+	void EnterWrite();
+
+	void LeaveWrite();
+
+private:
+
+	bool               m_bRWLockIsOK;
+
+};
+
+typedef Scope<RWLock, &RWLock::EnterRead, &RWLock::LeaveRead>     RLocker;
+typedef Scope<RWLock, &RWLock::EnterWrite, &RWLock::LeaveWrite>   WLocker;
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
 

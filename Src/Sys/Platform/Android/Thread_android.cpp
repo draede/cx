@@ -26,19 +26,70 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Lock.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Lock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Lock.hpp"
-#else
-	#error "Lock.h not implemented on this platform"
+#if defined(CX_OS_ANDROID)
+
+
+#include "CX/Sys/Thread.hpp"
+#include "CX/Status.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+Thread::Thread()
+{
+	m_bThreadIsOK = false;
+}
+
+Thread::~Thread()
+{
+}
+
+Status Thread::Wait()
+{
+	return Status();
+}
+
+Bool Thread::IsRunning()
+{
+	return m_bThreadIsOK;
+}
+
+Thread::ID Thread::GetID()
+{
+	if (!m_bThreadIsOK)
+	{
+		return 0;
+	}
+
+	return 0;
+}
+
+Thread::ID Thread::GetCurrentThreadID()
+{
+	return 0;
+}
+
+void Thread::Sleep(Size cMilliseconds)
+{
+	cMilliseconds;
+}
+
+void *Thread::ThreadProc(void *pArg)
+{
+	return NULL;
+}
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
 

@@ -26,19 +26,66 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Lock.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Lock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Lock.hpp"
-#else
-	#error "Lock.h not implemented on this platform"
+#if defined(CX_OS_ANDROID)
+
+
+#include "CX/Sys/DynLib.hpp"
+#include "CX/Status.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+DynLib::DynLib()
+{
+	m_pHandle = NULL;
+}
+
+DynLib::~DynLib()
+{
+	Unload();
+}
+
+Bool DynLib::IsOK()
+{
+	return (NULL != m_pHandle);
+}
+
+Status DynLib::Load(const Char *szPath)
+{
+	szPath;
+	
+	return Status(Status_NotSupported);
+}
+
+Status DynLib::Unload()
+{
+	return Status();
+}
+
+void *DynLib::GetFunc(const Char *szName)
+{
+	szName;
+	
+	if (NULL == m_pHandle)
+	{
+		return NULL;
+	}
+
+	return NULL;
+}
+
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
 

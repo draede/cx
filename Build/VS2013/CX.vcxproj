@@ -246,7 +246,6 @@
     <ClInclude Include="..\..\Include\CX\Var.hpp" />
     <ClInclude Include="..\..\Include\CX\Vector.hpp" />
     <ClInclude Include="..\..\Include\CX\Version.hpp" />
-    <ClInclude Include="..\..\Src\IO\Scope.hpp" />
     <ClInclude Include="..\..\Src\KVDB\FDBStatus.hpp" />
     <ClInclude Include="..\..\Src\KVDB\MemDBSerialize.hpp" />
     <ClInclude Include="..\..\Src\Platform\Windows\resource.h" />

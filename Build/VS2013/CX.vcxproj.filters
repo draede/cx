@@ -417,9 +417,6 @@
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\IO\Scope.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\Container.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>

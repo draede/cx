@@ -32,13 +32,47 @@
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Lock.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Lock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Lock.hpp"
-#else
-	#error "Lock.h not implemented on this platform"
+#if defined(CX_OS_ANDROID)
+
+
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+class CX_API DynLib : public IObject
+{
+public:
+
+	DynLib();
+
+	virtual ~DynLib();
+
+	Bool IsOK();
+
+	Status Load(const Char *szPath);
+
+	Status Unload();
+
+	void *GetFunc(const Char *szName);
+
+private:
+
+	void  *m_pHandle;
+
+};
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
 

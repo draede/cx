@@ -26,19 +26,68 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Lock.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Lock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Lock.hpp"
-#else
-	#error "Lock.h not implemented on this platform"
+#if defined(CX_OS_ANDROID)
+
+
+#include "CX/Sys/Process.hpp"
+#include "CX/C/stdlib.h"
+#include "CX/Status.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+Process::Process()
+{
+}
+
+Process::~Process()
+{
+}
+
+Process::ID Process::GetCurrentProcessID()
+{
+	return 0;
+}
+
+Status Process::GetCurrentProcessPath(String &sPath)
+{
+	sPath.clear();
+
+	return Status();
+}
+
+Status Process::GetCurrentProcessPathW(WString &wsPath)
+{
+	wsPath.clear();
+
+	return Status();
+}
+
+Status Process::GetCurrentProcessDir(String &sDir)
+{
+	sDir.clear();
+
+	return Status();
+}
+
+Status Process::GetCurrentProcessDirW(WString &wsDir)
+{
+	wsDir.clear();
+
+	return Status();
+}
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
 

@@ -34,6 +34,8 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Sys/Platform/Windows/DynLib.hpp"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/Sys/Platform/Android/DynLib.hpp"
 #elif defined(CX_OS_POSIX)
 	#include "CX/Sys/Platform/Posix/DynLib.hpp"
 #else

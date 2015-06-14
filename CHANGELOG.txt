@@ -1,3 +1,7 @@
+0.1.13 - 2015-06-14
+  - Fixed using missing Src/IO/Scope.hpp
+  - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a strin char at the end)
+  - Added Lock, RWLock, Process, Thread for Android (nop mostly)
 0.1.12 - 2015-06-09
   - Initial support for NDK build sys
 0.1.11 - 2015-06-08

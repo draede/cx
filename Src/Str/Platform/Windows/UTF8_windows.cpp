@@ -61,11 +61,11 @@ Status UTF8::ToWChar(const Char *szUTF8, Size cUTF8Len, WChar *wszWChar, Size *p
 	{
 		if (NULL == wszWChar)
 		{
-			*pcWCharLen = (Size)(cSize + 1);
+			*pcWCharLen = (Size)cSize;
 
 			return Status();
 		}
-		if (*pcWCharLen < (Size)cSize + 1)
+		if (*pcWCharLen < (Size)cSize)
 		{
 			return Status(Status_TooSmall, "Output buffer too small");
 		}
@@ -73,7 +73,7 @@ Status UTF8::ToWChar(const Char *szUTF8, Size cUTF8Len, WChar *wszWChar, Size *p
 		                                       TYPE_SIZE_MAX == cUTF8Len ? -1 : (int)cUTF8Len, wszWChar, 
 		                                       cSize + 1)))
 		{
-			wszWChar[cSize] = 0;
+			wszWChar[cSize - 1] = 0;
 
 			return Status();
 		}
@@ -112,7 +112,7 @@ Status UTF8::FromWChar(const WChar *wszWChar, Size cWCharLen, Char *szUTF8, Size
 		                                       TYPE_SIZE_MAX == cWCharLen ? -1 : (int)cWCharLen, szUTF8, 
 			                                    cSize, NULL, NULL)))
 		{
-			szUTF8[cSize] = 0;
+			szUTF8[cSize - 1] = 0;
 
 			return Status();
 		}
@@ -161,7 +161,7 @@ Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = TYP
 			return Status(Status_ConversionFailed, "MultiByteToWideChar failed with code {1}", 
 			              GetLastError());
 		}
-		psWChar->assign(pOut, cSize);
+		psWChar->assign(pOut, cSize - 1);
 		if (pOut != pOut)
 		{
 			delete [] pOut;
@@ -211,7 +211,7 @@ Status UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* =
 			return Status(Status_ConversionFailed, "WideCharToMultiByte failed with code {1}", 
 			              GetLastError());
 		}
-		psUTF8->assign(pOut, cSize);
+		psUTF8->assign(pOut, cSize - 1);
 		if (pOut != out)
 		{
 			delete [] pOut;

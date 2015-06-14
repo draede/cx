@@ -32,13 +32,46 @@
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Lock.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Lock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Lock.hpp"
-#else
-	#error "Lock.h not implemented on this platform"
+#if defined(CX_OS_ANDROID)
+
+
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/Scope.hpp"
+#include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+class CX_API Lock : public IObject
+{
+public:
+
+	Lock();
+
+	virtual ~Lock();
+
+	void Enter();
+
+	void Leave();
+
+private:
+
+	bool              m_bMutexIsOK;
+
+};
+
+typedef Scope<Lock, &Lock::Enter, &Lock::Leave>     Locker;
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
 
