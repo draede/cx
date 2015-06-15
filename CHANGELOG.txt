@@ -1,3 +1,5 @@
+0.1.14 - 2015-04-15
+  - Fixed string conversions
 0.1.13 - 2015-06-14
   - Fixed using missing Src/IO/Scope.hpp
   - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a strin char at the end)
