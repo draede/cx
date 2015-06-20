@@ -263,7 +263,8 @@ wchar_to_utf8(const wchar_t *in, size_t insize, char *out, size_t outsize,
 			return (0);		/* no space left */
 
 		/* make it work under different endians */
-		ch = htonl(*w);
+		//ch = htonl(*w);
+		ch = *w;
 		oc = (u_char *)&ch;
 		switch (n) {
 		case 1:

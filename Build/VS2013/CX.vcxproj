@@ -189,6 +189,7 @@
     <ClInclude Include="..\..\Include\CX\Queue.hpp" />
     <ClInclude Include="..\..\Include\CX\Set.hpp" />
     <ClInclude Include="..\..\Include\CX\Slice.hpp" />
+    <ClInclude Include="..\..\Include\CX\SparseHashHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\SparseHashMap.hpp" />
     <ClInclude Include="..\..\Include\CX\SparseHashSet.hpp" />
     <ClInclude Include="..\..\Include\CX\SparseMultiHashMap.hpp" />

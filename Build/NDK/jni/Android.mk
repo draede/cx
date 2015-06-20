@@ -115,10 +115,6 @@ $(LOCAL_PATH)/../../../../Src/Log/ConsoleOutput.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/DefaultFormatter.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/Logger.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/StreamOutput.cpp \
-$(LOCAL_PATH)/../../../../Src/Log/StreamOutput.cpp \
-$(LOCAL_PATH)/../../../../Src/Log/StreamOutput.cpp \
-$(LOCAL_PATH)/../../../../Src/Log/StreamOutput.cpp \
-$(LOCAL_PATH)/../../../../Src/Log/StreamOutput.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/DynLib_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Lock_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Process_android.cpp \

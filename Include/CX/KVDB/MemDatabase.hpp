@@ -50,7 +50,7 @@ public:
 
 	typedef UInt64   MagicType;
 
-	static const MagicType MAGIC = 0x302E3142444D5843; //CXMDB1.0
+	static const MagicType MAGIC; //CXMDB1.0
 
 	static const MemDatabaseConfig   DEFAULT_DB_CONFIG;
 	static const MemTableConfig      DEFAULT_TABLE_CONFIG;

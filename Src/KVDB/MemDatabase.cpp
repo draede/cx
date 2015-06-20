@@ -41,12 +41,13 @@ namespace CX
 namespace KVDB
 {
 
-const MemDatabaseConfig   MemDatabase::DEFAULT_DB_CONFIG;
-const MemTableConfig      MemDatabase::DEFAULT_TABLE_CONFIG;
+const MemDatabaseConfig        MemDatabase::DEFAULT_DB_CONFIG;
+const MemTableConfig           MemDatabase::DEFAULT_TABLE_CONFIG;
+const MemDatabase::MagicType   MemDatabase::MAGIC = 0x302E3142444D5843; //CXMDB1.0
 
 MemDatabase::MemDatabase()
 {
-	m_mapTables.set_deleted_key("~~~~~~~~~~~~~~~~~~~~~~~~");
+	m_mapTables.set_deleted_key("{F1D78E19-32ED-4353-89E8-335913009A37}");
 }
 
 MemDatabase::~MemDatabase()

@@ -1,8 +1,17 @@
+0.1.15 - 2015-06-20
+  - Fixed htonl used in UTF8ToUCS4 (NDK)
+  - Check for debug/release in NDK build
+  - Fixed StreamOutput.cpp being used multiple times in NDK makefile
+  - Removed GCC build sys
+  - More fixes for NDK build sys
+  - Moved KVDB::MemDatabase::MAGIC initialization to cpp file (NDK complaining while linking)
+  - Added SparseHashHelper.hpp (specialize CX::String & CX::WString hash for posix)
+  - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a string char at the end) (again!)
 0.1.14 - 2015-04-15
   - Fixed string conversions
 0.1.13 - 2015-06-14
   - Fixed using missing Src/IO/Scope.hpp
-  - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a strin char at the end)
+  - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a string char at the end)
   - Added Lock, RWLock, Process, Thread for Android (nop mostly)
 0.1.12 - 2015-06-09
   - Initial support for NDK build sys

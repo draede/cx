@@ -53,12 +53,12 @@ class CX_API UTF8 : public IObject
 {
 public:
 
-	//TYPE_SIZE_MAX == cUTF8Len => null terminated
+	//TYPE_SIZE_MAX == cUTF8Len => null terminated and the output will have an 0 added
 	//*pcWCharLen contains the max size of wszWChar
 	//if NULL == wszWChar => *pcWCharLen will contain the needed len
 	static Status ToWChar(const Char *szUTF8, Size cUTF8Len, WChar *wszWChar, Size *pcWCharLen);
 
-	//TYPE_SIZE_MAX == cWCharLen => null terminated
+	//TYPE_SIZE_MAX == cWCharLen => null terminated and the output will have an 0 added
 	//*pcUTF8Len contains the max size of szUTF8
 	//if NULL == szUTF8 => *pcUTF8Len will contain the needed len
 	static Status FromWChar(const WChar *wszWChar, Size cWCharLen, Char *szUTF8, Size *pcUTF8Len);

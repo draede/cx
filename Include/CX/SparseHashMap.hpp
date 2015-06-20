@@ -31,6 +31,7 @@
 
 #include "CX/STLAlloc.hpp"
 #include "CX/GSHAlloc.hpp"
+#include "CX/SparseHashHelper.hpp"
 #include "sparsehash/sparse_hash_map"
 
 
