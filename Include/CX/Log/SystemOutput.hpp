@@ -37,6 +37,6 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/Log/Platform/Posix/SystemOutput.hpp"
 #else
-	#error "SystemOutput.h not implemented on this platform"
+	#error "SystemOutput.hpp not implemented on this platform"
 #endif
 

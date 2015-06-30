@@ -58,3 +58,29 @@ inline void Str_UTF8_Test1()
 	delete [] szUTF8Out;
 }
 
+inline void Str_UTF8_Test2()
+{
+	const CX::Char    szUTF8In[] = "this is a test";
+	const CX::WChar   wszUTF16In[] = L"this is a test";
+	CX::Char          szUTF8Out[256];
+	CX::WChar         wszUTF16Out[256];
+	CX::String        sOut;
+	CX::WString       wsOut;
+	CX::Size          cWLen;
+	CX::Size          cLen;
+	CX::Status        status;
+
+	status = CX::Str::UTF8::ToWChar(szUTF8In, CX::TYPE_SIZE_MAX, wszUTF16Out, &cWLen);
+	status = CX::Str::UTF8::FromWChar(wszUTF16In, CX::TYPE_SIZE_MAX, szUTF8Out, &cLen);
+	status = CX::Str::UTF8::ToWChar(szUTF8In, 15, wszUTF16Out, &cWLen);
+	status = CX::Str::UTF8::FromWChar(wszUTF16In, 15, szUTF8Out, &cLen);
+
+	status = CX::Str::UTF8::ToWChar(szUTF8In, &wsOut, CX::TYPE_SIZE_MAX);
+	cWLen = wsOut.size();
+	status = CX::Str::UTF8::FromWChar(wszUTF16In, &sOut, CX::TYPE_SIZE_MAX);
+	cLen = sOut.size();
+	status = CX::Str::UTF8::ToWChar(szUTF8In, &wsOut, 15);
+	cWLen = wsOut.size();
+	status = CX::Str::UTF8::FromWChar(wszUTF16In, &sOut, 15);
+	cLen = sOut.size();
+}

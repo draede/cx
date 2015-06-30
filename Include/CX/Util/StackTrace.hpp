@@ -37,6 +37,6 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/Util/Platform/Posix/StackTrace.hpp"
 #else
-	#error "StackTrace.h not implemented on this platform"
+	#error "StackTrace.hpp not implemented on this platform"
 #endif
 

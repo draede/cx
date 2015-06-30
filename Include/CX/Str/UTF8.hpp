@@ -37,6 +37,6 @@
 #elif defined(CX_OS_POSIX) 
 	#include "CX/Str/Platform/Posix/UTF8.hpp"
 #else
-	#error "UTF8.h not implemented on this platform"
+	#error "UTF8.hpp not implemented on this platform"
 #endif
 

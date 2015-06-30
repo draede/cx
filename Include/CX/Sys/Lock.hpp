@@ -39,6 +39,6 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/Sys/Platform/Posix/Lock.hpp"
 #else
-	#error "Lock.h not implemented on this platform"
+	#error "Lock.hpp not implemented on this platform"
 #endif
 

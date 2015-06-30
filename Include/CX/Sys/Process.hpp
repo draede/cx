@@ -39,6 +39,6 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/Sys/Platform/Posix/Process.hpp"
 #else
-	#error "Process.h not implemented on this platform"
+	#error "Process.hpp not implemented on this platform"
 #endif
 

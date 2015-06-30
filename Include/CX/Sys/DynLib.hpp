@@ -39,6 +39,6 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/Sys/Platform/Posix/DynLib.hpp"
 #else
-	#error "DynLib.h not implemented on this platform"
+	#error "DynLib.hpp not implemented on this platform"
 #endif
 

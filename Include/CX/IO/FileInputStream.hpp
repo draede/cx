@@ -37,5 +37,5 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/IO/Platform/Posix/FileInputStream.hpp"
 #else
-	#error "FileOutputStream.h not implemented on this platform"
+	#error "FileOutputStream.hpp not implemented on this platform"
 #endif

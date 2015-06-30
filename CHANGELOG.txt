@@ -1,3 +1,7 @@
+0.1.16 - 2015-06-30
+  - fixed header names in messages
+  - removed KVDB
+  - removed ForestDB contrib
 0.1.15 - 2015-06-20
   - Fixed htonl used in UTF8ToUCS4 (NDK)
   - Check for debug/release in NDK build

@@ -37,6 +37,6 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/Util/Platform/Posix/Time.hpp"
 #else
-	#error "Time.h not implemented on this platform"
+	#error "Time.hpp not implemented on this platform"
 #endif
 

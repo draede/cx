@@ -39,6 +39,6 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/Sys/Platform/Posix/Thread.hpp"
 #else
-	#error "Thread.h not implemented on this platform"
+	#error "Thread.hpp not implemented on this platform"
 #endif
 

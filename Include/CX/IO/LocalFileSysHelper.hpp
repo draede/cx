@@ -37,7 +37,7 @@
 #elif defined(CX_OS_POSIX)
 	#include "CX/IO/Platform/Posix/LocalFileSysHelper.hpp"
 #else
-	#error "LocalFileSysHelper.h not implemented on this platform"
+	#error "LocalFileSysHelper.hpp not implemented on this platform"
 #endif
 
 
