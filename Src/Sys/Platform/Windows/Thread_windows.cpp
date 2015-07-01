@@ -95,13 +95,43 @@ void Thread::Sleep(Size cMilliseconds)
 	::Sleep((DWORD)cMilliseconds);
 }
 
+Status Thread::Run(const std::function<void()> &func)
+{
+	if (NULL != m_hThread)
+	{
+		return Status(Status_Busy, "Thread already started");
+	}
+
+	std::function<void()> *pFunc = new std::function<void()>(func);
+
+	if (NULL == *pFunc)
+	{
+		return Status(Status_MemAllocFailed, "Memory allocation error");
+	}
+
+	DWORD dwID;
+
+	if (NULL != (m_hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&ThreadProc, pFunc, 0, &dwID)))
+	{
+		m_nID = (ID)dwID;
+
+		return Status();
+	}
+	else
+	{
+		delete(pFunc);
+
+		return Status(Status_OpenFailed, "CreateThread failed with error {1}", GetLastError());
+	}
+}
+
 DWORD Thread::ThreadProc(void *pArg)
 {
-	IHelper *pHelper = (IHelper *)pArg;
+	std::function<void()> *pFunc = (std::function<void()> *)pArg;
 
-	pHelper->Run();
+	(*pFunc)();
 
-	delete(pHelper);
+	delete pFunc;
 
 	return 0;
 }

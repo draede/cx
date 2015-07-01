@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/C/Platform/Windows/stdarg.h"
-#elif defined(CX_OS_POSIX)
-	#include "CX/C/Platform/Posix/stdarg.h"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/C/Platform/Android/stdarg.h"
+#elif defined(CX_OS_IOS)
+	#include "CX/C/Platform/iOS/stdarg.h"
 #else
 	#error "stdarg.h not implemented on this platform"
 #endif

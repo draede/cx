@@ -29,18 +29,24 @@
 #pragma once
 
 
-#ifdef _DEBUG
+#if defined(_DEBUG) || !defined(NDEBUG)
 	#define CX_DEBUG
 #endif
 
 #if defined(_WIN32)
+	#define CX_OS           "WINDOWS"
+	#define CX_OS_WINDOWS
 	#define CX_TLS          __declspec(thread)
 	#define CX_DLL_EXPORT   __declspec(dllexport)
 	#define CX_DLL_IMPORT   __declspec(dllimport)
 	#define CX_INLINE       __inline
-#ifdef _UNICODE
-	#define CX_WCHAR_IS_DEFAULT
+	
+#ifdef _WIN64
+	#define CX_64BIT_ARCH
+#else
+	#define CX_32BIT_ARCH
 #endif
+
 #if _MSC_VER == 1400
 	#define CX_BUILDSYS_VS2005
 	#define CX_BUILDSYS     "VS2005"
@@ -57,70 +63,48 @@
 	#define CX_BUILDSYS_VS2013
 	#define CX_BUILDSYS     "VS2013"
 #endif
-#ifdef _WIN64
+
+#endif
+
+#ifdef __ANDROID__
+	#define CX_OS           "ANDROID"
+	#define CX_OS_ANDROID
+	#define CX_TLS          __thread
+	#define CX_DLL_EXPORT
+	#define CX_DLL_IMPORT
+	#define CX_INLINE       inline
+
+#ifdef __LP64__
 	#define CX_64BIT_ARCH
 #else
 	#define CX_32BIT_ARCH
 #endif
-#if (defined(_MSC_VER) && (_MSC_VER >= 1700) && !_USING_V110_SDK71_)
-#include <winapifamily.h>
-#if WINAPI_FAMILY == WINAPI_FAMILY_PC_APP
-	//Windows Modern (=Metro)
-	#define CX_OS_WINSTORE
-#elif WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP
-	//Windows Phone
-	#define CX_OS_WINPHONE
-#else
-	//Windows
-	#define CX_OS_WINDOWS
-#endif
-#else
-	//Windows
-	#define CX_OS_WINDOWS
-#endif
-#endif
 
-#ifdef __ANDROID__
-	#define CX_TLS          __thread
-	#define CX_DLL_EXPORT
-	#define CX_DLL_IMPORT
-	//Android
-	#define CX_OS_ANDROID
-	#define CX_OS_POSIX
 	#define CX_BUILDSYS_NDK
 	#define CX_BUILDSYS     "NDK"
 #endif
 
-#if defined(__linux__) && !defined(__ANDROID__)
-	#define CX_TLS		__thread
-	#define CX_DLL_EXPORT
-	#define CX_DLL_IMPORT
-	//Linux
-	#define CX_OS_LINUX
-	#define CX_OS_POSIX
-	#define CX_BUILDSYS_GCC
-	#define CX_BUILDSYS     "GCC"
-#endif
-
 #if defined(__APPLE__) && defined(__MACH__)
+	#include <TargetConditionals.h>
+
+#if TARGET_OS_IPHONE == 1
+	#define CX_OS           "IOS"
+	#define CX_OS_IOS
 	#define CX_TLS          __thread
 	#define CX_DLL_EXPORT
 	#define CX_DLL_IMPORT
-	#define CX_BUILDSYS_CLANG
-	#define CX_BUILDSYS     "CLANG"
-#include <TargetConditionals.h>
-#if TARGET_OS_MAC == 1
-	//OSX
-	#define CX_OS_OSX
-	#define CX_OS_POSIX
-#elif TARGET_IPHONE_SIMULATOR == 1
-	//iOS Simulator
-	#define CX_OS_IOSSIM
-	#define CX_OS_POSIX
-#elif TARGET_OS_IPHONE == 1
-	//iOS
-	#define CX_OS_IOS
-	#define CX_OS_POSIX
+	#define CX_INLINE       inline
+
+#ifdef __LP64__
+	#define CX_64BIT_ARCH
+#else
+	#define CX_32BIT_ARCH
 #endif
+
+	#define CX_BUILDSYS_XCODE
+	#define CX_BUILDSYS     "XCODE"
 #endif
+
+#endif
+
 

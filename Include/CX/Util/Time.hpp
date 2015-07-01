@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Util/Platform/Windows/Time.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Util/Platform/Posix/Time.hpp"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/Util/Platform/Android/Time.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/Util/Platform/iOS/Time.hpp"
 #else
 	#error "Time.hpp not implemented on this platform"
 #endif

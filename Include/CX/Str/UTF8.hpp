@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Str/Platform/Windows/UTF8.hpp"
-#elif defined(CX_OS_POSIX) 
-	#include "CX/Str/Platform/Posix/UTF8.hpp"
+#elif defined(CX_OS_ANDROID) 
+	#include "CX/Str/Platform/Android/UTF8.hpp"
+#elif defined(CX_OS_IOS) 
+	#include "CX/Str/Platform/iOS/UTF8.hpp"
 #else
 	#error "UTF8.hpp not implemented on this platform"
 #endif

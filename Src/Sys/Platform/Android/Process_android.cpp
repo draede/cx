@@ -63,23 +63,9 @@ Status Process::GetCurrentProcessPath(String &sPath)
 	return Status();
 }
 
-Status Process::GetCurrentProcessPathW(WString &wsPath)
-{
-	wsPath.clear();
-
-	return Status();
-}
-
 Status Process::GetCurrentProcessDir(String &sDir)
 {
 	sDir.clear();
-
-	return Status();
-}
-
-Status Process::GetCurrentProcessDirW(WString &wsDir)
-{
-	wsDir.clear();
 
 	return Status();
 }

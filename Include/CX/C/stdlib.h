@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/C/Platform/Windows/stdlib.h"
-#elif defined(CX_OS_POSIX)
-	#include "CX/C/Platform/Posix/stdlib.h"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/C/Platform/Android/stdlib.h"
+#elif defined(CX_OS_IOS)
+	#include "CX/C/Platform/iOS/stdlib.h"
 #else
 	#error "stdlib.h not implemented on this platform"
 #endif

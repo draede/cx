@@ -34,7 +34,6 @@
 #include "CX/Vector.hpp"
 #include "CX/String.hpp"
 #include "CX/Status.hpp"
-#include "CX/Util/IFunction.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/IObject.hpp"
 

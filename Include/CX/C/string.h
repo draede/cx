@@ -35,8 +35,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/C/Platform/Windows/string.h"
-#elif defined(CX_OS_POSIX)
-	#include "CX/C/Platform/Posix/string.h"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/C/Platform/Android/string.h"
+#elif defined(CX_OS_IOS)
+	#include "CX/C/Platform/iOS/string.h"
 #else
 	#error "string.h not implemented on this platform"
 #endif

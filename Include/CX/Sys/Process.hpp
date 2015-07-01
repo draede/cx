@@ -36,8 +36,8 @@
 	#include "CX/Sys/Platform/Windows/Process.hpp"
 #elif defined(CX_OS_ANDROID)
 	#include "CX/Sys/Platform/Android/Process.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Process.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/Sys/Platform/iOS/Process.hpp"
 #else
 	#error "Process.hpp not implemented on this platform"
 #endif

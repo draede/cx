@@ -1,3 +1,9 @@
+0.1.17 - 2015-07-01
+  - removed function
+  - removed container
+  - switched to std::function for Thread
+  - refactored cross platform support
+  - added XCODE buildsys (ios)
 0.1.16 - 2015-06-30
   - fixed header names in messages
   - removed KVDB

@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/C/Platform/Windows/Types.h"
-#elif defined(CX_OS_POSIX)
-	#include "CX/C/Platform/Posix/Types.h"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/C/Platform/Android/Types.h"
+#elif defined(CX_OS_IOS)
+	#include "CX/C/Platform/iOS/Types.h"
 #else
 	#error "Types.h not implemented on this platform"
 #endif

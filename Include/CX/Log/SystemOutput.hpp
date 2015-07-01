@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Log/Platform/Windows/SystemOutput.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Log/Platform/Posix/SystemOutput.hpp"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/Log/Platform/Android/SystemOutput.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/Log/Platform/iOS/SystemOutput.hpp"
 #else
 	#error "SystemOutput.hpp not implemented on this platform"
 #endif

@@ -57,11 +57,7 @@ public:
 
 	static Status GetCurrentProcessPath(String &sPath);
 
-	static Status GetCurrentProcessPathW(WString &wsPath);
-
 	static Status GetCurrentProcessDir(String &sDir);
-
-	static Status GetCurrentProcessDirW(WString &wsDir);
 
 private:
 

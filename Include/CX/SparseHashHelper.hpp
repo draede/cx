@@ -5,7 +5,7 @@
 #include "CX/Platform.hpp"
 
 
-#ifdef CX_OS_POSIX
+#ifdef CX_OS_ANDROID
 
 
 #include "CX/String.hpp"

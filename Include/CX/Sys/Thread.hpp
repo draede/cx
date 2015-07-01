@@ -36,8 +36,8 @@
 	#include "CX/Sys/Platform/Windows/Thread.hpp"
 #elif defined(CX_OS_ANDROID)
 	#include "CX/Sys/Platform/Android/Thread.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Thread.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/Sys/Platform/iOS/Thread.hpp"
 #else
 	#error "Thread.hpp not implemented on this platform"
 #endif

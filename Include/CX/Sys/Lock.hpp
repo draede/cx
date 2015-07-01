@@ -36,8 +36,8 @@
 	#include "CX/Sys/Platform/Windows/Lock.hpp"
 #elif defined(CX_OS_ANDROID)
 	#include "CX/Sys/Platform/Android/Lock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/Lock.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/Sys/Platform/iOS/Lock.hpp"
 #else
 	#error "Lock.hpp not implemented on this platform"
 #endif

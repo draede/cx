@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/C/Platform/Windows/ctype.h"
-#elif defined(CX_OS_POSIX)
-	#include "CX/C/Platform/Posix/ctype.h"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/C/Platform/Android/ctype.h"
+#elif defined(CX_OS_IOS)
+	#include "CX/C/Platform/iOS/ctype.h"
 #else
 	#error "ctype.h not implemented on this platform"
 #endif

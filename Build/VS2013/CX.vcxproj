@@ -93,12 +93,18 @@
     <ClInclude Include="..\..\Include\CX\C\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Limits.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform.h" />
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\ctype.h" />
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdarg.h" />
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdio.h" />
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdlib.h" />
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\string.h" />
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\Types.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\ctype.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdarg.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdio.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdlib.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\string.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\Types.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\ctype.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdarg.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdio.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdlib.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\string.h" />
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\Types.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdarg.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdio.h" />
@@ -145,9 +151,12 @@
     <ClInclude Include="..\..\Include\CX\IO\LocalFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\FileInputStream.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\FileOutputStream.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\LocalFileSysHelper.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\FileInputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\FileOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\LocalFileSysHelper.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\FileInputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\FileOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\LocalFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysHelper.hpp" />
@@ -159,7 +168,8 @@
     <ClInclude Include="..\..\Include\CX\Log\IOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Level.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Logger.hpp" />
-    <ClInclude Include="..\..\Include\CX\Log\Platform\Posix\SystemOutput.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Android\SystemOutput.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp" />
@@ -183,7 +193,8 @@
     <ClInclude Include="..\..\Include\CX\String.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\HexBinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\IBinStr.hpp" />
-    <ClInclude Include="..\..\Include\CX\Str\Platform\Posix\UTF8.hpp" />
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Android\UTF8.hpp" />
+    <ClInclude Include="..\..\Include\CX\Str\Platform\iOS\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Z85BinStr.hpp" />
@@ -192,11 +203,16 @@
     <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\DynLib.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Lock.hpp" />
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\DynLib.hpp" />
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Lock.hpp" />
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Process.hpp" />
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\RWLock.hpp" />
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Thread.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\DynLib.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Lock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Process.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\RWLock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Thread.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\DynLib.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Lock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Process.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\RWLock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Thread.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Process.hpp" />
@@ -210,13 +226,13 @@
     <ClInclude Include="..\..\Include\CX\UOMultiMap.hpp" />
     <ClInclude Include="..\..\Include\CX\UOMultiSet.hpp" />
     <ClInclude Include="..\..\Include\CX\UOSet.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\Container.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\Function.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\IFunction.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\StackTrace.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\Time.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\Timer.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\StackTrace.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Time.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Timer.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\StackTrace.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Time.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\StackTrace.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.hpp" />
@@ -415,6 +431,38 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c" />
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c" />
+    <ClCompile Include="..\..\Src\C\Platform\Android\Alloc_android.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\C\Platform\iOS\Alloc_ios.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">CompileAsC</CompileAs>
@@ -434,7 +482,8 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">CompileAsC</CompileAs>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
-    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Posix\DetailPrint_posix.cpp" />
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Android\DetailPrint_android.cpp" />
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\iOS\DetailPrint_ios.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp" />
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp" />
@@ -448,40 +497,54 @@
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
     <ClCompile Include="..\..\Src\IO\MemInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp" />
-    <ClCompile Include="..\..\Src\IO\Platform\Posix\FileInputStream_posix.cpp" />
-    <ClCompile Include="..\..\Src\IO\Platform\Posix\FileOutputStream_posix.cpp" />
-    <ClCompile Include="..\..\Src\IO\Platform\Posix\LocalFileSysHelper_posix.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Android\FileInputStream_android.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Android\FileOutputStream_android.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Android\LocalFileSysHelper_android.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileInputStream_ios.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileOutputStream_ios.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\LocalFileSysHelper_ios.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileInputStream_windows.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
-    <ClCompile Include="..\..\Src\Log\Platform\Posix\SystemOutput_posix.cpp" />
+    <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput_android.cpp" />
+    <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
-    <ClCompile Include="..\..\Src\Component.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />
+    <ClCompile Include="..\..\Src\Platform\Android\Component_android.cpp" />
+    <ClCompile Include="..\..\Src\Platform\iOS\Component_ios.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
     <ClCompile Include="..\..\Src\Str\HexBinStr.cpp" />
-    <ClCompile Include="..\..\Src\Str\Platform\Posix\UTF8_posix.cpp" />
+    <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8_android.cpp" />
+    <ClCompile Include="..\..\Src\Str\Platform\iOS\UTF8_ios.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8_windows.cpp" />
     <ClCompile Include="..\..\Src\Str\Z85BinStr.cpp" />
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\DynLib_posix.cpp" />
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Lock_posix.cpp" />
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Process_posix.cpp" />
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\RWLock_posix.cpp" />
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Thread_posix.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\DynLib_android.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Lock_android.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Process_android.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\RWLock_android.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Thread_android.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\DynLib_ios.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Lock_ios.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Process_ios.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\RWLock_ios.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Thread_ios.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
-    <ClCompile Include="..\..\Src\Util\Platform\Posix\StackTrace_posix.cpp" />
-    <ClCompile Include="..\..\Src\Util\Platform\Posix\Timer_posix.cpp" />
-    <ClCompile Include="..\..\Src\Util\Platform\Posix\Time_posix.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Android\StackTrace_android.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Android\Timer_android.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Android\Time_android.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\StackTrace_ios.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\Timer_ios.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\Time_ios.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\StackTrace_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp" />

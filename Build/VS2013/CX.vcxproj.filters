@@ -187,50 +187,95 @@
     <Filter Include="Source Files\IO\Platform\Windows">
       <UniqueIdentifier>{43d75adf-2a54-4261-ad01-01a8ef124bd4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\C\Platform\Posix">
-      <UniqueIdentifier>{b419a5b6-9a6a-456d-8100-cfa2062bbbf6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\C\Platform\Posix">
-      <UniqueIdentifier>{ce69c311-abc8-4a6a-93a2-cdd87d194217}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Util\Platform\Posix">
-      <UniqueIdentifier>{b7732209-1e85-4807-ba71-a725fc6272c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Util\Platform\Posix">
-      <UniqueIdentifier>{97abae2e-9b57-42ac-8851-62ffb4243021}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Sys\Platform\Posix">
-      <UniqueIdentifier>{c5d3da98-d897-405e-bcf3-33035b90a989}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Sys\Platform\Posix">
-      <UniqueIdentifier>{e969d6f5-ff7f-4b6c-acf0-310bb38bf9ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Str\Platform\Posix">
-      <UniqueIdentifier>{8bb3b450-3195-4377-9b27-40ad7d7710c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Str\Platform\Posix">
-      <UniqueIdentifier>{907f17c3-f539-49a7-824c-e0177a033904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Detail\DetailPrint\Platform\Posix">
-      <UniqueIdentifier>{c58842c4-6e27-41a8-b0a2-84213b9d66d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\IO\Platform\Posix">
-      <UniqueIdentifier>{3f92c816-82db-4cf6-8453-f9a7ea45c5aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\IO\Platform\Posix">
-      <UniqueIdentifier>{45ebb771-0b12-46da-adae-13114fddcdac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Log\Platform\Posix">
-      <UniqueIdentifier>{ad28a16c-26a9-48c9-9232-5ef45efb82ef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Log\Platform">
       <UniqueIdentifier>{fc72f02c-b630-48b6-961c-ee026638810e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Log\Platform\Posix">
-      <UniqueIdentifier>{7011339e-5c91-4982-9c39-459143708eb9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Log\Platform\Windows">
       <UniqueIdentifier>{f9fef98d-8936-4e0d-96d8-5d9d4e29e5ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C\Platform\Android">
+      <UniqueIdentifier>{8deebe0d-072e-42e1-b306-20d684d32938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C\Platform\iOS">
+      <UniqueIdentifier>{e6de4062-9f29-49f9-95d3-7179452da2f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Platform\Android">
+      <UniqueIdentifier>{5ca0d3dc-a536-4df4-8fe5-a84155837f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Platform\iOS">
+      <UniqueIdentifier>{d86d7842-f1e7-48ed-854c-eb11a2599131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform\Android">
+      <UniqueIdentifier>{4bc2772e-1ad0-4475-8413-204f2e17250f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform\iOS">
+      <UniqueIdentifier>{49cf426e-58d5-4f01-9c0d-d31fc840e398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform\Android">
+      <UniqueIdentifier>{37340d2c-c1f5-459e-8bd6-9e3aa6e6ae9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform\iOS">
+      <UniqueIdentifier>{efc4c106-d7c0-4364-a2a2-25311be6d14b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform\Android">
+      <UniqueIdentifier>{d410981f-f22d-43b2-8fb3-2f121e657ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform\iOS">
+      <UniqueIdentifier>{a79ee6c2-a571-4c44-bd93-f401a10a79b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform\Android">
+      <UniqueIdentifier>{22a148d9-9231-4330-91ad-b686f2165e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform\iOS">
+      <UniqueIdentifier>{c1b4852a-0ba5-436a-8457-85751ad406ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform\Android">
+      <UniqueIdentifier>{c0e73bc5-ce56-423d-87f1-54867e10d713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform\iOS">
+      <UniqueIdentifier>{92a04ce5-1d22-4116-9ed0-4222ff5fce91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform\Android">
+      <UniqueIdentifier>{1420aa2e-060d-4fcd-a753-d71eb2f08023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform\iOS">
+      <UniqueIdentifier>{a1046345-9db9-4df7-bd14-236207388ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform\Android">
+      <UniqueIdentifier>{4084a048-f1f5-4f23-842e-b50fdc47899d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform\iOS">
+      <UniqueIdentifier>{0384685b-5d69-480b-9bb9-b31cca9f1163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform\Android">
+      <UniqueIdentifier>{a94227b4-f8ab-46f0-9191-432cd5ab1390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform\iOS">
+      <UniqueIdentifier>{942cd640-c014-4794-b2df-7865b1ce71d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platform\Android">
+      <UniqueIdentifier>{e192c882-2f82-4569-afa6-e1fc79f520b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platform\iOS">
+      <UniqueIdentifier>{8c7aed07-9316-4ebc-8c94-db31787a77f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform\Android">
+      <UniqueIdentifier>{f1b3e3bb-fdda-4611-bdf3-6ac2f4131a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform\iOS">
+      <UniqueIdentifier>{d9f544bd-6a6f-4c55-b61a-6b74e769de57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform\Android">
+      <UniqueIdentifier>{ebd9664d-dd28-4f9c-acf5-6376b2241784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform\iOS">
+      <UniqueIdentifier>{d0f73c60-9beb-4fcc-93c3-a4aa99ac8f35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform\Android">
+      <UniqueIdentifier>{4004463c-e66f-4716-ac7b-06e0699a7aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform\iOS">
+      <UniqueIdentifier>{3571bb27-c70e-46dd-bf25-6d20541bf4a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -407,15 +452,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp">
       <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Container.hpp">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\IFunction.hpp">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Function.hpp">
-      <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Sys\Thread.hpp">
       <Filter>Header Files\Sys</Filter>
@@ -651,77 +687,134 @@
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysHelper.hpp">
       <Filter>Header Files\IO\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\ctype.h">
-      <Filter>Header Files\C\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdarg.h">
-      <Filter>Header Files\C\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdio.h">
-      <Filter>Header Files\C\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\stdlib.h">
-      <Filter>Header Files\C\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\string.h">
-      <Filter>Header Files\C\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Platform\Posix\Types.h">
-      <Filter>Header Files\C\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\StackTrace.hpp">
-      <Filter>Header Files\Util\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\Time.hpp">
-      <Filter>Header Files\Util\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Posix\Timer.hpp">
-      <Filter>Header Files\Util\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\DynLib.hpp">
-      <Filter>Header Files\Sys\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Lock.hpp">
-      <Filter>Header Files\Sys\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Process.hpp">
-      <Filter>Header Files\Sys\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\RWLock.hpp">
-      <Filter>Header Files\Sys\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Sys\Platform\Posix\Thread.hpp">
-      <Filter>Header Files\Sys\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Str\Platform\Posix\UTF8.hpp">
-      <Filter>Header Files\Str\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\LocalFileSysHelper.hpp">
-      <Filter>Header Files\IO\Platform\Posix</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileInputStream.hpp">
       <Filter>Header Files\IO\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileOutputStream.hpp">
       <Filter>Header Files\IO\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\FileInputStream.hpp">
-      <Filter>Header Files\IO\Platform\Posix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\Platform\Posix\FileOutputStream.hpp">
-      <Filter>Header Files\IO\Platform\Posix</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\SystemOutput.hpp">
       <Filter>Header Files\Log\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\Platform\Posix\SystemOutput.hpp">
-      <Filter>Header Files\Log\Platform\Posix</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\JSON\RapidJSONStreams.hpp">
       <Filter>Header Files\Data\JSON</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\SparseHashHelper.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\ctype.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdarg.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdio.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdlib.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\string.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\Types.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\ctype.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdarg.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdio.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdlib.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\string.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\Types.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\FileInputStream.hpp">
+      <Filter>Header Files\IO\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\FileOutputStream.hpp">
+      <Filter>Header Files\IO\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\FileInputStream.hpp">
+      <Filter>Header Files\IO\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\FileOutputStream.hpp">
+      <Filter>Header Files\IO\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Android\SystemOutput.hpp">
+      <Filter>Header Files\Log\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\SystemOutput.hpp">
+      <Filter>Header Files\Log\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Android\UTF8.hpp">
+      <Filter>Header Files\Str\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Platform\iOS\UTF8.hpp">
+      <Filter>Header Files\Str\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\DynLib.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Lock.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Process.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\RWLock.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Thread.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\DynLib.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Lock.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Process.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\RWLock.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Thread.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\StackTrace.hpp">
+      <Filter>Header Files\Util\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Time.hpp">
+      <Filter>Header Files\Util\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Timer.hpp">
+      <Filter>Header Files\Util\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\StackTrace.hpp">
+      <Filter>Header Files\Util\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Time.hpp">
+      <Filter>Header Files\Util\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Timer.hpp">
+      <Filter>Header Files\Util\Platform\iOS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -872,9 +965,6 @@
     <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32_internal.cpp">
       <Filter>Contrib\CRC32Slice8</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\IObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -899,47 +989,8 @@
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Posix\StackTrace_posix.cpp">
-      <Filter>Source Files\Util\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Posix\Time_posix.cpp">
-      <Filter>Source Files\Util\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Posix\Timer_posix.cpp">
-      <Filter>Source Files\Util\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\DynLib_posix.cpp">
-      <Filter>Source Files\Sys\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Lock_posix.cpp">
-      <Filter>Source Files\Sys\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Process_posix.cpp">
-      <Filter>Source Files\Sys\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\RWLock_posix.cpp">
-      <Filter>Source Files\Sys\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Posix\Thread_posix.cpp">
-      <Filter>Source Files\Sys\Platform\Posix</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8_windows.cpp">
       <Filter>Source Files\Str\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Str\Platform\Posix\UTF8_posix.cpp">
-      <Filter>Source Files\Str\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Posix\DetailPrint_posix.cpp">
-      <Filter>Source Files\Detail\DetailPrint\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Posix\LocalFileSysHelper_posix.cpp">
-      <Filter>Source Files\IO\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Posix\FileInputStream_posix.cpp">
-      <Filter>Source Files\IO\Platform\Posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Posix\FileOutputStream_posix.cpp">
-      <Filter>Source Files\IO\Platform\Posix</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileInputStream_windows.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
@@ -947,8 +998,101 @@
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Log\Platform\Posix\SystemOutput_posix.cpp">
-      <Filter>Source Files\Log\Platform\Posix</Filter>
+    <ClCompile Include="..\..\Src\C\Platform\Android\Alloc_android.c">
+      <Filter>Source Files\C\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\C\Platform\iOS\Alloc_ios.c">
+      <Filter>Source Files\C\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Android\DetailPrint_android.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\iOS\DetailPrint_ios.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\FileInputStream_android.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\FileOutputStream_android.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\LocalFileSysHelper_android.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileInputStream_ios.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileOutputStream_ios.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\LocalFileSysHelper_ios.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput_android.cpp">
+      <Filter>Source Files\Log\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp">
+      <Filter>Source Files\Log\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Platform\Android\Component_android.cpp">
+      <Filter>Source Files\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Platform\iOS\Component_ios.cpp">
+      <Filter>Source Files\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8_android.cpp">
+      <Filter>Source Files\Str\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\iOS\UTF8_ios.cpp">
+      <Filter>Source Files\Str\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\DynLib_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Lock_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Process_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\RWLock_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Thread_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\DynLib_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Lock_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Process_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\RWLock_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Thread_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Android\StackTrace_android.cpp">
+      <Filter>Source Files\Util\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Android\Time_android.cpp">
+      <Filter>Source Files\Util\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Android\Timer_android.cpp">
+      <Filter>Source Files\Util\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\StackTrace_ios.cpp">
+      <Filter>Source Files\Util\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\Time_ios.cpp">
+      <Filter>Source Files\Util\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\Timer_ios.cpp">
+      <Filter>Source Files\Util\Platform\iOS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

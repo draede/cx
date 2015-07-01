@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Util/Platform/Windows/StackTrace.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Util/Platform/Posix/StackTrace.hpp"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/Util/Platform/Android/StackTrace.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/Util/Platform/iOS/StackTrace.hpp"
 #else
 	#error "StackTrace.hpp not implemented on this platform"
 #endif

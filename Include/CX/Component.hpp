@@ -29,111 +29,16 @@
 #pragma once
 
 
-#include "CX/Types.hpp"
-#ifndef CX_OS_ANDROID
-#include "CX/Sys/Atomic.hpp"
-#endif
-#include "CX/C/string.h"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
+#include "CX/Platform.hpp"
 
 
-#define CX_COMPONENT(name)   static const CX::Char *ID() { return #name; }
-
-#define CX_COMPONENT_BEGIN(name)                                                                                                 \
-name()                                                                                                                           \
-{                                                                                                                                \
-}                                                                                                                                \
-~name()                                                                                                                          \
-{                                                                                                                                \
-}                                                                                                                                \
-virtual void *GetInterface(const CX::Char *szID)                                                                                 \
-{
-
-#define CX_COMPONENT_INTERFACE(name)                                                                                             \
-if (0 == cx_strcmp(szID, name::ID()))                                                                                            \
-{                                                                                                                                \
-	return (name *)this;                                                                                                          \
-}
-
-#define CX_COMPONENT_END()                                                                                                       \
-	return NULL;                                                                                                                  \
-}
-
-namespace CX
-{
-
-class CX_API Component : public IObject
-{
-public:
-
-	Component();
-
-	virtual ~Component();
-
-	template <typename T> static T *Create()
-	{
-		T         *pInst = new T();
-		Component *pObj  = (Component *)dynamic_cast<T *>(pInst);
-
-		if (NULL == pObj)
-		{
-			delete(pInst);
-
-			return NULL;
-		}
-		else
-		{
-			pObj->Init();
-
-			return pInst;
-		}
-	}
-
-	template <typename T> T *AcquireInterface()
-	{
-		T *pInst;
-
-		if (NULL != (pInst = (T *)GetInterface(T::ID())))
-		{
-			Retain();
-
-			return pInst;
-		}
-		else
-		{
-			return NULL;
-		}
-	}
-
-	template <typename T> void ReleaseInterface(T *pInst)
-	{
-		Release();
-	}
-
-	bool Destroy(bool bForce = false);
-
-	Size GetRefCount();
-
-protected:
-
-	virtual void *GetInterface(const Char *szID) = 0;
-
-private:
-
-#ifdef CX_OS_ANDROID
-	UInt32   m_refcnt;
+#if defined(CX_OS_WINDOWS)
+	#include "CX/Platform/Windows/Component.hpp"
+#elif defined(CX_OS_ANDROID) 
+	#include "CX/Platform/Android/Component.hpp"
+#elif defined(CX_OS_IOS) 
+	#include "CX/Platform/iOS/Component.hpp"
 #else
-	Sys::AtomicUInt32   m_refcnt;
+	#error "UTF8.hpp not implemented on this platform"
 #endif
-	
-	void Init();
-
-	void Retain();
-
-	bool Release();
-
-};
-
-}//namespace CX
 

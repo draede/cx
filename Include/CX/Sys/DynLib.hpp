@@ -36,8 +36,8 @@
 	#include "CX/Sys/Platform/Windows/DynLib.hpp"
 #elif defined(CX_OS_ANDROID)
 	#include "CX/Sys/Platform/Android/DynLib.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/DynLib.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/Sys/Platform/iOS/DynLib.hpp"
 #else
 	#error "DynLib.hpp not implemented on this platform"
 #endif

@@ -36,8 +36,8 @@
 	#include "CX/Sys/Platform/Windows/RWLock.hpp"
 #elif defined(CX_OS_ANDROID)
 	#include "CX/Sys/Platform/Android/RWLock.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/Sys/Platform/Posix/RWLock.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/Sys/Platform/iOS/RWLock.hpp"
 #else
 	#error "RWLock.hpp not implemented on this platform"
 #endif

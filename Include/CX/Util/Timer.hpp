@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/Util/Platform/Windows/Timer.hpp"
-#elif defined (CX_OS_POSIX)
-	#include "CX/Util/Platform/Posix/Timer.hpp"
+#elif defined (CX_OS_ANDROID)
+	#include "CX/Util/Platform/Android/Timer.hpp"
+#elif defined (CX_OS_IOS)
+	#include "CX/Util/Platform/iOS/Timer.hpp"
 #else
 	#error "Timer.hpp not implemented on this platform"
 #endif

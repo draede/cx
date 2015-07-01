@@ -44,7 +44,6 @@ namespace Sys
 
 Thread::Thread()
 {
-	m_bThreadIsOK = false;
 }
 
 Thread::~Thread()
@@ -58,16 +57,11 @@ Status Thread::Wait()
 
 Bool Thread::IsRunning()
 {
-	return m_bThreadIsOK;
+	return false;
 }
 
 Thread::ID Thread::GetID()
 {
-	if (!m_bThreadIsOK)
-	{
-		return 0;
-	}
-
 	return 0;
 }
 
@@ -81,10 +75,6 @@ void Thread::Sleep(Size cMilliseconds)
 	cMilliseconds;
 }
 
-void *Thread::ThreadProc(void *pArg)
-{
-	return NULL;
-}
 
 }//namespace Sys
 

@@ -34,8 +34,10 @@
 
 #if defined(CX_OS_WINDOWS)
 	#include "CX/IO/Platform/Windows/FileInputStream.hpp"
-#elif defined(CX_OS_POSIX)
-	#include "CX/IO/Platform/Posix/FileInputStream.hpp"
+#elif defined(CX_OS_ANDROID)
+	#include "CX/IO/Platform/Android/FileInputStream.hpp"
+#elif defined(CX_OS_IOS)
+	#include "CX/IO/Platform/iOS/FileInputStream.hpp"
 #else
 	#error "FileOutputStream.hpp not implemented on this platform"
 #endif
