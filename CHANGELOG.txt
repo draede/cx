@@ -1,3 +1,6 @@
+0.1.18 - 2015-07-02
+  - changed XCODE project name to uppercase (CX)
+  - fixed CC_TARGET_OS_IPHONE not defined
 0.1.17 - 2015-07-01
   - removed function
   - removed container

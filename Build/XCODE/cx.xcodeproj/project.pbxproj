@@ -108,7 +108,7 @@
 		4A0BE8671B447ECC005348CB /* StackTrace_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StackTrace_ios.cpp; path = ../../Src/Util/Platform/iOS/StackTrace_ios.cpp; sourceTree = "<group>"; };
 		4A0BE8681B447ECC005348CB /* Time_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Time_ios.cpp; path = ../../Src/Util/Platform/iOS/Time_ios.cpp; sourceTree = "<group>"; };
 		4A0BE8691B447ECC005348CB /* Timer_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Timer_ios.cpp; path = ../../Src/Util/Platform/iOS/Timer_ios.cpp; sourceTree = "<group>"; };
-		4A6876B91B43B2DD0007E26E /* libcx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A6876B91B43B2DD0007E26E /* libCX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCX.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,7 +175,7 @@
 		4A6876BA1B43B2DD0007E26E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4A6876B91B43B2DD0007E26E /* libcx.a */,
+				4A6876B91B43B2DD0007E26E /* libCX.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,9 +183,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4A6876B81B43B2DD0007E26E /* cx */ = {
+		4A6876B81B43B2DD0007E26E /* CX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4A6876CD1B43B2DE0007E26E /* Build configuration list for PBXNativeTarget "cx" */;
+			buildConfigurationList = 4A6876CD1B43B2DE0007E26E /* Build configuration list for PBXNativeTarget "CX" */;
 			buildPhases = (
 				4A6876B51B43B2DD0007E26E /* Sources */,
 				4A6876B61B43B2DD0007E26E /* Frameworks */,
@@ -195,9 +195,9 @@
 			);
 			dependencies = (
 			);
-			name = cx;
-			productName = cx;
-			productReference = 4A6876B91B43B2DD0007E26E /* libcx.a */;
+			name = CX;
+			productName = CX;
+			productReference = 4A6876B91B43B2DD0007E26E /* libCX.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -214,7 +214,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4A6876B41B43B2DD0007E26E /* Build configuration list for PBXProject "cx" */;
+			buildConfigurationList = 4A6876B41B43B2DD0007E26E /* Build configuration list for PBXProject "CX" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -226,7 +226,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4A6876B81B43B2DD0007E26E /* cx */,
+				4A6876B81B43B2DD0007E26E /* CX */,
 			);
 		};
 /* End PBXProject section */
@@ -378,6 +378,11 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -394,6 +399,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_IPHONE;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -408,7 +414,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4A6876B41B43B2DD0007E26E /* Build configuration list for PBXProject "cx" */ = {
+		4A6876B41B43B2DD0007E26E /* Build configuration list for PBXProject "CX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4A6876CB1B43B2DE0007E26E /* Debug */,
@@ -417,7 +423,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4A6876CD1B43B2DE0007E26E /* Build configuration list for PBXNativeTarget "cx" */ = {
+		4A6876CD1B43B2DE0007E26E /* Build configuration list for PBXNativeTarget "CX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4A6876CE1B43B2DE0007E26E /* Debug */,
