@@ -50,6 +50,24 @@
 		4A0BE86A1B447ECC005348CB /* StackTrace_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8671B447ECC005348CB /* StackTrace_ios.cpp */; };
 		4A0BE86B1B447ECC005348CB /* Time_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8681B447ECC005348CB /* Time_ios.cpp */; };
 		4A0BE86C1B447ECC005348CB /* Timer_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8691B447ECC005348CB /* Timer_ios.cpp */; };
+		4AE2E49E1B486743000CFAB8 /* tinymt32.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E49C1B486743000CFAB8 /* tinymt32.c */; };
+		4AE2E49F1B486743000CFAB8 /* tinymt64.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E49D1B486743000CFAB8 /* tinymt64.c */; };
+		4AE2E4A11B48674B000CFAB8 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4A01B48674B000CFAB8 /* utf8.c */; };
+		4AE2E4A31B486754000CFAB8 /* z85.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4A21B486754000CFAB8 /* z85.c */; };
+		4AE2E4A51B48675C000CFAB8 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4A41B48675C000CFAB8 /* xxhash.c */; };
+		4AE8D1C41B48669D00A7AC0F /* crc32_internal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C31B48669D00A7AC0F /* crc32_internal.cpp */; };
+		4AE8D1CD1B4866AE00A7AC0F /* bignum-dtoa.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C51B4866AE00A7AC0F /* bignum-dtoa.cc */; };
+		4AE8D1CE1B4866AE00A7AC0F /* bignum.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C61B4866AE00A7AC0F /* bignum.cc */; };
+		4AE8D1CF1B4866AE00A7AC0F /* cached-powers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C71B4866AE00A7AC0F /* cached-powers.cc */; };
+		4AE8D1D01B4866AE00A7AC0F /* diy-fp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C81B4866AE00A7AC0F /* diy-fp.cc */; };
+		4AE8D1D11B4866AE00A7AC0F /* double-conversion.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C91B4866AE00A7AC0F /* double-conversion.cc */; };
+		4AE8D1D21B4866AE00A7AC0F /* fast-dtoa.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1CA1B4866AE00A7AC0F /* fast-dtoa.cc */; };
+		4AE8D1D31B4866AE00A7AC0F /* fixed-dtoa.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1CB1B4866AE00A7AC0F /* fixed-dtoa.cc */; };
+		4AE8D1D41B4866AE00A7AC0F /* strtod.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1CC1B4866AE00A7AC0F /* strtod.cc */; };
+		4AE8D1D61B4866B600A7AC0F /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D51B4866B600A7AC0F /* md5.c */; };
+		4AE8D1DA1B4866C200A7AC0F /* hmac_sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D71B4866C200A7AC0F /* hmac_sha1.c */; };
+		4AE8D1DB1B4866C200A7AC0F /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D81B4866C200A7AC0F /* sha1.c */; };
+		4AE8D1DC1B4866C200A7AC0F /* sha2.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D91B4866C200A7AC0F /* sha2.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -109,6 +127,24 @@
 		4A0BE8681B447ECC005348CB /* Time_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Time_ios.cpp; path = ../../Src/Util/Platform/iOS/Time_ios.cpp; sourceTree = "<group>"; };
 		4A0BE8691B447ECC005348CB /* Timer_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Timer_ios.cpp; path = ../../Src/Util/Platform/iOS/Timer_ios.cpp; sourceTree = "<group>"; };
 		4A6876B91B43B2DD0007E26E /* libCX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AE2E49C1B486743000CFAB8 /* tinymt32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tinymt32.c; path = ../../Contrib/TinyMT/Src/tinymt32.c; sourceTree = "<group>"; };
+		4AE2E49D1B486743000CFAB8 /* tinymt64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tinymt64.c; path = ../../Contrib/TinyMT/Src/tinymt64.c; sourceTree = "<group>"; };
+		4AE2E4A01B48674B000CFAB8 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf8.c; path = ../../Contrib/UTF8ToUCS4/Src/utf8.c; sourceTree = "<group>"; };
+		4AE2E4A21B486754000CFAB8 /* z85.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = z85.c; path = ../../Contrib/Z85/Src/z85.c; sourceTree = "<group>"; };
+		4AE2E4A41B48675C000CFAB8 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xxhash.c; path = ../../Contrib/xxHash/Src/xxhash.c; sourceTree = "<group>"; };
+		4AE8D1C31B48669D00A7AC0F /* crc32_internal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = crc32_internal.cpp; path = ../../Contrib/CRC32Slice8/Src/crc32_internal.cpp; sourceTree = "<group>"; };
+		4AE8D1C51B4866AE00A7AC0F /* bignum-dtoa.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "bignum-dtoa.cc"; path = "../../Contrib/DoubleConversion/Src/bignum-dtoa.cc"; sourceTree = "<group>"; };
+		4AE8D1C61B4866AE00A7AC0F /* bignum.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bignum.cc; path = ../../Contrib/DoubleConversion/Src/bignum.cc; sourceTree = "<group>"; };
+		4AE8D1C71B4866AE00A7AC0F /* cached-powers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "cached-powers.cc"; path = "../../Contrib/DoubleConversion/Src/cached-powers.cc"; sourceTree = "<group>"; };
+		4AE8D1C81B4866AE00A7AC0F /* diy-fp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "diy-fp.cc"; path = "../../Contrib/DoubleConversion/Src/diy-fp.cc"; sourceTree = "<group>"; };
+		4AE8D1C91B4866AE00A7AC0F /* double-conversion.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "double-conversion.cc"; path = "../../Contrib/DoubleConversion/Src/double-conversion.cc"; sourceTree = "<group>"; };
+		4AE8D1CA1B4866AE00A7AC0F /* fast-dtoa.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "fast-dtoa.cc"; path = "../../Contrib/DoubleConversion/Src/fast-dtoa.cc"; sourceTree = "<group>"; };
+		4AE8D1CB1B4866AE00A7AC0F /* fixed-dtoa.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "fixed-dtoa.cc"; path = "../../Contrib/DoubleConversion/Src/fixed-dtoa.cc"; sourceTree = "<group>"; };
+		4AE8D1CC1B4866AE00A7AC0F /* strtod.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = strtod.cc; path = ../../Contrib/DoubleConversion/Src/strtod.cc; sourceTree = "<group>"; };
+		4AE8D1D51B4866B600A7AC0F /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = ../../Contrib/MD5/Src/md5.c; sourceTree = "<group>"; };
+		4AE8D1D71B4866C200A7AC0F /* hmac_sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hmac_sha1.c; path = ../../Contrib/SHA/Src/hmac_sha1.c; sourceTree = "<group>"; };
+		4AE8D1D81B4866C200A7AC0F /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = ../../Contrib/SHA/Src/sha1.c; sourceTree = "<group>"; };
+		4AE8D1D91B4866C200A7AC0F /* sha2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha2.c; path = ../../Contrib/SHA/Src/sha2.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +161,24 @@
 		4A6876B01B43B2DD0007E26E = {
 			isa = PBXGroup;
 			children = (
+				4AE2E4A41B48675C000CFAB8 /* xxhash.c */,
+				4AE2E4A21B486754000CFAB8 /* z85.c */,
+				4AE2E4A01B48674B000CFAB8 /* utf8.c */,
+				4AE2E49C1B486743000CFAB8 /* tinymt32.c */,
+				4AE2E49D1B486743000CFAB8 /* tinymt64.c */,
+				4AE8D1D71B4866C200A7AC0F /* hmac_sha1.c */,
+				4AE8D1D81B4866C200A7AC0F /* sha1.c */,
+				4AE8D1D91B4866C200A7AC0F /* sha2.c */,
+				4AE8D1D51B4866B600A7AC0F /* md5.c */,
+				4AE8D1C51B4866AE00A7AC0F /* bignum-dtoa.cc */,
+				4AE8D1C61B4866AE00A7AC0F /* bignum.cc */,
+				4AE8D1C71B4866AE00A7AC0F /* cached-powers.cc */,
+				4AE8D1C81B4866AE00A7AC0F /* diy-fp.cc */,
+				4AE8D1C91B4866AE00A7AC0F /* double-conversion.cc */,
+				4AE8D1CA1B4866AE00A7AC0F /* fast-dtoa.cc */,
+				4AE8D1CB1B4866AE00A7AC0F /* fixed-dtoa.cc */,
+				4AE8D1CC1B4866AE00A7AC0F /* strtod.cc */,
+				4AE8D1C31B48669D00A7AC0F /* crc32_internal.cpp */,
 				4A0BE8671B447ECC005348CB /* StackTrace_ios.cpp */,
 				4A0BE8681B447ECC005348CB /* Time_ios.cpp */,
 				4A0BE8691B447ECC005348CB /* Timer_ios.cpp */,
@@ -214,7 +268,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4A6876B41B43B2DD0007E26E /* Build configuration list for PBXProject "CX" */;
+			buildConfigurationList = 4A6876B41B43B2DD0007E26E /* Build configuration list for PBXProject "cx" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -241,12 +295,16 @@
 				4A0BE8401B447E72005348CB /* Status.cpp in Sources */,
 				4A0BE8411B447E72005348CB /* Var.cpp in Sources */,
 				4A0BE8421B447E72005348CB /* Version.cpp in Sources */,
+				4AE8D1DC1B4866C200A7AC0F /* sha2.c in Sources */,
 				4A0BE8181B447E24005348CB /* Alloc_ios.c in Sources */,
 				4A0BE81A1B447E3D005348CB /* JSONSAXParser.cpp in Sources */,
 				4A0BE81C1B447E47005348CB /* DetailPrint_ios.cpp in Sources */,
+				4AE2E4A31B486754000CFAB8 /* z85.c in Sources */,
 				4A0BE8251B447E53005348CB /* CRC32Hash.cpp in Sources */,
 				4A0BE8261B447E53005348CB /* MD5Hash.cpp in Sources */,
 				4A0BE8271B447E53005348CB /* SHA1Hash.cpp in Sources */,
+				4AE8D1DA1B4866C200A7AC0F /* hmac_sha1.c in Sources */,
+				4AE8D1D31B4866AE00A7AC0F /* fixed-dtoa.cc in Sources */,
 				4A0BE8281B447E53005348CB /* SHA256Hash.cpp in Sources */,
 				4A0BE8291B447E53005348CB /* SHA384Hash.cpp in Sources */,
 				4A0BE82A1B447E53005348CB /* SHA512Hash.cpp in Sources */,
@@ -255,30 +313,44 @@
 				4A0BE8301B447E5C005348CB /* Helper.cpp in Sources */,
 				4A0BE8311B447E5C005348CB /* MemInputStream.cpp in Sources */,
 				4A0BE8321B447E5C005348CB /* MemOutputStream.cpp in Sources */,
+				4AE2E4A11B48674B000CFAB8 /* utf8.c in Sources */,
+				4AE8D1CE1B4866AE00A7AC0F /* bignum.cc in Sources */,
 				4A0BE8361B447E63005348CB /* FileInputStream_ios.cpp in Sources */,
+				4AE8D1D11B4866AE00A7AC0F /* double-conversion.cc in Sources */,
+				4AE8D1C41B48669D00A7AC0F /* crc32_internal.cpp in Sources */,
+				4AE8D1D01B4866AE00A7AC0F /* diy-fp.cc in Sources */,
 				4A0BE8371B447E63005348CB /* FileOutputStream_ios.cpp in Sources */,
 				4A0BE8381B447E63005348CB /* LocalFileSysHelper_ios.cpp in Sources */,
+				4AE8D1CD1B4866AE00A7AC0F /* bignum-dtoa.cc in Sources */,
+				4AE2E49F1B486743000CFAB8 /* tinymt64.c in Sources */,
 				4A0BE8471B447E7F005348CB /* ConsoleOutput.cpp in Sources */,
+				4AE8D1D41B4866AE00A7AC0F /* strtod.cc in Sources */,
 				4A0BE8481B447E7F005348CB /* DefaultFormatter.cpp in Sources */,
+				4AE2E49E1B486743000CFAB8 /* tinymt32.c in Sources */,
 				4A0BE8491B447E7F005348CB /* Logger.cpp in Sources */,
 				4A0BE84A1B447E7F005348CB /* StreamOutput.cpp in Sources */,
 				4A0BE84C1B447E8C005348CB /* SystemOutput_ios.cpp in Sources */,
 				4A0BE84E1B447E95005348CB /* Component_ios.cpp in Sources */,
 				4A0BE8511B447E9E005348CB /* HexBinStr.cpp in Sources */,
 				4A0BE8521B447E9E005348CB /* Z85BinStr.cpp in Sources */,
+				4AE8D1D21B4866AE00A7AC0F /* fast-dtoa.cc in Sources */,
 				4A0BE8541B447EA9005348CB /* UTF8_ios.cpp in Sources */,
+				4AE8D1D61B4866B600A7AC0F /* md5.c in Sources */,
 				4A0BE85A1B447EB4005348CB /* DynLib_ios.cpp in Sources */,
 				4A0BE85B1B447EB4005348CB /* Lock_ios.cpp in Sources */,
 				4A0BE85C1B447EB4005348CB /* Process_ios.cpp in Sources */,
+				4AE2E4A51B48675C000CFAB8 /* xxhash.c in Sources */,
 				4A0BE85D1B447EB4005348CB /* RWLock_ios.cpp in Sources */,
 				4A0BE85E1B447EB4005348CB /* Thread_ios.cpp in Sources */,
 				4A0BE8631B447EC3005348CB /* MemPool.cpp in Sources */,
 				4A0BE8641B447EC3005348CB /* RCMemBuffer.cpp in Sources */,
 				4A0BE8651B447EC3005348CB /* RCMemBufferMgr.cpp in Sources */,
 				4A0BE8661B447EC3005348CB /* RndGen.cpp in Sources */,
+				4AE8D1DB1B4866C200A7AC0F /* sha1.c in Sources */,
 				4A0BE86A1B447ECC005348CB /* StackTrace_ios.cpp in Sources */,
 				4A0BE86B1B447ECC005348CB /* Time_ios.cpp in Sources */,
 				4A0BE86C1B447ECC005348CB /* Timer_ios.cpp in Sources */,
+				4AE8D1CF1B4866AE00A7AC0F /* cached-powers.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +486,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4A6876B41B43B2DD0007E26E /* Build configuration list for PBXProject "CX" */ = {
+		4A6876B41B43B2DD0007E26E /* Build configuration list for PBXProject "cx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4A6876CB1B43B2DE0007E26E /* Debug */,

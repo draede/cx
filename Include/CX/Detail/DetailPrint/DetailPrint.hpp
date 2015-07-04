@@ -732,8 +732,6 @@ inline StatusCode ToString<Double>(Double p, unsigned int nExtraFlags, Char *szO
 	}
 }
 
-#ifdef CX_OS_WINDOWS
-
 template <>
 inline StatusCode ToString<long>(long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
@@ -798,8 +796,6 @@ inline StatusCode ToString<unsigned long>(unsigned long p, unsigned int nExtraFl
 		return Status_OK;
 	}
 }
-
-#endif
 
 template <>
 inline StatusCode ToString<const Char *>(const Char *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
