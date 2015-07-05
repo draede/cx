@@ -31,7 +31,7 @@
 
 #include "CX/Hash/IHash.hpp"
 #include "CX/APIDefs.hpp"
-#include "../../../Contrib/xxHash/Include/xxHash.h"
+#include "../../../Contrib/xxHash/Include/xxhash.h"
 
 
 namespace CX

@@ -15,6 +15,7 @@ endif
 
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../../Include \
+$(LOCAL_PATH)/../../../Contrib/BLAKE2/Include \
 $(LOCAL_PATH)/../../../Contrib/ByteOrder/Include \
 $(LOCAL_PATH)/../../../Contrib/Catch/Include \
 $(LOCAL_PATH)/../../../Contrib/CRC32Slice8/Include \
@@ -30,6 +31,7 @@ $(LOCAL_PATH)/../../../Contrib/Z85/Include \
 $(NDK_ROOT)/platforms/android-16/arch-arm/usr/include
 
 LOCAL_SRC_FILES := \
+$(LOCAL_PATH)/../../../../Contrib/BLAKE2/Src/blake2b-ref.c \
 $(LOCAL_PATH)/../../../../Contrib/CRC32Slice8/Src/crc32_internal.cpp \
 $(LOCAL_PATH)/../../../../Contrib/DoubleConversion/Src/bignum.cc \
 $(LOCAL_PATH)/../../../../Contrib/DoubleConversion/Src/bignum-dtoa.cc \
@@ -51,6 +53,7 @@ $(LOCAL_PATH)/../../../../Contrib/Z85/Src/z85.c \
 $(LOCAL_PATH)/../../../../Src/C/Platform/Android/Alloc_android.c \
 $(LOCAL_PATH)/../../../../Src/Data/JSON/JSONSAXParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Detail/DetailPrint/Platform/Android/DetailPrint_android.cpp \
+$(LOCAL_PATH)/../../../../Src/Hash/BLAKE2Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/CRC32Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/MD5Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA1Hash.cpp \

@@ -55,6 +55,8 @@
 		4AE2E4A11B48674B000CFAB8 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4A01B48674B000CFAB8 /* utf8.c */; };
 		4AE2E4A31B486754000CFAB8 /* z85.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4A21B486754000CFAB8 /* z85.c */; };
 		4AE2E4A51B48675C000CFAB8 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4A41B48675C000CFAB8 /* xxhash.c */; };
+		4AE2E4B81B496D2D000CFAB8 /* blake2b-ref.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4B71B496D2D000CFAB8 /* blake2b-ref.c */; };
+		4AE2E4BA1B496D37000CFAB8 /* BLAKE2Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4B91B496D37000CFAB8 /* BLAKE2Hash.cpp */; };
 		4AE8D1C41B48669D00A7AC0F /* crc32_internal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C31B48669D00A7AC0F /* crc32_internal.cpp */; };
 		4AE8D1CD1B4866AE00A7AC0F /* bignum-dtoa.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C51B4866AE00A7AC0F /* bignum-dtoa.cc */; };
 		4AE8D1CE1B4866AE00A7AC0F /* bignum.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1C61B4866AE00A7AC0F /* bignum.cc */; };
@@ -132,6 +134,8 @@
 		4AE2E4A01B48674B000CFAB8 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf8.c; path = ../../Contrib/UTF8ToUCS4/Src/utf8.c; sourceTree = "<group>"; };
 		4AE2E4A21B486754000CFAB8 /* z85.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = z85.c; path = ../../Contrib/Z85/Src/z85.c; sourceTree = "<group>"; };
 		4AE2E4A41B48675C000CFAB8 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xxhash.c; path = ../../Contrib/xxHash/Src/xxhash.c; sourceTree = "<group>"; };
+		4AE2E4B71B496D2D000CFAB8 /* blake2b-ref.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "blake2b-ref.c"; path = "../../Contrib/BLAKE2/Src/blake2b-ref.c"; sourceTree = "<group>"; };
+		4AE2E4B91B496D37000CFAB8 /* BLAKE2Hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BLAKE2Hash.cpp; path = ../../Src/Hash/BLAKE2Hash.cpp; sourceTree = "<group>"; };
 		4AE8D1C31B48669D00A7AC0F /* crc32_internal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = crc32_internal.cpp; path = ../../Contrib/CRC32Slice8/Src/crc32_internal.cpp; sourceTree = "<group>"; };
 		4AE8D1C51B4866AE00A7AC0F /* bignum-dtoa.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "bignum-dtoa.cc"; path = "../../Contrib/DoubleConversion/Src/bignum-dtoa.cc"; sourceTree = "<group>"; };
 		4AE8D1C61B4866AE00A7AC0F /* bignum.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bignum.cc; path = ../../Contrib/DoubleConversion/Src/bignum.cc; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 		4A6876B01B43B2DD0007E26E = {
 			isa = PBXGroup;
 			children = (
+				4AE2E4B91B496D37000CFAB8 /* BLAKE2Hash.cpp */,
+				4AE2E4B71B496D2D000CFAB8 /* blake2b-ref.c */,
 				4AE2E4A41B48675C000CFAB8 /* xxhash.c */,
 				4AE2E4A21B486754000CFAB8 /* z85.c */,
 				4AE2E4A01B48674B000CFAB8 /* utf8.c */,
@@ -335,6 +341,7 @@
 				4A0BE8521B447E9E005348CB /* Z85BinStr.cpp in Sources */,
 				4AE8D1D21B4866AE00A7AC0F /* fast-dtoa.cc in Sources */,
 				4A0BE8541B447EA9005348CB /* UTF8_ios.cpp in Sources */,
+				4AE2E4B81B496D2D000CFAB8 /* blake2b-ref.c in Sources */,
 				4AE8D1D61B4866B600A7AC0F /* md5.c in Sources */,
 				4A0BE85A1B447EB4005348CB /* DynLib_ios.cpp in Sources */,
 				4A0BE85B1B447EB4005348CB /* Lock_ios.cpp in Sources */,
@@ -344,6 +351,7 @@
 				4A0BE85E1B447EB4005348CB /* Thread_ios.cpp in Sources */,
 				4A0BE8631B447EC3005348CB /* MemPool.cpp in Sources */,
 				4A0BE8641B447EC3005348CB /* RCMemBuffer.cpp in Sources */,
+				4AE2E4BA1B496D37000CFAB8 /* BLAKE2Hash.cpp in Sources */,
 				4A0BE8651B447EC3005348CB /* RCMemBufferMgr.cpp in Sources */,
 				4A0BE8661B447EC3005348CB /* RndGen.cpp in Sources */,
 				4AE8D1DB1B4866C200A7AC0F /* sha1.c in Sources */,

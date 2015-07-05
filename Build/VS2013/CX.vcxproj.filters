@@ -277,6 +277,9 @@
     <Filter Include="Source Files\Util\Platform\iOS">
       <UniqueIdentifier>{3571bb27-c70e-46dd-bf25-6d20541bf4a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contrib\BLAKE2">
+      <UniqueIdentifier>{1a266b5a-6270-4dad-ad47-972b00a6ad71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -816,6 +819,9 @@
     <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Timer.hpp">
       <Filter>Header Files\Util\Platform\iOS</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\BLAKE2Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -1093,6 +1099,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\Platform\iOS\Timer_ios.cpp">
       <Filter>Source Files\Util\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BLAKE2\Src\blake2b-ref.c">
+      <Filter>Contrib\BLAKE2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\BLAKE2Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

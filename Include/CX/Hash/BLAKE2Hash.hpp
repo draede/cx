@@ -31,7 +31,6 @@
 
 #include "CX/Hash/IHash.hpp"
 #include "CX/APIDefs.hpp"
-#include "../../../Contrib/xxHash/Include/xxhash.h"
 
 
 namespace CX
@@ -40,32 +39,70 @@ namespace CX
 namespace Hash
 {
 
-class CX_API xxHash64 : public IHash
+class CX_API BLAKE2HashHelper
+{
+public:
+        
+    static const Char     NAME[];
+    
+    static void *CreateState();
+        
+    static void DestroyState(void *pState);
+        
+    static Status Init(void *pState, Size cbSize, const void *pSeed = NULL);
+        
+    static Status Update(void *pState, const void *pBuffer, Size cbSize);
+        
+    static Status Done(void *pState, void *pCrypt, Size cbSize);
+        
+};
+    
+template <Size SIZE = 16>
+class CX_API BLAKE2Hash : public IHash
 {
 public:
 
-	static const Char     NAME[];
-	static const Size     SIZE   = 8;
+	static const Size     MIN_SIZE = 1;
+	static const Size     MAX_SIZE = 64;
 
-	xxHash64();
+	BLAKE2Hash()
+	{
+		m_pState = BLAKE2HashHelper::CreateState();
+	}
 
-	virtual ~xxHash64();
+	virtual ~BLAKE2Hash()
+	{
+		BLAKE2HashHelper::DestroyState(m_pState);
+	}
 
-	virtual const Char *GetName();
+	virtual const Char *GetName()
+	{
+		return BLAKE2HashHelper::NAME;
+	}
 
-	virtual Size GetSize();
+	virtual Size GetSize()
+	{
+		return SIZE;
+	}
 
-	virtual Status Init(const void *pCrypt = NULL);
+	virtual Status Init(const void *pCrypt = NULL)
+	{
+		return BLAKE2HashHelper::Init(m_pState, SIZE, pCrypt);
+	}
 
-	virtual Status Update(const void *pBuffer, Size cbSize);
+	virtual Status Update(const void *pBuffer, Size cbSize)
+	{
+		return BLAKE2HashHelper::Update(m_pState, pBuffer, cbSize);
+	}
 
-	virtual Status Done(void *pCrypt);
-
-	static UInt64 DoHash(const void *pData, Size cbSize, UInt64 nSeed = 0);
+	virtual Status Done(void *pCrypt)
+	{
+		return BLAKE2HashHelper::Done(m_pState, pCrypt, SIZE);
+	}
 
 private:
 
-	XXH64_state_t   m_state;
+	void *m_pState;
 
 };
 
