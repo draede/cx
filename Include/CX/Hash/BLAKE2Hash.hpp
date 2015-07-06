@@ -57,13 +57,15 @@ public:
         
 };
     
-template <Size SIZE = 16>
+template <Size HASHSIZE = 16>
 class CX_API BLAKE2Hash : public IHash
 {
 public:
 
-	static const Size     MIN_SIZE = 1;
-	static const Size     MAX_SIZE = 64;
+	static const Size     SIZE         = HASHSIZE;
+
+	static const Size     MIN_HASHSIZE = 1;
+	static const Size     MAX_HASHSIZE = 64;
 
 	BLAKE2Hash()
 	{
@@ -82,12 +84,12 @@ public:
 
 	virtual Size GetSize()
 	{
-		return SIZE;
+		return HASHSIZE;
 	}
 
 	virtual Status Init(const void *pCrypt = NULL)
 	{
-		return BLAKE2HashHelper::Init(m_pState, SIZE, pCrypt);
+		return BLAKE2HashHelper::Init(m_pState, HASHSIZE, pCrypt);
 	}
 
 	virtual Status Update(const void *pBuffer, Size cbSize)
@@ -97,7 +99,7 @@ public:
 
 	virtual Status Done(void *pCrypt)
 	{
-		return BLAKE2HashHelper::Done(m_pState, pCrypt, SIZE);
+		return BLAKE2HashHelper::Done(m_pState, pCrypt, HASHSIZE);
 	}
 
 private:
