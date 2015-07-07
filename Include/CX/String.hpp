@@ -60,5 +60,24 @@ struct CaseSensitiveOrderPolicy
 	}
 };
 
+struct WCaseInsensitiveOrderPolicy
+{
+	Bool operator()(const WString &s1, const WString &s2) const
+	{
+#pragma warning(push)
+#pragma warning(disable: 4996)
+		return (0 > cxw_stricmp(s1.c_str(), s2.c_str()));
+#pragma warning(pop)
+	}
+};
+
+struct WCaseSensitiveOrderPolicy
+{
+	Bool operator()(const WString &s1, const WString &s2) const
+	{
+		return (0 > cxw_strcmp(s1.c_str(), s2.c_str()));
+	}
+};
+
 }//namespace CX
 
