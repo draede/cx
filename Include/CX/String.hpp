@@ -31,6 +31,7 @@
 
 #include "CX/STLAlloc.hpp"
 #include "CX/C/string.h"
+#include "CX/Platform.hpp"
 #include <string>
 
 
@@ -60,6 +61,8 @@ struct CaseSensitiveOrderPolicy
 	}
 };
 
+#ifdef CX_OS_WINDOWS
+
 struct WCaseInsensitiveOrderPolicy
 {
 	Bool operator()(const WString &s1, const WString &s2) const
@@ -78,6 +81,8 @@ struct WCaseSensitiveOrderPolicy
 		return (0 > cxw_strcmp(s1.c_str(), s2.c_str()));
 	}
 };
+
+#endif
 
 }//namespace CX
 
