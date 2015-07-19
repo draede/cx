@@ -1382,7 +1382,7 @@ inline StatusCode Print(O o, const Char *szFormat,
 	Size        cIndex;
 	UInt32      cWidth;
 	UInt32      cPrec;
-	Char        buf[1024];
+	Char        buf[8192];
 	StatusCode  nStatus;
 
 	pszPos    = szFormat;

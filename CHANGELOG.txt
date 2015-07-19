@@ -1,3 +1,7 @@
+0.1.23 - 2015-07-19
+  - Increased Print internal ToString buffer from 1KB to 8KB
+  - Added support for ignored allocs in mem leak detector
+  - Added ignored allocs list (static vars)
 0.2.22 - 2015-07-08
   - Fixed wide char case order policies (on win os)
 0.2.21 - 2015-07-07

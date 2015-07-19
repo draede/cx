@@ -43,6 +43,9 @@ unsigned int Mem::m_nFlags = Mem::Flag_SimpleMemTrack;
 unsigned int Mem::m_nFlags = Mem::Flag_None;
 #endif
 
+Mem::IgnoredAllocsSet   Mem::m_setIgnoredAllocs;
+bool                    Mem::m_bInitIgnoredAllocs = false;
+
 class MemAllocInfo
 {
 public:
@@ -87,9 +90,9 @@ void *Mem::Alloc(Size cbSize)
 
 	if ((Flag_SourceMemTrack == m_nFlags))
 	{
-		Sys::Locker    locker(GetLock());
-		MemAllocInfo   info;
-		
+		Sys::Locker                locker(GetLock());
+		MemAllocInfo               info;
+
 		info.cbSize = cbSize;
 		Util::StackTrace::GetStackTrace(info.vectorCalls);
 		
@@ -189,9 +192,28 @@ unsigned int Mem::GetFlags()
 	return m_nFlags;
 }
 
+void Mem::IgnoreAllocsFromFunc(const Char *szFunction)
+{
+	Sys::Locker locker(GetLock());
+
+	m_setIgnoredAllocs.insert(szFunction);
+}
+
+void Mem::AddIgnoredAllocs()
+{
+	IgnoreAllocsFromFunc("CX::Log::Logger::GetDefaultLogger");
+	IgnoreAllocsFromFunc("CX::Log::Logger::AddOutput");
+}
+
 void Mem::GetCurrentAllocs(AllocsVector &vectorAllocs)
 {
 	Sys::Locker locker(GetLock());
+
+	if (!m_bInitIgnoredAllocs)
+	{
+		m_bInitIgnoredAllocs = true;
+		AddIgnoredAllocs();
+	}
 
 	vectorAllocs.clear();
 
@@ -202,9 +224,20 @@ void Mem::GetCurrentAllocs(AllocsVector &vectorAllocs)
 		data.pMem        = iter->first;
 		data.cbSize      = iter->second.cbSize;
 
+		bool bAdd = true;
+
 		for (Util::StackTrace::CallsVector::const_iterator iterCalls = iter->second.vectorCalls.begin(); 
 		     iterCalls != iter->second.vectorCalls.end(); ++iterCalls)
 		{
+			IgnoredAllocsSet::iterator iterIgnoredAllocs;
+
+			if (m_setIgnoredAllocs.end() != (iterIgnoredAllocs = m_setIgnoredAllocs.find(iterCalls->sFunction)))
+			{
+				bAdd = false;
+				
+				break;
+			}
+
 			Call call;
 
 			call.sFunction = iterCalls->sFunction;
@@ -213,7 +246,11 @@ void Mem::GetCurrentAllocs(AllocsVector &vectorAllocs)
 
 			data.vectorCalls.push_back(call);
 		}
-		vectorAllocs.push_back(data);
+
+		if (bAdd)
+		{
+			vectorAllocs.push_back(data);
+		}
 	}
 }
 
@@ -224,14 +261,22 @@ void Mem::PrintAllocs(std::string &sOut, const AllocsVector &vectorAllocs)
 		Print(&sOut, "No allocations found at this moment!\n");
 		return;
 	}
+
+	bool bFirst = true;
+
 	for (AllocsVector::const_iterator iter = vectorAllocs.begin(); iter != vectorAllocs.end(); ++iter)
 	{
 		static const Char hexdigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-		if (vectorAllocs.begin() != iter)
+		if (!bFirst)
 		{
 			Print(&sOut, "\n");
 		}
+		else
+		{
+			bFirst = false;
+		}
+
 #ifdef CX_64BIT_ARCH
 		Print(&sOut, "Detected {1} bytes at 0x{2:'0'16}\n", iter->cbSize, (void *)iter->pMem);
 #else

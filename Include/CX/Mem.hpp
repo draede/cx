@@ -34,6 +34,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <set>
 #include "CX/Platform.hpp"
 #include "CX/APIDefs.hpp"
 
@@ -90,6 +91,8 @@ public:
 
 	static unsigned int GetFlags();
 
+	static void IgnoreAllocsFromFunc(const Char *szFunction);
+
 	static void GetCurrentAllocs(AllocsVector &vectorAllocs);
 
 	//using std::string & AllocsVector so no internal allocs are generated
@@ -97,15 +100,24 @@ public:
 
 private:
 
+	typedef std::set<std::string>   IgnoredAllocsSet;
+
 	Mem();
 
 	~Mem();
 
-	static unsigned int   m_nFlags;
+#pragma warning(push)
+#pragma warning(disable: 4251)
+	static IgnoredAllocsSet   m_setIgnoredAllocs;
+#pragma warning(pop)
+	static bool               m_bInitIgnoredAllocs;
+	static unsigned int       m_nFlags;
 
 	static Sys::Lock *GetLock();
 
 	static std::map<void *, MemAllocInfo> *GetAllocs();
+
+	static void AddIgnoredAllocs();
 
 };
 

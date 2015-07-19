@@ -162,7 +162,7 @@ Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = TYP
 {
 	Size     cLen;
 	WChar    *pOut = NULL;
-	WChar    out[8000];
+	WChar    out[4000];
 	Status   status;
 
 	if ((status = ToWChar(szUTF8, cUTF8Len, NULL, &cLen)).IsNOK())
