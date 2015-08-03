@@ -1020,8 +1020,7 @@ inline StatusCode ToString<void *>(void *p, unsigned int nExtraFlags, Char *szOu
 {
 	cPrecision;
 
-#pragma warning(suppress: 6287)
-	if (Detail::ExtraFlag_HexLower != nExtraFlags || Detail::ExtraFlag_HexLower != nExtraFlags)
+	if (Detail::ExtraFlag_HexLower != nExtraFlags && Detail::ExtraFlag_HexUpper != nExtraFlags)
 	{
 		nExtraFlags = Detail::ExtraFlag_HexUpper;
 	}
@@ -1165,7 +1164,6 @@ public:
 		StatusCode nStatus;
 
 		cLen    = 0;
-		nStatus = Status_NotImplemented;
 		nStatus = ToString(p, pFlags->nExtraFlags, pBuf, cBufLen, &cLen, pFlags->cPrecision);
 
 		if (CXNOK(nStatus))
@@ -1176,15 +1174,15 @@ public:
 		if (Align_Left == pFlags->nAlign)
 		{
 			cPreLen = 0;
-			cPostLen = (cLen < pFlags->cWidth ? pFlags->cWidth - cLen : 0);
+			cPostLen = (cLen < (Size)pFlags->cWidth ? (Size)pFlags->cWidth - cLen : 0);
 		}
 		else
 		if (Align_Center == pFlags->nAlign)
 		{
-			if (cLen < pFlags->cWidth)
+			if (cLen < (Size)pFlags->cWidth)
 			{
-				cPreLen = cPostLen = (pFlags->cWidth - cLen) / 2;
-				cPreLen += (pFlags->cWidth - cLen) % 2;
+				cPreLen = cPostLen = ((Size)pFlags->cWidth - cLen) / 2;
+				cPreLen += ((Size)pFlags->cWidth - cLen) % 2;
 			}
 			else
 			{
@@ -1194,7 +1192,7 @@ public:
 		}
 		else
 		{
-			cPreLen = (cLen < pFlags->cWidth ? pFlags->cWidth - cLen : 0);
+			cPreLen  = (cLen < (Size)pFlags->cWidth ? (Size)pFlags->cWidth - cLen : 0);
 			cPostLen = 0;
 		}
 		for (Size i = 0; i < cPreLen; i++)
@@ -1261,15 +1259,15 @@ public:
 		if (Align_Left == pFlags->nAlign)
 		{
 			cPreLen = 0;
-			cPostLen = (cLen < pFlags->cWidth ? pFlags->cWidth - cLen : 0);
+			cPostLen = (cLen < (Size)pFlags->cWidth ? (Size)pFlags->cWidth - cLen : 0);
 		}
 		else
 		if (Align_Center == pFlags->nAlign)
 		{
-			if (cLen < pFlags->cWidth)
+			if (cLen < (Size)pFlags->cWidth)
 			{
-				cPreLen = cPostLen = (pFlags->cWidth - cLen) / 2;
-				cPreLen += (pFlags->cWidth - cLen) % 2;
+				cPreLen = cPostLen = ((Size)pFlags->cWidth - cLen) / 2;
+				cPreLen += ((Size)pFlags->cWidth - cLen) % 2;
 			}
 			else
 			{
@@ -1279,7 +1277,7 @@ public:
 		}
 		else
 		{
-			cPreLen = (cLen < pFlags->cWidth ? pFlags->cWidth - cLen : 0);
+			cPreLen = (cLen < (Size)pFlags->cWidth ? (Size)pFlags->cWidth - cLen : 0);
 			cPostLen = 0;
 		}
 		for (Size i = 0; i < cPreLen; i++)
@@ -1426,7 +1424,7 @@ inline StatusCode Print(O o, const Char *szFormat,
 			while (cx_isdigit((unsigned char)*pszPos))
 			{
 				cIndex *= 10;
-				cIndex += *pszPos - '0';
+				cIndex += (Size)(*pszPos - '0');
 				pszPos++;
 			}
 			if (0 == cIndex || cIndex > ARGC)

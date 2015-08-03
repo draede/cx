@@ -41,7 +41,7 @@ const Char SHA256Hash::NAME[] = "SHA256";
 
 SHA256Hash::SHA256Hash()
 {
-	if (NULL == (m_pCTX = new SHA256_CTX()))
+	if (NULL == (m_pCTX = new (std::nothrow) SHA256_CTX()))
 	{
 		return;
 	}

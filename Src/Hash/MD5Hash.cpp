@@ -41,7 +41,7 @@ const Char MD5Hash::NAME[] = "MD5";
 
 MD5Hash::MD5Hash()
 {
-	if (NULL == (m_pCTX = new MD5_CTX()))
+	if (NULL == (m_pCTX = new (std::nothrow) MD5_CTX()))
 	{
 		return;
 	}

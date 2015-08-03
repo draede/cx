@@ -41,8 +41,8 @@ namespace Util
 
 RndGen::RndGen()
 {
-	m_pState32 = new tinymt32_t();
-	m_pState64 = new tinymt64_t();
+	m_pState32 = new (std::nothrow) tinymt32_t();
+	m_pState64 = new (std::nothrow) tinymt64_t();
 
 	Time t;
 

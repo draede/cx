@@ -102,9 +102,9 @@ Status Thread::Run(const std::function<void()> &func)
 		return Status(Status_Busy, "Thread already started");
 	}
 
-	std::function<void()> *pFunc = new std::function<void()>(func);
+	std::function<void()> *pFunc = new (std::nothrow) std::function<void()>(func);
 
-	if (NULL == *pFunc)
+	if (NULL == pFunc)
 	{
 		return Status(Status_MemAllocFailed, "Memory allocation error");
 	}

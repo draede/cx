@@ -76,7 +76,7 @@ CX_API Bool UTF8toWChar(const Char *szUTF8, WString *pwsWChar, Size cUTF8Len/* =
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = new WChar[cSize]))
+			if (NULL == (pOut = new (std::nothrow) WChar[(Size)cSize]))
 			{
 				return false;
 			}
@@ -94,8 +94,8 @@ CX_API Bool UTF8toWChar(const Char *szUTF8, WString *pwsWChar, Size cUTF8Len/* =
 			
 			return false;
 		}
-		pwsWChar->append(pOut, cSize);
-		if (pOut != pOut)
+		pwsWChar->append(pOut, (Size)cSize);
+		if (NULL != pOut)
 		{
 			delete [] pOut;
 		}
@@ -120,7 +120,7 @@ CX_API Bool WChartoUTF8(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* 
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = new Char[cSize]))
+			if (NULL == (pOut = new (std::nothrow) Char[(Size)cSize]))
 			{
 				return false;
 			}
@@ -139,7 +139,7 @@ CX_API Bool WChartoUTF8(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* 
 
 			return false;
 		}
-		psUTF8->append(pOut, cSize);
+		psUTF8->append(pOut, (Size)cSize);
 		if (pOut != out)
 		{
 			delete [] pOut;
@@ -163,7 +163,7 @@ CX_API Bool UTF8toWCharx(const Char *szUTF8, std::wstring *pwsWChar, Size cUTF8L
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = new WChar[cSize]))
+			if (NULL == (pOut = new (std::nothrow) WChar[(Size)cSize]))
 			{
 				return false;
 			}
@@ -181,8 +181,8 @@ CX_API Bool UTF8toWCharx(const Char *szUTF8, std::wstring *pwsWChar, Size cUTF8L
 			
 			return false;
 		}
-		pwsWChar->append(pOut, cSize);
-		if (pOut != pOut)
+		pwsWChar->append(pOut, (Size)cSize);
+		if (NULL != pOut)
 		{
 			delete [] pOut;
 		}
@@ -207,7 +207,7 @@ CX_API Bool WChartoUTF8x(const WChar *wszWChar, std::string *psUTF8, Size cWChar
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = new Char[cSize]))
+			if (NULL == (pOut = new (std::nothrow) Char[(Size)cSize]))
 			{
 				return false;
 			}
@@ -226,7 +226,7 @@ CX_API Bool WChartoUTF8x(const WChar *wszWChar, std::string *psUTF8, Size cWChar
 
 			return false;
 		}
-		psUTF8->append(pOut, cSize);
+		psUTF8->append(pOut, (Size)cSize);
 		if (pOut != out)
 		{
 			delete [] pOut;

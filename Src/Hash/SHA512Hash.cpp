@@ -41,7 +41,7 @@ const Char SHA512Hash::NAME[] = "SHA512";
 
 SHA512Hash::SHA512Hash()
 {
-	if (NULL == (m_pCTX = new SHA512_CTX()))
+	if (NULL == (m_pCTX = new (std::nothrow) SHA512_CTX()))
 	{
 		return;
 	}

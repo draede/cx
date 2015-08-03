@@ -105,7 +105,7 @@ Status HexBinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBi
 	for (Size i = 0; i < cStrInputLen; i += 2)
 	{
 		ch = pStrInput[i];
-		if ('A' <= ch && 'f' >= ch)
+		if ('A' <= ch && 'F' >= ch)
 		{
 			((Byte *)pBinOutput)[i / 2] = ch - 'A' + 10;
 		}
@@ -120,7 +120,7 @@ Status HexBinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBi
 		}
 		((Byte *)pBinOutput)[i / 2] *= 16;
 		ch = pStrInput[i + 1];
-		if ('A' <= ch && 'f' >= ch)
+		if ('A' <= ch && 'F' >= ch)
 		{
 			((Byte *)pBinOutput)[i / 2] += ch - 'A' + 10;
 		}

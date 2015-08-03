@@ -94,9 +94,9 @@ Status Process::GetCurrentProcessPathW(WString &wsPath)
 		
 			break;
 		}
-		if (NULL == (wszTmpPath = (WChar *)Mem::Realloc(wszPath, sizeof(WChar) * dwLen)))
+		if (NULL == (wszTmpPath = (WChar *)Mem::Realloc(wszPath, sizeof(WChar) * (Size)dwLen)))
 		{
-			status = Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", sizeof(WChar) * dwLen);
+			status = Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", sizeof(WChar) * (Size)dwLen);
 
 			break;
 		}

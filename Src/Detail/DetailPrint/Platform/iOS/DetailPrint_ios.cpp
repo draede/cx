@@ -86,7 +86,7 @@ CX_API Bool UTF8toWChar(const Char *szUTF8, WString *pwsWChar, Size cUTF8Len/* =
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = new WChar[cSize]))
+			if (NULL == (pOut = new (std::nothrow) WChar[cSize]))
 			{
 				return false;
 			}
@@ -138,7 +138,7 @@ CX_API Bool WChartoUTF8(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* 
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = new Char[cSize]))
+			if (NULL == (pOut = new (std::nothrow) Char[cSize]))
 			{
 				return false;
 			}
@@ -190,7 +190,7 @@ CX_API Bool UTF8toWCharx(const Char *szUTF8, std::wstring *pwsWChar, Size cUTF8L
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = new WChar[cSize]))
+			if (NULL == (pOut = new (std::nothrow) WChar[cSize]))
 			{
 				return false;
 			}
@@ -242,7 +242,7 @@ CX_API Bool WChartoUTF8x(const WChar *wszWChar, std::string *psUTF8, Size cWChar
 	{
 		if (cSize > 8000)
 		{
-			if (NULL == (pOut = new Char[cSize]))
+			if (NULL == (pOut = new (std::nothrow) Char[cSize]))
 			{
 				return false;
 			}

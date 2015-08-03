@@ -20,7 +20,7 @@ public:
 #ifdef _MSC_VER
 	static void *operator new (std::size_t cbSize);
 #else
-	static void *operator new(std::size_t cbSize) throw (std::bad_alloc);
+	static void *operator new (std::size_t cbSize) throw (std::bad_alloc);
 #endif
 
 	static void operator delete(void *pMem, std::size_t cbSize) throw ();

@@ -1,3 +1,6 @@
+0.1.24 - 2015-08-03
+  - replaced calls to new to new (std::nothrow)
+  - fixed automatic detected issues
 0.1.23 - 2015-07-19
   - Increased Print internal ToString buffer from 1KB to 8KB
   - Added support for ignored allocs in mem leak detector

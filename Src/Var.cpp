@@ -69,7 +69,7 @@ public:
 		}
 		else
 		{
-			Var *pVar = new Var(Var::Type_Object);
+			Var *pVar = new (std::nothrow) Var(Var::Type_Object);
 
 			if (NULL == pVar)
 			{
@@ -113,7 +113,7 @@ public:
 		}
 		else
 		{
-			Var *pVar = new Var(Var::Type_Array);
+			Var *pVar = new (std::nothrow) Var(Var::Type_Array);
 
 			if (NULL == pVar)
 			{
@@ -338,7 +338,7 @@ Status Var::Copy(const Var &var)
 		for (VarsMap::iterator iter = var.m_pObject->mapVars.begin(); 
 		     iter != var.m_pObject->mapVars.end(); ++iter)
 		{
-			Var *pVar = new Var(*iter->second);
+			Var *pVar = new (std::nothrow) Var(*iter->second);
 
 			if (NULL == pVar)
 			{
@@ -372,7 +372,7 @@ Status Var::Copy(const Var &var)
 		for (VarsVector::iterator iter = var.m_pArray->vectorVars.begin(); 
 		     iter != var.m_pArray->vectorVars.end(); ++iter)
 		{
-			Var *pVar = new Var(**iter);
+			Var *pVar = new (std::nothrow) Var(**iter);
 
 			if (NULL == pVar)
 			{
@@ -574,7 +574,7 @@ Status Var::SetType(Type nType)
 	}
 	if (Type_String != m_nType && Type_String == nType)
 	{
-		if (NULL == (m_psString = new String()))
+		if (NULL == (m_psString = new (std::nothrow) String()))
 		{
 			return Status(Status_MemAllocFailed, "Failed to alloc string");
 		}
@@ -582,7 +582,7 @@ Status Var::SetType(Type nType)
 	else
 	if (Type_Object != m_nType && Type_Object == nType)
 	{
-		if (NULL == (m_pObject = new ObjectVar()))
+		if (NULL == (m_pObject = new (std::nothrow) ObjectVar()))
 		{
 			return Status(Status_MemAllocFailed, "Failed to alloc object");
 		}
@@ -590,7 +590,7 @@ Status Var::SetType(Type nType)
 	else
 	if (Type_Array != m_nType && Type_Array == nType)
 	{
-		if (NULL == (m_pArray = new ArrayVar()))
+		if (NULL == (m_pArray = new (std::nothrow) ArrayVar()))
 		{
 			return Status(Status_MemAllocFailed, "Failed to alloc array");
 		}
@@ -943,7 +943,7 @@ Var &Var::GetObjectMember(const char *szName)
 
 	if (m_pObject->mapVars.end() == iter)
 	{
-		Var *pVar = new Var();
+		Var *pVar = new (std::nothrow) Var();
 
 		if (NULL == pVar)
 		{
@@ -998,7 +998,7 @@ Var &Var::GetArrayItem(int cIndex/* = -1*/)
 
 	if (cIndex < 0 || cIndex >= (int)m_pArray->vectorVars.size())
 	{
-		Var *pVar = new Var();
+		Var *pVar = new (std::nothrow) Var();
 
 		if (NULL == pVar)
 		{
@@ -1011,7 +1011,7 @@ Var &Var::GetArrayItem(int cIndex/* = -1*/)
 	}
 	else
 	{
-		return *(m_pArray->vectorVars)[cIndex];
+		return *(m_pArray->vectorVars)[(Size)cIndex];
 	}
 }
 
@@ -1027,7 +1027,7 @@ const Var &Var::GetArrayItem(int cIndex/* = -1*/) const
 		return INVALID_VAR;
 	}
 
-	return *(m_pArray->vectorVars)[cIndex];
+	return *(m_pArray->vectorVars)[(Size)cIndex];
 }
 
 Var &Var::operator[](const char *szName)
@@ -1145,7 +1145,7 @@ Status Var::ObjectIterator::Next()
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
-	m_iter++;
+	++m_iter;
 	if (m_pVar->vectorVarExs.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
@@ -1211,7 +1211,7 @@ Status Var::ObjectConstIterator::Next()
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
-	m_iter++;
+	++m_iter;
 	if (m_pVar->vectorVarExs.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
@@ -1277,7 +1277,7 @@ Status Var::ArrayIterator::Next()
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
-	m_iter++;
+	++m_iter;
 	if (m_pVar->vectorVars.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
@@ -1343,7 +1343,7 @@ Status Var::ArrayConstIterator::Next()
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");
 	}
-	m_iter++;
+	++m_iter;
 	if (m_pVar->vectorVars.end() == m_iter)
 	{
 		return Status(Status_InvalidCall, "Iterator is invalid");

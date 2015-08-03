@@ -41,7 +41,7 @@ const Char SHA384Hash::NAME[] = "SHA384";
 
 SHA384Hash::SHA384Hash()
 {
-	if (NULL == (m_pCTX = new SHA384_CTX()))
+	if (NULL == (m_pCTX = new (std::nothrow) SHA384_CTX()))
 	{
 		return;
 	}

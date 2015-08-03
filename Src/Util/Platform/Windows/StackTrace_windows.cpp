@@ -89,7 +89,7 @@ Status StackTrace::GetStackTrace(CallsVector &vectorCalls, Size cMaxEntries/* = 
 	IMAGEHLP_LINE64   line;
 	DWORD             dwDisplacement;
 
-	if (NULL == (pSym = (SYMBOL_INFO *)CX_Alloc(sizeof(SYMBOL_INFO) + (MAX_SYMBOL_NAME + 1)* sizeof(Char))))
+	if (NULL == (pSym = (SYMBOL_INFO *)CX_Alloc(sizeof(SYMBOL_INFO) + (MAX_SYMBOL_NAME + 1) * sizeof(Char))))
 	{
 		CX_Free(entries);
 
@@ -121,7 +121,7 @@ Status StackTrace::GetStackTrace(CallsVector &vectorCalls, Size cMaxEntries/* = 
 				break;
 			}
 		}
-		if (!SymGetLineFromAddr64(hProcess, (DWORD)(entries[i]), &dwDisplacement, &line))
+		if (!SymGetLineFromAddr64(hProcess, (DWORD64)(entries[i]), &dwDisplacement, &line))
 		{
 			DWORD dwError = GetLastError();
 

@@ -39,7 +39,7 @@ namespace Log
 Logger::Logger()
 {
 	m_nLevel = Level_Info;
-	if (NULL == (m_pFormatter = new DefaultFormatter()))
+	if (NULL == (m_pFormatter = new (std::nothrow) DefaultFormatter()))
 	{
 		//
 	}

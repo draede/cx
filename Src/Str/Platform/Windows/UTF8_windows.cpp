@@ -109,6 +109,14 @@ Status UTF8::FromWChar(const WChar *wszWChar, Size cWCharLen, Char *szUTF8, Size
 {
 	int cSize;
 
+	if (NULL == wszWChar)
+	{
+		return Status(Status_InvalidArg);
+	}
+	if (NULL == szUTF8)
+	{
+		return Status(Status_InvalidArg);
+	}
 	if (TYPE_SIZE_MAX == cWCharLen)
 	{
 		cWCharLen = cxw_strlen(wszWChar) + 1;
@@ -171,7 +179,7 @@ Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = TYP
 	}
 	if (cLen > sizeof(out) / sizeof(out[0]))
 	{
-		if (NULL == (pOut = new WChar[cLen]))
+		if (NULL == (pOut = new (std::nothrow) WChar[cLen]))
 		{
 			return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", cLen * sizeof(WChar));
 		}
@@ -215,7 +223,7 @@ Status UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* =
 	}
 	if (cLen > sizeof(out) / sizeof(out[0]))
 	{
-		if (NULL == (pOut = new Char[cLen]))
+		if (NULL == (pOut = new (std::nothrow) Char[cLen]))
 		{
 			return Status(Status_MemAllocFailed, "Failed to allocate {1} bytes", cLen * sizeof(Char));
 		}

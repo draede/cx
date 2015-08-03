@@ -100,7 +100,7 @@ public:
 	void Add(const K1 &k1)
 	{
 		DataVector::iterator iter;
-		Data                 *pData = new Data();
+		Data                 *pData = new (std::nothrow) Data();
 
 		pData->k1      = k1;
 		m_vectorData.push_back(pData);
@@ -229,7 +229,7 @@ public:
 	void Add(const K1 &k1, const K2 &k2)
 	{
 		DataVector::iterator iter;
-		Data                 *pData = new Data();
+		Data                 *pData = new (std::nothrow) Data();
 
 		pData->k1      = k1;
 		pData->k2      = k2;
@@ -381,7 +381,7 @@ public:
 	void Add(const K1 &k1, const K2 &k2, const K3 &k3)
 	{
 		DataVector::iterator iter;
-		Data                 *pData = new Data();
+		Data                 *pData = new (std::nothrow) Data();
 
 		pData->k1      = k1;
 		pData->k2      = k2;
@@ -556,7 +556,7 @@ public:
 	void Add(const K1 &k1, const K2 &k2, const K3 &k3, const K4 &k4)
 	{
 		DataVector::iterator iter;
-		Data                 *pData = new Data();
+		Data                 *pData = new (std::nothrow) Data();
 
 		pData->k1      = k1;
 		pData->k2      = k2;
