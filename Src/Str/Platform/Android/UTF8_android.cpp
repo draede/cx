@@ -190,7 +190,7 @@ Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = TYP
 			return Status(Status_ConversionFailed, "utf8_to_wchar failed");
 		}
 		psWChar->assign(pOut, cSize);
-		if (pOut != pOut)
+		if (NULL != pOut)
 		{
 			delete [] pOut;
 		}
