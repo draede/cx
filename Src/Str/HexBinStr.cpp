@@ -140,14 +140,14 @@ Status HexBinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBi
 
 Size HexBinStr::GetStrLenFromBinSize(const void *pBinInput, Size cbBinInputSize)
 {
-	pBinInput;
+	CX_UNUSED(pBinInput);
 
 	return cbBinInputSize * 2;
 }
 
 Size HexBinStr::GetBinSizeFromStrLen(const Char *pStrInput, Size cStrInputLen)
 {
-	pStrInput;
+	CX_UNUSED(pStrInput);
 
 	return cStrInputLen / 2;
 }

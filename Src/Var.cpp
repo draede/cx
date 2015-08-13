@@ -230,7 +230,12 @@ const Char     *Var::DEFAULT_STRING = "";
 
 Var::Var(Bool a1, Bool a2, Bool a3, Bool a4, Bool a5)
 {
-	a1; a2; a3; a4; a5;
+	CX_UNUSED(a1);
+    CX_UNUSED(a2);
+    CX_UNUSED(a3);
+    CX_UNUSED(a4);
+    CX_UNUSED(a5);
+    
 	m_nType = Type_Invalid;
 }
 

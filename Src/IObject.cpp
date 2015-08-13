@@ -1,6 +1,7 @@
 
 #include "CX/IObject.hpp"
 #include "CX/Mem.hpp"
+#include "CX/Platform.hpp"
 
 
 namespace CX
@@ -31,7 +32,7 @@ void *IObject::operator new(std::size_t cbSize) throw (std::bad_alloc)
 
 void IObject::operator delete(void *pPtr, std::size_t cbSize) throw ()
 {
-	cbSize;
+	CX_UNUSED(cbSize);
 
 	Mem::Free(pPtr);
 }

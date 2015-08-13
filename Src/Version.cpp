@@ -155,6 +155,8 @@ const Version &CXVersion::Get()
 	                                                     CX_VER_REVISION, CX_VER_BUILD, CX_VER_NAME, 
 	                                                     CX_VER_COPYRIGHT, CX_VER_COMPANY, 
 	                                                     CX_VER_DESCRIPTION) " ***";
+    
+    CX_UNUSED(SIG);
 
 	return version;
 }

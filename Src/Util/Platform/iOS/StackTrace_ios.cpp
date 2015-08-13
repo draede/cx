@@ -55,9 +55,9 @@ StackTrace::~StackTrace()
 Status StackTrace::GetStackTrace(CallsVector &vectorCalls, Size cMaxEntries/* = MAX_STACK_ENTRIES*/, 
                                  unsigned int nFlags/* = Flag_IgnoreRuntimeInitCalls*/)
 {
-	vectorCalls;
-	cMaxEntries;
-	nFlags;
+	CX_UNUSED(vectorCalls);
+	CX_UNUSED(cMaxEntries);
+	CX_UNUSED(nFlags);
 
 	return Status(Status_NotSupported);
 }

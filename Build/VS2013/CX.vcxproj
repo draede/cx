@@ -87,6 +87,20 @@
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h" />
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\BLOB.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\CPPGenerator.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\DataReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\DataWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\IArchivable.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\IGenerator.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\IReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\IWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\JSONReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\JSONWriter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\Member.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\MemberType.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\Object.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\Parser.hpp" />
     <ClInclude Include="..\..\Include\CX\CX.hpp" />
     <ClInclude Include="..\..\Include\CX\C\Alloc.h" />
     <ClInclude Include="..\..\Include\CX\C\APIDefs.h" />
@@ -144,8 +158,6 @@
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\IDataReader.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\IDataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
@@ -462,6 +474,11 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c" />
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c" />
+    <ClCompile Include="..\..\Src\Archive\JSONReader.cpp" />
+    <ClCompile Include="..\..\Src\Archive\JSONWriter.cpp" />
+    <ClCompile Include="..\..\Src\Archive\Member.cpp" />
+    <ClCompile Include="..\..\Src\Archive\Object.cpp" />
+    <ClCompile Include="..\..\Src\Archive\Parser.cpp" />
     <ClCompile Include="..\..\Src\C\Platform\Android\Alloc_android.c">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>

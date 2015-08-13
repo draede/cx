@@ -73,6 +73,38 @@ Status Helper::CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStre
 	return Status();
 }
 
+Status Helper::LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData)
+{
+	UInt64 cbSize;
+	Size   cbReqSize;
+	Size   cbAckSize;
+	Status status;
+
+	if ((status = pInputStream->GetSize(&cbSize)).IsNOK())
+	{
+		return status;
+	}
+	cbReqSize = (Size)cbSize;
+	try
+	{
+		vectorData.resize(cbReqSize);
+	}
+	catch(...)
+	{
+		return Status(Status_MemAllocFailed);
+	}
+	if ((status = pInputStream->Read(&vectorData[0], cbReqSize, &cbAckSize)).IsNOK())
+	{
+		return status;
+	}
+	if (cbAckSize != cbReqSize)
+	{
+		return Status(Status_ReadFailed);
+	}
+
+	return Status();
+}
+
 }//namespace IO
 
 }//namespace CX

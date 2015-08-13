@@ -280,6 +280,12 @@
     <Filter Include="Contrib\BLAKE2">
       <UniqueIdentifier>{1a266b5a-6270-4dad-ad47-972b00a6ad71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Archive">
+      <UniqueIdentifier>{b94a6283-9ede-472d-81a2-03d4efbf3564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Archive">
+      <UniqueIdentifier>{8366a381-e633-4ec4-98ec-a560ffa7b240}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -612,12 +618,6 @@
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\IDataWriter.hpp">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\IDataReader.hpp">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\RndGen.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -821,6 +821,48 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Hash\BLAKE2Hash.hpp">
       <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\BLOB.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\CPPGenerator.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\DataReader.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\DataWriter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\IGenerator.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\IReader.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\IWriter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\JSONReader.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\JSONWriter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\Member.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\MemberType.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\Object.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\Parser.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\IArchivable.hpp">
+      <Filter>Header Files\Archive</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1105,6 +1147,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\BLAKE2Hash.cpp">
       <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\JSONReader.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\JSONWriter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\Member.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\Object.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\Parser.cpp">
+      <Filter>Source Files\Archive</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

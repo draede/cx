@@ -35,6 +35,7 @@
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/IObject.hpp"
+#include "CX/Vector.hpp"
 
 
 namespace CX
@@ -50,6 +51,8 @@ public:
 	static const Size COPY_STREAM_BUFFER = 8192;
 
 	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream);
+
+	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
 
 private:
 

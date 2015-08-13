@@ -61,9 +61,13 @@ void CX_Free(void *pPtr)
 	}
 }
 
+#endif
+
+#if defined(CX_OS_WINDOWS)
+
+static void a_dummy_func_to_make_vs_happy()
+{
+}
 
 #endif
 
-static void empty_func_to_make_compiler_happy()
-{
-}

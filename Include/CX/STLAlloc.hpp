@@ -31,6 +31,7 @@
 
 #include "CX/Mem.hpp"
 #include "CX/IObject.hpp"
+#include "CX/Platform.hpp"
 #include <new>
 #include <cstddef>
 #include <limits>
@@ -94,13 +95,13 @@ public:
 
 	STLAlloc(const STLAlloc &al)
 	{
-		al;
+		CX_UNUSED(al);
 	}
 	
 	template <class U> 
 	STLAlloc(const STLAlloc<U> &al)
 	{
-		al;
+		CX_UNUSED(al);
 	}
 	
 	~STLAlloc()
@@ -119,14 +120,14 @@ public:
 
 	pointer allocate(size_type n, STLAlloc<void>::const_pointer hint = 0)
 	{
-		hint;
+		CX_UNUSED(hint);
 
 		return (pointer)Mem::Alloc(n * sizeof(T));
 	}
 
 	void deallocate(pointer p, size_type n)
 	{
-		n;
+		CX_UNUSED(n);
 
 		Mem::Free(p);
 	}
@@ -143,7 +144,7 @@ public:
 
 	void destroy(pointer p)
 	{
-		p; //wth
+		CX_UNUSED(p); //wth
 
 		p->~T();
 	}
@@ -153,8 +154,8 @@ public:
 template <class T1, class T2>
 Bool operator==(const STLAlloc<T1 >&p1, const STLAlloc<T2> &p2)
 {
-	p1;
-	p2;
+	CX_UNUSED(p1);
+	CX_UNUSED(p2);
 
 	return True;
 }
@@ -162,8 +163,8 @@ Bool operator==(const STLAlloc<T1 >&p1, const STLAlloc<T2> &p2)
 template <class T1, class T2>
 Bool operator!=(const STLAlloc<T1> &p1, const STLAlloc<T2> &p2)
 {
-	p1;
-	p2;
+	CX_UNUSED(p1);
+	CX_UNUSED(p2);
 
 	return False;
 }

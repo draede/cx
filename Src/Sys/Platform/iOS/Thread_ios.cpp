@@ -72,7 +72,7 @@ Thread::ID Thread::GetCurrentThreadID()
 
 void Thread::Sleep(Size cMilliseconds)
 {
-	cMilliseconds;
+	CX_UNUSED(cMilliseconds);
 }
 
 }//namespace Sys

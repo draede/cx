@@ -359,12 +359,12 @@ template <>
 inline StatusCode ToString<EmptyType>(EmptyType p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                              Size cPrecision)
 {
-	p;
-	nExtraFlags;
-	szOutput;
-	cLen;
-	pcFinalLen;
-	cPrecision;
+	CX_UNUSED(p);
+	CX_UNUSED(nExtraFlags);
+	CX_UNUSED(szOutput);
+	CX_UNUSED(cLen);
+	CX_UNUSED(pcFinalLen);
+	CX_UNUSED(cPrecision);
 
 	return Status_NotSupported;
 }
@@ -373,8 +373,8 @@ template <>
 inline StatusCode ToString<Char>(Char p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
-	nExtraFlags;
-	cPrecision;
+	CX_UNUSED(nExtraFlags);
+	CX_UNUSED(cPrecision);
 
 	if (cLen < 2)
 	{
@@ -391,8 +391,8 @@ template <>
 inline StatusCode ToString<Bool>(Bool p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
-	nExtraFlags;
-	cPrecision;
+	CX_UNUSED(nExtraFlags);
+	CX_UNUSED(cPrecision);
 
 	if (p)
 	{
@@ -424,7 +424,7 @@ template <>
 inline StatusCode ToString<Int8>(Int8 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -464,7 +464,7 @@ template <>
 inline StatusCode ToString<UInt8>(UInt8 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -489,7 +489,7 @@ template <>
 inline StatusCode ToString<Int16>(Int16 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -529,7 +529,7 @@ template <>
 inline StatusCode ToString<UInt16>(UInt16 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -554,7 +554,7 @@ template <>
 inline StatusCode ToString<Int32>(Int32 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -594,7 +594,7 @@ template <>
 inline StatusCode ToString<UInt32>(UInt32 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -619,7 +619,7 @@ template <>
 inline StatusCode ToString<Int64>(Int64 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -659,7 +659,7 @@ template <>
 inline StatusCode ToString<UInt64>(UInt64 p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -684,7 +684,7 @@ template <>
 inline StatusCode ToString<Float>(Float p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                          Size cPrecision)
 {
-	nExtraFlags;
+	CX_UNUSED(nExtraFlags);
 
 	if (!Detail::DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
 	{
@@ -710,7 +710,7 @@ template <>
 inline StatusCode ToString<Double>(Double p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                           Size cPrecision)
 {
-	nExtraFlags;
+	CX_UNUSED(nExtraFlags);
 
 	if (!Detail::DetailPrint::DoubleToString(p, szOutput, cLen, cPrecision))
 	{
@@ -736,7 +736,7 @@ template <>
 inline StatusCode ToString<long>(long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -776,7 +776,7 @@ template <>
 inline StatusCode ToString<unsigned long>(unsigned long p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                  Size *pcFinalLen, Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
@@ -801,8 +801,8 @@ template <>
 inline StatusCode ToString<const Char *>(const Char *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                 Size *pcFinalLen, Size cPrecision)
 {
-	nExtraFlags;
-	cPrecision;
+	CX_UNUSED(nExtraFlags);
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::StrCopy(szOutput, cLen, p, pcFinalLen))
 	{
@@ -825,8 +825,8 @@ template <>
 inline StatusCode ToString<const String &>(const String &p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                                   Size *pcFinalLen, Size cPrecision)
 {
-	nExtraFlags;
-	cPrecision;
+	CX_UNUSED(nExtraFlags);
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::StrCopy(szOutput, cLen, p.c_str(), pcFinalLen))
 	{
@@ -858,7 +858,7 @@ inline StatusCode ToString<const WChar *>(const WChar *p, unsigned int nExtraFla
 {
 	String sTmp;
 
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::WChartoUTF8(p, &sTmp))
 	{
@@ -874,7 +874,7 @@ inline StatusCode ToString<WChar *>(WChar *p, unsigned int nExtraFlags, Char *sz
 {
 	String sTmp;
 
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::WChartoUTF8(p, &sTmp))
 	{
@@ -891,7 +891,7 @@ inline StatusCode ToString<const WString &>(const WString &p, unsigned int nExtr
 {
 	String sTmp;
 
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
@@ -907,7 +907,7 @@ inline StatusCode ToString<WString &>(WString &p, unsigned int nExtraFlags, Char
 {
 	String sTmp;
 
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
@@ -924,7 +924,7 @@ inline StatusCode ToString<WString>(WString p, unsigned int nExtraFlags, Char *s
 {
 	String sTmp;
 
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
@@ -938,9 +938,9 @@ template <>
 inline StatusCode ToString<const std::string &>(const std::string &p, unsigned int nExtraFlags, Char *szOutput, 
                                                        Size cLen, Size *pcFinalLen, Size cPrecision)
 {
-	cPrecision;
-
-	nExtraFlags;
+	CX_UNUSED(cPrecision);
+	CX_UNUSED(nExtraFlags);
+              
 	if (!Detail::DetailPrint::StrCopy(szOutput, cLen, p.c_str(), pcFinalLen))
 	{
 		return Status_TooSmall;
@@ -971,7 +971,7 @@ inline StatusCode ToString<const std::wstring &>(const std::wstring &p, unsigned
 {
 	String sTmp;
 
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
@@ -987,7 +987,7 @@ inline StatusCode ToString<std::wstring &>(std::wstring &p, unsigned int nExtraF
 {
 	String sTmp;
 
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
@@ -1004,7 +1004,7 @@ inline StatusCode ToString<std::wstring>(std::wstring p, unsigned int nExtraFlag
 {
 	String sTmp;
 
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (!Detail::DetailPrint::WChartoUTF8(p.c_str(), &sTmp))
 	{
@@ -1018,7 +1018,7 @@ template <>
 inline StatusCode ToString<void *>(void *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                           Size *pcFinalLen, Size cPrecision)
 {
-	cPrecision;
+	CX_UNUSED(cPrecision);
 
 	if (Detail::ExtraFlag_HexLower != nExtraFlags && Detail::ExtraFlag_HexUpper != nExtraFlags)
 	{
@@ -1244,8 +1244,8 @@ public:
 		Size       cPostLen;
 		StatusCode nStatus;
 
-		pBuf;
-		cBufLen;
+		CX_UNUSED(pBuf);
+		CX_UNUSED(cBufLen);
 
 		cLen    = 0;
 		nStatus = Status_NotImplemented;

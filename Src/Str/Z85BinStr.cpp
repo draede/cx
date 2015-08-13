@@ -73,7 +73,7 @@ Status Z85BinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBi
 
 Size Z85BinStr::GetStrLenFromBinSize(const void *pBinInput, Size cbBinInputSize)
 {
-	pBinInput;
+	CX_UNUSED(pBinInput);
 
 	return Z85_encode_with_padding_bound(cbBinInputSize);
 }

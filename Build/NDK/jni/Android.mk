@@ -50,6 +50,11 @@ $(LOCAL_PATH)/../../../../Contrib/TinyMT/Src/tinymt64.c \
 $(LOCAL_PATH)/../../../../Contrib/UTF8ToUCS4/Src/utf8.c \
 $(LOCAL_PATH)/../../../../Contrib/xxHash/Src/xxHash.c \
 $(LOCAL_PATH)/../../../../Contrib/Z85/Src/z85.c \
+$(LOCAL_PATH)/../../../../Src/Archive/JSONReader.cpp \
+$(LOCAL_PATH)/../../../../Src/Archive/JSONWriter.cpp \
+$(LOCAL_PATH)/../../../../Src/Archive/Member.cpp \
+$(LOCAL_PATH)/../../../../Src/Archive/Object.cpp \
+$(LOCAL_PATH)/../../../../Src/Archive/Parser.cpp \
 $(LOCAL_PATH)/../../../../Src/C/Platform/Android/Alloc_android.c \
 $(LOCAL_PATH)/../../../../Src/Data/JSON/JSONSAXParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Detail/DetailPrint/Platform/Android/DetailPrint_android.cpp \

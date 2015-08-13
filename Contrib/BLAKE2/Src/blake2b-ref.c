@@ -11,6 +11,8 @@
    this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 */
 
+#pragma warning(disable: 4127 4245)
+
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>

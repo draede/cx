@@ -52,8 +52,8 @@ StreamOutput::~StreamOutput()
 
 Status StreamOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
 {
-	nLevel;
-	szTag;
+	CX_UNUSED(nLevel);
+	CX_UNUSED(szTag);
 
 	if (NULL == m_pOutputStream)
 	{

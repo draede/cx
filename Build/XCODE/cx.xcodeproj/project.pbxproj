@@ -50,6 +50,11 @@
 		4A0BE86A1B447ECC005348CB /* StackTrace_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8671B447ECC005348CB /* StackTrace_ios.cpp */; };
 		4A0BE86B1B447ECC005348CB /* Time_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8681B447ECC005348CB /* Time_ios.cpp */; };
 		4A0BE86C1B447ECC005348CB /* Timer_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8691B447ECC005348CB /* Timer_ios.cpp */; };
+		4A7459181B7CFFE500F64B2B /* JSONReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A7459131B7CFFE500F64B2B /* JSONReader.cpp */; };
+		4A7459191B7CFFE500F64B2B /* JSONWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A7459141B7CFFE500F64B2B /* JSONWriter.cpp */; };
+		4A74591A1B7CFFE500F64B2B /* Member.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A7459151B7CFFE500F64B2B /* Member.cpp */; };
+		4A74591B1B7CFFE500F64B2B /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A7459161B7CFFE500F64B2B /* Object.cpp */; };
+		4A74591C1B7CFFE500F64B2B /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A7459171B7CFFE500F64B2B /* Parser.cpp */; };
 		4AE2E49E1B486743000CFAB8 /* tinymt32.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E49C1B486743000CFAB8 /* tinymt32.c */; };
 		4AE2E49F1B486743000CFAB8 /* tinymt64.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E49D1B486743000CFAB8 /* tinymt64.c */; };
 		4AE2E4A11B48674B000CFAB8 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2E4A01B48674B000CFAB8 /* utf8.c */; };
@@ -129,6 +134,11 @@
 		4A0BE8681B447ECC005348CB /* Time_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Time_ios.cpp; path = ../../Src/Util/Platform/iOS/Time_ios.cpp; sourceTree = "<group>"; };
 		4A0BE8691B447ECC005348CB /* Timer_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Timer_ios.cpp; path = ../../Src/Util/Platform/iOS/Timer_ios.cpp; sourceTree = "<group>"; };
 		4A6876B91B43B2DD0007E26E /* libCX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A7459131B7CFFE500F64B2B /* JSONReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JSONReader.cpp; path = ../../Src/Archive/JSONReader.cpp; sourceTree = "<group>"; };
+		4A7459141B7CFFE500F64B2B /* JSONWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JSONWriter.cpp; path = ../../Src/Archive/JSONWriter.cpp; sourceTree = "<group>"; };
+		4A7459151B7CFFE500F64B2B /* Member.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Member.cpp; path = ../../Src/Archive/Member.cpp; sourceTree = "<group>"; };
+		4A7459161B7CFFE500F64B2B /* Object.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Object.cpp; path = ../../Src/Archive/Object.cpp; sourceTree = "<group>"; };
+		4A7459171B7CFFE500F64B2B /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = ../../Src/Archive/Parser.cpp; sourceTree = "<group>"; };
 		4AE2E49C1B486743000CFAB8 /* tinymt32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tinymt32.c; path = ../../Contrib/TinyMT/Src/tinymt32.c; sourceTree = "<group>"; };
 		4AE2E49D1B486743000CFAB8 /* tinymt64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tinymt64.c; path = ../../Contrib/TinyMT/Src/tinymt64.c; sourceTree = "<group>"; };
 		4AE2E4A01B48674B000CFAB8 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf8.c; path = ../../Contrib/UTF8ToUCS4/Src/utf8.c; sourceTree = "<group>"; };
@@ -165,6 +175,11 @@
 		4A6876B01B43B2DD0007E26E = {
 			isa = PBXGroup;
 			children = (
+				4A7459131B7CFFE500F64B2B /* JSONReader.cpp */,
+				4A7459141B7CFFE500F64B2B /* JSONWriter.cpp */,
+				4A7459151B7CFFE500F64B2B /* Member.cpp */,
+				4A7459161B7CFFE500F64B2B /* Object.cpp */,
+				4A7459171B7CFFE500F64B2B /* Parser.cpp */,
 				4AE2E4B91B496D37000CFAB8 /* BLAKE2Hash.cpp */,
 				4AE2E4B71B496D2D000CFAB8 /* blake2b-ref.c */,
 				4AE2E4A41B48675C000CFAB8 /* xxhash.c */,
@@ -296,6 +311,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A7459181B7CFFE500F64B2B /* JSONReader.cpp in Sources */,
+				4A7459191B7CFFE500F64B2B /* JSONWriter.cpp in Sources */,
+				4A74591A1B7CFFE500F64B2B /* Member.cpp in Sources */,
+				4A74591B1B7CFFE500F64B2B /* Object.cpp in Sources */,
+				4A74591C1B7CFFE500F64B2B /* Parser.cpp in Sources */,
 				4A0BE83E1B447E72005348CB /* IObject.cpp in Sources */,
 				4A0BE83F1B447E72005348CB /* Mem.cpp in Sources */,
 				4A0BE8401B447E72005348CB /* Status.cpp in Sources */,

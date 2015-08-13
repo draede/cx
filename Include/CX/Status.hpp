@@ -54,6 +54,16 @@ public:
 
 	Status(StatusCode nCode, const Char *szMsg);
 
+	operator bool() const
+	{
+		return IsOK();
+	}
+
+	operator StatusCode() const
+	{
+		return m_nCode;
+	}
+
 	template <typename T1>
 	Status(StatusCode nCode, const Char *szFormat, T1 p1)
 	{

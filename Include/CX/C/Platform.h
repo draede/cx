@@ -33,6 +33,8 @@
 	#define CX_DEBUG
 #endif
 
+#define CX_UNUSED(x)   (void)x
+
 #if defined(_WIN32)
 	#define CX_OS           "WINDOWS"
 	#define CX_OS_WINDOWS

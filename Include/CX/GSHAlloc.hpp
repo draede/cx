@@ -100,7 +100,7 @@ public:
 
 	void destroy(pointer p) 
 	{ 
-		p;
+		CX_UNUSED(p);
 
 		p->~value_type(); 
 	}
