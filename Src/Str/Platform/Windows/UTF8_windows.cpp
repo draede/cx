@@ -113,10 +113,6 @@ Status UTF8::FromWChar(const WChar *wszWChar, Size cWCharLen, Char *szUTF8, Size
 	{
 		return Status(Status_InvalidArg);
 	}
-	if (NULL == szUTF8)
-	{
-		return Status(Status_InvalidArg);
-	}
 	if (TYPE_SIZE_MAX == cWCharLen)
 	{
 		cWCharLen = cxw_strlen(wszWChar) + 1;

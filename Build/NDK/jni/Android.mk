@@ -12,6 +12,7 @@ else
 	LOCAL_CFLAGS += -DNDEBUG
 endif
 
+LOCAL_CFLAGS += -DLZHAM_ANSI_CPLUSPLUS=1
 
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../../Include \
@@ -20,15 +21,16 @@ $(LOCAL_PATH)/../../../Contrib/ByteOrder/Include \
 $(LOCAL_PATH)/../../../Contrib/Catch/Include \
 $(LOCAL_PATH)/../../../Contrib/CRC32Slice8/Include \
 $(LOCAL_PATH)/../../../Contrib/DoubleConversion/Include \
+$(LOCAL_PATH)/../../../Contrib/LZHAM/Include \
 $(LOCAL_PATH)/../../../Contrib/MD5/Include \
 $(LOCAL_PATH)/../../../Contrib/RapidJSON/Include \
 $(LOCAL_PATH)/../../../Contrib/SHA/Include \
 $(LOCAL_PATH)/../../../Contrib/SparseHash/Include \
+$(LOCAL_PATH)/../../../Contrib/TinyAES128/Include \
 $(LOCAL_PATH)/../../../Contrib/TinyMT/Include \
 $(LOCAL_PATH)/../../../Contrib/UTF8ToUCS4/Include \
 $(LOCAL_PATH)/../../../Contrib/xxHash/Include \
 $(LOCAL_PATH)/../../../Contrib/Z85/Include \
-$(NDK_ROOT)/platforms/android-16/arch-arm/usr/include
 
 LOCAL_SRC_FILES := \
 $(LOCAL_PATH)/../../../../Contrib/BLAKE2/Src/blake2b-ref.c \
@@ -41,21 +43,41 @@ $(LOCAL_PATH)/../../../../Contrib/DoubleConversion/Src/double-conversion.cc \
 $(LOCAL_PATH)/../../../../Contrib/DoubleConversion/Src/fast-dtoa.cc \
 $(LOCAL_PATH)/../../../../Contrib/DoubleConversion/Src/fixed-dtoa.cc \
 $(LOCAL_PATH)/../../../../Contrib/DoubleConversion/Src/strtod.cc \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_assert.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_checksum.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_huffman_codes.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_lib.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_lzbase.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_lzcomp.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_lzcomp_internal.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_lzcomp_state.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_lzdecomp.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_lzdecompbase.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_match_accel.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_mem.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_platform.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_prefix_coding.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_symbol_codec.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_timer.cpp \
+$(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_vector.cpp \
 $(LOCAL_PATH)/../../../../Contrib/MD5/Src/md5.c \
 $(LOCAL_PATH)/../../../../Contrib/SHA/Src/hmac_sha1.c \
 $(LOCAL_PATH)/../../../../Contrib/SHA/Src/sha1.c \
 $(LOCAL_PATH)/../../../../Contrib/SHA/Src/sha2.c \
+$(LOCAL_PATH)/../../../../Contrib/TinyAES128/Src/aes.cpp \
 $(LOCAL_PATH)/../../../../Contrib/TinyMT/Src/tinymt32.c \
 $(LOCAL_PATH)/../../../../Contrib/TinyMT/Src/tinymt64.c \
 $(LOCAL_PATH)/../../../../Contrib/UTF8ToUCS4/Src/utf8.c \
 $(LOCAL_PATH)/../../../../Contrib/xxHash/Src/xxHash.c \
 $(LOCAL_PATH)/../../../../Contrib/Z85/Src/z85.c \
-$(LOCAL_PATH)/../../../../Src/Archive/JSONReader.cpp \
-$(LOCAL_PATH)/../../../../Src/Archive/JSONWriter.cpp \
-$(LOCAL_PATH)/../../../../Src/Archive/Member.cpp \
-$(LOCAL_PATH)/../../../../Src/Archive/Object.cpp \
-$(LOCAL_PATH)/../../../../Src/Archive/Parser.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONReader.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONWriter.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/Member.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/Object.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/Parser.cpp \
+$(LOCAL_PATH)/../../../../Src/Archive/LZHAMFilter.cpp \
 $(LOCAL_PATH)/../../../../Src/C/Platform/Android/Alloc_android.c \
+$(LOCAL_PATH)/../../../../Src/Crypt/AES128Filter.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/JSON/JSONSAXParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Detail/DetailPrint/Platform/Android/DetailPrint_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/BLAKE2Hash.cpp \
@@ -67,6 +89,9 @@ $(LOCAL_PATH)/../../../../Src/Hash/SHA384Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA512Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/xxHash32.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/xxHash64.cpp \
+$(LOCAL_PATH)/../../../../Src/IO/BlockFilter.cpp \
+$(LOCAL_PATH)/../../../../Src/IO/FilteredInputStream.cpp \
+$(LOCAL_PATH)/../../../../Src/IO/FilteredOutputStream.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/Platform/Android/LocalFileSysHelper_android.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/Platform/Android/FileInputStream_android.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/Platform/Android/FileOutputStream_android.cpp \

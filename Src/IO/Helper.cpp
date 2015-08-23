@@ -55,7 +55,10 @@ Status Helper::CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStre
 	{
 		if ((status = pInputStream->Read(buffer, sizeof(buffer), &cbAckSize)).IsNOK())
 		{
-			return status;
+			if (Status_EOF != (StatusCode)status)
+			{
+				return status;
+			}
 		}
 		if (0 < cbAckSize)
 		{

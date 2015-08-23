@@ -280,11 +280,29 @@
     <Filter Include="Contrib\BLAKE2">
       <UniqueIdentifier>{1a266b5a-6270-4dad-ad47-972b00a6ad71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SimpleBuffers">
+      <UniqueIdentifier>{d3ef37bc-d457-4e4b-8e5d-01c731c8a604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SimpleBuffers">
+      <UniqueIdentifier>{1e478e1c-83f2-416a-ae78-5d79435d7758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\LZHAM">
+      <UniqueIdentifier>{33f6a922-1eca-4688-af4c-16b0bd821fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\TinyAES128">
+      <UniqueIdentifier>{fedafd79-b9bd-40d5-82ab-f3f01584a4f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Crypt">
+      <UniqueIdentifier>{79bff1ab-53cc-480b-9f2d-d855ade5c7b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Crypt">
+      <UniqueIdentifier>{e32ab18b-86f8-4da6-afc2-e7ca3a071a67}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Archive">
-      <UniqueIdentifier>{b94a6283-9ede-472d-81a2-03d4efbf3564}</UniqueIdentifier>
+      <UniqueIdentifier>{d5a523f0-5d6b-4ed6-b847-c8111e43c492}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Archive">
-      <UniqueIdentifier>{8366a381-e633-4ec4-98ec-a560ffa7b240}</UniqueIdentifier>
+      <UniqueIdentifier>{dda57f85-90ef-43ef-85fa-da48db1f4abb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -822,46 +840,64 @@
     <ClInclude Include="..\..\Include\CX\Hash\BLAKE2Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\BLOB.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\IO\IFilter.hpp">
+      <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\CPPGenerator.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BLOB.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\DataReader.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\CPPGenerator.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\DataWriter.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\IGenerator.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataWriter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\IReader.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\IGenerator.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\IWriter.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\IReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\JSONReader.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\ISimpleBuffers.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\JSONWriter.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\IWriter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\Member.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\JSONReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\MemberType.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\JSONWriter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\Object.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Member.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\Parser.hpp">
-      <Filter>Header Files\Archive</Filter>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\MemberType.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\IArchivable.hpp">
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Object.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Parser.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FilteredInputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FilteredOutputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\BlockFilter.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Crypt\AES128Filter.hpp">
+      <Filter>Header Files\Crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZHAMFilter.hpp">
       <Filter>Header Files\Archive</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1148,19 +1184,88 @@
     <ClCompile Include="..\..\Src\Hash\BLAKE2Hash.cpp">
       <Filter>Source Files\Hash</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Archive\JSONReader.cpp">
-      <Filter>Source Files\Archive</Filter>
+    <ClCompile Include="..\..\Src\SimpleBuffers\JSONReader.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Archive\JSONWriter.cpp">
-      <Filter>Source Files\Archive</Filter>
+    <ClCompile Include="..\..\Src\SimpleBuffers\JSONWriter.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Archive\Member.cpp">
-      <Filter>Source Files\Archive</Filter>
+    <ClCompile Include="..\..\Src\SimpleBuffers\Member.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Archive\Object.cpp">
-      <Filter>Source Files\Archive</Filter>
+    <ClCompile Include="..\..\Src\SimpleBuffers\Object.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Archive\Parser.cpp">
+    <ClCompile Include="..\..\Src\SimpleBuffers\Parser.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\FilteredInputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\FilteredOutputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_assert.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_checksum.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_huffman_codes.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lib.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzbase.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzcomp.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzcomp_internal.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzcomp_state.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzdecomp.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzdecompbase.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_match_accel.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_mem.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_platform.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_prefix_coding.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_symbol_codec.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_timer.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_vector.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\TinyAES128\Src\aes.cpp">
+      <Filter>Contrib\TinyAES128</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\BlockFilter.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Crypt\AES128Filter.cpp">
+      <Filter>Source Files\Crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZHAMFilter.cpp">
       <Filter>Source Files\Archive</Filter>
     </ClCompile>
   </ItemGroup>

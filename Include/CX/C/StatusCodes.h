@@ -74,6 +74,7 @@ static const CX_StatusCode      CX_Status_Cancelled               = 29;
 static const CX_StatusCode      CX_Status_Denied                  = 30;
 static const CX_StatusCode      CX_Status_NoMoreItems             = 31;
 static const CX_StatusCode      CX_Status_NoMoreData              = 32;
+static const CX_StatusCode      CX_Status_Duplicate               = 33;
 
 
 #ifdef __cplusplus

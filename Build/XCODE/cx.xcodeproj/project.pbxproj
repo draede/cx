@@ -50,6 +50,26 @@
 		4A0BE86A1B447ECC005348CB /* StackTrace_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8671B447ECC005348CB /* StackTrace_ios.cpp */; };
 		4A0BE86B1B447ECC005348CB /* Time_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8681B447ECC005348CB /* Time_ios.cpp */; };
 		4A0BE86C1B447ECC005348CB /* Timer_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8691B447ECC005348CB /* Timer_ios.cpp */; };
+		4A2E6D9D1B8A281600C59F4A /* lzham_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D8C1B8A281600C59F4A /* lzham_assert.cpp */; };
+		4A2E6D9E1B8A281600C59F4A /* lzham_checksum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D8D1B8A281600C59F4A /* lzham_checksum.cpp */; };
+		4A2E6D9F1B8A281600C59F4A /* lzham_huffman_codes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D8E1B8A281600C59F4A /* lzham_huffman_codes.cpp */; };
+		4A2E6DA01B8A281600C59F4A /* lzham_lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D8F1B8A281600C59F4A /* lzham_lib.cpp */; };
+		4A2E6DA11B8A281600C59F4A /* lzham_lzbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D901B8A281600C59F4A /* lzham_lzbase.cpp */; };
+		4A2E6DA21B8A281600C59F4A /* lzham_lzcomp_internal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D911B8A281600C59F4A /* lzham_lzcomp_internal.cpp */; };
+		4A2E6DA31B8A281600C59F4A /* lzham_lzcomp_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D921B8A281600C59F4A /* lzham_lzcomp_state.cpp */; };
+		4A2E6DA41B8A281600C59F4A /* lzham_lzcomp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D931B8A281600C59F4A /* lzham_lzcomp.cpp */; };
+		4A2E6DA51B8A281600C59F4A /* lzham_lzdecomp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D941B8A281600C59F4A /* lzham_lzdecomp.cpp */; };
+		4A2E6DA61B8A281600C59F4A /* lzham_lzdecompbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D951B8A281600C59F4A /* lzham_lzdecompbase.cpp */; };
+		4A2E6DA71B8A281600C59F4A /* lzham_match_accel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D961B8A281600C59F4A /* lzham_match_accel.cpp */; };
+		4A2E6DA81B8A281600C59F4A /* lzham_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D971B8A281600C59F4A /* lzham_mem.cpp */; };
+		4A2E6DA91B8A281600C59F4A /* lzham_platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D981B8A281600C59F4A /* lzham_platform.cpp */; };
+		4A2E6DAA1B8A281600C59F4A /* lzham_prefix_coding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D991B8A281600C59F4A /* lzham_prefix_coding.cpp */; };
+		4A2E6DAB1B8A281600C59F4A /* lzham_symbol_codec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D9A1B8A281600C59F4A /* lzham_symbol_codec.cpp */; };
+		4A2E6DAC1B8A281600C59F4A /* lzham_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D9B1B8A281600C59F4A /* lzham_timer.cpp */; };
+		4A2E6DAD1B8A281600C59F4A /* lzham_vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6D9C1B8A281600C59F4A /* lzham_vector.cpp */; };
+		4A2E6DAF1B8A282600C59F4A /* aes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6DAE1B8A282600C59F4A /* aes.cpp */; };
+		4A2E6DB11B8A283F00C59F4A /* LZHAMFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6DB01B8A283F00C59F4A /* LZHAMFilter.cpp */; };
+		4A2E6DB31B8A284B00C59F4A /* AES128Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6DB21B8A284B00C59F4A /* AES128Filter.cpp */; };
 		4A7459181B7CFFE500F64B2B /* JSONReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A7459131B7CFFE500F64B2B /* JSONReader.cpp */; };
 		4A7459191B7CFFE500F64B2B /* JSONWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A7459141B7CFFE500F64B2B /* JSONWriter.cpp */; };
 		4A74591A1B7CFFE500F64B2B /* Member.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A7459151B7CFFE500F64B2B /* Member.cpp */; };
@@ -133,12 +153,32 @@
 		4A0BE8671B447ECC005348CB /* StackTrace_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StackTrace_ios.cpp; path = ../../Src/Util/Platform/iOS/StackTrace_ios.cpp; sourceTree = "<group>"; };
 		4A0BE8681B447ECC005348CB /* Time_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Time_ios.cpp; path = ../../Src/Util/Platform/iOS/Time_ios.cpp; sourceTree = "<group>"; };
 		4A0BE8691B447ECC005348CB /* Timer_ios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Timer_ios.cpp; path = ../../Src/Util/Platform/iOS/Timer_ios.cpp; sourceTree = "<group>"; };
+		4A2E6D8C1B8A281600C59F4A /* lzham_assert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_assert.cpp; path = ../../Contrib/LZHAM/Src/lzham_assert.cpp; sourceTree = "<group>"; };
+		4A2E6D8D1B8A281600C59F4A /* lzham_checksum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_checksum.cpp; path = ../../Contrib/LZHAM/Src/lzham_checksum.cpp; sourceTree = "<group>"; };
+		4A2E6D8E1B8A281600C59F4A /* lzham_huffman_codes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_huffman_codes.cpp; path = ../../Contrib/LZHAM/Src/lzham_huffman_codes.cpp; sourceTree = "<group>"; };
+		4A2E6D8F1B8A281600C59F4A /* lzham_lib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_lib.cpp; path = ../../Contrib/LZHAM/Src/lzham_lib.cpp; sourceTree = "<group>"; };
+		4A2E6D901B8A281600C59F4A /* lzham_lzbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_lzbase.cpp; path = ../../Contrib/LZHAM/Src/lzham_lzbase.cpp; sourceTree = "<group>"; };
+		4A2E6D911B8A281600C59F4A /* lzham_lzcomp_internal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_lzcomp_internal.cpp; path = ../../Contrib/LZHAM/Src/lzham_lzcomp_internal.cpp; sourceTree = "<group>"; };
+		4A2E6D921B8A281600C59F4A /* lzham_lzcomp_state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_lzcomp_state.cpp; path = ../../Contrib/LZHAM/Src/lzham_lzcomp_state.cpp; sourceTree = "<group>"; };
+		4A2E6D931B8A281600C59F4A /* lzham_lzcomp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_lzcomp.cpp; path = ../../Contrib/LZHAM/Src/lzham_lzcomp.cpp; sourceTree = "<group>"; };
+		4A2E6D941B8A281600C59F4A /* lzham_lzdecomp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_lzdecomp.cpp; path = ../../Contrib/LZHAM/Src/lzham_lzdecomp.cpp; sourceTree = "<group>"; };
+		4A2E6D951B8A281600C59F4A /* lzham_lzdecompbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_lzdecompbase.cpp; path = ../../Contrib/LZHAM/Src/lzham_lzdecompbase.cpp; sourceTree = "<group>"; };
+		4A2E6D961B8A281600C59F4A /* lzham_match_accel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_match_accel.cpp; path = ../../Contrib/LZHAM/Src/lzham_match_accel.cpp; sourceTree = "<group>"; };
+		4A2E6D971B8A281600C59F4A /* lzham_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_mem.cpp; path = ../../Contrib/LZHAM/Src/lzham_mem.cpp; sourceTree = "<group>"; };
+		4A2E6D981B8A281600C59F4A /* lzham_platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_platform.cpp; path = ../../Contrib/LZHAM/Src/lzham_platform.cpp; sourceTree = "<group>"; };
+		4A2E6D991B8A281600C59F4A /* lzham_prefix_coding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_prefix_coding.cpp; path = ../../Contrib/LZHAM/Src/lzham_prefix_coding.cpp; sourceTree = "<group>"; };
+		4A2E6D9A1B8A281600C59F4A /* lzham_symbol_codec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_symbol_codec.cpp; path = ../../Contrib/LZHAM/Src/lzham_symbol_codec.cpp; sourceTree = "<group>"; };
+		4A2E6D9B1B8A281600C59F4A /* lzham_timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_timer.cpp; path = ../../Contrib/LZHAM/Src/lzham_timer.cpp; sourceTree = "<group>"; };
+		4A2E6D9C1B8A281600C59F4A /* lzham_vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lzham_vector.cpp; path = ../../Contrib/LZHAM/Src/lzham_vector.cpp; sourceTree = "<group>"; };
+		4A2E6DAE1B8A282600C59F4A /* aes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aes.cpp; path = ../../Contrib/TinyAES128/Src/aes.cpp; sourceTree = "<group>"; };
+		4A2E6DB01B8A283F00C59F4A /* LZHAMFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LZHAMFilter.cpp; path = ../../Src/Archive/LZHAMFilter.cpp; sourceTree = "<group>"; };
+		4A2E6DB21B8A284B00C59F4A /* AES128Filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AES128Filter.cpp; path = ../../Src/Crypt/AES128Filter.cpp; sourceTree = "<group>"; };
 		4A6876B91B43B2DD0007E26E /* libCX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCX.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A7459131B7CFFE500F64B2B /* JSONReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JSONReader.cpp; path = ../../Src/Archive/JSONReader.cpp; sourceTree = "<group>"; };
-		4A7459141B7CFFE500F64B2B /* JSONWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JSONWriter.cpp; path = ../../Src/Archive/JSONWriter.cpp; sourceTree = "<group>"; };
-		4A7459151B7CFFE500F64B2B /* Member.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Member.cpp; path = ../../Src/Archive/Member.cpp; sourceTree = "<group>"; };
-		4A7459161B7CFFE500F64B2B /* Object.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Object.cpp; path = ../../Src/Archive/Object.cpp; sourceTree = "<group>"; };
-		4A7459171B7CFFE500F64B2B /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = ../../Src/Archive/Parser.cpp; sourceTree = "<group>"; };
+		4A7459131B7CFFE500F64B2B /* JSONReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JSONReader.cpp; path = ../../Src/SimpleBuffers/JSONReader.cpp; sourceTree = "<group>"; };
+		4A7459141B7CFFE500F64B2B /* JSONWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JSONWriter.cpp; path = ../../Src/SimpleBuffers/JSONWriter.cpp; sourceTree = "<group>"; };
+		4A7459151B7CFFE500F64B2B /* Member.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Member.cpp; path = ../../Src/SimpleBuffers/Member.cpp; sourceTree = "<group>"; };
+		4A7459161B7CFFE500F64B2B /* Object.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Object.cpp; path = ../../Src/SimpleBuffers/Object.cpp; sourceTree = "<group>"; };
+		4A7459171B7CFFE500F64B2B /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = ../../Src/SimpleBuffers/Parser.cpp; sourceTree = "<group>"; };
 		4AE2E49C1B486743000CFAB8 /* tinymt32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tinymt32.c; path = ../../Contrib/TinyMT/Src/tinymt32.c; sourceTree = "<group>"; };
 		4AE2E49D1B486743000CFAB8 /* tinymt64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tinymt64.c; path = ../../Contrib/TinyMT/Src/tinymt64.c; sourceTree = "<group>"; };
 		4AE2E4A01B48674B000CFAB8 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf8.c; path = ../../Contrib/UTF8ToUCS4/Src/utf8.c; sourceTree = "<group>"; };
@@ -175,6 +215,26 @@
 		4A6876B01B43B2DD0007E26E = {
 			isa = PBXGroup;
 			children = (
+				4A2E6DB21B8A284B00C59F4A /* AES128Filter.cpp */,
+				4A2E6DB01B8A283F00C59F4A /* LZHAMFilter.cpp */,
+				4A2E6DAE1B8A282600C59F4A /* aes.cpp */,
+				4A2E6D8C1B8A281600C59F4A /* lzham_assert.cpp */,
+				4A2E6D8D1B8A281600C59F4A /* lzham_checksum.cpp */,
+				4A2E6D8E1B8A281600C59F4A /* lzham_huffman_codes.cpp */,
+				4A2E6D8F1B8A281600C59F4A /* lzham_lib.cpp */,
+				4A2E6D901B8A281600C59F4A /* lzham_lzbase.cpp */,
+				4A2E6D911B8A281600C59F4A /* lzham_lzcomp_internal.cpp */,
+				4A2E6D921B8A281600C59F4A /* lzham_lzcomp_state.cpp */,
+				4A2E6D931B8A281600C59F4A /* lzham_lzcomp.cpp */,
+				4A2E6D941B8A281600C59F4A /* lzham_lzdecomp.cpp */,
+				4A2E6D951B8A281600C59F4A /* lzham_lzdecompbase.cpp */,
+				4A2E6D961B8A281600C59F4A /* lzham_match_accel.cpp */,
+				4A2E6D971B8A281600C59F4A /* lzham_mem.cpp */,
+				4A2E6D981B8A281600C59F4A /* lzham_platform.cpp */,
+				4A2E6D991B8A281600C59F4A /* lzham_prefix_coding.cpp */,
+				4A2E6D9A1B8A281600C59F4A /* lzham_symbol_codec.cpp */,
+				4A2E6D9B1B8A281600C59F4A /* lzham_timer.cpp */,
+				4A2E6D9C1B8A281600C59F4A /* lzham_vector.cpp */,
 				4A7459131B7CFFE500F64B2B /* JSONReader.cpp */,
 				4A7459141B7CFFE500F64B2B /* JSONWriter.cpp */,
 				4A7459151B7CFFE500F64B2B /* Member.cpp */,
@@ -312,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A7459181B7CFFE500F64B2B /* JSONReader.cpp in Sources */,
+				4A2E6DA41B8A281600C59F4A /* lzham_lzcomp.cpp in Sources */,
 				4A7459191B7CFFE500F64B2B /* JSONWriter.cpp in Sources */,
 				4A74591A1B7CFFE500F64B2B /* Member.cpp in Sources */,
 				4A74591B1B7CFFE500F64B2B /* Object.cpp in Sources */,
@@ -319,8 +380,10 @@
 				4A0BE83E1B447E72005348CB /* IObject.cpp in Sources */,
 				4A0BE83F1B447E72005348CB /* Mem.cpp in Sources */,
 				4A0BE8401B447E72005348CB /* Status.cpp in Sources */,
+				4A2E6DA91B8A281600C59F4A /* lzham_platform.cpp in Sources */,
 				4A0BE8411B447E72005348CB /* Var.cpp in Sources */,
 				4A0BE8421B447E72005348CB /* Version.cpp in Sources */,
+				4A2E6DA61B8A281600C59F4A /* lzham_lzdecompbase.cpp in Sources */,
 				4AE8D1DC1B4866C200A7AC0F /* sha2.c in Sources */,
 				4A0BE8181B447E24005348CB /* Alloc_ios.c in Sources */,
 				4A0BE81A1B447E3D005348CB /* JSONSAXParser.cpp in Sources */,
@@ -329,12 +392,15 @@
 				4A0BE8251B447E53005348CB /* CRC32Hash.cpp in Sources */,
 				4A0BE8261B447E53005348CB /* MD5Hash.cpp in Sources */,
 				4A0BE8271B447E53005348CB /* SHA1Hash.cpp in Sources */,
+				4A2E6D9F1B8A281600C59F4A /* lzham_huffman_codes.cpp in Sources */,
 				4AE8D1DA1B4866C200A7AC0F /* hmac_sha1.c in Sources */,
 				4AE8D1D31B4866AE00A7AC0F /* fixed-dtoa.cc in Sources */,
 				4A0BE8281B447E53005348CB /* SHA256Hash.cpp in Sources */,
 				4A0BE8291B447E53005348CB /* SHA384Hash.cpp in Sources */,
 				4A0BE82A1B447E53005348CB /* SHA512Hash.cpp in Sources */,
+				4A2E6DA21B8A281600C59F4A /* lzham_lzcomp_internal.cpp in Sources */,
 				4A0BE82B1B447E53005348CB /* xxHash32.cpp in Sources */,
+				4A2E6DAD1B8A281600C59F4A /* lzham_vector.cpp in Sources */,
 				4A0BE82C1B447E53005348CB /* xxHash64.cpp in Sources */,
 				4A0BE8301B447E5C005348CB /* Helper.cpp in Sources */,
 				4A0BE8311B447E5C005348CB /* MemInputStream.cpp in Sources */,
@@ -343,38 +409,52 @@
 				4AE8D1CE1B4866AE00A7AC0F /* bignum.cc in Sources */,
 				4A0BE8361B447E63005348CB /* FileInputStream_ios.cpp in Sources */,
 				4AE8D1D11B4866AE00A7AC0F /* double-conversion.cc in Sources */,
+				4A2E6DA11B8A281600C59F4A /* lzham_lzbase.cpp in Sources */,
 				4AE8D1C41B48669D00A7AC0F /* crc32_internal.cpp in Sources */,
 				4AE8D1D01B4866AE00A7AC0F /* diy-fp.cc in Sources */,
 				4A0BE8371B447E63005348CB /* FileOutputStream_ios.cpp in Sources */,
 				4A0BE8381B447E63005348CB /* LocalFileSysHelper_ios.cpp in Sources */,
+				4A2E6DAF1B8A282600C59F4A /* aes.cpp in Sources */,
 				4AE8D1CD1B4866AE00A7AC0F /* bignum-dtoa.cc in Sources */,
 				4AE2E49F1B486743000CFAB8 /* tinymt64.c in Sources */,
 				4A0BE8471B447E7F005348CB /* ConsoleOutput.cpp in Sources */,
 				4AE8D1D41B4866AE00A7AC0F /* strtod.cc in Sources */,
+				4A2E6DAA1B8A281600C59F4A /* lzham_prefix_coding.cpp in Sources */,
 				4A0BE8481B447E7F005348CB /* DefaultFormatter.cpp in Sources */,
 				4AE2E49E1B486743000CFAB8 /* tinymt32.c in Sources */,
 				4A0BE8491B447E7F005348CB /* Logger.cpp in Sources */,
 				4A0BE84A1B447E7F005348CB /* StreamOutput.cpp in Sources */,
 				4A0BE84C1B447E8C005348CB /* SystemOutput_ios.cpp in Sources */,
+				4A2E6D9E1B8A281600C59F4A /* lzham_checksum.cpp in Sources */,
 				4A0BE84E1B447E95005348CB /* Component_ios.cpp in Sources */,
 				4A0BE8511B447E9E005348CB /* HexBinStr.cpp in Sources */,
 				4A0BE8521B447E9E005348CB /* Z85BinStr.cpp in Sources */,
+				4A2E6DB11B8A283F00C59F4A /* LZHAMFilter.cpp in Sources */,
 				4AE8D1D21B4866AE00A7AC0F /* fast-dtoa.cc in Sources */,
 				4A0BE8541B447EA9005348CB /* UTF8_ios.cpp in Sources */,
+				4A2E6DA81B8A281600C59F4A /* lzham_mem.cpp in Sources */,
 				4AE2E4B81B496D2D000CFAB8 /* blake2b-ref.c in Sources */,
 				4AE8D1D61B4866B600A7AC0F /* md5.c in Sources */,
 				4A0BE85A1B447EB4005348CB /* DynLib_ios.cpp in Sources */,
+				4A2E6DA71B8A281600C59F4A /* lzham_match_accel.cpp in Sources */,
 				4A0BE85B1B447EB4005348CB /* Lock_ios.cpp in Sources */,
+				4A2E6DA01B8A281600C59F4A /* lzham_lib.cpp in Sources */,
+				4A2E6D9D1B8A281600C59F4A /* lzham_assert.cpp in Sources */,
 				4A0BE85C1B447EB4005348CB /* Process_ios.cpp in Sources */,
+				4A2E6DA51B8A281600C59F4A /* lzham_lzdecomp.cpp in Sources */,
 				4AE2E4A51B48675C000CFAB8 /* xxhash.c in Sources */,
 				4A0BE85D1B447EB4005348CB /* RWLock_ios.cpp in Sources */,
 				4A0BE85E1B447EB4005348CB /* Thread_ios.cpp in Sources */,
 				4A0BE8631B447EC3005348CB /* MemPool.cpp in Sources */,
 				4A0BE8641B447EC3005348CB /* RCMemBuffer.cpp in Sources */,
+				4A2E6DA31B8A281600C59F4A /* lzham_lzcomp_state.cpp in Sources */,
 				4AE2E4BA1B496D37000CFAB8 /* BLAKE2Hash.cpp in Sources */,
 				4A0BE8651B447EC3005348CB /* RCMemBufferMgr.cpp in Sources */,
+				4A2E6DAC1B8A281600C59F4A /* lzham_timer.cpp in Sources */,
+				4A2E6DAB1B8A281600C59F4A /* lzham_symbol_codec.cpp in Sources */,
 				4A0BE8661B447EC3005348CB /* RndGen.cpp in Sources */,
 				4AE8D1DB1B4866C200A7AC0F /* sha1.c in Sources */,
+				4A2E6DB31B8A284B00C59F4A /* AES128Filter.cpp in Sources */,
 				4A0BE86A1B447ECC005348CB /* StackTrace_ios.cpp in Sources */,
 				4A0BE86B1B447ECC005348CB /* Time_ios.cpp in Sources */,
 				4A0BE86C1B447ECC005348CB /* Timer_ios.cpp in Sources */,
@@ -490,7 +570,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "../../Contrib/ByteOrder/Include ../../Contrib/Catch/Include ../../Contrib/CRC32Slice8/Include ../../Contrib/DoubleConversion/Include ../../Contrib/MD5/Include ../../Contrib/RapidJSON/Include ../../Contrib/SHA/Include ../../Contrib/SparseHash/Include ../../Contrib/TinyMT/Include ../../Contrib/UTF8ToUCS4/Include ../../Contrib/xxHash/Include ../../Contrib/Z85/Include ../../Include";
+				USER_HEADER_SEARCH_PATHS = "../../Contrib/ByteOrder/Include ../../Contrib/Catch/Include ../../Contrib/CRC32Slice8/Include ../../Contrib/DoubleConversion/Include ../../Contrib/MD5/Include ../../Contrib/RapidJSON/Include ../../Contrib/SHA/Include ../../Contrib/SparseHash/Include ../../Contrib/TinyMT/Include ../../Contrib/UTF8ToUCS4/Include ../../Contrib/xxHash/Include ../../Contrib/Z85/Include ../../Include ../../Contrib/TinyAES128/Include ../../Contrib/LZHAM/Include";
 			};
 			name = Debug;
 		};
@@ -507,7 +587,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "../../Contrib/ByteOrder/Include ../../Contrib/Catch/Include ../../Contrib/CRC32Slice8/Include ../../Contrib/DoubleConversion/Include ../../Contrib/MD5/Include ../../Contrib/RapidJSON/Include ../../Contrib/SHA/Include ../../Contrib/SparseHash/Include ../../Contrib/TinyMT/Include ../../Contrib/UTF8ToUCS4/Include ../../Contrib/xxHash/Include ../../Contrib/Z85/Include ../../Include";
+				USER_HEADER_SEARCH_PATHS = "../../Contrib/ByteOrder/Include ../../Contrib/Catch/Include ../../Contrib/CRC32Slice8/Include ../../Contrib/DoubleConversion/Include ../../Contrib/MD5/Include ../../Contrib/RapidJSON/Include ../../Contrib/SHA/Include ../../Contrib/SparseHash/Include ../../Contrib/TinyMT/Include ../../Contrib/UTF8ToUCS4/Include ../../Contrib/xxHash/Include ../../Contrib/Z85/Include ../../Include ../../Contrib/TinyAES128/Include ../../Contrib/LZHAM/Include";
 			};
 			name = Release;
 		};

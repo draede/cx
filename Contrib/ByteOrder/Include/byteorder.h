@@ -42,9 +42,16 @@ extern "C" {
 #if defined(linux) || defined(__linux__) || defined (__GLIBC__) || defined(__GNU__)
 
 	#include <byteswap.h>
+
+#ifdef __ANDROID__
+	#define bswap16(x) bswap_16(x)
+	#define bswap32(x) bswap_32(x)
+	#define bswap64(x) bswap_64(x)
+#else
 	#define bswap16(x) __bswap_16(x)
 	#define bswap32(x) __bswap_32(x)
 	#define bswap64(x) __bswap_64(x)
+#endif
 
 	#ifdef __USE_BSD
 
@@ -131,9 +138,12 @@ extern "C" {
 
 #endif
 
-
+#ifndef LITTLE_ENDIAN
 #define LITTLE_ENDIAN	1234
+#endif
+#ifndef BIG_ENDIAN
 #define BIG_ENDIAN		4321
+#endif
 
 #define LITTLE_ENDIAN_NAME	"litte endian"
 #define BIG_ENDIAN_NAME		"big endian"
@@ -195,39 +205,87 @@ extern "C" {
 
 	#if (BYTE_ORDER == LITTLE_ENDIAN)
 
+#ifndef htole16
 		#define htole16(x) (uint16_t)(x)
+#endif
+#ifndef htole32
 		#define htole32(x) (uint32_t)(x)
+#endif
+#ifndef htole64
 		#define htole64(x) (uint64_t)(x)
+#endif
 
+#ifndef letoh16
 		#define letoh16(x) (uint16_t)(x)
+#endif
+#ifndef letoh32
 		#define letoh32(x) (uint32_t)(x)
+#endif
+#ifndef letoh64
 		#define letoh64(x) (uint64_t)(x)
+#endif
 
+#ifndef htobe16
 		#define htobe16(x) bswap16(x)
+#endif
+#ifndef htobe32
 		#define htobe32(x) bswap32(x)
+#endif
+#ifndef htobe64
 		#define htobe64(x) bswap64(x)
+#endif
 
+#ifndef betoh16
 		#define betoh16(x) bswap16(x)
+#endif
+#ifndef betoh32
 		#define betoh32(x) bswap32(x)
+#endif
+#ifndef betoh64
 		#define betoh64(x) bswap64(x)
+#endif
 
 	#elif (BYTE_ORDER == BIG_ENDIAN)
 
+#ifndef htole16
 		#define htole16(x) bswap16(x)
+#endif
+#ifndef htole32
 		#define htole32(x) bswap32(x)
+#endif
+#ifndef htole64
 		#define htole64(x) bswap64(x)
+#endif
 
+#ifndef letoh16
 		#define letoh16(x) bswap16(x)
+#endif
+#ifndef letoh32
 		#define letoh32(x) bswap32(x)
+#endif
+#ifndef letoh64
 		#define letoh64(x) bswap64(x)
+#endif
 
+#ifndef htobe16
 		#define htobe16(x) (uint16_t)(x)
+#endif
+#ifndef htobe32
 		#define htobe32(x) (uint32_t)(x)
+#endif
+#ifndef htobe64
 		#define htobe64(x) (uint64_t)(x)
+#endif
 
+#ifndef betoh16
 		#define betoh16(x) (uint16_t)(x)
+#endif
+#ifndef betoh32
 		#define betoh32(x) (uint32_t)(x)
+#endif
+#ifndef betoh64
 		#define betoh64(x) (uint64_t)(x)
+#endif
 
 	#else
 		#error Unknown machine endianness detected.

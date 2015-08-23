@@ -68,6 +68,7 @@ static const StatusCode      Status_Cancelled               = CX_Status_Cancelle
 static const StatusCode      Status_Denied                  = CX_Status_Denied;
 static const StatusCode      Status_NoMoreItems             = CX_Status_NoMoreItems;
 static const StatusCode      Status_NoMoreData              = CX_Status_NoMoreData;
+static const StatusCode      Status_Duplicate               = CX_Status_Duplicate;
 
 }//CX_API 
 

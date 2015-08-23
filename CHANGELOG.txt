@@ -1,3 +1,18 @@
+0.1.26 - 2015-08-23
+  - fixed Src/Str/Platform/UTF8_windows.cpp line 116 ( removed invalid NULL == szUTF8 return)
+  - fixed IO::Helper CopyStream (EOF issue)
+  - renamed Archive to SimpleBuffers
+  - renamed ArchiveCompiler to SimpleBuffersCompiler
+  - added missing info files for SparseHash contrib
+  - added Status_Duplicate
+  - added IO::IFilter
+  - added IO::FilteredInputStream
+  - added IO::FilteredOutputStream
+  - added IO::BlockFilter
+  - added LZHAM contrib
+  - added Archive::LZHAMFilter
+  - added TinyAES128 contrib
+  - added Crypt::AES128Filter
 0.1.25 - 2015-08-13
   - fixed typos
   - removed IO/IDataReader

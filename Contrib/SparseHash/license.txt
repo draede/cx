@@ -1,0 +1,11 @@
+This directory contains several hash-map implementations, similar in
+API to SGI's hash_map class, but with different performance
+characteristics.  sparse_hash_map uses very little space overhead, 1-2
+bits per entry.  dense_hash_map is very fast, particulary on lookup.
+(sparse_hash_set and dense_hash_set are the set versions of these
+routines.)  On the other hand, these classes have requirements that
+may not make them appropriate for all applications.
+
+All these implementation use a hashtable with internal quadratic
+probing.  This method is space-efficient -- there is no pointer
+overhead -- and time-efficient for good hash functions.
