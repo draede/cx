@@ -88,6 +88,7 @@
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZHAMFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\BLOB.hpp" />
     <ClInclude Include="..\..\Include\CX\Crypt\AES128Filter.hpp" />
     <ClInclude Include="..\..\Include\CX\CX.hpp" />
     <ClInclude Include="..\..\Include\CX\C\Alloc.h" />
@@ -149,10 +150,12 @@
     <ClInclude Include="..\..\Include\CX\IO\FilteredInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FilteredOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\IFileSysEnumerator.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\LocalFileSysEnumerator.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\LocalFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp" />
@@ -164,6 +167,7 @@
     <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\LocalFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileOutputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysEnumerator.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\Limits.hpp" />
     <ClInclude Include="..\..\Include\CX\List.hpp" />
@@ -184,8 +188,8 @@
     <ClInclude Include="..\..\Include\CX\Platform.hpp" />
     <ClInclude Include="..\..\Include\CX\Print.hpp" />
     <ClInclude Include="..\..\Include\CX\Queue.hpp" />
+    <ClInclude Include="..\..\Include\CX\ScopePtr.hpp" />
     <ClInclude Include="..\..\Include\CX\Set.hpp" />
-    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BLOB.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\CPPGenerator.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataWriter.hpp" />
@@ -306,6 +310,54 @@
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fast-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fixed-dtoa.cc" />
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc" />
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4frame.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4hc.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
     <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_assert.cpp">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
@@ -714,6 +766,54 @@
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">false</SDLCheck>
     </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy-sinksource.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy-stubs-internal.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy.cc">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
     <ClCompile Include="..\..\Contrib\TinyAES128\Src\aes.cpp">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
@@ -850,6 +950,7 @@
     <ClCompile Include="..\..\Src\IO\Platform\iOS\LocalFileSysHelper_ios.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileInputStream_windows.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysEnumerator.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
@@ -1179,7 +1280,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -1200,7 +1301,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -1222,7 +1323,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -1246,7 +1347,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -1271,7 +1372,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -1292,7 +1393,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -1314,7 +1415,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -1335,7 +1436,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -1359,7 +1460,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -1384,7 +1485,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -1410,7 +1511,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -1438,7 +1539,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -1467,7 +1568,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -1492,7 +1593,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -1518,7 +1619,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -1543,7 +1644,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>

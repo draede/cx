@@ -1,4 +1,31 @@
-
+/* 
+ * CX - C++ framework for general purpose development
+ *
+ * https://github.com/draede/cx
+ * 
+ * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ *
+ * Released under the MIT License.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */ 
+ 
 #include "CX/Crypt/AES128Filter.hpp"
 #include "CX/Hash/BLAKE2Hash.hpp"
 #include "CX/Util/RndGen.hpp"
@@ -27,16 +54,7 @@ AES128Filter::AES128Filter(Dir nDir, const void *pKey, Size cbKeySize/* = 0*/)
 	hash.Update(pKey, cbKeySize);
 	hash.Done(m_key);
 	
-	m_bFirstBlock = true;
-
-	if (Dir_Encrypt == m_nDir)
-	{
-		InitEncrypt();
-	}
-	else
-	{
-		InitDecrypt();
-	}
+	Reset();
 }
 
 AES128Filter::~AES128Filter()
@@ -139,7 +157,7 @@ Status AES128Filter::FilterEncrypt(Buffers *pBuffers)
 		}
 		memcpy(pBuffers->pOutBuffer, m_buffer + m_cbOffset, cbSize);
 		m_cbOffset += cbSize;
-		pBuffers->cbOutSize -= (UInt32)cbSize;
+		pBuffers->cbOutSize -= cbSize;
 		pBuffers->pOutBuffer = (Byte *)pBuffers->pOutBuffer + cbSize;
 		if (BLOCK_SIZE == m_cbOffset)
 		{
@@ -173,7 +191,7 @@ Status AES128Filter::FilterDecrypt(Buffers *pBuffers)
 		}
 		memcpy(m_buffer + m_cbOffset, pBuffers->pInBuffer, cbSize);
 		m_cbOffset += cbSize;
-		pBuffers->cbInSize -= (UInt32)cbSize;
+		pBuffers->cbInSize -= cbSize;
 		pBuffers->pInBuffer = (const Byte *)pBuffers->pInBuffer + cbSize;
 		if (BLOCK_SIZE == m_cbOffset)
 		{
@@ -193,6 +211,37 @@ Status AES128Filter::FilterDecrypt(Buffers *pBuffers)
 	}
 
 	return Status();
+}
+
+Status AES128Filter::Reset()
+{
+	Status status;
+
+	m_bFirstBlock = true;
+
+	if (Dir_Encrypt == m_nDir)
+	{
+		if (!(status = InitEncrypt()))
+		{
+			return status;
+		}
+
+		return m_blkflt.Reset();
+	}
+	else
+	if (Dir_Decrypt == m_nDir)
+	{
+		if (!(status = InitDecrypt()))
+		{
+			return status;
+		}
+
+		return m_blkflt.Reset();
+	}
+	else
+	{
+		return Status_InvalidArg;
+	}
 }
 
 }//namespace Crypt

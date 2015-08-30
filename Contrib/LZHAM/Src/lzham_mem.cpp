@@ -17,14 +17,6 @@ using namespace lzham;
 
 #define LZHAM_MEM_STATS 0
 
-#ifndef LZHAM_USE_WIN32_API
-   #ifndef __APPLE__
-      #define _msize malloc_usable_size
-   #else
-      #define _msize malloc_size
-   #endif
-#endif
-
 namespace lzham
 {
    #if LZHAM_64BIT_POINTERS
@@ -90,7 +82,7 @@ namespace lzham
          LZHAM_ASSERT( (reinterpret_cast<ptr_bits_t>(p_new) & (LZHAM_MIN_ALLOC_ALIGNMENT - 1)) == 0 );
 
          if (pActual_size)
-            *pActual_size = p_new ? _msize(p_new) : 0;
+            *pActual_size = size;
       }
       else if (!size)
       {
@@ -127,20 +119,14 @@ namespace lzham
          }
 
          if (pActual_size)
-            *pActual_size = _msize(p_final_block);
+            *pActual_size = size;
       }
 
       return p_new;
    }
 
-   static size_t lzham_default_msize(void* p, void* pUser_data)
-   {
-      LZHAM_NOTE_UNUSED(pUser_data);
-      return p ? _msize(p) : 0;
-   }
 
    static lzham_realloc_func        g_pRealloc = lzham_default_realloc;
-   static lzham_msize_func          g_pMSize   = lzham_default_msize;
    static void*                     g_pUser_data;
 
    static inline void lzham_mem_error(const char* p_msg)
@@ -243,32 +229,16 @@ namespace lzham
       (*g_pRealloc)(p, 0, NULL, true, g_pUser_data);
    }
 
-   size_t lzham_msize(void* p)
+   void LZHAM_CDECL lzham_lib_set_memory_callbacks(lzham_realloc_func pRealloc, void* pUser_data)
    {
-      if (!p)
-         return 0;
-
-      if (reinterpret_cast<ptr_bits_t>(p) & (LZHAM_MIN_ALLOC_ALIGNMENT - 1))
-      {
-         lzham_mem_error("lzham_msize: bad ptr");
-         return 0;
-      }
-
-      return (*g_pMSize)(p, g_pUser_data);
-   }
-
-   void LZHAM_CDECL lzham_lib_set_memory_callbacks(lzham_realloc_func pRealloc, lzham_msize_func pMSize, void* pUser_data)
-   {
-      if ((!pRealloc) || (!pMSize))
+      if ((!pRealloc))
       {
          g_pRealloc = lzham_default_realloc;
-         g_pMSize = lzham_default_msize;
          g_pUser_data = NULL;
       }
       else
       {
          g_pRealloc = pRealloc;
-         g_pMSize = pMSize;
          g_pUser_data = pUser_data;
       }
    }

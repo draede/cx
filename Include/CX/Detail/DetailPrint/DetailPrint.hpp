@@ -1420,6 +1420,9 @@ inline StatusCode Print(O o, const Char *szFormat,
 					return Status_InvalidArg;
 				}
 			}
+
+			const Char *pszBeginIndex = pszPos;
+
 			cIndex = 0;
 			while (cx_isdigit((unsigned char)*pszPos))
 			{
@@ -1427,11 +1430,8 @@ inline StatusCode Print(O o, const Char *szFormat,
 				cIndex += (Size)(*pszPos - '0');
 				pszPos++;
 			}
-			if (0 == cIndex || cIndex > ARGC)
-			{
-				return Status_InvalidArg;
-			}
-			cIndex--;
+
+			const Char *pszEndIndex = pszPos;
 
 			flags.Init();
 
@@ -1541,29 +1541,51 @@ inline StatusCode Print(O o, const Char *szFormat,
 			{
 				pszPos++;
 				
-				nStatus = Status_NotImplemented;
-				if (0 == cIndex) { nStatus = PrintArgHelper(o, p1, &flags, buf, sizeof(buf), &buffer); }
-				else if (1 == cIndex) { nStatus = PrintArgHelper(o, p2, &flags, buf, sizeof(buf), &buffer); }
-				else if (2 == cIndex) { nStatus = PrintArgHelper(o, p3, &flags, buf, sizeof(buf), &buffer); }
-				else if (3 == cIndex) { nStatus = PrintArgHelper(o, p4, &flags, buf, sizeof(buf), &buffer); }
-				else if (4 == cIndex) { nStatus = PrintArgHelper(o, p5, &flags, buf, sizeof(buf), &buffer); }
-				else if (5 == cIndex) { nStatus = PrintArgHelper(o, p6, &flags, buf, sizeof(buf), &buffer); }
-				else if (6 == cIndex) { nStatus = PrintArgHelper(o, p7, &flags, buf, sizeof(buf), &buffer); }
-				else if (7 == cIndex) { nStatus = PrintArgHelper(o, p8, &flags, buf, sizeof(buf), &buffer); }
-				else if (8 == cIndex) { nStatus = PrintArgHelper(o, p9, &flags, buf, sizeof(buf), &buffer); }
-				else if (9 == cIndex) { nStatus = PrintArgHelper(o, p10, &flags, buf, sizeof(buf), &buffer); }
-				else if (10 == cIndex) { nStatus = PrintArgHelper(o, p11, &flags, buf, sizeof(buf), &buffer); }
-				else if (11 == cIndex) { nStatus = PrintArgHelper(o, p12, &flags, buf, sizeof(buf), &buffer); }
-				else if (12 == cIndex) { nStatus = PrintArgHelper(o, p13, &flags, buf, sizeof(buf), &buffer); }
-				else if (13 == cIndex) { nStatus = PrintArgHelper(o, p14, &flags, buf, sizeof(buf), &buffer); }
-				else if (14 == cIndex) { nStatus = PrintArgHelper(o, p15, &flags, buf, sizeof(buf), &buffer); }
-				else if (15 == cIndex) { nStatus = PrintArgHelper(o, p16, &flags, buf, sizeof(buf), &buffer); }
-
-				if (CXNOK(nStatus))
+				if (0 == cIndex || cIndex > ARGC)
 				{
-					return nStatus;
+					if (CXNOK(nStatus = buffer.Write(o, "{", 1)))
+					{
+						return nStatus;
+					}
+					if (pszEndIndex > pszBeginIndex)
+					{
+						if (CXNOK(nStatus = buffer.Write(o, pszBeginIndex, pszEndIndex - pszBeginIndex)))
+						{
+							return nStatus;
+						}
+					}
+					if (CXNOK(nStatus = buffer.Write(o, "}", 1)))
+					{
+						return nStatus;
+					}
 				}
+				else
+				{
+					cIndex--;
 
+					nStatus = Status_NotImplemented;
+					if (0 == cIndex) { nStatus = PrintArgHelper(o, p1, &flags, buf, sizeof(buf), &buffer); }
+					else if (1 == cIndex) { nStatus = PrintArgHelper(o, p2, &flags, buf, sizeof(buf), &buffer); }
+					else if (2 == cIndex) { nStatus = PrintArgHelper(o, p3, &flags, buf, sizeof(buf), &buffer); }
+					else if (3 == cIndex) { nStatus = PrintArgHelper(o, p4, &flags, buf, sizeof(buf), &buffer); }
+					else if (4 == cIndex) { nStatus = PrintArgHelper(o, p5, &flags, buf, sizeof(buf), &buffer); }
+					else if (5 == cIndex) { nStatus = PrintArgHelper(o, p6, &flags, buf, sizeof(buf), &buffer); }
+					else if (6 == cIndex) { nStatus = PrintArgHelper(o, p7, &flags, buf, sizeof(buf), &buffer); }
+					else if (7 == cIndex) { nStatus = PrintArgHelper(o, p8, &flags, buf, sizeof(buf), &buffer); }
+					else if (8 == cIndex) { nStatus = PrintArgHelper(o, p9, &flags, buf, sizeof(buf), &buffer); }
+					else if (9 == cIndex) { nStatus = PrintArgHelper(o, p10, &flags, buf, sizeof(buf), &buffer); }
+					else if (10 == cIndex) { nStatus = PrintArgHelper(o, p11, &flags, buf, sizeof(buf), &buffer); }
+					else if (11 == cIndex) { nStatus = PrintArgHelper(o, p12, &flags, buf, sizeof(buf), &buffer); }
+					else if (12 == cIndex) { nStatus = PrintArgHelper(o, p13, &flags, buf, sizeof(buf), &buffer); }
+					else if (13 == cIndex) { nStatus = PrintArgHelper(o, p14, &flags, buf, sizeof(buf), &buffer); }
+					else if (14 == cIndex) { nStatus = PrintArgHelper(o, p15, &flags, buf, sizeof(buf), &buffer); }
+					else if (15 == cIndex) { nStatus = PrintArgHelper(o, p16, &flags, buf, sizeof(buf), &buffer); }
+
+					if (CXNOK(nStatus))
+					{
+						return nStatus;
+					}
+				}
 				pszStart = pszPos;
 			}
 			else

@@ -268,7 +268,37 @@ Double RndGen::GetDouble()
 
 Size RndGen::GetSize()
 {
+#ifdef CX_64BIT_ARCH
 	return (Size)GetUInt64();
+#else
+	return (Size)GetUInt32();
+#endif
+}
+
+Size RndGen::GetSizeRange(Size nMin, Size nMax)
+{
+#ifdef CX_64BIT_ARCH
+	return (Size)GetUInt64Range(nMin, nMax);
+#else
+	return (Size)GetUInt32Range(nMin, nMax);
+#endif
+}
+
+Status RndGen::GetBytes(Byte *pBuffer, Size cbSize, Byte *pByteSet/* = NULL*/, Size cbByteSetSize/* = 0*/)
+{
+	for (Size i = 0; i < cbSize; i++)
+	{
+		if (NULL != pByteSet)
+		{
+			*(pBuffer + i) = pByteSet[GetSizeRange(0, cbByteSetSize - 1)];
+		}
+		else
+		{
+			*(pBuffer + i) = GetUInt8();
+		}
+	}
+
+	return Status();
 }
 
 void RndGen::GetString(String *psStr, Size cMinLen, Size cMaxLen, const Char *szCharset/* = NULL*/)
@@ -310,7 +340,6 @@ const WChar *RndGen::GetWString(Size cMinLen, Size cMaxLen, const WChar *wszChar
 
 	return wsTmp.c_str();
 }
-
 
 }//namespace Util
 

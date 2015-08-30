@@ -93,7 +93,9 @@ public:
 
 	Size GetSize();
 
-	UInt8 GetSizeRange(Size nMin, Size nMax);
+	Size GetSizeRange(Size nMin, Size nMax);
+
+	Status GetBytes(Byte *pBuffer, Size cbSize, Byte *pByteSet = NULL, Size cbByteSetSize = 0);
 
 	void GetString(String *psStr, Size cMinLen, Size cMaxLen, const Char *szCharset = NULL);
 

@@ -30,6 +30,7 @@
 
 
 #include "CX/Str/IBinStr.hpp"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX

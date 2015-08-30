@@ -32,6 +32,7 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/IObject.hpp"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX
@@ -40,7 +41,7 @@ namespace CX
 namespace IO
 {
 
-class IFileSysHelper : public IObject
+class CX_API IFileSysHelper : public IObject
 {
 public:
 

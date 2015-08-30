@@ -65,7 +65,7 @@ extern "C" {
    typedef size_t (LZHAM_CDECL *lzham_msize_func)(void* p, void* pUser_data);
 
    // Call this function to force LZHAM to use custom memory malloc(), realloc(), free() and msize functions.
-   LZHAM_DLL_EXPORT void LZHAM_CDECL lzham_set_memory_callbacks(lzham_realloc_func pRealloc, lzham_msize_func pMSize, void* pUser_data);
+   LZHAM_DLL_EXPORT void LZHAM_CDECL lzham_set_memory_callbacks(lzham_realloc_func pRealloc, void* pUser_data);
 
    // lzham_flush_t must map directly to the zlib-style API flush types (LZHAM_Z_NO_FLUSH, etc.)
    typedef enum

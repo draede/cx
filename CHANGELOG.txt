@@ -1,3 +1,17 @@
+0.1.27 - 2015-08-30
+  - Added ScopePtr
+  - Fixed copyright in files
+  - Fixed LZHAM usage of malloc_usable_size (android issues)
+  - Added IO/IFileSysEnumerator
+  - Added IO/LocalFileSysEnumerator
+  - Switched Windows FileInputStream & FileOutputStream to Win32 API (from FILE)
+  - Fixed CX_API missing from some classes
+  - Moved SimpleBuffers/BLOB to /
+  - Added LZ4 contrib
+  - Added Snappy contrib
+  - Added some testers
+  - Print should still work event when args are wrong (a Print(out, "test {3}") when there are only 2 args should result in "test {3}")
+  - Added IO::IFilter::Reset method
 0.1.26 - 2015-08-23
   - fixed Src/Str/Platform/UTF8_windows.cpp line 116 ( removed invalid NULL == szUTF8 return)
   - fixed IO::Helper CopyStream (EOF issue)

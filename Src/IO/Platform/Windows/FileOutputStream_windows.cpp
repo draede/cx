@@ -34,9 +34,7 @@
 
 #include "CX/IO/FileOutputStream.hpp"
 #include "CX/Str/UTF8.hpp"
-#include "CX/C/stdio.h"
 #include "CX/Status.hpp"
-#include "CX/C/stdio.h"
 
 
 namespace CX
@@ -49,87 +47,91 @@ FileOutputStream::FileOutputStream(const Char *szPath)
 {
 	WString wsPath;
 
+	m_hFile = NULL;
+	m_sPath = szPath;
 	if (Str::UTF8::ToWChar(szPath, &wsPath).IsOK())
 	{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-		if (NULL == (m_pFile = _wfopen(wsPath.c_str(), L"wb")))
-#pragma warning(pop)
-		{
-			return;
-		}
-
-		m_sPath = szPath;
-	}
-	else
-	{
-		m_pFile = NULL;
+		OpenFile(wsPath.c_str());
 	}
 }
 
 FileOutputStream::FileOutputStream(const WChar *wszPath)
 {
-#pragma warning(push)
-#pragma warning(disable: 4996)
-	if (NULL == (m_pFile = _wfopen(wszPath, L"wb")))
-#pragma warning(pop)
-	{
-		return;
-	}
-
+	m_hFile = NULL;
 	Str::UTF8::FromWChar(wszPath, &m_sPath);
+	OpenFile(wszPath);
 }
 
 FileOutputStream::~FileOutputStream()
 {
-	if (NULL != m_pFile)
+	if (NULL != m_hFile)
 	{
-		cx_fclose(m_pFile);
-		m_pFile = NULL;
+		CloseHandle(m_hFile);
+		m_hFile = NULL;
 	}
+}
+
+Status FileOutputStream::OpenFile(const WChar *wszPath)
+{
+	if (INVALID_HANDLE_VALUE == (m_hFile = CreateFileW(wszPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 
+	                                                   FILE_ATTRIBUTE_NORMAL, NULL)))
+	{
+		m_hFile = NULL;
+
+		return Status(Status_OpenFailed, "CreateFileW failed with error {1}", GetLastError());
+	}
+
+	return Status();
 }
 
 Status FileOutputStream::Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize)
 {
-	if (NULL == m_pFile)
+	if (NULL == m_hFile)
 	{
 		return Status(Status_NotInitialized, "File not opened");
 	}
-	*pcbAckSize = fwrite(pBuffer, 1, cbReqSize, m_pFile);
-	if (ferror(m_pFile))
+	if ((Size)TYPE_UINT32_MAX < cbReqSize)
 	{
-		return Status(Status_WriteFailed, "fread failed with error {1}", errno);
+		return Status_TooBig;
 	}
+
+	DWORD dwAckSize;
+
+	if (!WriteFile(m_hFile, pBuffer, (DWORD)cbReqSize, &dwAckSize, NULL))
+	{
+		return Status(Status_OpenFailed, "WriteFile failed with error {1}", GetLastError());
+	}
+	*pcbAckSize = (Size)dwAckSize;
 
 	return Status();
 }
 
 Status FileOutputStream::GetSize(UInt64 *pcbSize) const
 {
-	if (NULL == m_pFile)
+	if (NULL == m_hFile)
 	{
 		return Status(Status_NotInitialized, "File not opened");
 	}
 
-	cx_stat64struct buf;
+	LARGE_INTEGER liSize;
 
-	if (0 != cx_stat64(cx_fileno(m_pFile), &buf))
+	if (!GetFileSizeEx(m_hFile, &liSize))
 	{
-		return Status(Status_GetSize, "fstat failed with error {1}", errno);
+		return Status(Status_OperationFailed, "GetFileSizeEx failed with error {1}", GetLastError());
 	}
-	*pcbSize = buf.st_size;
+	*pcbSize = liSize.QuadPart;
 
 	return Status();
 }
 
 Bool FileOutputStream::IsOK() const
 {
-	return (NULL != m_pFile);
+	return (NULL != m_hFile);
 }
 
 const Char *FileOutputStream::GetPath() const
 {
-	if (NULL == m_pFile)
+	if (NULL == m_hFile)
 	{
 		return "";
 	}

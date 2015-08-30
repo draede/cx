@@ -112,6 +112,7 @@ Status MemOutputStream::WriteImpl(const void *pMem, Size cbReqSize, Size *pcbAck
 			Status status;
 
 			status = m_pMemPool->Add(pMem, cbReqSize);
+			*pcbAckSize = cbReqSize;
 			if (status.IsNOK())
 			{
 				*pcbAckSize = cbReqSize;

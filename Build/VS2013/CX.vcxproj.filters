@@ -304,6 +304,12 @@
     <Filter Include="Source Files\Archive">
       <UniqueIdentifier>{dda57f85-90ef-43ef-85fa-da48db1f4abb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contrib\LZ4">
+      <UniqueIdentifier>{1494c80a-7707-4877-9a3d-155c55bf2d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\Snappy">
+      <UniqueIdentifier>{42b5f285-fbf5-4726-848d-4bc308eb0d0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -843,9 +849,6 @@
     <ClInclude Include="..\..\Include\CX\IO\IFilter.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BLOB.hpp">
-      <Filter>Header Files\SimpleBuffers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\CPPGenerator.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
@@ -899,6 +902,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Archive\LZHAMFilter.hpp">
       <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\ScopePtr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IFileSysEnumerator.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\LocalFileSysEnumerator.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysEnumerator.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\BLOB.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1267,6 +1285,27 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Archive\LZHAMFilter.cpp">
       <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysEnumerator.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4.c">
+      <Filter>Contrib\LZ4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4frame.c">
+      <Filter>Contrib\LZ4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4hc.c">
+      <Filter>Contrib\LZ4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy.cc">
+      <Filter>Contrib\Snappy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy-sinksource.cc">
+      <Filter>Contrib\Snappy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy-stubs-internal.cc">
+      <Filter>Contrib\Snappy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

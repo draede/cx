@@ -36,6 +36,7 @@
 
 
 #include "CX/IO/IFileSysHelper.hpp"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX
@@ -44,7 +45,7 @@ namespace CX
 namespace IO
 {
 
-class LocalFileSysHelper : public IFileSysHelper
+class CX_API LocalFileSysHelper : public IFileSysHelper
 {
 public:
 

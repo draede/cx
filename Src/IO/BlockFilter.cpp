@@ -1,4 +1,31 @@
-
+/* 
+ * CX - C++ framework for general purpose development
+ *
+ * https://github.com/draede/cx
+ * 
+ * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ *
+ * Released under the MIT License.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */ 
+ 
 #include "CX/IO/BlockFilter.hpp"
 #include "CX/Sys/ByteOrder.hpp"
 
@@ -12,40 +39,34 @@ namespace IO
 BlockFilter::BlockFilter(Dir nDir, IBlockFilterHandler *pHandler)
 {
 	m_nDir                 = nDir;
-
 	m_pHandler             = pHandler;
-
-	if (Dir_Encode == nDir)
-	{
-		m_cbBlockSize       = pHandler->GetBlockSize();
-	}
-	else
-	{
-		m_cbBlockSize       = pHandler->GetBlockSize() * 2;
-	}
-
-	m_pInBuffer            = (Byte *)Mem::Alloc(m_cbBlockSize * 2);
+	m_pInBuffer            = NULL;
+	m_pOutBuffer           = NULL;
 	m_cbInBufferSize       = 0;
-
-	m_pOutBuffer           = (Byte *)Mem::Alloc(m_cbBlockSize * 2);
 	m_cbOutBufferSize      = 0;
 	m_cbOutBufferOffset    = 0;
-
 	m_cbReceivedBytes      = 0;
 	m_cbSentBytes          = 0;
-
 	m_nMode                = Mode_InOut;
+	Reset();
 }
 
 BlockFilter::~BlockFilter()
 {
+	End();
+}
+
+void BlockFilter::End()
+{
 	if (NULL != m_pInBuffer)
 	{
 		Mem::Free(m_pInBuffer);
+		m_pInBuffer = NULL;
 	}
 	if (NULL != m_pOutBuffer)
 	{
 		Mem::Free(m_pOutBuffer);
+		m_pOutBuffer = NULL;
 	}
 }
 
@@ -99,11 +120,11 @@ Status BlockFilter::Filter(Buffers *pBuffers)
 					}
 					m_cbReceivedBytes += cbSize;
 					m_cbSentBytes += cbSize;
-					pBuffers->cbInSize -= (UInt32)cbSize;
-					pBuffers->cbInTotalSize = (UInt32)m_cbReceivedBytes;
+					pBuffers->cbInSize -= cbSize;
+					pBuffers->cbInTotalSize = m_cbReceivedBytes;
 					pBuffers->pInBuffer = (const Byte *)pBuffers->pInBuffer + cbSize;
-					pBuffers->cbOutSize -= (UInt32)cbSize;
-					pBuffers->cbOutTotalSize +=(UInt32) m_cbSentBytes;
+					pBuffers->cbOutSize -= cbSize;
+					pBuffers->cbOutTotalSize += m_cbSentBytes;
 					pBuffers->pOutBuffer = (Byte *)pBuffers->pOutBuffer + cbSize;
 				}
 			}
@@ -141,8 +162,8 @@ Status BlockFilter::Filter(Buffers *pBuffers)
 					memcpy(m_pInBuffer + m_cbInBufferSize, pBuffers->pInBuffer, cbSize);
 					m_cbInBufferSize += cbSize;
 					m_cbReceivedBytes += cbSize;
-					pBuffers->cbInSize -= (UInt32)cbSize;
-					pBuffers->cbInTotalSize = (UInt32)m_cbReceivedBytes;
+					pBuffers->cbInSize -= cbSize;
+					pBuffers->cbInTotalSize = m_cbReceivedBytes;
 					pBuffers->pInBuffer = (const Byte *)pBuffers->pInBuffer + cbSize;
 				}
 			}
@@ -160,11 +181,11 @@ Status BlockFilter::Filter(Buffers *pBuffers)
 					{
 						if (Dir_Encode == m_nDir)
 						{
-							UInt32 cbLastBlockSize = (UInt32)(m_cbReceivedBytes % m_cbBlockSize);
+							Size cbLastBlockSize = (m_cbReceivedBytes % m_cbBlockSize);
 
 							if (0 == cbLastBlockSize)
 							{
-								cbLastBlockSize = (UInt32)m_cbBlockSize;
+								cbLastBlockSize = m_cbBlockSize;
 							}
 							for (Size i = cbLastBlockSize; i < m_cbBlockSize; i++)
 							{
@@ -252,8 +273,8 @@ Status BlockFilter::Filter(Buffers *pBuffers)
 					memcpy(pBuffers->pOutBuffer, m_pOutBuffer, cbSize);
 					m_cbOutBufferOffset += cbSize;
 					m_cbSentBytes += cbSize;
-					pBuffers->cbOutSize -= (UInt32)cbSize;
-					pBuffers->cbOutTotalSize = (UInt32)m_cbSentBytes;
+					pBuffers->cbOutSize -= cbSize;
+					pBuffers->cbOutTotalSize = m_cbSentBytes;
 					pBuffers->pOutBuffer = (Byte *)pBuffers->pOutBuffer + cbSize;
 				}
 			}
@@ -282,6 +303,32 @@ Status BlockFilter::Filter(Buffers *pBuffers)
 			}
 		}
 	}
+}
+
+Status BlockFilter::Reset()
+{
+	if (Dir_Encode == m_nDir)
+	{
+		m_cbBlockSize       = m_pHandler->GetBlockSize();
+	}
+	else
+	{
+		m_cbBlockSize       = m_pHandler->GetBlockSize() * 2;
+	}
+
+	m_pInBuffer            = (Byte *)Mem::Alloc(m_cbBlockSize * 2);
+	m_cbInBufferSize       = 0;
+
+	m_pOutBuffer           = (Byte *)Mem::Alloc(m_cbBlockSize * 2);
+	m_cbOutBufferSize      = 0;
+	m_cbOutBufferOffset    = 0;
+
+	m_cbReceivedBytes      = 0;
+	m_cbSentBytes          = 0;
+
+	m_nMode                = Mode_InOut;
+
+	return Status();
 }
 
 }//namespace IO

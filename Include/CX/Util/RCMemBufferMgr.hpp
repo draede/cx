@@ -31,6 +31,7 @@
 
 #include "CX/IObject.hpp"
 #include "CX/SparseHashMap.hpp"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX
@@ -39,7 +40,7 @@ namespace CX
 namespace Util
 {
 
-class RCMemBufferMgr : public IObject
+class CX_API RCMemBufferMgr : public IObject
 {
 public:
 
@@ -82,7 +83,10 @@ private:
 
 	typedef SparseHashMap<void *, MemBuffer, Hasher, Comparator>::Type   MemBuffersMap;
 
+#pragma warning(push)
+#pragma warning(disable: 4251)
 	MemBuffersMap   m_mapMemBuffers;
+#pragma warning(pop)
 	Size            m_cbAllocsSize;
 
 	RCMemBufferMgr();

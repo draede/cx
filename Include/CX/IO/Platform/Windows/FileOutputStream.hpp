@@ -36,9 +36,9 @@
 
 
 #include "CX/IO/IOutputStream.hpp"
-#include "CX/C/stdio.h"
 #include "CX/String.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/C/Platform/Windows/windows.h"
 
 
 namespace CX
@@ -67,12 +67,14 @@ public:
 
 private:
 
-	FILE     *m_pFile;
+	HANDLE m_hFile;
 
 #pragma warning(push)
 #pragma warning(disable: 4251)
 	String   m_sPath;
 #pragma warning(pop)
+
+	Status OpenFile(const WChar *wszPath);
 
 };
 
