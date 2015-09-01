@@ -33,6 +33,8 @@
 #include "CX/Status.hpp"
 #include "CX/Log/IOutput.hpp"
 #include "CX/IO/IOutputStream.hpp"
+#include "CX/Sys/Lock.hpp"
+#include "CX/Util/Timer.hpp"
 #include "CX/APIDefs.hpp"
 
 
@@ -46,7 +48,8 @@ class CX_API StreamOutput : public IOutput
 {
 public:
 
-	StreamOutput(IO::IOutputStream *pOutputStream);
+	// 0 == cMSFlushDelay ? => no flush
+	StreamOutput(IO::IOutputStream *pOutputStream, Size cMSFlushDelay = 3, bool bUseLock = true);
 
 	~StreamOutput();
 
@@ -54,6 +57,10 @@ public:
 
 private:
 
+	Sys::Lock           m_lock;
+	bool                m_bUseLock;
+	Size                m_cMSFlushDelay;
+	Util::Timer         m_timer;
 	IO::IOutputStream   *m_pOutputStream;
 
 };

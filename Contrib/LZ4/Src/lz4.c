@@ -676,6 +676,7 @@ int LZ4_compress_fast_extState(void* state, const char* source, char* dest, int 
 }
 
 
+#pragma warning(suppress: 6262)
 int LZ4_compress_fast(const char* source, char* dest, int inputSize, int maxOutputSize, int acceleration)
 {
 #if (HEAPMODE)
@@ -702,6 +703,7 @@ int LZ4_compress_default(const char* source, char* dest, int inputSize, int maxO
 
 /* hidden debug function */
 /* strangely enough, gcc generates faster code when this function is uncommented, even if unused */
+#pragma warning(suppress: 6262)
 int LZ4_compress_fast_force(const char* source, char* dest, int inputSize, int maxOutputSize, int acceleration)
 {
     LZ4_stream_t ctx;
@@ -909,6 +911,7 @@ static int LZ4_compress_destSize_extState (void* state, const char* src, char* d
 }
 
 
+#pragma warning(suppress: 6262)
 int LZ4_compress_destSize(const char* src, char* dst, int* srcSizePtr, int targetDstSize)
 {
 #if (HEAPMODE)

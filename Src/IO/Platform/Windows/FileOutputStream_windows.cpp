@@ -139,6 +139,17 @@ const Char *FileOutputStream::GetPath() const
 	return m_sPath.c_str();
 }
 
+Status FileOutputStream::Flush()
+{
+	if (NULL == m_hFile)
+	{
+		return Status(Status_NotInitialized, "File not opened");
+	}
+	FlushFileBuffers(m_hFile);
+
+	return Status();
+}
+
 }//namespace IO
 
 }//namespace CX

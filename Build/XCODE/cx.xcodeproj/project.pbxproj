@@ -28,7 +28,7 @@
 		4A0BE83F1B447E72005348CB /* Mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE83A1B447E72005348CB /* Mem.cpp */; };
 		4A0BE8401B447E72005348CB /* Status.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE83B1B447E72005348CB /* Status.cpp */; };
 		4A0BE8411B447E72005348CB /* Var.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE83C1B447E72005348CB /* Var.cpp */; };
-		4A0BE8421B447E72005348CB /* Version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE83D1B447E72005348CB /* Version.cpp */; };
+		4A0BE8421B447E72005348CB /* CXVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE83D1B447E72005348CB /* CXw */; };
 		4A0BE8471B447E7F005348CB /* ConsoleOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8431B447E7F005348CB /* ConsoleOutput.cpp */; };
 		4A0BE8481B447E7F005348CB /* DefaultFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8441B447E7F005348CB /* DefaultFormatter.cpp */; };
 		4A0BE8491B447E7F005348CB /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A0BE8451B447E7F005348CB /* Logger.cpp */; };
@@ -91,7 +91,7 @@
 		4AE8D1D21B4866AE00A7AC0F /* fast-dtoa.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1CA1B4866AE00A7AC0F /* fast-dtoa.cc */; };
 		4AE8D1D31B4866AE00A7AC0F /* fixed-dtoa.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1CB1B4866AE00A7AC0F /* fixed-dtoa.cc */; };
 		4AE8D1D41B4866AE00A7AC0F /* strtod.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1CC1B4866AE00A7AC0F /* strtod.cc */; };
-		4AE8D1D61B4866B600A7AC0F /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D51B4866B600A7AC0F /* md5.c */; };
+		4AE8D1D61B4866B600A7AC0F /* md5_orig.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D51B4866B600A7AC0F /* md5_orig.c */; };
 		4AE8D1DA1B4866C200A7AC0F /* hmac_sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D71B4866C200A7AC0F /* hmac_sha1.c */; };
 		4AE8D1DB1B4866C200A7AC0F /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D81B4866C200A7AC0F /* sha1.c */; };
 		4AE8D1DC1B4866C200A7AC0F /* sha2.c in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D1D91B4866C200A7AC0F /* sha2.c */; };
@@ -131,7 +131,7 @@
 		4A0BE83A1B447E72005348CB /* Mem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mem.cpp; path = ../../Src/Mem.cpp; sourceTree = "<group>"; };
 		4A0BE83B1B447E72005348CB /* Status.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Status.cpp; path = ../../Src/Status.cpp; sourceTree = "<group>"; };
 		4A0BE83C1B447E72005348CB /* Var.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Var.cpp; path = ../../Src/Var.cpp; sourceTree = "<group>"; };
-		4A0BE83D1B447E72005348CB /* Version.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Version.cpp; path = ../../Src/Version.cpp; sourceTree = "<group>"; };
+		4A0BE83D1B447E72005348CB /* CXVersion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CXVersion.cpp; path = ../../Src/CXVersion.cpp; sourceTree = "<group>"; };
 		4A0BE8431B447E7F005348CB /* ConsoleOutput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConsoleOutput.cpp; path = ../../Src/Log/ConsoleOutput.cpp; sourceTree = "<group>"; };
 		4A0BE8441B447E7F005348CB /* DefaultFormatter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DefaultFormatter.cpp; path = ../../Src/Log/DefaultFormatter.cpp; sourceTree = "<group>"; };
 		4A0BE8451B447E7F005348CB /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Logger.cpp; path = ../../Src/Log/Logger.cpp; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 		4AE8D1CA1B4866AE00A7AC0F /* fast-dtoa.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "fast-dtoa.cc"; path = "../../Contrib/DoubleConversion/Src/fast-dtoa.cc"; sourceTree = "<group>"; };
 		4AE8D1CB1B4866AE00A7AC0F /* fixed-dtoa.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "fixed-dtoa.cc"; path = "../../Contrib/DoubleConversion/Src/fixed-dtoa.cc"; sourceTree = "<group>"; };
 		4AE8D1CC1B4866AE00A7AC0F /* strtod.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = strtod.cc; path = ../../Contrib/DoubleConversion/Src/strtod.cc; sourceTree = "<group>"; };
-		4AE8D1D51B4866B600A7AC0F /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = ../../Contrib/MD5/Src/md5.c; sourceTree = "<group>"; };
+		4AE8D1D51B4866B600A7AC0F /* md5_orig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5_orig.c; path = ../../Contrib/MD5/Src/md5_orig.c; sourceTree = "<group>"; };
 		4AE8D1D71B4866C200A7AC0F /* hmac_sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hmac_sha1.c; path = ../../Contrib/SHA/Src/hmac_sha1.c; sourceTree = "<group>"; };
 		4AE8D1D81B4866C200A7AC0F /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = ../../Contrib/SHA/Src/sha1.c; sourceTree = "<group>"; };
 		4AE8D1D91B4866C200A7AC0F /* sha2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha2.c; path = ../../Contrib/SHA/Src/sha2.c; sourceTree = "<group>"; };
@@ -250,7 +250,7 @@
 				4AE8D1D71B4866C200A7AC0F /* hmac_sha1.c */,
 				4AE8D1D81B4866C200A7AC0F /* sha1.c */,
 				4AE8D1D91B4866C200A7AC0F /* sha2.c */,
-				4AE8D1D51B4866B600A7AC0F /* md5.c */,
+				4AE8D1D51B4866B600A7AC0F /* md5_orig.c */,
 				4AE8D1C51B4866AE00A7AC0F /* bignum-dtoa.cc */,
 				4AE8D1C61B4866AE00A7AC0F /* bignum.cc */,
 				4AE8D1C71B4866AE00A7AC0F /* cached-powers.cc */,
@@ -285,7 +285,7 @@
 				4A0BE83A1B447E72005348CB /* Mem.cpp */,
 				4A0BE83B1B447E72005348CB /* Status.cpp */,
 				4A0BE83C1B447E72005348CB /* Var.cpp */,
-				4A0BE83D1B447E72005348CB /* Version.cpp */,
+				4A0BE83D1B447E72005348CB /* CXVersion.cpp */,
 				4A0BE8331B447E63005348CB /* FileInputStream_ios.cpp */,
 				4A0BE8341B447E63005348CB /* FileOutputStream_ios.cpp */,
 				4A0BE8351B447E63005348CB /* LocalFileSysHelper_ios.cpp */,
@@ -382,7 +382,7 @@
 				4A0BE8401B447E72005348CB /* Status.cpp in Sources */,
 				4A2E6DA91B8A281600C59F4A /* lzham_platform.cpp in Sources */,
 				4A0BE8411B447E72005348CB /* Var.cpp in Sources */,
-				4A0BE8421B447E72005348CB /* Version.cpp in Sources */,
+				4A0BE8421B447E72005348CB /* CXVersion.cpp in Sources */,
 				4A2E6DA61B8A281600C59F4A /* lzham_lzdecompbase.cpp in Sources */,
 				4AE8D1DC1B4866C200A7AC0F /* sha2.c in Sources */,
 				4A0BE8181B447E24005348CB /* Alloc_ios.c in Sources */,
@@ -434,7 +434,7 @@
 				4A0BE8541B447EA9005348CB /* UTF8_ios.cpp in Sources */,
 				4A2E6DA81B8A281600C59F4A /* lzham_mem.cpp in Sources */,
 				4AE2E4B81B496D2D000CFAB8 /* blake2b-ref.c in Sources */,
-				4AE8D1D61B4866B600A7AC0F /* md5.c in Sources */,
+				4AE8D1D61B4866B600A7AC0F /* md5_orig.c in Sources */,
 				4A0BE85A1B447EB4005348CB /* DynLib_ios.cpp in Sources */,
 				4A2E6DA71B8A281600C59F4A /* lzham_match_accel.cpp in Sources */,
 				4A0BE85B1B447EB4005348CB /* Lock_ios.cpp in Sources */,

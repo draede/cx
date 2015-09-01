@@ -65,6 +65,8 @@ public:
 
 	virtual const Char *GetPath() const;
 
+	virtual Status Flush();
+
 private:
 
 	FILE     *m_pFile;

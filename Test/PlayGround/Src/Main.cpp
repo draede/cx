@@ -26,10 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "Str_UTF8.hpp"
-#include "Util_StackTrace.hpp"
-#include "Mem.hpp"
-#include "MultiHashSetAndHashMap.h"
+#include "Tester.hpp"
 
 
 using namespace CX;
@@ -37,14 +34,10 @@ using namespace CX;
 
 int main(int argc, char *argv[])
 {
-	argc;
-	argv;
+	CX_UNUSED(argc);
+	CX_UNUSED(argv);
 
-	//Str_UTF8_Test1();
-	//Str_UTF8_Test2();
-	//Util_StackTrace_Test1();
-	//Mem_Test1();
-	MultiHashSetAndHashMap_Test1();
+	Tester::Run();
 
 	return 0;
 }

@@ -37,9 +37,11 @@ namespace CX
 namespace Log
 {
 
-StreamOutput::StreamOutput(IO::IOutputStream *pOutputStream)
+StreamOutput::StreamOutput(IO::IOutputStream *pOutputStream, Size cMSFlushDelay/* = 3*/, bool bUseLock/* = true*/)
 {
 	m_pOutputStream = pOutputStream;
+	m_cMSFlushDelay = cMSFlushDelay;
+	m_bUseLock      = bUseLock;
 }
 
 StreamOutput::~StreamOutput()
@@ -54,15 +56,37 @@ Status StreamOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer,
 {
 	CX_UNUSED(nLevel);
 	CX_UNUSED(szTag);
-
+	
 	if (NULL == m_pOutputStream)
 	{
 		return Status(Status_NotInitialized, "No valid stream set");
 	}
 
-	Size cbAckSize;
+	Status status;
+	Size   cbAckSize;
 
-	return m_pOutputStream->Write(pBuffer, cLen, &cbAckSize);
+	if (m_bUseLock)
+	{
+		m_lock.Enter();
+	}
+
+	status = m_pOutputStream->Write(pBuffer, cLen, &cbAckSize);
+
+	if (0 < m_cMSFlushDelay)
+	{
+		if ((double)m_cMSFlushDelay <= m_timer.GetElapsedTime() * 1000.0)
+		{
+			m_pOutputStream->Flush();
+			m_timer.ResetTimer();
+		}
+	}
+
+	if (m_bUseLock)
+	{
+		m_lock.Leave();
+	}
+
+	return status;
 }
 
 }//namespace Log

@@ -1,3 +1,12 @@
+0.1.28 - 2015-09-01
+  - Added IO::IOutputStream::Flush
+  - Added flush & lock to Log::StreamOutput
+  - Fixed snappy SDL warnings
+  - Updated lzham with latest sources from github + patch for android
+  - Added cURL contrib
+  - Added Network/HTTP/Client
+  - Removed Test/FilterTest
+  - Refactored Test/PlayGround
 0.1.27 - 2015-08-30
   - Added ScopePtr
   - Fixed copyright in files

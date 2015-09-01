@@ -35,6 +35,11 @@
 #if defined(CX_OS_WINDOWS)
 
 
+#ifdef CopyFile
+#undef CopyFile
+#endif
+
+
 #include "CX/IO/IFileSysHelper.hpp"
 #include "CX/APIDefs.hpp"
 

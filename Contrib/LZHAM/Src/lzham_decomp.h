@@ -5,7 +5,7 @@
 
 namespace lzham
 {
-   void LZHAM_CDECL lzham_lib_set_memory_callbacks(lzham_realloc_func pRealloc, void* pUser_data);
+   void LZHAM_CDECL lzham_lib_set_memory_callbacks(lzham_realloc_func pRealloc, lzham_msize_func pMSize, void* pUser_data);
    
    lzham_decompress_state_ptr LZHAM_CDECL lzham_lib_decompress_init(const lzham_decompress_params *pParams);
 

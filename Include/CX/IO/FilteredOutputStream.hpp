@@ -56,7 +56,7 @@ public:
 
 	virtual const Char *GetPath() const;
 
-	Status Flush();
+	virtual Status Flush();
 
 private:
 

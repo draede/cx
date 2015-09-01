@@ -55,6 +55,8 @@ public:
 
 	virtual const Char *GetPath() const = 0;
 
+	virtual Status Flush() { return Status_NotSupported; }
+
 };
 
 }//namespace IO

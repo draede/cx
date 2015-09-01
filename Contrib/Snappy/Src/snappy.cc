@@ -26,6 +26,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#pragma warning(disable: 4996 4100 4244 4018 4127 4389 4505 4267 4267)
+
 #include "../Include/snappy.h"
 #include "snappy-internal.h"
 #include "snappy-sinksource.h"

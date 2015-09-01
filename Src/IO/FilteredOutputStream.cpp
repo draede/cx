@@ -166,6 +166,7 @@ Status FilteredOutputStream::Flush()
 			}
 			m_buffers.pOutBuffer = m_pOutBuffer;
 			m_buffers.cbOutSize  = m_cbOutBufferSize;
+			m_pOutputStream->Flush();
 		}
 	}
 

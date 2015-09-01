@@ -547,6 +547,7 @@ int LZ4_compress_HC_extStateHC (void* state, const char* src, char* dst, int src
         return LZ4HC_compress_generic (state, src, dst, srcSize, maxDstSize, compressionLevel, noLimit);
 }
 
+#pragma warning(suppress: 6262)
 int LZ4_compress_HC(const char* src, char* dst, int srcSize, int maxDstSize, int compressionLevel)
 {
     LZ4HC_Data_Structure state;

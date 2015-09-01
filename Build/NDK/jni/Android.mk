@@ -60,7 +60,7 @@ $(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_prefix_coding.cpp \
 $(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_symbol_codec.cpp \
 $(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_timer.cpp \
 $(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_vector.cpp \
-$(LOCAL_PATH)/../../../../Contrib/MD5/Src/md5.c \
+$(LOCAL_PATH)/../../../../Contrib/MD5/Src/md5_orig.c \
 $(LOCAL_PATH)/../../../../Contrib/SHA/Src/hmac_sha1.c \
 $(LOCAL_PATH)/../../../../Contrib/SHA/Src/sha1.c \
 $(LOCAL_PATH)/../../../../Contrib/SHA/Src/sha2.c \
@@ -123,6 +123,6 @@ $(LOCAL_PATH)/../../../../Src/IObject.cpp \
 $(LOCAL_PATH)/../../../../Src/Mem.cpp \
 $(LOCAL_PATH)/../../../../Src/Status.cpp \
 $(LOCAL_PATH)/../../../../Src/Var.cpp \
-$(LOCAL_PATH)/../../../../Src/Version.cpp
+$(LOCAL_PATH)/../../../../Src/CXVersion.cpp
 
 include $(BUILD_STATIC_LIBRARY)

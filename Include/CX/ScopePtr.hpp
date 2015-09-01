@@ -68,7 +68,7 @@ class ScopePtr
 {
 public:
 
-	ScopePtr(T *pInst, bool bTakeOwnership)
+	ScopePtr(T *pInst, bool bTakeOwnership = true)
 	{
 		m_pInst          = pInst;
 		m_bTakeOwnership = bTakeOwnership;
@@ -98,6 +98,21 @@ public:
 		m_pInst          = sp.m_pInst;
 		m_bTakeOwnership = sp.m_bTakeOwnership;
 		sp.m_pInst       = NULL;
+	}
+
+	Bool IsValid()
+	{
+		return (NULL != m_pInst);
+	}
+
+	T *Get()
+	{
+		return m_pInst;
+	}
+
+	const T *Get() const
+	{
+		return m_pInst;
 	}
 
 	T *operator->()

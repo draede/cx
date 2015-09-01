@@ -26,9 +26,9 @@
 * SOFTWARE.
 */
 
-#include "Util_StackTrace.hpp"
 #include "CX/Util/StackTrace.hpp"
 #include "CX/Print.hpp"
+#include "Tester.hpp"
 
 
 using namespace CX;
@@ -64,3 +64,4 @@ void Util_StackTrace_Test1()
 	Test1();
 }
 
+//REGISTER_TEST(Util_StackTrace_Test1);

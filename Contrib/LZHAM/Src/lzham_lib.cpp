@@ -9,9 +9,9 @@ extern "C" lzham_uint32 LZHAM_CDECL lzham_get_version(void)
    return LZHAM_DLL_VERSION;
 }
 
-extern "C" void LZHAM_CDECL lzham_set_memory_callbacks(lzham_realloc_func pRealloc, void* pUser_data)
+extern "C" void LZHAM_CDECL lzham_set_memory_callbacks(lzham_realloc_func pRealloc, lzham_msize_func pMSize, void* pUser_data)
 {
-   lzham::lzham_lib_set_memory_callbacks(pRealloc, pUser_data);
+   lzham::lzham_lib_set_memory_callbacks(pRealloc, pMSize, pUser_data);
 }
 
 extern "C" lzham_decompress_state_ptr LZHAM_CDECL lzham_decompress_init(const lzham_decompress_params *pParams)

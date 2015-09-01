@@ -310,6 +310,21 @@
     <Filter Include="Contrib\Snappy">
       <UniqueIdentifier>{42b5f285-fbf5-4726-848d-4bc308eb0d0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contrib\cURL">
+      <UniqueIdentifier>{d8e44830-afc5-4425-a99a-e8b9a9b42654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Network">
+      <UniqueIdentifier>{db83ef44-92da-4423-a031-d7d52a2b38a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Network\HTTP">
+      <UniqueIdentifier>{c8664dad-3c33-4d4a-92ac-e47b0b2a788b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{2975ffdd-9be4-42f1-ae04-5830cfb20ad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\HTTP">
+      <UniqueIdentifier>{56ec3950-f439-4f06-97f6-1c6ff3225c60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -918,6 +933,9 @@
     <ClInclude Include="..\..\Include\CX\BLOB.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Network\HTTP\Client.hpp">
+      <Filter>Header Files\Network\HTTP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -958,9 +976,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Version.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Var.cpp">
       <Filter>Source Files</Filter>
@@ -1003,9 +1018,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp">
       <Filter>Source Files\Hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MD5\Src\md5.c">
-      <Filter>Contrib\MD5</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\SHA\Src\hmac_sha1.c">
       <Filter>Contrib\SHA</Filter>
@@ -1306,6 +1318,357 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\Snappy\Src\snappy-stubs-internal.cc">
       <Filter>Contrib\Snappy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\amigaos.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\asyn-ares.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\asyn-thread.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\base64.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\conncache.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\connect.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\content_encoding.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\cookie.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_addrinfo.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_des.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_endian.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_fnmatch.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_gethostname.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_gssapi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_memrchr.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_multibyte.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_ntlm.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_ntlm_core.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_ntlm_msgs.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_ntlm_wb.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_rtmp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_sasl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_sasl_gssapi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_sasl_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_threads.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\dict.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\dotdot.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\easy.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\escape.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\file.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\fileinfo.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\formdata.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ftp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ftplistparser.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\getenv.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\getinfo.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\gopher.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hash.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hmac.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostasyn.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostcheck.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostip.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostip4.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostip6.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostsyn.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_chunks.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_digest.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_negotiate.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_negotiate_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_proxy.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\idn_win32.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\if2ip.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\imap.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\inet_ntop.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\inet_pton.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\krb5.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ldap.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\llist.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\md4.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\md5.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\memdebug.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\mprintf.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\multi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\netrc.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\non-ascii.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\nonblock.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\openldap.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\parsedate.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\pingpong.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\pipeline.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\pop3.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\progress.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\rawstr.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\rtsp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\security.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\select.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\sendf.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\share.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\slist.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\smb.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\smtp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\socks.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\socks_gssapi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\socks_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\speedcheck.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\splay.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ssh.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strdup.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strequal.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strerror.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strtok.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strtoofft.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\telnet.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\tftp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\timeval.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\transfer.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\url.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\version.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\warnless.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\wildcard.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\x509asn1.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\axtls.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\cyassl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\darwinssl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\gskit.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\gtls.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\nss.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\openssl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\polarssl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\polarssl_threadlock.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\schannel.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\vtls.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\MD5\Src\md5_orig.c">
+      <Filter>Contrib\MD5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CXVersion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Network\HTTP\Client.cpp">
+      <Filter>Source Files\Network\HTTP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
