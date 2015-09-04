@@ -186,6 +186,7 @@
     <ClInclude Include="..\..\Include\CX\Component.hpp" />
     <ClInclude Include="..\..\Include\CX\Mem.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\HTTP\Client.hpp" />
+    <ClInclude Include="..\..\Include\CX\Network\URLParser.hpp" />
     <ClInclude Include="..\..\Include\CX\Platform.hpp" />
     <ClInclude Include="..\..\Include\CX\Print.hpp" />
     <ClInclude Include="..\..\Include\CX\Queue.hpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="..\..\Include\CX\Str\Platform\Android\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Platform\iOS\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.hpp" />
+    <ClInclude Include="..\..\Include\CX\Str\StringHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\UTF8.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Z85BinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp" />
@@ -4508,6 +4510,7 @@
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />
     <ClCompile Include="..\..\Src\Network\HTTP\Client.cpp" />
+    <ClCompile Include="..\..\Src\Network\URLParser.cpp" />
     <ClCompile Include="..\..\Src\Platform\Android\Component_android.cpp" />
     <ClCompile Include="..\..\Src\Platform\iOS\Component_ios.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
@@ -4521,6 +4524,7 @@
     <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8_android.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\iOS\UTF8_ios.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8_windows.cpp" />
+    <ClCompile Include="..\..\Src\Str\StringHelper.cpp" />
     <ClCompile Include="..\..\Src\Str\Z85BinStr.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Android\DynLib_android.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Android\Lock_android.cpp" />

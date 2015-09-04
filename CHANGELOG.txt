@@ -1,3 +1,7 @@
+0.1.29 - 2015-09-04
+  - Added Network::HTTP::URLParser
+  - Added Network::HTTP::Client::DownloadURL
+  - Added Str::StringHelper
 0.1.28 - 2015-09-01
   - Added IO::IOutputStream::Flush
   - Added flush & lock to Log::StreamOutput

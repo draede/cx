@@ -26,40 +26,42 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Network/HTTP/Client.hpp"
-#include "CX/Print.hpp"
-#include "CX/Mem.hpp"
-#include "CX/IO/MemInputStream.hpp"
-#include "CX/IO/MemOutputStream.hpp"
-#include "Tester.hpp"
+#pragma once
 
 
-using namespace CX;
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/String.hpp"
+#include "CX/APIDefs.hpp"
 
 
-void Network_HTTP_Client_Test1()
+namespace CX
 {
-	Mem::SetFlags(Mem::Flag_SourceMemTrack);
 
-	{
-		Network::HTTP::Client client;
-		String                sResponse;
-		int                   nResponseStatus;
-		Status                status;
+namespace Str
+{
 
-		status = client.Open("google.com", true);
-		status = client.SetUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0");
-		status = client.Perform("/", "GET", NULL, new IO::MemOutputStream(&sResponse), &nResponseStatus);
-		status = client.Close();
-	}
+class CX_API StringHelper
+{
+public:
 
-	Mem::AllocsVector vectorAllocs;
-	std::string       sOut;
+	static Status FindSubStr(const Char *pText, Size cTextLen, const Char *pWhat, Size cWhatLen, 
+	                         bool bCaseSensitive, const Char **pszPos);
 
-	Mem::GetCurrentAllocs(vectorAllocs);
-	Mem::PrintAllocs(sOut, vectorAllocs);
-	Print(stdout, "{1}\n", sOut.c_str());
-}
+	// if 0 == cTextLen => use null terminator
+	static Status FindWithMarkers(const Char *pText, Size cTextLen, const Char *pPrefix, Size cPrefixLen, 
+	                              const Char *pPostfix, Size cPostfixLen, bool bCaseSensitive, 
+	                              const Char **pszBegin, const Char **pszEnd);
 
-//REGISTER_TEST(Network_HTTP_Client_Test1);
+private:
+
+	StringHelper();
+
+	~StringHelper();
+
+};
+
+}//namespace Str
+
+}//namespace CX
 

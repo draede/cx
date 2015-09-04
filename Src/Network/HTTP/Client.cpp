@@ -28,6 +28,7 @@
 
 #include "CX/Network/HTTP/Client.hpp"
 #include "CX/Print.hpp"
+#include "CX/Network/URLParser.hpp"
 #include "curl/curl.h"
 
 
@@ -221,6 +222,68 @@ size_t Client::WriteCallback(char *pBuffer, size_t cbItemSize, size_t cItemsCoun
 	}
 
 	return cbAckSize;
+}
+
+Status Client::DownloadURL(const Char *szURL, ScopePtr<IO::IOutputStream> response)
+{
+	Network::HTTP::Client client;
+	int                   nStatusCode;
+	String                sProtocol;
+	String                sHost;
+	int                   nPort;
+	String                sPath;
+	String                sQuery;
+	String                sURI;
+	bool                  bSSL;
+	Status                status;
+
+	if (!(status = URLParser::Parse(szURL, sProtocol, sHost, nPort, sPath, sQuery)))
+	{
+		return status;
+	}
+	if (0 == cx_stricmp(sHost.c_str(), "http"))
+	{
+		bSSL = false;
+		if (0 <= nPort)
+		{
+			nPort = HTTP_PORT;
+		}
+	}
+	else
+	if (0 == cx_stricmp(sHost.c_str(), "https"))
+	{
+		bSSL = true;
+		if (0 <= nPort)
+		{
+			nPort = HTTPS_PORT;
+		}
+	}
+	else
+	{
+		return Status(Status_InvalidArg, "Invalid protocol");
+	}
+	sURI = "/";
+	sURI += sPath;
+	if (!sQuery.empty())
+	{
+		sURI += "?";
+		sURI += sQuery;
+	}
+	if (!(status = client.Open(sHost.c_str(), bSSL, (UInt16)nPort)))
+	{
+		return status;
+	}
+	client.SetUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0");
+	if (!(status = client.Perform(sURI.c_str(), "GET", NULL, response, &nStatusCode)))
+	{
+		return status;
+	}
+	if (200 != nStatusCode)
+	{
+		return Status(Status_OperationFailed, "HTTP operation failed with status code {1}", nStatusCode);
+	}
+
+	return Status();
 }
 
 }//namespace HTTP

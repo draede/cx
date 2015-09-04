@@ -936,6 +936,12 @@
     <ClInclude Include="..\..\Include\CX\Network\HTTP\Client.hpp">
       <Filter>Header Files\Network\HTTP</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Network\URLParser.hpp">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\StringHelper.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -1669,6 +1675,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Network\HTTP\Client.cpp">
       <Filter>Source Files\Network\HTTP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Network\URLParser.cpp">
+      <Filter>Source Files\Network\HTTP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\StringHelper.cpp">
+      <Filter>Source Files\Str</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

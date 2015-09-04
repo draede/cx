@@ -26,31 +26,28 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Network/HTTP/Client.hpp"
+#include "CX/Str/StringHelper.hpp"
 #include "CX/Print.hpp"
 #include "CX/Mem.hpp"
-#include "CX/IO/MemInputStream.hpp"
-#include "CX/IO/MemOutputStream.hpp"
 #include "Tester.hpp"
 
 
 using namespace CX;
 
 
-void Network_HTTP_Client_Test1()
+void Str_StringHelper_Test1()
 {
 	Mem::SetFlags(Mem::Flag_SourceMemTrack);
 
 	{
-		Network::HTTP::Client client;
-		String                sResponse;
-		int                   nResponseStatus;
-		Status                status;
+		const Char *pszBegin;
+		const Char *pszEnd;
+		Status     status;
 
-		status = client.Open("google.com", true);
-		status = client.SetUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0");
-		status = client.Perform("/", "GET", NULL, new IO::MemOutputStream(&sResponse), &nResponseStatus);
-		status = client.Close();
+		status = Str::StringHelper::FindSubStr("this is just a test", 0, "just", 4, true, &pszBegin);
+		status = Str::StringHelper::FindSubStr("this is just a test", 0, "Just", 4, false, &pszBegin);
+		status = Str::StringHelper::FindWithMarkers("this is just a test", 0, " is ", 4, " a", 2, true, &pszBegin, &pszEnd);
+		status = Str::StringHelper::FindWithMarkers("this is just a test", 0, " Is ", 4, " A", 2, false, &pszBegin, &pszEnd);
 	}
 
 	Mem::AllocsVector vectorAllocs;
@@ -61,5 +58,5 @@ void Network_HTTP_Client_Test1()
 	Print(stdout, "{1}\n", sOut.c_str());
 }
 
-//REGISTER_TEST(Network_HTTP_Client_Test1);
+REGISTER_TEST(Str_StringHelper_Test1);
 
