@@ -241,19 +241,19 @@ Status Client::DownloadURL(const Char *szURL, ScopePtr<IO::IOutputStream> respon
 	{
 		return status;
 	}
-	if (0 == cx_stricmp(sHost.c_str(), "http"))
+	if (0 == cx_stricmp(sProtocol.c_str(), "http"))
 	{
 		bSSL = false;
-		if (0 <= nPort)
+		if (0 >= nPort)
 		{
 			nPort = HTTP_PORT;
 		}
 	}
 	else
-	if (0 == cx_stricmp(sHost.c_str(), "https"))
+	if (0 == cx_stricmp(sProtocol.c_str(), "https"))
 	{
 		bSSL = true;
-		if (0 <= nPort)
+		if (0 >= nPort)
 		{
 			nPort = HTTPS_PORT;
 		}

@@ -1,3 +1,5 @@
+0.1.30 - 2015-09-05
+  - Fixed Network::HTTP::Client::DownloadURL
 0.1.29 - 2015-09-04
   - Added Network::HTTP::URLParser
   - Added Network::HTTP::Client::DownloadURL
