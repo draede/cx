@@ -77,6 +77,9 @@ typedef CX_Byte                Byte;
 // char type
 typedef CX_Char                Char;
 
+// unsigned char type
+typedef CX_UChar               UChar;
+
 // wchar_t type
 typedef CX_WChar               WChar;
 

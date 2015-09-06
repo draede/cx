@@ -1,3 +1,9 @@
+0.1.31 - 2015-09-06
+  - added UChar type (unsigned char)
+  - Added Str::StringHelper::Compare
+  - Added Str::StringHelper::Split
+  - Added Str::StringHelper::Strip
+  - Added Str::StringHelper::Replace
 0.1.30 - 2015-09-05
   - Fixed Network::HTTP::Client::DownloadURL
 0.1.29 - 2015-09-04

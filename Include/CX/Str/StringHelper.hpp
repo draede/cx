@@ -32,6 +32,7 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/String.hpp"
+#include "CX/Vector.hpp"
 #include "CX/APIDefs.hpp"
 
 
@@ -45,13 +46,39 @@ class CX_API StringHelper
 {
 public:
 
+	typedef Vector<String>::Type   StringsVector;
+
+	enum StripType
+	{
+		Strip_Begin = 1,
+		Strip_End   = 2,
+		Strip_Both  = 3,
+	};
+
+	// if 0 == cText1Len => use null terminator
+	// if 0 == cText2Len => use null terminator
+	static bool Compare(const Char *pStr1, Size cStr1Len, const Char *pStr2, Size cStr2Len, bool bCaseSensitive, Size cMaxLen = 0);
+
+	// if 0 == cTextLen => use null terminator
 	static Status FindSubStr(const Char *pText, Size cTextLen, const Char *pWhat, Size cWhatLen, 
-	                         bool bCaseSensitive, const Char **pszPos);
+	                         bool bCaseSensitive, const Char **pPos);
 
 	// if 0 == cTextLen => use null terminator
 	static Status FindWithMarkers(const Char *pText, Size cTextLen, const Char *pPrefix, Size cPrefixLen, 
 	                              const Char *pPostfix, Size cPostfixLen, bool bCaseSensitive, 
-	                              const Char **pszBegin, const Char **pszEnd);
+	                              const Char **pBegin, const Char **pEnd);
+
+	// if 0 == cTextLen => use null terminator
+	static Status Split(const Char *pText, Size cTextLen, const Char *pSeparator, Size cSeparatorLen, 
+	                    bool bCaseSensitive, StringsVector &vectorStrings);
+
+	// if 0 == cTextLen => use null terminator
+	static Status Strip(const Char *pText, Size cTextLen, const Char *pStrip, Size cStripLen, 
+	                    bool bCaseSensitive, const Char **pBegin, const Char **pEnd, StripType nStripType = Strip_Both);
+
+	// if 0 == cTextLen => use null terminator
+	static Status Replace(const Char *pText, Size cTextLen, const Char *pWhat, Size cWhatLen, const Char *pWithWhat, 
+	                      Size cWithWhatLen, bool bCaseSensitive, String &sString, bool bAll = true);
 
 private:
 

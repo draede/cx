@@ -100,6 +100,9 @@ typedef uint8_t               CX_Byte;
 // char type
 typedef char                  CX_Char;
 
+// unsigned char type
+typedef unsigned char         CX_UChar;
+
 // wchar_t type
 typedef wchar_t               CX_WChar;
 
