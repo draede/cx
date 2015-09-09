@@ -211,15 +211,24 @@ Status StringHelper::Strip(const Char *pText, Size cTextLen, const Char *pStrip,
 {
 	const Char *pPosText;
 	bool       bHasLen = (0 < cTextLen);
+	Size       cIndex;
 
 	pPosText = pText;
 	if ((nStripType & Strip_Begin))
 	{
 		while ((bHasLen && (Size)(pPosText - pText) < cTextLen) || (!bHasLen && 0 != *pPosText))
 		{
-			if (Compare(pPosText, bHasLen ? (cTextLen - (pPosText - pText)) : 0, pStrip, cStripLen, bCaseSensitive, cStripLen))
+			for (cIndex = 0; cIndex < cStripLen; cIndex++)
 			{
-				pPosText += cStripLen;
+				if ((bCaseSensitive && *pPosText == pStrip[cIndex]) || 
+				    (!bCaseSensitive && cx_tolower((UChar)*pPosText) == cx_tolower((UChar)pStrip[cIndex])))
+				{
+					break;
+				}
+			}
+			if (cIndex < cStripLen)
+			{
+				pPosText++;
 			}
 			else
 			{
@@ -238,19 +247,27 @@ Status StringHelper::Strip(const Char *pText, Size cTextLen, const Char *pStrip,
 	}
 	if ((nStripType & Strip_End))
 	{
+		pPosText--;
 		while (pPosText > *pBegin)
 		{
-			if (Compare(pPosText - cStripLen, bHasLen ? (cTextLen - (pPosText - pText)) : 0, pStrip, cStripLen, bCaseSensitive, 
-			            cStripLen))
+			for (cIndex = 0; cIndex < cStripLen; cIndex++)
 			{
-				pPosText -= cStripLen;
+				if ((bCaseSensitive && *pPosText == pStrip[cIndex]) || 
+				    (!bCaseSensitive && cx_tolower((UChar)*pPosText) == cx_tolower((UChar)pStrip[cIndex])))
+				{
+					break;
+				}
+			}
+			if (cIndex < cStripLen)
+			{
+				pPosText--;
 			}
 			else
 			{
 				break;
 			}
 		}
-		*pEnd = pPosText;
+		*pEnd = pPosText + 1;
 	}
 	else
 	{
@@ -280,7 +297,7 @@ Status StringHelper::Replace(const Char *pText, Size cTextLen, const Char *pWhat
 				sString.append(pPosText, pBegin - pPosText);
 			}
 			sString.append(pWithWhat, cWithWhatLen);
-			pPosText += cWhatLen;
+			pPosText = pBegin + cWhatLen;
 			if (!bAll)
 			{
 				while ((bHasLen && (Size)(pPosText - pText) < cTextLen) || (!bHasLen && 0 != *pPosText))

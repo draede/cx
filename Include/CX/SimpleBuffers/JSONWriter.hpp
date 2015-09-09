@@ -193,7 +193,7 @@ private:
 };
 
 template <>
-Status JSONWriter::WriteFunc<Bool>(IO::IOutputStream *pOutputStream, const Bool &v, const Char *szName)
+inline Status JSONWriter::WriteFunc<Bool>(IO::IOutputStream *pOutputStream, const Bool &v, const Char *szName)
 {
 	if (NULL != szName)
 	{
@@ -206,7 +206,7 @@ Status JSONWriter::WriteFunc<Bool>(IO::IOutputStream *pOutputStream, const Bool 
 }
 
 template <>
-Status JSONWriter::WriteFunc<String>(IO::IOutputStream *pOutputStream, const String &v, const Char *szName)
+inline Status JSONWriter::WriteFunc<String>(IO::IOutputStream *pOutputStream, const String &v, const Char *szName)
 {
 	if (NULL != szName)
 	{
@@ -219,7 +219,7 @@ Status JSONWriter::WriteFunc<String>(IO::IOutputStream *pOutputStream, const Str
 }
 
 template <>
-Status JSONWriter::WriteFunc<BLOB>(IO::IOutputStream *pOutputStream, const BLOB &v, const Char *szName)
+inline Status JSONWriter::WriteFunc<BLOB>(IO::IOutputStream *pOutputStream, const BLOB &v, const Char *szName)
 {
 	if (0 == v.size())
 	{

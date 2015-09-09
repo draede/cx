@@ -192,105 +192,105 @@ private:
 
 };
 
-template <> bool JSONReader::IsType<Bool>(rapidjson::Value *pValue) { return pValue->IsBool(); }
-template <> bool JSONReader::IsType<Int8>(rapidjson::Value *pValue) { return pValue->IsInt(); }
-template <> bool JSONReader::IsType<UInt8>(rapidjson::Value *pValue) { return pValue->IsUint(); }
-template <> bool JSONReader::IsType<Int16>(rapidjson::Value *pValue) { return pValue->IsInt(); }
-template <> bool JSONReader::IsType<UInt16>(rapidjson::Value *pValue) { return pValue->IsUint(); }
-template <> bool JSONReader::IsType<Int32>(rapidjson::Value *pValue) { return pValue->IsInt(); }
-template <> bool JSONReader::IsType<UInt32>(rapidjson::Value *pValue) { return pValue->IsUint(); }
-template <> bool JSONReader::IsType<Int64>(rapidjson::Value *pValue) { return pValue->IsInt(); }
-template <> bool JSONReader::IsType<UInt64>(rapidjson::Value *pValue) { return pValue->IsUint(); }
-template <> bool JSONReader::IsType<Float>(rapidjson::Value *pValue) { return pValue->IsDouble(); }
-template <> bool JSONReader::IsType<Double>(rapidjson::Value *pValue) { return pValue->IsDouble(); }
-template <> bool JSONReader::IsType<String>(rapidjson::Value *pValue) { return pValue->IsString(); }
-template <> bool JSONReader::IsType<BLOB>(rapidjson::Value *pValue) { return pValue->IsString(); }
+template <> inline bool JSONReader::IsType<Bool>(rapidjson::Value *pValue) { return pValue->IsBool(); }
+template <> inline bool JSONReader::IsType<Int8>(rapidjson::Value *pValue) { return pValue->IsInt(); }
+template <> inline bool JSONReader::IsType<UInt8>(rapidjson::Value *pValue) { return pValue->IsUint(); }
+template <> inline bool JSONReader::IsType<Int16>(rapidjson::Value *pValue) { return pValue->IsInt(); }
+template <> inline bool JSONReader::IsType<UInt16>(rapidjson::Value *pValue) { return pValue->IsUint(); }
+template <> inline bool JSONReader::IsType<Int32>(rapidjson::Value *pValue) { return pValue->IsInt(); }
+template <> inline bool JSONReader::IsType<UInt32>(rapidjson::Value *pValue) { return pValue->IsUint(); }
+template <> inline bool JSONReader::IsType<Int64>(rapidjson::Value *pValue) { return pValue->IsInt(); }
+template <> inline bool JSONReader::IsType<UInt64>(rapidjson::Value *pValue) { return pValue->IsUint(); }
+template <> inline bool JSONReader::IsType<Float>(rapidjson::Value *pValue) { return pValue->IsDouble(); }
+template <> inline bool JSONReader::IsType<Double>(rapidjson::Value *pValue) { return pValue->IsDouble(); }
+template <> inline bool JSONReader::IsType<String>(rapidjson::Value *pValue) { return pValue->IsString(); }
+template <> inline bool JSONReader::IsType<BLOB>(rapidjson::Value *pValue) { return pValue->IsString(); }
 
 
-template <> Status JSONReader::GetVal<Bool>(rapidjson::Value *pValue, Bool &val) 
+template <> inline Status JSONReader::GetVal<Bool>(rapidjson::Value *pValue, Bool &val) 
 { 
 	val = pValue->GetBool(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<Int8>(rapidjson::Value *pValue, Int8 &val) 
+template <> inline Status JSONReader::GetVal<Int8>(rapidjson::Value *pValue, Int8 &val) 
 { 
 	val = (Int8)pValue->GetInt(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<UInt8>(rapidjson::Value *pValue, UInt8 &val) 
+template <> inline Status JSONReader::GetVal<UInt8>(rapidjson::Value *pValue, UInt8 &val) 
 { 
 	val = (UInt8)pValue->GetUint(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<Int16>(rapidjson::Value *pValue, Int16 &val) 
+template <> inline Status JSONReader::GetVal<Int16>(rapidjson::Value *pValue, Int16 &val) 
 { 
 	val = (Int16)pValue->GetInt(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<UInt16>(rapidjson::Value *pValue, UInt16 &val) 
+template <> inline Status JSONReader::GetVal<UInt16>(rapidjson::Value *pValue, UInt16 &val) 
 { 
 	val = (UInt16)pValue->GetUint(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<Int32>(rapidjson::Value *pValue, Int32 &val) 
+template <> inline Status JSONReader::GetVal<Int32>(rapidjson::Value *pValue, Int32 &val) 
 { 
 	val = (Int32)pValue->GetInt(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<UInt32>(rapidjson::Value *pValue, UInt32 &val) 
+template <> inline Status JSONReader::GetVal<UInt32>(rapidjson::Value *pValue, UInt32 &val) 
 { 
 	val = (UInt32)pValue->GetUint(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<Int64>(rapidjson::Value *pValue, Int64 &val) 
+template <> inline Status JSONReader::GetVal<Int64>(rapidjson::Value *pValue, Int64 &val) 
 { 
 	val = (Int64)pValue->GetInt(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<UInt64>(rapidjson::Value *pValue, UInt64 &val) 
+template <> inline Status JSONReader::GetVal<UInt64>(rapidjson::Value *pValue, UInt64 &val) 
 { 
 	val = (UInt64)pValue->GetUint(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<Float>(rapidjson::Value *pValue, Float &val) 
+template <> inline Status JSONReader::GetVal<Float>(rapidjson::Value *pValue, Float &val) 
 { 
 	val = (Float)pValue->GetDouble(); 
 	
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<Double>(rapidjson::Value *pValue, Double &val)
+template <> inline Status JSONReader::GetVal<Double>(rapidjson::Value *pValue, Double &val)
 {
 	val = (Double)pValue->GetDouble(); 
 	
 	return Status();
 }
 
-template <> Status JSONReader::GetVal<String>(rapidjson::Value *pValue, String &val) 
+template <> inline Status JSONReader::GetVal<String>(rapidjson::Value *pValue, String &val) 
 { 
 	val = pValue->GetString(); 
 	return Status(); 
 }
 
-template <> Status JSONReader::GetVal<BLOB>(rapidjson::Value *pValue, BLOB &val)
+template <> inline Status JSONReader::GetVal<BLOB>(rapidjson::Value *pValue, BLOB &val)
 {
 	Str::Z85BinStr z85;
 	Status         status;

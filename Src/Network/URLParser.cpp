@@ -119,6 +119,97 @@ Status URLParser::Parse(const Char *szURL, String &sProtocol, String &sHost, int
 	return Status();
 }
 
+Status URLParser::Encode(const Char *szSrcURL, String &sDestURL)
+{
+	static const Char hexdigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
+	const Char *pszPos;
+
+	sDestURL.clear();
+	pszPos = szSrcURL;
+	while (0 != *pszPos)
+	{
+		if (32 > (Byte )*pszPos || 127 < (Byte )*pszPos || 
+		    '!' == *pszPos || '*' == *pszPos || '\'' == *pszPos || '(' == *pszPos || ')' == *pszPos || ';' == *pszPos || 
+		    ':' == *pszPos || '@' == *pszPos || '&' == *pszPos || '=' == *pszPos || '+' == *pszPos || '$' == *pszPos || 
+		    '/' == *pszPos || '?' == *pszPos || '%' == *pszPos || '#' == *pszPos || '[' == *pszPos || ']' == *pszPos)
+		{
+			sDestURL += "%";
+#pragma warning(suppress: 6385)
+			sDestURL += hexdigits[((Byte )*pszPos) / 16];
+			sDestURL += hexdigits[((Byte )*pszPos) % 16];
+		}
+		else
+		{
+			sDestURL += *pszPos;
+		}
+		pszPos++;
+	}
+
+	return Status();
+}
+
+Status URLParser::Decode(const Char *szSrcURL, String &sDestURL)
+{
+	const Char *pszPos;
+
+	sDestURL.clear();
+	pszPos = szSrcURL;
+	while (0 != *pszPos)
+	{
+		if ('%' == *pszPos)
+		{
+			pszPos++;
+			if (cx_isdigit((unsigned char)*pszPos) && cx_isxdigit((unsigned char)*(pszPos + 1)))
+			{
+				Byte x = 0;
+
+				x = 0;
+				if ('0' <= *pszPos && '9' >= *pszPos)
+				{
+					x += 16 * (*pszPos - '0');
+				}
+				else
+				if ('A' <= *pszPos && 'F' >= *pszPos)
+				{
+					x += 16 * (*pszPos - 'A' + 10);
+				}
+				else
+				{
+					x += 16 * (*pszPos - 'a' + 10);
+				}
+				pszPos++;
+				if ('0' <= *pszPos && '9' >= *pszPos)
+				{
+					x += *pszPos - '0';
+				}
+				else
+				if ('A' <= *pszPos && 'F' >= *pszPos)
+				{
+					x += *pszPos - 'A' + 10;
+				}
+				else
+				{
+					x += *pszPos - 'a' + 10;
+				}
+				pszPos++;
+				sDestURL += (Char)x;
+			}
+			else
+			{
+				sDestURL += '%';
+			}
+		}
+		else
+		{
+			sDestURL += *pszPos;
+			pszPos++;
+		}
+	}
+
+	return Status();
+}
+
 }//namespace Network
 
 }//namespace CX

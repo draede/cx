@@ -21,6 +21,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Build\VS2013\CX.vcxproj">
+      <Project>{dc97160c-7040-40eb-8552-f76c36302622}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B7EFAA93-1F4B-4659-8218-B41E30148350}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -101,7 +106,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +123,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

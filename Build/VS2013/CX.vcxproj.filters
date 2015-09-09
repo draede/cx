@@ -879,9 +879,6 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\IReader.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SimpleBuffers\ISimpleBuffers.hpp">
-      <Filter>Header Files\SimpleBuffers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\IWriter.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
@@ -941,6 +938,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Str\StringHelper.hpp">
       <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\ISimpleBuffer.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

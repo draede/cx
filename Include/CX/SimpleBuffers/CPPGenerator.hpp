@@ -122,12 +122,12 @@ public:
 				{
 					Print(out, "\tconst {1} &Get{2}() const\n", sFullType, iter->GetName());
 					Print(out, "\t{{\n");
-					Print(out, "\t\treturn m_{1};\n", iter->GetName());
+					Print(out, "\t\treturn this->{1};\n", iter->GetMemberName());
 					Print(out, "\t}\n");
 					Print(out, "\n");
 					Print(out, "\tvoid Set{1}(const {2} &p)\n", iter->GetName(), sFullType);
 					Print(out, "\t{{\n");
-					Print(out, "\t\tm_{1} = p;\n", iter->GetName());
+					Print(out, "\t\tthis->{1} = p;\n", iter->GetMemberName());
 					Print(out, "\t}\n");
 					Print(out, "\n");
 				}
@@ -138,12 +138,12 @@ public:
 				{
 					Print(out, "\tconst {1} &Get{2}() const\n", sFullType, iter->GetName());
 					Print(out, "\t{{\n");
-					Print(out, "\t\treturn m_{1};\n", iter->GetName());
+					Print(out, "\t\treturn this->{1};\n", iter->GetMemberName());
 					Print(out, "\t}\n");
 					Print(out, "\n");
 					Print(out, "\t{1} &Get{2}()\n", sFullType, iter->GetName());
 					Print(out, "\t{{\n");
-					Print(out, "\t\treturn m_{1};\n", iter->GetName());
+					Print(out, "\t\treturn this->{1};\n", iter->GetMemberName());
 					Print(out, "\t}\n");
 					Print(out, "\n");
 				}
@@ -186,36 +186,64 @@ public:
 				case MemberType_Scalar:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataReader<CX::SimpleBuffers::MemberType_Scalar, {1}>::Read("
-					      "pReader, m_{2}, \"{2}\")).IsNOK())\n", sKeyType, iter->GetName());
+					      "pReader, this->{2}, \"{3}\")).IsNOK())\n", sKeyType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{\n");
-					Print(out, "\t\t\treturn status;\n");
+					if (!iter->GetOptional())
+					{
+						Print(out, "\t\t\treturn status;\n");
+					}
+					else
+					{
+						Print(out, "\t\t\t//return status; OPTIONAL MEMBER\n");
+					}
 					Print(out, "\t\t}\n");
 				}
 				break;
 				case MemberType_Vector:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataReader<CX::SimpleBuffers::MemberType_Vector, {1}>::Read("
-					      "pReader, m_{2}, \"{2}\")).IsNOK())\n", sKeyType, iter->GetName());
+					      "pReader, this->{2}, \"{3}\")).IsNOK())\n", sKeyType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{\n");
-					Print(out, "\t\t\treturn status;\n");
+					if (!iter->GetOptional())
+					{
+						Print(out, "\t\t\treturn status;\n");
+					}
+					else
+					{
+						Print(out, "\t\t\t//return status; OPTIONAL MEMBER\n");
+					}
 					Print(out, "\t\t}\n");
 				}
 				break;
 				case MemberType_Set:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataReader<CX::SimpleBuffers::MemberType_Set, {1}>::Read("
-					      "pReader, m_{2}, \"{2}\")).IsNOK())\n", sKeyType, iter->GetName());
+					      "pReader, this->{2}, \"{3}\")).IsNOK())\n", sKeyType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{\n");
-					Print(out, "\t\t\treturn status;\n");
+					if (!iter->GetOptional())
+					{
+						Print(out, "\t\t\treturn status;\n");
+					}
+					else
+					{
+						Print(out, "\t\t\t//return status; OPTIONAL MEMBER\n");
+					}
 					Print(out, "\t\t}\n");
 				}
 				break;
 				case MemberType_Map:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataReader<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Read("
-					      "pReader, m_{3}, \"{3}\")).IsNOK())\n", sKeyType, sValType, iter->GetName());
+					      "pReader, this->{3}, \"{34}\")).IsNOK())\n", sKeyType, sValType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{\n");
-					Print(out, "\t\t\treturn status;\n");
+					if (!iter->GetOptional())
+					{
+						Print(out, "\t\t\treturn status;\n");
+					}
+					else
+					{
+						Print(out, "\t\t\t//return status; OPTIONAL MEMBER\n");
+					}
 					Print(out, "\t\t}\n");
 				}
 				break;
@@ -265,7 +293,7 @@ public:
 				case MemberType_Scalar:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Scalar, {1}>::Write("
-					      "pWriter, m_{2}, \"{2}\")).IsNOK())\n", sKeyType, iter->GetName());
+					      "pWriter, this->{2}, \"{3}\")).IsNOK())\n", sKeyType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{\n");
 					Print(out, "\t\t\treturn status;\n");
 					Print(out, "\t\t}\n");
@@ -274,7 +302,7 @@ public:
 				case MemberType_Vector:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Vector, {1}>::Write("
-					      "pWriter, m_{2}, \"{2}\")).IsNOK())\n", sKeyType, iter->GetName());
+					      "pWriter, this->{2}, \"{3}\")).IsNOK())\n", sKeyType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{\n");
 					Print(out, "\t\t\treturn status;\n");
 					Print(out, "\t\t}\n");
@@ -283,7 +311,7 @@ public:
 				case MemberType_Set:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Set, {1}>::Write("
-					      "pWriter, m_{2}, \"{2}\")).IsNOK())\n", sKeyType, iter->GetName());
+					      "pWriter, this->{2}, \"{3}\")).IsNOK())\n", sKeyType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{\n");
 					Print(out, "\t\t\treturn status;\n");
 					Print(out, "\t\t}\n");
@@ -292,7 +320,7 @@ public:
 				case MemberType_Map:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Write("
-					      "pWriter, m_{3}, \"{3}\")).IsNOK())\n", sKeyType, sValType, iter->GetName());
+					      "pWriter, this->{3}, \"{3}\")).IsNOK())\n", sKeyType, sValType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{\n");
 					Print(out, "\t\t\treturn status;\n");
 					Print(out, "\t\t}\n");
@@ -325,12 +353,12 @@ public:
 		{
 			for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
 			{
-				Print(out, "\t\tif (m_{1} < p.m_{1})\n", iter->GetName());
+				Print(out, "\t\tif (this->{1} < p.{1})\n", iter->GetMemberName());
 				Print(out, "\t\t{{\n");
 				Print(out, "\t\t\treturn true;\n");
 				Print(out, "\t\t}\n");
 				Print(out, "\t\telse\n");
-				Print(out, "\t\tif (m_{1} > p.m_{1})\n", iter->GetName());
+				Print(out, "\t\tif (this->{1} > p.{1})\n", iter->GetMemberName());
 				Print(out, "\t\t{{\n");
 				Print(out, "\t\t\treturn false;\n");
 				Print(out, "\t\t}\n");
@@ -353,12 +381,12 @@ public:
 		{
 			for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
 			{
-				Print(out, "\t\tif (m_{1} > p.m_{1})\n", iter->GetName());
+				Print(out, "\t\tif (this->{1} > p.{1})\n", iter->GetMemberName());
 				Print(out, "\t\t{{\n");
 				Print(out, "\t\t\treturn true;\n");
 				Print(out, "\t\t}\n");
 				Print(out, "\t\telse\n");
-				Print(out, "\t\tif (m_{1} < p.m_{1})\n", iter->GetName());
+				Print(out, "\t\tif (this->{1} < p.{1})\n", iter->GetMemberName());
 				Print(out, "\t\t{{\n");
 				Print(out, "\t\t\treturn false;\n");
 				Print(out, "\t\t}\n");
@@ -402,7 +430,7 @@ public:
 
 			String     sPadding(cMaxDataTypeLen - sFullType.size() + 1, ' ');
 
-			Print(out, "\t{1}{2}m_{3};\n", sFullType, sPadding, iter->GetName());
+			Print(out, "\t{1}{2}{3};\n", sFullType, sPadding, iter->GetMemberName());
 		}
 
 		Print(out, "\n");
@@ -447,7 +475,7 @@ public:
 		Print(out, "}//namespace CX\n");
 		Print(out, "\n");
 
-		const Object::PragmasVector &vectorEpilogPragmas = object.GetPragmasByLocation(Object::PRAGMA_LOCATION_PROLOG());
+		const Object::PragmasVector &vectorEpilogPragmas = object.GetPragmasByLocation(Object::PRAGMA_LOCATION_EPILOG());
 
 		if (!vectorEpilogPragmas.empty())
 		{

@@ -45,7 +45,7 @@ class CX_API Object
 {
 public:
 
-	typedef Vector<Member>::Type   MembersVector;
+	typedef Vector<Member>::Type      MembersVector;
 
 	struct Pragma
 	{

@@ -1,3 +1,9 @@
+0.1.32 - 2015-09-09
+  - added Network::URLParser:Encode
+  - added Network::URLParser:Decode
+  - added optional member support in SimpleBuffers
+  - added member name support in SimpleBuffers
+  - fixed SimpleBuffersParser
 0.1.31 - 2015-09-06
   - added UChar type (unsigned char)
   - Added Str::StringHelper::Compare

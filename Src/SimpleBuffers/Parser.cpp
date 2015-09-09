@@ -29,6 +29,7 @@
 #include "CX/SimpleBuffers/Parser.hpp"
 #include "CX/IO/FileInputStream.hpp"
 #include "CX/IO/Helper.hpp"
+#include "CX/Print.hpp"
 #include "CX/C/ctype.h"
 
 
@@ -378,14 +379,76 @@ Status Parser::ParseMember(CTX *pCTX, Member &member, const AliasesMap &mapAlias
 	{
 		return Status(Status_ParseFailed, "Unexpected end of file");
 	}
+
+	String sMemberName = sName;
+
+	if ('(' == *(pCTX->pBuffer + pCTX->cbIndex))
+	{
+		pCTX->cbIndex++;
+		pCTX->cColumn++;
+		if ((status = ParseIdentifier(pCTX, sMemberName)).IsNOK())
+		{
+			return status;
+		}
+		if (pCTX->cbIndex >= pCTX->cbSize)
+		{
+			return Status(Status_ParseFailed, "Unexpected end of file");
+		}
+		if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+		{
+			return status;
+		}
+		if (pCTX->cbIndex >= pCTX->cbSize)
+		{
+			return Status(Status_ParseFailed, "Unexpected end of file");
+		}
+		if (')' != *(pCTX->pBuffer + pCTX->cbIndex))
+		{
+			return Status(Status_ParseFailed, "Missing ) at line {1}, column {2}", pCTX->cLine, pCTX->cColumn);
+		}
+		pCTX->cbIndex++;
+		pCTX->cColumn++;
+	}
+	if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+	{
+		return status;
+	}
+	if (pCTX->cbIndex >= pCTX->cbSize)
+	{
+		return Status(Status_ParseFailed, "Unexpected end of file");
+	}
+
+	bool   bOptional = false;
+	String sOptional;
+
+	if (';' != *(pCTX->pBuffer + pCTX->cbIndex))
+	{
+		if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+		{
+			return status;
+		}
+		if ((status = ParseIdentifier(pCTX, sOptional)).IsNOK())
+		{
+			return status;
+		}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+		if (0 != cx_stricmp(sOptional.c_str(), "optional"))
+#pragma warning(pop)
+		{
+			return Status(Status_InvalidArg, "Unknown member flag {1}", sOptional);
+		}
+		bOptional = true;
+	}
 	if (';' != *(pCTX->pBuffer + pCTX->cbIndex))
 	{
 		return Status(Status_ParseFailed, "Missing ; at line {1}, column {2}", pCTX->cLine, pCTX->cColumn);
 	}
 	pCTX->cbIndex++;
 	pCTX->cColumn++;
-
 	member.SetName(sName);
+	member.SetMemberName(sMemberName);
+	member.SetOptional(bOptional);
 
 	return Status();
 }
@@ -537,7 +600,7 @@ Status Parser::Parse(const Char *pBuffer, Size cLen, Object &object)
 		object.GetMembers().push_back(member);
 	}
 
-	//prolog
+	//epilog
 
 	while (ctx.cbIndex < ctx.cbSize)
 	{

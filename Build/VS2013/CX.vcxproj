@@ -197,7 +197,7 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\IGenerator.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\IReader.hpp" />
-    <ClInclude Include="..\..\Include\CX\SimpleBuffers\ISimpleBuffers.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\ISimpleBuffer.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\IWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\JSONReader.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\JSONWriter.hpp" />

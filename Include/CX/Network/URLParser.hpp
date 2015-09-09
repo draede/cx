@@ -50,6 +50,10 @@ public:
 	//<protocol>://<host>[:<port>]/[<path>][?<query>]
 	static Status Parse(const Char *szURL, String &sProtocol, String &sHost, int &nPort, String &sPath, String &sQuery);
 
+	static Status Encode(const Char *szSrcURL, String &sDestURL);
+
+	static Status Decode(const Char *szSrcURL, String &sDestURL);
+
 private:
 
 	URLParser();

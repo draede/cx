@@ -34,6 +34,7 @@
 #include "CX/String.hpp"
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/BLOB.hpp"
+#include "CX/C/stdarg.h"
 #include "CX/APIDefs.hpp"
 
 

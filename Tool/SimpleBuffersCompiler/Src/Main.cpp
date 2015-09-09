@@ -1,6 +1,6 @@
 
-#include "CX/Archive/Parser.hpp"
-#include "CX/Archive/CPPGenerator.hpp"
+#include "CX/SimpleBuffers/Parser.hpp"
+#include "CX/SimpleBuffers/CPPGenerator.hpp"
 #include "CX/IO/FileOutputStream.hpp"
 #include "CX/Print.hpp"
 
@@ -8,7 +8,7 @@
 using namespace CX;
 
 
-typedef Archive::IGenerator<IO::IOutputStream *> Generator;
+typedef SimpleBuffers::IGenerator<IO::IOutputStream *> Generator;
 
 typedef Generator * (* CreateGeneratorProc)();
 
@@ -21,7 +21,7 @@ struct GeneratorData
 
 Generator *CreateCPPGenerator()
 {
-	return new (std::nothrow) Archive::CPPGenerator<IO::IOutputStream *>();
+	return new (std::nothrow) SimpleBuffers::CPPGenerator<IO::IOutputStream *>();
 }
 
 
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	Archive::Object   object;
+	SimpleBuffers::Object   object;
 	GeneratorData     *pGeneratorData;
 	Generator         *pGenerator;
 	Status            status;
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 
 		return 2;
 	}
-	if (!(status = Archive::Parser::ParseFilePath(argv[2], object)))
+	if (!(status = SimpleBuffers::Parser::ParseFilePath(argv[2], object)))
 	{
 		Print(stdout, "Error {1} parsing {2} ({3})\n", status.GetCode(), argv[2], status.GetMsg());
 
