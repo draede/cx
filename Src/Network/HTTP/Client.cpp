@@ -51,7 +51,7 @@ Client::~Client()
 	Close();
 }
 
-Status Client::Open(const Char *szHost, bool bSSL/* = false*/, UInt16 nPort/* = HTTP_PORT*/)
+Status Client::Open(const Char *szHost, unsigned int nFlags/* = 0*/, UInt16 nPort/* = HTTP_PORT*/)
 {
 	Close();
 
@@ -60,7 +60,7 @@ Status Client::Open(const Char *szHost, bool bSSL/* = false*/, UInt16 nPort/* = 
 		return Status(Status_OperationFailed, "curl_easy_init failed");
 	}
 	m_sHost = szHost;
-	m_bSSL  = bSSL;
+	m_bSSL  = (Flag_SSL == (nFlags & Flag_SSL));
 	if (m_bSSL)
 	{
 		if (0 == nPort)
@@ -74,6 +74,22 @@ Status Client::Open(const Char *szHost, bool bSSL/* = false*/, UInt16 nPort/* = 
 		nPort = HTTP_PORT;
 	}
 	m_nPort = nPort;
+	if ((nFlags & Flag_PersistentCookies))
+	{
+#ifdef CX_OS_WINDOWS
+		curl_easy_setopt(m_pHandle, CURLOPT_COOKIEJAR, "NUL");
+#else
+		curl_easy_setopt(m_pHandle, CURLOPT_COOKIEJAR, "/dev/null");
+#endif
+	}
+	if ((nFlags & Flag_Debug))
+	{
+		curl_easy_setopt(m_pHandle, CURLOPT_VERBOSE, 1);
+	}
+	else
+	{
+		curl_easy_setopt(m_pHandle, CURLOPT_VERBOSE, 0);
+	}
 
 	return Status();
 }

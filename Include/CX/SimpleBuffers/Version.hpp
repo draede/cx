@@ -25,41 +25,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */ 
-
-#include "CX/Network/HTTP/Client.hpp"
-#include "CX/Print.hpp"
-#include "CX/Mem.hpp"
-#include "CX/IO/MemInputStream.hpp"
-#include "CX/IO/MemOutputStream.hpp"
-#include "Tester.hpp"
+ 
+#pragma once
 
 
-using namespace CX;
+#include "CX/Types.hpp"
 
 
-void Network_HTTP_Client_Test1()
+namespace CX
 {
-	Mem::SetFlags(Mem::Flag_SourceMemTrack);
 
-	{
-		Network::HTTP::Client client;
-		String                sResponse;
-		int                   nResponseStatus;
-		Status                status;
+namespace SimpleBuffers
+{
 
-		status = client.Open("google.com", Network::HTTP::Client::Flag_SSL);
-		status = client.SetUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0");
-		status = client.Perform("/", "GET", NULL, new IO::MemOutputStream(&sResponse), &nResponseStatus);
-		status = client.Close();
-	}
+enum Version
+{
+	Version_Major    = 0,
+	Version_Minor    = 1,
+	Version_Revision = 1,
+};
 
-	Mem::AllocsVector vectorAllocs;
-	std::string       sOut;
+}//namespace SimpleBuffers
 
-	Mem::GetCurrentAllocs(vectorAllocs);
-	Mem::PrintAllocs(sOut, vectorAllocs);
-	Print(stdout, "{1}\n", sOut.c_str());
-}
-
-//REGISTER_TEST(Network_HTTP_Client_Test1);
-
+}//namespace CX

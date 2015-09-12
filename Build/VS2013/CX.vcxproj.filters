@@ -942,6 +942,9 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\ISimpleBuffer.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Version.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">

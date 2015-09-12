@@ -205,6 +205,7 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\MemberType.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\Object.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\Parser.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Version.hpp" />
     <ClInclude Include="..\..\Include\CX\Slice.hpp" />
     <ClInclude Include="..\..\Include\CX\SparseHashHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\SparseHashMap.hpp" />

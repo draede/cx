@@ -54,11 +54,18 @@ public:
 	static const UInt16    HTTP_PORT  = 80;
 	static const UInt16    HTTPS_PORT = 443;
 
+	enum Flags
+	{
+		Flag_SSL,
+		Flag_PersistentCookies,
+		Flag_Debug,
+	};
+
 	Client();
 
 	~Client();
 
-	Status Open(const Char *szHost, bool bSSL = false, UInt16 nPort = 0);
+	Status Open(const Char *szHost, unsigned int nFlags = 0, UInt16 nPort = 0);
 
 	Status Close();
 
