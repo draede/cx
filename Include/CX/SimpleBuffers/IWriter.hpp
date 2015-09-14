@@ -88,6 +88,37 @@ public:
 
 	virtual Status EndArray() = 0;
 
+	template <typename T>
+	Status WriteEnum(const T &v, const Char *szName, Size cValsCount, ...)
+	{
+		va_list    vl;
+		bool       bOK = false;
+		Status     status;
+
+		va_start(vl, cValsCount);
+		for (Size i = 0; i < cValsCount; i++)
+		{
+			T          val    = va_arg(vl, T);
+			const Char *szStr = va_arg(vl, const Char *);
+
+			if (!bOK && val == v)
+			{
+				bOK = true;
+				if (!(status = WriteString(szStr, szName)))
+				{
+					return status;
+				}
+			}
+		}
+		va_end(vl);
+		if (!bOK)
+		{
+			return Status(Status_InvalidArg);
+		}
+
+		return Status();
+	}
+
 };
 
 }//namespace SimpleBuffers

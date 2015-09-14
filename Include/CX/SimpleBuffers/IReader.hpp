@@ -35,6 +35,7 @@
 #include "CX/IO/IInputStream.hpp"
 #include "CX/BLOB.hpp"
 #include "CX/Map.hpp"
+#include "CX/C/string.h"
 #include "CX/C/stdarg.h"
 #include "CX/APIDefs.hpp"
 
@@ -88,6 +89,42 @@ public:
 	virtual Status BeginArray(const Char *szName = NULL) = 0;
 
 	virtual Status EndArray() = 0;
+
+	template <typename T>
+	Status ReadEnum(T &v, const Char *szName, Size cValsCount, ...)
+	{
+		va_list    vl;
+		String     sStr;
+		bool       bOK = false;
+		Status     status;
+
+		if (!(status = ReadString(sStr, szName)))
+		{
+			return status;
+		}
+		va_start(vl, cValsCount);
+		for (Size i = 0; i < cValsCount; i++)
+		{
+			T          val    = va_arg(vl, T);
+			const Char *szStr = va_arg(vl, const Char *);
+
+	#pragma warning(push)
+	#pragma warning(disable: 4996)
+			if (!bOK && 0 == cx_stricmp(szStr, sStr.c_str()))
+	#pragma warning(pop)
+			{
+				bOK = true;
+				v   = val;
+			}
+		}
+		va_end(vl);
+		if (!bOK)
+		{
+			return Status(Status_InvalidArg);
+		}
+
+		return Status();
+	}
 
 };
 

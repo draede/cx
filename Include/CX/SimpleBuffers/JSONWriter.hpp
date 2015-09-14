@@ -33,6 +33,7 @@
 #include "CX/Stack.hpp"
 #include "CX/Print.hpp"
 #include "CX/Str/Z85BinStr.hpp"
+#include "CX/Data/JSON/SAXParser.hpp"
 #include "CX/APIDefs.hpp"
 
 
@@ -208,13 +209,16 @@ inline Status JSONWriter::WriteFunc<Bool>(IO::IOutputStream *pOutputStream, cons
 template <>
 inline Status JSONWriter::WriteFunc<String>(IO::IOutputStream *pOutputStream, const String &v, const Char *szName)
 {
+	String sStr;
+
+	Data::JSON::SAXParser::EscapeString(v.c_str(), &sStr);
 	if (NULL != szName)
 	{
-		return Print(pOutputStream, "\"{1}\": \"{2}\"", szName, v);
+		return Print(pOutputStream, "\"{1}\": \"{2}\"", szName, sStr);
 	}
 	else
 	{
-		return Print(pOutputStream, "\"{1}\"", v);
+		return Print(pOutputStream, "\"{1}\"", sStr);
 	}
 }
 
