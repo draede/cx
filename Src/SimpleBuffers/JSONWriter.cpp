@@ -182,9 +182,60 @@ Status JSONWriter::WriteString(const String &v, const Char *szName/* = NULL*/)
 	return Write(&JSONWriter::WriteFunc<String>, v, szName);
 }
 
-Status JSONWriter::WriteBLOB(const BLOB &v, const Char *szName/* = NULL*/)
+Status JSONWriter::WriteBLOB(const void *pData, Size cbSize, const Char *szName/* = NULL*/)
 {
-	return Write(&JSONWriter::WriteFunc<BLOB>, v, szName);
+	if (0 == cbSize)
+	{
+		if (NULL != szName)
+		{
+			return Print(m_pOutputStream, "\"{1}\": \"\"", szName);
+		}
+		else
+		{
+			return Print(m_pOutputStream, "\"\"");
+		}
+	}
+
+	Str::Z85BinStr z85;
+	Size           cLen;
+	Char           *szBuffer;
+	Status         status;
+
+	cLen = z85.GetStrLenFromBinSize(pData, cbSize);
+	szBuffer = NULL;
+	for (;;)
+	{
+		if (NULL == (szBuffer = (Char *)Mem::Alloc(cLen + 1)))
+		{
+			status = Status(Status_MemAllocFailed, "Failed to allocate temp string");
+
+			break;
+		}
+		if ((status = z85.ToString(pData, cbSize, szBuffer, cLen)).IsNOK())
+		{
+			break;
+		}
+
+		break;
+	}
+	if (status.IsOK() && NULL != szBuffer)
+	{
+		szBuffer[cLen] = 0;
+		if (NULL != szName)
+		{
+			status = Print(m_pOutputStream, "\"{1}\": \"{2}\"", szName, szBuffer);
+		}
+		else
+		{
+			status = Print(m_pOutputStream, "\"{1}\"", szBuffer);
+		}
+	}
+	if (NULL != szBuffer)
+	{
+		Mem::Free(szBuffer);
+	}
+
+	return status;
 }
 
 Status JSONWriter::BeginObject(const Char *szName/* = NULL*/)

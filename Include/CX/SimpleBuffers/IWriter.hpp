@@ -78,7 +78,12 @@ public:
 
 	virtual Status WriteString(const String &v, const Char *szName = NULL) = 0;
 
-	virtual Status WriteBLOB(const BLOB &v, const Char *szName = NULL) = 0;
+	virtual Status WriteBLOB(const void *pData, Size cbSize, const Char *szName = NULL) = 0;
+
+	virtual Status WriteBLOB(const BLOB &blob, const Char *szName = NULL)
+	{
+		return WriteBLOB(&blob[0], blob.size(), szName);
+	}
 
 	virtual Status BeginObject(const Char *szName = NULL) = 0;
 

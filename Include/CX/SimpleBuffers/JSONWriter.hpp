@@ -79,7 +79,7 @@ public:
 
 	virtual Status WriteString(const String &v, const Char *szName = NULL);
 
-	virtual Status WriteBLOB(const BLOB &v, const Char *szName = NULL);
+	virtual Status WriteBLOB(const void *pData, Size cbSize, const Char *szName = NULL);
 
 	virtual Status BeginObject(const Char *szName = NULL);
 
@@ -220,63 +220,6 @@ inline Status JSONWriter::WriteFunc<String>(IO::IOutputStream *pOutputStream, co
 	{
 		return Print(pOutputStream, "\"{1}\"", sStr);
 	}
-}
-
-template <>
-inline Status JSONWriter::WriteFunc<BLOB>(IO::IOutputStream *pOutputStream, const BLOB &v, const Char *szName)
-{
-	if (0 == v.size())
-	{
-		if (NULL != szName)
-		{
-			return Print(pOutputStream, "\"{1}\": \"\"", szName);
-		}
-		else
-		{
-			return Print(pOutputStream, "\"\"");
-		}
-	}
-
-	Str::Z85BinStr z85;
-	Size           cLen;
-	Char           *szBuffer;
-	Status         status;
-
-	cLen     = z85.GetStrLenFromBinSize(&v[0], v.size());
-	szBuffer = NULL;
-	for (;;)
-	{
-		if (NULL == (szBuffer = (Char *)Mem::Alloc(cLen + 1)))
-		{
-			status = Status(Status_MemAllocFailed, "Failed to allocate temp string");
-
-			break;
-		}
-		if ((status = z85.ToString(&v[0], v.size(), szBuffer, cLen)).IsNOK())
-		{
-			break;
-		}
-
-		break;
-	}
-	if (status.IsOK() && NULL != szBuffer)
-	{
-		szBuffer[cLen] = 0;
-		if (NULL != szName)
-		{
-			status = Print(pOutputStream, "\"{1}\": \"{2}\"", szName, szBuffer);
-		}
-		else
-		{
-			status = Print(pOutputStream, "\"{1}\"", szBuffer);
-		}
-	}
-	if (NULL != szBuffer)
-	{
-		Mem::Free(szBuffer);
-	}
-		
-	return status;
 }
 
 }//namespace SimpleBuffers
