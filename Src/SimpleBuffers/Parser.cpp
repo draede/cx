@@ -132,6 +132,49 @@ Status Parser::ParseIdentifier(CTX *pCTX, String &sIdentifier)
 	return Status();
 }
 
+Status Parser::ParseDefaultValue(CTX *pCTX, String &sDefault)
+{
+	bool bString = false;
+	Size cbStart;
+
+	cbStart = pCTX->cbIndex;
+	if ('"' == *(pCTX->pBuffer + pCTX->cbIndex))
+	{
+		bString = true;
+		pCTX->cbIndex++;
+	}
+	while (pCTX->cbIndex < pCTX->cbSize)
+	{
+		if (bString)
+		{
+			if ('"' == *(pCTX->pBuffer + pCTX->cbIndex))
+			{
+				if ('\\' != *(pCTX->pBuffer + pCTX->cbIndex - 1))
+				{
+					pCTX->cbIndex++;
+					break;
+				}
+			}
+		}
+		else
+		{
+			if (!cx_isalnum((UChar)*(pCTX->pBuffer + pCTX->cbIndex)) && '_' != *(pCTX->pBuffer + pCTX->cbIndex) && 
+			    '.' != *(pCTX->pBuffer + pCTX->cbIndex))
+			{
+				break;
+			}
+		}
+		pCTX->cbIndex++;
+	}
+	if (cbStart == pCTX->cbIndex)
+	{
+		return Status_InvalidArg;
+	}
+	sDefault.assign(pCTX->pBuffer + cbStart, pCTX->cbIndex - cbStart);
+
+	return Status();
+}
+
 Status Parser::ParsePragma(CTX *pCTX, String &sID, String &sValue)
 {
 	Status   status;
@@ -154,6 +197,21 @@ Status Parser::ParsePragma(CTX *pCTX, String &sID, String &sValue)
 		if ('\n' == *(pCTX->pBuffer + pCTX->cbIndex))
 		{
 			pCTX->cbIndex++;
+			if ('\r' == *(pCTX->pBuffer + pCTX->cbIndex + 1))
+			{
+				pCTX->cbIndex++;
+			}
+			pCTX->cColumn = 1;
+			pCTX->cLine++;
+		}
+		else
+		if ('\r' == *(pCTX->pBuffer + pCTX->cbIndex))
+		{
+			pCTX->cbIndex++;
+			if ('\n' == *(pCTX->pBuffer + pCTX->cbIndex + 1))
+			{
+				pCTX->cbIndex++;
+			}
 			pCTX->cColumn = 1;
 			pCTX->cLine++;
 
@@ -380,34 +438,149 @@ Status Parser::ParseMember(CTX *pCTX, Member &member, const AliasesMap &mapAlias
 		return Status(Status_ParseFailed, "Unexpected end of file");
 	}
 
-	String sMemberName = sName;
+	String sMemberName;
+	String sGetterName;
+	String sSetterName;
+	bool   bOptional = false;
+	String sDefault;
+
+	Print(&sMemberName, "m_{1}", sName);
+	Print(&sGetterName, "Get{1}", sName);
+	Print(&sSetterName, "Set{1}", sName);
 
 	if ('(' == *(pCTX->pBuffer + pCTX->cbIndex))
 	{
 		pCTX->cbIndex++;
 		pCTX->cColumn++;
-		if ((status = ParseIdentifier(pCTX, sMemberName)).IsNOK())
+
+		for (;;)
 		{
-			return status;
+			String sPropName;
+			String sPropValue;
+
+			if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+			{
+				return status;
+			}
+			if (pCTX->cbIndex >= pCTX->cbSize)
+			{
+				return Status(Status_ParseFailed, "Unexpected end of file");
+			}
+			if ((status = ParseIdentifier(pCTX, sPropName)).IsNOK())
+			{
+				return status;
+			}
+			if (pCTX->cbIndex >= pCTX->cbSize)
+			{
+				return Status(Status_ParseFailed, "Unexpected end of file");
+			}
+			if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+			{
+				return status;
+			}
+			if (pCTX->cbIndex >= pCTX->cbSize)
+			{
+				return Status(Status_ParseFailed, "Unexpected end of file");
+			}
+			if ('=' != *(pCTX->pBuffer + pCTX->cbIndex))
+			{
+				return Status(Status_ParseFailed, "Missing = at line {1}, column {2}", pCTX->cLine, pCTX->cColumn);
+			}
+			pCTX->cbIndex++;
+			pCTX->cColumn++;
+			if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+			{
+				return status;
+			}
+			if (pCTX->cbIndex >= pCTX->cbSize)
+			{
+				return Status(Status_ParseFailed, "Unexpected end of file");
+			}
+			if (0 == cx_stricmp(sPropName.c_str(), "default"))
+			{
+				if ((status = ParseDefaultValue(pCTX, sPropValue)).IsNOK())
+				{
+					return status;
+				}
+			}
+			else
+			{
+				if ((status = ParseIdentifier(pCTX, sPropValue)).IsNOK())
+				{
+					return status;
+				}
+			}
+			if (pCTX->cbIndex >= pCTX->cbSize)
+			{
+				return Status(Status_ParseFailed, "Unexpected end of file");
+			}
+			if (0 == cx_stricmp(sPropName.c_str(), "member"))
+			{
+				sMemberName = sPropValue;
+			}
+			else
+			if (0 == cx_stricmp(sPropName.c_str(), "getter"))
+			{
+				sGetterName = sPropValue;
+			}
+			else
+			if (0 == cx_stricmp(sPropName.c_str(), "setter"))
+			{
+				sSetterName = sPropValue;
+			}
+			else
+			if (0 == cx_stricmp(sPropName.c_str(), "default"))
+			{
+				sDefault = sPropValue;
+			}
+			else
+			if (0 == cx_stricmp(sPropName.c_str(), "optional"))
+			{
+				if (0 == cx_stricmp(sPropValue.c_str(), "false"))
+				{
+					bOptional = false;
+				}
+				else
+				if (0 == cx_stricmp(sPropValue.c_str(), "true"))
+				{
+					bOptional = true;
+				}
+				else
+				{
+					return Status(Status_ParseFailed, "Unknown member property [{1}]=[{2}] for at line {3}, column {4}", 
+					              sPropName, sPropValue, pCTX->cLine, pCTX->cColumn);
+				}
+			}
+			else
+			{
+				return Status(Status_ParseFailed, "Unknown member property [{1}]=[{2}] at line {3}, column {4}", 
+				              sPropName, sPropValue, pCTX->cLine, pCTX->cColumn);
+			}
+			if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+			{
+				return status;
+			}
+			if (pCTX->cbIndex >= pCTX->cbSize)
+			{
+				return Status(Status_ParseFailed, "Unexpected end of file");
+			}
+			if (',' == *(pCTX->pBuffer + pCTX->cbIndex))
+			{
+				pCTX->cbIndex++;
+				pCTX->cColumn++;
+			}
+			else
+			if (')' == *(pCTX->pBuffer + pCTX->cbIndex))
+			{
+				pCTX->cbIndex++;
+				pCTX->cColumn++;
+				break;
+			}
+			else
+			{
+				return Status(Status_ParseFailed, "Missing , or ) at line {1}, column {2}", pCTX->cLine, pCTX->cColumn);
+			}
 		}
-		if (pCTX->cbIndex >= pCTX->cbSize)
-		{
-			return Status(Status_ParseFailed, "Unexpected end of file");
-		}
-		if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
-		{
-			return status;
-		}
-		if (pCTX->cbIndex >= pCTX->cbSize)
-		{
-			return Status(Status_ParseFailed, "Unexpected end of file");
-		}
-		if (')' != *(pCTX->pBuffer + pCTX->cbIndex))
-		{
-			return Status(Status_ParseFailed, "Missing ) at line {1}, column {2}", pCTX->cLine, pCTX->cColumn);
-		}
-		pCTX->cbIndex++;
-		pCTX->cColumn++;
 	}
 	if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
 	{
@@ -417,29 +590,6 @@ Status Parser::ParseMember(CTX *pCTX, Member &member, const AliasesMap &mapAlias
 	{
 		return Status(Status_ParseFailed, "Unexpected end of file");
 	}
-
-	bool   bOptional = false;
-	String sOptional;
-
-	if (';' != *(pCTX->pBuffer + pCTX->cbIndex))
-	{
-		if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
-		{
-			return status;
-		}
-		if ((status = ParseIdentifier(pCTX, sOptional)).IsNOK())
-		{
-			return status;
-		}
-#pragma warning(push)
-#pragma warning(disable: 4996)
-		if (0 != cx_stricmp(sOptional.c_str(), "optional"))
-#pragma warning(pop)
-		{
-			return Status(Status_InvalidArg, "Unknown member flag {1}", sOptional);
-		}
-		bOptional = true;
-	}
 	if (';' != *(pCTX->pBuffer + pCTX->cbIndex))
 	{
 		return Status(Status_ParseFailed, "Missing ; at line {1}, column {2}", pCTX->cLine, pCTX->cColumn);
@@ -448,6 +598,9 @@ Status Parser::ParseMember(CTX *pCTX, Member &member, const AliasesMap &mapAlias
 	pCTX->cColumn++;
 	member.SetName(sName);
 	member.SetMemberName(sMemberName);
+	member.SetGetterName(sGetterName);
+	member.SetSetterName(sSetterName);
+	member.SetDefault(sDefault);
 	member.SetOptional(bOptional);
 
 	return Status();

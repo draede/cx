@@ -47,8 +47,8 @@ public:
 
 	Member();
 
-	Member(const String &sName, const String &sMemberName, bool bOptional, MemberType nMemberType, const String &sKeyType, 
-	       const String &sValType = "");
+	Member(const String &sName, const String &sMemberName, const String &sGetterName, const String &sSetterName, 
+	       const String &sDefault, bool bOptional, MemberType nMemberType, const String &sKeyType, const String &sValType = "");
 
 	Member(const Member &member);
 
@@ -65,6 +65,18 @@ public:
 	void SetMemberName(const String &sMemberName);
 
 	const String &GetMemberName() const;
+
+	void SetGetterName(const String &sGetterName);
+
+	const String &GetGetterName() const;
+
+	void SetSetterName(const String &sSetterName);
+
+	const String &GetSetterName() const;
+
+	void SetDefault(const String &sDefault);
+
+	const String &GetDefault() const;
 
 	void SetMemberType(MemberType nMemberType);
 
@@ -88,6 +100,9 @@ private:
 #pragma warning(disable: 4251)
 	String       m_sName;
 	String       m_sMemberName;
+	String       m_sGetterName;
+	String       m_sSetterName;
+	String       m_sDefault;
 	String       m_sKeyType;
 	String       m_sValType;
 #pragma warning(pop)

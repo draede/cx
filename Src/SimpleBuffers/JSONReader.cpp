@@ -243,7 +243,7 @@ Status JSONReader::BeginObject(const Char *szName/* = NULL*/)
 		}
 		if (!pValue->HasMember(szName))
 		{
-			return Status(Status_InvalidCall, "No such element : {1}", szName);
+			return Status(Status_NotFound, "No such element : {1}", szName);
 		}
 		if (!(*pValue)[szName].IsObject())
 		{
@@ -273,7 +273,7 @@ Status JSONReader::BeginObject(const Char *szName/* = NULL*/)
 		}
 		if (pValue->Capacity() <= m_stackStates.top().cElems)
 		{
-			return Status(Status_InvalidCall, "No such element : {1}", m_stackStates.top().cElems);
+			return Status(Status_NoMoreItems, "No such element : {1}", m_stackStates.top().cElems);
 		}
 		if (!(*pValue)[(rapidjson::SizeType)m_stackStates.top().cElems].IsObject())
 		{
@@ -338,7 +338,7 @@ Status JSONReader::BeginArray(const Char *szName/* = NULL*/)
 		}
 		if (!pValue->HasMember(szName))
 		{
-			return Status(Status_InvalidCall, "No such element : {1}", szName);
+			return Status(Status_NotFound, "No such element : {1}", szName);
 		}
 		if (!(*pValue)[szName].IsArray())
 		{
@@ -368,7 +368,7 @@ Status JSONReader::BeginArray(const Char *szName/* = NULL*/)
 		}
 		if (pValue->Capacity() <= m_stackStates.top().cElems)
 		{
-			return Status(Status_InvalidCall, "No such element : {1}", m_stackStates.top().cElems);
+			return Status(Status_NoMoreItems, "No such element : {1}", m_stackStates.top().cElems);
 		}
 		if (!(*pValue)[(rapidjson::SizeType)m_stackStates.top().cElems].IsArray())
 		{

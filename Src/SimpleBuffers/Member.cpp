@@ -40,11 +40,15 @@ Member::Member()
 	m_bOptional = false;
 }
 
-Member::Member(const String &sName, const String &sMemberName, bool bOptional, MemberType nMemberType, const String &sKeyType, 
+Member::Member(const String &sName, const String &sMemberName, const String &sGetterName, const String &sSetterName, 
+               const String &sDefault, bool bOptional, MemberType nMemberType, const String &sKeyType, 
                const String &sValType/* = ""*/)
 {
 	m_sName       = sName;
 	m_sMemberName = sMemberName;
+	m_sGetterName = sGetterName;
+	m_sSetterName = sSetterName;
+	m_sDefault    = sDefault;
 	m_bOptional   = bOptional;
 	m_nMemberType = nMemberType;
 	m_sKeyType    = sKeyType;
@@ -71,6 +75,9 @@ void Member::Copy(const Member &member)
 {
 	m_sName       = member.m_sName;
 	m_sMemberName = member.m_sMemberName;
+	m_sGetterName = member.m_sGetterName;
+	m_sSetterName = member.m_sSetterName;
+	m_sDefault    = member.m_sDefault;
 	m_nMemberType = member.m_nMemberType;
 	m_bOptional   = member.m_bOptional;
 	m_sKeyType    = member.m_sKeyType;
@@ -95,6 +102,36 @@ void Member::SetMemberName(const String &sMemberName)
 const String &Member::GetMemberName() const
 {
 	return m_sMemberName;
+}
+
+void Member::SetGetterName(const String &sGetterName)
+{
+	m_sGetterName = sGetterName;
+}
+
+const String &Member::GetGetterName() const
+{
+	return m_sGetterName;
+}
+
+void Member::SetSetterName(const String &sSetterName)
+{
+	m_sSetterName = sSetterName;
+}
+
+const String &Member::GetSetterName() const
+{
+	return m_sSetterName;
+}
+
+void Member::SetDefault(const String &sDefault)
+{
+	m_sDefault = sDefault;
+}
+
+const String &Member::GetDefault() const
+{
+	return m_sDefault;
 }
 
 void Member::SetMemberType(MemberType nMemberType)

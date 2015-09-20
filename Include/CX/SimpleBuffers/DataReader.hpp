@@ -179,6 +179,10 @@ struct DataReader<MemberType_Vector, K>
 
 			if ((status = DataReader<MemberType_Scalar, K>::Read(pReader, k)).IsNOK())
 			{
+				if (Status_NoMoreItems != status.GetCode())
+				{
+					return status;
+				}
 				break;
 			}
 			v.push_back(k);

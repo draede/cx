@@ -152,7 +152,7 @@ private:
 			}
 			if (!m_stackStates.top().pValue->HasMember(szName))
 			{
-				return Status(Status_InvalidCall, "Member [{1}] not found", szName);
+				return Status(Status_NotFound, "Member [{1}] not found", szName);
 			}
 			pValue = &(*m_stackStates.top().pValue)[szName];
 		}
@@ -169,7 +169,7 @@ private:
 			}
 			if (m_stackStates.top().pValue->Capacity() <= m_stackStates.top().cElems)
 			{
-				return Status(Status_InvalidCall, "Member [{1}] not found", m_stackStates.top().cElems);
+				return Status(Status_NoMoreItems, "Member [{1}] not found", m_stackStates.top().cElems);
 			}
 			pValue = &(*m_stackStates.top().pValue)[(rapidjson::SizeType)m_stackStates.top().cElems];
 		}

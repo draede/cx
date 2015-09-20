@@ -73,6 +73,8 @@ private:
 
 	static Status ParseIdentifier(CTX *pCTX, String &sIdentifier);
 
+	static Status ParseDefaultValue(CTX *pCTX, String &sDefault);
+
 	static Status ParsePragma(CTX *pCTX, String &sID, String &sValue);
 
 	static Status ParseAlias(CTX *pCTX, String &sType, String &sAlias);
