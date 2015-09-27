@@ -23,17 +23,26 @@ if not exist "%PRJDIR%\Lib\NDK\ARMEABI-V7A" mkdir "%PRJDIR%\Lib\NDK\ARMEABI-V7A"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 if not exist "%PRJDIR%\Lib\NDK\ARMEABI-V7A\Debug" mkdir "%PRJDIR%\Lib\NDK\ARMEABI-V7A\Debug"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+if not exist "%PRJDIR%\Lib\NDK\x86" mkdir "%PRJDIR%\Lib\NDK\x86"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+if not exist "%PRJDIR%\Lib\NDK\x86\Debug" mkdir "%PRJDIR%\Lib\NDK\x86\Debug"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+
 
 REM copy libs to Lib folder
 copy /y "%PRJDIR%\Temp\NDK\local\armeabi\*.a" "%PRJDIR%\Lib\NDK\ARMEABI\Debug\"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 copy /y "%PRJDIR%\Temp\NDK\local\armeabi-v7a\*.a" "%PRJDIR%\Lib\NDK\ARMEABI-V7A\Debug\"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+copy /y "%PRJDIR%\Temp\NDK\local\x86\*.a" "%PRJDIR%\Lib\NDK\x86\Debug\"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 REM copy gdb files to Lib folder
 copy /y "%PRJDIR%\Build\NDK\libs\armeabi\*.*" "%PRJDIR%\Lib\NDK\ARMEABI\Debug\"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 copy /y "%PRJDIR%\Build\NDK\libs\armeabi-v7a\*.*" "%PRJDIR%\Lib\NDK\ARMEABI-V7A\Debug\"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+copy /y "%PRJDIR%\Build\NDK\libs\x86\*.*" "%PRJDIR%\Lib\NDK\x86\Debug\"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 REM remove libs

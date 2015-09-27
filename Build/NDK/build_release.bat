@@ -23,11 +23,17 @@ if not exist "%PRJDIR%\Lib\NDK\ARMEABI-V7A" mkdir "%PRJDIR%\Lib\NDK\ARMEABI-V7A"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 if not exist "%PRJDIR%\Lib\NDK\ARMEABI-V7A\Release" mkdir "%PRJDIR%\Lib\NDK\ARMEABI-V7A\Release"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+if not exist "%PRJDIR%\Lib\NDK\x86" mkdir "%PRJDIR%\Lib\NDK\x86"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+if not exist "%PRJDIR%\Lib\NDK\x86\Release" mkdir "%PRJDIR%\Lib\NDK\x86\Release"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 REM copy libs to Lib folder
 copy /y "%PRJDIR%\Temp\NDK\local\armeabi\*.a" "%PRJDIR%\Lib\NDK\ARMEABI\Release\"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 copy /y "%PRJDIR%\Temp\NDK\local\armeabi-v7a\*.a" "%PRJDIR%\Lib\NDK\ARMEABI-V7A\Release\"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+copy /y "%PRJDIR%\Temp\NDK\local\x86\*.a" "%PRJDIR%\Lib\NDK\x86\Release\"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 

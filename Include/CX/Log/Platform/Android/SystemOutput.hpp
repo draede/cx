@@ -45,7 +45,7 @@ namespace CX
 namespace Log
 {
 
-class CX_API SystemOutput : public IOutput
+class CX_API SystemOutput : public IOutput, public IObject
 {
 public:
 

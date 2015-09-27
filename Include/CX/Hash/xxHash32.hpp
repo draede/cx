@@ -40,7 +40,7 @@ namespace CX
 namespace Hash
 {
 
-class CX_API xxHash32 : public IHash
+class CX_API xxHash32 : public IHash, public IObject
 {
 public:
 

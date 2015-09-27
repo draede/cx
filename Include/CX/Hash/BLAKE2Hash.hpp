@@ -39,7 +39,7 @@ namespace CX
 namespace Hash
 {
 
-class CX_API BLAKE2HashHelper
+class CX_API BLAKE2HashHelper : public IObject
 {
 public:
         
@@ -58,7 +58,7 @@ public:
 };
     
 template <Size HASHSIZE = 16>
-class CX_API BLAKE2Hash : public IHash
+class CX_API BLAKE2Hash : public IHash, public IObject
 {
 public:
 

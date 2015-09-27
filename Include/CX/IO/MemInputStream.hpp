@@ -41,7 +41,7 @@ namespace CX
 namespace IO
 {
 
-class CX_API MemInputStream : public IInputStream
+class CX_API MemInputStream : public IInputStream, public IObject
 {
 public:
 

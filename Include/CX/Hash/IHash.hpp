@@ -41,7 +41,7 @@ namespace CX
 namespace Hash
 {
 
-class CX_API IHash : public IObject
+class CX_API IHash
 {
 public:
 

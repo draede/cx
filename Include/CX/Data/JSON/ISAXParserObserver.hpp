@@ -43,7 +43,7 @@ namespace Data
 namespace JSON
 {
 
-class CX_API ISAXParserObserver : public IObject
+class CX_API ISAXParserObserver
 {
 public:
 

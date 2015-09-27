@@ -43,7 +43,7 @@ namespace CX
 namespace Util
 {
 
-class CX_API IMemPool : public IObject
+class CX_API IMemPool
 {
 public:
 
@@ -70,7 +70,7 @@ public:
 
 };
 
-class CX_API DynMemPool : public IMemPool
+class CX_API DynMemPool : public IMemPool, public IObject
 {
 public:
 
@@ -106,7 +106,7 @@ private:
 
 };
 
-class CX_API StaticMemPool : public IMemPool
+class CX_API StaticMemPool : public IMemPool, public IObject
 {
 public:
 

@@ -43,7 +43,7 @@ namespace CX
 namespace IO
 {
 
-class CX_API MemOutputStream : public IOutputStream
+class CX_API MemOutputStream : public IOutputStream, public IObject
 {
 public:
 

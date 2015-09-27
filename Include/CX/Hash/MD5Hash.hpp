@@ -39,7 +39,7 @@ namespace CX
 namespace Hash
 {
 
-class CX_API MD5Hash : public IHash
+class CX_API MD5Hash : public IHash, public IObject
 {
 public:
 

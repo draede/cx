@@ -40,7 +40,7 @@ namespace CX
 namespace SimpleBuffers
 {
 
-class CX_API Parser
+class CX_API Parser : public IObject
 {
 public:
 

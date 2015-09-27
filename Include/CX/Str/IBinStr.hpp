@@ -43,7 +43,7 @@ namespace CX
 namespace Str
 {
 
-class CX_API IBinStr : public IObject
+class CX_API IBinStr
 {
 public:
 

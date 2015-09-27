@@ -41,7 +41,7 @@ namespace CX
 namespace SimpleBuffers
 {
 
-class CX_API Member
+class CX_API Member : public IObject
 {
 public:
 

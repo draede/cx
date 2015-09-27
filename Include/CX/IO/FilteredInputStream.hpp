@@ -40,7 +40,7 @@ namespace CX
 namespace IO
 {
 
-class CX_API FilteredInputStream : public IInputStream
+class CX_API FilteredInputStream : public IInputStream, public IObject
 {
 public:
 

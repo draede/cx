@@ -38,7 +38,7 @@ namespace CX
 {
 
 template<class T>
-class GSHAlloc : public IObject 
+class GSHAlloc
 {
 public:
 

@@ -36,7 +36,7 @@
 #include <functional>
 
 
-class Tester
+class Tester : public CX::IObject
 {
 public:
 
@@ -62,7 +62,7 @@ private:
 
 };
 
-class TestHelper
+class TestHelper : public CX::IObject
 {
 public:
 

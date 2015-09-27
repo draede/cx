@@ -1,4 +1,8 @@
-0.1.36 - 2015-09-
+0.1.37 - 2015-09-27
+  - Added x86 build for NDK
+  - Fixed IObject not being used non-abstract classes
+  - Fixed IObject used in abstract classes
+0.1.36 - 2015-09-20
   - Read from an array in SimpleBuffer will return Status_NoMoreItems at the end of the array
   - SimpleBuffer is using \r\n as line terminator for generators now
   - Added support for member params in SimpleBuffer (member=name, getter=name, setter=name, optional=false, default=value)

@@ -45,7 +45,7 @@ namespace CX
 namespace IO
 {
 
-class CX_API LocalFileSysEnumerator : public IFileSysEnumerator
+class CX_API LocalFileSysEnumerator : public IFileSysEnumerator, public IObject
 {
 public:
 

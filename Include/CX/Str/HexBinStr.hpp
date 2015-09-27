@@ -38,7 +38,7 @@ namespace CX
 namespace Str
 {
 
-class CX_API HexBinStr : public IBinStr
+class CX_API HexBinStr : public IBinStr, public IObject
 {
 public:
 

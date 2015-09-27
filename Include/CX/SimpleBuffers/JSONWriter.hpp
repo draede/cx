@@ -43,7 +43,7 @@ namespace CX
 namespace SimpleBuffers
 {
 
-class CX_API JSONWriter : public IWriter
+class CX_API JSONWriter : public IWriter, public IObject
 {
 public:
 
