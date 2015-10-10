@@ -35,7 +35,7 @@ using namespace CX;
 
 void Str_UTF8_Test1()
 {
-	Byte    szUTF8In[]   = { 0xE4, 0xBD, 0xA0, 0xE5, 0xA5, 0xBD, 0xE4, 0xB8, 0x96, 0xE7, 0x95, 0x8C, 0x00 };
+	Byte    szUTF8In[] = { 0xE4, 0xBD, 0xA0, 0xE5, 0xA5, 0xBD, 0xE4, 0xB8, 0x96, 0xE7, 0x95, 0x8C, 0x00 };
 	WChar   wszUTF16In[] = { 0x4F60, 0x597D, 0x4E16, 0x754C, 0x0 };
 	String  sUTF8Out;
 	WString wsUTF16Out;
@@ -55,13 +55,13 @@ void Str_UTF8_Test1()
 	szUTF8Out = new Char[cLen];
 	status = Str::UTF8::FromWChar(wszUTF16In, TYPE_SIZE_MAX, szUTF8Out, &cLen); status;
 
-	delete [] wszUTF16Out;
-	delete [] szUTF8Out;
+	delete[] wszUTF16Out;
+	delete[] szUTF8Out;
 }
 
 void Str_UTF8_Test2()
 {
-	const Char    szUTF8In[]   = "this is a test";
+	const Char    szUTF8In[] = "this is a test";
 	const WChar   wszUTF16In[] = L"this is a test";
 	Char          szUTF8Out[256];
 	WChar         wszUTF16Out[256];
@@ -86,5 +86,5 @@ void Str_UTF8_Test2()
 	cLen = sOut.size();
 }
 
-//REGISTER_TEST(Str_UTF8_Test1);
-//REGISTER_TEST(Str_UTF8_Test2);
+REGISTER_TEST(Str_UTF8_Test1);
+REGISTER_TEST(Str_UTF8_Test2);

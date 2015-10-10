@@ -26,29 +26,68 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
 #include "CX/C/Platform.h"
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#if defined(CX_OS_ANDROID)
 
 
-#include "CX/C/Types.h"
-#include "CX/C/APIDefs.h"
+#include "CX/C/Mem.h"
+#include "CX/C/stdlib.h"
 
 
-CX_API void *CX_Alloc(CX_Size cbSize);
-
-CX_API void *CX_Realloc(void *pPtr, CX_Size cbSize);
-
-CX_API void CX_Free(void *pPtr);
-
-
-#ifdef __cplusplus
+void *CX_MemOptAlloc(CX_Size cbSize)
+{
+	return malloc(cbSize);
 }
+
+void *CX_MemOptRealloc(void *pPtr, CX_Size cbSize)
+{
+	if (NULL == pPtr)
+	{
+		return malloc(cbSize);
+	}
+	else
+	{
+		return realloc(pPtr, cbSize);
+	}
+}
+
+void CX_MemOptFree(void *pPtr)
+{
+	if (NULL != pPtr)
+	{
+		free(pPtr);
+	}
+}
+
+void *CX_MemAlloc(CX_Size cbSize)
+{
+	return malloc(cbSize);
+}
+
+void *CX_MemRealloc(void *pPtr, CX_Size cbSize)
+{
+	if (NULL == pPtr)
+	{
+		return malloc(cbSize);
+	}
+	else
+	{
+		return realloc(pPtr, cbSize);
+	}
+}
+
+void CX_MemFree(void *pPtr)
+{
+	if (NULL != pPtr)
+	{
+		free(pPtr);
+	}
+}
+
 #endif
 
+static void empty_func_to_make_compiler_happy()
+{
+}

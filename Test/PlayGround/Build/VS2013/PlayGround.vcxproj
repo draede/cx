@@ -24,13 +24,15 @@
     <ClCompile Include="..\..\Src\Mem.cpp" />
     <ClCompile Include="..\..\Src\Network_HTTP_Client.cpp" />
     <ClCompile Include="..\..\Src\Networl_URLParser.cpp" />
+    <ClCompile Include="..\..\Src\SimpleBuffers.cpp" />
     <ClCompile Include="..\..\Src\Str_StringHelper.cpp" />
     <ClCompile Include="..\..\Src\Str_UTF8.cpp" />
     <ClCompile Include="..\..\Src\Tester.cpp" />
-    <ClCompile Include="..\..\Src\Util_StackTrace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Tester.hpp" />
+    <ClInclude Include="..\..\Src\TestSimpleBuffers1.hpp" />
+    <ClInclude Include="..\..\Src\TestSimpleBuffers2.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Build\VS2013\CX.vcxproj">
@@ -117,14 +119,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/VS2013/$(Platform)/Static$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cx.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,14 +136,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/VS2013/$(Platform)/Static$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cx.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -153,7 +155,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -162,7 +164,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/VS2013/$(Platform)/Static$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cx.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -174,7 +176,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -183,7 +185,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/VS2013/$(Platform)/Static$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cx.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

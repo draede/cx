@@ -26,46 +26,35 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Platform.hpp"
+#pragma once
 
 
-#if defined(CX_OS_IOS)
+#include "CX/C/Platform.h"
 
 
-#include "CX/Util/StackTrace.hpp"
-#include "CX/Status.hpp"
-#include "CX/C/Alloc.h"
-#include "CX/C/stdlib.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
-namespace CX
-{
+#include "CX/C/Types.h"
+#include "CX/C/APIDefs.h"
 
-namespace Util
-{
 
-StackTrace::StackTrace()
-{
+CX_API void *CX_MemAlloc(CX_Size cbSize);
+
+CX_API void *CX_MemRealloc(void *pPtr, CX_Size cbSize);
+
+CX_API void CX_MemFree(void *pPtr);
+
+CX_API void *CX_MemOptAlloc(CX_Size cbSize);
+
+CX_API void *CX_MemOptRealloc(void *pPtr, CX_Size cbSize);
+
+CX_API void CX_MemOptFree(void *pPtr);
+
+
+#ifdef __cplusplus
 }
-
-StackTrace::~StackTrace()
-{
-}
-
-Status StackTrace::GetStackTrace(CallsVector &vectorCalls, Size cMaxEntries/* = MAX_STACK_ENTRIES*/, 
-                                 unsigned int nFlags/* = Flag_IgnoreRuntimeInitCalls*/)
-{
-	CX_UNUSED(vectorCalls);
-	CX_UNUSED(cMaxEntries);
-	CX_UNUSED(nFlags);
-
-	return Status(Status_NotSupported);
-}
-
-}//namespace Util
-
-}//namespace CX
-
-
 #endif
 

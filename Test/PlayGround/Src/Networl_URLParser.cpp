@@ -27,8 +27,6 @@
  */ 
 
 #include "CX/Network/URLParser.hpp"
-#include "CX/Print.hpp"
-#include "CX/Mem.hpp"
 #include "Tester.hpp"
 
 
@@ -37,58 +35,36 @@ using namespace CX;
 
 void Network_URLParser_Test_Parse()
 {
-	Mem::SetFlags(Mem::Flag_SourceMemTrack);
+	String sProtocol;
+	String sHost;
+	int    nPort;
+	String sPath;
+	String sQuery;
+	Status status;
 
-	{
-		String sProtocol;
-		String sHost;
-		int    nPort;
-		String sPath;
-		String sQuery;
-		Status status;
-
-		status = Network::URLParser::Parse("http://google.com", sProtocol, sHost, nPort, sPath, sQuery);
-		status = Network::URLParser::Parse("http://google.com:1000", sProtocol, sHost, nPort, sPath, sQuery);
-		status = Network::URLParser::Parse("http://google.com:1000/", sProtocol, sHost, nPort, sPath, sQuery);
-		status = Network::URLParser::Parse("http://google.com:1000/test", sProtocol, sHost, nPort, sPath, sQuery);
-		status = Network::URLParser::Parse("http://google.com:1000/test?name1=val1&name2=val2", sProtocol, sHost, nPort, sPath, sQuery);
-		status = Network::URLParser::Parse("http://google.com/test?name1=val1&name2=val2", sProtocol, sHost, nPort, sPath, sQuery);
-		status = Network::URLParser::Parse("http://google.com/?name1=val1&name2=val2", sProtocol, sHost, nPort, sPath, sQuery);
-		status = Network::URLParser::Parse("http://google.com/", sProtocol, sHost, nPort, sPath, sQuery);
-	}
-
-	Mem::AllocsVector vectorAllocs;
-	std::string       sOut;
-
-	Mem::GetCurrentAllocs(vectorAllocs);
-	Mem::PrintAllocs(sOut, vectorAllocs);
-	Print(stdout, "{1}\n", sOut.c_str());
+	status = Network::URLParser::Parse("http://google.com", sProtocol, sHost, nPort, sPath, sQuery);
+	status = Network::URLParser::Parse("http://google.com:1000", sProtocol, sHost, nPort, sPath, sQuery);
+	status = Network::URLParser::Parse("http://google.com:1000/", sProtocol, sHost, nPort, sPath, sQuery);
+	status = Network::URLParser::Parse("http://google.com:1000/test", sProtocol, sHost, nPort, sPath, sQuery);
+	status = Network::URLParser::Parse("http://google.com:1000/test?name1=val1&name2=val2", sProtocol, sHost, nPort, sPath, sQuery);
+	status = Network::URLParser::Parse("http://google.com/test?name1=val1&name2=val2", sProtocol, sHost, nPort, sPath, sQuery);
+	status = Network::URLParser::Parse("http://google.com/?name1=val1&name2=val2", sProtocol, sHost, nPort, sPath, sQuery);
+	status = Network::URLParser::Parse("http://google.com/", sProtocol, sHost, nPort, sPath, sQuery);
 }
 
 void Network_URLParser_Test_EncodeDecode()
 {
-	Mem::SetFlags(Mem::Flag_SourceMemTrack);
+	String sIn = "abcdef!*\'x();:aa@&=+$/aa?%#aa[a\n]";
+	String sOut1;
+	String sOut2;
+	bool   bRes;
+	Status status;
 
-	{
-		String sIn = "abcdef!*\'x();:aa@&=+$/aa?%#aa[a\n]";
-		String sOut1;
-		String sOut2;
-		bool   bRes;
-		Status status;
-
-		status = Network::URLParser::Encode(sIn.c_str(), sOut1);
-		status = Network::URLParser::Decode(sOut1.c_str(), sOut2);
-		bRes   = (sIn == sOut2);
-	}
-
-	Mem::AllocsVector vectorAllocs;
-	std::string       sOut;
-
-	Mem::GetCurrentAllocs(vectorAllocs);
-	Mem::PrintAllocs(sOut, vectorAllocs);
-	Print(stdout, "{1}\n", sOut.c_str());
+	status = Network::URLParser::Encode(sIn.c_str(), sOut1);
+	status = Network::URLParser::Decode(sOut1.c_str(), sOut2);
+	bRes   = (sIn == sOut2);
 }
 
-//REGISTER_TEST(Network_URLParser_Test_Parse);
-//REGISTER_TEST(Network_URLParser_Test_EncodeDecode);
+REGISTER_TEST(Network_URLParser_Test_Parse);
+REGISTER_TEST(Network_URLParser_Test_EncodeDecode);
 

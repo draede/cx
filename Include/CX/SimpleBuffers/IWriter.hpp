@@ -82,7 +82,14 @@ public:
 
 	virtual Status WriteBLOB(const BLOB &blob, const Char *szName = NULL)
 	{
-		return WriteBLOB(&blob[0], blob.size(), szName);
+		if (!blob.empty())
+		{
+			return WriteBLOB(&blob[0], blob.size(), szName);
+		}
+		else
+		{
+			return WriteBLOB("", 0, szName);
+		}
 	}
 
 	virtual Status BeginObject(const Char *szName = NULL) = 0;

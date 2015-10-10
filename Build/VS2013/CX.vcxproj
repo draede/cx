@@ -91,10 +91,11 @@
     <ClInclude Include="..\..\Include\CX\BLOB.hpp" />
     <ClInclude Include="..\..\Include\CX\Crypt\AES128Filter.hpp" />
     <ClInclude Include="..\..\Include\CX\CX.hpp" />
-    <ClInclude Include="..\..\Include\CX\C\Alloc.h" />
     <ClInclude Include="..\..\Include\CX\C\APIDefs.h" />
     <ClInclude Include="..\..\Include\CX\C\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Limits.h" />
+    <ClInclude Include="..\..\Include\CX\C\Mem.h" />
+    <ClInclude Include="..\..\Include\CX\C\MemStats.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Android\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdarg.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="..\..\Include\CX\Map.hpp" />
     <ClInclude Include="..\..\Include\CX\Component.hpp" />
     <ClInclude Include="..\..\Include\CX\Mem.hpp" />
+    <ClInclude Include="..\..\Include\CX\MemStats.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\HTTP\Client.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\URLParser.hpp" />
     <ClInclude Include="..\..\Include\CX\Platform.hpp" />
@@ -192,6 +194,9 @@
     <ClInclude Include="..\..\Include\CX\Queue.hpp" />
     <ClInclude Include="..\..\Include\CX\ScopePtr.hpp" />
     <ClInclude Include="..\..\Include\CX\Set.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINRW.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\CPPGenerator.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataWriter.hpp" />
@@ -254,19 +259,15 @@
     <ClInclude Include="..\..\Include\CX\UOMultiSet.hpp" />
     <ClInclude Include="..\..\Include\CX\UOSet.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\StackTrace.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Timer.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\StackTrace.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Timer.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\StackTrace.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\RCMemBuffer.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\RCMemBufferMgr.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\RndGen.hpp" />
-    <ClInclude Include="..\..\Include\CX\Util\StackTrace.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Var.hpp" />
@@ -4422,7 +4423,7 @@
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c" />
     <ClCompile Include="..\..\Src\Archive\LZHAMFilter.cpp" />
     <ClCompile Include="..\..\Src\Crypt\AES128Filter.cpp" />
-    <ClCompile Include="..\..\Src\C\Platform\Android\Alloc_android.c">
+    <ClCompile Include="..\..\Src\C\Platform\Android\Mem_android.c">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -4438,7 +4439,7 @@
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="..\..\Src\C\Platform\iOS\Alloc_ios.c">
+    <ClCompile Include="..\..\Src\C\Platform\iOS\Mem_ios.c">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -4454,7 +4455,7 @@
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
+    <ClCompile Include="..\..\Src\C\Platform\Windows\Mem_windows.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">CompileAsC</CompileAs>
@@ -4510,11 +4511,14 @@
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />
+    <ClCompile Include="..\..\Src\MemStats.cpp" />
     <ClCompile Include="..\..\Src\Network\HTTP\Client.cpp" />
     <ClCompile Include="..\..\Src\Network\URLParser.cpp" />
     <ClCompile Include="..\..\Src\Platform\Android\Component_android.cpp" />
     <ClCompile Include="..\..\Src\Platform\iOS\Component_ios.cpp" />
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
+    <ClCompile Include="..\..\Src\SimpleBuffers\BINReader.cpp" />
+    <ClCompile Include="..\..\Src\SimpleBuffers\BINWriter.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\JSONReader.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\JSONWriter.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\Member.cpp" />
@@ -4543,13 +4547,10 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
-    <ClCompile Include="..\..\Src\Util\Platform\Android\StackTrace_android.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Android\Timer_android.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Android\Time_android.cpp" />
-    <ClCompile Include="..\..\Src\Util\Platform\iOS\StackTrace_ios.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\iOS\Timer_ios.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\iOS\Time_ios.cpp" />
-    <ClCompile Include="..\..\Src\Util\Platform\Windows\StackTrace_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\RCMemBuffer.cpp" />
@@ -4841,7 +4842,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
@@ -4864,7 +4865,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
@@ -4935,7 +4936,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
@@ -4958,7 +4959,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
@@ -5027,7 +5028,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
@@ -5054,7 +5055,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
@@ -5137,7 +5138,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
@@ -5164,7 +5165,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>../../Lib/VS2013/$(Platform)/$(Configuration)/$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;ws2_32.lib;wldap32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>

@@ -72,11 +72,13 @@ $(LOCAL_PATH)/../../../../Contrib/xxHash/Src/xxHash.c \
 $(LOCAL_PATH)/../../../../Contrib/Z85/Src/z85.c \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONReader.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONWriter.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/BINReader.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/BINWriter.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/Member.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/Object.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/Parser.cpp \
 $(LOCAL_PATH)/../../../../Src/Archive/LZHAMFilter.cpp \
-$(LOCAL_PATH)/../../../../Src/C/Platform/Android/Alloc_android.c \
+$(LOCAL_PATH)/../../../../Src/C/Platform/Android/Mem_android.c \
 $(LOCAL_PATH)/../../../../Src/Crypt/AES128Filter.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/JSON/JSONSAXParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Detail/DetailPrint/Platform/Android/DetailPrint_android.cpp \
@@ -111,7 +113,6 @@ $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Thread_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Str/Platform/Android/UTF8_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Str/HexBinStr.cpp \
 $(LOCAL_PATH)/../../../../Src/Str/Z85BinStr.cpp \
-$(LOCAL_PATH)/../../../../Src/Util/Platform/Android/StackTrace_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/Platform/Android/Time_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/Platform/Android/Timer_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/MemPool.cpp \

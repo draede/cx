@@ -48,11 +48,11 @@ private:
 
 	struct TestData
 	{
-		std::string           sName;
+		CX::String           sName;
 		std::function<void()> func;
 	};
 
-	typedef std::vector<TestData>   TestsVector;
+	typedef CX::Vector<TestData>::Type   TestsVector;
 
 	Tester();
 

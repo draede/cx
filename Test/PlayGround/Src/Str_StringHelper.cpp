@@ -27,8 +27,6 @@
  */ 
 
 #include "CX/Str/StringHelper.hpp"
-#include "CX/Print.hpp"
-#include "CX/Mem.hpp"
 #include "Tester.hpp"
 
 
@@ -37,32 +35,21 @@ using namespace CX;
 
 void Str_StringHelper_Test1()
 {
-	Mem::SetFlags(Mem::Flag_SourceMemTrack);
+	const Char *pszBegin;
+	const Char *pszEnd;
+	bool       bCmp;
+	String     sStr1;
+	String     sStr2;
+	Status     status;
 
-	{
-		const Char *pszBegin;
-		const Char *pszEnd;
-		bool       bCmp;
-		String     sStr1;
-		String     sStr2;
-		Status     status;
-
-		status = Str::StringHelper::FindSubStr("this is just a test", 0, "just", 4, true, &pszBegin);
-		status = Str::StringHelper::FindSubStr("this is just a test", 0, "Just", 4, false, &pszBegin);
-		status = Str::StringHelper::FindWithMarkers("this is just a test", 0, " is ", 4, " a", 2, true, &pszBegin, &pszEnd);
-		status = Str::StringHelper::FindWithMarkers("this is just a test", 0, " Is ", 4, " A", 2, false, &pszBegin, &pszEnd);
-		bCmp   = Str::StringHelper::Compare("this is just a test", 0, "this", 4, false, 4);
-		status = Str::StringHelper::Strip(" \ttest\n  ", 0, " \t\n", 3, true, &pszBegin, &pszEnd, Str::StringHelper::Strip_Both);
-		status = Str::StringHelper::Replace("this is a test", 0, "is", 2, "ABC", 3, true, sStr1, true);
-		status = Str::StringHelper::Replace("this is a test", 0, "is", 2, "ABC", 3, true, sStr2, false);
-	}
-
-	Mem::AllocsVector vectorAllocs;
-	std::string       sOut;
-
-	Mem::GetCurrentAllocs(vectorAllocs);
-	Mem::PrintAllocs(sOut, vectorAllocs);
-	Print(stdout, "{1}\n", sOut.c_str());
+	status = Str::StringHelper::FindSubStr("this is just a test", 0, "just", 4, true, &pszBegin);
+	status = Str::StringHelper::FindSubStr("this is just a test", 0, "Just", 4, false, &pszBegin);
+	status = Str::StringHelper::FindWithMarkers("this is just a test", 0, " is ", 4, " a", 2, true, &pszBegin, &pszEnd);
+	status = Str::StringHelper::FindWithMarkers("this is just a test", 0, " Is ", 4, " A", 2, false, &pszBegin, &pszEnd);
+	bCmp   = Str::StringHelper::Compare("this is just a test", 0, "this", 4, false, 4);
+	status = Str::StringHelper::Strip(" \ttest\n  ", 0, " \t\n", 3, true, &pszBegin, &pszEnd, Str::StringHelper::Strip_Both);
+	status = Str::StringHelper::Replace("this is a test", 0, "is", 2, "ABC", 3, true, sStr1, true);
+	status = Str::StringHelper::Replace("this is a test", 0, "is", 2, "ABC", 3, true, sStr2, false);
 }
 
 REGISTER_TEST(Str_StringHelper_Test1);

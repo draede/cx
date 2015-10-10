@@ -573,9 +573,6 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\Alloc.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\C\APIDefs.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
@@ -674,12 +671,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Mem.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\StackTrace.hpp">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\StackTrace.hpp">
-      <Filter>Header Files\Util\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Sys\Process.hpp">
       <Filter>Header Files\Sys</Filter>
@@ -840,17 +831,11 @@
     <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Thread.hpp">
       <Filter>Header Files\Sys\Platform\iOS</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\StackTrace.hpp">
-      <Filter>Header Files\Util\Platform\Android</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Time.hpp">
       <Filter>Header Files\Util\Platform\Android</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Timer.hpp">
       <Filter>Header Files\Util\Platform\Android</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\StackTrace.hpp">
-      <Filter>Header Files\Util\Platform\iOS</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Time.hpp">
       <Filter>Header Files\Util\Platform\iOS</Filter>
@@ -943,6 +928,24 @@
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\Version.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Mem.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\MemStats.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\MemStats.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINRW.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINWriter.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1049,7 +1052,7 @@
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp">
       <Filter>Source Files\Hash</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\C\Platform\Windows\Alloc_windows.c">
+    <ClCompile Include="..\..\Src\C\Platform\Windows\Mem_windows.c">
       <Filter>Source Files\C\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\HexBinStr.cpp">
@@ -1091,9 +1094,6 @@
     <ClCompile Include="..\..\Src\IObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Windows\StackTrace_windows.cpp">
-      <Filter>Source Files\Util\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Mem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1121,10 +1121,10 @@
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\C\Platform\Android\Alloc_android.c">
+    <ClCompile Include="..\..\Src\C\Platform\Android\Mem_android.c">
       <Filter>Source Files\C\Platform\Android</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\C\Platform\iOS\Alloc_ios.c">
+    <ClCompile Include="..\..\Src\C\Platform\iOS\Mem_ios.c">
       <Filter>Source Files\C\Platform\iOS</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Android\DetailPrint_android.cpp">
@@ -1199,17 +1199,11 @@
     <ClCompile Include="..\..\Src\Sys\Platform\iOS\Thread_ios.cpp">
       <Filter>Source Files\Sys\Platform\iOS</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Android\StackTrace_android.cpp">
-      <Filter>Source Files\Util\Platform\Android</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Util\Platform\Android\Time_android.cpp">
       <Filter>Source Files\Util\Platform\Android</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\Platform\Android\Timer_android.cpp">
       <Filter>Source Files\Util\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\iOS\StackTrace_ios.cpp">
-      <Filter>Source Files\Util\Platform\iOS</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\Platform\iOS\Time_ios.cpp">
       <Filter>Source Files\Util\Platform\iOS</Filter>
@@ -1684,6 +1678,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\StringHelper.cpp">
       <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MemStats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\BINReader.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\BINWriter.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -26,43 +26,49 @@
  * SOFTWARE.
  */ 
 
-#include "CX/C/Platform.h"
+#include "CX/MemStats.hpp"
 
 
-#if defined(CX_OS_ANDROID)
-
-
-#include "CX/C/Alloc.h"
-#include "CX/C/stdlib.h"
-
-
-void *CX_Alloc(CX_Size cbSize)
+namespace CX
 {
-	return malloc(cbSize);
-}
 
-void *CX_Realloc(void *pPtr, CX_Size cbSize)
-{
-	if (NULL == pPtr)
-	{
-		return malloc(cbSize);
-	}
-	else
-	{
-		return realloc(pPtr, cbSize);
-	}
-}
-
-void CX_Free(void *pPtr)
-{
-	if (NULL != pPtr)
-	{
-		free(pPtr);
-	}
-}
-
-#endif
-
-static void empty_func_to_make_compiler_happy()
+MemStats::MemStats()
 {
 }
+
+MemStats::~MemStats()
+{
+}
+
+Status MemStats::Activate()
+{
+	return CX_MemStats_Activate();
+}
+
+Bool MemStats::IsActive()
+{
+	return CX_MemStats_IsActive();
+}
+
+Size MemStats::GetCurrentAllocsSize()
+{
+	return CX_MemStats_GetCurrentAllocsSize();
+}
+
+Size MemStats::GetCurrentAllocsCount()
+{
+	return CX_MemStats_GetCurrentAllocsCount();
+}
+
+Size MemStats::GetMaxAllocsSize()
+{
+	return CX_MemStats_GetMaxAllocsSize();
+}
+
+Size MemStats::GetMaxAllocsCount()
+{
+	return CX_MemStats_GetMaxAllocsCount();
+}
+
+}//namespace CX
+

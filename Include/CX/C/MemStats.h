@@ -29,81 +29,57 @@
 #pragma once
 
 
-#include "CX/Platform.hpp"
+#include "CX/C/Platform.h"
 
 
-#if defined(CX_OS_IOS)
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/IObject.hpp"
-#include "CX/String.hpp"
-#include "CX/Vector.hpp"
-#include "CX/Print.hpp"
-#include "CX/APIDefs.hpp"
+#include "CX/C/Types.h"
+#include "CX/C/APIDefs.h"
 
 
-namespace CX
+#define CX_MEMSTATS_MAX_CALLS_COUNT   60
+#define CX_MEMSTATS_MAX_SYMBOL_LEN    256
+
+
+typedef struct _CX_MemAllocCall
 {
+	CX_Char szFunction[CX_MEMSTATS_MAX_SYMBOL_LEN];
+	CX_Char szFile[CX_MEMSTATS_MAX_SYMBOL_LEN];
+	CX_Size cLineNumber;
+}CX_MemAllocCall;
 
-namespace Util
+typedef struct _CX_MemAllocInfo
 {
+	void            *pPtr;
+	CX_Size         cbSize;
+	CX_Size         cCallsCount;
+	CX_MemAllocCall *calls;
+}CX_MemAllocInfo;
 
-class CX_API StackTrace : public IObject
-{
-public:
+typedef void (* CX_MemStats_AllocStatsHandler)(const CX_MemAllocInfo *pInfo, void *pUsrCtx);
 
-	static const Size MAX_STACK_ENTRIES = 256;
-	static const Size MAX_SYMBOL_NAME   = 1023;
+CX_API CX_StatusCode CX_MemStats_Activate();
 
-	enum Flags
-	{
-		Flag_IgnoreRuntimeInitCalls = 1,
-	};
+CX_API CX_Bool CX_MemStats_IsActive();
 
-	typedef struct _Call
-	{
-		std::string   sFunction;
-		std::string   sFile;
-		Size          cLine;
-	}Call;
+CX_API CX_Size CX_MemStats_GetCurrentAllocsSize();
 
-	typedef std::vector<Call>   CallsVector;
+CX_API CX_Size CX_MemStats_GetCurrentAllocsCount();
 
-	static Status GetStackTrace(CallsVector &vectorCalls, Size cMaxEntries = MAX_STACK_ENTRIES, 
-	                            unsigned int nFlags = Flag_IgnoreRuntimeInitCalls);
+CX_API CX_Size CX_MemStats_GetMaxAllocsSize();
 
-	template <typename OUTPUT>
-	static void PrintStackTrace(OUTPUT out, const CallsVector &vectorCalls)
-	{
-		Size cCount = vectorCalls.size();
+CX_API CX_Size CX_MemStats_GetMaxAllocsCount();
 
-		if (0 == cCount)
-		{
-			Print(out, "<no stack trace available>\n");
+CX_API void CX_MemStats_GetAllocs(CX_MemStats_AllocStatsHandler pfnHandler, void *pUsrCtx, 
+                                  const CX_Char *exceptions[], CX_Size cExceptions,
+                                  const CX_Char *ignoresUpper[], CX_Size cIgnoresUpper, 
+                                  const CX_Char *ignoresLower[], CX_Size cIgnoresLower);
 
-			return;
-		}
-		for (Size i = 0; i < cCount; i++)
-		{
-			Print(out, "[{1}]: {2} - {3}:{4}\n", cCount - i - 1, vectorCalls[i].sFunction, vectorCalls[i].sFile, 
-			      vectorCalls[i].cLine);
-		}
-	}
-
-private:
-
-	StackTrace();
-
-	~StackTrace();
-
-};
-
-}//namespace Util
-
-}//CX
-
-
+#ifdef __cplusplus
+}
 #endif
 

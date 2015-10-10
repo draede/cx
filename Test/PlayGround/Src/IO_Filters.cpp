@@ -194,5 +194,5 @@ void Archive_LZHAMFilter_Test()
 	}
 }
 
-//REGISTER_TEST(Archive_LZHAMFilter_Test);
+REGISTER_TEST(Archive_LZHAMFilter_Test);
 

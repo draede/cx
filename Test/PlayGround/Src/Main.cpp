@@ -27,6 +27,7 @@
  */ 
 
 #include "Tester.hpp"
+#include "CX/MemStats.hpp"
 
 
 using namespace CX;
@@ -36,6 +37,8 @@ int main(int argc, char *argv[])
 {
 	CX_UNUSED(argc);
 	CX_UNUSED(argv);
+
+	MemStats::Activate();
 
 	Tester::Run();
 

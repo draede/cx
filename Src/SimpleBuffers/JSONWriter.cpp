@@ -184,6 +184,17 @@ Status JSONWriter::WriteString(const String &v, const Char *szName/* = NULL*/)
 
 Status JSONWriter::WriteBLOB(const void *pData, Size cbSize, const Char *szName/* = NULL*/)
 {
+	Status         status;
+
+	if ((status = PrintFieldsSeparator(false)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = PrintIndent()).IsNOK())
+	{
+		return status;
+	}
+
 	if (0 == cbSize)
 	{
 		if (NULL != szName)
@@ -199,7 +210,6 @@ Status JSONWriter::WriteBLOB(const void *pData, Size cbSize, const Char *szName/
 	Str::Z85BinStr z85;
 	Size           cLen;
 	Char           *szBuffer;
-	Status         status;
 
 	cLen = z85.GetStrLenFromBinSize(pData, cbSize);
 	szBuffer = NULL;

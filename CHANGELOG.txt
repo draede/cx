@@ -1,6 +1,12 @@
+0.1.38 - 2015-10-11
+  - Revamped mem stats / mem leak detector - moved all functionality from C++ to C (C++ relays to C now)
+  - Fixed SimpleBuffer::JSONWriter::WriteBLOB not writing field separator + indent + newline
+  - Added SimpleBuffer::BINWriter
+  - Added SimpleBuffer::BINReader
+  - Added Mem::New, Mem::Delete, Mem::NewArr, Mem::DeleteArr
 0.1.37 - 2015-09-27
   - Added x86 build for NDK
-  - Fixed IObject not being used non-abstract classes
+  - Fixed IObject not being used for non-abstract classes
   - Fixed IObject used in abstract classes
 0.1.36 - 2015-09-20
   - Read from an array in SimpleBuffer will return Status_NoMoreItems at the end of the array

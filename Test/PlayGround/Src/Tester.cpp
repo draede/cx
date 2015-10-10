@@ -28,7 +28,7 @@
 
 #include "Tester.hpp"
 #include "CX/Print.hpp"
-#include "CX/Mem.hpp"
+#include "CX/MemStats.hpp"
 
 
 using namespace CX;
@@ -62,11 +62,20 @@ Status Tester::RegisterTest(const CX::Char *szName, const std::function<void()> 
 
 void Tester::Run()
 {
+	//static vars that will only be cleaned at atexit
+	static const char *exceptions[] =
+	{
+		"Tester::GetTests",
+	};
+
 	for (TestsVector::const_iterator iter = GetTests().begin(); iter != GetTests().end(); ++iter)
 	{
 		Print(stdout, "Running '{1}'...\n", iter->sName);
 		iter->func();
 		Print(stdout, "\n");
+		Print(stdout, "Memory leaks:\n", iter->sName);
+		MemStats::PrintAllocs(stdout, exceptions, sizeof(exceptions) / sizeof(exceptions[0]));
+		Print(stdout, "\n\n");
 	}
 }
 

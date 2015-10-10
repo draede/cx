@@ -1,0 +1,17 @@
+
+object TestSimpleBuffers1
+{
+	bool   value_bool;
+	int8   value_int8;
+	uint8  value_uint8;
+	int16  value_int16;
+	uint16 value_uint16;
+	int32  value_int32;
+	uint32 value_uint32;
+	int64  value_int64;
+	uint64 value_uint64;
+	float  value_float;
+	double value_double;
+	string value_string;
+	blob   value_blob;
+}
