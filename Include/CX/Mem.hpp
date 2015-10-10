@@ -31,6 +31,7 @@
 
 #include "CX/Types.hpp"
 #include "CX/IObject.hpp"
+#include "CX/C/string.h"
 #include "CX/Platform.hpp"
 #include "CX/APIDefs.hpp"
 
