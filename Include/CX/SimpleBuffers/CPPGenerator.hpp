@@ -182,6 +182,67 @@ public:
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 
+		//=== consts
+
+		if (!object.GetConsts().empty())
+		{
+			Size cMaxDataTypeLen = 0;
+			Size cMaxDataNameLen = 0;
+
+			for (Object::ConstsVector::const_iterator iter = object.GetConsts().begin(); iter != object.GetConsts().end(); ++iter)
+			{
+				String sFullType;
+
+				if ((status = GetMemberFullType(MemberType_Scalar, iter->sType.c_str(), "", sFullType)).IsNOK())
+				{
+					return status;
+				}
+
+				if (cMaxDataTypeLen < sFullType.size())
+				{
+					cMaxDataTypeLen = sFullType.size();
+				}
+				if (cMaxDataNameLen < iter->sName.size())
+				{
+					cMaxDataNameLen = iter->sName.size();
+				}
+			}
+			for (Object::ConstsVector::const_iterator iter = object.GetConsts().begin(); iter != object.GetConsts().end(); ++iter)
+			{
+				String sFullType;
+
+				if ((status = GetMemberFullType(MemberType_Scalar, iter->sType.c_str(), "", sFullType)).IsNOK())
+				{
+					return status;
+				}
+
+				String sPaddingType(cMaxDataTypeLen - sFullType.size() + 1, ' ');
+				String sPaddingName(cMaxDataNameLen - iter->sName.size() + 1, ' ');
+
+				if (0 == cx_strcmp(iter->sType.c_str(), "CX.Bool") ||
+				    0 == cx_strcmp(iter->sType.c_str(), "CX.Int8") || 0 == cx_strcmp(iter->sType.c_str(), "CX.UInt8") || 
+				    0 == cx_strcmp(iter->sType.c_str(), "CX.Int16") || 0 == cx_strcmp(iter->sType.c_str(), "CX.UInt16") || 
+				    0 == cx_strcmp(iter->sType.c_str(), "CX.Int32") || 0 == cx_strcmp(iter->sType.c_str(), "CX.UInt32") || 
+				    0 == cx_strcmp(iter->sType.c_str(), "CX.Int64") || 0 == cx_strcmp(iter->sType.c_str(), "CX.UInt64"))
+				{
+					Print(out, "\tstatic const {1}{2}{3}{4}= {5};\n", sFullType, sPaddingType, iter->sName, sPaddingName, 
+					      iter->sValue);
+				}
+				else
+				if (0 == cx_strcmp(iter->sType.c_str(), "CX.String") || 
+				    0 == cx_strcmp(iter->sType.c_str(), "CX.Float") || 0 == cx_strcmp(iter->sType.c_str(), "CX.Double"))
+				{
+					Print(out, "\tstatic const {1}{2}{3}() {{ return {4}; }\n", sFullType, sPaddingType, iter->sName, iter->sValue);
+				}
+				else
+				{
+					Print(out, "\t/* static const {1}{2}{3}{4}= {5}; */\n", sFullType, sPaddingType, iter->sName, sPaddingName, 
+					      iter->sValue);
+				}
+			}
+			Print(out, CX_SB_LINE_TERMINATOR);
+		}
+
 		//=== getters/setters
 
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)

@@ -79,7 +79,9 @@ private:
 
 	static Status ParseAlias(CTX *pCTX, String &sType, String &sAlias);
 
-	static Status ParseMember(CTX *pCTX, Member &member, const AliasesMap &mapAliases);
+	static Status ParseMember(CTX *pCTX, Object &object, const AliasesMap &mapAliases);
+
+	static Status ParseConst(CTX *pCTX, Object &object, const AliasesMap &mapAliases);
 
 	static void UpdateType(String &sType, const AliasesMap &mapAliases);
 

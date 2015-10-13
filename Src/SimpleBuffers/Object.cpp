@@ -58,6 +58,7 @@ Object &Object::operator=(const Object &object)
 void Object::Copy(const Object &object)
 {
 	m_sName         = object.m_sName;
+	m_vectorConsts  = object.m_vectorConsts;
 	m_vectorMembers = object.m_vectorMembers;
 	m_mapPragmas    = object.m_mapPragmas;
 }
@@ -80,6 +81,16 @@ const Object::MembersVector &Object::GetMembers() const
 Object::MembersVector &Object::GetMembers()
 {
 	return m_vectorMembers;
+}
+
+const Object::ConstsVector &Object::GetConsts() const
+{
+	return m_vectorConsts;
+}
+
+Object::ConstsVector &Object::GetConsts()
+{
+	return m_vectorConsts;
 }
 
 const Object::PragmasVector &Object::GetPragmasByLocation(const Char *szPragmaLocation) const

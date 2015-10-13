@@ -266,8 +266,81 @@ Status Parser::ParseAlias(CTX *pCTX, String &sType, String &sAlias)
 	return Status();
 }
 
-Status Parser::ParseMember(CTX *pCTX, Member &member, const AliasesMap &mapAliases)
+Status Parser::ParseConst(CTX *pCTX, Object &object, const AliasesMap &mapAliases)
 {
+	Object::Const cnst;
+	Status        status;
+
+	if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = ParseIdentifier(pCTX, cnst.sType)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+	{
+		return status;
+	}
+	if (pCTX->cbIndex >= pCTX->cbSize)
+	{
+		return Status(Status_ParseFailed, "Unexpected end of file");
+	}
+	UpdateType(cnst.sType, mapAliases);
+	if ((status = ParseIdentifier(pCTX, cnst.sName)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+	{
+		return status;
+	}
+	if (pCTX->cbIndex >= pCTX->cbSize)
+	{
+		return Status(Status_ParseFailed, "Unexpected end of file");
+	}
+	if ('=' != *(pCTX->pBuffer + pCTX->cbIndex))
+	{
+		return Status(Status_ParseFailed, "Missing = at line {1}, column {2}", pCTX->cLine, pCTX->cColumn);
+	}
+	pCTX->cbIndex++;
+	pCTX->cColumn++;
+	if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+	{
+		return status;
+	}
+	if (pCTX->cbIndex >= pCTX->cbSize)
+	{
+		return Status(Status_ParseFailed, "Unexpected end of file");
+	}
+	if ((status = ParseDefaultValue(pCTX, cnst.sValue)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
+	{
+		return status;
+	}
+	if (pCTX->cbIndex >= pCTX->cbSize)
+	{
+		return Status(Status_ParseFailed, "Unexpected end of file");
+	}
+	if (';' != *(pCTX->pBuffer + pCTX->cbIndex))
+	{
+		return Status(Status_ParseFailed, "Missing ; at line {1}, column {2}", pCTX->cLine, pCTX->cColumn);
+	}
+	pCTX->cbIndex++;
+	pCTX->cColumn++;
+
+	object.GetConsts().push_back(cnst);
+
+	return Status();
+}
+
+Status Parser::ParseMember(CTX *pCTX, Object &object, const AliasesMap &mapAliases)
+{
+	Member member;
 	String sKeyType;
 	Status status;
 
@@ -278,6 +351,10 @@ Status Parser::ParseMember(CTX *pCTX, Member &member, const AliasesMap &mapAlias
 	if ((status = ParseIdentifier(pCTX, sKeyType)).IsNOK())
 	{
 		return status;
+	}
+	if (0 == cx_strcmp(sKeyType.c_str(), "const"))
+	{
+		return ParseConst(pCTX, object, mapAliases);
 	}
 	if ((status = ParseWhiteSpaces(pCTX)).IsNOK())
 	{
@@ -603,6 +680,8 @@ Status Parser::ParseMember(CTX *pCTX, Member &member, const AliasesMap &mapAlias
 	member.SetDefault(sDefault);
 	member.SetOptional(bOptional);
 
+	object.GetMembers().push_back(member);
+
 	return Status();
 }
 
@@ -744,13 +823,10 @@ Status Parser::Parse(const Char *pBuffer, Size cLen, Object &object)
 			break;
 		}
 
-		Member member;
-
-		if ((status = ParseMember(&ctx, member, mapAliases)).IsNOK())
+		if ((status = ParseMember(&ctx, object, mapAliases)).IsNOK())
 		{
 			return status;
 		}
-		object.GetMembers().push_back(member);
 	}
 
 	//epilog

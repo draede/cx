@@ -55,6 +55,15 @@ public:
 
 	typedef Vector<Pragma>::Type   PragmasVector;
 
+	struct Const
+	{
+		String sType;
+		String sName;
+		String sValue;
+	};
+
+	typedef Vector<Const>::Type   ConstsVector;
+
 	static const Char *PRAGMA_LOCATION_PROLOG() { return "prolog"; }
 	static const Char *PRAGMA_LOCATION_EPILOG() { return "epilog"; }
 	static const Char *PRAGMA_CPP() { return "cpp"; }
@@ -77,6 +86,10 @@ public:
 
 	MembersVector &GetMembers();
 
+	const ConstsVector &GetConsts() const;
+
+	ConstsVector &GetConsts();
+
 	const PragmasVector &GetPragmasByLocation(const Char *szPragmaLocation) const;
 
 	Status AddPragma(const String &sLocation, const String &sID, const String &sValue);
@@ -88,6 +101,7 @@ private:
 #pragma warning(push)
 #pragma warning(disable: 4251)
 	String          m_sName;
+	ConstsVector    m_vectorConsts;
 	MembersVector   m_vectorMembers;
 	PragmasMap      m_mapPragmas;
 #pragma warning(pop)
