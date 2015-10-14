@@ -411,7 +411,7 @@ public:
 				case MemberType_Map:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataReader<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Read("
-					      "pReader, this->{3}, \"{34}\")).IsNOK())" CX_SB_LINE_TERMINATOR, sKeyType, sValType, iter->GetMemberName(), iter->GetName());
+					      "pReader, this->{3}, \"{4}\")).IsNOK())" CX_SB_LINE_TERMINATOR, sKeyType, sValType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
 					if (!iter->GetOptional())
 					{
@@ -500,7 +500,7 @@ public:
 				case MemberType_Map:
 				{
 					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Write("
-					      "pWriter, this->{3}, \"{3}\")).IsNOK())" CX_SB_LINE_TERMINATOR, sKeyType, sValType, iter->GetMemberName(), iter->GetName());
+					      "pWriter, this->{3}, \"{4}\")).IsNOK())" CX_SB_LINE_TERMINATOR, sKeyType, sValType, iter->GetMemberName(), iter->GetName());
 					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);

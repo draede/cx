@@ -37,3 +37,4 @@ Lib/
 Temp/
 xcuserdata/
 
+*.user
