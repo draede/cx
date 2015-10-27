@@ -4551,6 +4551,7 @@
     <ClCompile Include="..\..\Src\Util\RCMemBufferMgr.cpp" />
     <ClCompile Include="..\..\Src\Util\RndGen.cpp" />
     <ClCompile Include="..\..\Src\CXVersion.cpp" />
+    <ClCompile Include="..\..\Src\Var.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Src\Platform\Windows\cx.rc" />

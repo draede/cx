@@ -1718,6 +1718,9 @@
     <ClCompile Include="..\..\Contrib\crypto-algorithms\Src\aes.cpp">
       <Filter>Contrib\crypto-algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Var.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Src\Platform\Windows\cx.rc">
