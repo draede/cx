@@ -119,7 +119,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -136,7 +136,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -155,7 +155,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -176,7 +176,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>

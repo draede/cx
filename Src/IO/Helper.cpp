@@ -44,13 +44,17 @@ Helper::~Helper()
 {
 }
 
-Status Helper::CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream)
+Status Helper::CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize/* = NULL*/)
 {
 	Byte   buffer[COPY_STREAM_BUFFER];
 	Size   cbAckSize;
 	Size   cbAckSize2;
 	Status status;
 
+	if (NULL != pcbSize)
+	{
+		*pcbSize = 0;
+	}
 	while (!pInputStream->IsEOF())
 	{
 		if ((status = pInputStream->Read(buffer, sizeof(buffer), &cbAckSize)).IsNOK())
@@ -69,6 +73,10 @@ Status Helper::CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStre
 			if (cbAckSize2 != cbAckSize)
 			{
 				return Status(Status_WriteFailed, "Failed to write all bytes");
+			}
+			if (NULL != pcbSize)
+			{
+				(*pcbSize) += cbAckSize;
 			}
 		}
 	}

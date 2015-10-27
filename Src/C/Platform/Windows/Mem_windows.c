@@ -59,6 +59,7 @@ typedef struct _CX_MemStats
 	CX_Bool          bActive;
 	CX_Bool          bSynInitialized;
 	CX_Size          cbCrAllocsSize;
+	CX_Size          cbMaxMemSize;
 	CX_Size          cCrAllocsCount;
 	CX_Size          cbMaxAllocsSize;
 	CX_Size          cMaxAllocsCount;
@@ -172,6 +173,11 @@ CX_MemBlock *CX_MemGetBlockFromPtr(void *pPtr)
 
 void *CX_MemDbgAlloc(CX_Size cbSize)
 {
+	if (0 < g_cx_memstats.cbMaxMemSize && cbSize + g_cx_memstats.cbCrAllocsSize > g_cx_memstats.cbMaxMemSize)
+	{
+		return NULL;
+	}
+
 	CX_MemFrame   frames[CX_MEMSTATS_MAX_CALLS_COUNT];
 	CX_UInt8      cFrames;
 	CX_UInt16     cbBlockSize;
@@ -239,6 +245,11 @@ void *CX_MemDbgRealloc(void *pOldPtr, CX_Size cbSize)
 	if (NULL == pOldPtr)
 	{
 		return CX_MemDbgAlloc(cbSize);
+	}
+
+	if (0 < g_cx_memstats.cbMaxMemSize && cbSize + g_cx_memstats.cbCrAllocsSize > g_cx_memstats.cbMaxMemSize)
+	{
+		return NULL;
 	}
 
 	CX_Byte       *pOldBlockPtr;
@@ -439,13 +450,14 @@ CX_StatusCode CX_MemStats_Activate()
 	{
 		return CX_Status_OK;
 	}
-	g_cx_memstats.bSynInitialized = false;
-	g_cx_memstats.cbCrAllocsSize  = 0;
-	g_cx_memstats.cCrAllocsCount  = 0;
-	g_cx_memstats.cbMaxAllocsSize = 0;
-	g_cx_memstats.cMaxAllocsCount = 0;
-	g_cx_memstats.pFirstBlock     = NULL;
-	g_cx_memstats.pLastBlock      = NULL;
+	g_cx_memstats.bSynInitialized       = false;
+	g_cx_memstats.cbCrAllocsSize        = 0;
+	g_cx_memstats.cCrAllocsCount        = 0;
+	g_cx_memstats.cbMaxMemSize          = 0;
+	g_cx_memstats.cMaxAllocsCount       = 0;
+	g_cx_memstats.cbMaxAllocsSize       = 0;
+	g_cx_memstats.pFirstBlock           = NULL;
+	g_cx_memstats.pLastBlock            = NULL;
 	InitializeCriticalSection(&g_cx_memstats.cs);
 	atexit(&CX_MemStats_AtExit);
 	g_cx_memstats.bActive = true;
@@ -456,6 +468,26 @@ CX_StatusCode CX_MemStats_Activate()
 CX_Bool CX_MemStats_IsActive()
 {
 	return g_cx_memstats.bActive;
+}
+
+CX_StatusCode CX_MemStats_SetMaxMemSize(CX_Size cbSize)
+{
+	if (g_cx_memstats.bActive)
+	{
+		g_cx_memstats.cbMaxMemSize = cbSize;
+	}
+
+	return CX_Status_OK;
+}
+
+CX_Size CX_MemStats_GetMaxMemSize()
+{
+	if (!g_cx_memstats.bActive)
+	{
+		return 0;
+	}
+
+	return g_cx_memstats.cbMaxMemSize;
 }
 
 CX_Size CX_MemStats_GetCurrentAllocsSize()

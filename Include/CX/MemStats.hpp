@@ -49,6 +49,10 @@ public:
 
 	static Bool IsActive();
 
+	static Status SetMaxMemSize(Size cbSize);
+
+	static Size GetMaxMemSize();
+
 	static Size GetCurrentAllocsSize();
 
 	static Size GetCurrentAllocsCount();
@@ -65,6 +69,10 @@ public:
 	{
 		MemInfo<OUTPUT> info(&out);
 
+		Print(out, "Current allocated blocks : {1}\n", CX_MemStats_GetCurrentAllocsCount());
+		Print(out, "Current allocated bytes  : {1}\n", CX_MemStats_GetCurrentAllocsSize());
+		Print(out, "Max allocated blocks     : {1}\n", CX_MemStats_GetMaxAllocsCount());
+		Print(out, "Max allocated bytes      : {1}\n", CX_MemStats_GetMaxAllocsSize());
 		CX_MemStats_GetAllocs(&MemStats::AllocStatsHandler<OUTPUT>, &info, exceptions, cExceptions, ignoresUpper, cIgnoresUpper, 
 		                      ignoresLower, cIgnoresLower);
 		if (0 < info.cAllocsCount)

@@ -49,7 +49,7 @@ public:
 
 	MemInputStream(const String *pStr);
 
-	MemInputStream(const Util::IMemPool *pMemPool);
+	MemInputStream(const Util::IMemPool *pMemPool, Size cbSize);
 
 	~MemInputStream();
 
@@ -78,7 +78,7 @@ private:
 
 	Type                  m_nType;
 	const void            *m_pMem;
-	Size                  m_cbMemSize;
+	Size                  m_cbSize;
 	const String          *m_pStr;
 	const Util::IMemPool  *m_pMemPool;
 	Size                  m_cbOffset;

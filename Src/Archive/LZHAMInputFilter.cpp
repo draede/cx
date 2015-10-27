@@ -25,44 +25,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */ 
-
-#pragma once
-
-
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
+ 
+#include "CX/Archive/LZHAMInputFilter.hpp"
+#include "lzham.h"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Archive
 {
 
-class CX_API Helper : public IObject
+LZHAMInputFilter::LZHAMInputFilter()
 {
-public:
+}
 
-	static const Size COPY_STREAM_BUFFER = 8192;
+LZHAMInputFilter::~LZHAMInputFilter()
+{
+}
 
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
+Status LZHAMInputFilter::ResizeBuffer(Size cbSize)
+{
+	if (cbSize > m_buffer.GetSize())
+	{
+		return m_buffer.SetSize(cbSize);
+	}
 
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
+	return Status();
+}
 
-private:
+Status LZHAMInputFilter::Filter(const void *pInput, Size cbInputSize, Size cbOrigInputSize, void **ppOutput, Size *pcbOutputSize)
+{
+	lzham_z_ulong   cbSize;
+	int             nRet;
+	Status          status;
 
-	Helper();
+	if (0 == cbInputSize)
+	{
+		*ppOutput      = NULL;
+		*pcbOutputSize = 0;
 
-	~Helper();
+		return Status();
+	}
+	*pcbOutputSize = cbOrigInputSize;
+	if (!(status = ResizeBuffer(*pcbOutputSize)))
+	{
+		return status;
+	}
+	if (LZHAM_Z_OK != (nRet = lzham_z_uncompress((unsigned char *)m_buffer.GetMem(), &cbSize, (const unsigned char *)pInput, 
+	                                             (lzham_z_ulong)cbInputSize)))
+	{
+		return Status_OperationFailed;
+	}
+	if (*pcbOutputSize != (Size)cbSize)
+	{
+		return Status_InvalidArg;
+	}
+	*ppOutput = m_buffer.GetMem();
 
-};
+	return Status();
+}
 
-}//namespace IO
+}//namespace Archive
 
 }//namespace CX
-

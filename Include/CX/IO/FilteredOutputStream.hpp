@@ -29,9 +29,12 @@
 #pragma once
 
 
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/IO/IFilter.hpp"
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/IObject.hpp"
+#include "CX/IO/IOutputStream.hpp"
+#include "CX/IO/IOutputFilter.hpp"
 
 
 namespace CX
@@ -40,11 +43,11 @@ namespace CX
 namespace IO
 {
 
-class CX_API FilteredOutputStream : public IOutputStream, public IObject
+class CX_API FilteredOutputStream : public IO::IOutputStream, public IObject
 {
 public:
 
-	FilteredOutputStream(IFilter *pFilter, IOutputStream *pOutputStream);
+	FilteredOutputStream(IOutputFilter *pFilter, IO::IOutputStream *pOutputStream, bool bTakeStreamOwnership = false);
 
 	~FilteredOutputStream();
 
@@ -56,19 +59,25 @@ public:
 
 	virtual const Char *GetPath() const;
 
-	virtual Status Flush();
+	Status Flush();
 
 private:
 
-	static const Size OUTPUT_BUFFER_SIZE = 65536;
+	static const Size BUFFER_SIZE = 65536;
 
-	IFilter          *m_pFilter;
-	IOutputStream    *m_pOutputStream;
-	void             *m_pOutBuffer;
-	UInt32           m_cbOutBufferSize;
-	IFilter::Buffers m_buffers;
+	IOutputFilter          *m_pFilter;
+	IO::IOutputStream      *m_pOutputStream;
+	bool                   m_bTakeStreamOwnership;
+	Byte                   *m_pBuffer;
+	Size                   m_cbBufferSize;
+	Size                   m_cbBufferOffset;
+	UInt64                 m_cbReceivedSize;
+	bool                   m_bReady;
+
+	Status Filter(const void *pInput, Size cbInputSize);
 
 };
+
 
 }//namespace IO
 

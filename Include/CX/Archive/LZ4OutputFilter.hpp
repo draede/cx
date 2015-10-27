@@ -29,68 +29,44 @@
 #pragma once
 
 
-#include "CX/IO/BlockFilter.hpp"
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/Util/MemPool.hpp"
+#include "CX/IO/IOutputFilter.hpp"
 
 
 namespace CX
 {
 
-namespace Crypt
+namespace Archive
 {
 
-class CX_API AES128Filter : public IObject, public IO::IFilter, private IO::IBlockFilterHandler
+class CX_API LZ4OutputFilter : public IO::IOutputFilter
 {
 public:
 
-	static const Size BLOCK_SIZE      = 16;
-	static const Size KEY_SIZE        = 16;
+	static const Size BLOCK_SIZE                = 65536;
+	static const int  DEFAULT_COMPRESSION_LEVEL = -1;
+	static const int  MAX_COMPRESSION_LEVEL     = 16;
 
-	enum Dir
-	{
-		Dir_Encrypt,
-		Dir_Decrypt,
-	};
+	LZ4OutputFilter(int nCompressionLevel = DEFAULT_COMPRESSION_LEVEL);
 
-	AES128Filter(Dir nDir, const void *pKey, Size cbKeySize = 0);
-
-	~AES128Filter();
-
-	virtual Status Filter(Buffers *pBuffers);
-
-	virtual Status Reset();
-
-private:
-
-	enum Mode
-	{
-		Mode_Header,
-		Mode_Body,
-	};
-
-	Mode              m_nMode;
-	Dir               m_nDir;
-	Byte              m_key[KEY_SIZE];
-	Byte              m_iv[BLOCK_SIZE];
-	Byte              m_buffer[BLOCK_SIZE];
-	Size              m_cbOffset;
-	IO::BlockFilter   m_blkflt;
-	bool              m_bFirstBlock;
-
-	Status InitEncrypt();
-	
-	Status InitDecrypt();
-
-	Status FilterEncrypt(Buffers *pBuffers);
-
-	Status FilterDecrypt(Buffers *pBuffers);
+	~LZ4OutputFilter();
 
 	virtual Size GetBlockSize();
 
-	virtual Status OnBlocks(Size cbSize, const void *pIn, void *pOut);
+	virtual Status Filter(const void *pInput, Size cbInputSize, void **ppOutput, Size *pcbOutputSize);
+
+private:
+
+	Util::DynMemPool   m_buffer;
+	int                m_nCompressionLevel;
+
+	Status ResizeBuffer(Size cbSize);
 
 };
 
-}//namespace Crypt
+}//namespace Archive
 
 }//namespace CX

@@ -27,7 +27,7 @@
  */ 
  
 #include "CX/IO/FilteredInputStream.hpp"
-#include "CX/Limits.hpp"
+#include "aes.h"
 
 
 namespace CX
@@ -36,85 +36,125 @@ namespace CX
 namespace IO
 {
 
-FilteredInputStream::FilteredInputStream(IFilter *pFilter, IInputStream *pInputStream)
+FilteredInputStream::FilteredInputStream(IInputFilter *pFilter, IO::IInputStream *pInputStream, 
+                                         bool bTakeStreamOwnership/* = false*/)
 {
 	m_pFilter              = pFilter;
 	m_pInputStream         = pInputStream;
-	m_pInBuffer            = Mem::Alloc(INPUT_BUFFER_SIZE);
-	m_cbInBufferTotalSize  = INPUT_BUFFER_SIZE;
-	m_cbBufferSize         = 0;
-	m_buffers.pInBuffer    = m_pInBuffer;
-	m_buffers.cbInSize     = m_cbBufferSize;
-	m_buffers.pOutBuffer   = NULL;
-	m_buffers.cbOutSize    = 0;
-	m_buffers.bHasMoreData = true;
-	m_buffers.nState       = IFilter::State_Continue;
+	m_bTakeStreamOwnership = bTakeStreamOwnership;
+	m_cbReceivedSize       = 0;
+	m_bReady               = false;
+	m_pOutput              = NULL;
+	m_cbOutputSize         = 0;
 }
 
 FilteredInputStream::~FilteredInputStream()
 {
-	if (NULL != m_pInBuffer)
+	if (NULL != m_pFilter)
 	{
-		Mem::Free(m_pInBuffer);
-		m_pInBuffer = NULL;
+		delete m_pFilter;
+	}
+	if (m_bTakeStreamOwnership && NULL != m_pInputStream)
+	{
+		delete m_pInputStream;
 	}
 }
 
 Status FilteredInputStream::Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize)
 {
-	if (NULL == m_pFilter || NULL == m_pInputStream || NULL == m_pInBuffer)
-	{
-		return Status_NotInitialized;
-	}
-	if ((Size)TYPE_UINT32_MAX < cbReqSize)
-	{
-		return Status_TooBig;
-	}
-	if (IFilter::State_Finish == m_buffers.nState)
+	if (m_bReady)
 	{
 		return Status_EOF;
 	}
+	if (NULL == m_pFilter || NULL == m_pInputStream)
+	{
+		return Status();
+	}
 
-	Size   cbAckSize;
+	UInt32 cbSrcSize;
+	UInt32 cbFltSize;
+	Size   cbSize;
+	Byte   *pOut;
 	Status status;
 
-	m_buffers.pOutBuffer = pBuffer;
-	m_buffers.cbOutSize  = (UInt32)cbReqSize;
-	while (0 < m_buffers.cbOutSize)
+	*pcbAckSize = 0;
+	pOut        = (Byte *)pBuffer;
+	while (0 < cbReqSize)
 	{
-		if (m_buffers.bHasMoreData && 0 == m_buffers.cbInSize)
+		if (0 < m_cbOutputSize)
 		{
-			if ((status = m_pInputStream->Read(m_pInBuffer, m_cbInBufferTotalSize, &cbAckSize)))
+			if (m_cbOutputSize >= cbReqSize)
 			{
-				m_cbBufferSize      = (UInt32)cbAckSize;
-				m_buffers.pInBuffer = m_pInBuffer;
-				m_buffers.cbInSize  = m_cbBufferSize;
+				cbSize = cbReqSize;
 			}
 			else
 			{
-				if (Status_EOF == (StatusCode)status)
-				{
-					m_buffers.bHasMoreData = false;
-				}
-				else
-				{
-					return status;
-				}
+				cbSize = m_cbOutputSize;
 			}
+			memcpy(pOut, m_pOutput, cbSize);
+			pOut += cbSize;
+			(*pcbAckSize) += cbSize;
+			cbReqSize -= cbSize;
+			m_pOutput += cbSize;
+			m_cbOutputSize -= cbSize;
+			m_cbReceivedSize += cbSize;
 		}
-		if (!(status = m_pFilter->Filter(&m_buffers)))
-		{
-			return status;
-		}
-		if (IFilter::State_Finish == m_buffers.nState)
+		if (0 == cbReqSize)
 		{
 			break;
 		}
-	}
-	*pcbAckSize = cbReqSize - m_buffers.cbOutSize;
-	if (IFilter::State_Finish == m_buffers.nState)
-	{
-		return Status_EOF;
+
+		//read next 
+		if (!(status = m_pInputStream->Read(&cbSrcSize, sizeof(cbSrcSize), &cbSize)))
+		{
+			if (Status_EOF == (StatusCode)status)
+			{
+				m_bReady = true;
+			}
+
+			return status;
+		}
+		if (sizeof(cbSrcSize) != cbSize)
+		{
+			return Status_ReadFailed;
+		}
+		if (!(status = m_pInputStream->Read(&cbFltSize, sizeof(cbFltSize), &cbSize)))
+		{
+			if (Status_EOF == (StatusCode)status)
+			{
+				return Status_ReadFailed;
+			}
+
+			return status;
+		}
+		if (sizeof(cbFltSize) != cbSize)
+		{
+			return Status_ReadFailed;
+		}
+
+		if (m_buffer.GetSize() < (Size)cbFltSize)
+		{
+			if (!(status = m_buffer.SetSize((Size)cbFltSize)))
+			{
+				return status;
+			}
+		}
+		if (!(status = m_pInputStream->Read((Byte *)m_buffer.GetMem(), (Size)cbFltSize, &cbSize)))
+		{
+			if (Status_EOF != (StatusCode)status)
+			{
+				return status;
+			}
+		}
+		if ((Size)cbFltSize != cbSize)
+		{
+			return Status_ReadFailed;
+		}
+
+		if (!(status = m_pFilter->Filter(m_buffer.GetMem(), (Size)cbFltSize, (Size)cbSrcSize, (void **)&m_pOutput, &m_cbOutputSize)))
+		{
+			return status;
+		}
 	}
 
 	return Status();
@@ -124,9 +164,9 @@ Status FilteredInputStream::SetPos(UInt64 cbPos)
 {
 	CX_UNUSED(cbPos);
 
-	if (NULL == m_pFilter || NULL == m_pInputStream || NULL == m_pInBuffer)
+	if (NULL == m_pFilter || NULL == m_pInputStream)
 	{
-		return Status_NotInitialized;
+		return Status();
 	}
 
 	return Status_NotSupported;
@@ -134,47 +174,48 @@ Status FilteredInputStream::SetPos(UInt64 cbPos)
 
 Status FilteredInputStream::GetPos(UInt64 *pcbPos) const
 {
-	if (NULL == m_pFilter || NULL == m_pInputStream || NULL == m_pInBuffer)
+	if (NULL == m_pFilter || NULL == m_pInputStream)
 	{
-		return Status_NotInitialized;
+		return Status();
 	}
+	*pcbPos = m_cbReceivedSize;
 
-	return m_pInputStream->GetPos(pcbPos);
+	return Status();
 }
 
 Status FilteredInputStream::GetSize(UInt64 *pcbSize) const
 {
-	if (NULL == m_pFilter || NULL == m_pInputStream || NULL == m_pInBuffer)
+	if (NULL == m_pFilter || NULL == m_pInputStream)
 	{
-		return Status_NotInitialized;
+		return Status();
 	}
-
-	return m_pInputStream->GetSize(pcbSize);
+	*pcbSize = m_cbReceivedSize;
+	
+	return Status();
 }
 
 Bool FilteredInputStream::IsEOF() const
 {
-	if (NULL == m_pFilter || NULL == m_pInputStream || NULL == m_pInBuffer)
+	if (NULL == m_pFilter || NULL == m_pInputStream)
 	{
-		return True;
+		return Status();
+	}
+	if (0 < m_cbOutputSize)
+	{
+		return false;
 	}
 
-	return (IFilter::State_Finish == m_buffers.nState);
+	return m_pInputStream->IsEOF();
 }
 
 Bool FilteredInputStream::IsOK() const
 {
-	if (NULL == m_pFilter || NULL == m_pInputStream || NULL == m_pInBuffer)
-	{
-		return False;
-	}
-
-	return m_pInputStream->IsOK();
+	return (NULL != m_pFilter && NULL != m_pInputStream);
 }
 
 const Char *FilteredInputStream::GetPath() const
 {
-	if (NULL == m_pFilter || NULL == m_pInputStream || NULL == m_pInBuffer)
+	if (NULL == m_pFilter || NULL == m_pInputStream)
 	{
 		return "";
 	}

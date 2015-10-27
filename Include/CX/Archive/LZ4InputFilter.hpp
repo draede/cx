@@ -29,77 +29,37 @@
 #pragma once
 
 
-#include "CX/IO/IFilter.hpp"
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/Util/MemPool.hpp"
+#include "CX/IO/IInputFilter.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Archive
 {
 
-class CX_API IBlockFilterHandler
-{
-public:
-
-	virtual ~IBlockFilterHandler() { }
-
-	virtual Size GetBlockSize() = 0;
-
-	//pIn & pOut have cbSize size, cbSize is multiple of GetBlockSize()
-	virtual Status OnBlocks(Size cbSize, const void *pIn, void *pOut) = 0;
-
-};
-
-class CX_API BlockFilter : public IFilter
+class CX_API LZ4InputFilter : public IO::IInputFilter
 {
 public:
 
-	enum Dir
-	{
-		Dir_Encode,
-		Dir_Decode,
-	};
+	LZ4InputFilter();
 
-	BlockFilter(Dir nDir, IBlockFilterHandler *pHandler);
+	~LZ4InputFilter();
 
-	~BlockFilter();
-
-	virtual Status Filter(Buffers *pBuffers);
-
-	virtual Status Reset();
+	virtual Status Filter(const void *pInput, Size cbInputSize, Size cbOrigInputSize, void **ppOutput, Size *pcbOutputSize);
 
 private:
 
-	enum Mode
-	{
-		Mode_In,
-		Mode_Out,
-		Mode_InOut,
-		Mode_Error,
-		Mode_Finished,
-	};
+	Util::DynMemPool   m_buffer;
 
-	Dir                   m_nDir;
-	Mode                  m_nMode;
-	IBlockFilterHandler   *m_pHandler;
-	Size                  m_cbBlockSize;
-
-	Byte                  *m_pInBuffer;
-	Size                  m_cbInBufferSize;
-
-	Byte                  *m_pOutBuffer;
-	Size                  m_cbOutBufferSize;
-	Size                  m_cbOutBufferOffset;
-
-	Size                  m_cbReceivedBytes;
-	Size                  m_cbSentBytes;
-
-	void End();
+	Status ResizeBuffer(Size cbSize);
 
 };
 
-}//namespace IO
+}//namespace Archive
 
 }//namespace CX

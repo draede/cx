@@ -1,0 +1,1 @@
+These are basic implementations of standard cryptography algorithms, written by Brad Conte (brad@bradconte.com) from scratch and without any cross-licensing

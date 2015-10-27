@@ -35,6 +35,8 @@ namespace CX
 namespace SimpleBuffers
 {
 
+const Size JSONWriter::INDENT_TAB_SIZE;
+
 JSONWriter::JSONWriter()
 {
 	m_pOutputStream = NULL;

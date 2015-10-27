@@ -26,43 +26,53 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
+#include "CX/Limits.hpp"
+#include "CX/C/Limits.h"
 
 
 namespace CX
 {
 
-namespace IO
-{
+//min Int8 value
+const Int8          TYPE_INT8_MIN    = CX_INT8_MIN;
 
-class CX_API Helper : public IObject
-{
-public:
+//max Int8 value
+const Int8          TYPE_INT8_MAX    = CX_INT8_MAX;
 
-	static const Size COPY_STREAM_BUFFER = 8192;
+//max UInt8 value
+const UInt8         TYPE_UINT8_MAX   = CX_UINT8_MAX;
 
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
+//min Int16 value
+const Int16         TYPE_INT16_MIN   = CX_INT16_MIN;
 
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
+//max Int16 value
+const Int16         TYPE_INT16_MAX   = CX_INT16_MAX;
 
-private:
+//max UInt16 value
+const UInt16        TYPE_UINT16_MAX  = CX_UINT16_MAX;
 
-	Helper();
+//min Int32 value
+const Int32         TYPE_INT32_MIN   = CX_INT32_MIN;
 
-	~Helper();
+//max Int32 value
+const Int32         TYPE_INT32_MAX   = CX_INT32_MAX;
 
-};
+//max UInt32 value
+const UInt32        TYPE_UINT32_MAX  = CX_UINT32_MAX;
 
-}//namespace IO
+//min Int64 value
+const Int64         TYPE_INT64_MIN   = CX_INT64_MIN;
+
+//max Int64 value
+const Int64         TYPE_INT64_MAX   = CX_INT64_MAX;
+
+//max UInt64 value
+const UInt64        TYPE_UINT64_MAX  = CX_UINT64_MAX;
+
+//max Byte value
+const Byte          TYPE_BYTE_MAX    = CX_BYTE_MAX;
+
+//max Size value
+const Size          TYPE_SIZE_MAX   = CX_SIZE_MAX;
 
 }//namespace CX
-

@@ -25,44 +25,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */ 
-
-#pragma once
-
-
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
+ 
+#include "CX/Archive/SnappyInputFilter.hpp"
+#include "snappy.h"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Archive
 {
 
-class CX_API Helper : public IObject
+SnappyInputFilter::SnappyInputFilter()
 {
-public:
+}
 
-	static const Size COPY_STREAM_BUFFER = 8192;
+SnappyInputFilter::~SnappyInputFilter()
+{
+}
 
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
+Status SnappyInputFilter::ResizeBuffer(Size cbSize)
+{
+	if (cbSize > m_buffer.GetSize())
+	{
+		return m_buffer.SetSize(cbSize);
+	}
 
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
+	return Status();
+}
 
-private:
+Status SnappyInputFilter::Filter(const void *pInput, Size cbInputSize, Size cbOrigInputSize, void **ppOutput, Size *pcbOutputSize)
+{
+	Status status;
 
-	Helper();
+	if (0 == cbInputSize)
+	{
+		*ppOutput      = NULL;
+		*pcbOutputSize = 0;
 
-	~Helper();
+		return Status();
+	}
+	if (!snappy::GetUncompressedLength((const char *)pInput, cbInputSize, pcbOutputSize))
+	{
+		return Status_OperationFailed;
+	}
+	if (*pcbOutputSize != cbOrigInputSize)
+	{
+		return Status_InvalidArg;
+	}
+	if (!(status = ResizeBuffer(*pcbOutputSize)))
+	{
+		return status;
+	}
+	if (!snappy::RawUncompress((const char *)pInput, cbInputSize, (char *)m_buffer.GetMem()))
+	{
+		return Status_OperationFailed;
+	}
+	*ppOutput = m_buffer.GetMem();
 
-};
+	return Status();
+}
 
-}//namespace IO
+}//namespace Archive
 
 }//namespace CX
-

@@ -25,44 +25,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */ 
-
+ 
 #pragma once
 
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
+#include "CX/Util/MemPool.hpp"
+#include "CX/IO/IInputFilter.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Crypt
 {
 
-class CX_API Helper : public IObject
+class CX_API AES128InputFilter : public IO::IInputFilter
 {
 public:
 
-	static const Size COPY_STREAM_BUFFER = 8192;
+	static const Size BLOCK_SIZE       = 16;
+	static const Size KEY_SIZE_128     = 16;
+	static const Size KEY_SIZE_192     = 24;
+	static const Size KEY_SIZE_256     = 32;
 
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
+	AES128InputFilter(const void *pKey, Size cbKeySize = 0);
 
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
+	~AES128InputFilter();
+
+	virtual Status Filter(const void *pInput, Size cbInputSize, Size cbOrigInputSize, void **ppOutput, Size *pcbOutputSize);
 
 private:
 
-	Helper();
-
-	~Helper();
+	enum State
+	{
+		State_IV,
+		State_Begin,
+		State_Body,
+	};
+	
+	unsigned int       m_key[60];
+	int                m_cKeySize;
+	Byte               m_iv[BLOCK_SIZE];
+	Util::DynMemPool   m_buffer;
+	State              m_nState;
 
 };
 
-}//namespace IO
+}//namespace Crypt
 
 }//namespace CX
-

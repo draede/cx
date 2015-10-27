@@ -66,6 +66,10 @@ CX_API CX_StatusCode CX_MemStats_Activate();
 
 CX_API CX_Bool CX_MemStats_IsActive();
 
+CX_API CX_StatusCode CX_MemStats_SetMaxMemSize(CX_Size cbSize);
+
+CX_API CX_Size CX_MemStats_GetMaxMemSize();
+
 CX_API CX_Size CX_MemStats_GetCurrentAllocsSize();
 
 CX_API CX_Size CX_MemStats_GetCurrentAllocsCount();

@@ -29,6 +29,7 @@
 #pragma once
 
 
+#include "CX/Types.hpp"
 #include "CX/C/StatusCodes.h"
 
 

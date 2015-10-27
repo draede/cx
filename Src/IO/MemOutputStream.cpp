@@ -66,7 +66,7 @@ Size MemOutputStream::GetSizeImpl() const
 	{
 		case Type_Mem:       return m_cbMemSize;
 		case Type_String:    return m_pStr->size();
-		case Type_MemPool:   return m_pMemPool->GetSize();
+		case Type_MemPool:   return m_cbOffset;
 	}
 
 	return 0;
@@ -103,6 +103,7 @@ Status MemOutputStream::WriteImpl(const void *pMem, Size cbReqSize, Size *pcbAck
 		{
 			m_pStr->append((const Char *)pMem, cbReqSize);
 			*pcbAckSize = cbReqSize;
+			m_cbOffset += cbReqSize;
 
 			return Status_OK;
 		}
@@ -111,12 +112,16 @@ Status MemOutputStream::WriteImpl(const void *pMem, Size cbReqSize, Size *pcbAck
 		{
 			Status status;
 
-			status = m_pMemPool->Add(pMem, cbReqSize);
-			*pcbAckSize = cbReqSize;
-			if (status.IsNOK())
+			if (m_cbOffset + cbReqSize > m_pMemPool->GetSize())
 			{
-				*pcbAckSize = cbReqSize;
+				if (!(status = m_pMemPool->SetSize(m_cbOffset + cbReqSize)))
+				{
+					return status;
+				}
 			}
+			memcpy((Byte *)m_pMemPool->GetMem() + m_cbOffset, pMem, cbReqSize);
+			*pcbAckSize = cbReqSize;
+			m_cbOffset += cbReqSize;
 
 			return status;
 		}

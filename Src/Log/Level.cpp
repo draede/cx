@@ -26,43 +26,23 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
+#include "CX/Log/Level.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Log
 {
 
-class CX_API Helper : public IObject
-{
-public:
+static const Level      Level_None                     = CX_LOG_NONE;
+static const Level      Level_Error                    = CX_LOG_ERROR;
+static const Level      Level_Warning                  = CX_LOG_WARN;
+static const Level      Level_Info                     = CX_LOG_INFO;
+static const Level      Level_Verbose                  = CX_LOG_VERB;
+static const Level      Level_Debug                    = CX_LOG_DEBUG;
 
-	static const Size COPY_STREAM_BUFFER = 8192;
-
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
-
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
-
-private:
-
-	Helper();
-
-	~Helper();
-
-};
-
-}//namespace IO
+}//namespace Log
 
 }//namespace CX
 

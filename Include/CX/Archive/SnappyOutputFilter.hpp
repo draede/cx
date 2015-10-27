@@ -25,44 +25,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */ 
-
+ 
 #pragma once
 
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
+#include "CX/Util/MemPool.hpp"
+#include "CX/IO/IOutputFilter.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Archive
 {
 
-class CX_API Helper : public IObject
+class CX_API SnappyOutputFilter : public IO::IOutputFilter
 {
 public:
 
-	static const Size COPY_STREAM_BUFFER = 8192;
+	static const Size BLOCK_SIZE   = 65536;
 
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
+	SnappyOutputFilter();
 
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
+	~SnappyOutputFilter();
+
+	virtual Size GetBlockSize();
+
+	virtual Status Filter(const void *pInput, Size cbInputSize, void **ppOutput, Size *pcbOutputSize);
 
 private:
 
-	Helper();
+	Util::DynMemPool   m_buffer;
 
-	~Helper();
+	Status ResizeBuffer(Size cbSize);
 
 };
 
-}//namespace IO
+}//namespace Archive
 
 }//namespace CX
-

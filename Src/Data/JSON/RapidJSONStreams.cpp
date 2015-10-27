@@ -29,40 +29,26 @@
 #pragma once
 
 
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
+#include "CX/Data/JSON/RapidJSONStreams.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Data
 {
 
-class CX_API Helper : public IObject
+namespace JSON
 {
-public:
 
-	static const Size COPY_STREAM_BUFFER = 8192;
+const Size RapidJSONInputStream::BUFFER_SIZE = 4000;
 
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
-
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
-
-private:
-
-	Helper();
-
-	~Helper();
 
 };
 
-}//namespace IO
+}//namespace JSON
+
+}//namespace Data
 
 }//namespace CX
 

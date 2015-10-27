@@ -25,17 +25,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */ 
-
+ 
 #pragma once
 
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
 
 
 namespace CX
@@ -44,25 +40,17 @@ namespace CX
 namespace IO
 {
 
-class CX_API Helper : public IObject
+
+class CX_API IInputFilter
 {
 public:
 
-	static const Size COPY_STREAM_BUFFER = 8192;
+	virtual ~IInputFilter() { }
 
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
-
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
-
-private:
-
-	Helper();
-
-	~Helper();
+	virtual Status Filter(const void *pInput, Size cbInputSize, Size cbOrigInputSize, void **ppOutput, Size *pcbOutputSize) = 0;
 
 };
 
 }//namespace IO
 
 }//namespace CX
-

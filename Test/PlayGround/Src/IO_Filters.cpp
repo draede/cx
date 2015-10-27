@@ -32,8 +32,14 @@
 #include "CX/Util/Timer.hpp"
 #include "CX/Util/RndGen.hpp"
 #include "CX/Print.hpp"
-#include "CX/Archive/LZHAMFilter.hpp"
-#include "CX/Crypt/AES128Filter.hpp"
+#include "CX/Crypt/AES128InputFilter.hpp"
+#include "CX/Crypt/AES128OutputFilter.hpp"
+#include "CX/Archive/SnappyInputFilter.hpp"
+#include "CX/Archive/SnappyOutputFilter.hpp"
+#include "CX/Archive/LZ4InputFilter.hpp"
+#include "CX/Archive/LZ4OutputFilter.hpp"
+#include "CX/Archive/LZHAMInputFilter.hpp"
+#include "CX/Archive/LZHAMOutputFilter.hpp"
 #include "CX/IO/FilteredInputStream.hpp"
 #include "CX/IO/FilteredOutputStream.hpp"
 #include "CX/IO/MemInputStream.hpp"
@@ -43,7 +49,6 @@
 
 
 using namespace CX;
-
 
 Status CreateInput(Util::DynMemPool *pMemPool, Size cbMinSize, Size cbMaxSize)
 {
@@ -70,129 +75,214 @@ Status CreateInput(Util::DynMemPool *pMemPool, Size cbMinSize, Size cbMaxSize)
 	return Util::RndGen::Get().GetBytes((Byte *)pMemPool->GetMem(), cbSize, byteset + 65, 26);
 }
 
-Status TestFilterAsInput(IO::IFilter *pFilter, Util::DynMemPool *pMemPoolIn, Util::DynMemPool *pMemPoolOut)
+typedef IO::IInputStream * (*InputStreamFactory)(IO::IInputStream *pIS);
+
+typedef IO::IOutputStream * (*OutputStreamFactory)(IO::IOutputStream *pOS);
+
+void TestFilter(const Char *szName, InputStreamFactory pfnInputStreamFactory, OutputStreamFactory pfnOutputStreamFactory, 
+                IO::IInputStream *pInputStream)
 {
-	IO::MemInputStream       mis(pMemPoolIn);
-	IO::MemOutputStream      mos(pMemPoolOut);
-	IO::FilteredInputStream  is(pFilter, &mis);
-	Status                   status;
 
-	if (!(status = IO::Helper::CopyStream(&is, &mos)))
-	{
-		return status;
-	}
-
-	return Status();
-}
-
-Status TestFilterAsOutput(IO::IFilter *pFilter, Util::DynMemPool *pMemPoolIn, Util::DynMemPool *pMemPoolOut)
-{
-	IO::MemInputStream       mis(pMemPoolIn);
-	IO::MemOutputStream      mos(pMemPoolOut);
-	IO::FilteredOutputStream os(pFilter, &mos);
-	Status                   status;
-
-	if (!(status = IO::Helper::CopyStream(&mis, &os)))
-	{
-		return status;
-	}
-
-	return Status();
-}
-
-void TestFilter(IO::IFilter *pInFilter, IO::IFilter *pOutFilter, Util::DynMemPool *pMemPoolIn)
-{
-	Util::Timer      timer;
-	Status           status;
+	Util::DynMemPool   mem1;
+	Util::DynMemPool   mem2;
+	Util::DynMemPool   mem3;
+	UInt64             cbSize1;
+	UInt64             cbSize2;
+	UInt64             cbSize3;
+	Status             status;
 
 	{
-		Util::DynMemPool    output1;
-		Util::DynMemPool    output2;
+		IO::MemOutputStream   mos(&mem1);
 
-		pInFilter->Reset();
-		pOutFilter->Reset();
-
-		timer.ResetTimer();
-		if ((status = TestFilterAsInput(pInFilter, pMemPoolIn, &output1)))
+		if (!(status = IO::Helper::CopyStream(pInputStream, &mos)))
 		{
-			Print(stdout, "Input filtered (=>) {1} bytes into {2} bytes in {3:.3} seconds ({4:.3} MB/sec)\n", 
-			      pMemPoolIn->GetSize(), output1.GetSize(), timer.GetElapsedTime(), 
-			      ((double)pMemPoolIn->GetSize() / 1048576.0) / timer.GetElapsedTime());
+			Print(stdout, "{1} : copy error {2}, msg '{3}'\n", szName, status.GetCode(), status.GetMsg());
+
+			return;
 		}
 
-		timer.ResetTimer();
-		if ((status = TestFilterAsInput(pOutFilter, &output1, &output2)))
-		{
-			Print(stdout, "Input filtered (<=) {1} bytes into {2} bytes in {3:.3} seconds ({4:.3} MB/sec)\n", output1.GetSize(), 
-			      output2.GetSize(), timer.GetElapsedTime(), ((double)output1.GetSize() / 1048576.0) / timer.GetElapsedTime());
-		}
+		mos.GetSize(&cbSize1);
+	}
 
-		if (pMemPoolIn->GetSize() == output2.GetSize())
+	{
+		IO::MemOutputStream   mos(&mem2);
+
 		{
-			if (0 != memcmp(pMemPoolIn->GetMem(), output2.GetMem(), pMemPoolIn->GetSize()))
+			IO::MemInputStream    mis(&mem1, (Size)cbSize1);
+			IO::IOutputStream     *pOS = pfnOutputStreamFactory(&mos);
+
+			if (!(status = IO::Helper::CopyStream(&mis, pOS)))
 			{
-				Print(stdout, "Buffer difference\n");
+				Print(stdout, "{1} : encode error {2}, msg '{3}'\n", szName, status.GetCode(), status.GetMsg());
+				delete pOS;
+
+				return;
 			}
+			delete pOS;
 		}
-		else
-		{
-			Print(stdout, "Size difference\n");
-		}
+
+		mos.GetSize(&cbSize2);
 	}
 	{
-		Util::DynMemPool    output1;
-		Util::DynMemPool    output2;
+		IO::MemOutputStream      mos(&mem3);
 
-		pInFilter->Reset();
-		pOutFilter->Reset();
-
-		timer.ResetTimer();
-		if ((status = TestFilterAsOutput(pInFilter, pMemPoolIn, &output1)))
 		{
-			Print(stdout, "Output filtered (=>) {1} bytes into {2} bytes in {3:.3} seconds ({4:.3} MB/sec)\n", 
-			      pMemPoolIn->GetSize(), output1.GetSize(), timer.GetElapsedTime(), 
-			      ((double)pMemPoolIn->GetSize() / 1048576.0) / timer.GetElapsedTime());
-		}
+			IO::MemInputStream       mis(&mem2, (Size)cbSize2);
+			IO::IInputStream         *pIS = pfnInputStreamFactory(&mis);
 
-		timer.ResetTimer();
-		if ((status = TestFilterAsOutput(pOutFilter, &output1, &output2)))
-		{
-			Print(stdout, "Output filtered (<=) {1} bytes into {2} bytes in {3:.3} seconds ({4:.3} MB/sec)\n", output1.GetSize(), 
-			      output2.GetSize(), timer.GetElapsedTime(), ((double)output1.GetSize() / 1048576.0) / timer.GetElapsedTime());
-		}
-
-		if (pMemPoolIn->GetSize() == output2.GetSize())
-		{
-			if (0 != memcmp(pMemPoolIn->GetMem(), output2.GetMem(), pMemPoolIn->GetSize()))
+			if (!(status = IO::Helper::CopyStream(pIS, &mos)))
 			{
-				Print(stdout, "Buffer difference\n");
+				Print(stdout, "{1} : decode error {2}, msg '{3}'\n", szName, status.GetCode(), status.GetMsg());
+				delete pIS;
+
+				return;
 			}
+
+			delete pIS;
 		}
-		else
-		{
-			Print(stdout, "Size difference\n");
-		}
+
+		mos.GetSize(&cbSize3);
 	}
-}
-
-void Archive_LZHAMFilter_Test()
-{
-	Util::DynMemPool input;
-	Util::Timer      timer;
-	Status           status;
-
-	timer.ResetTimer();
-	status = CreateInput(&input, 4096, 131072);
-	Print(stdout, "Generated {1} bytes random input in {2:.3} seconds\n", input.GetSize(), timer.GetElapsedTime());
-
+	if (cbSize1 != cbSize3)
 	{
-		Archive::LZHAMFilter flt1(Archive::LZHAMFilter::Dir_Compress);
-		Archive::LZHAMFilter flt2(Archive::LZHAMFilter::Dir_Uncompress);
+		Print(stdout, "{1} : size mismatched\n", szName);
 
-		Print(stdout, "Testing LZHAMFilter...\n");
-		TestFilter(&flt1, &flt2, &input);
+		return;
+	}
+	if (0 != memcmp(mem1.GetMem(), mem3.GetMem(), (Size)cbSize1))
+	{
+		Print(stdout, "{1} : content mismatched\n", szName);
+
+		return;
 	}
 }
 
-REGISTER_TEST(Archive_LZHAMFilter_Test);
+IO::IInputStream *AESInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS);
+}
 
+IO::IOutputStream *AESOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS);
+}
+
+IO::IInputStream *LZ4InputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::LZ4InputFilter(), pIS);
+}
+
+IO::IOutputStream *LZ4OutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::LZ4OutputFilter(), pOS);
+}
+
+IO::IInputStream *SnappyInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::SnappyInputFilter(), pIS);
+}
+
+IO::IOutputStream *SnappyOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::SnappyOutputFilter(), pOS);
+}
+
+IO::IInputStream *LZHAMInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::LZHAMInputFilter(), pIS);
+}
+
+IO::IOutputStream *LZHAMOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::LZHAMOutputFilter(), pOS);
+}
+
+IO::IInputStream *LZ4AESInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::LZ4InputFilter(), 
+	                                        new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS), true);
+}
+
+IO::IOutputStream *LZ4AESOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::LZ4OutputFilter(16), 
+	                                        new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS), true);
+}
+
+IO::IInputStream *SnappyAESInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::SnappyInputFilter(), 
+	                                        new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS), true);
+}
+
+IO::IOutputStream *SnappyAESOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::SnappyOutputFilter(), 
+	                                        new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS), true);
+}
+
+IO::IInputStream *LZHAMAESInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::LZHAMInputFilter(), 
+	                                        new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS), true);
+}
+
+IO::IOutputStream *LZHAMAESOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::LZHAMOutputFilter(), 
+	                                        new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS), true);
+}
+
+void Filter_Test(const Char *szName, InputStreamFactory pfnInputStreamFactory, OutputStreamFactory pfnOutputStreamFactory)
+{
+	Util::DynMemPool   mem;
+
+	CreateInput(&mem, 1000, 1000000);
+
+	IO::MemInputStream mis(&mem, mem.GetSize());
+
+	TestFilter(szName, pfnInputStreamFactory, pfnOutputStreamFactory, &mis);
+}
+
+void AESFilter_Test()
+{
+	Filter_Test("AESFilter_Test", &AESInputStreamFactory, &AESOutputStreamFactory);
+}
+
+void SnappyFilter_Test()
+{
+	Filter_Test("SnappyFilter_Test", &SnappyInputStreamFactory, &SnappyOutputStreamFactory);
+}
+
+void LZ4Filter_Test()
+{
+	Filter_Test("LZ4Filter_Test", &LZ4InputStreamFactory, &LZ4OutputStreamFactory);
+}
+
+void LZHAMFilter_Test()
+{
+	Filter_Test("LZHAMFilter_Test", &LZHAMInputStreamFactory, &LZHAMOutputStreamFactory);
+}
+
+void SnappyAESFilter_Test()
+{
+	Filter_Test("SnappyAESFilter_Test", &SnappyAESInputStreamFactory, &SnappyAESOutputStreamFactory);
+}
+
+void LZ4AESFilter_Test()
+{
+	Filter_Test("LZ4AESFilter_Test", &LZ4AESInputStreamFactory, &LZ4AESOutputStreamFactory);
+}
+
+void LZHAMAESFilter_Test()
+{
+	Filter_Test("LZHAMAESFilter_Test", &LZHAMAESInputStreamFactory, &LZHAMAESOutputStreamFactory);
+}
+
+REGISTER_TEST(AESFilter_Test);
+REGISTER_TEST(SnappyFilter_Test);
+REGISTER_TEST(LZ4Filter_Test);
+REGISTER_TEST(LZHAMFilter_Test);
+REGISTER_TEST(SnappyAESFilter_Test);
+REGISTER_TEST(LZ4AESFilter_Test);
+REGISTER_TEST(LZHAMAESFilter_Test);

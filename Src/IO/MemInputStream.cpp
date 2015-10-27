@@ -40,7 +40,7 @@ MemInputStream::MemInputStream(const void *pMem, Size cbSize)
 {
 	m_nType     = Type_Mem;
 	m_pMem      = pMem;
-	m_cbMemSize = cbSize;
+	m_cbSize    = cbSize;
 	m_cbOffset  = 0;
 }
 
@@ -51,10 +51,11 @@ MemInputStream::MemInputStream(const String *pStr)
 	m_cbOffset  = 0;
 }
 
-MemInputStream::MemInputStream(const Util::IMemPool *pMemPool)
+MemInputStream::MemInputStream(const Util::IMemPool *pMemPool, Size cbSize)
 {
 	m_nType     = Type_MemPool;
 	m_pMemPool  = pMemPool;
+	m_cbSize    = cbSize;
 	m_cbOffset  = 0;
 }
 
@@ -66,9 +67,9 @@ Size MemInputStream::GetSizeImpl() const
 {
 	switch(m_nType)
 	{
-		case Type_Mem:       return m_cbMemSize;
+		case Type_Mem:       return m_cbSize;
 		case Type_String:    return m_pStr->size();
-		case Type_MemPool:   return m_pMemPool->GetSize();
+		case Type_MemPool:   return m_cbSize;
 	}
 
 	return 0;
@@ -88,13 +89,22 @@ const void *MemInputStream::GetMemImpl(Size cbOffset) const
 
 Status MemInputStream::Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize)
 {
-	if (cbReqSize > GetSizeImpl() - m_cbOffset)
+	Size cbSize = GetSizeImpl();
+
+	if (m_cbOffset < cbSize)
 	{
-		*pcbAckSize = GetSizeImpl() - m_cbOffset;
+		if (cbReqSize > cbSize - m_cbOffset)
+		{
+			*pcbAckSize = cbSize - m_cbOffset;
+		}
+		else
+		{
+			*pcbAckSize = cbReqSize;
+		}
 	}
 	else
 	{
-		*pcbAckSize = cbReqSize;
+		*pcbAckSize = 0;
 	}
 	if (0 < *pcbAckSize)
 	{

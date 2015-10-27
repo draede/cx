@@ -32,45 +32,52 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/Util/MemPool.hpp"
+#include "CX/IO/IOutputFilter.hpp"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Crypt
 {
 
-class CX_API IFilter
+class CX_API AES128OutputFilter : public IO::IOutputFilter
 {
 public:
 
+	static const Size BLOCK_SIZE       = 16;
+	static const Size KEY_SIZE_128     = 16;
+	static const Size KEY_SIZE_192     = 24;
+	static const Size KEY_SIZE_256     = 32;
+
+	AES128OutputFilter(const void *pKey, Size cbKeySize = 0);
+
+	~AES128OutputFilter();
+
+	virtual Size GetBlockSize();
+
+	virtual Status Filter(const void *pInput, Size cbInputSize, void **ppOutput, Size *pcbOutputSize);
+
+private:
+
 	enum State
 	{
-		State_Continue,
-		State_Finish,
-		State_Error,
+		State_IV,
+		State_Begin,
+		State_Body,
 	};
 
-	struct Buffers
-	{
-		const void *pInBuffer;
-		Size       cbInSize;
-		Size       cbInTotalSize;
-		void       *pOutBuffer;
-		Size       cbOutSize;
-		Size       cbOutTotalSize;
-		bool       bHasMoreData;
-		State      nState;
-	};
+	unsigned int       m_key[60];
+	int                m_cKeySize;
+	Byte               m_iv[BLOCK_SIZE];
+	Util::DynMemPool   m_buffer;
+	State              m_nState;
 
-	virtual ~IFilter() { }
-
-	virtual Status Filter(Buffers *pBuffers) = 0;
-
-	virtual Status Reset() = 0;
+	Status ResizeBuffer(Size cbSize);
 
 };
 
-}//namespace IO
+}//namespace Crypt
 
 }//namespace CX

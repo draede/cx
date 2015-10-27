@@ -1,0 +1,482 @@
+/* 
+ * CX - C++ framework for general purpose development
+ *
+ * https://github.com/draede/cx
+ * 
+ * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ *
+ * Released under the MIT License.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */ 
+
+#include "Tester.hpp"
+#include "CX/MemStats.hpp"
+
+
+using namespace CX;
+
+
+struct TestResult
+{
+	bool   bFileOK;
+	bool   bReadOK;
+	bool   bEncodeOK;
+	bool   bDecodeOK;
+	bool   bSameSize;
+	bool   bSameContent;
+	double lfEncoderElapsed;
+	double lfDecoderElapsed;
+};
+
+struct Stats
+{
+	Util::Timer timer;
+	double      lfEncoderElapsed;
+	double      lfDecoderElapsed;
+	UInt64      cbEncoderSize;
+	UInt64      cbDecoderSize;
+	double      lfLastDumpStats;
+	Size        cTotal;
+	Size        cOpenOK;
+	Size        cReadOK;
+	Size        cEncodeOK;
+	Size        cDecodeOK;
+	Size        cSameSize;
+	Size        cSameContent;
+};
+
+typedef IO::IInputStream * (* InputStreamFactory)(IO::IInputStream *pIS);
+
+typedef IO::IOutputStream * (* OutputStreamFactory)(IO::IOutputStream *pOS);
+
+
+bool IsResOK(TestResult *pRes)
+{
+	if (!pRes->bFileOK) return false;
+	if (!pRes->bReadOK) return false;
+	if (!pRes->bEncodeOK) return false;
+	if (!pRes->bDecodeOK) return false;
+	if (!pRes->bSameSize) return false;
+	if (!pRes->bSameContent) return false;
+
+	return true;
+}
+
+
+
+
+void TestFile(InputStreamFactory pfnInputStreamFactory, OutputStreamFactory pfnOutputStreamFactory, 
+              const WChar *wszPath, TestResult *pRes, const Char *szOutPath = NULL)
+{
+	Util::Timer timer;
+
+	for (;;)
+	{
+		Util::DynMemPool      mem1;
+		UInt64                cbMem1Size;
+		Util::DynMemPool      mem2;
+		UInt64                cbMem2Size;
+		Util::DynMemPool      mem3;
+		UInt64                cbMem3Size;
+		Status                status;
+
+		mem1.SetSize(10000000);
+		mem2.SetSize(10000000);
+		mem3.SetSize(10000000);
+
+		pRes->bFileOK      = true;
+		pRes->bReadOK      = true;
+		pRes->bEncodeOK    = true;
+		pRes->bDecodeOK    = true;
+		pRes->bSameSize    = true;
+		pRes->bSameContent = true;
+
+		{
+			IO::FileInputStream   fis(wszPath);
+			if (!fis.IsOK())
+			{
+				pRes->bFileOK = false;
+
+				break;
+			}
+
+			IO::MemOutputStream   mos1(&mem1);
+
+			if (!(status = IO::Helper::CopyStream(&fis, &mos1)))
+			{
+				pRes->bReadOK = false;
+
+				break;
+			}
+			mos1.GetSize(&cbMem1Size);
+		}
+		if (!IsResOK(pRes))
+		{
+			break;
+		}
+
+		{
+			IO::MemInputStream        mis1(&mem1, (Size)cbMem1Size);
+			IO::MemOutputStream       mos2(&mem2);
+			{
+				IO::IOutputStream *pOS = pfnOutputStreamFactory(&mos2);
+				//IO::FilteredOutputStream  fltos(pOutputFilter, &mos2);
+
+				timer.ResetTimer();
+				if (!(status = IO::Helper::CopyStream(&mis1, pOS)))
+				{
+					pRes->bEncodeOK = false;
+
+					break;
+				}
+				else
+				{
+					pRes->lfEncoderElapsed = timer.GetElapsedTime();
+				}
+
+				delete pOS;
+			}
+			mos2.GetSize(&cbMem2Size);
+		}
+		if (!IsResOK(pRes))
+		{
+			break;
+		}
+
+		{
+			IO::MemInputStream       mis2(&mem2, (Size)cbMem2Size);
+			IO::IInputStream         *pIS = pfnInputStreamFactory(&mis2);
+			//IO::FilteredInputStream  fltis(pInputFilter, &mis2);
+			IO::MemOutputStream      mos3(&mem3);
+
+			timer.ResetTimer();
+			if (!(status = IO::Helper::CopyStream(pIS, &mos3)))
+			{
+				pRes->bDecodeOK = false;
+
+				break;
+			}
+			else
+			{
+				pRes->lfDecoderElapsed = timer.GetElapsedTime();
+			}
+
+			delete pIS;
+
+			mos3.GetSize(&cbMem3Size);
+		}
+		if (!IsResOK(pRes))
+		{
+			break;
+		}
+
+		if (NULL != szOutPath)
+		{
+			String sPath;
+
+			sPath = szOutPath;
+			sPath += "\\mem1.dat";
+			IO::FileOutputStream fos1(sPath.c_str());
+			IO::MemInputStream   mis1(&mem1, (Size)cbMem1Size);
+			IO::Helper::CopyStream(&mis1, &fos1);
+
+			sPath = szOutPath;
+			sPath += "\\mem2.dat";
+			IO::FileOutputStream fos2(sPath.c_str());
+			IO::MemInputStream   mis2(&mem2, (Size)cbMem2Size);
+			IO::Helper::CopyStream(&mis2, &fos2);
+
+			sPath = szOutPath;
+			sPath += "\\mem3.dat";
+			IO::FileOutputStream fos3(sPath.c_str());
+			IO::MemInputStream   mis3(&mem3, (Size)cbMem3Size);
+			IO::Helper::CopyStream(&mis3, &fos3);
+		}
+		if (!IsResOK(pRes))
+		{
+			break;
+		}
+
+		if (cbMem1Size != cbMem3Size)
+		{
+			pRes->bSameSize = false;
+
+			break;
+		}
+
+		if (0 != memcmp(mem1.GetMem(), mem3.GetMem(), (Size)cbMem1Size))
+		{
+			pRes->bSameContent = false;
+
+			break;
+		}
+
+		break;
+	}
+	//nothing here yet
+}
+
+void DumpStats(Stats &stats, bool bForce = false)
+{
+	double lfElapsed = stats.timer.GetElapsedTime();
+
+	if (!bForce && (lfElapsed - stats.lfLastDumpStats) < 5.0)
+	{
+		return;
+	}
+	stats.lfLastDumpStats = lfElapsed;
+	Print(stdout, "Elapsed time       : {1:.3} seconds\n", lfElapsed);
+	Print(stdout, "Files              : {1}\n", stats.cTotal);
+	Print(stdout, "Encode speed       : {1:.3} MB/s\n", (stats.cbEncoderSize / (1024.0 * 1024.0)) / stats.lfEncoderElapsed);
+	Print(stdout, "Decode speed       : {1:.3} MB/s\n", (stats.cbDecoderSize / (1024.0 * 1024.0)) / stats.lfDecoderElapsed);
+	Print(stdout, "Open file errors   : {1} ({2:.2}%)\n", stats.cTotal - stats.cOpenOK, (stats.cTotal - stats.cOpenOK) * 100.0 / stats.cTotal);
+	Print(stdout, "Read file errors   : {1} ({2:.2}%)\n", stats.cTotal - stats.cReadOK, (stats.cTotal - stats.cReadOK) * 100.0 / stats.cTotal);
+	Print(stdout, "Encode errors      : {1} ({2:.2}%)\n", stats.cTotal - stats.cEncodeOK, (stats.cTotal - stats.cEncodeOK) * 100.0 / stats.cTotal);
+	Print(stdout, "Decode errors      : {1} ({2:.2}%)\n", stats.cTotal - stats.cDecodeOK, (stats.cTotal - stats.cDecodeOK) * 100.0 / stats.cTotal);
+	Print(stdout, "Size mismatches    : {1} ({2:.2}%)\n", stats.cTotal - stats.cSameSize, (stats.cTotal - stats.cSameSize) * 100.0 / stats.cTotal);
+	Print(stdout, "Content mismatches : {1} ({2:.2}%)\n", stats.cTotal - stats.cSameContent, (stats.cTotal - stats.cSameContent) * 100.0 / stats.cTotal);
+	Print(stdout, "\n");
+}
+
+void EnumFiles(InputStreamFactory pfnInputStreamFactory, OutputStreamFactory pfnOutputStreamFactory, 
+               const std::wstring wsInputPath, Stats &stats, IO::IOutputStream *pErrorsOS)
+{
+	WIN32_FIND_DATAW   data;
+	HANDLE             hFind;
+	ULARGE_INTEGER     liSize;
+	std::wstring       wsMask;
+	std::wstring       wsInPath;
+	std::wstring       wsOutPath;
+
+	wsMask = wsInputPath;
+	wsMask += L"\\*.*";
+	if (INVALID_HANDLE_VALUE == (hFind = FindFirstFileW(wsMask.c_str(), &data)))
+	{
+		return;
+	}
+	for (;;)
+	{
+		if (!(FILE_ATTRIBUTE_REPARSE_POINT & data.dwFileAttributes))
+		{
+			wsInPath = wsInputPath;
+			wsInPath += L"\\";
+			wsInPath += data.cFileName;
+			if (!(FILE_ATTRIBUTE_DIRECTORY & data.dwFileAttributes))
+			{
+				liSize.LowPart  = data.nFileSizeLow;
+				liSize.HighPart = data.nFileSizeHigh;
+
+				if (67108864 >= liSize.QuadPart)
+				{
+					TestResult res;
+
+					//Print(stdout, "{1}\n", wsInPath);
+					TestFile(pfnInputStreamFactory, pfnOutputStreamFactory, wsInPath.c_str(), &res);
+
+					stats.cTotal++;
+					if (res.bFileOK)
+					{
+						stats.cOpenOK++;
+					}
+					else
+					{
+						Print(pErrorsOS, "Open file failed: {1}\n", wsInPath);
+					}
+
+					if (res.bReadOK)
+					{
+						stats.cReadOK++;
+					}
+					else
+					{
+						Print(pErrorsOS, "Read file failed: {1}\n", wsInPath);
+					}
+
+					if (res.bEncodeOK)
+					{
+						stats.cEncodeOK++;
+						stats.cbEncoderSize += liSize.QuadPart;
+						stats.lfEncoderElapsed += res.lfEncoderElapsed;
+					}
+					else
+					{
+						Print(pErrorsOS, "Encode failed : {1}\n", wsInPath);
+					}
+
+					if (res.bDecodeOK)
+					{
+						stats.cDecodeOK++;
+						stats.cbDecoderSize += liSize.QuadPart;
+						stats.lfDecoderElapsed += res.lfDecoderElapsed;
+					}
+					else
+					{
+						Print(pErrorsOS, "Decode failed : {1}\n", wsInPath);
+					}
+
+					if (res.bSameSize)
+					{
+						stats.cSameSize++;
+					}
+					else
+					{
+						Print(pErrorsOS, "Size mismatched : {1}\n", wsInPath);
+					}
+
+					if (res.bSameContent)
+					{
+						stats.cSameContent++;
+					}
+					else
+					{
+						Print(pErrorsOS, "Content mismatched : {1}\n", wsInPath);
+					}
+
+					DumpStats(stats);
+				}
+			}
+			else
+			if (0 != wcscmp(data.cFileName, L".") && 0 != wcscmp(data.cFileName, L".."))
+			{
+				EnumFiles(pfnInputStreamFactory, pfnOutputStreamFactory, wsInPath.c_str(), stats, pErrorsOS);
+			}
+		}
+		if (!FindNextFileW(hFind, &data))
+		{
+			break;
+		}
+	}
+	FindClose(hFind);
+}
+
+IO::IInputStream *AESInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS);
+}
+
+IO::IOutputStream *AESOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS);
+}
+
+IO::IInputStream *LZ4InputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::LZ4InputFilter(), pIS);
+}
+
+IO::IOutputStream *LZ4OutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::LZ4OutputFilter(), pOS);
+}
+
+IO::IInputStream *SnappyInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::SnappyInputFilter(), pIS);
+}
+
+IO::IOutputStream *SnappyOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::SnappyOutputFilter(), pOS);
+}
+
+IO::IInputStream *LZHAMInputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::LZHAMInputFilter(), pIS);
+}
+
+IO::IOutputStream *LZHAMOutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::LZHAMOutputFilter(), pOS);
+}
+
+IO::IInputStream *Combined1InputStreamFactory(IO::IInputStream *pIS)
+{
+	return new IO::FilteredInputStream(new Archive::LZ4InputFilter(), 
+	                                        new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS), true);
+}
+
+IO::IOutputStream *Combined1OutputStreamFactory(IO::IOutputStream *pOS)
+{
+	return new IO::FilteredOutputStream(new Archive::LZ4OutputFilter(16), 
+	                                        new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS), true);
+}
+
+int main(int argc, char *argv[])
+{
+	CX_UNUSED(argc);
+	CX_UNUSED(argv);
+
+	MemStats::Activate();
+
+	//TestResult res;
+
+	//TestFile(&AESInputStreamFactory, &AESOutputStreamFactory, L"c:\\windows\\notepad.exe", &res, "c:\\temp");
+	//TestFile(&SnappyInputStreamFactory, &SnappyOutputStreamFactory, L"c:\\windows\\notepad.exe", &res, "c:\\temp");
+	//TestFile(&LZ4InputStreamFactory, &LZ4OutputStreamFactory, L"c:\\windows\\notepad.exe", &res, "c:\\temp");
+	//TestFile(&LZHAMInputStreamFactory, &LZHAMOutputStreamFactory, L"c:\\windows\\notepad.exe", &res, "c:\\temp");
+	//TestFile(&Combined1InputStreamFactory, &Combined1OutputStreamFactory, L"c:\\windows\\notepad.exe", &res, "c:\\temp");
+
+	{
+		IO::FileInputStream fis(L"c:\\windows\\notepad.exe");
+		TestFilter("AES", &SnappyInputStreamFactory, &SnappyOutputStreamFactory, &fis);
+	}
+
+#if 0
+	{
+		Stats stats;
+
+		stats.cTotal           = 0;
+		stats.lfEncoderElapsed = 0;
+		stats.lfDecoderElapsed = 0;
+		stats.cbEncoderSize    = 0;
+		stats.cbDecoderSize    = 0;
+		stats.cOpenOK          = 0;
+		stats.cReadOK          = 0;
+		stats.cEncodeOK        = 0;
+		stats.cDecodeOK        = 0;
+		stats.cSameSize        = 0;
+		stats.cSameContent     = 0;
+		stats.lfLastDumpStats  = 0.0;
+		stats.timer.ResetTimer();
+
+		IO::FileOutputStream err("c:\\temp\\errors.txt");
+
+		//EnumFiles(&AESInputStreamFactory, &AESOutputStreamFactory, L"c:", stats, &err);
+		//EnumFiles(&LZ4InputStreamFactory, &LZ4OutputStreamFactory, L"c:", stats, &err);
+		//EnumFiles(&SnappyInputStreamFactory, &SnappyOutputStreamFactory, L"c:", stats, &err);
+		//EnumFiles(&LZHAMInputStreamFactory, &LZHAMOutputStreamFactory, L"c:", stats, &err);
+		//EnumFiles(&Combined1InputStreamFactory, &Combined1OutputStreamFactory, L"c:", stats, &err);
+
+		EnumFiles(&Combined1InputStreamFactory, &Combined1OutputStreamFactory, L"c:", stats, &err);
+		EnumFiles(&Combined1InputStreamFactory, &Combined1OutputStreamFactory, L"d:", stats, &err);
+		EnumFiles(&Combined1InputStreamFactory, &Combined1OutputStreamFactory, L"e:", stats, &err);
+		EnumFiles(&Combined1InputStreamFactory, &Combined1OutputStreamFactory, L"f:", stats, &err);
+
+		DumpStats(stats, true);
+	}
+#endif
+
+	MemStats::PrintAllocs(stdout);
+
+	//Tester::Run();
+	
+	return 0;
+}
+

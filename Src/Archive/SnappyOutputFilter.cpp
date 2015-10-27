@@ -25,44 +25,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */ 
-
-#pragma once
-
-
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/IO/IInputStream.hpp"
-#include "CX/IO/IOutputStream.hpp"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-#include "CX/Vector.hpp"
+ 
+#include "CX/Archive/SnappyOutputFilter.hpp"
+#include "CX/Hash/BLAKE2Hash.hpp"
+#include "CX/Util/RndGen.hpp"
+#include "snappy.h"
 
 
 namespace CX
 {
 
-namespace IO
+namespace Archive
 {
 
-class CX_API Helper : public IObject
+SnappyOutputFilter::SnappyOutputFilter()
 {
-public:
+}
 
-	static const Size COPY_STREAM_BUFFER = 8192;
+SnappyOutputFilter::~SnappyOutputFilter()
+{
+}
 
-	static Status CopyStream(IInputStream *pInputStream, IOutputStream *pOutputStream, UInt64 *pcbSize = NULL);
+Status SnappyOutputFilter::ResizeBuffer(Size cbSize)
+{
+	if (cbSize > m_buffer.GetSize())
+	{
+		return m_buffer.SetSize(cbSize);
+	}
 
-	static Status LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vectorData);
+	return Status();
+}
 
-private:
+Size SnappyOutputFilter::GetBlockSize()
+{
+	return BLOCK_SIZE;
+}
 
-	Helper();
+Status SnappyOutputFilter::Filter(const void *pInput, Size cbInputSize, void **ppOutput, Size *pcbOutputSize)
+{
+	Status status;
 
-	~Helper();
+	if (0 == cbInputSize)
+	{
+		*ppOutput      = NULL;
+		*pcbOutputSize = 0;
 
-};
+		return Status();
+	}
+	if (!(status = ResizeBuffer(snappy::MaxCompressedLength(cbInputSize))))
+	{
+		return status;
+	}
+	snappy::RawCompress((const char *)pInput, cbInputSize, (char *)m_buffer.GetMem(), pcbOutputSize);
+	*ppOutput = m_buffer.GetMem();
 
-}//namespace IO
+	return Status();
+}
+
+}//namespace Archive
 
 }//namespace CX
-

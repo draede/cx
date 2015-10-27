@@ -1,3 +1,20 @@
+0.1.43 - 2015-10-27
+  - Added max mem alloc option for mem dbg
+  - Revamped IO filters 
+  - Refactored IO::FilteredInputStream
+  - Refactored IO::FilteredOutputStream
+  - Removed Archive/LZHAMFilter
+  - Removed Archive/CryptFilter
+  - Added Crypt/AES128InputFilter
+  - Added Crypt/AES128OutputFilter
+  - Added Archive/LZHAMInputFilter
+  - Added Archive/LZHAMOutputFilter
+  - Added Archive/LZ4InputFilter
+  - Added Archive/LZ4OutputFilter
+  - Added Archive/SnappyInputFilter
+  - Added Archive/SnappyOutputFilter
+  - Fixed IO::MemOutputStream MemPool copy 
+  - Fixed IO::MemInputStream read EOF
 0.1.42 - 2015-10-14
   - Fixed map read & write in SimpleBuffers
 0.1.41 - 2015-10-13

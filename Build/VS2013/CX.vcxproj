@@ -87,9 +87,15 @@
     <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h" />
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
-    <ClInclude Include="..\..\Include\CX\Archive\LZHAMFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\LZ4InputFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\LZ4OutputFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\LZHAMInputFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\LZHAMOutputFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\SnappyInputFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Archive\SnappyOutputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\BLOB.hpp" />
-    <ClInclude Include="..\..\Include\CX\Crypt\AES128Filter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Crypt\AES128InputFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\Crypt\AES128OutputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\CX.hpp" />
     <ClInclude Include="..\..\Include\CX\C\APIDefs.h" />
     <ClInclude Include="..\..\Include\CX\C\ctype.h" />
@@ -145,7 +151,6 @@
     <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp" />
     <ClInclude Include="..\..\Include\CX\IObject.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\BlockFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FilteredInputStream.hpp" />
@@ -153,8 +158,9 @@
     <ClInclude Include="..\..\Include\CX\IO\Helper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IFileSysEnumerator.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IFileSysHelper.hpp" />
-    <ClInclude Include="..\..\Include\CX\IO\IFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\IInputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\IOutputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\LocalFileSysEnumerator.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\LocalFileSysHelper.hpp" />
@@ -307,6 +313,7 @@
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32_internal.cpp" />
+    <ClCompile Include="..\..\Contrib\crypto-algorithms\Src\aes.cpp" />
     <ClCompile Include="..\..\Contrib\cURL\Src\amigaos.c">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</SDLCheck>
@@ -4365,24 +4372,6 @@
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">
       </DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="..\..\Contrib\TinyAES128\Src\aes.cpp">
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt32.c">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
@@ -4421,8 +4410,14 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c" />
     <ClCompile Include="..\..\Contrib\Z85\Src\z85.c" />
-    <ClCompile Include="..\..\Src\Archive\LZHAMFilter.cpp" />
-    <ClCompile Include="..\..\Src\Crypt\AES128Filter.cpp" />
+    <ClCompile Include="..\..\Src\Archive\LZ4InputFilter.cpp" />
+    <ClCompile Include="..\..\Src\Archive\LZ4OutputFilter.cpp" />
+    <ClCompile Include="..\..\Src\Archive\LZHAMInputFilter.cpp" />
+    <ClCompile Include="..\..\Src\Archive\LZHAMOutputFilter.cpp" />
+    <ClCompile Include="..\..\Src\Archive\SnappyInputFilter.cpp" />
+    <ClCompile Include="..\..\Src\Archive\SnappyOutputFilter.cpp" />
+    <ClCompile Include="..\..\Src\Crypt\AES128InputFilter.cpp" />
+    <ClCompile Include="..\..\Src\Crypt\AES128OutputFilter.cpp" />
     <ClCompile Include="..\..\Src\C\Platform\Android\Mem_android.c">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">4206;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -4487,7 +4482,6 @@
     <ClCompile Include="..\..\Src\Hash\xxHash32.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash64.cpp" />
     <ClCompile Include="..\..\Src\IObject.cpp" />
-    <ClCompile Include="..\..\Src\IO\BlockFilter.cpp" />
     <ClCompile Include="..\..\Src\IO\FilteredInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FilteredOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
@@ -4556,7 +4550,6 @@
     <ClCompile Include="..\..\Src\Util\RCMemBuffer.cpp" />
     <ClCompile Include="..\..\Src\Util\RCMemBufferMgr.cpp" />
     <ClCompile Include="..\..\Src\Util\RndGen.cpp" />
-    <ClCompile Include="..\..\Src\Var.cpp" />
     <ClCompile Include="..\..\Src\CXVersion.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -4834,7 +4827,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -4856,7 +4849,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -4879,7 +4872,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -4903,7 +4896,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -4928,7 +4921,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -4950,7 +4943,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -4973,7 +4966,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -4994,7 +4987,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_LIB;CX_API_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -5018,7 +5011,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -5044,7 +5037,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -5071,7 +5064,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -5099,7 +5092,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -5128,7 +5121,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -5154,7 +5147,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -5181,7 +5174,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -5206,7 +5199,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;NDEBUG;_WINDOWS;_LIB;CX_API_STATIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/TinyAES128/Include;../../Contrib/Snappy/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>

@@ -36,96 +36,162 @@ namespace CX
 namespace IO
 {
 
-FilteredOutputStream::FilteredOutputStream(IFilter *pFilter, IOutputStream *pOutputStream)
+FilteredOutputStream::FilteredOutputStream(IOutputFilter *pFilter, IO::IOutputStream *pOutputStream, 
+                                           bool bTakeStreamOwnership/* = false*/)
 {
+	m_cbBufferSize = (BUFFER_SIZE / pFilter->GetBlockSize()) * pFilter->GetBlockSize();
+	if (0 == m_cbBufferSize)
+	{
+		m_cbBufferSize = pFilter->GetBlockSize();
+	}
 	m_pFilter              = pFilter;
 	m_pOutputStream        = pOutputStream;
-	m_pOutBuffer           = Mem::Alloc(OUTPUT_BUFFER_SIZE);
-	m_cbOutBufferSize      = OUTPUT_BUFFER_SIZE;
-	m_buffers.pInBuffer    = NULL;
-	m_buffers.cbInSize     = 0;
-	m_buffers.pOutBuffer   = m_pOutBuffer;
-	m_buffers.cbOutSize    = m_cbOutBufferSize;
-	m_buffers.bHasMoreData = true;
-	m_buffers.nState       = IFilter::State_Continue;
+	m_bTakeStreamOwnership = bTakeStreamOwnership;
+	m_pBuffer              = (Byte *)Mem::Alloc(m_cbBufferSize);
+	m_cbBufferOffset       = 0;
+	m_cbReceivedSize       = 0;
+	m_bReady               = false;
 }
 
 FilteredOutputStream::~FilteredOutputStream()
 {
-	Flush();
-	if (NULL != m_pOutBuffer)
+	if (!m_bReady)
 	{
-		Mem::Free(m_pOutBuffer);
-		m_pOutBuffer = NULL;
+		if (NULL != m_pFilter)
+		{
+			Flush();
+		}
 	}
+	if (NULL != m_pBuffer)
+	{
+		Mem::Free(m_pBuffer);
+	}
+	if (NULL != m_pFilter)
+	{
+		delete m_pFilter;
+	}
+	if (m_bTakeStreamOwnership && NULL != m_pOutputStream)
+	{
+		delete m_pOutputStream;
+	}
+}
+
+Status FilteredOutputStream::Filter(const void *pInput, Size cbInputSize)
+{
+	UInt32 nTmp;
+	Size   cbSize;
+	void   *pOutput;
+	Size   cbOutputSize;
+	Status status;
+
+	if ((Size)TYPE_INT32_MAX < cbInputSize)
+	{
+		return Status_TooBig;
+	}
+	if (!(status = m_pFilter->Filter(pInput, cbInputSize, &pOutput, &cbOutputSize)))
+	{
+		return status;
+	}
+	if ((Size)TYPE_INT32_MAX < cbOutputSize)
+	{
+		return Status_TooBig;
+	}
+	nTmp = (UInt32)cbInputSize;
+	if (!(status = m_pOutputStream->Write(&nTmp, sizeof(nTmp), &cbSize)))
+	{
+		return status;
+	}
+	if (sizeof(nTmp) != cbSize)
+	{
+		return Status_WriteFailed;
+	}
+	nTmp = (UInt32)cbOutputSize;
+	if (!(status = m_pOutputStream->Write(&nTmp, sizeof(nTmp), &cbSize)))
+	{
+		return status;
+	}
+	if (sizeof(nTmp) != cbSize)
+	{
+		return Status_WriteFailed;
+	}
+	if (!(status = m_pOutputStream->Write(pOutput, cbOutputSize, &cbSize)))
+	{
+		return status;
+	}
+	if (cbOutputSize != cbSize)
+	{
+		return Status_WriteFailed;
+	}
+	m_cbReceivedSize += cbInputSize;
+
+	return Status();
 }
 
 Status FilteredOutputStream::Write(const void *pBuffer, Size cbReqSize, Size *pcbAckSize)
 {
-	if (NULL == m_pFilter || NULL == m_pOutputStream || NULL == m_pOutBuffer)
+	if (NULL == m_pOutputStream || NULL == m_pBuffer)
 	{
 		return Status_NotInitialized;
 	}
-	if ((Size)TYPE_UINT32_MAX < cbReqSize)
+
+	if (m_bReady)
 	{
-		return Status_TooBig;
+		return Status_InvalidCall;
 	}
 
-	Size   cbAckSize;
-	Status status;
+	const Byte *pInput;
+	Size       cbSize;
+	Status     status;
 
-	m_buffers.pInBuffer    = pBuffer;
-	m_buffers.cbInSize     = (UInt32)cbReqSize;
-	m_buffers.bHasMoreData = true;
-	while (0 < m_buffers.cbInSize && IFilter::State_Continue == m_buffers.nState)
+	pInput      = (const Byte *)pBuffer;
+	*pcbAckSize = 0;
+	while (0 < cbReqSize)
 	{
-		if (!(status = m_pFilter->Filter(&m_buffers)))
+		cbSize = m_cbBufferSize - m_cbBufferOffset;
+		if (cbSize > cbReqSize)
 		{
-			return status;
+			cbSize = cbReqSize;
 		}
-		if (0 == m_buffers.cbOutSize || (IFilter::State_Finish == m_buffers.nState && m_buffers.cbOutSize < m_cbOutBufferSize))
+		if (0 < cbSize)
 		{
-			if (!(status = m_pOutputStream->Write(m_pOutBuffer, m_cbOutBufferSize - m_buffers.cbOutSize, &cbAckSize)))
+			memcpy(m_pBuffer + m_cbBufferOffset, pInput, cbSize);
+			m_cbBufferOffset += cbSize;
+			pInput += cbSize;
+			cbReqSize -= cbSize;
+			*pcbAckSize += cbSize;
+		}
+		if (m_cbBufferOffset == m_cbBufferSize)
+		{
+			if (!(status = Filter(m_pBuffer, m_cbBufferSize)))
 			{
 				return status;
 			}
-			if (cbAckSize != m_cbOutBufferSize - m_buffers.cbOutSize)
-			{
-				return Status_WriteFailed;
-			}
-			
-			m_buffers.pOutBuffer = m_pOutBuffer;
-			m_buffers.cbOutSize  = m_cbOutBufferSize;
+			m_cbBufferOffset = 0;
 		}
 	}
-	(*pcbAckSize) = cbReqSize;
 
 	return Status();
 }
 
 Status FilteredOutputStream::GetSize(UInt64 *pcbSize) const
 {
-	if (NULL == m_pFilter || NULL == m_pOutputStream || NULL == m_pOutBuffer)
+	if (NULL == m_pOutputStream || NULL == m_pBuffer)
 	{
 		return Status_NotInitialized;
 	}
+	*pcbSize = m_cbReceivedSize;
 
-	return m_pOutputStream->GetSize(pcbSize);
+	return Status();
 }
 
 Bool FilteredOutputStream::IsOK() const
 {
-	if (NULL == m_pFilter || NULL == m_pOutputStream || NULL == m_pOutBuffer)
-	{
-		return False;
-	}
-
-	return m_pOutputStream->IsOK();
+	return (NULL != m_pOutputStream && NULL != m_pBuffer);
 }
 
 const Char *FilteredOutputStream::GetPath() const
 {
-	if (NULL == m_pFilter || NULL == m_pOutputStream || NULL == m_pOutBuffer)
+	if (NULL == m_pOutputStream || NULL == m_pBuffer)
 	{
 		return "";
 	}
@@ -135,46 +201,30 @@ const Char *FilteredOutputStream::GetPath() const
 
 Status FilteredOutputStream::Flush()
 {
-	if (NULL == m_pFilter || NULL == m_pOutputStream || NULL == m_pOutBuffer)
+	if (NULL == m_pOutputStream || NULL == m_pBuffer)
 	{
 		return Status_NotInitialized;
 	}
-	if (IFilter::State_Continue != m_buffers.nState)
+	if (m_bReady)
 	{
-		return Status_InvalidArg;
+		return Status_InvalidCall;
 	}
+	m_bReady = true;
 
-	Size   cbAckSize;
-	Status status;
-
-	m_buffers.bHasMoreData = false;
-	while (IFilter::State_Continue == m_buffers.nState)
+	if (0 < m_cbBufferOffset)
 	{
-		if (!(status = m_pFilter->Filter(&m_buffers)))
+		Status status;
+
+		if (!(status = Filter(m_pBuffer, m_cbBufferOffset)))
 		{
 			return status;
 		}
-		if (0 == m_buffers.cbOutSize || (IFilter::State_Finish == m_buffers.nState && m_buffers.cbOutSize < m_cbOutBufferSize))
-		{
-			if (!(status = m_pOutputStream->Write(m_pOutBuffer, m_cbOutBufferSize - m_buffers.cbOutSize, &cbAckSize)))
-			{
-				return status;
-			}
-			if (cbAckSize != m_cbOutBufferSize - m_buffers.cbOutSize)
-			{
-				return Status_WriteFailed;
-			}
-			m_buffers.pOutBuffer = m_pOutBuffer;
-			m_buffers.cbOutSize  = m_cbOutBufferSize;
-			m_pOutputStream->Flush();
-		}
+		m_cbBufferOffset = 0;
 	}
-
+	
 	return Status();
 }
 
 }//namespace IO
 
 }//namespace CX
-
-

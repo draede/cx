@@ -289,9 +289,6 @@
     <Filter Include="Contrib\LZHAM">
       <UniqueIdentifier>{33f6a922-1eca-4688-af4c-16b0bd821fd5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contrib\TinyAES128">
-      <UniqueIdentifier>{fedafd79-b9bd-40d5-82ab-f3f01584a4f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Crypt">
       <UniqueIdentifier>{79bff1ab-53cc-480b-9f2d-d855ade5c7b7}</UniqueIdentifier>
     </Filter>
@@ -324,6 +321,9 @@
     </Filter>
     <Filter Include="Source Files\Network\HTTP">
       <UniqueIdentifier>{56ec3950-f439-4f06-97f6-1c6ff3225c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\crypto-algorithms">
+      <UniqueIdentifier>{fedafd79-b9bd-40d5-82ab-f3f01584a4f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -846,9 +846,6 @@
     <ClInclude Include="..\..\Include\CX\Hash\BLAKE2Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\IFilter.hpp">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\CPPGenerator.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
@@ -884,21 +881,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\Parser.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\FilteredInputStream.hpp">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\FilteredOutputStream.hpp">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IO\BlockFilter.hpp">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Crypt\AES128Filter.hpp">
-      <Filter>Header Files\Crypt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Archive\LZHAMFilter.hpp">
-      <Filter>Header Files\Archive</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\ScopePtr.hpp">
       <Filter>Header Files</Filter>
@@ -948,13 +930,46 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINWriter.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZ4InputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZ4OutputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZHAMInputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZHAMOutputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\SnappyInputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\SnappyOutputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Crypt\AES128InputFilter.hpp">
+      <Filter>Header Files\Crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Crypt\AES128OutputFilter.hpp">
+      <Filter>Header Files\Crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FilteredInputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FilteredOutputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IInputFilter.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IOutputFilter.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
       <Filter>Source Files\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Status.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
       <Filter>Contrib\DoubleConversion</Filter>
@@ -988,9 +1003,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Var.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp">
       <Filter>Source Files\Data\JSON</Filter>
@@ -1232,12 +1244,6 @@
     <ClCompile Include="..\..\Src\SimpleBuffers\Parser.cpp">
       <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\IO\FilteredInputStream.cpp">
-      <Filter>Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\FilteredOutputStream.cpp">
-      <Filter>Source Files\IO</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_assert.cpp">
       <Filter>Contrib\LZHAM</Filter>
     </ClCompile>
@@ -1288,18 +1294,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_vector.cpp">
       <Filter>Contrib\LZHAM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\TinyAES128\Src\aes.cpp">
-      <Filter>Contrib\TinyAES128</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\BlockFilter.cpp">
-      <Filter>Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Crypt\AES128Filter.cpp">
-      <Filter>Source Files\Crypt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Archive\LZHAMFilter.cpp">
-      <Filter>Source Files\Archive</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysEnumerator.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
@@ -1687,6 +1681,42 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\SimpleBuffers\BINWriter.cpp">
       <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Status.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZ4InputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZ4OutputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZHAMInputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZHAMOutputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\SnappyInputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\SnappyOutputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Crypt\AES128InputFilter.cpp">
+      <Filter>Source Files\Crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Crypt\AES128OutputFilter.cpp">
+      <Filter>Source Files\Crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\FilteredInputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\FilteredOutputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\crypto-algorithms\Src\aes.cpp">
+      <Filter>Contrib\crypto-algorithms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
