@@ -27,7 +27,7 @@
  */ 
 
 #include "CX/Mem.hpp"
-#include "CX/MemStats.hpp"
+#include "CX/Print.hpp"
 #include "Tester.hpp"
 
 
@@ -45,13 +45,8 @@ void Mem_Test1()
 
 	memcpy(x, "this is a test", 14);
 
-	Print(stdout, "\nIntermediate memory dump (leaks should be detected):\n");
-	MemStats::PrintAllocs(stdout);
-
 	Mem::Free(x);
 	delete pTest;
-
-	Print(stdout, "\nFinal memory dump (no leaks should be detected):\n");
 }
 
 class Cls1

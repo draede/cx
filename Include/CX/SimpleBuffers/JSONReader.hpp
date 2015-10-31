@@ -303,9 +303,12 @@ template <> inline Status JSONReader::GetVal<BLOB>(rapidjson::Value *pValue, BLO
 	{
 		return Status(Status_MemAllocFailed, "Failed to allocate blob");
 	}
-	if ((status = z85.FromString(pValue->GetString(), pValue->GetStringLength(), &val[0], val.size())).IsNOK())
+	if (!val.empty())
 	{
-		return Status(Status_ParseFailed, "Failed to parse blob");
+		if ((status = z85.FromString(pValue->GetString(), pValue->GetStringLength(), &val[0], val.size())).IsNOK())
+		{
+			return Status(Status_ParseFailed, "Failed to parse blob");
+		}
 	}
 
 	return Status();

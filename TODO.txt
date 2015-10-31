@@ -1,3 +1,2 @@
 1. Unit tests!!!
-2. Check methods that need to be const
-3. DynMemPool reallocaton strategy (use 2x instead of constant grow)
+2. DynMemPool reallocaton strategy (use 2x instead of constant grow)

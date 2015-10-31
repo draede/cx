@@ -33,7 +33,6 @@
 
 
 #include "CX/C/Mem.h"
-#include "CX/C/MemStats.h"
 #include "CX/C/StatusCodes.h"
 #include "CX/C/Limits.h"
 #include "CX/C/string.h"
@@ -43,360 +42,264 @@
 #include <dbghelp.h>
 
 
-typedef CX_UIntPtr    CX_MemFrame;
+#define CX_MEMSTATS_MAX_CALLS_COUNT   63
 
-typedef struct _CX_MemBlock
+
+typedef CX_UIntPtr        CX_MemFrame;
+
+INIT_ONCE g_cx_mem_init_once    = INIT_ONCE_STATIC_INIT;
+INIT_ONCE g_cx_mem_initsym_once = INIT_ONCE_STATIC_INIT;
+HANDLE    g_cx_mem_heap         = NULL;
+CX_Bool   g_cx_mem_sym          = 0;
+#ifdef CX_MEM_FORCE_TRACK
+CX_Bool   g_cx_mem_track        = 1;
+#else
+CX_Bool   g_cx_mem_track        = 0;
+#endif
+#ifdef CX_MEM_FORCE_DUMP
+CX_Bool   g_cx_mem_dump         = 1;
+#else
+CX_Bool   g_cx_mem_dump         = 0;
+#endif
+
+typedef struct _CX_MemCallStack
 {
-	struct _CX_MemBlock *pPrev;
-	struct _CX_MemBlock *pNext;
-	CX_Size             cbSize;
-	CX_UInt8            cFrames;
-	CX_MemFrame         frames[1];
-}CX_MemBlock;
+	CX_MemFrame *callstack;
+	CX_Size     cFrameIndex;
+	CX_Size     cFramesCount;
+}CX_MemCallStack;
 
-typedef struct _CX_MemStats
+#define CX_MEMSTATS_MAX_FUNCTION_NAME_LEN    256
+
+
+void CX_Mem_Uninit(void)
 {
-	CX_Bool          bActive;
-	CX_Bool          bSynInitialized;
-	CX_Size          cbCrAllocsSize;
-	CX_Size          cbMaxMemSize;
-	CX_Size          cCrAllocsCount;
-	CX_Size          cbMaxAllocsSize;
-	CX_Size          cMaxAllocsCount;
-	CX_MemBlock      *pFirstBlock;
-	CX_MemBlock      *pLastBlock;
-	CRITICAL_SECTION cs;
-}CX_MemStats;
-
-static const CX_Char *CX_MEMSTATS_IGNORES_UPPER[] =
-{
-	"CX_MemAlloc",
-	"CX_MemRealloc",
-	"CX_MemFree",
-	"CX_MemOptAlloc",
-	"CX_MemOptRealloc",
-	"CX_MemOptFree",
-	"CX_MemDbgAlloc",
-	"CX_MemDbgRealloc",
-	"CX_MemDbgFree",
-	"CX_MemGetFrames",
-	"CX::Mem::Alloc",
-	"CX::Mem::New",
-	"CX::Mem::NewArr",
-	"CX::IObject::operator new",
-};
-
-static const CX_Size CX_MEMSTATS_IGNORES_UPPER_COUNT = sizeof(CX_MEMSTATS_IGNORES_UPPER) / sizeof(CX_MEMSTATS_IGNORES_UPPER[0]);
-
-static const CX_Char *CX_MEMSTATS_IGNORES_LOWER[] =
-{
-	"__tmainCRTStartup",
-	"mainCRTStartup",
-};
-
-static const CX_Size CX_MEMSTATS_IGNORES_LOWER_COUNT = sizeof(CX_MEMSTATS_IGNORES_LOWER) / sizeof(CX_MEMSTATS_IGNORES_LOWER[0]);
-
-static const CX_Char *CX_MEMSTATS_EXCEPTIONS[] =
-{
-	"",//dummy
-};
-
-static const CX_Size CX_MEMSTATS_EXCEPTIONS_COUNT = 0;//sizeof(CX_MEMSTATS_EXCEPTIONS) / sizeof(CX_MEMSTATS_EXCEPTIONS[0]);
-
-static CX_MemStats g_cx_memstats = { 0 };
-
-
-void *CX_MemOptAlloc(CX_Size cbSize)
-{
-	return HeapAlloc(GetProcessHeap(), 0, cbSize);
+	if (g_cx_mem_dump)
+	{
+		CX_MemEnumAllocs(NULL);
+	}
+	if (g_cx_mem_sym)
+	{
+		SymCleanup(GetCurrentProcess());
+		g_cx_mem_sym = CX_False;
+	}
+	HeapDestroy(g_cx_mem_heap);
+	g_cx_mem_heap = NULL;
 }
 
-void *CX_MemOptRealloc(void *pPtr, CX_Size cbSize)
+BOOL CALLBACK CX_Mem_InitHandler(PINIT_ONCE InitOnce, PVOID Parameter, PVOID *lpContext)
 {
-	if (NULL == pPtr)
-	{
-		return CX_MemOptAlloc(cbSize);
-	}
-	else
-	{
-		return HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
-	}
+	CX_UNUSED(InitOnce);
+	CX_UNUSED(Parameter);
+	CX_UNUSED(lpContext);
+
+	g_cx_mem_heap = HeapCreate(0, 0, 0);
+	atexit(&CX_Mem_Uninit);
+
+	return TRUE;
 }
 
-void CX_MemOptFree(void *pPtr)
+BOOL CALLBACK CX_Mem_InitSymHandler(PINIT_ONCE InitOnce, PVOID Parameter, PVOID *lpContext)
 {
-	if (NULL != pPtr)
-	{
-		HeapFree(GetProcessHeap(), 0, pPtr);
-	}
+	CX_UNUSED(InitOnce);
+	CX_UNUSED(Parameter);
+	CX_UNUSED(lpContext);
+
+	SymInitialize(GetCurrentProcess(), NULL, TRUE);
+	g_cx_mem_sym = CX_True;
+
+	return TRUE;
 }
 
-CX_StatusCode CX_MemGetFrames(CX_MemFrame frames[CX_MEMSTATS_MAX_CALLS_COUNT], CX_UInt8 *pcFrames)
+void CX_Mem_Init()
+{
+	PVOID lpContext;
+
+	InitOnceExecuteOnce(&g_cx_mem_init_once, &CX_Mem_InitHandler, NULL, &lpContext);
+}
+
+void CX_Mem_SymInit()
+{
+	PVOID lpContext;
+
+	InitOnceExecuteOnce(&g_cx_mem_initsym_once, &CX_Mem_InitSymHandler, NULL, &lpContext);
+}
+
+void CX_MemSetTrack(CX_Bool bTrackMem)
+{
+	g_cx_mem_track = bTrackMem;
+}
+
+CX_Bool CX_MemGetTrack()
+{
+	return g_cx_mem_track;
+}
+
+void CX_MemSetDumpAllocs(CX_Bool bDumpAllocs)
+{
+	g_cx_mem_dump = bDumpAllocs;
+}
+
+CX_Bool CX_MemGetDumpAllocs()
+{
+	return g_cx_mem_dump;
+}
+
+void CX_MemGetFrames(CX_MemFrame frames[CX_MEMSTATS_MAX_CALLS_COUNT], CX_Byte *pcFrames)
 {
 	USHORT cFrames;
 
 	cFrames = CaptureStackBackTrace(0, CX_MEMSTATS_MAX_CALLS_COUNT, (PVOID *)frames, NULL);
-	if ((USHORT)CX_UINT8_MAX < cFrames)
+	if ((USHORT)CX_MEMSTATS_MAX_CALLS_COUNT < cFrames)
 	{
-		cFrames = CX_UINT8_MAX;
+		cFrames = CX_MEMSTATS_MAX_CALLS_COUNT;
 	}
-	*pcFrames = (CX_UInt8)cFrames;
-
-	return CX_Status_OK;
+	*pcFrames = (CX_Byte)cFrames;
 }
 
-CX_UInt16 CX_MemGetBlockSize(CX_UInt8 cFrames)
+/*
+
+Memory block:
+
+sizeof(CX_Size) = alloc_size
+1 byte = frames_count
+... user data ...
+sizeof(CX_UIntPtr) * (frames count) = frames (only if 0 < frames_count)
+
+*/
+
+CX_Size CX_MemGetTotalSize(CX_Bool bTrack, CX_Size cbSize, CX_MemFrame frames[CX_MEMSTATS_MAX_CALLS_COUNT], CX_Byte *pcFrames)
 {
-	CX_UInt16 cbBlockSize;
-	
-	cbBlockSize = (CX_UInt16)sizeof(CX_MemBlock);
+	CX_Size     cbTotalSize;
+
+	cbTotalSize = sizeof(CX_Size); //alloc size
+	cbTotalSize += sizeof(CX_Byte); //frames count
+	cbTotalSize += cbSize;
+	if (bTrack)
+	{
+		CX_MemGetFrames(frames, pcFrames);
+	}
+	else
+	{
+		*pcFrames = 0;
+	}
+	if (0 < *pcFrames)
+	{
+		cbTotalSize += (*pcFrames) * sizeof(CX_MemFrame); //frames
+	}
+
+	return cbTotalSize;
+}
+
+void *CX_MemSetBlockData(CX_Byte *pMem, CX_Size cbSize, CX_MemFrame frames[CX_MEMSTATS_MAX_CALLS_COUNT], CX_Byte cFrames)
+{
+	void *pUsrMem;
+
+	memcpy(pMem, &cbSize, sizeof(CX_Size)); //alloc size
+	pMem += sizeof(CX_Size);
+	memcpy(pMem, &cFrames, sizeof(CX_Byte)); //frames count
+	pMem += sizeof(CX_Byte);
+	pUsrMem = pMem;
 	if (0 < cFrames)
 	{
-		cbBlockSize += (CX_UInt16)((cFrames - 1) * sizeof(CX_MemFrame));
+		pMem += cbSize;
+		memcpy(pMem, frames, cFrames * sizeof(CX_MemFrame)); //frames
 	}
 
-	return cbBlockSize;
+	return pUsrMem;
 }
 
-CX_MemBlock *CX_MemGetBlockFromPtr(void *pPtr)
+void *CX_MemAllocHelper(CX_Bool bTrack, CX_Size cbSize)
 {
-	CX_UInt16 cbBlockSize;
-	CX_Byte   *pRealPtr;
+	CX_MemFrame frames[CX_MEMSTATS_MAX_CALLS_COUNT];
+	CX_Size     cbTotalSize;
+	CX_Byte     cFrames;
+	CX_Byte     *pMem;
 
-	pRealPtr = (CX_Byte *)pPtr;
-	pRealPtr -= sizeof(CX_UInt16);
-	memcpy(&cbBlockSize, pRealPtr, sizeof(CX_UInt16));
-	pRealPtr -= cbBlockSize;
+	if (NULL == g_cx_mem_heap)
+	{
+		CX_Mem_Init();
+	}
+	cbTotalSize = CX_MemGetTotalSize(bTrack, cbSize, frames, &cFrames);
+#pragma warning(suppress: 6387)
+	if (NULL == (pMem = (CX_Byte *)HeapAlloc(g_cx_mem_heap, 0, cbTotalSize)))
+	{
+		return NULL;
+	}
 
-	return (CX_MemBlock *)pRealPtr;
+	return CX_MemSetBlockData(pMem, cbSize, frames, cFrames);
+}
+
+void CX_MemFreeHelper(CX_Bool bTrack, void *pPtr)
+{
+	CX_Byte *pMem;
+
+	CX_UNUSED(bTrack);
+
+	//get base address
+	pMem = (CX_Byte *)pPtr;
+	pMem -= sizeof(CX_Byte);
+	pMem -= sizeof(CX_Size);
+	HeapFree(g_cx_mem_heap, 0, pMem);
+}
+
+void *CX_MemReallocHelper(CX_Bool bTrack, void *pPtr, CX_Size cbSize)
+{
+	CX_MemFrame frames[CX_MEMSTATS_MAX_CALLS_COUNT];
+	CX_Size     cbTotalSize;
+	CX_Byte     cFrames;
+	CX_Byte     *pMem;
+	CX_Byte     *pOldMem;
+
+	if (NULL == pPtr)
+	{
+		return CX_MemAllocHelper(bTrack, cbSize);
+	}
+	pOldMem = (CX_Byte *)pPtr;
+	pOldMem -= sizeof(CX_Byte);
+	pOldMem -= sizeof(CX_Size);
+	cbTotalSize = CX_MemGetTotalSize(bTrack, cbSize, frames, &cFrames);
+	if (NULL == (pMem = (CX_Byte *)HeapReAlloc(g_cx_mem_heap, 0, pOldMem, cbTotalSize)))
+	{
+		return NULL;
+	}
+
+	return CX_MemSetBlockData(pMem, cbSize, frames, cFrames);
+}
+
+void *CX_MemOptAlloc(CX_Size cbSize)
+{
+	return CX_MemAllocHelper(false, cbSize);
+}
+
+void *CX_MemOptRealloc(void *pPtr, CX_Size cbSize)
+{
+	return CX_MemReallocHelper(false, pPtr, cbSize);
+}
+
+void CX_MemOptFree(void *pPtr)
+{
+	CX_MemFreeHelper(false, pPtr);
 }
 
 void *CX_MemDbgAlloc(CX_Size cbSize)
 {
-	if (0 < g_cx_memstats.cbMaxMemSize && cbSize + g_cx_memstats.cbCrAllocsSize > g_cx_memstats.cbMaxMemSize)
-	{
-		return NULL;
-	}
-
-	CX_MemFrame   frames[CX_MEMSTATS_MAX_CALLS_COUNT];
-	CX_UInt8      cFrames;
-	CX_UInt16     cbBlockSize;
-	CX_Size       cbTotalSize;
-	CX_Byte       *pBlockPtr;
-	CX_Byte       *pBlockSizePtr;
-	CX_Byte       *pUserPtr;
-	CX_MemBlock   *pBlock;
-	CX_StatusCode nStatus;
-
-	if (CXNOK(nStatus = CX_MemGetFrames(frames, &cFrames)))
-	{
-		cFrames = 0;
-	}
-	cbBlockSize = CX_MemGetBlockSize(cFrames);
-	cbTotalSize = cbBlockSize + sizeof(CX_UInt16) + cbSize;
-	if (NULL == (pBlockPtr = (CX_Byte *)CX_MemOptAlloc(cbTotalSize)))
-	{
-		return NULL;
-	}
-	pBlockSizePtr   = pBlockPtr + cbBlockSize;
-	pUserPtr        = pBlockSizePtr + sizeof(CX_UInt16);
-	memcpy(pBlockSizePtr, &cbBlockSize, sizeof(CX_UInt16));
-
-	pBlock          = (CX_MemBlock *)pBlockPtr;
-	pBlock->pNext   = NULL;
-	pBlock->cbSize  = cbSize;
-	pBlock->cFrames = cFrames;
-	if (0 < cFrames)
-	{
-		memcpy(pBlock->frames, frames, cFrames * sizeof(CX_MemFrame));
-	}
-
-	EnterCriticalSection(&g_cx_memstats.cs);
-
-	g_cx_memstats.cbCrAllocsSize += cbSize;
-	g_cx_memstats.cCrAllocsCount++;
-	if (g_cx_memstats.cbCrAllocsSize > g_cx_memstats.cbMaxAllocsSize)
-	{
-		g_cx_memstats.cbMaxAllocsSize = g_cx_memstats.cbCrAllocsSize;
-	}
-	if (g_cx_memstats.cCrAllocsCount > g_cx_memstats.cMaxAllocsCount)
-	{
-		g_cx_memstats.cMaxAllocsCount = g_cx_memstats.cCrAllocsCount;
-	}
-	if (NULL == g_cx_memstats.pFirstBlock)
-	{
-		pBlock->pPrev             = NULL;
-		g_cx_memstats.pFirstBlock = g_cx_memstats.pLastBlock = pBlock;
-	}
-	else
-	{
-		pBlock->pPrev                   = g_cx_memstats.pLastBlock;
-		g_cx_memstats.pLastBlock->pNext = pBlock;
-		g_cx_memstats.pLastBlock        = pBlock;
-	}
-
-	LeaveCriticalSection(&g_cx_memstats.cs);
-
-	return pUserPtr;
+	return CX_MemAllocHelper(true, cbSize);
 }
 
-void *CX_MemDbgRealloc(void *pOldPtr, CX_Size cbSize)
+void *CX_MemDbgRealloc(void *pPtr, CX_Size cbSize)
 {
-	if (NULL == pOldPtr)
-	{
-		return CX_MemDbgAlloc(cbSize);
-	}
-
-	if (0 < g_cx_memstats.cbMaxMemSize && cbSize + g_cx_memstats.cbCrAllocsSize > g_cx_memstats.cbMaxMemSize)
-	{
-		return NULL;
-	}
-
-	CX_Byte       *pOldBlockPtr;
-	CX_Byte       *pOldBlockSizePtr;
-	CX_Byte       *pOldUserPtr = (CX_Byte *)pOldPtr;
-	CX_UInt16     cbOldBlockSize;
-	CX_MemBlock   *pOldBlock;
-	CX_MemFrame   frames[CX_MEMSTATS_MAX_CALLS_COUNT];
-	CX_UInt8      cFrames;
-	CX_UInt16     cbBlockSize;
-	CX_Size       cbTotalSize;
-	CX_Byte       *pBlockPtr;
-	CX_Byte       *pBlockSizePtr;
-	CX_Byte       *pUserPtr;
-	CX_MemBlock   *pBlock;
-	CX_StatusCode nStatus;
-
-	if (CXNOK(nStatus = CX_MemGetFrames(frames, &cFrames)))
-	{
-		cFrames = 0;
-	}
-	cbBlockSize = CX_MemGetBlockSize(cFrames);
-	cbTotalSize = cbBlockSize + sizeof(CX_UInt16) + cbSize;
-	if (NULL == (pBlockPtr = (CX_Byte *)CX_MemOptAlloc(cbTotalSize)))
-	{
-
-		return NULL;
-	}
-
-	EnterCriticalSection(&g_cx_memstats.cs);
-
-	pOldBlockSizePtr = pOldUserPtr - sizeof(CX_UInt16);
-	memcpy(&cbOldBlockSize, pOldBlockSizePtr, sizeof(CX_UInt16));
-	pOldBlockPtr     = pOldBlockSizePtr - cbOldBlockSize;
-	pOldBlock        = (CX_MemBlock *)pOldBlockPtr;
-
-	if (NULL != pOldBlock->pPrev)
-	{
-		pOldBlock->pPrev->pNext = pOldBlock->pNext;
-	}
-	if (NULL != pOldBlock->pNext)
-	{
-		pOldBlock->pNext->pPrev = pOldBlock->pPrev;
-	}
-	if (pOldBlock == g_cx_memstats.pFirstBlock)
-	{
-		g_cx_memstats.pFirstBlock = g_cx_memstats.pFirstBlock->pNext;
-	}
-	else
-	if (pOldBlock == g_cx_memstats.pLastBlock)
-	{
-		g_cx_memstats.pLastBlock = g_cx_memstats.pLastBlock->pPrev;
-	}
-	g_cx_memstats.cbCrAllocsSize -= pOldBlock->cbSize;
-	g_cx_memstats.cCrAllocsCount--;
-
-	pBlockSizePtr = pBlockPtr + cbBlockSize;
-	pUserPtr = pBlockSizePtr + sizeof(CX_UInt16);
-	memcpy(pBlockSizePtr, &cbBlockSize, sizeof(CX_UInt16));
-
-	pBlock = (CX_MemBlock *)pBlockPtr;
-	pBlock->pNext = NULL;
-	pBlock->cbSize = cbSize;
-	pBlock->cFrames = cFrames;
-	if (0 < cFrames)
-	{
-		memcpy(pBlock->frames, frames, cFrames * sizeof(CX_MemFrame));
-	}
-
-	g_cx_memstats.cbCrAllocsSize += cbSize;
-	g_cx_memstats.cCrAllocsCount++;
-	if (g_cx_memstats.cbCrAllocsSize > g_cx_memstats.cbMaxAllocsSize)
-	{
-		g_cx_memstats.cbMaxAllocsSize = g_cx_memstats.cbCrAllocsSize;
-	}
-	if (g_cx_memstats.cCrAllocsCount > g_cx_memstats.cMaxAllocsCount)
-	{
-		g_cx_memstats.cMaxAllocsCount = g_cx_memstats.cCrAllocsCount;
-	}
-	if (NULL == g_cx_memstats.pFirstBlock)
-	{
-		pBlock->pPrev = NULL;
-		g_cx_memstats.pFirstBlock = g_cx_memstats.pLastBlock = pBlock;
-	}
-	else
-	{
-		pBlock->pPrev = g_cx_memstats.pLastBlock;
-		g_cx_memstats.pLastBlock->pNext = pBlock;
-		g_cx_memstats.pLastBlock = pBlock;
-	}
-
-	if (cbSize > pOldBlock->cbSize)
-	{
-		cbSize = pOldBlock->cbSize;
-	}
-	memcpy(pUserPtr, pOldUserPtr, cbSize);
-
-	CX_MemOptFree(pOldBlockPtr);
-
-	LeaveCriticalSection(&g_cx_memstats.cs);
-
-	return pUserPtr;
+	return CX_MemReallocHelper(true, pPtr, cbSize);
 }
 
 void CX_MemDbgFree(void *pPtr)
 {
-	EnterCriticalSection(&g_cx_memstats.cs);
-
-	CX_Byte       *pBlockPtr;
-	CX_Byte       *pBlockSizePtr;
-	CX_Byte       *pUserPtr = (CX_Byte *)pPtr;
-	CX_UInt16     cbBlockSize;
-	CX_MemBlock   *pBlock;
-
-	pBlockSizePtr = pUserPtr - sizeof(CX_UInt16);
-	memcpy(&cbBlockSize, pBlockSizePtr, sizeof(CX_UInt16));
-	pBlockPtr     = pBlockSizePtr - cbBlockSize;
-	pBlock        = (CX_MemBlock *)pBlockPtr;
-
-	if (NULL != pBlock->pPrev)
-	{
-		pBlock->pPrev->pNext = pBlock->pNext;
-	}
-	if (NULL != pBlock->pNext)
-	{
-		pBlock->pNext->pPrev = pBlock->pPrev;
-	}
-	if (pBlock == g_cx_memstats.pFirstBlock)
-	{
-		g_cx_memstats.pFirstBlock = g_cx_memstats.pFirstBlock->pNext;
-	}
-	else
-	if (pBlock == g_cx_memstats.pLastBlock)
-	{
-		g_cx_memstats.pLastBlock = g_cx_memstats.pLastBlock->pPrev;
-	}
-	g_cx_memstats.cbCrAllocsSize -= pBlock->cbSize;
-	g_cx_memstats.cCrAllocsCount--;
-
-	CX_MemOptFree(pBlockPtr);
-
-	LeaveCriticalSection(&g_cx_memstats.cs);
+	CX_MemFreeHelper(true, pPtr);
 }
 
 void *CX_MemAlloc(CX_Size cbSize)
 {
-	if (g_cx_memstats.bActive)
+	if (g_cx_mem_track)
 	{
 		return CX_MemDbgAlloc(cbSize);
 	}
@@ -408,7 +311,7 @@ void *CX_MemAlloc(CX_Size cbSize)
 
 void *CX_MemRealloc(void *pPtr, CX_Size cbSize)
 {
-	if (g_cx_memstats.bActive)
+	if (g_cx_mem_track)
 	{
 		return CX_MemDbgRealloc(pPtr, cbSize);
 	}
@@ -420,7 +323,7 @@ void *CX_MemRealloc(void *pPtr, CX_Size cbSize)
 
 void CX_MemFree(void *pPtr)
 {
-	if (g_cx_memstats.bActive)
+	if (g_cx_mem_track)
 	{
 		CX_MemDbgFree(pPtr);
 	}
@@ -430,205 +333,185 @@ void CX_MemFree(void *pPtr)
 	}
 }
 
-static void CX_MemStats_AtExit(void)
+CX_Bool CX_MemGetFrameInfo(void *pCallStack, const CX_Char **pszFunctionName, const CX_Char **pszFileName, CX_Size *pcLine)
 {
-	if (g_cx_memstats.bActive)
-	{
-		DeleteCriticalSection(&g_cx_memstats.cs);
-		g_cx_memstats.bActive = CX_False;
-	}
-	if (g_cx_memstats.bSynInitialized)
-	{
-		SymCleanup(GetCurrentProcess());
-		g_cx_memstats.bSynInitialized = CX_False;
-	}
-}
-
-CX_StatusCode CX_MemStats_Activate()
-{
-	if (g_cx_memstats.bActive)
-	{
-		return CX_Status_OK;
-	}
-	g_cx_memstats.bSynInitialized       = false;
-	g_cx_memstats.cbCrAllocsSize        = 0;
-	g_cx_memstats.cCrAllocsCount        = 0;
-	g_cx_memstats.cbMaxMemSize          = 0;
-	g_cx_memstats.cMaxAllocsCount       = 0;
-	g_cx_memstats.cbMaxAllocsSize       = 0;
-	g_cx_memstats.pFirstBlock           = NULL;
-	g_cx_memstats.pLastBlock            = NULL;
-	InitializeCriticalSection(&g_cx_memstats.cs);
-	atexit(&CX_MemStats_AtExit);
-	g_cx_memstats.bActive = true;
-
-	return CX_Status_OK;
-}
-
-CX_Bool CX_MemStats_IsActive()
-{
-	return g_cx_memstats.bActive;
-}
-
-CX_StatusCode CX_MemStats_SetMaxMemSize(CX_Size cbSize)
-{
-	if (g_cx_memstats.bActive)
-	{
-		g_cx_memstats.cbMaxMemSize = cbSize;
-	}
-
-	return CX_Status_OK;
-}
-
-CX_Size CX_MemStats_GetMaxMemSize()
-{
-	if (!g_cx_memstats.bActive)
-	{
-		return 0;
-	}
-
-	return g_cx_memstats.cbMaxMemSize;
-}
-
-CX_Size CX_MemStats_GetCurrentAllocsSize()
-{
-	return g_cx_memstats.cbCrAllocsSize;
-}
-
-CX_Size CX_MemStats_GetCurrentAllocsCount()
-{
-	return g_cx_memstats.cCrAllocsCount;
-}
-
-CX_Size CX_MemStats_GetMaxAllocsSize()
-{
-	return g_cx_memstats.cbMaxAllocsSize;
-}
-
-CX_Size CX_MemStats_GetMaxAllocsCount()
-{
-	return g_cx_memstats.cMaxAllocsCount;
-}
-
-bool CX_MemStatsIsString(const CX_Char *szString, const CX_Char *strings[], CX_Size cStrings)
-{
-	CX_Size cIndex;
-
-	for (cIndex = 0; cIndex < cStrings; cIndex++)
-	{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-		if (0 == cx_strcmp(szString, strings[cIndex]))
-#pragma warning(pop)
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-void CX_MemStats_GetAllocs(CX_MemStats_AllocStatsHandler pfnHandler, void *pUsrCtx,
-                           const CX_Char *exceptions[], CX_Size cExceptions,
-                           const CX_Char *ignoresUpper[], CX_Size cIgnoresUpper,
-                           const CX_Char *ignoresLower[], CX_Size cIgnoresLower)
-{
-	CX_MemAllocInfo   info;
-	CX_MemAllocCall   *calls;
-	CX_MemBlock       *pBlock;
-	CX_Byte           *pPos;
-	CX_UInt8          cIndex;
-	unsigned char     symbuf[sizeof(SYMBOL_INFO) + CX_MEMSTATS_MAX_SYMBOL_LEN - 1];
+	CX_MemCallStack   *pCS = (CX_MemCallStack *)pCallStack;
+	unsigned char     symbuf[sizeof(SYMBOL_INFO) + CX_MEMSTATS_MAX_FUNCTION_NAME_LEN - 1];
 	SYMBOL_INFO       *pSym = (SYMBOL_INFO *)symbuf;
-	IMAGEHLP_LINE64   line;
 	DWORD             dwDisplacement;
-	CX_Bool           bException;
-	HANDLE            hProcess;
+	IMAGEHLP_LINE64   line;
 
-	if (NULL == (calls = (CX_MemAllocCall *)CX_MemOptAlloc(sizeof(CX_MemAllocCall) * CX_MEMSTATS_MAX_CALLS_COUNT)))
+	if (NULL == pCS)
 	{
-		return;
+		return CX_False;
 	}
-	
-	hProcess = GetCurrentProcess();
-	pSym->MaxNameLen = sizeof(symbuf) - sizeof(sizeof(SYMBOL_INFO));
+	if (pCS->cFrameIndex >= pCS->cFramesCount)
+	{
+		return CX_False;
+	}
+	pSym->MaxNameLen   = sizeof(symbuf) - sizeof(sizeof(SYMBOL_INFO));
 	pSym->SizeOfStruct = sizeof(SYMBOL_INFO);
-
-	EnterCriticalSection(&g_cx_memstats.cs);
-
-	if (!g_cx_memstats.bSynInitialized)
+	if (0 == pCS->cFrameIndex)
 	{
-		g_cx_memstats.bSynInitialized = CX_True;
-		SymInitialize(GetCurrentProcess(), NULL, TRUE);
+		CX_Mem_SymInit();
+	}
+	while (pCS->cFrameIndex < pCS->cFramesCount)
+	{
+		*pszFunctionName = "";
+		*pszFileName = "";
+		*pcLine = 0;
+		if (SymFromAddr(GetCurrentProcess(), (DWORD64)(pCS->callstack[pCS->cFrameIndex]), 0, pSym))
+		{
+			*pszFunctionName = pSym->Name;
+			if (SymGetLineFromAddr64(GetCurrentProcess(), (DWORD64)(pCS->callstack[pCS->cFrameIndex]), &dwDisplacement, &line))
+			{
+				*pszFileName = line.FileName;
+				*pcLine      = line.LineNumber;
+			}
+		}
+		pCS->cFrameIndex++;
+		if (0 == cx_strcmp(*pszFunctionName, "CX_MemGetFrames") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemGetTotalSize") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemAllocHelper") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemReallocHelper") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemFreeHelper") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemDbgAlloc") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemDbgRealloc") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemDbgFree") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemOptAlloc") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemOptRealloc") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemOptFree") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemAlloc") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemRealloc") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX_MemFree") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX::Mem::Alloc") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX::Mem::Realloc") || 
+		    0 == cx_strcmp(*pszFunctionName, "CX::Mem::Free") || 
+		    0 == cx_strncmp(*pszFunctionName, "CX::Mem::New<", 13) || 
+		    0 == cx_strncmp(*pszFunctionName, "CX::Mem::NewArr<", 16) || 
+		    0 == cx_strncmp(*pszFunctionName, "CX::Mem::Delete<", 16) || 
+		    0 == cx_strncmp(*pszFunctionName, "CX::Mem::DeleteArr<", 19))
+		{
+			continue;
+		}
+
+		break;
 	}
 
-	pBlock = g_cx_memstats.pFirstBlock;
-	while (NULL != pBlock)
+	return CX_True;
+}
+
+void CX_SysLogMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
+{
+	CX_Char       szBuffer[4096];
+	CX_Size       cBufferLen = sizeof(szBuffer) / sizeof(szBuffer[0]);
+	const CX_Char *szFunctionName;
+	const CX_Char *szFileName;
+	CX_Size       cLine;
+
+	cx_snprintf(szBuffer, sizeof(szBuffer) / sizeof(szBuffer[0]), "\n%u bytes at 0x%p\n", cbSize, pMem);
+	szBuffer[cBufferLen - 1] = 0;
+	OutputDebugStringA(szBuffer);
+	if (NULL != pCallStack)
 	{
-		pPos = (CX_Byte *)pBlock;
-		pPos += sizeof(CX_MemBlock);
-		if (0 < pBlock->cFrames)
+		while (CX_MemGetFrameInfo(pCallStack, &szFunctionName, &szFileName, &cLine))
 		{
-			pPos += (pBlock->cFrames - 1) * sizeof(CX_UIntPtr);
+			cx_snprintf(szBuffer, sizeof(szBuffer) / sizeof(szBuffer[0]), " - %s (%s:%u)\n", szFunctionName, szFileName, cLine);
+			szBuffer[cBufferLen - 1] = 0;
+			OutputDebugStringA(szBuffer);
 		}
-		pPos += sizeof(CX_UInt16);
+	}
+	else
+	{
+		OutputDebugStringA(" - no call stack available\n");
+	}
+}
 
-		info.pPtr = pPos;
-		info.cbSize = pBlock->cbSize;
-		info.cCallsCount = 0;
-		info.calls = calls;
-		bException = CX_False;
-		for (cIndex = 0; cIndex < pBlock->cFrames; cIndex++)
+void CX_StdOutMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
+{
+	CX_Char       szBuffer[4096];
+	CX_Size       cBufferLen = sizeof(szBuffer) / sizeof(szBuffer[0]);
+	const CX_Char *szFunctionName;
+	const CX_Char *szFileName;
+	CX_Size       cLine;
+
+	cx_snprintf(szBuffer, sizeof(szBuffer) / sizeof(szBuffer[0]), "\n%u bytes at 0x%p\n", cbSize, pMem);
+	szBuffer[cBufferLen - 1] = 0;
+	printf(szBuffer);
+	if (NULL != pCallStack)
+	{
+		while (CX_MemGetFrameInfo(pCallStack, &szFunctionName, &szFileName, &cLine))
 		{
-			calls[info.cCallsCount].szFunction[0] = 0;
-			calls[info.cCallsCount].szFile[0] = 0;
-			calls[info.cCallsCount].cLineNumber = 1;
-			if (SymFromAddr(hProcess, (DWORD64)(pBlock->frames[cIndex]), 0, pSym))
-			{
-				if (CX_MemStatsIsString(pSym->Name, ignoresUpper, cIgnoresUpper) ||
-					CX_MemStatsIsString(pSym->Name, CX_MEMSTATS_IGNORES_UPPER, CX_MEMSTATS_IGNORES_UPPER_COUNT))
-				{
-					continue;
-				}
-				if (CX_MemStatsIsString(pSym->Name, ignoresLower, cIgnoresLower) ||
-					CX_MemStatsIsString(pSym->Name, CX_MEMSTATS_IGNORES_LOWER, CX_MEMSTATS_IGNORES_LOWER_COUNT))
-				{
-					break;
-				}
-				if (CX_MemStatsIsString(pSym->Name, exceptions, cExceptions) ||
-					CX_MemStatsIsString(pSym->Name, CX_MEMSTATS_EXCEPTIONS, CX_MEMSTATS_EXCEPTIONS_COUNT))
-				{
-					bException = CX_True;
+			cx_snprintf(szBuffer, sizeof(szBuffer) / sizeof(szBuffer[0]), " - %s (%s:%u)\n", szFunctionName, szFileName, cLine);
+			szBuffer[cBufferLen - 1] = 0;
+			printf(szBuffer);
+		}
+	}
+	else
+	{
+		printf(" - no call stack available\n");
+	}
+}
 
-					break;
-				}
-#pragma warning(push)
-#pragma warning(disable: 4996)
-				cx_strcpy(calls[info.cCallsCount].szFunction, pSym->Name);
-#pragma warning(pop)
-				if (SymGetLineFromAddr64(hProcess, (DWORD64)(pBlock->frames[cIndex]), &dwDisplacement, &line))
+void CX_MemEnumAllocs(CX_MemAllocHandler pfnMemAllocHandler)
+{
+	CX_Byte            *pMem;
+	CX_Size            cbSize;
+	CX_Byte            cFrames;
+	CX_MemCallStack    callstack;
+	PROCESS_HEAP_ENTRY entry;
+	CX_Bool            bFirst;
+
+	if (NULL == g_cx_mem_heap)
+	{
+		CX_Mem_Init();
+	}
+	if (NULL == pfnMemAllocHandler)
+	{
+		pfnMemAllocHandler = &CX_SysLogMemAllocHandler;
+	}
+#pragma warning(suppress: 6387)
+	if (HeapLock(g_cx_mem_heap))
+	{
+		bFirst       = CX_True;
+		entry.lpData = NULL;
+#pragma warning(suppress: 6387)
+		while (HeapWalk(g_cx_mem_heap, &entry))
+		{
+			if ((PROCESS_HEAP_ENTRY_BUSY & entry.wFlags))
+			{
+				if (bFirst)
 				{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-					cx_strncpy(calls[info.cCallsCount].szFile, line.FileName, CX_MEMSTATS_MAX_SYMBOL_LEN);
-#pragma warning(pop)
-					calls[info.cCallsCount].szFile[CX_MEMSTATS_MAX_SYMBOL_LEN - 1] = 0;
-					calls[info.cCallsCount].cLineNumber = (CX_Size)line.LineNumber;
+					bFirst = CX_False;
+					OutputDebugStringA("\nAllocated memory blocks:\n");
+				}
+				pMem = (CX_Byte *)entry.lpData;
+#pragma warning(suppress: 6387)
+				memcpy(&cbSize, pMem, sizeof(CX_Size));
+				pMem += sizeof(CX_Size);
+				memcpy(&cFrames, pMem, sizeof(CX_Byte));
+				pMem += sizeof(CX_Byte);
+				pMem += cbSize;
+				if (0 < cFrames)
+				{
+					callstack.callstack    = (CX_MemFrame *)pMem;
+					callstack.cFrameIndex  = 0;
+					callstack.cFramesCount = cFrames;
+					pfnMemAllocHandler(pMem, cbSize, &callstack);
+				}
+				else
+				{
+					pfnMemAllocHandler(pMem, cbSize, NULL);
 				}
 			}
-			info.cCallsCount++;
 		}
-		if (!bException)
+#pragma warning(suppress: 6387)
+		HeapUnlock(g_cx_mem_heap);
+		if (!bFirst)
 		{
-			pfnHandler(&info, pUsrCtx);
+			OutputDebugStringA("\n");
 		}
-
-		pBlock = pBlock->pNext;
 	}
-
-	LeaveCriticalSection(&g_cx_memstats.cs);
-
-	CX_MemOptFree(calls);
 }
 
 #endif

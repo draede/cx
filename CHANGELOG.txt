@@ -1,3 +1,9 @@
+0.1.45 - 2015-10-31 - Improved memory tracking (windows only), fixed contrib warnings, fixed SimpleBuffers, added CX version
+  - Fixed contrib warnings
+  - Updated CX version
+  - Fixed BINReader & BINWriter
+  - Fixed JSONReader & JSONWriter
+  - Improved memory tracking (windows only)
 0.1.44 - 2015-10-27 - New IO filters and stream fixes
   - Added max mem alloc option for mem dbg
   - Revamped IO filters 

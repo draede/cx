@@ -125,7 +125,7 @@
 #define cxw_fprintf        fwprintf
 #define cx_sprintf         sprintf
 #define cxw_sprintf        swprintf
-#define cx_snprintf        snprintf
+#define cx_snprintf        sprintf_s
 //#define cxw_snprintf NOT AVAILABLE
 #define cx_vprintf         vprintf
 #define cxw_vprintf        vwprintf

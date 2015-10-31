@@ -99,11 +99,11 @@ Status LZ4OutputFilter::Filter(const void *pInput, Size cbInputSize, void **ppOu
 	}
 	if (DEFAULT_COMPRESSION_LEVEL == m_nCompressionLevel)
 	{
-		cbResSize = LZ4_compress_default((const char *)pInput, (char *)m_buffer.GetMem(), cbInputSize, cbSize);
+		cbResSize = LZ4_compress_default((const char *)pInput, (char *)m_buffer.GetMem(), (int)cbInputSize, (int)cbSize);
 	}
 	else
 	{
-		cbResSize = LZ4_compress_HC((const char *)pInput, (char *)m_buffer.GetMem(), cbInputSize, cbSize, m_nCompressionLevel);
+		cbResSize = LZ4_compress_HC((const char *)pInput, (char *)m_buffer.GetMem(), (int)cbInputSize, (int)cbSize, m_nCompressionLevel);
 	}
 	if (0 == cbResSize)
 	{

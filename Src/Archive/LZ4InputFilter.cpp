@@ -71,7 +71,8 @@ Status LZ4InputFilter::Filter(const void *pInput, Size cbInputSize, Size cbOrigI
 	{
 		return status;
 	}
-	if (0 == (cbResSize = LZ4_decompress_safe((const char *)pInput, (char *)m_buffer.GetMem(), (int)cbInputSize, *pcbOutputSize)))
+	if (0 == (cbResSize = LZ4_decompress_safe((const char *)pInput, (char *)m_buffer.GetMem(), (int)cbInputSize, 
+	                                          (int)*pcbOutputSize)))
 	{
 		return Status_OperationFailed;
 	}

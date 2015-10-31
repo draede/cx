@@ -84,7 +84,7 @@ Status LZHAMOutputFilter::Filter(const void *pInput, Size cbInputSize, void **pp
 
 		return Status();
 	}
-	*pcbOutputSize = (Size)lzham_z_compressBound(cbInputSize);
+	*pcbOutputSize = (Size)lzham_z_compressBound((lzham_z_ulong)cbInputSize);
 	if (!(status = ResizeBuffer(*pcbOutputSize)))
 	{
 		return status;

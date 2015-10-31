@@ -101,7 +101,6 @@
     <ClInclude Include="..\..\Include\CX\C\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Limits.h" />
     <ClInclude Include="..\..\Include\CX\C\Mem.h" />
-    <ClInclude Include="..\..\Include\CX\C\MemStats.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Android\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdarg.h" />
@@ -192,7 +191,6 @@
     <ClInclude Include="..\..\Include\CX\Map.hpp" />
     <ClInclude Include="..\..\Include\CX\Component.hpp" />
     <ClInclude Include="..\..\Include\CX\Mem.hpp" />
-    <ClInclude Include="..\..\Include\CX\MemStats.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\HTTP\Client.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\URLParser.hpp" />
     <ClInclude Include="..\..\Include\CX\Platform.hpp" />
@@ -313,7 +311,36 @@
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32_internal.cpp" />
-    <ClCompile Include="..\..\Contrib\crypto-algorithms\Src\aes.cpp" />
+    <ClCompile Include="..\..\Contrib\crypto-algorithms\Src\aes.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
+    </ClCompile>
     <ClCompile Include="..\..\Contrib\cURL\Src\amigaos.c">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</SDLCheck>
@@ -4505,7 +4532,6 @@
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />
-    <ClCompile Include="..\..\Src\MemStats.cpp" />
     <ClCompile Include="..\..\Src\Network\HTTP\Client.cpp" />
     <ClCompile Include="..\..\Src\Network\URLParser.cpp" />
     <ClCompile Include="..\..\Src\Platform\Android\Component_android.cpp" />

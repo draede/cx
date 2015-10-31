@@ -468,7 +468,7 @@ Status BINReader::BeginArray(const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BINRW::RECORD_BEGIN_OBJECT != nRecordType)
+	if (BINRW::RECORD_BEGIN_ARRAY != nRecordType)
 	{
 		return Status_ParseFailed;
 	}
@@ -500,7 +500,7 @@ Status BINReader::BeginArray(const Char *szName/* = NULL*/)
 			return Status_InvalidCall;
 		}
 	}
-	m_stackStates.push(State_Object);
+	m_stackStates.push(State_Array);
 
 	return Status();
 }
@@ -522,7 +522,7 @@ Status BINReader::EndArray()
 	{
 		return status;
 	}
-	if (BINRW::RECORD_END_OBJECT != nRecordType)
+	if (BINRW::RECORD_END_ARRAY != nRecordType)
 	{
 		return Status_ParseFailed;
 	}

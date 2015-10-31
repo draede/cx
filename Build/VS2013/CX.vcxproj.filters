@@ -915,12 +915,6 @@
     <ClInclude Include="..\..\Include\CX\C\Mem.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\C\MemStats.h">
-      <Filter>Header Files\C</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\MemStats.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINReader.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
@@ -1672,9 +1666,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\StringHelper.cpp">
       <Filter>Source Files\Str</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\MemStats.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\SimpleBuffers\BINReader.cpp">
       <Filter>Source Files\SimpleBuffers</Filter>

@@ -15,6 +15,9 @@
                * http://csrc.nist.gov/publications/nistpubs/800-38C/SP800-38C_updated-July20_2007.pdf
 *********************************************************************/
 
+#pragma warning(disable: 4267)
+#pragma warning(disable: 4244)
+
 /*************************** HEADER FILES ***************************/
 #include <stdlib.h>
 #include <memory.h>
@@ -274,6 +277,7 @@ int aes_encrypt_cbc_mac(const BYTE in[], size_t in_len, BYTE out[], const WORD k
 		// Do not output all encrypted blocks.
 	}
 
+#pragma warning(suppress: 6001)
 	memcpy(out, buf_out, AES_BLOCK_SIZE);   // Only output the last block.
 
 	return(TRUE);
