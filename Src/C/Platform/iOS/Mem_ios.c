@@ -86,6 +86,55 @@ void CX_MemFree(void *pPtr)
 	}
 }
 
+void CX_MemSetTrack(CX_Bool bTrackMem)
+{
+	CX_UNUSED(bTrackMem);
+}
+
+CX_Bool CX_MemGetTrack()
+{
+	return CX_False;
+}
+
+void CX_MemSetDumpAllocs(CX_Bool bDumpAllocs)
+{
+	CX_UNUSED(bDumpAllocs);
+}
+
+CX_Bool CX_MemGetDumpAllocs()
+{
+	return CX_False;
+}
+
+void CX_SysLogMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
+{
+	CX_UNUSED(pMem);
+	CX_UNUSED(cbSize);
+	CX_UNUSED(pCallStack);
+}
+
+void CX_StdOutMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
+{
+	CX_UNUSED(pMem);
+	CX_UNUSED(cbSize);
+	CX_UNUSED(pCallStack);
+}
+
+void CX_MemEnumAllocs(CX_MemAllocHandler pfnMemAllocHandler)
+{
+	CX_UNUSED(pfnMemAllocHandler);
+}
+
+CX_Bool CX_MemGetFrameInfo(void *pCallStack, const CX_Char **pszFunctionName, const CX_Char **pszFileName, CX_Size *pcLine)
+{
+	CX_UNUSED(pCallStack);
+	CX_UNUSED(pszFunctionName);
+	CX_UNUSED(pszFileName);
+	CX_UNUSED(pcLine);
+
+	return CX_False;
+}
+
 #endif
 
 #if defined(CX_OS_WINDOWS)

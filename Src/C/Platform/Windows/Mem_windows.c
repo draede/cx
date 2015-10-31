@@ -42,6 +42,11 @@
 #include <dbghelp.h>
 
 
+//#define CX_MEM_DISABLE
+//#define CX_MEM_FORCE_TRACK
+//#define CX_MEM_FORCE_DUMP
+
+
 #define CX_MEMSTATS_MAX_CALLS_COUNT   63
 
 
@@ -127,22 +132,38 @@ void CX_Mem_SymInit()
 
 void CX_MemSetTrack(CX_Bool bTrackMem)
 {
+#ifdef CX_MEM_DISABLE
+	CX_UNUSED(bTrackMem);
+#else
 	g_cx_mem_track = bTrackMem;
+#endif
 }
 
 CX_Bool CX_MemGetTrack()
 {
+#ifdef CX_MEM_DISABLE
+	return CX_False;
+#else
 	return g_cx_mem_track;
+#endif
 }
 
 void CX_MemSetDumpAllocs(CX_Bool bDumpAllocs)
 {
+#ifdef CX_MEM_DISABLE
+	CX_UNUSED(bDumpAllocs);
+#else
 	g_cx_mem_dump = bDumpAllocs;
+#endif
 }
 
 CX_Bool CX_MemGetDumpAllocs()
 {
+#ifdef CX_MEM_DISABLE
+	return CX_False;
+#else
 	return g_cx_mem_dump;
+#endif
 }
 
 void CX_MemGetFrames(CX_MemFrame frames[CX_MEMSTATS_MAX_CALLS_COUNT], CX_Byte *pcFrames)
@@ -269,36 +290,77 @@ void *CX_MemReallocHelper(CX_Bool bTrack, void *pPtr, CX_Size cbSize)
 
 void *CX_MemOptAlloc(CX_Size cbSize)
 {
+#ifdef CX_MEM_DISABLE
+	return HeapAlloc(GetProcessHeap(), 0, cbSize);
+#else
 	return CX_MemAllocHelper(false, cbSize);
+#endif
 }
 
 void *CX_MemOptRealloc(void *pPtr, CX_Size cbSize)
 {
+#ifdef CX_MEM_DISABLE
+	if (NUL == pPtr)
+	{
+		return CX_MemOptAlloc(cbSize);
+	}
+	else
+	{
+		return HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
+	}
+#else
 	return CX_MemReallocHelper(false, pPtr, cbSize);
+#endif
 }
 
 void CX_MemOptFree(void *pPtr)
 {
+#ifdef CX_MEM_DISABLE
+	HeapFree(GetProcessHeap(), 0, pPtr);
+#else
 	CX_MemFreeHelper(false, pPtr);
+#endif
 }
 
 void *CX_MemDbgAlloc(CX_Size cbSize)
 {
+#ifdef CX_MEM_DISABLE
+	return HeapAlloc(GetProcessHeap(), 0, cbSize);
+#else
 	return CX_MemAllocHelper(true, cbSize);
+#endif
 }
 
 void *CX_MemDbgRealloc(void *pPtr, CX_Size cbSize)
 {
+#ifdef CX_MEM_DISABLE
+	if (NUL == pPtr)
+	{
+		return CX_MemDbgAlloc(cbSize);
+	}
+	else
+	{
+		return HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
+	}
+#else
 	return CX_MemReallocHelper(true, pPtr, cbSize);
+#endif
 }
 
 void CX_MemDbgFree(void *pPtr)
 {
+#ifdef CX_MEM_DISABLE
+	HeapFree(GetProcessHeap(), 0, pPtr);
+#else
 	CX_MemFreeHelper(true, pPtr);
+#endif
 }
 
 void *CX_MemAlloc(CX_Size cbSize)
 {
+#ifdef CX_MEM_DISABLE
+	return HeapAlloc(GetProcessHeap(), 0, cbSize);
+#else
 	if (g_cx_mem_track)
 	{
 		return CX_MemDbgAlloc(cbSize);
@@ -307,10 +369,21 @@ void *CX_MemAlloc(CX_Size cbSize)
 	{
 		return CX_MemOptAlloc(cbSize);
 	}
+#endif
 }
 
 void *CX_MemRealloc(void *pPtr, CX_Size cbSize)
 {
+#ifdef CX_MEM_DISABLE
+	if (NUL == pPtr)
+	{
+		return CX_MemDbgAlloc(cbSize);
+	}
+	else
+	{
+		return HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
+	}
+#else
 	if (g_cx_mem_track)
 	{
 		return CX_MemDbgRealloc(pPtr, cbSize);
@@ -319,10 +392,14 @@ void *CX_MemRealloc(void *pPtr, CX_Size cbSize)
 	{
 		return CX_MemOptRealloc(pPtr, cbSize);
 	}
+#endif
 }
 
 void CX_MemFree(void *pPtr)
 {
+#ifdef CX_MEM_DISABLE
+	HeapFree(GetProcessHeap(), 0, pPtr);
+#else
 	if (g_cx_mem_track)
 	{
 		CX_MemDbgFree(pPtr);
@@ -331,6 +408,7 @@ void CX_MemFree(void *pPtr)
 	{
 		CX_MemOptFree(pPtr);
 	}
+#endif
 }
 
 CX_Bool CX_MemGetFrameInfo(void *pCallStack, const CX_Char **pszFunctionName, const CX_Char **pszFileName, CX_Size *pcLine)
@@ -455,6 +533,9 @@ void CX_StdOutMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
 
 void CX_MemEnumAllocs(CX_MemAllocHandler pfnMemAllocHandler)
 {
+#ifdef CX_MEM_DISABLE
+	CX_UNUSED(pfnMemAllocHandler);
+#else
 	CX_Byte            *pMem;
 	CX_Size            cbSize;
 	CX_Byte            cFrames;
@@ -512,6 +593,7 @@ void CX_MemEnumAllocs(CX_MemAllocHandler pfnMemAllocHandler)
 			OutputDebugStringA("\n");
 		}
 	}
+#endif
 }
 
 #endif
