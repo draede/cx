@@ -219,7 +219,7 @@ public:
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 
-		//=== reset
+		//=== init
 
 		Print(out, "\tvirtual void Init()" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
@@ -261,8 +261,8 @@ public:
 				break;
 				case MemberType_Map:
 				{
-					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Map, {1}>::Init("
-					      "this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Init("
+					      "this->{3});" CX_SB_LINE_TERMINATOR, sKeyType, sValType, iter->GetMemberName());
 				}
 				break;
 				default:

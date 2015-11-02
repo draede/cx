@@ -202,6 +202,7 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINRW.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\CPPGenerator.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataIniter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\IGenerator.hpp" />

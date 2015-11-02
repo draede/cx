@@ -960,6 +960,9 @@
     <ClInclude Include="..\..\Include\CX\IO\IOutputFilter.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataIniter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
