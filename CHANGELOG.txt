@@ -1,3 +1,5 @@
+0.1.48 - 2015-11-01 - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
+  - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
 0.1.47 - 2015-11-01 - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
   - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
 0.1.46 - 2015-10-31 - Fixed android build
