@@ -31,6 +31,8 @@
 
 #include "CX/SimpleBuffers/IReader.hpp"
 #include "CX/SimpleBuffers/IWriter.hpp"
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 
 
@@ -45,6 +47,8 @@ class CX_API ISimpleBuffer
 public:
 
 	virtual ~ISimpleBuffer() { }
+
+	virtual void Init() = 0;
 
 	virtual Status Read(IReader *pReader, const Char *szName = NULL) = 0;
 

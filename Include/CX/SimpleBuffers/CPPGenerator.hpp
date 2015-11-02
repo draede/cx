@@ -74,6 +74,7 @@ public:
 		Print(out, "#include \"CX/SimpleBuffers/MemberType.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/DataWriter.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/DataReader.hpp\"" CX_SB_LINE_TERMINATOR);
+		Print(out, "#include \"CX/SimpleBuffers/DataIniter.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/ISimpleBuffer.hpp\"" CX_SB_LINE_TERMINATOR);
 
 		const Object::PragmasVector &vectorPrologPragmas = object.GetPragmasByLocation(Object::PRAGMA_LOCATION_PROLOG());
@@ -218,6 +219,61 @@ public:
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 
+		//=== reset
+
+		Print(out, "\tvirtual void Init()" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
+		{
+			String sKeyType;
+			String sValType;
+
+			if ((status = GetMemberFullType(MemberType_Scalar, iter->GetKeyType(), "", sKeyType)).IsNOK())
+			{
+				return status;
+			}
+			if (MemberType_Map == iter->GetMemberType())
+			{
+				if ((status = GetMemberFullType(MemberType_Scalar, iter->GetValType(), "", sValType)).IsNOK())
+				{
+					return status;
+				}
+			}
+			switch (iter->GetMemberType())
+			{
+				case MemberType_Scalar:
+				{
+					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Scalar, {1}>::Init("
+					      "this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+				}
+				break;
+				case MemberType_Vector:
+				{
+					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Vector, {1}>::Init("
+					      "this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+				}
+				break;
+				case MemberType_Set:
+				{
+					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Set, {1}>::Init("
+					      "this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+				}
+				break;
+				case MemberType_Map:
+				{
+					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Map, {1}>::Init("
+					      "this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+				}
+				break;
+				default:
+				{
+					return Status(Status_InvalidArg, "Member {1} has invalid field type", iter->GetName());
+				}
+			}
+		}
+		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+
 		//=== getters/setters
 
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
@@ -304,6 +360,7 @@ public:
 		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\tCX::Status status;" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\tInit();" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\tif ((status = pReader->BeginObject(szName)).IsNOK())" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
@@ -599,7 +656,7 @@ public:
 			Print(out, "}//namespace {1}" CX_SB_LINE_TERMINATOR, *iter);
 		}
 
-		//=== external writer / reader
+		//=== external init/writer/reader
 
 		Print(out, CX_SB_LINE_TERMINATOR);
 		Print(out, "namespace CX" CX_SB_LINE_TERMINATOR);
@@ -607,6 +664,22 @@ public:
 		Print(out, CX_SB_LINE_TERMINATOR);
 		Print(out, "namespace SimpleBuffers" CX_SB_LINE_TERMINATOR);
 		Print(out, "{{" CX_SB_LINE_TERMINATOR);
+
+		//=== external init
+
+		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "template <>" CX_SB_LINE_TERMINATOR);
+		Print(out, "struct DataIniter<MemberType_Scalar, {1}>" CX_SB_LINE_TERMINATOR, sFullType);
+		Print(out, "{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\tstatic void Init({1} &v)" CX_SB_LINE_TERMINATOR, sFullType);
+		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\tv.Init();" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, "};" CX_SB_LINE_TERMINATOR);
+
+		//=== external writer
+
+		Print(out, CX_SB_LINE_TERMINATOR);
 		Print(out, "template <>" CX_SB_LINE_TERMINATOR);
 		Print(out, "struct DataWriter<MemberType_Scalar, {1}>" CX_SB_LINE_TERMINATOR, sFullType);
 		Print(out, "{{" CX_SB_LINE_TERMINATOR);
@@ -615,6 +688,9 @@ public:
 		Print(out, "\t\treturn v.Write(pWriter, szName);" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 		Print(out, "};" CX_SB_LINE_TERMINATOR);
+
+		//=== external reader
+
 		Print(out, CX_SB_LINE_TERMINATOR);
 		Print(out, "template <>" CX_SB_LINE_TERMINATOR);
 		Print(out, "struct DataReader<MemberType_Scalar, {1}>" CX_SB_LINE_TERMINATOR, sFullType);
@@ -624,6 +700,7 @@ public:
 		Print(out, "\t\treturn v.Read(pReader, szName);" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 		Print(out, "};" CX_SB_LINE_TERMINATOR);
+
 		Print(out, CX_SB_LINE_TERMINATOR);
 		Print(out, "}//namespace SimpleBuffers" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
