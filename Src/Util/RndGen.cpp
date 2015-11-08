@@ -133,7 +133,7 @@ Int8 RndGen::GetInt8Range(Int8 nMin, Int8 nMax)
 	}
 	else
 	{
-		return (nMin + (GetInt8() % (nMax - nMin + 1)));
+		return (nMin + (GetUInt8() % (nMax - nMin + 1)));
 	}
 }
 
@@ -167,7 +167,7 @@ Int16 RndGen::GetInt16Range(Int16 nMin, Int16 nMax)
 	}
 	else
 	{
-		return (nMin + (GetInt16() % (nMax - nMin + 1)));
+		return (nMin + (GetUInt16() % (nMax - nMin + 1)));
 	}
 }
 
@@ -201,7 +201,7 @@ Int32 RndGen::GetInt32Range(Int32 nMin, Int32 nMax)
 	}
 	else
 	{
-		return (nMin + (GetInt32() % (nMax - nMin + 1)));
+		return (nMin + (GetUInt32() % (nMax - nMin + 1)));
 	}
 }
 
@@ -235,7 +235,7 @@ Int64 RndGen::GetInt64Range(Int64 nMin, Int64 nMax)
 	}
 	else
 	{
-		return (nMin + (GetInt64() % (nMax - nMin + 1)));
+		return (nMin + (GetUInt64() % (nMax - nMin + 1)));
 	}
 }
 
