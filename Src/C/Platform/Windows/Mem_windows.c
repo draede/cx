@@ -96,10 +96,10 @@ BOOL CALLBACK CX_Mem_InitHandler(PINIT_ONCE InitOnce, PVOID Parameter, PVOID *lp
 {
 	CX_UNUSED(InitOnce);
 	CX_UNUSED(Parameter);
-	CX_UNUSED(lpContext);
 
 	g_cx_mem_heap = HeapCreate(0, 0, 0);
 	atexit(&CX_Mem_Uninit);
+	*lpContext = NULL;
 
 	return TRUE;
 }
@@ -108,9 +108,9 @@ BOOL CALLBACK CX_Mem_InitSymHandler(PINIT_ONCE InitOnce, PVOID Parameter, PVOID 
 {
 	CX_UNUSED(InitOnce);
 	CX_UNUSED(Parameter);
-	CX_UNUSED(lpContext);
 
 	SymInitialize(GetCurrentProcess(), NULL, TRUE);
+	*lpContext   = NULL;
 	g_cx_mem_sym = CX_True;
 
 	return TRUE;
