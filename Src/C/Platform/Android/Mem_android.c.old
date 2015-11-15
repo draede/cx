@@ -29,12 +29,37 @@
 #include "CX/C/Platform.h"
 
 
-#if defined(CX_OS_IOS)
+#if defined(CX_OS_ANDROID)
 
 
 #include "CX/C/Mem.h"
 #include "CX/C/stdlib.h"
 
+
+void *CX_MemOptAlloc(CX_Size cbSize)
+{
+	return malloc(cbSize);
+}
+
+void *CX_MemOptRealloc(void *pPtr, CX_Size cbSize)
+{
+	if (NULL == pPtr)
+	{
+		return malloc(cbSize);
+	}
+	else
+	{
+		return realloc(pPtr, cbSize);
+	}
+}
+
+void CX_MemOptFree(void *pPtr)
+{
+	if (NULL != pPtr)
+	{
+		free(pPtr);
+	}
+}
 
 void *CX_MemAlloc(CX_Size cbSize)
 {
@@ -61,13 +86,57 @@ void CX_MemFree(void *pPtr)
 	}
 }
 
-#endif
-
-#if defined(CX_OS_WINDOWS)
-
-static void empty_func_to_make_compiler_happy()
+void CX_MemSetTrack(CX_Bool bTrackMem)
 {
+	CX_UNUSED(bTrackMem);
+}
+
+CX_Bool CX_MemGetTrack()
+{
+	return CX_False;
+}
+
+void CX_MemSetDumpAllocs(CX_Bool bDumpAllocs)
+{
+	CX_UNUSED(bDumpAllocs);
+}
+
+CX_Bool CX_MemGetDumpAllocs()
+{
+	return CX_False;
+}
+
+void CX_SysLogMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
+{
+	CX_UNUSED(pMem);
+	CX_UNUSED(cbSize);
+	CX_UNUSED(pCallStack);
+}
+
+void CX_StdOutMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
+{
+	CX_UNUSED(pMem);
+	CX_UNUSED(cbSize);
+	CX_UNUSED(pCallStack);
+}
+
+void CX_MemEnumAllocs(CX_MemAllocHandler pfnMemAllocHandler)
+{
+	CX_UNUSED(pfnMemAllocHandler);
+}
+
+CX_Bool CX_MemGetFrameInfo(void *pCallStack, const CX_Char **pszFunctionName, const CX_Char **pszFileName, CX_Size *pcLine)
+{
+	CX_UNUSED(pCallStack);
+	CX_UNUSED(pszFunctionName);
+	CX_UNUSED(pszFileName);
+	CX_UNUSED(pcLine);
+
+	return CX_False;
 }
 
 #endif
 
+static void empty_func_to_make_compiler_happy()
+{
+}

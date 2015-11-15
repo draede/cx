@@ -1,3 +1,5 @@
+0.1.52 - 2015-11-15 - Removed mem tracking (win only) - for now
+  - Removed mem tracking (win only) - for now
 0.1.51 - 2015-11-14 - Fixed InitOnceExecuteOnce param not set
   - Fixed InitOnceExecuteOnce param not set
 0.1.50 - 2015-11-08 - Fixed RndGen signed int range

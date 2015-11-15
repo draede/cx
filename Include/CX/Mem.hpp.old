@@ -333,6 +333,25 @@ public:
 		Mem::Free(pPtr);
 	}
 
+	static void SetTrackMem(Bool bTrackMem);
+
+	static Bool GetTrackMem();
+
+	static void SetDumpAllocs(Bool bDumpAllocs);
+
+	static Bool GetDumpAllocs();
+
+	typedef void (* MemAllocHandler)(void *pMem, Size cbSize, void *pCallStack);
+
+	static void SysLogMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack);
+
+	static void StdOutMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack);
+
+	static void EnumAllocs(MemAllocHandler pfnMemAllocHandler = NULL);
+
+	//call this from your MemAllocHandler
+	static Bool GetFrameInfo(void *pCallStack, const Char **pszFunctionName, const Char **pszFileName, Size *pcLine);
+
 private:
 
 	Mem();

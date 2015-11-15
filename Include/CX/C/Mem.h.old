@@ -26,48 +26,54 @@
  * SOFTWARE.
  */ 
 
+#pragma once
+
+
 #include "CX/C/Platform.h"
 
 
-#if defined(CX_OS_IOS)
-
-
-#include "CX/C/Mem.h"
-#include "CX/C/stdlib.h"
-
-
-void *CX_MemAlloc(CX_Size cbSize)
-{
-	return malloc(cbSize);
-}
-
-void *CX_MemRealloc(void *pPtr, CX_Size cbSize)
-{
-	if (NULL == pPtr)
-	{
-		return malloc(cbSize);
-	}
-	else
-	{
-		return realloc(pPtr, cbSize);
-	}
-}
-
-void CX_MemFree(void *pPtr)
-{
-	if (NULL != pPtr)
-	{
-		free(pPtr);
-	}
-}
-
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#if defined(CX_OS_WINDOWS)
 
-static void empty_func_to_make_compiler_happy()
-{
+#include "CX/C/Types.h"
+#include "CX/C/APIDefs.h"
+
+
+CX_API void *CX_MemAlloc(CX_Size cbSize);
+
+CX_API void *CX_MemRealloc(void *pPtr, CX_Size cbSize);
+
+CX_API void CX_MemFree(void *pPtr);
+
+CX_API void *CX_MemOptAlloc(CX_Size cbSize);
+
+CX_API void *CX_MemOptRealloc(void *pPtr, CX_Size cbSize);
+
+CX_API void CX_MemOptFree(void *pPtr);
+
+CX_API void CX_MemSetTrack(CX_Bool bTrackMem);
+
+CX_API CX_Bool CX_MemGetTrack();
+
+CX_API void CX_MemSetDumpAllocs(CX_Bool bDumpAllocs);
+
+CX_API CX_Bool CX_MemGetDumpAllocs();
+
+typedef void (* CX_MemAllocHandler)(void *pMem, CX_Size cbSize, void *pCallStack);
+
+CX_API void CX_SysLogMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack);
+
+CX_API void CX_StdOutMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack);
+
+CX_API void CX_MemEnumAllocs(CX_MemAllocHandler pfnMemAllocHandler);
+
+//call this from your CX_MemAllocHandler
+CX_API CX_Bool CX_MemGetFrameInfo(void *pCallStack, const CX_Char **pszFunctionName, const CX_Char **pszFileName, 
+                                  CX_Size *pcLine);
+
+#ifdef __cplusplus
 }
-
 #endif
 

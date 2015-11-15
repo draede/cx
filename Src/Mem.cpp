@@ -57,45 +57,5 @@ void Mem::Free(void *pPtr)
 	CX_MemFree(pPtr);
 }
 
-void Mem::SetTrackMem(Bool bTrackMem)
-{
-	CX_MemSetTrack(bTrackMem);
-}
-
-Bool Mem::GetTrackMem()
-{
-	return CX_MemGetTrack();
-}
-
-void Mem::SetDumpAllocs(Bool bDumpAllocs)
-{
-	CX_MemSetDumpAllocs(bDumpAllocs);
-}
-
-Bool Mem::GetDumpAllocs()
-{
-	return CX_MemGetTrack();
-}
-
-void Mem::SysLogMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
-{
-	CX_SysLogMemAllocHandler(pMem, cbSize, pCallStack);
-}
-
-void Mem::StdOutMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack)
-{
-	CX_StdOutMemAllocHandler(pMem, cbSize, pCallStack);
-}
-
-void Mem::EnumAllocs(MemAllocHandler pfnMemAllocHandler/* = NULL*/)
-{
-	CX_MemEnumAllocs(pfnMemAllocHandler);
-}
-
-Bool Mem::GetFrameInfo(void *pCallStack, const Char **pszFunctionName, const Char **pszFileName, Size *pcLine)
-{
-	return CX_MemGetFrameInfo(pCallStack, pszFunctionName, pszFileName, pcLine);
-}
-
 }//namespace CX
 

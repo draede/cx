@@ -47,31 +47,6 @@ CX_API void *CX_MemRealloc(void *pPtr, CX_Size cbSize);
 
 CX_API void CX_MemFree(void *pPtr);
 
-CX_API void *CX_MemOptAlloc(CX_Size cbSize);
-
-CX_API void *CX_MemOptRealloc(void *pPtr, CX_Size cbSize);
-
-CX_API void CX_MemOptFree(void *pPtr);
-
-CX_API void CX_MemSetTrack(CX_Bool bTrackMem);
-
-CX_API CX_Bool CX_MemGetTrack();
-
-CX_API void CX_MemSetDumpAllocs(CX_Bool bDumpAllocs);
-
-CX_API CX_Bool CX_MemGetDumpAllocs();
-
-typedef void (* CX_MemAllocHandler)(void *pMem, CX_Size cbSize, void *pCallStack);
-
-CX_API void CX_SysLogMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack);
-
-CX_API void CX_StdOutMemAllocHandler(void *pMem, CX_Size cbSize, void *pCallStack);
-
-CX_API void CX_MemEnumAllocs(CX_MemAllocHandler pfnMemAllocHandler);
-
-//call this from your CX_MemAllocHandler
-CX_API CX_Bool CX_MemGetFrameInfo(void *pCallStack, const CX_Char **pszFunctionName, const CX_Char **pszFileName, 
-                                  CX_Size *pcLine);
 
 #ifdef __cplusplus
 }
