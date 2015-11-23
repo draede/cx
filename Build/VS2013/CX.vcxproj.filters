@@ -963,6 +963,9 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataIniter.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\BitSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">

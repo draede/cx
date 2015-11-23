@@ -93,6 +93,7 @@
     <ClInclude Include="..\..\Include\CX\Archive\LZHAMOutputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\SnappyInputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\SnappyOutputFilter.hpp" />
+    <ClInclude Include="..\..\Include\CX\BitSet.hpp" />
     <ClInclude Include="..\..\Include\CX\BLOB.hpp" />
     <ClInclude Include="..\..\Include\CX\Crypt\AES128InputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Crypt\AES128OutputFilter.hpp" />

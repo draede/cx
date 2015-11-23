@@ -25,49 +25,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */ 
- 
+
 #pragma once
 
 
-#include "CX/SimpleBuffers/IReader.hpp"
-#include "CX/SimpleBuffers/IWriter.hpp"
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/APIDefs.hpp"
+#include "CX/STLAlloc.hpp"
+#include <bitset>
 
 
 namespace CX
 {
 
-namespace SimpleBuffers
+template <Size BITS>
+struct BitSet
 {
-
-class CX_API ISimpleBuffer
-{
-public:
-
-	virtual ~ISimpleBuffer() { }
-
-	virtual void Init() = 0;
-
-	virtual Size GetMembersCount() = 0;
-
-	virtual Bool GetMemberLoaded(Size cIndex) = 0;
-
-	virtual Bool GetMemberLoaded(const Char *szName) = 0;
-
-	virtual Status SetMemberLoaded(Size cIndex, Bool bLoaded) = 0;
-
-	virtual Status SetMemberLoaded(const Char *szName, Bool bLoaded) = 0;
-
-	virtual Status SetAllMembersLoaded(Bool bLoaded) = 0;
-
-	virtual Status Read(IReader *pReader, const Char *szName = NULL) = 0;
-
-	virtual Status Write(IWriter *pWriter, const Char *szName = NULL) const = 0;
-
+	typedef std::bitset<BITS>     Type;
 };
 
-}//namespace SimpleBuffers
-
 }//namespace CX
+

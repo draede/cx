@@ -34,12 +34,12 @@
 
 #define CX_VER_MAJOR               0
 #define CX_VER_MINOR               1
-#define CX_VER_REVISION            52
+#define CX_VER_REVISION            53
 #define CX_VER_BUILD               0
 
 #define CX_VER_NAME                "CX" 
-#define CX_VER_COPYRIGHT           "Copyright (C) 2014, 2015 - draede"
-#define CX_VER_COMPANY             "draede"         
+#define CX_VER_COPYRIGHT           "Copyright (C) 2014, 2015 - draede [at] outlook [dot] com"
+#define CX_VER_COMPANY             "draede [at] outlook [dot] com"         
 
 #ifdef CX_DEBUG
 	#ifdef CX_64BIT_ARCH

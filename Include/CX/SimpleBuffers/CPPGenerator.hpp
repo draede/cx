@@ -71,6 +71,8 @@ public:
 		Print(out, "#include \"CX/Set.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/Map.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/BLOB.hpp\"" CX_SB_LINE_TERMINATOR);
+		Print(out, "#include \"CX/BitSet.hpp\"" CX_SB_LINE_TERMINATOR);
+		Print(out, "#include \"CX/C/string.h\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/MemberType.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/DataWriter.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/DataReader.hpp\"" CX_SB_LINE_TERMINATOR);
@@ -216,6 +218,7 @@ public:
 			Print(out, CX_SB_LINE_TERMINATOR);
 		}
 		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\tInit();" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 
@@ -354,6 +357,94 @@ public:
 			}
 		}
 
+		Size cMemberIndex;
+
+		//=== helpers
+
+		Print(out, "\tvirtual CX::Size GetMembersCount()" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\treturn {1};" CX_SB_LINE_TERMINATOR, object.GetMembers().size());
+		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+
+		Print(out, "\tvirtual CX::Bool GetMemberLoaded(CX::Size cIndex)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\tif (m_bitsetLoadedMembers.size() <= cIndex)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t\treturn CX::False;" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\treturn m_bitsetLoadedMembers[cIndex];" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+
+		Print(out, "\tvirtual CX::Bool GetMemberLoaded(const CX::Char *szName)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		cMemberIndex = 0;
+		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
+		{
+			Print(out, "#pragma warning(push)" CX_SB_LINE_TERMINATOR, iter->GetName());
+			Print(out, "#pragma warning(disable: 4996)" CX_SB_LINE_TERMINATOR, iter->GetName());
+			Print(out, "\t\tif (0 == cx_strcmp(\"{1}\", szName))" CX_SB_LINE_TERMINATOR, iter->GetName());
+			Print(out, "#pragma warning(pop)" CX_SB_LINE_TERMINATOR, iter->GetName());
+			Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+			Print(out, "\t\t\treturn m_bitsetLoadedMembers[{1}];" CX_SB_LINE_TERMINATOR, cMemberIndex);
+			Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+			cMemberIndex++;
+		}
+		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\treturn CX::False;" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+
+		Print(out, "\tvirtual CX::Status SetMemberLoaded(CX::Size cIndex, CX::Bool bLoaded)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\tif (m_bitsetLoadedMembers.size() <= cIndex)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t\treturn CX::Status_InvalidArg;" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\tm_bitsetLoadedMembers[cIndex] = bLoaded;" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\treturn CX::Status();" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+
+		Print(out, "\tvirtual CX::Status SetMemberLoaded(const CX::Char *szName, CX::Bool bLoaded)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		cMemberIndex = 0;
+		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
+		{
+			Print(out, "#pragma warning(push)" CX_SB_LINE_TERMINATOR, iter->GetName());
+			Print(out, "#pragma warning(disable: 4996)" CX_SB_LINE_TERMINATOR, iter->GetName());
+			Print(out, "\t\tif (0 == cx_strcmp(\"{1}\", szName))" CX_SB_LINE_TERMINATOR, iter->GetName());
+			Print(out, "#pragma warning(pop)" CX_SB_LINE_TERMINATOR, iter->GetName());
+			Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+			Print(out, "\t\t\tm_bitsetLoadedMembers[{1}] = bLoaded;" CX_SB_LINE_TERMINATOR, cMemberIndex);
+			Print(out, CX_SB_LINE_TERMINATOR);
+			Print(out, "\t\t\treturn CX::Status();" CX_SB_LINE_TERMINATOR);
+			Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+			cMemberIndex++;
+		}
+		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\treturn CX::Status_InvalidArg;" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+
+		Print(out, "\tvirtual CX::Status SetAllMembersLoaded(CX::Bool bLoaded)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\tif (bLoaded)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t\tm_bitsetLoadedMembers.set();" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\telse" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t\tm_bitsetLoadedMembers.reset();" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\treturn CX::Status();" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+
 		//=== reader
 
 		Print(out, "\tvirtual CX::Status Read(CX::SimpleBuffers::IReader *pReader, const CX::Char *szName = NULL)" CX_SB_LINE_TERMINATOR);
@@ -361,10 +452,13 @@ public:
 		Print(out, "\t\tCX::Status status;" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\tInit();" CX_SB_LINE_TERMINATOR);
+		Print(out, "\t\tm_bitsetLoadedMembers.reset();" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\tif ((status = pReader->BeginObject(szName)).IsNOK())" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+
+		cMemberIndex = 0;
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
 		{
 			String sKeyType;
@@ -394,11 +488,16 @@ public:
 					}
 					else
 					{
-						Print(out, "\t\t\tif (CX::Status_NotFound != status.GetCode()) //optional member" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\tif (CX::Status_NotFound != status.GetCode())" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
+						
 					}
+					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\telse" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\tm_bitsetLoadedMembers[{1}] = true;" CX_SB_LINE_TERMINATOR, cMemberIndex);
 					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
 				}
 				break;
@@ -413,11 +512,15 @@ public:
 					}
 					else
 					{
-						Print(out, "\t\t\tif (CX::Status_NotFound != status.GetCode()) //optional member" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\tif (CX::Status_NotFound != status.GetCode())" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 					}
+					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\telse" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\tm_bitsetLoadedMembers[{1}] = true;" CX_SB_LINE_TERMINATOR, cMemberIndex);
 					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
 				}
 				break;
@@ -432,11 +535,15 @@ public:
 					}
 					else
 					{
-						Print(out, "\t\t\tif (CX::Status_NotFound != status.GetCode()) //optional member" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\tif (CX::Status_NotFound != status.GetCode())" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 					}
+					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\telse" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\tm_bitsetLoadedMembers[{1}] = true;" CX_SB_LINE_TERMINATOR, cMemberIndex);
 					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
 				}
 				break;
@@ -451,11 +558,15 @@ public:
 					}
 					else
 					{
-						Print(out, "\t\t\tif (CX::Status_NotFound != status.GetCode()) //optional member" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\tif (CX::Status_NotFound != status.GetCode())" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
 						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 					}
+					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\telse" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\tm_bitsetLoadedMembers[{1}] = true;" CX_SB_LINE_TERMINATOR, cMemberIndex);
 					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
 				}
 				break;
@@ -464,6 +575,7 @@ public:
 					return Status(Status_InvalidArg, "Member {1} has invalid field type", iter->GetName());
 				}
 			}
+			cMemberIndex++;
 		}
 		Print(out, "\t\tif ((status = pReader->EndObject()).IsNOK())" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
@@ -614,7 +726,11 @@ public:
 		Print(out, "private:" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 
-		Size cMaxDataTypeLen = 0;
+		String sBitSet;
+
+		Print(&sBitSet, "CX::BitSet<{1}>::Type", object.GetMembers().size());
+
+		Size cMaxDataTypeLen = sBitSet.size();
 
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
 		{
@@ -643,6 +759,12 @@ public:
 			String     sPadding(cMaxDataTypeLen - sFullType.size() + 1, ' ');
 
 			Print(out, "\t{1}{2}{3};" CX_SB_LINE_TERMINATOR, sFullType, sPadding, iter->GetMemberName());
+		}
+
+		{
+			String     sPadding(cMaxDataTypeLen - sBitSet.size() + 1, ' ');
+
+			Print(out, "\t{1}{2}m_bitsetLoadedMembers;" CX_SB_LINE_TERMINATOR, sBitSet, sPadding);
 		}
 
 		Print(out, CX_SB_LINE_TERMINATOR);
