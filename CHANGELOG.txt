@@ -1,3 +1,5 @@
+0.1.54 - 2015-12-03 - Better random ranges; fixed playground tester
+  - Better random ranges; fixed playground tester
 0.1.53 - 2015-11-23 - SimpleBuffers: added support for testing if an optional member was loaded
   - SimpleBuffers: added support for testing if an optional member was loaded
 0.1.52 - 2015-11-15 - Removed mem tracking (win only) - for now

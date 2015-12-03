@@ -72,7 +72,9 @@ Status CreateInput(Util::DynMemPool *pMemPool, Size cbMinSize, Size cbMaxSize)
 		return status;
 	}
 
-	return Util::RndGen::Get().GetBytes((Byte *)pMemPool->GetMem(), cbSize, byteset + 65, 26);
+	Util::RndGen::Get().GetBytes((Byte *)pMemPool->GetMem(), cbSize, byteset + 65, 26);
+
+	return Status();
 }
 
 typedef IO::IInputStream * (*InputStreamFactory)(IO::IInputStream *pIS);

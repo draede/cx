@@ -37,9 +37,6 @@ int main(int argc, char *argv[])
 	CX_UNUSED(argc);
 	CX_UNUSED(argv);
 
-	Mem::SetDumpAllocs(true);
-	Mem::SetTrackMem(true);
-
 	Tester::Run();
 
 	return 0;

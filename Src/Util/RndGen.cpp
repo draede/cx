@@ -73,136 +73,14 @@ void RndGen::Seed64(UInt64 nSeed)
 	tinymt64_init((tinymt64_t *)m_pState64, nSeed);
 }
 
-Bool RndGen::GetBool()
+UInt32 RndGen::GetRange32(UInt32 cValues)
 {
-	return (0 == (GetUInt32() % 2));
+	return GetUInt32() / (TYPE_UINT32_MAX / cValues);
 }
 
-Char RndGen::GetChar(const Char *szCharset/* = NULL*/)
+UInt64 RndGen::GetRange64(UInt64 cValues)
 {
-	static const Char charset[] = 
-	"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-
-	if (NULL == szCharset)
-	{
-		szCharset = charset;
-	}
-
-	Size cChars = cx_strlen(szCharset);
-
-	return szCharset[GetSize() % cChars];
-}
-
-WChar RndGen::GetWChar(const WChar *wszCharset/* = NULL*/)
-{
-	static const WChar charset[] =
-		L"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-
-	if (NULL == wszCharset)
-	{
-		wszCharset = charset;
-	}
-
-	Size cChars = cxw_strlen(wszCharset);
-
-	return wszCharset[GetSize() % cChars];
-}
-
-Char RndGen::GetCharRange(Char nMin, Char nMax)
-{
-	if (nMin >= nMax)
-	{
-		return nMin;
-	}
-	else
-	{
-		return (nMin + (GetChar() % (nMax - nMin + 1)));
-	}
-}
-
-Int8 RndGen::GetInt8()
-{
-	return (Int8)(GetUInt8());
-}
-
-Int8 RndGen::GetInt8Range(Int8 nMin, Int8 nMax)
-{
-	if (nMin >= nMax)
-	{
-		return nMin;
-	}
-	else
-	{
-		return (nMin + (GetUInt8() % (nMax - nMin + 1)));
-	}
-}
-
-UInt8 RndGen::GetUInt8()
-{
-	return (GetUInt32() % CX::TYPE_UINT8_MAX);
-}
-
-UInt8 RndGen::GetUInt8Range(UInt8 nMin, UInt8 nMax)
-{
-	if (nMin >= nMax)
-	{
-		return nMin;
-	}
-	else
-	{
-		return (nMin + (GetUInt8() % (nMax - nMin + 1)));
-	}
-}
-
-Int16 RndGen::GetInt16()
-{
-	return (Int16)(GetUInt16());
-}
-
-Int16 RndGen::GetInt16Range(Int16 nMin, Int16 nMax)
-{
-	if (nMin >= nMax)
-	{
-		return nMin;
-	}
-	else
-	{
-		return (nMin + (GetUInt16() % (nMax - nMin + 1)));
-	}
-}
-
-UInt16 RndGen::GetUInt16()
-{
-	return (GetUInt32() % TYPE_UINT16_MAX);
-}
-
-UInt16 RndGen::GetUInt16Range(UInt16 nMin, UInt16 nMax)
-{
-	if (nMin >= nMax)
-	{
-		return nMin;
-	}
-	else
-	{
-		return (nMin + (GetUInt16() % (nMax - nMin + 1)));
-	}
-}
-
-Int32 RndGen::GetInt32()
-{
-	return (Int32)(GetUInt32());
-}
-
-Int32 RndGen::GetInt32Range(Int32 nMin, Int32 nMax)
-{
-	if (nMin >= nMax)
-	{
-		return nMin;
-	}
-	else
-	{
-		return (nMin + (GetUInt32() % (nMax - nMin + 1)));
-	}
+	return GetUInt64() / (TYPE_UINT64_MAX / cValues);
 }
 
 UInt32 RndGen::GetUInt32()
@@ -210,50 +88,82 @@ UInt32 RndGen::GetUInt32()
 	return tinymt32_generate_uint32((tinymt32_t *)m_pState32);
 }
 
-UInt32 RndGen::GetUInt32Range(UInt32 nMin, UInt32 nMax)
-{
-	if (nMin >= nMax)
-	{
-		return nMin;
-	}
-	else
-	{
-		return (nMin + (GetUInt32() % (nMax - nMin + 1)));
-	}
-}
-
-Int64 RndGen::GetInt64()
-{
-	return (Int64)(GetUInt64());
-}
-
-Int64 RndGen::GetInt64Range(Int64 nMin, Int64 nMax)
-{
-	if (nMin >= nMax)
-	{
-		return nMin;
-	}
-	else
-	{
-		return (nMin + (GetUInt64() % (nMax - nMin + 1)));
-	}
-}
-
 UInt64 RndGen::GetUInt64()
 {
 	return tinymt64_generate_uint64((tinymt64_t *)m_pState64);
 }
 
-UInt64 RndGen::GetUInt64Range(UInt64 nMin, UInt64 nMax)
+UInt8 RndGen::GetUInt8()
 {
-	if (nMin >= nMax)
+	return (UInt8)GetRange32(TYPE_UINT8_MAX);
+}
+
+UInt16 RndGen::GetUInt16()
+{
+	return (UInt16)GetRange32(TYPE_UINT16_MAX);
+}
+
+Size RndGen::GetSize()
+{
+#ifdef CX_64BIT_ARCH
+	return (Size)GetUInt64();
+#else
+	return (Size)GetUInt32();
+#endif
+}
+
+UInt8 RndGen::GetUInt8Range(UInt8 nMin, UInt8 nMax)
+{
+	if (nMax <= nMin)
 	{
 		return nMin;
 	}
-	else
+
+	return nMin + (UInt8)GetRange32((nMax - nMin) + 1);
+}
+
+UInt16 RndGen::GetUInt16Range(UInt16 nMin, UInt16 nMax)
+{
+	if (nMax <= nMin)
 	{
-		return (nMin + (GetUInt64() % (nMax - nMin + 1)));
+		return nMin;
 	}
+
+	return nMin + (UInt16)GetRange32((nMax - nMin) + 1);
+}
+
+UInt32 RndGen::GetUInt32Range(UInt32 nMin, UInt32 nMax)
+{
+	if (nMax <= nMin)
+	{
+		return nMin;
+	}
+
+	return nMin + GetRange32((nMax - nMin) + 1);
+}
+
+UInt64 RndGen::GetUInt64Range(UInt64 nMin, UInt64 nMax)
+{
+	if (nMax <= nMin)
+	{
+		return nMin;
+	}
+
+	return nMin + GetRange64((nMax - nMin) + 1);
+}
+
+Size RndGen::GetSizeRange(Size nMin, Size nMax)
+{
+#ifdef CX_64BIT_ARCH
+	return (Size)GetUInt64Range(nMin, nMax);
+#else
+	return (Size)GetUInt32Range(nMin, nMax);
+#endif
+}
+
+Bool RndGen::GetBool()
+{
+	return (1 == GetRange32(2));
 }
 
 Float RndGen::GetFloat()
@@ -266,79 +176,94 @@ Double RndGen::GetDouble()
 	return tinymt64_generate_double((tinymt64_t *)m_pState64);
 }
 
-Size RndGen::GetSize()
+Char RndGen::GetChar(const Char *szCharset/* = NULL*/)
 {
-#ifdef CX_64BIT_ARCH
-	return (Size)GetUInt64();
-#else
-	return (Size)GetUInt32();
-#endif
-}
+	static const Char charset[] =
+	"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
-Size RndGen::GetSizeRange(Size nMin, Size nMax)
-{
-#ifdef CX_64BIT_ARCH
-	return (Size)GetUInt64Range(nMin, nMax);
-#else
-	return (Size)GetUInt32Range(nMin, nMax);
-#endif
-}
-
-Status RndGen::GetBytes(Byte *pBuffer, Size cbSize, Byte *pByteSet/* = NULL*/, Size cbByteSetSize/* = 0*/)
-{
-	for (Size i = 0; i < cbSize; i++)
+	if (NULL == szCharset)
 	{
-		if (NULL != pByteSet)
-		{
-			*(pBuffer + i) = pByteSet[GetSizeRange(0, cbByteSetSize - 1)];
-		}
-		else
-		{
-			*(pBuffer + i) = GetUInt8();
-		}
+		szCharset = charset;
 	}
 
-	return Status();
+	UInt32 cChars = (UInt32)cx_strlen(szCharset);
+
+	return szCharset[GetRange32(cChars)];
 }
 
-void RndGen::GetString(String *psStr, Size cMinLen, Size cMaxLen, const Char *szCharset/* = NULL*/)
+WChar RndGen::GetWChar(const WChar *wszCharset/* = NULL*/)
 {
-	Size cLen = cMinLen + (GetSize() % (cMaxLen - cMinLen + 1));
+	static const WChar charset[] =
+	L"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
-	psStr->clear();
-	for (Size i = 0; i < cLen; i++)
+	if (NULL == wszCharset)
+	{
+		wszCharset = charset;
+	}
+
+	UInt32 cChars = (UInt32)cxw_strlen(wszCharset);
+
+	return wszCharset[GetRange32(cChars)];
+}
+
+Byte RndGen::GetByte(Byte *pByteSet/* = NULL*/, Size cByteSetSize/* = 0*/)
+{
+	if (NULL == pByteSet || 0 == cByteSetSize)
+	{
+		return GetUInt8();
+	}
+	else
+	{
+		return pByteSet[GetRange32((UInt32)cByteSetSize)];
+	}
+}
+
+void RndGen::GetString(Char *pStr, Size cSize, const Char *szCharset/* = NULL*/)
+{
+	for (Size i = 0; i < cSize; i++)
+	{
+		pStr[i] = GetChar(szCharset);
+	}
+}
+
+void RndGen::GetWString(WChar *pwStr, Size cSize, const WChar *wszCharset/* = NULL*/)
+{
+	for (Size i = 0; i < cSize; i++)
+	{
+		pwStr[i] = GetWChar(wszCharset);
+	}
+}
+
+void RndGen::GetBytes(Byte *pBuffer, Size cSize, Byte *pByteSet/* = NULL*/, Size cByteSetSize/* = 0*/)
+{
+	for (Size i = 0; i < cSize; i++)
+	{
+		pBuffer[i] = GetByte(pByteSet, cByteSetSize);
+	}
+}
+
+void RndGen::GetString(String *psStr, Size cSize, const Char *szCharset/* = NULL*/)
+{
+	for (Size i = 0; i < cSize; i++)
 	{
 		*psStr += GetChar(szCharset);
 	}
 }
 
-void RndGen::GetWString(WString *pwsStr, Size cMinLen, Size cMaxLen, const WChar *wszCharset/* = NULL*/)
+void RndGen::GetWString(WString *pwsStr, Size cSize, const WChar *wszCharset/* = NULL*/)
 {
-	Size cLen = cMinLen + (GetSize() % (cMaxLen - cMinLen + 1));
-
-	pwsStr->clear();
-	for (Size i = 0; i < cLen; i++)
+	for (Size i = 0; i < cSize; i++)
 	{
 		*pwsStr += GetWChar(wszCharset);
 	}
 }
 
-const Char *RndGen::GetString(Size cMinLen, Size cMaxLen, const Char *szCharset/* = NULL*/)
+void RndGen::GetBytes(BLOB *pBuffer, Size cSize, Byte *pByteSet/* = NULL*/, Size cByteSetSize/* = 0*/)
 {
-	static String sTmp;
-
-	GetString(&sTmp, cMinLen, cMaxLen, szCharset);
-
-	return sTmp.c_str();
-}
-
-const WChar *RndGen::GetWString(Size cMinLen, Size cMaxLen, const WChar *wszCharset/* = NULL*/)
-{
-	static WString wsTmp;
-
-	GetWString(&wsTmp, cMinLen, cMaxLen, wszCharset);
-
-	return wsTmp.c_str();
+	for (Size i = 0; i < cSize; i++)
+	{
+		pBuffer->push_back(GetByte(pByteSet, cByteSetSize));
+	}
 }
 
 }//namespace Util

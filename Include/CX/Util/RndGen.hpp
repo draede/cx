@@ -31,6 +31,7 @@
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
+#include "CX/BLOB.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/IObject.hpp"
 
@@ -47,63 +48,49 @@ public:
 
 	static RndGen &Get();
 
-	Bool GetBool();
-
-	Char GetChar(const Char *szCharset = NULL);
-
-	WChar GetWChar(const WChar *wszCharset = NULL);
-
-	Char GetCharRange(Char nMin, Char nMax);
-
-	Int8 GetInt8();
-
-	Int8 GetInt8Range(Int8 nMin, Int8 nMax);
-
 	UInt8 GetUInt8();
 
 	UInt8 GetUInt8Range(UInt8 nMin, UInt8 nMax);
-
-	Int16 GetInt16();
-
-	Int16 GetInt16Range(Int16 nMin, Int16 nMax);
 
 	UInt16 GetUInt16();
 
 	UInt16 GetUInt16Range(UInt16 nMin, UInt16 nMax);
 
-	Int32 GetInt32();
-
-	Int32 GetInt32Range(Int32 nMin, Int32 nMax);
-
 	UInt32 GetUInt32();
 
 	UInt32 GetUInt32Range(UInt32 nMin, UInt32 nMax);
-
-	Int64 GetInt64();
-
-	Int64 GetInt64Range(Int64 nMin, Int64 nMax);
 
 	UInt64 GetUInt64();
 
 	UInt64 GetUInt64Range(UInt64 nMin, UInt64 nMax);
 
-	Float GetFloat();
-
-	Double GetDouble();
-
 	Size GetSize();
 
 	Size GetSizeRange(Size nMin, Size nMax);
 
-	Status GetBytes(Byte *pBuffer, Size cbSize, Byte *pByteSet = NULL, Size cbByteSetSize = 0);
+	Bool GetBool();
 
-	void GetString(String *psStr, Size cMinLen, Size cMaxLen, const Char *szCharset = NULL);
+	Float GetFloat();
 
-	void GetWString(WString *psStr, Size cMinLen, Size cMaxLen, const WChar *wszCharset = NULL);
+	Double GetDouble();
 
-	const Char *GetString(Size cMinLen, Size cMaxLen, const Char *szCharset = NULL);
+	Char GetChar(const Char *szCharset = NULL);
 
-	const WChar *GetWString(Size cMinLen, Size cMaxLen, const WChar *wszCharset = NULL);
+	WChar GetWChar(const WChar *wszCharset = NULL);
+
+	Byte GetByte(Byte *pByteSet = NULL, Size cByteSetSize = 0);
+
+	void GetString(Char *pStr, Size cSize, const Char *szCharset = NULL);
+
+	void GetWString(WChar *pwStr, Size cSize, const WChar *wszCharset = NULL);
+
+	void GetBytes(Byte *pBuffer, Size cSize, Byte *pByteSet = NULL, Size cByteSetSize = 0);
+
+	void GetString(String *psStr, Size cSize, const Char *szCharset = NULL);
+
+	void GetWString(WString *pwsStr, Size cSize, const WChar *wszCharset = NULL);
+
+	void GetBytes(BLOB *pBuffer, Size cSize, Byte *pByteSet = NULL, Size cByteSetSize = 0);
 
 	//===
 
@@ -119,6 +106,10 @@ private:
 	RndGen();
 
 	~RndGen();
+
+	UInt32 GetRange32(UInt32 cValues);
+
+	UInt64 GetRange64(UInt64 cValues);
 
 };
 
