@@ -1,3 +1,5 @@
+0.1.55 - 2015-12-14 - Added VS 2015 support
+  - Added VS 2015 support
 0.1.54 - 2015-12-03 - Better random ranges; fixed playground tester
   - Better random ranges; fixed playground tester
 0.1.53 - 2015-11-23 - SimpleBuffers: added support for testing if an optional member was loaded

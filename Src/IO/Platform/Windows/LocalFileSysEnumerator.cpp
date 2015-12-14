@@ -71,33 +71,36 @@ Status LocalFileSysEnumerator::EnumDrives(IItemHandler *pHandler, const WChar *w
 		}
 		pPos      = wszPath;
 		bContinue = true;
-		for (;;)
+		if (NULL != pPos)
 		{
-			if (0 == *pPos)
+			for (;;)
 			{
-				if (wszPath < pPos)
+				if (0 == *pPos)
 				{
-					if (!(status = Notify(pHandler, "", wszPath, IItemHandler::Type_Folder, 0, &bContinue)))
+					if (wszPath < pPos)
 					{
-						if (bContinue)
+						if (!(status = Notify(pHandler, "", wszPath, IItemHandler::Type_Folder, 0, &bContinue)))
 						{
-							status.Clear();
+							if (bContinue)
+							{
+								status.Clear();
+							}
+						}
+						if (!(status = Enum(pHandler, wszMask, wszPath, &bContinue)))
+						{
+							if (bContinue)
+							{
+								status.Clear();
+							}
 						}
 					}
-					if (!(status = Enum(pHandler, wszMask, wszPath, &bContinue)))
-					{
-						if (bContinue)
-						{
-							status.Clear();
-						}
-					}
-				}
 
-				break;
-			}
-			else
-			{
-				pPos++;
+					break;
+				}
+				else
+				{
+					pPos++;
+				}
 			}
 		}
 		if (!bContinue)

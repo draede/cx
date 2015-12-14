@@ -7,10 +7,18 @@
 #define GOOGLE_NAMESPACE  ::google
 
 /* the location of the header defining hash functions */
+#if (1900 == _MSC_VER)
+#define HASH_FUN_H  <unordered_map>
+#else
 #define HASH_FUN_H  <hash_map>
+#endif
 
 /* the location of <unordered_map> or <hash_map> */
+#if (1900 == _MSC_VER)
+#define HASH_MAP_H  <unordered_map>
+#else
 #define HASH_MAP_H  <hash_map>
+#endif
 
 /* the namespace of the hash<> function */
 #define HASH_NAMESPACE  stdext

@@ -64,6 +64,9 @@
 #elif _MSC_VER == 1800
 	#define CX_BUILDSYS_VS2013
 	#define CX_BUILDSYS     "VS2013"
+#elif _MSC_VER == 1900
+	#define CX_BUILDSYS_VS2015
+	#define CX_BUILDSYS     "VS2015"
 #endif
 
 #endif
