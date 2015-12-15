@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CX", "CX.vcxproj", "{DC97160C-7040-40EB-8552-F76C36302622}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		DebugMT|Win32 = DebugMT|Win32
+		DebugMT|x64 = DebugMT|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		ReleaseMT|Win32 = ReleaseMT|Win32
+		ReleaseMT|x64 = ReleaseMT|x64
+		StaticDebug|Win32 = StaticDebug|Win32
+		StaticDebug|x64 = StaticDebug|x64
+		StaticDebugMT|Win32 = StaticDebugMT|Win32
+		StaticDebugMT|x64 = StaticDebugMT|x64
+		StaticRelease|Win32 = StaticRelease|Win32
+		StaticRelease|x64 = StaticRelease|x64
+		StaticReleaseMT|Win32 = StaticReleaseMT|Win32
+		StaticReleaseMT|x64 = StaticReleaseMT|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC97160C-7040-40EB-8552-F76C36302622}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.Debug|Win32.Build.0 = Debug|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.Debug|x64.ActiveCfg = Debug|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.Debug|x64.Build.0 = Debug|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.DebugMT|Win32.ActiveCfg = DebugMT|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.DebugMT|Win32.Build.0 = DebugMT|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.DebugMT|x64.ActiveCfg = DebugMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.DebugMT|x64.Build.0 = DebugMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.Release|Win32.ActiveCfg = Release|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.Release|Win32.Build.0 = Release|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.Release|x64.ActiveCfg = Release|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.Release|x64.Build.0 = Release|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.ReleaseMT|Win32.ActiveCfg = ReleaseMT|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.ReleaseMT|Win32.Build.0 = ReleaseMT|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.ReleaseMT|x64.ActiveCfg = ReleaseMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.ReleaseMT|x64.Build.0 = ReleaseMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticDebug|Win32.ActiveCfg = StaticDebug|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticDebug|Win32.Build.0 = StaticDebug|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticDebug|x64.ActiveCfg = StaticDebug|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticDebug|x64.Build.0 = StaticDebug|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticDebugMT|Win32.ActiveCfg = StaticDebugMT|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticDebugMT|Win32.Build.0 = StaticDebugMT|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticDebugMT|x64.ActiveCfg = StaticDebugMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticDebugMT|x64.Build.0 = StaticDebugMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticRelease|Win32.ActiveCfg = StaticRelease|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticRelease|x64.ActiveCfg = StaticRelease|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticRelease|x64.Build.0 = StaticRelease|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticReleaseMT|Win32.ActiveCfg = StaticReleaseMT|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticReleaseMT|Win32.Build.0 = StaticReleaseMT|Win32
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticReleaseMT|x64.ActiveCfg = StaticReleaseMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.StaticReleaseMT|x64.Build.0 = StaticReleaseMT|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

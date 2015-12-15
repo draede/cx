@@ -1386,8 +1386,10 @@ static CURLcode telnet_do(struct connectdata *conn, bool *done)
   }
 
   /* Tell winsock what events we want to listen to */
+#pragma warning(suppress: 28278)
   if(event_select_func(sockfd, event_handle, FD_READ|FD_CLOSE) ==
      SOCKET_ERROR) {
+#pragma warning(suppress: 28278)
     close_event_func(event_handle);
     FreeLibrary(wsock2);
     return CURLE_OK;
@@ -1488,6 +1490,7 @@ static CURLcode telnet_do(struct connectdata *conn, bool *done)
     case WAIT_OBJECT_0:
 
       events.lNetworkEvents = 0;
+#pragma warning(suppress: 28278)
       if(SOCKET_ERROR == enum_netevents_func(sockfd, event_handle, &events)) {
         if((err = SOCKERRNO) != EINPROGRESS) {
           infof(data, "WSAEnumNetworkEvents failed (%d)", err);
@@ -1546,6 +1549,7 @@ static CURLcode telnet_do(struct connectdata *conn, bool *done)
   }
 
   /* We called WSACreateEvent, so call WSACloseEvent */
+#pragma warning(suppress: 28278)
   if(!close_event_func(event_handle)) {
     infof(data, "WSACloseEvent failed (%d)", SOCKERRNO);
   }
