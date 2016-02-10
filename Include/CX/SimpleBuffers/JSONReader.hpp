@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2016 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -201,8 +201,8 @@ template <> inline bool JSONReader::IsType<Int32>(rapidjson::Value *pValue) { re
 template <> inline bool JSONReader::IsType<UInt32>(rapidjson::Value *pValue) { return pValue->IsUint(); }
 template <> inline bool JSONReader::IsType<Int64>(rapidjson::Value *pValue) { return pValue->IsInt(); }
 template <> inline bool JSONReader::IsType<UInt64>(rapidjson::Value *pValue) { return pValue->IsUint(); }
-template <> inline bool JSONReader::IsType<Float>(rapidjson::Value *pValue) { return pValue->IsDouble(); }
-template <> inline bool JSONReader::IsType<Double>(rapidjson::Value *pValue) { return pValue->IsDouble(); }
+template <> inline bool JSONReader::IsType<Float>(rapidjson::Value *pValue) { return (pValue->IsDouble() || pValue->IsInt()); }
+template <> inline bool JSONReader::IsType<Double>(rapidjson::Value *pValue) { return (pValue->IsDouble() || pValue->IsInt()); }
 template <> inline bool JSONReader::IsType<String>(rapidjson::Value *pValue) { return pValue->IsString(); }
 template <> inline bool JSONReader::IsType<BLOB>(rapidjson::Value *pValue) { return pValue->IsString(); }
 

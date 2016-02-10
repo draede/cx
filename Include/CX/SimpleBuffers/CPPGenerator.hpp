@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2016 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -112,6 +112,10 @@ public:
 		Print(out, "class {1} : public CX::SimpleBuffers::ISimpleBuffer" CX_SB_LINE_TERMINATOR, sType);
 		Print(out, "{{" CX_SB_LINE_TERMINATOR);
 		Print(out, "public:" CX_SB_LINE_TERMINATOR);
+		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "\tstatic const CX::Char *OBJECT_NAME() {{ return \"{1}\"; }" CX_SB_LINE_TERMINATOR, object.GetName());
+		Print(out, CX_SB_LINE_TERMINATOR);
+		Print(out, "\tvirtual const CX::Char *GetObjectName() const {{ return OBJECT_NAME(); }" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 
 		//=== consts
@@ -361,13 +365,13 @@ public:
 
 		//=== helpers
 
-		Print(out, "\tvirtual CX::Size GetMembersCount()" CX_SB_LINE_TERMINATOR);
+		Print(out, "\tvirtual CX::Size GetMembersCount() const" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\treturn {1};" CX_SB_LINE_TERMINATOR, object.GetMembers().size());
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 
-		Print(out, "\tvirtual CX::Bool GetMemberLoaded(CX::Size cIndex)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\tvirtual CX::Bool GetMemberLoaded(CX::Size cIndex) const" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\tif (m_bitsetLoadedMembers.size() <= cIndex)" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
@@ -378,7 +382,7 @@ public:
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 		Print(out, CX_SB_LINE_TERMINATOR);
 
-		Print(out, "\tvirtual CX::Bool GetMemberLoaded(const CX::Char *szName)" CX_SB_LINE_TERMINATOR);
+		Print(out, "\tvirtual CX::Bool GetMemberLoaded(const CX::Char *szName) const" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 		cMemberIndex = 0;
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)

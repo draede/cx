@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2016 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -34,11 +34,11 @@
 
 #define CX_VER_MAJOR               0
 #define CX_VER_MINOR               1
-#define CX_VER_REVISION            57
+#define CX_VER_REVISION            58
 #define CX_VER_BUILD               0
 
 #define CX_VER_NAME                "CX" 
-#define CX_VER_COPYRIGHT           "Copyright (C) 2014, 2015 - draede [at] outlook [dot] com"
+#define CX_VER_COPYRIGHT           "Copyright (C) 2014 - 2016 - draede [at] outlook [dot] com"
 #define CX_VER_COMPANY             "draede [at] outlook [dot] com"         
 
 #ifdef CX_DEBUG

@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2016 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -48,13 +48,17 @@ public:
 
 	virtual ~ISimpleBuffer() { }
 
+	static const Char *OBJECT_NAME() { return "CX.SimpleBuffers.ISimpleBuffer"; }
+
+	virtual const Char *GetObjectName() const { return OBJECT_NAME(); }
+
 	virtual void Init() = 0;
 
-	virtual Size GetMembersCount() = 0;
+	virtual Size GetMembersCount() const = 0;
 
-	virtual Bool GetMemberLoaded(Size cIndex) = 0;
+	virtual Bool GetMemberLoaded(Size cIndex) const = 0;
 
-	virtual Bool GetMemberLoaded(const Char *szName) = 0;
+	virtual Bool GetMemberLoaded(const Char *szName) const = 0;
 
 	virtual Status SetMemberLoaded(Size cIndex, Bool bLoaded) = 0;
 

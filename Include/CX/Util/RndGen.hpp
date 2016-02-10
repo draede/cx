@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2016 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -45,6 +45,10 @@ namespace Util
 class CX_API RndGen : public IObject
 {
 public:
+
+	RndGen();
+
+	~RndGen();
 
 	static RndGen &Get();
 
@@ -102,10 +106,6 @@ private:
 
 	void *m_pState64;
 	void *m_pState32;
-
-	RndGen();
-
-	~RndGen();
 
 	UInt32 GetRange32(UInt32 cValues);
 
