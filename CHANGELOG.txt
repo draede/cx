@@ -1,3 +1,14 @@
+0.1.59 - 2016-02-17 - added TaskExecutor & TaskQueue
+  - Added TaskExecutor
+  - Added TaskQueue
+0.1.58 - 2016-02-10 - SimpleBuffers fixes
+  - CX::SimpleBuffers::ISimpleBuffer::GetMembersCount is now const
+  - CX::SimpleBuffers::ISimpleBuffer::GetMemberLoaded is now const
+  - Added static const Char *OBJECT_NAME() in all CX::SimpleBuffers::ISimpleBuffer
+  - Added virtual const Char *GetObjectName() const in CX::SimpleBuffers::ISimpleBuffer
+  - Float and double members of SimpleBuffers accept integers too in JSON
+  - CX::Util::RndGen supports now multiple instances
+  - Changed copyright from 2014-2015 to 2014 - 2026 :)
 0.1.57 - 2015-12-15 - Added VS 2015 support
   - Added VS 2015 support
 0.1.56 - 2015-12-15 - Added VS 2015 support

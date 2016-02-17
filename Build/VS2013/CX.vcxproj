@@ -255,9 +255,13 @@
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Process.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\RWLock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\TaskExecutor.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\TaskQueue.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Thread.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Process.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\RWLock.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\TaskExecutor.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\TaskQueue.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Thread.hpp" />
     <ClInclude Include="..\..\Include\CX\Types.hpp" />
     <ClInclude Include="..\..\Include\CX\UOMap.hpp" />
@@ -4567,6 +4571,8 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskExecutor.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskQueue.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Android\Timer_android.cpp" />
