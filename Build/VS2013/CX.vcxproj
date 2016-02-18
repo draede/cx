@@ -184,8 +184,10 @@
     <ClInclude Include="..\..\Include\CX\Log\IOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Level.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Logger.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\OptimizedStreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Android\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\SystemOutput.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\OptimizedStreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp" />
@@ -4535,6 +4537,7 @@
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput_android.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp" />
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\OptimizedStreamOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />

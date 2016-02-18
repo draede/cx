@@ -51,6 +51,7 @@ TaskExecutor::TaskExecutor()
 	m_threads            = NULL;
 	m_pQueue             = NULL;
 	m_pStopSemaphore     = NULL;
+	m_pCustomExecutor    = NULL;
 }
 
 TaskExecutor::~TaskExecutor()
@@ -68,7 +69,7 @@ Status TaskExecutor::Add(TaskQueue::ITask *pTask)
 }
 
 Status TaskExecutor::Start(Size cThreads, Priority nPriority, Size cFirstRunDelayInMS/* = 0*/, 
-                          Size cRunDelayInMS/* = 0*/)
+                          Size cRunDelayInMS/* = 0*/, ICustomExecutor *pCustomExecutor/* = NULL*/)
 {
 	if (NULL != m_threads)
 	{
@@ -87,6 +88,7 @@ Status TaskExecutor::Start(Size cThreads, Priority nPriority, Size cFirstRunDela
 	m_nPriority          = nPriority;
 	m_cRunDelayInMS      = cRunDelayInMS;
 	m_cFirstRunDelayInMS = cFirstRunDelayInMS;
+	m_pCustomExecutor    = pCustomExecutor;
 	m_pQueue             = new TaskQueue(cThreads);
 
 	if (0 < m_cFirstRunDelayInMS || 0 < m_cRunDelayInMS)
@@ -119,7 +121,7 @@ Status TaskExecutor::Stop(bool bWaitForTasks)
 		ReleaseSemaphore(m_pStopSemaphore, (LONG)m_cThreads, NULL);
 	}
 	m_pQueue->Shutdown();
-	WaitForMultipleObjects(m_cThreads, m_threads, TRUE, INFINITE);
+	WaitForMultipleObjects((DWORD)m_cThreads, m_threads, TRUE, INFINITE);
 	for (Size i = 0; i < m_cThreads; i++)
 	{
 		CloseHandle(m_threads[i]);
@@ -138,13 +140,9 @@ Status TaskExecutor::Stop(bool bWaitForTasks)
 	m_threads            = NULL;
 	m_pQueue             = NULL;
 	m_pStopSemaphore     = NULL;
+	m_pCustomExecutor    = NULL;
 
 	return Status();
-}
-
-bool TaskExecutor::IsRunning()
-{
-	return (NULL != m_threads);
 }
 
 unsigned long __stdcall TaskExecutor::ThreadProc(void *pArg)
@@ -194,25 +192,69 @@ unsigned long __stdcall TaskExecutor::ThreadProc(void *pArg)
 			}
 		}
 
-		TaskQueue::ITask *pTask;
-
-		if ((status = pThis->m_pQueue->Pop(&pTask)).IsOK())
+		status.Clear();
+		if (NULL != pThis->m_pCustomExecutor)
 		{
-			pTask->Run();
-			pTask->Release();
+			Size cCount = pThis->m_pCustomExecutor->GetTasksCount();
+
+			TaskQueue::TasksVector vectorTasks;
+
+			if ((status = pThis->m_pQueue->Pop(&vectorTasks, cCount)).IsOK())
+			{
+				if (!vectorTasks.empty())
+				{
+					pThis->m_pCustomExecutor->ExecuteTasks(vectorTasks);
+					for (auto iter = vectorTasks.begin(); iter != vectorTasks.end(); ++iter)
+					{
+						(*iter)->Release();
+					}
+				}
+			}
 		}
 		else
 		{
-			if (Status_Cancelled == status.GetCode())
+			TaskQueue::ITask *pTask;
+
+			if ((status = pThis->m_pQueue->Pop(&pTask)).IsOK())
 			{
-				break;
+				pTask->Run();
+				pTask->Release();
 			}
+		}
+		if (Status_Cancelled == status.GetCode())
+		{
+			break;
 		}
 
 		cRun++;
 	}
 
 	return 0;
+}
+
+bool TaskExecutor::IsRunning()
+{
+	return (NULL != m_threads);
+}
+
+Size TaskExecutor::GetThreadCount() const
+{
+	return m_cThreads;
+}
+
+Size TaskExecutor::GetPriority() const
+{
+	return m_nPriority;
+}
+
+Size TaskExecutor::GetFirstRunDelay() const
+{
+	return m_cFirstRunDelayInMS;
+}
+
+Size TaskExecutor::GetRunDelay() const
+{
+	return m_cRunDelayInMS;
 }
 
 }//namespace Sys

@@ -35,68 +35,53 @@
 #if defined(CX_OS_WINDOWS)
 
 
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/Queue.hpp"
+#include "CX/Log/IOutput.hpp"
+#include "CX/Sys/Lock.hpp"
 #include "CX/Vector.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
-namespace Sys
+namespace Log
 {
 
-class CX_API TaskQueue : public IObject
+class CX_API OptimizedStreamOutput : public IOutput, public IObject
 {
 public:
 
-	class ITask
-	{
-	public:
+	OptimizedStreamOutput(const Char *szPath, Size cFlushDelay = 3000, Size cbMaxMem = 1048576);
 
-		virtual ~ITask() { };
+	OptimizedStreamOutput(const WChar *wszPath, Size cFlushDelay = 3000, Size cbMaxMem = 1048576);
 
-		virtual void Run() = 0;
+	~OptimizedStreamOutput();
 
-		virtual void Release() = 0;
-
-	};
-
-	typedef Vector<ITask *>::Type   TasksVector;
-
-	TaskQueue(Size cConsumers = 1);
-
-	~TaskQueue();
-
-	Status Push(ITask *pTask);
-
-	Status Pop(ITask **ppTask);
-
-	Status Pop(TasksVector *pVectorTasks, Size cCount = 0);
-
-	Status Wait();
-
-	Status Shutdown();
-
-	Status Clear();
+	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
 
 private:
 
-	typedef CX::Queue<ITask *>::Type   TasksQueue;
+	typedef Vector<String>::Type StringsVector;
 
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	TasksQueue       m_queueTasks;
-#pragma warning(pop)
-	Size             m_cConsumers;
-	void             *m_pSync;
+
+	void            *m_hFile;
+	void            *m_hStopEvent;
+	void            *m_hThread;
+	StringsVector   *m_pVectorStrings;
+	Sys::Lock       m_lockStrings;
+	Size            m_cFlushDelay;
+	Size            m_cbMaxMem;
+	Size            m_cbCrMem;
+
+	static unsigned long __stdcall ThreadProc(void *pArg);
+
+	Status Init(void *hFile, Size cFlushDelay, Size cMaxMem);
+
+	Status Uninit();
 
 };
 
-}//namespace Sys
+}//namespace Log
 
 }//namespace CX
 

@@ -119,6 +119,44 @@ Status TaskQueue::Pop(ITask **ppTask)
 	return status;
 }
 
+Status TaskQueue::Pop(TasksVector *pVectorTasks, Size cCount/* = 0*/)
+{
+	HANDLE handles[2] = { ((Sync *)m_pSync)->hShutdownSemaphore, ((Sync *)m_pSync)->hTasksSemaphore };
+	DWORD  dwRet;
+	Status status;
+
+	pVectorTasks->clear();
+	dwRet = WaitForMultipleObjects(2, handles, FALSE, INFINITE);
+	if (WAIT_OBJECT_0 == dwRet)
+	{
+		status = Status_Cancelled;
+	}
+	else
+	if (WAIT_OBJECT_0 + 1 == dwRet)
+	{
+		EnterCriticalSection(&((Sync *)m_pSync)->cs);
+		if (!m_queueTasks.empty())
+		{
+			while (!m_queueTasks.empty() && (0 == cCount || pVectorTasks->size() < cCount))
+			{
+				pVectorTasks->push_back(m_queueTasks.front());
+				m_queueTasks.pop();
+			}
+			if (m_queueTasks.empty())
+			{
+				SetEvent(((Sync *)m_pSync)->hEmptyEvent);
+			}
+		}
+		LeaveCriticalSection(&((Sync *)m_pSync)->cs);
+	}
+	else
+	{
+		status = Status(Status_OperationFailed, "WaitForMultipleObjects failed with error {1}", GetLastError());
+	}
+
+	return status;
+}
+
 Status TaskQueue::Shutdown()
 {
 	ReleaseSemaphore(((Sync *)m_pSync)->hShutdownSemaphore, (LONG)m_cConsumers, NULL);

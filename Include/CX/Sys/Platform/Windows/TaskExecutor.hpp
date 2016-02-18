@@ -67,11 +67,24 @@ public:
 		Priority_Lowest,
 	};
 
+	class ICustomExecutor
+	{
+	public:
+
+		virtual ~ICustomExecutor() = 0;
+
+		virtual Size GetTasksCount() = 0;
+
+		virtual void ExecuteTasks(TaskQueue::TasksVector &vectorTasks) = 0;
+
+	};
+
 	TaskExecutor();
 
 	~TaskExecutor();
 
-	Status Start(Size cThreads, Priority nPriority, Size cFirstRunDelayInMS = 0, Size cRunDelayInMS = 0);
+	Status Start(Size cThreads, Priority nPriority, Size cFirstRunDelayInMS = 0, Size cRunDelayInMS = 0, 
+	             ICustomExecutor *pCustomExecutor = NULL);
 
 	Status Add(TaskQueue::ITask *pTask);
 
@@ -83,17 +96,20 @@ public:
 
 	Size GetPriority() const;
 
+	Size GetFirstRunDelay() const;
+
 	Size GetRunDelay() const;
 
 private:
 
-	TaskQueue   *m_pQueue;
-	Size        m_cThreads;
-	Priority    m_nPriority;
-	void        **m_threads;
-	Size        m_cRunDelayInMS;
-	Size        m_cFirstRunDelayInMS;
-	void        *m_pStopSemaphore;
+	TaskQueue        *m_pQueue;
+	Size             m_cThreads;
+	Priority         m_nPriority;
+	void             **m_threads;
+	Size             m_cRunDelayInMS;
+	Size             m_cFirstRunDelayInMS;
+	void             *m_pStopSemaphore;
+	ICustomExecutor  *m_pCustomExecutor;
 
 	static unsigned long __stdcall ThreadProc(void *pArg);
 

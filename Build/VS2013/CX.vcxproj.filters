@@ -978,6 +978,12 @@
     <ClInclude Include="..\..\Include\CX\Sys\TaskQueue.hpp">
       <Filter>Header Files\Sys</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\OptimizedStreamOutput.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\OptimizedStreamOutput.hpp">
+      <Filter>Header Files\Log\Platform\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
@@ -1735,6 +1741,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskQueue.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\OptimizedStreamOutput_windows.cpp">
+      <Filter>Source Files\Log\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,73 +33,8 @@
 
 
 #if defined(CX_OS_WINDOWS)
-
-
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/Queue.hpp"
-#include "CX/Vector.hpp"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-
-
-namespace CX
-{
-
-namespace Sys
-{
-
-class CX_API TaskQueue : public IObject
-{
-public:
-
-	class ITask
-	{
-	public:
-
-		virtual ~ITask() { };
-
-		virtual void Run() = 0;
-
-		virtual void Release() = 0;
-
-	};
-
-	typedef Vector<ITask *>::Type   TasksVector;
-
-	TaskQueue(Size cConsumers = 1);
-
-	~TaskQueue();
-
-	Status Push(ITask *pTask);
-
-	Status Pop(ITask **ppTask);
-
-	Status Pop(TasksVector *pVectorTasks, Size cCount = 0);
-
-	Status Wait();
-
-	Status Shutdown();
-
-	Status Clear();
-
-private:
-
-	typedef CX::Queue<ITask *>::Type   TasksQueue;
-
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	TasksQueue       m_queueTasks;
-#pragma warning(pop)
-	Size             m_cConsumers;
-	void             *m_pSync;
-
-};
-
-}//namespace Sys
-
-}//namespace CX
-
-
+	#include "CX/Log/Platform/Windows/OptimizedStreamOutput.hpp"
+#elif defined(CX_OS_ANDROID)
+	#error "OptimizedStreamOutput.hpp not implemented on this platform"
 #endif
 
