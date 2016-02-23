@@ -1,4 +1,8 @@
-0.1.61 - 2016-02-23 - Simplebuffers JSONReader & Log::OptimizedStreamOutput fixes
+0.1.62 - 2016-02-23 - Simplebuffers JSONReader & Log::OptimizedStreamOutput fixes
+  - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
+  - Log::OptimizedStreamOutput fixes
+  - Changed version
+0.1.62 - 2016-02-23 - Simplebuffers JSONReader & Log::OptimizedStreamOutput fixes
   - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
   - Log::OptimizedStreamOutput fixes
 0.1.60 - 2016-02-18 - added Log::OptimizedStreamOutput
