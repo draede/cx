@@ -1,3 +1,6 @@
+0.1.63 - 2016-03-03 - Added Util::RndGen::Copy
+  - Added Util::RndGen::Copy
+  - Fixed copyright notice
 0.1.62 - 2016-02-23 - Simplebuffers JSONReader & Log::OptimizedStreamOutput fixes
   - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
   - Log::OptimizedStreamOutput fixes

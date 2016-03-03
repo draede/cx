@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2016 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014-2016 draede, draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -61,6 +61,12 @@ RndGen &RndGen::Get()
 	static RndGen rndgen;
 
 	return rndgen;
+}
+
+void RndGen::Copy(const RndGen &rndgen)
+{
+	memcpy(m_pState32, rndgen.m_pState32, sizeof(tinymt32_t));
+	memcpy(m_pState64, rndgen.m_pState64, sizeof(tinymt64_t));
 }
 
 void RndGen::Seed32(UInt32 nSeed)
