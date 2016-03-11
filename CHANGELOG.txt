@@ -1,3 +1,5 @@
+0.1.64 - 2016-03-11 - Fixed UTF8 conversion crash
+  - Fixed UTF8 conversion crash
 0.1.63 - 2016-03-03 - Added Util::RndGen::Copy
   - Added Util::RndGen::Copy
   - Fixed copyright notice
