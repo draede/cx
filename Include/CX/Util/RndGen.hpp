@@ -51,6 +51,8 @@ public:
 	~RndGen();
 
 	static RndGen &Get();
+	
+	void Copy(const RndGen &rndgen);
 
 	UInt8 GetUInt8();
 
