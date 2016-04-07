@@ -1,3 +1,5 @@
+0.1.66 - 2016-04-07 - Fixed Task queue empty event not signaled on creation
+  - Fixed Task queue empty event not signaled on creation
 0.1.65 - 2016-03-11 - Fixed RndGen compilation
   - Fixed RndGen compilation
   - Fixed version

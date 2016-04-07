@@ -55,7 +55,7 @@ TaskQueue::TaskQueue(Size cConsumers/* = 1*/)
 	m_cConsumers = cConsumers;
 	m_pSync      = new Sync();
 	InitializeCriticalSection(&((Sync *)m_pSync)->cs);
-	((Sync *)m_pSync)->hEmptyEvent        = CreateEventA(NULL, FALSE, FALSE, NULL);
+	((Sync *)m_pSync)->hEmptyEvent        = CreateEventA(NULL, FALSE, TRUE, NULL);
 	((Sync *)m_pSync)->hShutdownSemaphore = CreateSemaphoreA(NULL, 0, (LONG)m_cConsumers, NULL);
 	((Sync *)m_pSync)->hTasksSemaphore    = CreateSemaphoreA(NULL, 0, LONG_MAX, NULL);
 }
