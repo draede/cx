@@ -6,11 +6,16 @@
 /* Namespace for Google classes */
 #define GOOGLE_NAMESPACE  ::google
 
+#if (_MSC_VER >= 1800 )
+
 /* the location of the header defining hash functions */
-#if (1900 == _MSC_VER)
 #define HASH_FUN_H  <unordered_map>
-#else
+
+#else /* Earlier than VSC++ 2013 */ 
+
+/* the location of the header defining hash functions */
 #define HASH_FUN_H  <hash_map>
+ 
 #endif
 
 /* the namespace of the hash<> function */

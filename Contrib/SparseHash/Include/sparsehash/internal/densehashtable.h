@@ -588,13 +588,19 @@ class dense_hashtable {
     // are currently taking up room).  But later, when we decide what
     // size to resize to, *don't* count deleted buckets, since they
     // get discarded during the resize.
-    const size_type needed_size = settings.min_buckets(num_elements + delta, 0);
+    size_type needed_size = settings.min_buckets(num_elements + delta, 0);
     if ( needed_size <= bucket_count() )      // we have enough buckets
       return did_resize;
 
     size_type resize_to =
       settings.min_buckets(num_elements - num_deleted + delta, bucket_count());
 
+    // When num_deleted is large, we may still grow but we do not want to
+    // over expand.  So we reduce needed_size by a portion of num_deleted
+    // (the exact portion does not matter).  This is especially helpful
+    // when min_load_factor is zero (no shrink at all) to avoid doubling
+    // the bucket count to infinity.  See also test ResizeWithoutShrink.
+    needed_size = settings.min_buckets(num_elements - num_deleted / 4 + delta, 0);
     if (resize_to < needed_size &&    // may double resize_to
         resize_to < (std::numeric_limits<size_type>::max)() / 2) {
       // This situation means that we have enough deleted elements,
@@ -826,7 +832,7 @@ class dense_hashtable {
     const size_type bucket_count_minus_one = bucket_count() - 1;
     size_type bucknum = hash(key) & bucket_count_minus_one;
     size_type insert_pos = ILLEGAL_BUCKET; // where we would insert
-    for ( ;; ) {                          // probe until something happens
+    while ( 1 ) {                          // probe until something happens
       if ( test_empty(bucknum) ) {         // bucket is empty
         if ( insert_pos == ILLEGAL_BUCKET )   // found no prior place to insert
           return std::pair<size_type,size_type>(ILLEGAL_BUCKET, bucknum);
