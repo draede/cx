@@ -1,6 +1,7 @@
 0.1.67 - 2016-04-21 - Updated SparseHash to 2.0.3
   - Updated SparseHash to 2.0.3
   - Fixed SparseHash readme
+  - Added *.VC.db as ignored (VS2015 update 2)
 0.1.66 - 2016-04-07 - Fixed Task queue empty event not signaled on creation
   - Fixed Task queue empty event not signaled on creation
 0.1.65 - 2016-03-11 - Fixed RndGen compilation

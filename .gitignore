@@ -30,6 +30,7 @@
 *.opensdf
 *.suo
 *.sdf
+*.VC.db
 
 ipch/
 Bin/
