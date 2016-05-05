@@ -4720,7 +4720,7 @@
     <ClCompile Include="..\..\Src\Str\HexBinStr.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8_android.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\iOS\UTF8_ios.cpp" />
-    <ClCompile Include="..\..\Src\Str\Platform\WildMat.cpp" />
+    <ClCompile Include="..\..\Src\Str\WildMat.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8_windows.cpp" />
     <ClCompile Include="..\..\Src\Str\StringHelper.cpp" />
     <ClCompile Include="..\..\Src\Str\Z85BinStr.cpp" />
