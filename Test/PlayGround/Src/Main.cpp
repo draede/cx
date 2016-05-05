@@ -32,10 +32,17 @@
 using namespace CX;
 
 
+
 int main(int argc, char *argv[])
 {
 	CX_UNUSED(argc);
 	CX_UNUSED(argv);
+
+	//Tester::AddInclusion("Data_MO_SAX_StressTest");
+	//Tester::AddInclusion("Data_XML_SAX_StressTest");
+	//Tester::AddInclusion("Data_JSON_SAX_StressTest");
+	//Tester::AddInclusion("Data_JSON_Node_Test1");
+	//Tester::AddInclusion("Data_XML_Node_Test1");
 
 	Tester::Run();
 

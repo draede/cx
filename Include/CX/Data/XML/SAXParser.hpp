@@ -30,15 +30,12 @@
 
 
 #include "CX/IO/IInputStream.hpp"
-#include "CX/Data/JSON/ISAXParserObserver.hpp"
+#include "CX/Data/XML/ISAXParserObserver.hpp"
 #include "CX/Vector.hpp"
 #include "CX/String.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/IObject.hpp"
-
-
-struct CX_Data_JSON_SAX_Handler;
 
 
 namespace CX
@@ -47,7 +44,7 @@ namespace CX
 namespace Data
 {
 
-namespace JSON
+namespace XML
 {
 
 class CX_API SAXParser : public IObject
@@ -58,15 +55,13 @@ public:
 
 	~SAXParser();
 
-	Status ParseStream(IO::IInputStream *pInputStream);
+	Status BeginParse();
+
+	Status EndParse();
 
 	Status ParseStream(const Char *szPath);
 
-	Status ParseBuffer(const void *pBuffer, Size cbSize);
-
-	Status ParseString(const Char *szString);
-
-	Status ParseString(const String &sString);
+	Status ParseStream(IO::IInputStream *pInputStream);
 
 	Status AddObserver(ISAXParserObserver *pObserver);
 
@@ -76,6 +71,8 @@ public:
 
 private:
 
+	static const Size BUFFER_SIZE = 8192;
+
 	typedef Vector<ISAXParserObserver *>::Type   ObserversVector;
 
 #pragma warning(push)
@@ -83,11 +80,18 @@ private:
 	ObserversVector   m_vectorObservers;
 #pragma warning(push)
 
-	CX_Data_JSON_SAX_Handler *m_pHandler;
+	void   *m_pParser;
+	String m_sText;
+
+	static void StartElementHandler(void *pContext, const void *szName, const void **pszAttrs);
+
+	static void EndElementHandler(void *pContext, const void *szName);
+
+	static void CharacterDataHandler(void *pContext, const void *pBuffer, int cbSize);
 
 };
 
-}//namespace JSON
+}//namespace XML
 
 }//namespace Data
 

@@ -30,15 +30,13 @@
 
 
 #include "CX/IO/IInputStream.hpp"
-#include "CX/Data/JSON/ISAXParserObserver.hpp"
-#include "CX/Vector.hpp"
+#include "CX/Data/MO/SAXParser.hpp"
+#include "CX/IO/IInputStream.hpp"
+#include "CX/Map.hpp"
 #include "CX/String.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/IObject.hpp"
-
-
-struct CX_Data_JSON_SAX_Handler;
 
 
 namespace CX
@@ -47,47 +45,62 @@ namespace CX
 namespace Data
 {
 
-namespace JSON
+namespace MO
 {
 
-class CX_API SAXParser : public IObject
+class CX_API Language : public IObject
 {
 public:
 
-	SAXParser();
+	Language();
 
-	~SAXParser();
+	Language(const String &sID);
 
-	Status ParseStream(IO::IInputStream *pInputStream);
+	Language(const Language &lang);
 
-	Status ParseStream(const Char *szPath);
+	~Language();
 
-	Status ParseBuffer(const void *pBuffer, Size cbSize);
+	Status Copy(const Language &lang);
 
-	Status ParseString(const Char *szString);
+	Status SetID(const String &sID);
 
-	Status ParseString(const String &sString);
+	const String &GetID() const;
+	Size GetStringsCount() const;
 
-	Status AddObserver(ISAXParserObserver *pObserver);
+	const String &GetString(Size cIndex) const;
 
-	Status RemoveObservers();
+	const String &GetTranslation(Size cIndex) const;
 
-	static Status EscapeString(const Char *szStr, String *psStr);
+	const String &GetTranslation(const String &sString) const;
+
+	Status LoadFromStream(const Char *szPath);
+
+	Status LoadFromStream(IO::IInputStream *pInputStream);
 
 private:
 
-	typedef Vector<ISAXParserObserver *>::Type   ObserversVector;
+	typedef Map<String, String>::Type   StringsMap;
 
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	ObserversVector   m_vectorObservers;
-#pragma warning(push)
+	String     m_sID;
+	StringsMap m_mapStrings;
 
-	CX_Data_JSON_SAX_Handler *m_pHandler;
+	class SAXObserver : public ISAXParserObserver
+	{
+	public:
+
+		StringsMap *m_pMapStrings;
+
+		virtual void OnBeginParse();
+
+		virtual void OnEndParse();
+
+		virtual void OnString(const Char *szOrig, const Char *szTranslated);
+
+	};
 
 };
 
-}//namespace JSON
+}//namespace MO
 
 }//namespace Data
 

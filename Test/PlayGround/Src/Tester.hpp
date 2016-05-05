@@ -32,17 +32,31 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/Vector.hpp"
+#include "CX/Set.hpp"
 #include "CX/String.hpp"
 #include <functional>
+
+
+#define TESTFILES_ROOT_PATH   L"\\\\?\\Q:\\__TESTFILES__"
 
 
 class Tester : public CX::IObject
 {
 public:
 
+	typedef void (* HandleFileProc)(const CX::WChar *, void *);
+
 	static CX::Status RegisterTest(const CX::Char *szName, const std::function<void()> &func);
 
 	static void Run();
+
+	static void AddInclusion(const CX::Char *szPattern);
+
+	static void RemoveInclusion(const CX::Char *szPattern);
+
+	static void RemoveAllInclusions();
+
+	static void EnumFiles(const CX::WChar *wszPath, HandleFileProc pfnHandleFile, void *pUsrCtx);
 
 private:
 
@@ -52,6 +66,8 @@ private:
 		std::function<void()> func;
 	};
 
+	typedef CX::Set<CX::String, CX::CaseInsensitiveOrderPolicy>::Type   InclusionsSet;
+
 	typedef CX::Vector<TestData>::Type   TestsVector;
 
 	Tester();
@@ -59,6 +75,10 @@ private:
 	~Tester();
 
 	static TestsVector &GetTests();
+
+	static InclusionsSet &GetInclusions();
+
+	static bool IsAllowedToRun(const CX::String &sTest);
 
 };
 

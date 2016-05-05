@@ -22,6 +22,10 @@ class TestSimpleBuffers1 : public CX::SimpleBuffers::ISimpleBuffer
 {
 public:
 
+	static const CX::Char *OBJECT_NAME() { return "TestSimpleBuffers1"; }
+
+	virtual const CX::Char *GetObjectName() const { return OBJECT_NAME(); }
+
 	TestSimpleBuffers1()
 	{
 		Init();
@@ -239,12 +243,12 @@ public:
 		this->m_value_blob = p;
 	}
 
-	virtual CX::Size GetMembersCount()
+	virtual CX::Size GetMembersCount() const
 	{
 		return 13;
 	}
 
-	virtual CX::Bool GetMemberLoaded(CX::Size cIndex)
+	virtual CX::Bool GetMemberLoaded(CX::Size cIndex) const
 	{
 		if (m_bitsetLoadedMembers.size() <= cIndex)
 		{
@@ -254,7 +258,7 @@ public:
 		return m_bitsetLoadedMembers[cIndex];
 	}
 
-	virtual CX::Bool GetMemberLoaded(const CX::Char *szName)
+	virtual CX::Bool GetMemberLoaded(const CX::Char *szName) const
 	{
 #pragma warning(push)
 #pragma warning(disable: 4996)

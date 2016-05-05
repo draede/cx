@@ -325,6 +325,21 @@
     <Filter Include="Contrib\crypto-algorithms">
       <UniqueIdentifier>{fedafd79-b9bd-40d5-82ab-f3f01584a4f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contrib\Expat">
+      <UniqueIdentifier>{1ea7a61a-70b7-45b1-a085-2a61692fb5dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data\XML">
+      <UniqueIdentifier>{424c1588-ab8d-407c-9fee-6999d8edb2e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\XML">
+      <UniqueIdentifier>{4a66af95-8dc4-497d-822c-cb69430c7914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data\MO">
+      <UniqueIdentifier>{c72caa5c-9d88-4f53-a6e7-5ea0f0a18823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\MO">
+      <UniqueIdentifier>{0fb14965-9f93-4359-8606-7a30d045a14e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -983,6 +998,30 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\OptimizedStreamOutput.hpp">
       <Filter>Header Files\Log\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\XML\ISAXParserObserver.hpp">
+      <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\XML\SAXParser.hpp">
+      <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\MO\ISAXParserObserver.hpp">
+      <Filter>Header Files\Data\MO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\MO\SAXParser.hpp">
+      <Filter>Header Files\Data\MO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\WildMat.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\Node.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\XML\Node.hpp">
+      <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\MO\Language.hpp">
+      <Filter>Header Files\Data\MO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1744,6 +1783,39 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Log\Platform\Windows\OptimizedStreamOutput_windows.cpp">
       <Filter>Source Files\Log\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\xmlparse.c">
+      <Filter>Contrib\Expat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\xmlrole.c">
+      <Filter>Contrib\Expat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok.c">
+      <Filter>Contrib\Expat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok_impl.c">
+      <Filter>Contrib\Expat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok_ns.c">
+      <Filter>Contrib\Expat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\XML\XMLSAXParser.cpp">
+      <Filter>Source Files\Data\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\MO\MOSAXParser.cpp">
+      <Filter>Source Files\Data\MO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\WildMat.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\XML\XMLNode.cpp">
+      <Filter>Source Files\Data\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONNode.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\MO\Language.cpp">
+      <Filter>Source Files\Data\MO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

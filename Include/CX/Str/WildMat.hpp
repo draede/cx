@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2016 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014-2016 draede, draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -29,66 +29,38 @@
 #pragma once
 
 
-#include "CX/IO/IInputStream.hpp"
-#include "CX/Data/JSON/ISAXParserObserver.hpp"
-#include "CX/Vector.hpp"
-#include "CX/String.hpp"
-#include "CX/Status.hpp"
+#include "CX/Types.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
-
-
-struct CX_Data_JSON_SAX_Handler;
 
 
 namespace CX
 {
 
-namespace Data
+namespace Str
 {
 
-namespace JSON
-{
-
-class CX_API SAXParser : public IObject
+class CX_API WildMat
 {
 public:
 
-	SAXParser();
+	static WildMat &Get();
 
-	~SAXParser();
+	bool MatchA(const Char *szString, const Char *szPattern, bool bIgnoreCase);
 
-	Status ParseStream(IO::IInputStream *pInputStream);
-
-	Status ParseStream(const Char *szPath);
-
-	Status ParseBuffer(const void *pBuffer, Size cbSize);
-
-	Status ParseString(const Char *szString);
-
-	Status ParseString(const String &sString);
-
-	Status AddObserver(ISAXParserObserver *pObserver);
-
-	Status RemoveObservers();
-
-	static Status EscapeString(const Char *szStr, String *psStr);
+	bool MatchW(const WChar *wszString, const CX::WChar *wszPattern, bool bIgnoreCase);
 
 private:
 
-	typedef Vector<ISAXParserObserver *>::Type   ObserversVector;
+	WildMat();
 
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	ObserversVector   m_vectorObservers;
-#pragma warning(push)
+	~WildMat();
 
-	CX_Data_JSON_SAX_Handler *m_pHandler;
+	int StrMatchA(const Char *szString, const Char *szPattern, bool bIgnoreCase);
+
+	int StrMatchW(const WChar *wszString, const CX::WChar *wszPattern, bool bIgnoreCase);
 
 };
 
-}//namespace JSON
-
-}//namespace Data
+}//namespace Str
 
 }//namespace CX

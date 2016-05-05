@@ -27,6 +27,7 @@
  */ 
 
 #include "CX/Data/JSON/SAXParser.hpp"
+#include "CX/IO/FileInputStream.hpp"
 #include "CX/Status.hpp"
 #include "rapidjson.h"
 #include "reader.h"
@@ -297,10 +298,22 @@ Status SAXParser::ParseStream(IO::IInputStream *pInputStream)
 
 	if (!m_pHandler->EndDoc())
 	{
-		return Status(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
 	return Status();
+}
+
+Status SAXParser::ParseStream(const Char *szPath)
+{
+	IO::FileInputStream fis(szPath);
+
+	if (!fis.IsOK())
+	{
+		return Status(Status_OpenFailed, "Failed to open '{1}'", szPath);
+	}
+
+	return ParseStream(&fis);
 }
 
 Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)

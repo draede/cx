@@ -1,3 +1,12 @@
+0.1.68 - 2016-05-05 - Added XML & JSON Node
+  - Fixed SparseHash warning (sparsehashtable.h:844)
+  - Added XML parser
+  - Added MO parser
+  - Added XML Node
+  - Added JSON Node
+  - Added Data::MO::Language class
+  - Added wildmat support
+  - Fixed IO::MemInputStream SetPos
 0.1.67 - 2016-04-21 - Updated SparseHash to 2.0.3
   - Updated SparseHash to 2.0.3
   - Fixed SparseHash readme

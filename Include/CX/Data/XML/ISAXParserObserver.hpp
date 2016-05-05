@@ -29,16 +29,10 @@
 #pragma once
 
 
-#include "CX/IO/IInputStream.hpp"
-#include "CX/Data/JSON/ISAXParserObserver.hpp"
+#include "CX/Types.hpp"
 #include "CX/Vector.hpp"
-#include "CX/String.hpp"
-#include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/IObject.hpp"
-
-
-struct CX_Data_JSON_SAX_Handler;
 
 
 namespace CX
@@ -47,47 +41,34 @@ namespace CX
 namespace Data
 {
 
-namespace JSON
+namespace XML
 {
 
-class CX_API SAXParser : public IObject
+class CX_API ISAXParserObserver
 {
 public:
 
-	SAXParser();
+	typedef struct _Attr
+	{
+		String sName;
+		String sValue;
+	}Attr;
 
-	~SAXParser();
+	typedef Vector<Attr>::Type   AttrsVector;
 
-	Status ParseStream(IO::IInputStream *pInputStream);
+	virtual ~ISAXParserObserver() { }
 
-	Status ParseStream(const Char *szPath);
+	virtual void OnBeginParse() = 0;
 
-	Status ParseBuffer(const void *pBuffer, Size cbSize);
+	virtual void OnEndParse() = 0;
 
-	Status ParseString(const Char *szString);
+	virtual void OnStartElement(const Char *szName, const AttrsVector *pVectorAttrs) = 0;
 
-	Status ParseString(const String &sString);
-
-	Status AddObserver(ISAXParserObserver *pObserver);
-
-	Status RemoveObservers();
-
-	static Status EscapeString(const Char *szStr, String *psStr);
-
-private:
-
-	typedef Vector<ISAXParserObserver *>::Type   ObserversVector;
-
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	ObserversVector   m_vectorObservers;
-#pragma warning(push)
-
-	CX_Data_JSON_SAX_Handler *m_pHandler;
+	virtual void OnEndElement(const Char *szName, const Char *szText) = 0;
 
 };
 
-}//namespace JSON
+}//namespace XML
 
 }//namespace Data
 

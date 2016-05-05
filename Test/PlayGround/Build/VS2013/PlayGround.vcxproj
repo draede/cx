@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\Data_JSON_Node.cpp" />
+    <ClCompile Include="..\..\Src\Data_JSON_SAX.cpp" />
+    <ClCompile Include="..\..\Src\Data_MO_SAX.cpp" />
+    <ClCompile Include="..\..\Src\Data_XML_Node.cpp" />
+    <ClCompile Include="..\..\Src\Data_XML_SAX.cpp" />
     <ClCompile Include="..\..\Src\IO_Filters.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />

@@ -125,6 +125,7 @@ Status MemInputStream::SetPos(UInt64 cbPos)
 	{
 		return Status(Status_OutOfBounds, "Invalid offset");
 	}
+	m_cbOffset = (Size)cbPos;
 
 	return Status();
 }

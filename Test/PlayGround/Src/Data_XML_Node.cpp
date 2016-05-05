@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2016 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -26,69 +26,36 @@
  * SOFTWARE.
  */ 
 
-#pragma once
+#include "CX/Data/XML/Node.hpp"
+#include "CX/Print.hpp"
+#include "Tester.hpp"
+#include "CX/Print.hpp"
 
 
-#include "CX/IO/IInputStream.hpp"
-#include "CX/Data/JSON/ISAXParserObserver.hpp"
-#include "CX/Vector.hpp"
-#include "CX/String.hpp"
-#include "CX/Status.hpp"
-#include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
+using namespace CX;
 
 
-struct CX_Data_JSON_SAX_Handler;
+#define MYTEST(expr, msg)     if (!(expr)) { Print(stdout, "{1}\n", msg); }
 
 
-namespace CX
+void Data_XML_Node_Test1()
 {
+	Data::XML::Node node;
+	Data::XML::Node node1;
+	String          sTmp;
+	Status          status;
 
-namespace Data
-{
+	MYTEST(node.SetName("filesystem").IsOK(), "ERR1");
+	node("type") = "ntfs";
+	node("size") = "12345";
+	MYTEST(node[0].SetName("drive").IsOK(), "ERR2");
+	node[0]("name") = "c:";
+	MYTEST(node[0].SetValue("drive_label").IsOK(), "ERR3");
+	
+	MYTEST(node.SaveToString(sTmp).IsOK(), "ERR4");
+	MYTEST(node1.LoadFromString(sTmp).IsOK(), "ERR5");
+	MYTEST(node1 == node, "Not Equal");
+}
 
-namespace JSON
-{
+REGISTER_TEST(Data_XML_Node_Test1);
 
-class CX_API SAXParser : public IObject
-{
-public:
-
-	SAXParser();
-
-	~SAXParser();
-
-	Status ParseStream(IO::IInputStream *pInputStream);
-
-	Status ParseStream(const Char *szPath);
-
-	Status ParseBuffer(const void *pBuffer, Size cbSize);
-
-	Status ParseString(const Char *szString);
-
-	Status ParseString(const String &sString);
-
-	Status AddObserver(ISAXParserObserver *pObserver);
-
-	Status RemoveObservers();
-
-	static Status EscapeString(const Char *szStr, String *psStr);
-
-private:
-
-	typedef Vector<ISAXParserObserver *>::Type   ObserversVector;
-
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	ObserversVector   m_vectorObservers;
-#pragma warning(push)
-
-	CX_Data_JSON_SAX_Handler *m_pHandler;
-
-};
-
-}//namespace JSON
-
-}//namespace Data
-
-}//namespace CX

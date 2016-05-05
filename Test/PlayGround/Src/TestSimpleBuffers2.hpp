@@ -16,12 +16,18 @@
 #include "CX/SimpleBuffers/DataReader.hpp"
 #include "CX/SimpleBuffers/DataIniter.hpp"
 #include "CX/SimpleBuffers/ISimpleBuffer.hpp"
+
+
 #include "TestSimpleBuffers1.hpp"
 
 
 class TestSimpleBuffers2 : public CX::SimpleBuffers::ISimpleBuffer
 {
 public:
+
+	static const CX::Char *OBJECT_NAME() { return "TestSimpleBuffers2"; }
+
+	virtual const CX::Char *GetObjectName() const { return OBJECT_NAME(); }
 
 	TestSimpleBuffers2()
 	{
@@ -256,12 +262,12 @@ public:
 		this->m_testSimpleBuffers1 = p;
 	}
 
-	virtual CX::Size GetMembersCount()
+	virtual CX::Size GetMembersCount() const
 	{
 		return 14;
 	}
 
-	virtual CX::Bool GetMemberLoaded(CX::Size cIndex)
+	virtual CX::Bool GetMemberLoaded(CX::Size cIndex) const
 	{
 		if (m_bitsetLoadedMembers.size() <= cIndex)
 		{
@@ -271,7 +277,7 @@ public:
 		return m_bitsetLoadedMembers[cIndex];
 	}
 
-	virtual CX::Bool GetMemberLoaded(const CX::Char *szName)
+	virtual CX::Bool GetMemberLoaded(const CX::Char *szName) const
 	{
 #pragma warning(push)
 #pragma warning(disable: 4996)

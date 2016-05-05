@@ -30,15 +30,12 @@
 
 
 #include "CX/IO/IInputStream.hpp"
-#include "CX/Data/JSON/ISAXParserObserver.hpp"
+#include "CX/Data/MO/ISAXParserObserver.hpp"
 #include "CX/Vector.hpp"
 #include "CX/String.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/IObject.hpp"
-
-
-struct CX_Data_JSON_SAX_Handler;
 
 
 namespace CX
@@ -47,7 +44,7 @@ namespace CX
 namespace Data
 {
 
-namespace JSON
+namespace MO
 {
 
 class CX_API SAXParser : public IObject
@@ -58,21 +55,17 @@ public:
 
 	~SAXParser();
 
-	Status ParseStream(IO::IInputStream *pInputStream);
+	Status BeginParse();
+
+	Status EndParse();
 
 	Status ParseStream(const Char *szPath);
 
-	Status ParseBuffer(const void *pBuffer, Size cbSize);
-
-	Status ParseString(const Char *szString);
-
-	Status ParseString(const String &sString);
+	Status ParseStream(IO::IInputStream *pInputStream);
 
 	Status AddObserver(ISAXParserObserver *pObserver);
 
 	Status RemoveObservers();
-
-	static Status EscapeString(const Char *szStr, String *psStr);
 
 private:
 
@@ -83,11 +76,34 @@ private:
 	ObserversVector   m_vectorObservers;
 #pragma warning(push)
 
-	CX_Data_JSON_SAX_Handler *m_pHandler;
+	static const Size    BUFFER_SIZE       = 8192;
+	static const UInt32  MAGIC1            = 0x950412DE;
+	static const UInt32  MAGIC2            = 0xDE120495;
+	static const Size    MAX_STRINGS       = 65536;
+	static const Size    MAX_STRING_LEN    = 4096;
+
+	enum Header
+	{
+		MAGIC,
+		REVISION,
+		COUNT,
+		ORIGOFFSET,
+		TROFFSET,
+		HASHSIZE,
+		HASHOFFSET,
+	};
+
+	enum HeaderEx
+	{
+		LEN,
+		OFFSET,
+	};
+
+	Status ReadString(IO::IInputStream *pInputStream, UInt32 cbOffset, Char *pStr, UInt32 *pcbLen);
 
 };
 
-}//namespace JSON
+}//namespace MO
 
 }//namespace Data
 
