@@ -136,7 +136,7 @@ Status SAXParser::ParseStream(IO::IInputStream *pInputStream)
 		}
 		if (0 < cbAckSize)
 		{
-			if (XML_STATUS_OK != XML_Parse((XML_Parser)m_pParser, (const char *)buffer, cbAckSize, 0))
+			if (XML_STATUS_OK != XML_Parse((XML_Parser)m_pParser, (const char *)buffer, (int)cbAckSize, 0))
 			{
 				return Status_ParseFailed;
 			}

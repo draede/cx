@@ -3875,66 +3875,6 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
     </ClCompile>
-    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok_impl.c">
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok_ns.c">
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticDebugMT|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticReleaseMT|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">TurnOffAllWarnings</WarningLevel>
-      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">false</SDLCheck>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\LZ4\Src\lz4.c">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">TurnOffAllWarnings</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">TurnOffAllWarnings</WarningLevel>

@@ -1,3 +1,6 @@
+0.1.69 - 2016-05-19 - Fixes in TaskExecutor
+  - Fixed priority setup mistype in task thread
+  - Threads prority is restored to normal in Stop (so that dormant threads can be stopped - Windows)
 0.1.68 - 2016-05-05 - Added XML & JSON Node
   - Fixed SparseHash warning (sparsehashtable.h:844)
   - Added XML parser

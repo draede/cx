@@ -108,11 +108,13 @@ Status SAXParser::ParseStream(IO::IInputStream *pInputStream)
 	}
 	for (Size i = 0; i < header[COUNT]; i++)
 	{
-		if ((status = ReadString(pInputStream, header[ORIGOFFSET] + i * sizeof(UInt32) * 2, szOrig, &cbLenOrig)).IsNOK())
+		if ((status = ReadString(pInputStream, (UInt32)(header[ORIGOFFSET] + i * sizeof(UInt32) * 2), szOrig, 
+		                         &cbLenOrig)).IsNOK())
 		{
 			return status;
 		}
-		if ((status = ReadString(pInputStream, header[TROFFSET] + i * sizeof(UInt32) * 2, szTr, &cbLenTr)).IsNOK())
+		if ((status = ReadString(pInputStream, (UInt32)(header[TROFFSET] + i * sizeof(UInt32) * 2), szTr, 
+		                         &cbLenTr)).IsNOK())
 		{
 			return status;
 		}

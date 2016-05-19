@@ -1793,20 +1793,11 @@
     <ClCompile Include="..\..\Contrib\Expat\Src\xmltok.c">
       <Filter>Contrib\Expat</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok_impl.c">
-      <Filter>Contrib\Expat</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok_ns.c">
-      <Filter>Contrib\Expat</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Data\XML\XMLSAXParser.cpp">
       <Filter>Source Files\Data\XML</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\MO\MOSAXParser.cpp">
       <Filter>Source Files\Data\MO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Str\Platform\WildMat.cpp">
-      <Filter>Source Files\Str</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\XML\XMLNode.cpp">
       <Filter>Source Files\Data\XML</Filter>
@@ -1816,6 +1807,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\MO\Language.cpp">
       <Filter>Source Files\Data\MO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\WildMat.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

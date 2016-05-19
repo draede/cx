@@ -1790,12 +1790,6 @@
     <ClCompile Include="..\..\Contrib\Expat\Src\xmltok.c">
       <Filter>Contrib\Expat</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok_impl.c">
-      <Filter>Contrib\Expat</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok_ns.c">
-      <Filter>Contrib\Expat</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\JSONNode.cpp">
       <Filter>Source Files\Data\JSON</Filter>
     </ClCompile>

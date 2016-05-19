@@ -118,6 +118,17 @@ Status TaskExecutor::Stop(bool bWaitForTasks)
 	}
 	if (NULL != m_pStopSemaphore)
 	{
+		for (Size i = 0; i < m_cThreads; i++)
+		{
+			if (m_nPriority == Priority_Background)
+			{
+				SetThreadPriority(m_threads[i], THREAD_MODE_BACKGROUND_END);
+			}
+			else
+			{
+				SetThreadPriority(m_threads[i], THREAD_PRIORITY_NORMAL);
+			}
+		}
 		ReleaseSemaphore(m_pStopSemaphore, (LONG)m_cThreads, NULL);
 	}
 	m_pQueue->Shutdown();
@@ -151,7 +162,7 @@ unsigned long __stdcall TaskExecutor::ThreadProc(void *pArg)
 	HANDLE       hThread = GetCurrentThread();
 	Status       status;
 
-	switch (pThis->m_cThreads)
+	switch (pThis->m_nPriority)
 	{
 		case Priority_Background: SetThreadPriority(hThread, THREAD_MODE_BACKGROUND_BEGIN); break;
 		case Priority_Normal: SetThreadPriority(hThread, THREAD_PRIORITY_NORMAL); break;
