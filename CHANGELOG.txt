@@ -1,3 +1,5 @@
+0.1.70 - 2016-05-31 - Fixes in SimpleBuffers::JSONReader
+  - Fixed NULL szName used in status setup when element is an array
 0.1.69 - 2016-05-19 - Fixes in TaskExecutor
   - Fixed priority setup mistype in task thread
   - Threads prority is restored to normal in Stop (so that dormant threads can be stopped - Windows)

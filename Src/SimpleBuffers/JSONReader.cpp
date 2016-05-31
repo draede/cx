@@ -277,7 +277,7 @@ Status JSONReader::BeginObject(const Char *szName/* = NULL*/)
 		}
 		if (!(*pValue)[(rapidjson::SizeType)m_stackStates.top().cElems].IsObject())
 		{
-			return Status(Status_InvalidCall, "Element {1} is not an object", szName);
+			return Status(Status_InvalidCall, "Element {1} is not an object", m_stackStates.top().cElems);
 		}
 
 		StateData sd(State_Object);
@@ -372,7 +372,7 @@ Status JSONReader::BeginArray(const Char *szName/* = NULL*/)
 		}
 		if (!(*pValue)[(rapidjson::SizeType)m_stackStates.top().cElems].IsArray())
 		{
-			return Status(Status_InvalidCall, "Element {1} is not an array", szName);
+			return Status(Status_InvalidCall, "Element {1} is not an array", m_stackStates.top().cElems);
 		}
 
 		StateData sd(State_Array);
