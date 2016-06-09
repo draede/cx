@@ -51,9 +51,9 @@ class CX_API OptimizedStreamOutput : public IOutput, public IObject
 {
 public:
 
-	OptimizedStreamOutput(const Char *szPath, Size cFlushDelay = 3000, Size cbMaxMem = 1048576);
+	OptimizedStreamOutput(const Char *szPath, bool bAppend = false, Size cFlushDelay = 3000, Size cbMaxMem = 1048576);
 
-	OptimizedStreamOutput(const WChar *wszPath, Size cFlushDelay = 3000, Size cbMaxMem = 1048576);
+	OptimizedStreamOutput(const WChar *wszPath, bool bAppend = false, Size cFlushDelay = 3000, Size cbMaxMem = 1048576);
 
 	~OptimizedStreamOutput();
 
