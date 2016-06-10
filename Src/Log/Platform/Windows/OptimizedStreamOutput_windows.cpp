@@ -8,15 +8,15 @@ namespace CX
 namespace Log
 {
 
-OptimizedStreamOutput::OptimizedStreamOutput(const Char *szPath, bool bAppend = false, Size cFlushDelay/* = 3000*/, 
+OptimizedStreamOutput::OptimizedStreamOutput(const Char *szPath, bool bAppend/* = false*/, Size cFlushDelay/* = 3000*/, 
                                              Size cbMaxMem/* = 1048576*/)
 {
 	Init(CreateFileA(szPath, FILE_APPEND_DATA, FILE_SHARE_READ, 0, bAppend ? OPEN_ALWAYS : CREATE_ALWAYS, 
 	                 FILE_ATTRIBUTE_NORMAL, NULL), cFlushDelay, cbMaxMem);
 }
 
-OptimizedStreamOutput::OptimizedStreamOutput(const WChar *wszPath, bool bAppend = false, Size cFlushDelay/* = 3000*/, 
-                                             Size cbMaxMem/* = 1048576*/)
+OptimizedStreamOutput::OptimizedStreamOutput(const WChar *wszPath, bool bAppend/* = false*/, 
+                                             Size cFlushDelay/* = 3000*/, Size cbMaxMem/* = 1048576*/)
 {
 	Init(CreateFileW(wszPath, FILE_APPEND_DATA, FILE_SHARE_READ, 0, bAppend ? OPEN_ALWAYS : CREATE_ALWAYS, 
 	                 FILE_ATTRIBUTE_NORMAL, NULL), cFlushDelay, cbMaxMem);
