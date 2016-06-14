@@ -42,18 +42,21 @@ MemOutputStream::MemOutputStream(void *pMem, Size cbSize)
 	m_nType     = Type_Mem;
 	m_pMem      = pMem;
 	m_cbMemSize = cbSize;
+	m_cbOffset  = 0;
 }
 
 MemOutputStream::MemOutputStream(String *pStr)
 {
 	m_nType     = Type_String;
 	m_pStr      = pStr;
+	m_cbOffset  = 0;
 }
 
 MemOutputStream::MemOutputStream(Util::IMemPool *pMemPool)
 {
 	m_nType     = Type_MemPool;
 	m_pMemPool  = pMemPool;
+	m_cbOffset  = 0;
 }
 
 MemOutputStream::~MemOutputStream()
