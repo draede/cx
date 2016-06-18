@@ -126,101 +126,37 @@ public:
 
 			for (Object::ConstsVector::const_iterator iter = object.GetConsts().begin(); iter != object.GetConsts().end(); ++iter)
 			{
-				String sFullType;
+				String sTmpFullType;
 
-				if ((status = GetMemberFullType(MemberType_Scalar, iter->sType.c_str(), "", sFullType)).IsNOK())
+				if ((status = GetMemberFullType(MemberType_Scalar, iter->sType.c_str(), "", sTmpFullType)).IsNOK())
 				{
 					return status;
 				}
 
-				if (cMaxDataTypeLen < sFullType.size())
+				if (cMaxDataTypeLen < sTmpFullType.size())
 				{
-					cMaxDataTypeLen = sFullType.size();
+					cMaxDataTypeLen = sTmpFullType.size();
 				}
 			}
 			for (Object::ConstsVector::const_iterator iter = object.GetConsts().begin(); iter != object.GetConsts().end(); ++iter)
 			{
-				String sFullType;
+				String sTmpFullType;
 
-				if ((status = GetMemberFullType(MemberType_Scalar, iter->sType.c_str(), "", sFullType)).IsNOK())
+				if ((status = GetMemberFullType(MemberType_Scalar, iter->sType.c_str(), "", sTmpFullType)).IsNOK())
 				{
 					return status;
 				}
 
-				String sPaddingType(cMaxDataTypeLen - sFullType.size() + 1, ' ');
+				String sPaddingType(cMaxDataTypeLen - sTmpFullType.size() + 1, ' ');
 
-				Print(out, "\tstatic const {1}{2}{3}() {{ return {4}; }\n", sFullType, sPaddingType, iter->sName, iter->sValue);
+				Print(out, "\tstatic const {1}{2}{3}() {{ return {4}; }\n", sTmpFullType, sPaddingType, iter->sName, iter->sValue);
 			}
 			Print(out, CX_SB_LINE_TERMINATOR);
 		}
 
 		//=== constructor
 
-		bool bHasDefaults = false;
-
-		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
-		{
-			if (!iter->GetDefault().empty())
-			{
-				bHasDefaults = true;
-				break;
-			}
-		}
-
-		if (bHasDefaults)
-		{
-			Print(out, "\t{1}() : ", sType);
-		}
-		else
-		{
-			Print(out, "\t{1}()" CX_SB_LINE_TERMINATOR, sType);
-		}
-		if (bHasDefaults)
-		{
-			bool bFirstDefault = true;
-
-			for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
-			{
-				if (!iter->GetDefault().empty())
-				{
-					if (bFirstDefault)
-					{
-						bFirstDefault = false;
-					}
-					else
-					{
-						Print(out, ", ");
-					}
-
-					String sDefault;
-
-					if ('"' == *iter->GetDefault().begin())
-					{
-						sDefault = iter->GetDefault();
-					}
-					else
-					{
-						const Char *pszPos;
-
-						pszPos = iter->GetDefault().c_str();
-						while (0 != *pszPos)
-						{
-							if ('.' == *pszPos)
-							{
-								sDefault += "::";
-							}
-							else
-							{
-								sDefault += *pszPos;
-							}
-							pszPos++;
-						}
-					}
-					Print(out, CX_SB_LINE_TERMINATOR "\t\t{1}({2})" CX_SB_LINE_TERMINATOR, iter->GetMemberName(), sDefault);
-				}
-			}
-			Print(out, CX_SB_LINE_TERMINATOR);
-		}
+		Print(out, "\t{1}()" CX_SB_LINE_TERMINATOR, sType);
 		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\tInit();" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
@@ -232,50 +168,81 @@ public:
 		Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
 		{
-			String sKeyType;
-			String sValType;
+			if (iter->GetDefault().empty())
+			{
+				String sKeyType;
+				String sValType;
 
-			if ((status = GetMemberFullType(MemberType_Scalar, iter->GetKeyType(), "", sKeyType)).IsNOK())
-			{
-				return status;
-			}
-			if (MemberType_Map == iter->GetMemberType())
-			{
-				if ((status = GetMemberFullType(MemberType_Scalar, iter->GetValType(), "", sValType)).IsNOK())
+				if ((status = GetMemberFullType(MemberType_Scalar, iter->GetKeyType(), "", sKeyType)).IsNOK())
 				{
 					return status;
 				}
+				if (MemberType_Map == iter->GetMemberType())
+				{
+					if ((status = GetMemberFullType(MemberType_Scalar, iter->GetValType(), "", sValType)).IsNOK())
+					{
+						return status;
+					}
+				}
+				switch (iter->GetMemberType())
+				{
+					case MemberType_Scalar:
+					{
+						Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Scalar, {1}>::Init("
+								"this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+					}
+					break;
+					case MemberType_Vector:
+					{
+						Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Vector, {1}>::Init("
+								"this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+					}
+					break;
+					case MemberType_Set:
+					{
+						Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Set, {1}>::Init("
+								"this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+					}
+					break;
+					case MemberType_Map:
+					{
+						Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Init("
+								"this->{3});" CX_SB_LINE_TERMINATOR, sKeyType, sValType, iter->GetMemberName());
+					}
+					break;
+					default:
+					{
+						return Status(Status_InvalidArg, "Member {1} has invalid field type", iter->GetName());
+					}
+				}
 			}
-			switch (iter->GetMemberType())
+			else
 			{
-				case MemberType_Scalar:
+				String sDefault;
+
+				if ('"' == *iter->GetDefault().begin())
 				{
-					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Scalar, {1}>::Init("
-					      "this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+					sDefault = iter->GetDefault();
 				}
-				break;
-				case MemberType_Vector:
+				else
 				{
-					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Vector, {1}>::Init("
-					      "this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
+					const Char *pszPos;
+
+					pszPos = iter->GetDefault().c_str();
+					while (0 != *pszPos)
+					{
+						if ('.' == *pszPos)
+						{
+							sDefault += "::";
+						}
+						else
+						{
+							sDefault += *pszPos;
+						}
+						pszPos++;
+					}
 				}
-				break;
-				case MemberType_Set:
-				{
-					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Set, {1}>::Init("
-					      "this->{2});" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName());
-				}
-				break;
-				case MemberType_Map:
-				{
-					Print(out, "\t\tCX::SimpleBuffers::DataIniter<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Init("
-					      "this->{3});" CX_SB_LINE_TERMINATOR, sKeyType, sValType, iter->GetMemberName());
-				}
-				break;
-				default:
-				{
-					return Status(Status_InvalidArg, "Member {1} has invalid field type", iter->GetName());
-				}
+				Print(out, "\t\t{1} = {2};\n", iter->GetMemberName(), sDefault);
 			}
 		}
 		Print(out, "\t}" CX_SB_LINE_TERMINATOR);
@@ -285,9 +252,9 @@ public:
 
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
 		{
-			String sFullType;
+			String sTmpFullType;
 
-			if ((status = GetMemberFullType(iter->GetMemberType(), iter->GetKeyType(), iter->GetValType(), sFullType)).IsNOK())
+			if ((status = GetMemberFullType(iter->GetMemberType(), iter->GetKeyType(), iter->GetValType(), sTmpFullType)).IsNOK())
 			{
 				return status;
 			}
@@ -295,17 +262,17 @@ public:
 			{
 				case MemberType_Scalar:
 				{
-					Print(out, "\tconst {1} &{2}() const" CX_SB_LINE_TERMINATOR, sFullType, iter->GetGetterName());
+					Print(out, "\tconst {1} &{2}() const" CX_SB_LINE_TERMINATOR, sTmpFullType, iter->GetGetterName());
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\treturn this->{1};" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 					Print(out, CX_SB_LINE_TERMINATOR);
-					Print(out, "\t{1} &{2}()" CX_SB_LINE_TERMINATOR, sFullType, iter->GetGetterName());
+					Print(out, "\t{1} &{2}()" CX_SB_LINE_TERMINATOR, sTmpFullType, iter->GetGetterName());
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\treturn this->{1};" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 					Print(out, CX_SB_LINE_TERMINATOR);
-					Print(out, "\tvoid {1}(const {2} &p)" CX_SB_LINE_TERMINATOR, iter->GetSetterName(), sFullType);
+					Print(out, "\tvoid {1}(const {2} &p)" CX_SB_LINE_TERMINATOR, iter->GetSetterName(), sTmpFullType);
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\tthis->{1} = p;" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
@@ -314,12 +281,12 @@ public:
 				break;
 				case MemberType_Vector:
 				{
-					Print(out, "\tconst {1} &{2}() const" CX_SB_LINE_TERMINATOR, sFullType, iter->GetGetterName());
+					Print(out, "\tconst {1} &{2}() const" CX_SB_LINE_TERMINATOR, sTmpFullType, iter->GetGetterName());
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\treturn this->{1};" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 					Print(out, CX_SB_LINE_TERMINATOR);
-					Print(out, "\t{1} &{2}()" CX_SB_LINE_TERMINATOR, sFullType, iter->GetGetterName());
+					Print(out, "\t{1} &{2}()" CX_SB_LINE_TERMINATOR, sTmpFullType, iter->GetGetterName());
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\treturn this->{1};" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
@@ -328,12 +295,12 @@ public:
 				break;
 				case MemberType_Set:
 				{
-					Print(out, "\tconst {1} &{2}() const" CX_SB_LINE_TERMINATOR, sFullType, iter->GetGetterName());
+					Print(out, "\tconst {1} &{2}() const" CX_SB_LINE_TERMINATOR, sTmpFullType, iter->GetGetterName());
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\treturn this->{1};" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 					Print(out, CX_SB_LINE_TERMINATOR);
-					Print(out, "\t{1} &{2}()" CX_SB_LINE_TERMINATOR, sFullType, iter->GetGetterName());
+					Print(out, "\t{1} &{2}()" CX_SB_LINE_TERMINATOR, sTmpFullType, iter->GetGetterName());
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\treturn this->{1};" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
@@ -342,12 +309,12 @@ public:
 				break;
 				case MemberType_Map:
 				{
-					Print(out, "\tconst {1} &{2}() const" CX_SB_LINE_TERMINATOR, sFullType, iter->GetGetterName());
+					Print(out, "\tconst {1} &{2}() const" CX_SB_LINE_TERMINATOR, sTmpFullType, iter->GetGetterName());
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\treturn this->{1};" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
 					Print(out, CX_SB_LINE_TERMINATOR);
-					Print(out, "\t{1} &{2}()" CX_SB_LINE_TERMINATOR, sFullType, iter->GetGetterName());
+					Print(out, "\t{1} &{2}()" CX_SB_LINE_TERMINATOR, sTmpFullType, iter->GetGetterName());
 					Print(out, "\t{{" CX_SB_LINE_TERMINATOR);
 					Print(out, "\t\treturn this->{1};" CX_SB_LINE_TERMINATOR, iter->GetMemberName());
 					Print(out, "\t}" CX_SB_LINE_TERMINATOR);
@@ -738,31 +705,31 @@ public:
 
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
 		{
-			String sFullType;
+			String sTmpFullType;
 
-			if ((status = GetMemberFullType(iter->GetMemberType(), iter->GetKeyType(), iter->GetValType(), sFullType)).IsNOK())
+			if ((status = GetMemberFullType(iter->GetMemberType(), iter->GetKeyType(), iter->GetValType(), sTmpFullType)).IsNOK())
 			{
 				return status;
 			}
 
-			if (cMaxDataTypeLen < sFullType.size())
+			if (cMaxDataTypeLen < sTmpFullType.size())
 			{
-				cMaxDataTypeLen = sFullType.size();
+				cMaxDataTypeLen = sTmpFullType.size();
 			}
 		}
 
 		for (Object::MembersVector::const_iterator iter = object.GetMembers().begin(); iter != object.GetMembers().end(); ++iter)
 		{
-			String sFullType;
+			String sTmpFullType;
 
-			if ((status = GetMemberFullType(iter->GetMemberType(), iter->GetKeyType(), iter->GetValType(), sFullType)).IsNOK())
+			if ((status = GetMemberFullType(iter->GetMemberType(), iter->GetKeyType(), iter->GetValType(), sTmpFullType)).IsNOK())
 			{
 				return status;
 			}
 
-			String     sPadding(cMaxDataTypeLen - sFullType.size() + 1, ' ');
+			String     sPadding(cMaxDataTypeLen - sTmpFullType.size() + 1, ' ');
 
-			Print(out, "\t{1}{2}{3};" CX_SB_LINE_TERMINATOR, sFullType, sPadding, iter->GetMemberName());
+			Print(out, "\t{1}{2}{3};" CX_SB_LINE_TERMINATOR, sTmpFullType, sPadding, iter->GetMemberName());
 		}
 
 		{
