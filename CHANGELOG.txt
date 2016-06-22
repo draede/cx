@@ -1,3 +1,5 @@
+0.1.75 - 2016-06-22 - Reverted to an older version of SparseHash
+  - Reverted to an older version of SparseHash
 0.1.74 - 2016-06-19 - Fixed SimpleBuffers generator not using default in Init()
   - Fixed SimpleBuffers generator not using default in Init()
 0.1.73 - 2016-06-14 - Fixed IO::MemOutputStream invalid offset
