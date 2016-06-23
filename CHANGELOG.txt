@@ -1,3 +1,5 @@
+0.1.76 - 2016-06-23 - Fixed Print in std::wstring and WString
+  - Fixed Print in std::wstring and WString
 0.1.75 - 2016-06-22 - Reverted to an older version of SparseHash
   - Reverted to an older version of SparseHash
 0.1.74 - 2016-06-19 - Fixed SimpleBuffers generator not using default in Init()

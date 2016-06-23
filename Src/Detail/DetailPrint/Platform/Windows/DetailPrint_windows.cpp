@@ -95,7 +95,7 @@ CX_API Bool UTF8toWChar(const Char *szUTF8, WString *pwsWChar, Size cUTF8Len/* =
 			return false;
 		}
 		pwsWChar->append(pOut, (Size)cSize);
-		if (NULL != pOut)
+		if (out != pOut)
 		{
 			delete [] pOut;
 		}
@@ -140,7 +140,7 @@ CX_API Bool WChartoUTF8(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* 
 			return false;
 		}
 		psUTF8->append(pOut, (Size)cSize);
-		if (pOut != out)
+		if (out != pOut)
 		{
 			delete [] pOut;
 		}
@@ -182,7 +182,7 @@ CX_API Bool UTF8toWCharx(const Char *szUTF8, std::wstring *pwsWChar, Size cUTF8L
 			return false;
 		}
 		pwsWChar->append(pOut, (Size)cSize);
-		if (NULL != pOut)
+		if (out != pOut)
 		{
 			delete [] pOut;
 		}
@@ -227,7 +227,7 @@ CX_API Bool WChartoUTF8x(const WChar *wszWChar, std::string *psUTF8, Size cWChar
 			return false;
 		}
 		psUTF8->append(pOut, (Size)cSize);
-		if (pOut != out)
+		if (out != pOut)
 		{
 			delete [] pOut;
 		}
