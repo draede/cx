@@ -144,6 +144,14 @@ inline StatusCode HexPrintHelper(const void *p, Size cbSize, Char *szOutput, Siz
 			}
 		}
 	}
+	if (0 < cbSize && 0 == *pcFinalLen)
+	{
+		*pPos = '0';
+		pPos++;
+		*pPos = '0';
+		pPos++;
+		(*pcFinalLen)++;
+	}
 	*pPos = 0;
 
 	return Status_OK;
