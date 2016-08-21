@@ -322,9 +322,15 @@ public:
 
 	Var &operator[](const char *szName);
 
+	const Var &operator[](const char *szName) const;
+
 	Var &operator[](const String &sName);
 
+	const Var &operator[](const String &sName) const;
+
 	Var &operator[](int cIndex);
+
+	const Var &operator[](int cIndex) const;
 
 	Var &operator=(Bool bBool);
 

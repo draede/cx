@@ -752,6 +752,10 @@ Double Var::GetReal(Double lfRealDefault/* = DEFAULT_REAL*/) const
 	{
 		return m_lfReal;
 	}
+	if (IsInt())
+	{
+		return m_nInt;
+	}
 
 	return lfRealDefault;
 }
@@ -1040,12 +1044,27 @@ Var &Var::operator[](const char *szName)
 	return GetObjectMember(szName);
 }
 
+const Var &Var::operator[](const char *szName) const
+{
+	return GetObjectMember(szName);
+}
+
 Var &Var::operator[](const String &sName)
 {
 	return GetObjectMember(sName);
 }
 
+const Var &Var::operator[](const String &sName) const
+{
+	return GetObjectMember(sName);
+}
+
 Var &Var::operator[](int cIndex)
+{
+	return GetArrayItem(cIndex);
+}
+
+const Var &Var::operator[](int cIndex) const
 {
 	return GetArrayItem(cIndex);
 }
