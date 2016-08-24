@@ -139,6 +139,12 @@
     <ClInclude Include="..\..\Include\CX\Data\XML\ISAXParserObserver.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\XML\Node.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\XML\SAXParser.hpp" />
+    <ClInclude Include="..\..\Include\CX\Debug\IProfilingHandler.hpp" />
+    <ClInclude Include="..\..\Include\CX\Debug\PrintProfilingHandler.hpp" />
+    <ClInclude Include="..\..\Include\CX\Debug\Profiler.hpp" />
+    <ClInclude Include="..\..\Include\CX\Debug\ScopeProfiler.hpp" />
+    <ClInclude Include="..\..\Include\CX\Debug\SysLogProfilingHandler.hpp" />
+    <ClInclude Include="..\..\Include\CX\Debug\ThreadProfiler.hpp" />
     <ClInclude Include="..\..\Include\CX\DenseHashMap.hpp" />
     <ClInclude Include="..\..\Include\CX\DenseHashSet.hpp" />
     <ClInclude Include="..\..\Include\CX\DenseMultiHashMap.hpp" />
@@ -4607,6 +4613,10 @@
     <ClCompile Include="..\..\Src\Data\MO\MOSAXParser.cpp" />
     <ClCompile Include="..\..\Src\Data\XML\XMLNode.cpp" />
     <ClCompile Include="..\..\Src\Data\XML\XMLSAXParser.cpp" />
+    <ClCompile Include="..\..\Src\Debug\Platform\Windows\Profiler_windows.cpp" />
+    <ClCompile Include="..\..\Src\Debug\Platform\Windows\SysLogProfilingHandler_windows.cpp" />
+    <ClCompile Include="..\..\Src\Debug\Platform\Windows\ThreadProfiler_windows.cpp" />
+    <ClCompile Include="..\..\Src\Debug\ScopeProfiler.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Android\DetailPrint_android.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\iOS\DetailPrint_ios.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp" />

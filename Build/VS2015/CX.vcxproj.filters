@@ -340,6 +340,18 @@
     <Filter Include="Source Files\Data\XML">
       <UniqueIdentifier>{1f1ef256-8116-4256-a9a7-4f457597039f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Debug">
+      <UniqueIdentifier>{ec6d28de-dcb5-4657-849f-981e97802780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debug\Platform">
+      <UniqueIdentifier>{8b409c38-ab1a-4743-964a-690b4168feaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debug\Platform\Windows">
+      <UniqueIdentifier>{15059cf5-8125-464f-bb56-13dab681207e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Debug">
+      <UniqueIdentifier>{3ed6d8fe-3a7f-4393-a887-98c992eb5412}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1019,6 +1031,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\XML\SAXParser.hpp">
       <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\IProfilingHandler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\PrintProfilingHandler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\Profiler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\ScopeProfiler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\SysLogProfilingHandler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\ThreadProfiler.hpp">
+      <Filter>Header Files\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1807,6 +1837,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\WildMat.cpp">
       <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\Platform\Windows\Profiler_windows.cpp">
+      <Filter>Source Files\Debug\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\Platform\Windows\SysLogProfilingHandler_windows.cpp">
+      <Filter>Source Files\Debug\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\Platform\Windows\ThreadProfiler_windows.cpp">
+      <Filter>Source Files\Debug\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\ScopeProfiler.cpp">
+      <Filter>Source Files\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
