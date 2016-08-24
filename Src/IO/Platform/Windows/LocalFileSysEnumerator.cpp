@@ -8,6 +8,7 @@
 #include "CX/IO/LocalFileSysEnumerator.hpp"
 #include "CX/C/Platform/Windows/windows.h"
 #include "CX/Str/UTF8.hpp"
+#include "CX/Mem.hpp"
 
 
 namespace CX

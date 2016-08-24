@@ -29,7 +29,6 @@
 #pragma once
 
 
-#include "CX/STLAlloc.hpp"
 #include <deque>
 
 
@@ -39,7 +38,7 @@ namespace CX
 template <typename T>
 struct Deque
 {
-	typedef std::deque<T, STLAlloc<T> >     Type;
+	typedef std::deque<T>     Type;
 };
 
 }//namespace CX

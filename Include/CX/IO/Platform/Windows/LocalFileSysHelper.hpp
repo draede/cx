@@ -50,7 +50,7 @@ namespace CX
 namespace IO
 {
 
-class CX_API LocalFileSysHelper : public IFileSysHelper, public IObject
+class CX_API LocalFileSysHelper : public IFileSysHelper
 {
 public:
 

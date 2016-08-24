@@ -34,13 +34,12 @@
 #include "CX/Slice.hpp"
 #include "CX/Detail/DetailPrint/DetailPrint.hpp"
 #include "CX/StatusCodes.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
-class CX_API Status : public IObject
+class CX_API Status
 {
 public:
 

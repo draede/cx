@@ -32,7 +32,6 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/IO/IOutputFilter.hpp"
 
@@ -43,7 +42,7 @@ namespace CX
 namespace IO
 {
 
-class CX_API FilteredOutputStream : public IO::IOutputStream, public IObject
+class CX_API FilteredOutputStream : public IO::IOutputStream
 {
 public:
 

@@ -34,7 +34,6 @@
 #include "CX/Log/Level.hpp"
 #include "CX/Print.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX

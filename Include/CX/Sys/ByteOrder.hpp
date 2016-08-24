@@ -31,7 +31,6 @@
 
 #include "CX/Types.hpp"
 #include "../../../Contrib/ByteOrder/Include/byteorder.h"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -40,7 +39,7 @@ namespace CX
 namespace Sys
 {
 
-class ByteOrder : public IObject
+class ByteOrder
 {
 public:
 

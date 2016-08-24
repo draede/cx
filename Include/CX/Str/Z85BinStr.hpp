@@ -39,7 +39,7 @@ namespace CX
 namespace Str
 {
 
-class CX_API Z85BinStr : public IBinStr, public IObject
+class CX_API Z85BinStr : public IBinStr
 {
 public:
 

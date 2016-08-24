@@ -31,7 +31,6 @@
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/IObject.hpp"
 #include "CX/APIDefs.hpp"
 
 

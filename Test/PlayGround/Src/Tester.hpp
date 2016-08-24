@@ -40,7 +40,7 @@
 #define TESTFILES_ROOT_PATH   L"\\\\?\\Q:\\__TESTFILES__"
 
 
-class Tester : public CX::IObject
+class Tester
 {
 public:
 
@@ -82,7 +82,7 @@ private:
 
 };
 
-class TestHelper : public CX::IObject
+class TestHelper
 {
 public:
 

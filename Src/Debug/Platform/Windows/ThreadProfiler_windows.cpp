@@ -2,6 +2,7 @@
 #include "CX/Debug/ThreadProfiler.hpp"
 #include "CX/Debug/Profiler.hpp"
 #include "CX/C/Platform/Windows/windows.h"
+#include "CX/Mem.hpp"
 
 
 namespace CX

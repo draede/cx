@@ -43,7 +43,7 @@ namespace CX
 namespace SimpleBuffers
 {
 
-class CX_API JSONReader : public IReader, public IObject
+class CX_API JSONReader : public IReader
 {
 public:
 

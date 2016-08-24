@@ -29,7 +29,6 @@
 #pragma once
 
 
-#include "CX/STLAlloc.hpp"
 #include <map>
 
 
@@ -39,7 +38,7 @@ namespace CX
 template <typename K, typename V, typename C = std::less<K> >
 struct Map
 {
-	typedef std::map<K, V, C, STLAlloc<std::pair<const K, V> > >     Type;
+	typedef std::map<K, V, C>     Type;
 };
 
 }//namespace CX

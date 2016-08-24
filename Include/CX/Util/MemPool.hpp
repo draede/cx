@@ -34,7 +34,6 @@
 #include "CX/Limits.hpp"
 #include "CX/String.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -70,7 +69,7 @@ public:
 
 };
 
-class CX_API DynMemPool : public IMemPool, public IObject
+class CX_API DynMemPool : public IMemPool
 {
 public:
 
@@ -106,7 +105,7 @@ private:
 
 };
 
-class CX_API StaticMemPool : public IMemPool, public IObject
+class CX_API StaticMemPool : public IMemPool
 {
 public:
 

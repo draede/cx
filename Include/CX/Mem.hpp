@@ -30,7 +30,6 @@
 
 
 #include "CX/Types.hpp"
-#include "CX/IObject.hpp"
 #include "CX/C/string.h"
 #include "CX/Platform.hpp"
 #include "CX/APIDefs.hpp"
@@ -74,7 +73,7 @@ return pInsts;
 namespace CX
 {
 
-class CX_API Mem : public IObject
+class CX_API Mem
 {
 public:
 

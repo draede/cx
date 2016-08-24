@@ -64,7 +64,7 @@ struct ReleaseByMemFree
 
 //moves ptrs on copy
 template <typename T, typename ReleasePolicy = ReleaseByDelete<T> >
-class ScopePtr : public IObject
+class ScopePtr
 {
 public:
 

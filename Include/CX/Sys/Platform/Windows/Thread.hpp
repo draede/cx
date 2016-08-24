@@ -39,7 +39,6 @@
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/C/Platform/Windows/windows.h"
-#include "CX/IObject.hpp"
 #include <functional>
 
 
@@ -49,7 +48,7 @@ namespace CX
 namespace Sys
 {
 
-class CX_API Thread : public IObject
+class CX_API Thread
 {
 public:
 

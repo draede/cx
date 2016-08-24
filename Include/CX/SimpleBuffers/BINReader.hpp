@@ -41,7 +41,7 @@ namespace CX
 namespace SimpleBuffers
 {
 
-class CX_API BINReader : public IReader, public IObject
+class CX_API BINReader : public IReader
 {
 public:
 

@@ -32,7 +32,6 @@
 #include "CX/Types.hpp"
 #include "CX/Vector.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX

@@ -39,7 +39,6 @@
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
 #include <sys/time.h>
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -48,7 +47,7 @@ namespace CX
 namespace Util
 {
 
-class CX_API Timer : public IObject
+class CX_API Timer
 {
 public:
 

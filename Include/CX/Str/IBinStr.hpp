@@ -34,7 +34,7 @@
 #include "CX/String.hpp"
 #include "CX/Vector.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
+#include "CX/Mem.hpp"
 
 
 namespace CX

@@ -34,7 +34,7 @@
 using namespace CX;
 
 
-class MemTest: public IObject
+class MemTest
 {
 };
 

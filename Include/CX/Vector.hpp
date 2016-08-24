@@ -29,7 +29,6 @@
 #pragma once
 
 
-#include "CX/STLAlloc.hpp"
 #include <vector>
 
 
@@ -39,7 +38,7 @@ namespace CX
 template <typename T>
 struct Vector
 {
-	typedef std::vector<T, STLAlloc<T> >     Type;
+	typedef std::vector<T>     Type;
 };
 
 }//namespace CX

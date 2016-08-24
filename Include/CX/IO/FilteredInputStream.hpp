@@ -43,7 +43,7 @@ namespace CX
 namespace IO
 {
 
-class CX_API FilteredInputStream : public IO::IInputStream, public IObject
+class CX_API FilteredInputStream : public IO::IInputStream
 {
 public:
 

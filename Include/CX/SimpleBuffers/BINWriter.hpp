@@ -41,7 +41,7 @@ namespace CX
 namespace SimpleBuffers
 {
 
-class CX_API BINWriter : public IWriter, public IObject
+class CX_API BINWriter : public IWriter
 {
 public:
 

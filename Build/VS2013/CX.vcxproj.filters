@@ -34,12 +34,6 @@
     <Filter Include="Contrib\Mintomic">
       <UniqueIdentifier>{e6cd0a80-59b9-45ef-ae2e-a8b3faf770fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Platform">
-      <UniqueIdentifier>{93005c09-ae17-4a46-bf20-757b0cef9ef1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Platform\Windows">
-      <UniqueIdentifier>{dc2fbe2f-78c4-4f91-875b-d79695acbd3a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Sys\Platform">
       <UniqueIdentifier>{692da411-0b00-45c1-89dc-5136ad459b9c}</UniqueIdentifier>
     </Filter>
@@ -253,12 +247,6 @@
     <Filter Include="Source Files\Log\Platform\iOS">
       <UniqueIdentifier>{942cd640-c014-4794-b2df-7865b1ce71d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Platform\Android">
-      <UniqueIdentifier>{e192c882-2f82-4569-afa6-e1fc79f520b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Platform\iOS">
-      <UniqueIdentifier>{8c7aed07-9316-4ebc-8c94-db31787a77f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Str\Platform\Android">
       <UniqueIdentifier>{f1b3e3bb-fdda-4611-bdf3-6ac2f4131a7e}</UniqueIdentifier>
     </Filter>
@@ -438,13 +426,7 @@
     <ClInclude Include="..\..\Include\CX\StatusCodes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\STLAlloc.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Version.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\CX.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Sys\DynLib.hpp">
@@ -651,9 +633,6 @@
     <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Types.h">
       <Filter>Header Files\C\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Platform\Windows\resource.h">
-      <Filter>Source Files\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\C\Version.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
@@ -690,12 +669,6 @@
     <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
       <Filter>Contrib\CRC32Slice8</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Component.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IObject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Mem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -704,9 +677,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Process.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\GSHAlloc.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\DenseHashMap.hpp">
       <Filter>Header Files</Filter>
@@ -1055,9 +1025,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp">
-      <Filter>Source Files\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
       <Filter>Contrib\DoubleConversion</Filter>
     </ClCompile>
@@ -1190,9 +1157,6 @@
     <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32_internal.cpp">
       <Filter>Contrib\CRC32Slice8</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\IObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Mem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1255,12 +1219,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp">
       <Filter>Source Files\Log\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Platform\Android\Component_android.cpp">
-      <Filter>Source Files\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Platform\iOS\Component_ios.cpp">
-      <Filter>Source Files\Platform\iOS</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8_android.cpp">
       <Filter>Source Files\Str\Platform\Android</Filter>
@@ -1853,15 +1811,5 @@
     <ClCompile Include="..\..\Src\Debug\Platform\Windows\ThreadProfiler_windows.cpp">
       <Filter>Source Files\Debug\Platform\Windows</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\Src\Platform\Windows\cx.rc">
-      <Filter>Source Files\Platform\Windows</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Src\Platform\Windows\cx.rc2">
-      <Filter>Source Files\Platform\Windows</Filter>
-    </None>
   </ItemGroup>
 </Project>

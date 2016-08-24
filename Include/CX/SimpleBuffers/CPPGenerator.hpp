@@ -44,7 +44,7 @@ namespace SimpleBuffers
 {
 
 template <typename OUTPUT>
-class CPPGenerator : public IGenerator<OUTPUT>, public IObject
+class CPPGenerator : public IGenerator<OUTPUT>
 {
 public:
 

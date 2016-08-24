@@ -29,8 +29,6 @@
 #pragma once
 
 
-#include "CX/STLAlloc.hpp"
-#include "CX/GSHAlloc.hpp"
 #include "CX/SparseHashHelper.hpp"
 #include "sparsehash/sparse_hash_map"
 
@@ -38,11 +36,10 @@
 namespace CX
 {
 
-template <typename K, typename V, typename H = SPARSEHASH_HASH<K>, typename E = std::equal_to<K>, 
-          typename A = GSHAlloc<std::pair<const K, V> > > 
+template <typename K, typename V, typename H = SPARSEHASH_HASH<K>, typename E = std::equal_to<K> > 
 struct SparseHashMap
 {
-	typedef google::sparse_hash_map<K, V, H, E, A>   Type;
+	typedef google::sparse_hash_map<K, V, H, E>   Type;
 };
 
 }//namespace CX

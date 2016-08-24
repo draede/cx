@@ -39,7 +39,7 @@ namespace CX
 namespace Hash
 {
 
-class CX_API SHA1Hash : public IHash, public IObject
+class CX_API SHA1Hash : public IHash
 {
 public:
 

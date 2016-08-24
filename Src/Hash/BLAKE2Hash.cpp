@@ -28,6 +28,7 @@
 
 #include "CX/Hash/BLAKE2Hash.hpp"
 #include "CX/Status.hpp"
+#include "CX/Mem.hpp"
 #pragma warning(push)
 #pragma warning(disable: 4324 4245)
 #include "../../Contrib/BLAKE2/Include/blake2.h"

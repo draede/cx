@@ -37,6 +37,7 @@
 #include "CX/C/Platform/Windows/windows.h"
 #include "CX/Str/UTF8.hpp"
 #include "CX/Status.hpp"
+#include "CX/Mem.hpp"
 
 
 namespace CX

@@ -36,7 +36,6 @@
 #include "CX/String.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -48,7 +47,7 @@ namespace Data
 namespace MO
 {
 
-class CX_API Language : public IObject
+class CX_API Language
 {
 public:
 

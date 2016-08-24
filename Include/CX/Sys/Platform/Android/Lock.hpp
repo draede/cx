@@ -39,7 +39,6 @@
 #include "CX/Status.hpp"
 #include "CX/Scope.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -48,7 +47,7 @@ namespace CX
 namespace Sys
 {
 
-class CX_API Lock : public IObject
+class CX_API Lock
 {
 public:
 

@@ -38,13 +38,12 @@
 #include "CX/IO/IInputStream.hpp"
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
 {
 
-class CX_API Var : public IObject
+class CX_API Var
 {
 private:
 
@@ -192,7 +191,7 @@ public:
 
 	Var *GetParent() const;
 
-	class ObjectIterator : public IObject
+	class ObjectIterator
 	{
 	public:
 
@@ -219,7 +218,7 @@ public:
 
 	};
 
-	class ObjectConstIterator : public IObject
+	class ObjectConstIterator
 	{
 	public:
 
@@ -250,7 +249,7 @@ public:
 
 	ObjectConstIterator GetObjectConstIterator() const;
 
-	class ArrayIterator : public IObject
+	class ArrayIterator
 	{
 	public:
 
@@ -277,7 +276,7 @@ public:
 
 	};
 
-	class ArrayConstIterator : public IObject
+	class ArrayConstIterator
 	{
 	public:
 

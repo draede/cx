@@ -40,7 +40,6 @@
 #include "CX/Vector.hpp"
 #include "CX/Scope.hpp"
 #include "CX/Status.hpp"
-#include "CX/IObject.hpp"
 
 
 #ifndef CX_LOG_LEVEL
@@ -104,7 +103,7 @@ namespace CX
 namespace Log
 {
 
-class CX_API Logger : public IObject
+class CX_API Logger
 {
 public:
 

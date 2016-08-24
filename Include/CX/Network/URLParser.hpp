@@ -41,7 +41,7 @@ namespace CX
 namespace Network
 {
 
-class CX_API URLParser : public IObject
+class CX_API URLParser
 {
 public:
 

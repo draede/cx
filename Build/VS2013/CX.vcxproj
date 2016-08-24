@@ -97,7 +97,6 @@
     <ClInclude Include="..\..\Include\CX\BLOB.hpp" />
     <ClInclude Include="..\..\Include\CX\Crypt\AES128InputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Crypt\AES128OutputFilter.hpp" />
-    <ClInclude Include="..\..\Include\CX\CX.hpp" />
     <ClInclude Include="..\..\Include\CX\C\APIDefs.h" />
     <ClInclude Include="..\..\Include\CX\C\ctype.h" />
     <ClInclude Include="..\..\Include\CX\C\Limits.h" />
@@ -152,7 +151,6 @@
     <ClInclude Include="..\..\Include\CX\Deque.hpp" />
     <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.hpp" />
     <ClInclude Include="..\..\Include\CX\EmptyType.hpp" />
-    <ClInclude Include="..\..\Include\CX\GSHAlloc.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\BLAKE2Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\CRC32Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\IHash.hpp" />
@@ -163,7 +161,6 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp" />
-    <ClInclude Include="..\..\Include\CX\IObject.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FilteredInputStream.hpp" />
@@ -205,7 +202,6 @@
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Map.hpp" />
-    <ClInclude Include="..\..\Include\CX\Component.hpp" />
     <ClInclude Include="..\..\Include\CX\Mem.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\HTTP\Client.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\URLParser.hpp" />
@@ -241,7 +237,6 @@
     <ClInclude Include="..\..\Include\CX\Stack.hpp" />
     <ClInclude Include="..\..\Include\CX\Status.hpp" />
     <ClInclude Include="..\..\Include\CX\StatusCodes.hpp" />
-    <ClInclude Include="..\..\Include\CX\STLAlloc.hpp" />
     <ClInclude Include="..\..\Include\CX\String.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\HexBinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\IBinStr.hpp" />
@@ -299,7 +294,6 @@
     <ClInclude Include="..\..\Include\CX\Var.hpp" />
     <ClInclude Include="..\..\Include\CX\Vector.hpp" />
     <ClInclude Include="..\..\Include\CX\Version.hpp" />
-    <ClInclude Include="..\..\Src\Platform\Windows\resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\BLAKE2\Src\blake2b-ref.c">
@@ -4629,7 +4623,6 @@
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash32.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash64.cpp" />
-    <ClCompile Include="..\..\Src\IObject.cpp" />
     <ClCompile Include="..\..\Src\IO\FilteredInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FilteredOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
@@ -4656,9 +4649,6 @@
     <ClCompile Include="..\..\Src\Mem.cpp" />
     <ClCompile Include="..\..\Src\Network\HTTP\Client.cpp" />
     <ClCompile Include="..\..\Src\Network\URLParser.cpp" />
-    <ClCompile Include="..\..\Src\Platform\Android\Component_android.cpp" />
-    <ClCompile Include="..\..\Src\Platform\iOS\Component_ios.cpp" />
-    <ClCompile Include="..\..\Src\Platform\Windows\dllmain.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\BINReader.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\BINWriter.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\JSONReader.cpp" />
@@ -4703,12 +4693,6 @@
     <ClCompile Include="..\..\Src\Util\RndGen.cpp" />
     <ClCompile Include="..\..\Src\CXVersion.cpp" />
     <ClCompile Include="..\..\Src\Var.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\Src\Platform\Windows\cx.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Src\Platform\Windows\cx.rc2" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DC97160C-7040-40EB-8552-F76C36302622}</ProjectGuid>

@@ -39,7 +39,7 @@
 using namespace CX;
 
 
-class MyOutput : public Log::IOutput, public IObject
+class MyOutput : public Log::IOutput
 {
 public:
 

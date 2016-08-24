@@ -42,7 +42,7 @@ namespace CX
 namespace Str
 {
 
-class CX_API StringHelper : public IObject
+class CX_API StringHelper
 {
 public:
 

@@ -47,7 +47,7 @@ namespace Network
 namespace HTTP
 {
 
-class CX_API Client : public IObject
+class CX_API Client
 {
 public:
 

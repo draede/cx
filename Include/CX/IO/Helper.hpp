@@ -34,7 +34,6 @@
 #include "CX/IO/IInputStream.hpp"
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 #include "CX/Vector.hpp"
 
 
@@ -44,7 +43,7 @@ namespace CX
 namespace IO
 {
 
-class CX_API Helper : public IObject
+class CX_API Helper
 {
 public:
 

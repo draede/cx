@@ -40,7 +40,7 @@ template <typename V, typename K1 = EmptyType, typename K2 = EmptyType, typename
 class SparseMultiHashMap;
 
 template <typename V, typename K1>
-class SparseMultiHashMap<V, K1> : public IObject
+class SparseMultiHashMap<V, K1>
 {
 public:
 
@@ -157,7 +157,7 @@ private:
 };
 
 template <typename V, typename K1, typename K2>
-class SparseMultiHashMap<V, K1, K2> : public IObject
+class SparseMultiHashMap<V, K1, K2>
 {
 public:
 
@@ -297,7 +297,7 @@ private:
 };
 
 template <typename V, typename K1, typename K2, typename K3>
-class SparseMultiHashMap<V, K1, K2, K3> : public IObject
+class SparseMultiHashMap<V, K1, K2, K3>
 {
 public:
 
@@ -460,7 +460,7 @@ private:
 };
 
 template <typename V, typename K1, typename K2, typename K3, typename K4>
-class SparseMultiHashMap : public IObject
+class SparseMultiHashMap
 {
 public:
 

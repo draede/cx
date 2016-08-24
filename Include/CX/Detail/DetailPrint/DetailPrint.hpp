@@ -38,7 +38,6 @@
 #include "CX/Limits.hpp"
 #include <stdio.h>
 #include "CX/C/ctype.h"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -215,6 +214,8 @@ inline StatusCode PrintOutput<WString *>(WString *pwsStr, const Char *pBuffer, S
 	return Status_OK;
 }
 
+/*
+
 template <>
 inline StatusCode PrintOutput<std::string *>(std::string *psStr, const Char *pBuffer, Size cLen)
 {
@@ -233,6 +234,8 @@ inline StatusCode PrintOutput<std::wstring *>(std::wstring *pwsStr, const Char *
 
 	return Status_OK;
 }
+
+*/
 
 template <>
 inline StatusCode PrintOutput<Slice *>(Slice *pSlice, const Char *pBuffer, Size cLen)
@@ -942,6 +945,8 @@ inline StatusCode ToString<WString>(WString p, unsigned int nExtraFlags, Char *s
 	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
+/*
+
 template <>
 inline StatusCode ToString<const std::string &>(const std::string &p, unsigned int nExtraFlags, Char *szOutput, 
                                                        Size cLen, Size *pcFinalLen, Size cPrecision)
@@ -1022,6 +1027,8 @@ inline StatusCode ToString<std::wstring>(std::wstring p, unsigned int nExtraFlag
 	return ToString<const String &>(sTmp, nExtraFlags, szOutput, cLen, pcFinalLen, cPrecision);
 }
 
+*/
+
 template <>
 inline StatusCode ToString<void *>(void *p, unsigned int nExtraFlags, Char *szOutput, Size cLen, 
                                           Size *pcFinalLen, Size cPrecision)
@@ -1047,7 +1054,7 @@ namespace Detail
 namespace DetailPrint
 {
 
-class Buffer : public IObject
+class Buffer
 {
 public:
 
@@ -1160,7 +1167,7 @@ typedef struct _Flags
 
 
 template <typename O, typename T>
-class ArgPrinter : public IObject
+class ArgPrinter
 {
 public:
 
@@ -1228,7 +1235,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, Char *> : public IObject
+class ArgPrinter<O, Char *>
 {
 public:
 
@@ -1240,7 +1247,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, const Char *> : public IObject
+class ArgPrinter<O, const Char *>
 {
 public:
 
@@ -1313,7 +1320,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, String> : public IObject
+class ArgPrinter<O, String>
 {
 public:
 
@@ -1325,7 +1332,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, String &> : public IObject
+class ArgPrinter<O, String &>
 {
 public:
 
@@ -1337,7 +1344,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, const String> : public IObject
+class ArgPrinter<O, const String>
 {
 public:
 
@@ -1349,7 +1356,7 @@ public:
 };
 
 template <typename O>
-class ArgPrinter<O, const String &> : public IObject
+class ArgPrinter<O, const String &>
 {
 public:
 

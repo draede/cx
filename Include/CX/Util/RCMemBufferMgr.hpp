@@ -29,9 +29,9 @@
 #pragma once
 
 
-#include "CX/IObject.hpp"
 #include "CX/SparseHashMap.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/Types.hpp"
 
 
 namespace CX
@@ -40,7 +40,7 @@ namespace CX
 namespace Util
 {
 
-class CX_API RCMemBufferMgr : public IObject
+class CX_API RCMemBufferMgr
 {
 public:
 

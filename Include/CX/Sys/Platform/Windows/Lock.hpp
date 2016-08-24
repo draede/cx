@@ -40,7 +40,6 @@
 #include "CX/Scope.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/C/Platform/Windows/windows.h"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -49,7 +48,7 @@ namespace CX
 namespace Sys
 {
 
-class CX_API Lock : public IObject
+class CX_API Lock
 {
 public:
 

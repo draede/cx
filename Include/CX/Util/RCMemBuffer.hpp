@@ -30,8 +30,8 @@
 
 
 #include "CX/String.hpp"
-#include "CX/IObject.hpp"
 #include "CX/APIDefs.hpp"
+#include "CX/Types.hpp"
 
 
 namespace CX
@@ -40,7 +40,7 @@ namespace CX
 namespace Util
 {
 
-class CX_API RCMemBuffer : public IObject
+class CX_API RCMemBuffer
 {
 public:
 

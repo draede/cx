@@ -38,7 +38,7 @@
 namespace CX
 {
 
-class VarJSONSAXParserObserver : public Data::JSON::ISAXParserObserver, public IObject
+class VarJSONSAXParserObserver : public Data::JSON::ISAXParserObserver
 {
 public:
 

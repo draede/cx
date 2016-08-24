@@ -41,7 +41,7 @@ namespace CX
 namespace Log
 {
 
-class CX_API DefaultFormatter : public IFormatter, public IObject
+class CX_API DefaultFormatter : public IFormatter
 {
 public:
 

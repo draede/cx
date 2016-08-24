@@ -35,7 +35,6 @@
 #include "CX/String.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -47,7 +46,7 @@ namespace Data
 namespace XML
 {
 
-class CX_API SAXParser : public IObject
+class CX_API SAXParser
 {
 public:
 

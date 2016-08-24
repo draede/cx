@@ -28,6 +28,7 @@
 
 #include "CX/Util/MemPool.hpp"
 #include "CX/Status.hpp"
+#include "CX/Mem.hpp"
 
 
 namespace CX

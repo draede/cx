@@ -40,7 +40,6 @@
 #include "CX/Queue.hpp"
 #include "CX/Vector.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -49,7 +48,7 @@ namespace CX
 namespace Sys
 {
 
-class CX_API TaskQueue : public IObject
+class CX_API TaskQueue
 {
 public:
 

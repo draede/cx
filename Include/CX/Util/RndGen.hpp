@@ -33,7 +33,6 @@
 #include "CX/Status.hpp"
 #include "CX/BLOB.hpp"
 #include "CX/APIDefs.hpp"
-#include "CX/IObject.hpp"
 
 
 namespace CX
@@ -42,7 +41,7 @@ namespace CX
 namespace Util
 {
 
-class CX_API RndGen : public IObject
+class CX_API RndGen
 {
 public:
 

@@ -28,6 +28,7 @@
  
 #include "CX/IO/FilteredOutputStream.hpp"
 #include "CX/Limits.hpp"
+#include "CX/Mem.hpp"
 
 
 namespace CX
