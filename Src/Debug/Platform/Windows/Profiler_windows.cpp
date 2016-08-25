@@ -266,6 +266,7 @@ void Profiler::MergeChildren(ThreadProfiler::Scope *pScope, Size &cInitialCount,
 	ThreadProfiler::Scope *pChild2;
 	ThreadProfiler::Scope *pLastChild;
 	ThreadProfiler::Scope *pTmp;
+	ThreadProfiler::Scope *pNextChild;
 
 	cInitialCount = 0;
 	cFinalCount   = 0;
@@ -285,7 +286,7 @@ void Profiler::MergeChildren(ThreadProfiler::Scope *pScope, Size &cInitialCount,
 		pChild2 = pChild1->pNextSibling;
 		while (NULL != pChild2)
 		{
-			pTmp = pChild2->pNextSibling;
+			pNextChild = pChild2->pNextSibling;
 
 			if (ThreadProfiler::MatchScope(pChild1, pChild2))
 			{
@@ -333,7 +334,7 @@ void Profiler::MergeChildren(ThreadProfiler::Scope *pScope, Size &cInitialCount,
 				ThreadProfiler::DestroyScope(pChild2);
 			}
 
-			pChild2 = pTmp;
+			pChild2 = pNextChild;
 		}
 
 		pChild1 = pChild1->pNextSibling;
