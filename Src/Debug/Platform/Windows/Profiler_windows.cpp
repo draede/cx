@@ -379,11 +379,11 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 			}
 			else
 			{
-				hs.name = hsn;
-				hs.cCalls = pScope->cCalls;
+				hs.name           = hsn;
+				hs.cCalls         = pScope->cCalls;
 				hs.cTotalDuration = pScope->cTotalDuration;
-				hs.cMaxDuration = pScope->cMaxDuration;
-				hs.cMinDuration = pScope->cMinDuration;
+				hs.cMaxDuration   = pScope->cMaxDuration;
+				hs.cMinDuration   = pScope->cMinDuration;
 			}
 
 			bool bAdded = false;
@@ -393,27 +393,41 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 				if (iter->cCalls < hs.cCalls)
 				{
 					bAdded = true;
+					if (mapCalls.end() != iterMap)
+					{
+						iterMap->second = iter - vectorCalls.begin();
+					}
+					else
+					{
+						mapCalls[hsn]   = iter - vectorCalls.begin();
+					}
 					vectorCalls.insert(iter, hs);
 
 					break;
 				}
 			}
-			if (bAdded)
-			{
-				if (cMaxCallHotSpots < vectorCalls.size())
-				{
-					auto iter = vectorCalls.end();
-
-					iter--;
-					vectorCalls.erase(iter);
-				}
-			}
-			else
+			if (!bAdded)
 			{
 				if (cMaxCallHotSpots > vectorCalls.size())
 				{
 					vectorCalls.push_back(hs);
+					if (mapCalls.end() != iterMap)
+					{
+						iterMap->second = vectorCalls.size();
+					}
+					else
+					{
+						mapCalls[hsn]   = vectorCalls.size();
+					}
 				}
+			}
+			if (cMaxCallHotSpots < vectorCalls.size())
+			{
+				auto iter = vectorCalls.end();
+
+				iter--;
+				mapCalls.erase(mapCalls.find(iter->name));
+				vectorCalls.erase(iter);
 			}
 		}
 
@@ -442,11 +456,11 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 			}
 			else
 			{
-				hs.name = hsn;
-				hs.cCalls = pScope->cCalls;
+				hs.name           = hsn;
+				hs.cCalls         = pScope->cCalls;
 				hs.cTotalDuration = pScope->cTotalDuration;
-				hs.cMaxDuration = pScope->cMaxDuration;
-				hs.cMinDuration = pScope->cMinDuration;
+				hs.cMaxDuration   = pScope->cMaxDuration;
+				hs.cMinDuration   = pScope->cMinDuration;
 			}
 
 			bool bAdded = false;
@@ -456,27 +470,41 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 				if (iter->cTotalDuration < hs.cTotalDuration)
 				{
 					bAdded = true;
+					if (mapDurations.end() != iterMap)
+					{
+						iterMap->second = iter - vectorDurations.begin();
+					}
+					else
+					{
+						mapDurations[hsn] = iter - vectorDurations.begin();
+					}
 					vectorDurations.insert(iter, hs);
 
 					break;
 				}
 			}
-			if (bAdded)
-			{
-				if (cMaxDurationHotSpots < vectorDurations.size())
-				{
-					auto iter = vectorDurations.end();
-
-					iter--;
-					vectorDurations.erase(iter);
-				}
-			}
-			else
+			if (!bAdded)
 			{
 				if (cMaxDurationHotSpots > vectorDurations.size())
 				{
 					vectorDurations.push_back(hs);
+					if (mapDurations.end() != iterMap)
+					{
+						iterMap->second   = vectorDurations.size();
+					}
+					else
+					{
+						mapDurations[hsn] = vectorDurations.size();
+					}
 				}
+			}
+			if (cMaxDurationHotSpots < vectorDurations.size())
+			{
+				auto iter = vectorDurations.end();
+
+				iter--;
+				mapDurations.erase(mapDurations.find(iter->name));
+				vectorDurations.erase(iter);
 			}
 		}
 	}
