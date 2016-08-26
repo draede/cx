@@ -36,6 +36,7 @@ public:
 		if (IProfilingHandler::Resolution_Seconds == m_nResolution)
 		{
 			Print(m_output, "\nBEGIN PROFILING (seconds)\n\n");
+			Print(m_output, "\nBEGIN SCOPE (seconds)\n\n");
 		}
 		else
 		if (IProfilingHandler::Resolution_MilliSeconds == m_nResolution)

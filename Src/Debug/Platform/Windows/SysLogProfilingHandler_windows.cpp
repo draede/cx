@@ -25,6 +25,7 @@ bool SysLogProfilingHandler::OnBeginProfiling()
 	if (IProfilingHandler::Resolution_Seconds == m_nResolution)
 	{
 		OutputDebugStringA("\nBEGIN PROFILING (seconds)\n\n");
+		OutputDebugStringA("\nBEGIN SCOPE\n\n");
 	}
 	else
 	if (IProfilingHandler::Resolution_MilliSeconds == m_nResolution)

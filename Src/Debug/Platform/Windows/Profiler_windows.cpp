@@ -264,6 +264,86 @@ void Profiler::MergeChildren(ThreadProfiler::Scope *pScope, Size &cInitialCount,
 {
 	ThreadProfiler::Scope *pChild1;
 	ThreadProfiler::Scope *pChild2;
+	ThreadProfiler::Scope *pTmp;
+	Size                  cMerged;
+
+	cInitialCount = 0;
+	cMerged       = 0;
+
+	pChild1 = pScope->pFirstChild;
+	while (NULL != pChild1)
+	{
+		cInitialCount++;
+
+		pChild2 = pChild1->pNextSibling;
+		while (NULL != pChild2)
+		{
+			if (ThreadProfiler::MatchScope(pChild1, pChild2))
+			{
+				cMerged++;
+
+				//merge stats
+				pChild1->cCalls += pChild2->cCalls;
+				pChild1->cTotalDuration += pChild2->cTotalDuration;
+				if (pChild1->cMinDuration > pChild2->cMinDuration)
+				{
+					pChild1->cMinDuration = pChild2->cMinDuration;
+				}
+				if (pChild1->cMaxDuration < pChild2->cMaxDuration)
+				{
+					pChild1->cMaxDuration = pChild2->cMaxDuration;
+				}
+
+				//remove child2 from list
+				if (NULL != pChild2->pPrevSibling)
+				{
+					pChild2->pPrevSibling->pNextSibling = pChild2->pNextSibling;
+				}
+				if (NULL != pChild2->pNextSibling)
+				{
+					pChild2->pNextSibling->pPrevSibling = pChild2->pPrevSibling;
+				}
+
+				//add child2 children to child1
+				if (NULL != pChild2->pFirstChild)
+				{
+					if (NULL == pChild1->pFirstChild)
+					{
+						pChild1->pFirstChild = pChild2->pFirstChild;
+					}
+					else
+					{
+						pTmp = pChild1->pFirstChild;
+						while (NULL != pTmp->pNextSibling)
+						{
+							pTmp = pTmp->pNextSibling;
+						}
+						pTmp->pNextSibling                 = pChild2->pFirstChild;
+						pChild2->pFirstChild->pPrevSibling = pTmp;
+					}
+					pChild2->pFirstChild->pParent = pChild1;
+				}
+
+				pTmp  = pChild2->pNextSibling;
+
+				ThreadProfiler::DestroyScope(pChild2);
+
+				pChild2 = pTmp;
+			}
+			else
+			{
+				pChild2 = pChild2->pNextSibling;
+			}
+		}
+
+		pChild1 = pChild1->pNextSibling;
+	}
+
+	cFinalCount = cInitialCount - cMerged;
+
+/*
+	ThreadProfiler::Scope *pChild1;
+	ThreadProfiler::Scope *pChild2;
 	ThreadProfiler::Scope *pLastChild;
 	ThreadProfiler::Scope *pTmp;
 	ThreadProfiler::Scope *pNextChild;
@@ -340,6 +420,7 @@ void Profiler::MergeChildren(ThreadProfiler::Scope *pScope, Size &cInitialCount,
 		pChild1 = pChild1->pNextSibling;
 	}
 	cFinalCount = cInitialCount - cFinalCount;
+*/
 }
 
 void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vectorCalls, HotSpotsVector &vectorDurations, 
