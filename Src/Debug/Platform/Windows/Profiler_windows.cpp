@@ -27,6 +27,8 @@ Profiler::Profiler()
 	m_root.pNextSibling             = NULL;
 
 	m_pOnDestructProfilingHandler   = NULL;
+
+	m_bEnabled                      = false;
 }
 
 Profiler::~Profiler()
@@ -71,9 +73,24 @@ Profiler &Profiler::Get()
 	return profiler;
 }
 
+void Profiler::SetEnabled(bool bEnabled/* = true*/)
+{
+	m_bEnabled = bEnabled;
+}
+
+bool Profiler::GetEnabled()
+{
+	return m_bEnabled;
+}
+
 void Profiler::SetOnExitProfilingHandler(IProfilingHandler *pProfilingHandler)
 {
 	Sys::Locker locker(&m_lock);
+
+	if (!m_bEnabled)
+	{
+		return;
+	}
 
 	m_pOnDestructProfilingHandler = pProfilingHandler;
 }
@@ -112,6 +129,11 @@ bool Profiler::GetProfiling(IProfilingHandler *pProfilingHandler)
 	HotSpotsMap                   mapCalls;
 	HotSpotsMap                   mapDurations;
 	IProfilingHandler::Resolution nRes = pProfilingHandler->GetResolution();
+
+	if (!m_bEnabled)
+	{
+		return false;
+	}
 
 	if (!pProfilingHandler->OnBeginProfiling())
 	{

@@ -23,6 +23,10 @@ public:
 
 	static Profiler &Get();
 
+	void SetEnabled(bool bEnabled = true);
+
+	bool GetEnabled();
+
 	//pProfilingHandler will be deleted at exit
 	void SetOnExitProfilingHandler(IProfilingHandler *pProfilingHandler);
 
@@ -39,6 +43,7 @@ private:
 	Sys::Lock               m_lock;
 	IProfilingHandler       *m_pOnDestructProfilingHandler;
 	ThreadProfiler::Scope   m_root;
+	bool                    m_bEnabled;
 
 	struct HotSpotName
 	{

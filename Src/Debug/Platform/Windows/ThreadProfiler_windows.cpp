@@ -110,6 +110,11 @@ UInt64 ThreadProfiler::GetTimeStamp()
 
 void ThreadProfiler::EnterScope(const Char *szFileName, const Char *szScopeName, int cLineNo)
 {
+	if (Profiler::Get().GetEnabled())
+	{
+		return;
+	}
+
 	Scope *pPrev  = NULL;
 	Scope *pScope = NULL;
 
@@ -156,6 +161,11 @@ void ThreadProfiler::EnterScope(const Char *szFileName, const Char *szScopeName,
 
 void ThreadProfiler::LeaveScope()
 {
+	if (Profiler::Get().GetEnabled())
+	{
+		return;
+	}
+
 	UInt64 nTimestamp = GetTimeStamp();
 	UInt64 nDuration;
 
