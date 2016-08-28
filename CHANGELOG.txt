@@ -1,5 +1,5 @@
-0.1.84 - 2016-08-26 - More profiler options
-  - More profiler options
+0.1.85 - 2016-08-28 - Fixed C scope (D like scope)
+  - Fixed C scope (D like scope)
 0.1.83 - 2016-08-26 - More profiler fixes
   - More profiler fixes
 0.1.82 - 2016-08-25 - Fixed profiler stats

@@ -37,75 +37,52 @@ extern "C" {
 #endif
 
 
-#define CX_SCOPE
+#define CX_TRIGGER_SUCCESS                                                                                             \
+___cx_scope_result = CX_Scope_Result_Success;                                                                          \
+goto ___cx_scope_finalize;
 
-//don't use C++ RAII idioms in CX_SCOPE_TRY scope!
-//when success/failure triggers are used destructors will not be called!
-//instead use CX_SCOPE_EXIT/CX_SCOPE_SUCCESS/CX_SCOPE_FAILURE as your exit points
+#define CX_TRIGGER_FAILURE                                                                                             \
+___cx_scope_result = CX_Scope_Result_Failure;                                                                          \
+goto ___cx_scope_finalize;
 
-//EXAMPLE:
-/*
-	int x = 1;
-	int y = 1;
+#define CX_BEGIN_SCOPE                                                                                                 \
+{                                                                                                                      \
+CX_Scope_Result ___cx_scope_result = CX_Scope_Result_Success;
 
-	CX_SCOPE
-	{
-		CX_SCOPE_TRY 
-		{
-			CX_SCOPE_TRIGGER_FAILURE;
-		}
-		CX_SCOPE_CATCH
-		{
-			CX_SCOPE_SUCCESS
-			{
-				x = 2;
-			}
-			CX_SCOPE_FAILURE
-			{
-				x = 3;
-			}
-			CX_SCOPE_EXIT
-			{
-				y = 2;
-			}
-		}
-	}
+#define CX_END_SCOPE                                                                                                   \
+}
 
-	//x will be 3
-	//y will be 2
-*/
+#define CX_BEGIN_FINALIZE                                                                                              \
+___cx_scope_finalize:                                                                                                  \
+{
 
-#define CX_SCOPE_TRY                                                                               \
-		CX_Scope_Result ___cx_scope_result = CX_Scope_Result_Succes;
+#define CX_END_FINALIZE                                                                                                \
+}
 
-#define CX_SCOPE_CATCH                                                                             \
-		___cx_scope_label_catch:
+#define CX_BEGIN_ON_SUCCESS                                                                                            \
+if (CX_Scope_Result_Success == ___cx_scope_result)                                                                     \
+{
 
-#define CX_SCOPE_SUCCESS                                                                           \
-			if (CX_Scope_Result_Succes == ___cx_scope_result)
+#define CX_END_ON_SUCCESS                                                                                              \
+}
 
-#define CX_SCOPE_FAILURE                                                                           \
-			if (CX_Scope_Result_Failure == ___cx_scope_result)
+#define CX_BEGIN_ON_FAILURE                                                                                            \
+if (CX_Scope_Result_Failure == ___cx_scope_result)                                                                     \
+{
 
-#define CX_SCOPE_EXIT
+#define CX_END_ON_FAILURE                                                                                              \
+}
 
-#define CX_SCOPE_TRIGGER_SUCCESS                                                                   \
-			{                                                                                         \
-				___cx_scope_result = CX_Scope_Result_Succes;                                           \
-				goto ___cx_scope_label_catch;                                                          \
-			}
+#define CX_BEGIN_ON_EXIT                                                                                               \
+{
 
-#define CX_SCOPE_TRIGGER_FAILURE                                                                   \
-			{                                                                                         \
-				___cx_scope_result = CX_Scope_Result_Failure;                                          \
-				goto ___cx_scope_label_catch;                                                          \
-			}
-
+#define CX_END_ON_EXIT                                                                                                 \
+}
 
 typedef enum _CX_Scope_Result
 {
 	CX_Scope_Result_Failure,
-	CX_Scope_Result_Succes,
+	CX_Scope_Result_Success,
 }CX_Scope_Result;
 
 
