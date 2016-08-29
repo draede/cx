@@ -12,7 +12,7 @@ namespace Debug
 
 ScopeProfiler::ScopeProfiler(const Char *szFileName, const Char *szScopeName, int cLineNo)
 {
-	if (Profiler::Get().GetEnabled())
+	if (!Profiler::Get().GetEnabled())
 	{
 		return;
 	}
@@ -22,7 +22,7 @@ ScopeProfiler::ScopeProfiler(const Char *szFileName, const Char *szScopeName, in
 
 ScopeProfiler::~ScopeProfiler()
 {
-	if (Profiler::Get().GetEnabled())
+	if (!Profiler::Get().GetEnabled())
 	{
 		return;
 	}
