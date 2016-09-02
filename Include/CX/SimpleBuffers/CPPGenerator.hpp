@@ -455,7 +455,14 @@ public:
 					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
 					if (!iter->GetOptional())
 					{
-						Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\tif (CX::Status_NotFound == status.GetCode())" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t\treturn CX::Status(CX::Status_NoMoreItems, \"{1} : {{1}\", status.GetMsg());" CX_SB_LINE_TERMINATOR, object.GetName());
+						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\telse" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 					}
 					else
 					{
@@ -479,7 +486,14 @@ public:
 					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
 					if (!iter->GetOptional())
 					{
-						Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\tif (CX::Status_NotFound == status.GetCode())" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t\treturn CX::Status(CX::Status_NoMoreItems, \"{1} : {{1}\", status.GetMsg());" CX_SB_LINE_TERMINATOR, object.GetName());
+						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\telse" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 					}
 					else
 					{
@@ -502,7 +516,14 @@ public:
 					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
 					if (!iter->GetOptional())
 					{
-						Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\tif (CX::Status_NotFound == status.GetCode())" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t\treturn CX::Status(CX::Status_NoMoreItems, \"{1} : {{1}\", status.GetMsg());" CX_SB_LINE_TERMINATOR, object.GetName());
+						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\telse" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 					}
 					else
 					{
@@ -525,7 +546,14 @@ public:
 					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
 					if (!iter->GetOptional())
 					{
-						Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\tif (CX::Status_NotFound == status.GetCode())" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t\treturn CX::Status(CX::Status_NoMoreItems, \"{1} : {{1}\", status.GetMsg());" CX_SB_LINE_TERMINATOR, object.GetName());
+						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\telse" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+						Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 					}
 					else
 					{
