@@ -92,10 +92,13 @@
 #define cxw_strcspn        wcscspn
 #define cx_strpbrk         strpbrk
 #define cxw_wcspbrk        wcspbrk
+#define cxw_strpbrk        wcspbrk
 #define cx_strstr          strstr
 #define cxw_wcsstr         wcsstr
+#define cxw_strstr         wcsstr
 #define cx_strtok          strtok
 #define cxw_wcstok         wcstok
+#define cxw_strtok         wcstok
 
 #ifndef CX_WCHAR_IS_DEFAULT
 #define cxt_strlen         cxw_strlen
