@@ -1,3 +1,6 @@
+0.1.89 - 2016-09-08 - Added Base64BinStr
+  - Added Base64BinStr
+  - Added support for custom headers in HTTP client
 0.1.88 - 2016-09-02 - Fixed cxw_wcs* defined instead of cxw_str*
   - Fixed cxw_wcs* defined instead of cxw_str*
 0.1.87 - 2016-09-02 - Improved SimpleBuffers JSON error reporting

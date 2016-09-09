@@ -75,6 +75,14 @@ public:
 
 	Status SetReferer(const Char *szReferer);
 
+	Status AddHeader(const Char *szName, const Char *szValue);
+
+	Status AddEmptyHeader(const Char *szName);
+
+	Status RemoveHeader(const Char *szName);
+
+	Status RemoveAllHeaders();
+
 	Status Perform(const Char *szURI, const Char *szVerb, ScopePtr<IO::IInputStream> request, 
 	               ScopePtr<IO::IOutputStream> response, int *pnStatusCode = NULL);
 
@@ -101,6 +109,7 @@ private:
 #pragma warning(pop)
 	bool   m_bSSL;
 	UInt16 m_nPort;
+	void   *m_pHeaders;
 
 	static size_t ReadCallback(char *pBuffer, size_t cbItemSize, size_t cItemsCount, void *pUserData); 
 

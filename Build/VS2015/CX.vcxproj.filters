@@ -1020,6 +1020,9 @@
     <ClInclude Include="..\..\Include\CX\Debug\ThreadProfiler.hpp">
       <Filter>Header Files\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Base64BinStr.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -1807,6 +1810,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Debug\ScopeProfiler.cpp">
       <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Base64BinStr.cpp">
+      <Filter>Source Files\Str</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

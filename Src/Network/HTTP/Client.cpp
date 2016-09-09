@@ -43,7 +43,8 @@ namespace HTTP
 
 Client::Client()
 {
-	m_pHandle = NULL;
+	m_pHandle  = NULL;
+	m_pHeaders = NULL;
 }
 
 Client::~Client()
@@ -96,6 +97,11 @@ Status Client::Open(const Char *szHost, unsigned int nFlags/* = 0*/, UInt16 nPor
 
 Status Client::Close()
 {
+	if (NULL != m_pHeaders)
+	{
+		curl_slist_free_all((struct curl_slist *)m_pHeaders);
+		m_pHeaders = NULL;
+	}
 	if (NULL != m_pHandle)
 	{
 		curl_easy_cleanup(m_pHandle);
@@ -139,6 +145,64 @@ Status Client::SetReferer(const Char *szReferer)
 	if (CURLE_OK != (nCode = curl_easy_setopt(m_pHandle, CURLOPT_REFERER, szReferer)))
 	{
 		return Status(Status_OperationFailed, "curl_easy_setopt(CURLOPT_REFERER) failed with error {1}", (int)nCode);
+	}
+
+	return Status();
+}
+
+Status Client::AddHeader(const Char *szName, const Char *szValue)
+{
+	String sHeader;
+
+	if (NULL == m_pHandle)
+	{
+		return Status_NotInitialized;
+	}
+	Print(&sHeader, "{1}: {2}", szName, szValue);
+	m_pHeaders = curl_slist_append((struct curl_slist *)m_pHeaders, sHeader.c_str());
+
+	return Status();
+}
+
+Status Client::AddEmptyHeader(const Char *szName)
+{
+	String sHeader;
+
+	if (NULL == m_pHandle)
+	{
+		return Status_NotInitialized;
+	}
+	Print(&sHeader, "{1};", szName);
+	m_pHeaders = curl_slist_append((struct curl_slist *)m_pHeaders, sHeader.c_str());
+
+	return Status();
+}
+
+Status Client::RemoveHeader(const Char *szName)
+{
+	String sHeader;
+
+	if (NULL == m_pHandle)
+	{
+		return Status_NotInitialized;
+	}
+	Print(&sHeader, "{1}:", szName);
+	m_pHeaders = curl_slist_append((struct curl_slist *)m_pHeaders, sHeader.c_str());
+
+	return Status();
+}
+
+Status Client::RemoveAllHeaders()
+{
+	if (NULL == m_pHandle)
+	{
+		return Status_NotInitialized;
+	}
+	curl_easy_setopt(m_pHandle, CURLOPT_HTTPHEADER, NULL);
+	if (NULL != m_pHeaders)
+	{
+		curl_slist_free_all((struct curl_slist *)m_pHeaders);
+		m_pHeaders = NULL;
 	}
 
 	return Status();
@@ -188,6 +252,11 @@ Status Client::Perform(const Char *szURI, const Char *szVerb, ScopePtr<IO::IInpu
 	wdata.pClient       = this;
 	wdata.pOutputStream = response.Get();
 	curl_easy_setopt(m_pHandle, CURLOPT_WRITEDATA, (void *)&wdata);
+
+	if (NULL != m_pHeaders)
+	{
+		curl_easy_setopt(m_pHandle, CURLOPT_HTTPHEADER, m_pHeaders);
+	}
 
 	CURLcode nCode;
 

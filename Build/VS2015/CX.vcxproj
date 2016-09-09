@@ -238,6 +238,7 @@
     <ClInclude Include="..\..\Include\CX\Status.hpp" />
     <ClInclude Include="..\..\Include\CX\StatusCodes.hpp" />
     <ClInclude Include="..\..\Include\CX\String.hpp" />
+    <ClInclude Include="..\..\Include\CX\Str\Base64BinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\HexBinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\IBinStr.hpp" />
     <ClInclude Include="..\..\Include\CX\Str\Platform\Android\UTF8.hpp" />
@@ -4668,6 +4669,7 @@
     <ClCompile Include="..\..\Src\SimpleBuffers\Object.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\Parser.cpp" />
     <ClCompile Include="..\..\Src\Status.cpp" />
+    <ClCompile Include="..\..\Src\Str\Base64BinStr.cpp" />
     <ClCompile Include="..\..\Src\Str\HexBinStr.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8_android.cpp" />
     <ClCompile Include="..\..\Src\Str\Platform\iOS\UTF8_ios.cpp" />
