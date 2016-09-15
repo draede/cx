@@ -44,7 +44,7 @@ void Network_HTTP_Client_Test1()
 
 	status = client.Open("google.com", Network::HTTP::Client::Flag_SSL);
 	status = client.SetUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0");
-	status = client.Perform("/", "GET", NULL, new IO::MemOutputStream(&sResponse), &nResponseStatus);
+	status = client.Perform("/", "GET", NULL, new (std::nothrow) IO::MemOutputStream(&sResponse), &nResponseStatus);
 	status = client.Close();
 }
 

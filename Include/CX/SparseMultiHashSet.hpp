@@ -40,7 +40,7 @@ template <typename K1 = EmptyType, typename K2 = EmptyType, typename K3 = EmptyT
 class SparseMultiHashSet;
 
 template <typename K1>
-class SparseMultiHashSet<K1>
+class SparseMultiHashSet<K1> : public IObject
 {
 public:
 
@@ -155,7 +155,7 @@ private:
 };
 
 template <typename K1, typename K2>
-class SparseMultiHashSet<K1, K2>
+class SparseMultiHashSet<K1, K2> : public IObject
 {
 public:
 
@@ -293,7 +293,7 @@ private:
 };
 
 template <typename K1, typename K2, typename K3>
-class SparseMultiHashSet<K1, K2, K3>
+class SparseMultiHashSet<K1, K2, K3> : public IObject
 {
 public:
 
@@ -454,7 +454,7 @@ private:
 };
 
 template <typename K1, typename K2, typename K3, typename K4>
-class SparseMultiHashSet
+class SparseMultiHashSet : public IObject
 {
 public:
 

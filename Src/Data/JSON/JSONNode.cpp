@@ -427,7 +427,7 @@ Status Node::SetString(const StringType &sValue)
 	{
 		String *psValue;
 
-		if (NULL == (psValue = new StringType(sValue)))
+		if (NULL == (psValue = new (std::nothrow) StringType(sValue)))
 		{
 			return Status_MemAllocFailed;
 		}
@@ -470,7 +470,7 @@ Status Node::SetObject()
 	{
 		NodesMap *pMapNodes;
 
-		if (NULL == (pMapNodes = new NodesMap()))
+		if (NULL == (pMapNodes = new (std::nothrow) NodesMap()))
 		{
 			return Status_MemAllocFailed;
 		}
@@ -496,7 +496,7 @@ Status Node::SetArray()
 	{
 		NodesVector *pVectorNodes;
 
-		if (NULL == (pVectorNodes = new NodesVector()))
+		if (NULL == (pVectorNodes = new (std::nothrow) NodesVector()))
 		{
 			return Status_MemAllocFailed;
 		}
@@ -608,7 +608,7 @@ Node *Node::AddMember(const String &sName)
 		{
 			Node *pNode;
 
-			if (NULL == (pNode = new Node()))
+			if (NULL == (pNode = new (std::nothrow) Node()))
 			{
 				return NULL;
 			}
@@ -716,7 +716,7 @@ Node *Node::AddItem()
 	{
 		Node *pNode;
 
-		if (NULL == (pNode = new Node()))
+		if (NULL == (pNode = new (std::nothrow) Node()))
 		{
 			return NULL;
 		}
@@ -745,7 +745,7 @@ Node *Node::InsertItem(Size cAtIndex)
 		{
 			Node *pNode;
 
-			if (NULL == (pNode = new Node()))
+			if (NULL == (pNode = new (std::nothrow) Node()))
 			{
 				return NULL;
 			}

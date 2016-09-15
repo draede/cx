@@ -48,11 +48,11 @@ void Str_UTF8_Test1()
 	status = Str::UTF8::FromWChar(wszUTF16In, &sUTF8Out); status;
 
 	status = Str::UTF8::ToWChar((const Char *)szUTF8In, TYPE_SIZE_MAX, NULL, &cLen); status;
-	wszUTF16Out = new WChar[cLen];
+	wszUTF16Out = new (std::nothrow) WChar[cLen];
 	status = Str::UTF8::ToWChar((const Char *)szUTF8In, TYPE_SIZE_MAX, wszUTF16Out, &cLen); status;
 
 	status = Str::UTF8::FromWChar(wszUTF16In, TYPE_SIZE_MAX, NULL, &cLen); status;
-	szUTF8Out = new Char[cLen];
+	szUTF8Out = new (std::nothrow) Char[cLen];
 	status = Str::UTF8::FromWChar(wszUTF16In, TYPE_SIZE_MAX, szUTF8Out, &cLen); status;
 
 	delete[] wszUTF16Out;

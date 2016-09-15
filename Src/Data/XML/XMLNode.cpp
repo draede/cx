@@ -98,7 +98,7 @@ Status Node::Copy(const Node &node)
 	{
 		Node *pNode;
 
-		if (NULL == (pNode = new Node()))
+		if (NULL == (pNode = new (std::nothrow) Node()))
 		{
 			return Status_MemAllocFailed;
 		}
@@ -180,7 +180,7 @@ Node *Node::AddChild(const String &sName, const String &sValue, Size cAttrs/* = 
 {
 	Node *pNode;
 
-	if (NULL == (pNode = new Node(sName, sValue)))
+	if (NULL == (pNode = new (std::nothrow) Node(sName, sValue)))
 	{
 		return NULL;
 	}
@@ -206,7 +206,7 @@ Node *Node::InsertChild(Size cAtIndex, const String &sName, const String &sValue
 {
 	Node *pNode;
 
-	if (NULL == (pNode = new Node(sName, sValue)))
+	if (NULL == (pNode = new (std::nothrow) Node(sName, sValue)))
 	{
 		return NULL;
 	}

@@ -44,7 +44,7 @@ Status OptimizedStreamOutput::Init(void *hFile, Size cFlushDelay, Size cbMaxMem)
 
 			break;
 		}
-		if (NULL == (m_pVectorStrings = new StringsVector()))
+		if (NULL == (m_pVectorStrings = new (std::nothrow) StringsVector()))
 		{
 			status  = Status(Status_MemAllocFailed, "Failed to allocate strings");
 			
@@ -146,7 +146,7 @@ unsigned long __stdcall  OptimizedStreamOutput::ThreadProc(void *pArg)
 			Sys::Locker locker(&pThis->m_lockStrings);
 
 			pVectorStrings          = pThis->m_pVectorStrings;
-			pThis->m_pVectorStrings = new StringsVector();
+			pThis->m_pVectorStrings = new (std::nothrow) StringsVector();
 			pThis->m_cbCrMem        = 0;
 		}
 

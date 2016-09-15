@@ -74,7 +74,7 @@ Status JSONReader::Begin(IO::IInputStream *pInputStream)
 	status.Clear();
 	for (;;)
 	{
-		if (NULL == (m_pDoc = new rapidjson::Document()))
+		if (NULL == (m_pDoc = new (std::nothrow) rapidjson::Document()))
 		{
 			status = Status(Status_MemAllocFailed, "Failed to allocate document");
 

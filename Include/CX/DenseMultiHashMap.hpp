@@ -36,12 +36,11 @@
 namespace CX
 {
 
-template <typename V, typename K1 = EmptyType, typename K2 = EmptyType, typename K3 = EmptyType, 
-          typename K4 = EmptyType>
+template <typename V, typename K1 = EmptyType, typename K2 = EmptyType, typename K3 = EmptyType, typename K4 = EmptyType>
 class DenseMultiHashMap;
 
 template <typename V, typename K1>
-class DenseMultiHashMap<V, K1>
+class DenseMultiHashMap<V, K1> : public IObject
 {
 public:
 
@@ -163,7 +162,7 @@ private:
 };
 
 template <typename V, typename K1, typename K2>
-class DenseMultiHashMap<V, K1, K2>
+class DenseMultiHashMap<V, K1, K2> : public IObject
 {
 public:
 
@@ -309,7 +308,7 @@ private:
 };
 
 template <typename V, typename K1, typename K2, typename K3>
-class DenseMultiHashMap<V, K1, K2, K3>
+class DenseMultiHashMap<V, K1, K2, K3> : public IObject
 {
 public:
 
@@ -479,7 +478,7 @@ private:
 };
 
 template <typename V, typename K1, typename K2, typename K3, typename K4>
-class DenseMultiHashMap
+class DenseMultiHashMap : public IObject
 {
 public:
 

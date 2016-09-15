@@ -154,5 +154,5 @@ void Data_XML_SAX_StressTest()
 	Print(stdout, "XML: ERREndParseFiles    : {1}\n", stats.cERREndParseFiles);
 }
 
-REGISTER_TEST(Data_XML_SAX_StressTest);
+//REGISTER_TEST(Data_XML_SAX_StressTest);
 

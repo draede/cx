@@ -80,7 +80,7 @@ Status TaskExecutor::Start(Size cThreads, Priority nPriority, Size cFirstRunDela
 		return Status_InvalidArg;
 	}
 
-	if (NULL == (m_threads = new HANDLE[cThreads]))
+	if (NULL == (m_threads = new (std::nothrow) HANDLE[cThreads]))
 	{
 		return Status_MemAllocFailed;
 	}
@@ -89,7 +89,7 @@ Status TaskExecutor::Start(Size cThreads, Priority nPriority, Size cFirstRunDela
 	m_cRunDelayInMS      = cRunDelayInMS;
 	m_cFirstRunDelayInMS = cFirstRunDelayInMS;
 	m_pCustomExecutor    = pCustomExecutor;
-	m_pQueue             = new TaskQueue(cThreads);
+	m_pQueue             = new (std::nothrow) TaskQueue(cThreads);
 
 	if (0 < m_cFirstRunDelayInMS || 0 < m_cRunDelayInMS)
 	{

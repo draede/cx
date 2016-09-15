@@ -5,8 +5,10 @@
                          for non scalars values it's a must)
 4. no exceptions
 5. don't use C++11 (C++0x is ok)
-6. why do we have typedefs over STL containers? for flexibility in the future
-7. bin/libs folders format: <BUILD_SYSTEM>/<PLATFORM>/<CONFIGURATION>. Example 'VS2013/Win32/Release' or 'GCC/Linux/Debug'
+6. why do we have typedefs over STL containers? to use custom allocs (support cross dll allocs + easy memory 
+   introspection + no alloc exceptions) and for flexibility in the future
+7. bin/libs folders format: <BUILD_SYSTEM>/<PLATFORM>/<CONFIGURATION>. Example 'VS2013/Win32/Release' or 
+   'GCC/Linux/Debug'
 8. all functions that return error codes must return Status
 9. all strings used are UTF8 (even on windows)
 10. tabs for identing (start of the line), spaces for aligning:

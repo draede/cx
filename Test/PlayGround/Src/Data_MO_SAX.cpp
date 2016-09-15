@@ -141,5 +141,5 @@ void Data_MO_SAX_StressTest()
 	Print(stdout, "MO: ERREndParseFiles    : {1}\n", stats.cERREndParseFiles);
 }
 
-REGISTER_TEST(Data_MO_SAX_StressTest);
+//REGISTER_TEST(Data_MO_SAX_StressTest);
 

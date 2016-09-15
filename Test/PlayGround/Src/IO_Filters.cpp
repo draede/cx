@@ -161,78 +161,78 @@ void TestFilter(const Char *szName, InputStreamFactory pfnInputStreamFactory, Ou
 
 IO::IInputStream *AESInputStreamFactory(IO::IInputStream *pIS)
 {
-	return new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS);
+	return new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Crypt::AES128InputFilter("12345678"), pIS);
 }
 
 IO::IOutputStream *AESOutputStreamFactory(IO::IOutputStream *pOS)
 {
-	return new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS);
+	return new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Crypt::AES128OutputFilter("12345678"), pOS);
 }
 
 IO::IInputStream *LZ4InputStreamFactory(IO::IInputStream *pIS)
 {
-	return new IO::FilteredInputStream(new Archive::LZ4InputFilter(), pIS);
+	return new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Archive::LZ4InputFilter(), pIS);
 }
 
 IO::IOutputStream *LZ4OutputStreamFactory(IO::IOutputStream *pOS)
 {
-	return new IO::FilteredOutputStream(new Archive::LZ4OutputFilter(), pOS);
+	return new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Archive::LZ4OutputFilter(), pOS);
 }
 
 IO::IInputStream *SnappyInputStreamFactory(IO::IInputStream *pIS)
 {
-	return new IO::FilteredInputStream(new Archive::SnappyInputFilter(), pIS);
+	return new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Archive::SnappyInputFilter(), pIS);
 }
 
 IO::IOutputStream *SnappyOutputStreamFactory(IO::IOutputStream *pOS)
 {
-	return new IO::FilteredOutputStream(new Archive::SnappyOutputFilter(), pOS);
+	return new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Archive::SnappyOutputFilter(), pOS);
 }
 
 IO::IInputStream *LZHAMInputStreamFactory(IO::IInputStream *pIS)
 {
-	return new IO::FilteredInputStream(new Archive::LZHAMInputFilter(), pIS);
+	return new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Archive::LZHAMInputFilter(), pIS);
 }
 
 IO::IOutputStream *LZHAMOutputStreamFactory(IO::IOutputStream *pOS)
 {
-	return new IO::FilteredOutputStream(new Archive::LZHAMOutputFilter(), pOS);
+	return new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Archive::LZHAMOutputFilter(), pOS);
 }
 
 IO::IInputStream *LZ4AESInputStreamFactory(IO::IInputStream *pIS)
 {
-	return new IO::FilteredInputStream(new Archive::LZ4InputFilter(), 
-	                                        new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS), true);
+	return new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Archive::LZ4InputFilter(), 
+	                                        new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Crypt::AES128InputFilter("12345678"), pIS), true);
 }
 
 IO::IOutputStream *LZ4AESOutputStreamFactory(IO::IOutputStream *pOS)
 {
-	return new IO::FilteredOutputStream(new Archive::LZ4OutputFilter(16), 
-	                                        new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS), true);
+	return new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Archive::LZ4OutputFilter(16), 
+	                                        new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Crypt::AES128OutputFilter("12345678"), pOS), true);
 }
 
 IO::IInputStream *SnappyAESInputStreamFactory(IO::IInputStream *pIS)
 {
-	return new IO::FilteredInputStream(new Archive::SnappyInputFilter(), 
-	                                        new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS), true);
+	return new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Archive::SnappyInputFilter(), 
+	                                        new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Crypt::AES128InputFilter("12345678"), pIS), true);
 }
 
 IO::IOutputStream *SnappyAESOutputStreamFactory(IO::IOutputStream *pOS)
 {
-	return new IO::FilteredOutputStream(new Archive::SnappyOutputFilter(), 
-	                                        new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS), true);
+	return new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Archive::SnappyOutputFilter(), 
+	                                        new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Crypt::AES128OutputFilter("12345678"), pOS), true);
 }
 
 IO::IInputStream *LZHAMAESInputStreamFactory(IO::IInputStream *pIS)
 {
-	return new IO::FilteredInputStream(new Archive::LZHAMInputFilter(), 
-	                                        new IO::FilteredInputStream(new Crypt::AES128InputFilter("12345678"), pIS), true);
+	return new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Archive::LZHAMInputFilter(), 
+	                                        new (std::nothrow) IO::FilteredInputStream(new (std::nothrow) Crypt::AES128InputFilter("12345678"), pIS), true);
 }
 
 IO::IOutputStream *LZHAMAESOutputStreamFactory(IO::IOutputStream *pOS)
 {
-	return new IO::FilteredOutputStream(new Archive::LZHAMOutputFilter(), 
-	                                        new IO::FilteredOutputStream(new Crypt::AES128OutputFilter("12345678"), pOS), true);
+	return new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Archive::LZHAMOutputFilter(), 
+	                                        new (std::nothrow) IO::FilteredOutputStream(new (std::nothrow) Crypt::AES128OutputFilter("12345678"), pOS), true);
 }
 
 void Filter_Test(const Char *szName, InputStreamFactory pfnInputStreamFactory, OutputStreamFactory pfnOutputStreamFactory)

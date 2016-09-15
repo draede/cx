@@ -206,5 +206,5 @@ void Data_JSON_SAX_StressTest()
 	Print(stdout, "JSON: ERREndParseFiles    : {1}\n", stats.cERREndParseFiles);
 }
 
-REGISTER_TEST(Data_JSON_SAX_StressTest);
+//REGISTER_TEST(Data_JSON_SAX_StressTest);
 

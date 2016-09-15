@@ -29,6 +29,8 @@
 #pragma once
 
 
+#include "CX/STLAlloc.hpp"
+#include "CX/GSHAlloc.hpp"
 #include "CX/SparseHashHelper.hpp"
 #include "sparsehash/dense_hash_set"
 
@@ -36,10 +38,10 @@
 namespace CX
 {
 
-template <typename K, typename H = SPARSEHASH_HASH<K>, typename E = std::equal_to<K> >
+template <typename K, typename H = SPARSEHASH_HASH<K>, typename E = std::equal_to<K>, typename A = GSHAlloc<K> >
 struct DenseHashSet
 {
-	typedef google::dense_hash_set<K, H, E>   Type;
+	typedef google::dense_hash_set<K, H, E, A>   Type;
 };
 
 }//namespace CX

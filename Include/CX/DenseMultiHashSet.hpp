@@ -40,7 +40,7 @@ template <typename K1 = EmptyType, typename K2 = EmptyType, typename K3 = EmptyT
 class DenseMultiHashSet;
 
 template <typename K1>
-class DenseMultiHashSet<K1>
+class DenseMultiHashSet<K1> : public IObject
 {
 public:
 
@@ -160,7 +160,7 @@ private:
 };
 
 template <typename K1, typename K2>
-class DenseMultiHashSet<K1, K2>
+class DenseMultiHashSet<K1, K2> : public IObject
 {
 public:
 
@@ -304,7 +304,7 @@ private:
 };
 
 template <typename K1, typename K2, typename K3>
-class DenseMultiHashSet<K1, K2, K3>
+class DenseMultiHashSet<K1, K2, K3> : public IObject
 {
 public:
 
@@ -472,7 +472,7 @@ private:
 };
 
 template <typename K1, typename K2, typename K3, typename K4>
-class DenseMultiHashSet
+class DenseMultiHashSet : public IObject
 {
 public:
 

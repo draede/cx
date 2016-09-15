@@ -29,18 +29,18 @@
 #pragma once
 
 
-#include "CX/Platform.hpp"
+#include "CX/STLAlloc.hpp"
 #include "CX/C/string.h"
-#include "CX/Types.hpp"
+#include "CX/Platform.hpp"
 #include <string>
 
 
 namespace CX
 {
 
-typedef std::basic_string<Char, std::char_traits<Char> >        String;
+typedef std::basic_string<Char, std::char_traits<Char>, STLAlloc<Char> >         String;
 
-typedef std::basic_string<WChar, std::char_traits<WChar> >      WString;
+typedef std::basic_string<WChar, std::char_traits<WChar>, STLAlloc<WChar> >      WString;
 
 struct CaseInsensitiveOrderPolicy
 {

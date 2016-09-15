@@ -40,7 +40,7 @@ class MemTest
 
 void Mem_Test1()
 {
-	MemTest *pTest = new MemTest();
+	MemTest *pTest = new (std::nothrow) MemTest();
 	char    *x     = (char *)Mem::Alloc(sizeof(char) * 100);
 
 	memcpy(x, "this is a test", 14);

@@ -29,6 +29,7 @@
 #pragma once
 
 
+#include "CX/STLAlloc.hpp"
 #include <set>
 
 
@@ -38,7 +39,7 @@ namespace CX
 template <typename K, typename C = std::less<K> >
 struct Set
 {
-	typedef std::set<K, C>     Type;
+	typedef std::set<K, C, STLAlloc<K> >     Type;
 };
 
 }//namespace CX
