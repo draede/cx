@@ -1,3 +1,5 @@
+0.1.91 - 2016-09-28 - Fixed profile issues
+  - Fixed profile issues
 0.1.90 - 2016-09-16 - Added custom allocator for STL types
   - Added custom allocator for STL types - to disable alloc exceptions
   - added nothrow to new allocs where missing

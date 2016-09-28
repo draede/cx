@@ -362,87 +362,6 @@ void Profiler::MergeChildren(ThreadProfiler::Scope *pScope, Size &cInitialCount,
 	}
 
 	cFinalCount = cInitialCount - cMerged;
-
-/*
-	ThreadProfiler::Scope *pChild1;
-	ThreadProfiler::Scope *pChild2;
-	ThreadProfiler::Scope *pLastChild;
-	ThreadProfiler::Scope *pTmp;
-	ThreadProfiler::Scope *pNextChild;
-
-	cInitialCount = 0;
-	cFinalCount   = 0;
-	pChild1       = pScope->pFirstChild;
-	while (NULL != pChild1)
-	{
-		cInitialCount++;
-		pLastChild = pChild1->pFirstChild;
-		if (NULL != pLastChild)
-		{
-			while (NULL != pLastChild->pNextSibling)
-			{
-				pLastChild = pLastChild->pNextSibling;
-			}
-		}
-
-		pChild2 = pChild1->pNextSibling;
-		while (NULL != pChild2)
-		{
-			pNextChild = pChild2->pNextSibling;
-
-			if (ThreadProfiler::MatchScope(pChild1, pChild2))
-			{
-				cFinalCount++;
-
-				pChild1->cCalls += pChild2->cCalls;
-				pChild1->cTotalDuration += pChild2->cTotalDuration;
-				if (pChild1->cMinDuration > pChild2->cMinDuration)
-				{
-					pChild1->cMinDuration = pChild2->cMinDuration;
-				}
-				if (pChild1->cMaxDuration < pChild2->cMaxDuration)
-				{
-					pChild1->cMaxDuration = pChild2->cMaxDuration;
-				}
-				
-				if (NULL != pChild2->pPrevSibling)
-				{
-					pChild2->pPrevSibling->pNextSibling = pChild2->pNextSibling;
-				}
-				if (NULL != pChild2->pNextSibling)
-				{
-					pChild2->pNextSibling->pPrevSibling = pChild2->pPrevSibling;
-				}
-
-				pTmp = pChild2->pFirstChild;
-				while (NULL != pTmp)
-				{
-					if (NULL == pLastChild)
-					{
-						pChild1->pFirstChild = pTmp;
-						pTmp->pPrevSibling   = NULL;
-					}
-					else
-					{
-						pLastChild->pNextSibling = pTmp;
-						pTmp->pPrevSibling       = pLastChild;
-					}
-					pLastChild         = pTmp;
-					pTmp->pNextSibling = NULL;
-					pTmp->pParent      = pTmp;
-					pTmp               = pTmp->pNextSibling;
-				}
-
-				ThreadProfiler::DestroyScope(pChild2);
-			}
-
-			pChild2 = pNextChild;
-		}
-
-		pChild1 = pChild1->pNextSibling;
-	}
-	cFinalCount = cInitialCount - cFinalCount;
-*/
 }
 
 void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vectorCalls, HotSpotsVector &vectorDurations, 
@@ -461,7 +380,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 			auto    iterMap = mapCalls.find(hsn);
 			HotSpot hs;
 
-			if (mapCalls.end() != iterMap)
+			if (mapCalls.end() != iterMap && vectorCalls.size() > iterMap->second)
 			{
 				auto iterVector = vectorCalls.begin() + iterMap->second;
 
@@ -538,7 +457,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 			auto    iterMap = mapDurations.find(hsn);
 			HotSpot hs;
 
-			if (mapDurations.end() != iterMap)
+			if (mapDurations.end() != iterMap && vectorDurations.size() > iterMap->second)
 			{
 				auto iterVector = vectorDurations.begin() + iterMap->second;
 

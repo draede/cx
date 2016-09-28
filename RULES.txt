@@ -20,5 +20,5 @@ int test(int a,
 <tab>c = testfunc(a,
 <tab>.............b);
 }
-11. max line length = 130
+11. max line length = 120
 
