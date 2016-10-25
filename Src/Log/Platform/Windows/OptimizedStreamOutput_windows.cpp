@@ -11,6 +11,7 @@ namespace Log
 OptimizedStreamOutput::OptimizedStreamOutput(const Char *szPath, bool bAppend/* = false*/, Size cFlushDelay/* = 3000*/, 
                                              Size cbMaxMem/* = 1048576*/)
 {
+	m_bWide = false;
 	Init(CreateFileA(szPath, FILE_APPEND_DATA, FILE_SHARE_READ, 0, bAppend ? OPEN_ALWAYS : CREATE_ALWAYS, 
 	                 FILE_ATTRIBUTE_NORMAL, NULL), cFlushDelay, cbMaxMem);
 }
@@ -18,6 +19,7 @@ OptimizedStreamOutput::OptimizedStreamOutput(const Char *szPath, bool bAppend/* 
 OptimizedStreamOutput::OptimizedStreamOutput(const WChar *wszPath, bool bAppend/* = false*/, 
                                              Size cFlushDelay/* = 3000*/, Size cbMaxMem/* = 1048576*/)
 {
+	m_bWide = true;
 	Init(CreateFileW(wszPath, FILE_APPEND_DATA, FILE_SHARE_READ, 0, bAppend ? OPEN_ALWAYS : CREATE_ALWAYS, 
 	                 FILE_ATTRIBUTE_NORMAL, NULL), cFlushDelay, cbMaxMem);
 }
@@ -135,6 +137,7 @@ unsigned long __stdcall  OptimizedStreamOutput::ThreadProc(void *pArg)
 	OptimizedStreamOutput *pThis = (OptimizedStreamOutput *)pArg;
 	DWORD                 dwRet;
 	DWORD                 dwAckSize;
+	Status                status;
 
 	for (;;)
 	{
@@ -148,27 +151,99 @@ unsigned long __stdcall  OptimizedStreamOutput::ThreadProc(void *pArg)
 			pVectorStrings          = pThis->m_pVectorStrings;
 			pThis->m_pVectorStrings = new (std::nothrow) StringsVector();
 			pThis->m_cbCrMem        = 0;
+
+			if (pThis->m_bWide)
+			{
+				WString wsPath;
+
+				if (pThis->NeedsReopenWithNewPath(&wsPath))
+				{
+					if ((status = pThis->Reopen(wsPath.c_str())).IsNOK())
+					{
+						//
+					}
+				}
+			}
+			else
+			{
+				String sPath;
+
+				if (pThis->NeedsReopenWithNewPath(&sPath))
+				{
+					if ((status = pThis->Reopen(sPath.c_str())).IsNOK())
+					{
+						//
+					}
+				}
+			}
 		}
 
 		if (NULL != pVectorStrings)
 		{
-			for (auto iter = pVectorStrings->begin(); iter != pVectorStrings->end(); iter++)
+			if (NULL != pThis->m_hFile)
 			{
-				WriteFile(pThis->m_hFile, iter->c_str(), (DWORD)iter->size(), &dwAckSize, NULL);
+				for (auto iter = pVectorStrings->begin(); iter != pVectorStrings->end(); iter++)
+				{
+					WriteFile(pThis->m_hFile, iter->c_str(), (DWORD)iter->size(), &dwAckSize, NULL);
+				}
+
+				FlushFileBuffers(pThis->m_hFile);
 			}
-
 			delete pVectorStrings;
-
-			FlushFileBuffers(pThis->m_hFile);
 		}
 
 		if (WAIT_OBJECT_0 == dwRet)
 		{
+			if (NULL != pThis->m_hFile)
+			{
+				FlushFileBuffers(pThis->m_hFile);
+			}
+
 			break;
 		}
 	}
 
 	return 0;
+}
+
+Status OptimizedStreamOutput::Reopen(const Char *szPath)
+{
+	if (NULL != m_hFile)
+	{
+		FlushFileBuffers(m_hFile);
+		CloseHandle(m_hFile);
+		m_hFile = NULL;
+	}
+
+	if (INVALID_HANDLE_VALUE == (m_hFile = CreateFileA(szPath, FILE_APPEND_DATA, FILE_SHARE_READ, 0, CREATE_ALWAYS, 
+	                                                   FILE_ATTRIBUTE_NORMAL, NULL)))
+	{
+		m_hFile = NULL;
+
+		return Status_CreateFailed;
+	}
+
+	return Status();
+}
+
+Status OptimizedStreamOutput::Reopen(const WChar *wszPath)
+{
+	if (NULL != m_hFile)
+	{
+		FlushFileBuffers(m_hFile);
+		CloseHandle(m_hFile);
+		m_hFile = NULL;
+	}
+
+	if (INVALID_HANDLE_VALUE == (m_hFile = CreateFileW(wszPath, FILE_APPEND_DATA, FILE_SHARE_READ, 0, CREATE_ALWAYS,
+	                                                   FILE_ATTRIBUTE_NORMAL, NULL)))
+	{
+		m_hFile = NULL;
+
+		return Status_CreateFailed;
+	}
+
+	return Status();
 }
 
 }//namespace Log

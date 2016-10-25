@@ -59,10 +59,23 @@ public:
 
 	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
 
+	virtual bool NeedsReopenWithNewPath(String *psPath)
+	{
+		psPath;
+
+		return false;
+	}
+
+	virtual bool NeedsReopenWithNewPath(WString *pwsPath)
+	{
+		pwsPath;
+
+		return false;
+	}
+
 private:
 
 	typedef Vector<String>::Type StringsVector;
-
 
 	void            *m_hFile;
 	void            *m_hStopEvent;
@@ -72,12 +85,17 @@ private:
 	Size            m_cFlushDelay;
 	Size            m_cbMaxMem;
 	Size            m_cbCrMem;
+	bool            m_bWide;
 
 	static unsigned long __stdcall ThreadProc(void *pArg);
 
 	Status Init(void *hFile, Size cFlushDelay, Size cMaxMem);
 
 	Status Uninit();
+
+	Status Reopen(const Char *szPath);
+
+	Status Reopen(const WChar *wszPath);
 
 };
 
