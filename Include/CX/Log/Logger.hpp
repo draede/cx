@@ -46,51 +46,58 @@
 	#define CX_LOG_LEVEL                        5
 #endif
 
+
+#define CXHLPLOG(level, tag, fmt, ...)                                                                                 \
+{                                                                                                                      \
+	if (CX::Log::Logger::GetDefaultLogger().GetLevel() >= level)                                                        \
+	{                                                                                                                   \
+		CX::Log::Logger::GetDefaultLogger().Log(level, tag, fmt, ## __VA_ARGS__);                                        \
+	}                                                                                                                   \
+}
+
+#define CXHLPLOGIF(cnd, level, tag, fmt, ...)                                                                          \
+{                                                                                                                      \
+	if (CX::Log::Logger::GetDefaultLogger().GetLevel() >= level)                                                        \
+	{                                                                                                                   \
+		CX::Log::Logger::GetDefaultLogger().LogIf(cnd, level, tag, fmt, ## __VA_ARGS__);                                 \
+	}                                                                                                                   \
+}
+
 #if CX_LOG_LEVEL >= CX_LOG_ERROR
-	#define CXERR(tag, fmt, ...)           CX::Log::Logger::GetDefaultLogger().Log                  \
-	                                             (CX_LOG_ERROR, tag, fmt, ## __VA_ARGS__)
-	#define CXERRIF(cnd, tag, fmt, ...)    CX::Log::Logger::GetDefaultLogger().LogIf                \
-	                                             (cnd, CX_LOG_ERROR, tag, fmt, ## __VA_ARGS__)
+	#define CXERR(tag, fmt, ...)           CXHLPLOG(CX_LOG_ERROR, tag, fmt, ## __VA_ARGS__)
+	#define CXERRIF(cnd, tag, fmt, ...)    CXHLPLOGIF(cnd, CX_LOG_ERROR, tag, fmt, ## __VA_ARGS__)
 #else
 	#define CXERR(tag, fmt, ...)
 	#define CXERRIF(cnd, tag, fmt, ...)
 #endif
 
 #if CX_LOG_LEVEL >= CX_LOG_WARN
-	#define CXWARN(tag, fmt, ...)          CX::Log::Logger::GetDefaultLogger().Log                  \
-	                                             (CX_LOG_WARN, tag, fmt, ## __VA_ARGS__)
-	#define CXWARNIF(cnd, tag, fmt, ...)   CX::Log::Logger::GetDefaultLogger().LogIf                \
-	                                             (cnd, CX_LOG_WARN, tag, fmt, ## __VA_ARGS__)
+	#define CXWARN(tag, fmt, ...)          CXHLPLOG(CX_LOG_WARN, tag, fmt, ## __VA_ARGS__)
+	#define CXWARNIF(cnd, tag, fmt, ...)   CXHLPLOGIF(cnd, CX_LOG_WARN, tag, fmt, ## __VA_ARGS__)
 #else
 	#define CXWARN(tag, fmt, ...)
 	#define CXWARNIF(cnd, tag, fmt, ...)
 #endif
 
 #if CX_LOG_LEVEL >= CX_LOG_INFO
-	#define CXINFO(tag, fmt, ...)          CX::Log::Logger::GetDefaultLogger().Log                  \
-	                                             (CX_LOG_INFO, tag, fmt, ## __VA_ARGS__)
-	#define CXINFOIF(cnd, tag, fmt, ...)   CX::Log::Logger::GetDefaultLogger().LogIf                \
-	                                             (cnd, CX_LOG_INFO, tag, fmt, ## __VA_ARGS__)
+	#define CXINFO(tag, fmt, ...)          CXHLPLOG(CX_LOG_INFO, tag, fmt, ## __VA_ARGS__)
+	#define CXINFOIF(cnd, tag, fmt, ...)   CXHLPLOGIF(cnd, CX_LOG_INFO, tag, fmt, ## __VA_ARGS__)
 #else
 	#define CXINFO(tag, fmt, ...)
 	#define CXINFOINF(cnd, tag, fmt, ...)
 #endif
 
 #if CX_LOG_LEVEL >= CX_LOG_VERB
-	#define CXVERB(tag, fmt, ...)          CX::Log::Logger::GetDefaultLogger().Log                  \
-	                                             (CX_LOG_VERB, tag, fmt, ## __VA_ARGS__)
-	#define CXVERBIF(cnd, tag, fmt, ...)   CX::Log::Logger::GetDefaultLogger().LogIf                \
-	                                             (cnd, CX_LOG_VERB, tag, fmt, ## __VA_ARGS__)
+	#define CXVERB(tag, fmt, ...)          CXHLPLOG(CX_LOG_VERB, tag, fmt, ## __VA_ARGS__)
+	#define CXVERBIF(cnd, tag, fmt, ...)   CXHLPLOGIF(cnd, CX_LOG_VERB, tag, fmt, ## __VA_ARGS__)
 #else
 	#define CXVERB(tag, fmt, ...)
 	#define CXVERBIF(cnd, tag, fmt, ...)
 #endif
 
 #if CX_LOG_LEVEL >= CX_LOG_DEBUG
-	#define CXDBG(tag, fmt, ...)           CX::Log::Logger::GetDefaultLogger().Log                  \
-	                                             (CX_LOG_DEBUG, tag, fmt, ## __VA_ARGS__)
-	#define CXDBGIF(cnd, tag, fmt, ...)    CX::Log::Logger::GetDefaultLogger().LogIf                \
-	                                             (cnd, CX_LOG_DEBUG, tag, fmt, ## __VA_ARGS__)
+	#define CXDBG(tag, fmt, ...)           CXHLPLOG(CX_LOG_DEBUG, tag, fmt, ## __VA_ARGS__)
+	#define CXDBGIF(cnd, tag, fmt, ...)    CXHLPLOGIF(cnd, CX_LOG_DEBUG, tag, fmt, ## __VA_ARGS__)
 #else
 	#define CXDBG(tag, fmt, ...)
 	#define CXDBGIF(cnd, tag, fmt, ...)
