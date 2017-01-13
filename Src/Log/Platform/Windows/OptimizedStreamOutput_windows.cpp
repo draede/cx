@@ -156,7 +156,7 @@ unsigned long __stdcall  OptimizedStreamOutput::ThreadProc(void *pArg)
 			{
 				WString wsPath;
 
-				if (pThis->NeedsReopenWithNewPath(&wsPath))
+				if (pThis->NeedsReopenWithNewPath(pThis->m_hFile, &wsPath))
 				{
 					if ((status = pThis->Reopen(wsPath.c_str())).IsNOK())
 					{
@@ -168,7 +168,7 @@ unsigned long __stdcall  OptimizedStreamOutput::ThreadProc(void *pArg)
 			{
 				String sPath;
 
-				if (pThis->NeedsReopenWithNewPath(&sPath))
+				if (pThis->NeedsReopenWithNewPath(pThis->m_hFile, &sPath))
 				{
 					if ((status = pThis->Reopen(sPath.c_str())).IsNOK())
 					{

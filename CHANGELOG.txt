@@ -1,3 +1,5 @@
+0.1.94 - 2017-01-13 - Added file handle arg in log reopening
+  - Added file handle arg in log reopening
 0.1.93 - 2016-11-20 - Added log level check in logging macro
   - Added log level check in logging macro
 0.1.92 - 2016-10-25 - Added support for reopening of the file in Log::OptimizedStreamOutput (for log rotate)

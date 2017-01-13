@@ -59,15 +59,17 @@ public:
 
 	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
 
-	virtual bool NeedsReopenWithNewPath(String *psPath)
+	virtual bool NeedsReopenWithNewPath(void *pFileHandle, String *psPath)
 	{
+		pFileHandle;
 		psPath;
 
 		return false;
 	}
 
-	virtual bool NeedsReopenWithNewPath(WString *pwsPath)
+	virtual bool NeedsReopenWithNewPath(void *pFileHandle, WString *pwsPath)
 	{
+		pFileHandle;
 		pwsPath;
 
 		return false;
