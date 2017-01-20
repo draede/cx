@@ -1,3 +1,6 @@
+0.1.95 - 2017-01-19 - Added SQLite wrapper
+  - Added SQLite wrapper
+  - Updated copyright years
 0.1.94 - 2017-01-13 - Added file handle arg in log reopening
   - Added file handle arg in log reopening
 0.1.93 - 2016-11-20 - Added log level check in logging macro

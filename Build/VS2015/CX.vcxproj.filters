@@ -340,6 +340,33 @@
     <Filter Include="Header Files\Debug">
       <UniqueIdentifier>{3ed6d8fe-3a7f-4393-a887-98c992eb5412}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DB">
+      <UniqueIdentifier>{79fa87e5-1c3a-47d2-968f-f8f06fc17881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\SQLite">
+      <UniqueIdentifier>{ad479844-c1af-4b71-a732-533a85d90bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DB">
+      <UniqueIdentifier>{a1aa7d9d-92a8-4639-96fd-3dae204ce7d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DB\SQLite">
+      <UniqueIdentifier>{f155545d-05da-4994-a87c-abac70adcb6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DB\SQLite">
+      <UniqueIdentifier>{73e930a3-c2ea-4451-b402-06a89773849a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DB\SQLite\Platform">
+      <UniqueIdentifier>{ecdc416d-bfc6-4eca-ada3-eff0a2d8c9e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DB\SQLite\Platform\Windows">
+      <UniqueIdentifier>{69098033-5bb7-417b-82e4-12cd7f5647ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DB\SQLite\Platform">
+      <UniqueIdentifier>{a8ae9908-02af-43ee-9c10-4dba69cd70d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DB\SQLite\Platform\Windows">
+      <UniqueIdentifier>{4b8c436e-e943-44e3-802e-54180696387b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1022,6 +1049,27 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Str\Base64BinStr.hpp">
       <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\SQLite\Include\sqlite3.h">
+      <Filter>Contrib\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Database.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Statement.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Transaction.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\DBHelper.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Bindings.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Platform\Windows\DBHelper.hpp">
+      <Filter>Header Files\DB\SQLite\Platform\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1813,6 +1861,24 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\Base64BinStr.cpp">
       <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SQLite\Src\sqlite3.c">
+      <Filter>Contrib\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Database.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Statement.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Transaction.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Bindings.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Platform\Windows\DBHelper_windows.cpp">
+      <Filter>Source Files\DB\SQLite\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
