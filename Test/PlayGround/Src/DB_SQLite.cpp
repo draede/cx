@@ -30,6 +30,7 @@
 #include "CX/DB/SQLite/Transaction.hpp"
 #include "CX/DB/SQLite/Statement.hpp"
 #include "CX/DB/SQLite/Bindings.hpp"
+#include "CX/DB/SQLite/DBHelper.hpp"
 #include "CX/Print.hpp"
 #include "CX/Util/Timer.hpp"
 #include <windows.h>
@@ -355,5 +356,94 @@ void DB_SQLite_TestMultiThread()
 	}
 }
 
+class MyDBHelper : public DB::SQLite::DBHelper
+{
+public:
+
+	static const Size STMT_INSERT = 0;
+	static const Size STMT_SELECT = 0;
+
+	virtual const Char *GetDDL() const
+	{
+		return DDL;
+	}
+
+	virtual const Char **GetStatements() const
+	{
+		return STATEMENTS;
+	}
+
+	virtual Size GetStatementsCount() const
+	{
+		return STATEMENTS_COUNT;
+	}
+
+	static const Char *DDL;
+	static const Char *STATEMENTS[];
+	static const Size STATEMENTS_COUNT;
+
+};
+
+const Char *MyDBHelper::DDL =
+"CREATE TABLE IF NOT EXISTS [config] "
+"( "
+"   [id] INTEGER PRIMARY KEY AUTOINCREMENT, "
+"   [name] TEXT NOT NULL UNIQUE, "
+"   [value] TEXT "
+");";
+
+const Char *MyDBHelper::STATEMENTS[] =
+{
+	"INSERT INTO [config] ([name], [value]) VALUES (?, ?);",
+	"SELECT * FROM [config] WHERE [name] like 'name-%';",
+};
+
+const Size MyDBHelper::STATEMENTS_COUNT = sizeof(MyDBHelper::STATEMENTS) / sizeof(MyDBHelper::STATEMENTS[0]);
+
+void DB_SQLite_TestDBHelper()
+{
+	MyDBHelper dbh;
+	Status     status;
+
+	unlink("testdbh.db");
+	if ((status = dbh.Open("testdbh.db")).IsOK())
+	{
+		Util::Timer timer;
+		double      lfElapsed;
+		Size        cCount = 1000000;
+		DB::SQLite::Bindings **bindings = (DB::SQLite::Bindings **)malloc(sizeof(DB::SQLite::Bindings *) *cCount);
+
+		for (Size i = 0; i < cCount; i++)
+		{
+			String sName;
+			String sValue;
+
+			Print(&sName, "name-{1}", i + 1);
+			Print(&sValue, "value-{1}", i + 1);
+			bindings[i] = dbh.CreateBindings("ss", sName.c_str(), sValue.c_str());
+		}
+
+		timer.ResetTimer();
+		for (Size i = 0; i < cCount; i++)
+		{
+			if ((status = dbh.AddAsyncOperation(MyDBHelper::STMT_INSERT, bindings[i])).IsNOK())
+			{
+				dbh.DestroyBindings(bindings[i]);
+			}
+		}
+		dbh.Close();
+
+		free(bindings);
+
+		lfElapsed = timer.GetElapsedTime();
+		Print(stdout, "Insert : {1:.3} inserts / second\n", cCount / lfElapsed);
+	}
+	else
+	{
+		Print(stdout, "Open failed with error {1}, message '{2}'\n", status.GetCode(), status.GetMsg());
+	}
+}
+
 REGISTER_TEST(DB_SQLite_Test1);
 //REGISTER_TEST(DB_SQLite_TestMultiThread);
+REGISTER_TEST(DB_SQLite_TestDBHelper);

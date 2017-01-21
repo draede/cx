@@ -1,3 +1,5 @@
+0.1.96 - 2017-01-21 - Fixed SQLite tester
+  - Fixed SQLite tester
 0.1.95 - 2017-01-19 - Added SQLite wrapper
   - Added SQLite wrapper
   - Updated copyright years
