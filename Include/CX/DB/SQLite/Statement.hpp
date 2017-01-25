@@ -93,9 +93,9 @@ public:
 
 	Size GetArgsCount();
 
-	Size GetArgIndex(const Char *szName);
+	Size GetArgIndex(const Char *szName, Status *pnStatus = NULL);
 
-	const Char *GetArgName(Size cIndex);
+	const Char *GetArgName(Size cIndex, Status *pnStatus = NULL);
 
 	Status ClearBindings();
 
@@ -117,27 +117,27 @@ public:
 
 	Size GetColumnsCount();
 
-	unsigned int GetColumnType(Size cIndex);
+	unsigned int GetColumnType(Size cIndex, Status *pnStatus = NULL);
 
-	const Char *GetColumnDeclaredType(Size cIndex);
+	const Char *GetColumnDeclaredType(Size cIndex, Status *pnStatus = NULL);
 
-	const Char *GetColumnName(Size cIndex);
+	const Char *GetColumnName(Size cIndex, Status *pnStatus = NULL);
 
-	Int64 GetInt(Size cIndex);
+	Int64 GetInt(Size cIndex, Status *pnStatus = NULL);
 
-	Double GetReal(Size cIndex);
+	Double GetReal(Size cIndex, Status *pnStatus = NULL);
 
-	const Char *GetString(Size cIndex);
+	const Char *GetString(Size cIndex, Status *pnStatus = NULL);
 
-	Size GetStringLen(Size cIndex);
+	Size GetStringLen(Size cIndex, Status *pnStatus = NULL);
 
-	const WChar *GetWString(Size cIndex);
+	const WChar *GetWString(Size cIndex, Status *pnStatus = NULL);
 
-	Size GetWStringLen(Size cIndex);
+	Size GetWStringLen(Size cIndex, Status *pnStatus = NULL);
 
-	const void *GetBLOB(Size cIndex);
+	const void *GetBLOB(Size cIndex, Status *pnStatus = NULL);
 
-	Size GetBLOBSize(Size cIndex);
+	Size GetBLOBSize(Size cIndex, Status *pnStatus = NULL);
 
 	Result Step(Status *pStatus = NULL);
 

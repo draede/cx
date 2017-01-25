@@ -79,6 +79,18 @@ public:
 
 	};
 
+	class IAsyncOperationHandler
+	{
+	public:
+
+		virtual ~IAsyncOperationHandler() { }
+
+		virtual void OnCompletion(Statement *pStatement, const Status &status) = 0;
+
+		virtual void Release() = 0;
+
+	};
+
 	DBHelper();
 
 	DBHelper(const Char *szPath, 
@@ -113,7 +125,9 @@ public:
 	void DestroyBindings(Bindings *pBindings);
 
 	//pBindings must be create with CreateBindings (after this call the ownership of pBindings is taken by DBHelper)
-	Status AddAsyncOperation(Size cStatementIndex, Bindings *pBindings);
+	//pAsyncOperationHandler will be released with pAsyncOperationHandler->Release()
+	Status AddAsyncOperation(Size cStatementIndex, Bindings *pBindings,
+	                         IAsyncOperationHandler *pAsyncOperationHandler = NULL);
 
 	Status FlushAsyncOperations();
 	
@@ -146,8 +160,9 @@ private:
 
 	struct Operation
 	{
-		Size     cStatementIndex;
-		Bindings *pBindings;
+		Size                   cStatementIndex;
+		Bindings               *pBindings;
+		IAsyncOperationHandler *pAsyncOperationHandler;
 	};
 
 	typedef CX::Queue<Operation>::Type              OperationsQueue;

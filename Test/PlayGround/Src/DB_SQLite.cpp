@@ -40,7 +40,7 @@
 using namespace CX;
 
 
-void DB_SQLite_Test1()
+void DB_SQLite_Test()
 {
 	Print(stdout, "Begin DB SQLite test\n");
 
@@ -65,6 +65,7 @@ void DB_SQLite_Test1()
 
 					if (insert.IsOK())
 					{
+						insert.ClearBindings();
 						insert.BindString("name1");
 						insert.BindString("value1");
 						if (DB::SQLite::Statement::Result_Done == (nResult = insert.Step(&status)))
@@ -76,8 +77,8 @@ void DB_SQLite_Test1()
 							tr.SetSuccessful(false);
 							Print(stdout, "InsertStep1 : {1}\n", status.GetMsg());
 						}
-
 						insert.Reset();
+
 						insert.ClearBindings();
 						insert.BindString("name2");
 						insert.BindString("value2");
@@ -90,9 +91,11 @@ void DB_SQLite_Test1()
 							tr.SetSuccessful(false);
 							Print(stdout, "InsertStep2 : {1}\n", status.GetMsg());
 						}
-
 						insert.Reset();
+
 						//test bindings
+						insert.ClearBindings();
+
 						insert.Bind(DB::SQLite::Bindings("ss", "name3", "value3"));
 						if (DB::SQLite::Statement::Result_Done == (nResult = insert.Step(&status)))
 						{
@@ -104,7 +107,7 @@ void DB_SQLite_Test1()
 							Print(stdout, "InsertStep3 : {1}\n", status.GetMsg());
 						}
 						insert.Reset();
-						insert.ClearBindings();
+						
 					}
 					else
 					{
@@ -295,8 +298,8 @@ void DB_SQLite_TestMultiThread()
 	DWORD                   dwThreadID;
 	Status                  status;
 
-	unlink("test.db");
-	if ((status = db.Open("test.db")).IsOK())
+	unlink("testmt.db");
+	if ((status = db.Open("testmt.db")).IsOK())
 	{
 		if ((status = db.Exec("CREATE TABLE [config] ([id] INTEGER PRIMARY KEY AUTOINCREMENT, "
 			"[name] TEXT NOT NULL UNIQUE, [value] TEXT);")).IsOK())
@@ -361,7 +364,7 @@ class MyDBHelper : public DB::SQLite::DBHelper
 public:
 
 	static const Size STMT_INSERT = 0;
-	static const Size STMT_SELECT = 0;
+	static const Size STMT_SELECT = 1;
 
 	virtual const Char *GetDDL() const
 	{
@@ -444,6 +447,178 @@ void DB_SQLite_TestDBHelper()
 	}
 }
 
-REGISTER_TEST(DB_SQLite_Test1);
-//REGISTER_TEST(DB_SQLite_TestMultiThread);
+class MyDBHelper2 : public DB::SQLite::DBHelper
+{
+public:
+
+	static const Size STMT_INSERT = 0;
+	static const Size STMT_SELECT = 1;
+
+	virtual const Char *GetDDL() const
+	{
+		return DDL;
+	}
+
+	virtual const Char **GetStatements() const
+	{
+		return STATEMENTS;
+	}
+
+	virtual Size GetStatementsCount() const
+	{
+		return STATEMENTS_COUNT;
+	}
+
+	static const Char *DDL;
+	static const Char *STATEMENTS[];
+	static const Size STATEMENTS_COUNT;
+
+};
+
+const Char *MyDBHelper2::DDL =
+"CREATE TABLE IF NOT EXISTS [config] "
+"( "
+"   [id] INTEGER PRIMARY KEY AUTOINCREMENT, "
+"   [name] TEXT NOT NULL UNIQUE, "
+"   [value] TEXT "
+");";
+
+const Char *MyDBHelper2::STATEMENTS[] =
+{
+	"INSERT INTO [config] ([name], [value]) VALUES (?, ?);",
+	"SELECT * FROM [config] WHERE [name] like 'name-%';",
+};
+
+const Size MyDBHelper2::STATEMENTS_COUNT = sizeof(MyDBHelper2::STATEMENTS) / sizeof(MyDBHelper2::STATEMENTS[0]);
+
+struct ThreadData2
+{
+	MyDBHelper2 *pDBH;
+	Size       cIndex;
+	double     lfTime;
+};
+
+DWORD WINAPI WriterThread2(void *pArg)
+{
+	ThreadData2                *pData = (ThreadData2 *)pArg;
+	MyDBHelper2::StatementScope scope(pData->pDBH, MyDBHelper2::STMT_INSERT);
+	DB::SQLite::Statement::Result nResult;
+	Size                       cIndex;
+	Status                     status;
+	Util::Timer                timer;
+
+	cIndex = 0;
+	while (timer.GetElapsedTime() < pData->lfTime)
+	{
+		//DB::SQLite::Transaction tr(&pData->pDBH->GetDB());
+
+		String sName;
+		String sValue;
+
+		cIndex++;
+		Print(&sName, "name-{1}-{2}", pData->cIndex, cIndex);
+		Print(&sValue, "value-{1}-{2}", pData->cIndex, cIndex);
+
+		if ((status = scope.GetStatement()->ClearBindings()).IsNOK())
+		{
+			Print(stdout, "ClearBindings : {1}, {2}\n", status.GetCode(), status.GetMsg());
+		}
+		if ((status = scope.GetStatement()->BindString(sName.c_str())).IsNOK())
+		{
+			Print(stdout, "Bind1 : {1}, {2}\n", status.GetCode(), status.GetMsg());
+		}
+		if ((status = scope.GetStatement()->BindString(sValue.c_str())).IsNOK())
+		{
+			Print(stdout, "Bind2 : {1}, {2}\n", status.GetCode(), status.GetMsg());
+		}
+		nResult = scope.GetStatement()->Step(&status);
+		if (status.IsNOK())
+		{
+			Print(stdout, "Step : {1}, {2}\n", status.GetCode(), status.GetMsg());
+		}
+		if ((status = scope.GetStatement()->Reset()).IsNOK())
+		{
+			Print(stdout, "Reset : {1}, {2}\n", status.GetCode(), status.GetMsg());
+		}
+	}
+
+	return 0;
+}
+
+DWORD WINAPI ReaderThread2(void *pArg)
+{
+	ThreadData2                *pData = (ThreadData2 *)pArg;
+	MyDBHelper2::StatementScope scope(pData->pDBH, MyDBHelper2::STMT_SELECT);
+	DB::SQLite::Statement::Result nResult;
+	Status                     status;
+	Util::Timer                timer;
+
+	while (timer.GetElapsedTime() < pData->lfTime)
+	{
+		if ((status = scope.GetStatement()->ClearBindings()).IsNOK())
+		{
+			Print(stdout, "ClearBindings : {1}, {2}\n", status.GetCode(), status.GetMsg());
+		}
+		nResult = scope.GetStatement()->Step(&status);
+		if (status.IsNOK())
+		{
+			Print(stdout, "Step : {1}, {2}\n", status.GetCode(), status.GetMsg());
+		}
+		scope.GetStatement()->GetInt(0);
+		scope.GetStatement()->GetString(1);
+		scope.GetStatement()->GetString(2);
+		if ((status = scope.GetStatement()->Reset()).IsNOK())
+		{
+			Print(stdout, "Reset : {1}, {2}\n", status.GetCode(), status.GetMsg());
+		}
+	}
+
+	return 0;
+}
+
+void DB_SQLite_TestDBHelperMultiThread()
+{
+	MyDBHelper2 dbh;
+	static const Size       WRITE_THREADS = 32;
+	static const Size       READ_THREADS = 32;
+	static const Size       TOTAL_THREADS = WRITE_THREADS + READ_THREADS;
+	HANDLE                  threads[TOTAL_THREADS];
+	ThreadData2             wd[WRITE_THREADS];
+	ThreadData2             rd[READ_THREADS];
+	DWORD                   dwThreadID;
+	Status                  status;
+
+	unlink("testdbhmt.db");
+	if ((status = dbh.Open("testdbhmt.db")).IsOK())
+	{
+		for (Size i = 0; i < WRITE_THREADS; i++)
+		{
+			wd[i].pDBH = &dbh;
+			wd[i].cIndex = i + 1;
+			wd[i].lfTime = 10.0;
+			threads[i] = CreateThread(NULL, 0, &WriterThread2, &wd[i], 0, &dwThreadID);
+		}
+		for (Size i = 0; i < READ_THREADS; i++)
+		{
+			rd[i].pDBH = &dbh;
+			rd[i].cIndex = (i % WRITE_THREADS) + 1;
+			rd[i].lfTime = 10.0;
+			threads[WRITE_THREADS + i] = CreateThread(NULL, 0, &ReaderThread2, &rd[i], 0, &dwThreadID);
+		}
+		WaitForMultipleObjects(TOTAL_THREADS, threads, TRUE, INFINITE);
+		for (Size i = 0; i < TOTAL_THREADS; i++)
+		{
+			CloseHandle(threads[i]);
+		}
+		dbh.Close();
+	}
+	else
+	{
+		Print(stdout, "Open failed with error {1}, message '{2}'\n", status.GetCode(), status.GetMsg());
+	}
+}
+
+REGISTER_TEST(DB_SQLite_Test);
+REGISTER_TEST(DB_SQLite_TestMultiThread);
 REGISTER_TEST(DB_SQLite_TestDBHelper);
+REGISTER_TEST(DB_SQLite_TestDBHelperMultiThread);

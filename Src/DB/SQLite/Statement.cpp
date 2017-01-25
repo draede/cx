@@ -159,20 +159,30 @@ Size Statement::GetArgsCount()
 	return (Size)sqlite3_bind_parameter_count((sqlite3_stmt *)m_pSTMT);
 }
 
-Size Statement::GetArgIndex(const Char *szName)
+Size Statement::GetArgIndex(const Char *szName, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 
 	return (Size)sqlite3_bind_parameter_index((sqlite3_stmt *)m_pSTMT, szName);
 }
 
-const Char *Statement::GetArgName(Size cIndex)
+const Char *Statement::GetArgName(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return NULL;
 	}
 
@@ -435,110 +445,165 @@ Size Statement::GetColumnsCount()
 	return (Size)sqlite3_column_count((sqlite3_stmt *)m_pSTMT);
 }
 
-unsigned int Statement::GetColumnType(Size cIndex)
+unsigned int Statement::GetColumnType(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return NULL;
 	}
 
 	return (unsigned int)sqlite3_column_type((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-const Char *Statement::GetColumnDeclaredType(Size cIndex)
+const Char *Statement::GetColumnDeclaredType(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return NULL;
 	}
 
 	return sqlite3_column_decltype((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-const Char *Statement::GetColumnName(Size cIndex)
+const Char *Statement::GetColumnName(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return NULL;
 	}
 
 	return sqlite3_column_name((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-Int64 Statement::GetInt(Size cIndex)
+Int64 Statement::GetInt(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 
 	return sqlite3_column_int64((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-Double Statement::GetReal(Size cIndex)
+Double Statement::GetReal(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 
 	return sqlite3_column_double((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-const Char *Statement::GetString(Size cIndex)
+const Char *Statement::GetString(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 
 	return (const Char *)sqlite3_column_text((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-Size Statement::GetStringLen(Size cIndex)
+Size Statement::GetStringLen(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 
 	return (Size)sqlite3_column_bytes((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-const WChar *Statement::GetWString(Size cIndex)
+const WChar *Statement::GetWString(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 
 	return (const WChar *)sqlite3_column_text16((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-Size Statement::GetWStringLen(Size cIndex)
+Size Statement::GetWStringLen(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 
 	return (Size)(sqlite3_column_bytes((sqlite3_stmt *)m_pSTMT, (int)cIndex) / 2);
 }
 
-const void *Statement::GetBLOB(Size cIndex)
+const void *Statement::GetBLOB(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 
 	return sqlite3_column_blob((sqlite3_stmt *)m_pSTMT, (int)cIndex);
 }
 
-Size Statement::GetBLOBSize(Size cIndex)
+Size Statement::GetBLOBSize(Size cIndex, Status *pnStatus/* = NULL*/)
 {
 	if (NULL == m_pSTMT)
 	{
+		if (NULL != pnStatus)
+		{
+			*pnStatus = Status_NotInitialized;
+		}
+
 		return 0;
 	}
 

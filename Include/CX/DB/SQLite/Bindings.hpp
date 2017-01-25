@@ -88,6 +88,24 @@ public:
 
 	Status Copy(const Bindings &bindings);
 
+	//n = null (no extra args provided)
+	//i = Int64
+	//r = Double
+	//s = String
+	//w = WString
+	//b = const void *, Size
+	//z = Size
+	Status Init(const Char *szArgsType, ...);
+
+	//n = null (no extra args provided)
+	//i = Int64
+	//r = Double
+	//s = String
+	//w = WString
+	//b = const void *, Size
+	//z = Size
+	Status Init(const Char *szArgsType, va_list vl);
+
 	Status AddNull();
 
 	Status AddInt(Int64 nValue);

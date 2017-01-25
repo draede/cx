@@ -48,12 +48,13 @@ Bindings::Bindings(const Char *szArgsType, ...)
 	va_list vl;
 
 	va_start(vl, szArgsType);
-	Bindings(szArgsType, vl);
+	Init(szArgsType, vl);
 	va_end(vl);
 }
 
 Bindings::Bindings(const Char *szArgsType, va_list vl)
 {
+	Init(szArgsType, vl);
 	const Char *pszPos;
 	Status     status;
 
@@ -225,6 +226,110 @@ Status Bindings::Copy(const Bindings &bindings)
 		{
 			return Status_InvalidArg;
 		}
+	}
+
+	return Status();
+}
+
+Status Bindings::Init(const Char *szArgsType, ...)
+{
+	va_list vl;
+	Status  status;
+
+	va_start(vl, szArgsType);
+	status = Init(szArgsType, vl);
+	va_end(vl);
+
+	return status;
+}
+
+Status Bindings::Init(const Char *szArgsType, va_list vl)
+{
+	const Char *pszPos;
+	Status     status;
+
+	pszPos = szArgsType;
+	while (0 != *pszPos)
+	{
+		if ('n' == *pszPos)
+		{
+			if ((status = AddNull()).IsNOK())
+			{
+				break;
+			}
+		}
+		else
+		if ('i' == *pszPos)
+		{
+			Int64 nValue = va_arg(vl, Int64);
+
+			if ((status = AddInt(nValue)).IsNOK())
+			{
+				break;
+			}
+		}
+		else
+		if ('r' == *pszPos)
+		{
+			Double lfValue = va_arg(vl, Double);
+
+			if ((status = AddReal(lfValue)).IsNOK())
+			{
+				break;
+			}
+		}
+		else
+		if ('s' == *pszPos)
+		{
+			const Char *szValue = va_arg(vl, const Char *);
+
+			if ((status = AddString(szValue)).IsNOK())
+			{
+				break;
+			}
+		}
+		else
+		if ('w' == *pszPos)
+		{
+			const WChar *wszValue = va_arg(vl, const WChar *);
+
+			if ((status = AddWString(wszValue)).IsNOK())
+			{
+				break;
+			}
+		}
+		else
+		if ('b' == *pszPos)
+		{
+			const void *pData = va_arg(vl, const void *);
+			Size       cbSize = va_arg(vl, Size);
+
+			if ((status = AddBLOB(pData, cbSize)).IsNOK())
+			{
+				break;
+			}
+		}
+		else
+		if ('z' == *pszPos)
+		{
+			Size cbSize = va_arg(vl, Size);
+
+			if ((status = AddZeroBLOB(cbSize)).IsNOK())
+			{
+				break;
+			}
+		}
+		else
+		{
+			status = Status_InvalidArg;
+
+			break;
+		}
+		pszPos++;
+	}
+	if (status.IsNOK())
+	{
+		Clear();
 	}
 
 	return Status();

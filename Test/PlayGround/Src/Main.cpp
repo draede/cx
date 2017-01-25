@@ -32,12 +32,6 @@
 using namespace CX;
 
 
-
-#include "CX/Print.hpp"
-#include "CX/Util/Timer.hpp"
-
-
-
 int main(int argc, char *argv[])
 {
 	CX_UNUSED(argc);

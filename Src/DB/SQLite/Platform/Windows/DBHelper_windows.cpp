@@ -257,7 +257,8 @@ void DBHelper::DestroyBindings(Bindings *pBindings)
 	delete pBindings;
 }
 
-Status DBHelper::AddAsyncOperation(Size cStatementIndex, Bindings *pBindings)
+Status DBHelper::AddAsyncOperation(Size cStatementIndex, Bindings *pBindings,
+                                   IAsyncOperationHandler *pAsyncOperationHandler/* = NULL*/)
 {
 	Sys::Locker locker(&m_lockOperations);
 	Operation   oper;
@@ -266,8 +267,9 @@ Status DBHelper::AddAsyncOperation(Size cStatementIndex, Bindings *pBindings)
 	{
 		return Status_NotInitialized;
 	}
-	oper.cStatementIndex = cStatementIndex;
-	oper.pBindings       = pBindings;
+	oper.cStatementIndex        = cStatementIndex;
+	oper.pBindings              = pBindings;
+	oper.pAsyncOperationHandler = pAsyncOperationHandler;
 	m_queueOperations.push(oper);
 	if (m_queueOperations.size() >= m_cMaxAsyncOperations)
 	{
@@ -388,12 +390,27 @@ DWORD DBHelper::AsyncThreadProc()
 					{
 						if ((status = scope.GetStatement()->Bind(*oper.pBindings)).IsOK())
 						{
-							scope.GetStatement()->Step();
-							scope.GetStatement()->Reset();
+							if ((status = scope.GetStatement()->Step()).IsOK())
+							{
+								status = scope.GetStatement()->Reset();
+							}
+							
 						}
+					}
+					else
+					{
+						status = Status(Status_OperationFailed, "Failed to get statement");
+					}
+					if (NULL != oper.pAsyncOperationHandler)
+					{
+						oper.pAsyncOperationHandler->OnCompletion(scope.GetStatement(), status);
 					}
 				}
 
+				if (NULL != oper.pAsyncOperationHandler)
+				{
+					oper.pAsyncOperationHandler->Release();
+				}
 				delete oper.pBindings;
 			}
 		}
