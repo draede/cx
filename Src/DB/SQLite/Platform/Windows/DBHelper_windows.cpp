@@ -352,6 +352,7 @@ Status DBHelper::ReleaseStatement(DB::SQLite::Statement *pStatement)
 	{
 		m_mapAvailStatements[iterUsedStatements->second].push(pStatement);
 	}
+	m_mapUsedStatements.erase(iterUsedStatements);
 
 	return Status();
 }

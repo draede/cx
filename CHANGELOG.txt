@@ -1,3 +1,6 @@
+0.1.98 - 2017-01-30 - Fixes for SQLite wrapper
+  - Fixed statement not removed from used map during AcquireStatement
+  - Fixed non const arg in virtual methods of DBHelper
 0.1.97 - 2017-01-25 - Fixes & improvements for SQLite wrapper
   - Fixed SQLite Bindings class
   - Added support for completion handler for async operations in DBHelper
