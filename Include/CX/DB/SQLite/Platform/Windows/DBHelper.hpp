@@ -144,11 +144,11 @@ public:
 
 	virtual Status OnPreOpen() { return Status(); }
 
-	virtual Status OnPostOpen(const Status &status) { status; return Status(); }
+	virtual Status OnPostOpen() { return Status(); }
 
 	virtual Status OnPreClose() { return Status(); }
 	
-	virtual Status OnPostClose(const Status &status) { status; return Status(); }
+	virtual Status OnPostClose() { return Status(); }
 
 private:
 

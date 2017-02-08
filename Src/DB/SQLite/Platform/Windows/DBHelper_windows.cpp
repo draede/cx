@@ -117,21 +117,23 @@ Status DBHelper::Open(const Char *szPath,
 	m_cMaxAsyncFlushTimeout = cMaxAsyncFlushTimeout;
 	if ((status = m_db.Open(szPath, nFlags)).IsNOK())
 	{
-		OnPostOpen(status);
-
 		return status;
 	}
 	if ((status = m_db.Exec(GetDDL())).IsNOK())
 	{
 		m_db.Close();
-		OnPostOpen(status);
+
+		return status;
+	}
+	if ((status = OnPostOpen()).IsNOK())
+	{
+		m_db.Close();
 
 		return status;
 	}
 	if (NULL == (m_hStopEvent = ::CreateEventW(NULL, FALSE, FALSE, NULL)))
 	{
 		m_db.Close();
-		OnPostOpen(status);
 
 		return Status(Status_OperationFailed, "Failed to create event");
 	}
@@ -140,7 +142,6 @@ Status DBHelper::Open(const Char *szPath,
 		CloseHandle(m_hStopEvent);
 		m_hStopEvent = NULL;
 		m_db.Close();
-		OnPostOpen(status);
 
 		return Status(Status_OperationFailed, "Failed to create event");
 	}
@@ -151,11 +152,9 @@ Status DBHelper::Open(const Char *szPath,
 		CloseHandle(m_hStopEvent);
 		m_hStopEvent = NULL;
 		m_db.Close();
-		OnPostOpen(status);
 
 		return Status(Status_OperationFailed, "Failed to create thread");
 	}
-	OnPostOpen(Status());
 
 	return Status();
 }
@@ -185,8 +184,6 @@ Status DBHelper::Close()
 	}
 	if (!m_mapUsedStatements.empty())
 	{
-		OnPostClose(Status_Busy);
-
 		return Status_Busy;
 	}
 	{
@@ -205,7 +202,7 @@ Status DBHelper::Close()
 		m_mapAvailStatements.clear();
 	}
 	m_db.Close();
-	OnPostClose(Status());
+	OnPostClose();
 
 	return Status();
 }

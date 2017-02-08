@@ -1,3 +1,5 @@
+0.1.99 - 2017-02-08 - More fixes for SQLite wrapper
+  - Fixed virtual handlers calls
 0.1.98 - 2017-01-30 - Fixes for SQLite wrapper
   - Fixed statement not removed from used map during AcquireStatement
   - Fixed non const arg in virtual methods of DBHelper
