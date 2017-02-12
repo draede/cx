@@ -74,7 +74,7 @@ private:
 	{
 		pOut[0] = table[c1] << 2 | table[c2] >> 4;
 		pOut[1] = table[c2] << 4 | table[c3] >> 2;
-		pOut[2] = table[c3] << 6 | table[c4] & 0x3F;
+		pOut[2] = table[c3] << 6 | (table[c4] & 0x3F);
 	}
 
 };

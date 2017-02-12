@@ -28,6 +28,7 @@
 
 #include "CX/Str/WildMat.hpp"
 #include "CX/Platform.hpp"
+#include "CX/C/ctype.h"
 #ifdef CX_OS_WINDOWS
 #include <windows.h>
 #else
@@ -107,7 +108,7 @@ int WildMat::StrMatchA(const Char *szString, const Char *szPattern, bool bIgnore
 #ifdef CX_OS_WINDOWS
 				if (CharLowerA((LPSTR)((SIZE_T)szString[x])) != CharLower((LPSTR)((SIZE_T)szPattern[y])))
 #else
-				if (tolower(szString[x])) != tolower(szPattern[y]))
+				if (cx_tolower(szString[x]) != cx_tolower(szPattern[y]))
 #endif
 				{
 					return 1;
@@ -167,7 +168,7 @@ int WildMat::StrMatchW(const WChar *wszString, const CX::WChar *wszPattern, bool
 #ifdef CX_OS_WINDOWS
 				if (CharLowerW((LPWSTR)((SIZE_T)wszString[x])) != CharLowerW((LPWSTR)((SIZE_T)wszPattern[y])))
 #else
-				if (towlower(wszString[x])) != towlower(wszPattern[y]))
+				if (cxw_tolower(wszString[x]) != cxw_tolower(wszPattern[y]))
 #endif
 				{
 					return 1;

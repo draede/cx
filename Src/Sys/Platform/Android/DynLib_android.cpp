@@ -59,7 +59,7 @@ Bool DynLib::IsOK()
 
 Status DynLib::Load(const Char *szPath)
 {
-	szPath;
+	CX_UNUSED(szPath);
 	
 	return Status(Status_NotSupported);
 }
@@ -71,7 +71,7 @@ Status DynLib::Unload()
 
 void *DynLib::GetFunc(const Char *szName)
 {
-	szName;
+	CX_UNUSED(szName);
 	
 	if (NULL == m_pHandle)
 	{

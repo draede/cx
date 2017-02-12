@@ -324,7 +324,7 @@ Status Node::RemoveAttribute(Size cIndex)
 		return Status_NotFound;
 	}
 
-	AttrsMap::const_iterator iter = m_mapAttrs.begin();
+	AttrsMap::iterator iter = m_mapAttrs.begin();
 
 	while (0 < cIndex)
 	{
@@ -338,7 +338,7 @@ Status Node::RemoveAttribute(Size cIndex)
 
 Status Node::RemoveAttribute(const String &sName)
 {
-	AttrsMap::const_iterator iter = m_mapAttrs.find(sName);
+	AttrsMap::iterator iter = m_mapAttrs.find(sName);
 
 	if (m_mapAttrs.end() != iter)
 	{

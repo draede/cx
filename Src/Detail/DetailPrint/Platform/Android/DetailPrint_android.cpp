@@ -105,7 +105,7 @@ CX_API Bool UTF8toWChar(const Char *szUTF8, WString *pwsWChar, Size cUTF8Len/* =
 			return false;
 		}
 		pwsWChar->assign(pOut, cSize);
-		if (pOut != pOut)
+		if (pOut != out)
 		{
 			delete [] pOut;
 		}
@@ -209,7 +209,7 @@ CX_API Bool UTF8toWCharx(const Char *szUTF8, std::wstring *pwsWChar, Size cUTF8L
 			return false;
 		}
 		pwsWChar->assign(pOut, cSize);
-		if (pOut != pOut)
+		if (pOut != out)
 		{
 			delete [] pOut;
 		}

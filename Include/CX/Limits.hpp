@@ -78,5 +78,4 @@ static const Byte          TYPE_BYTE_MAX    = CX_BYTE_MAX;
 //max Size value
 static const Size          TYPE_SIZE_MAX   = CX_SIZE_MAX;
 
-
 }//namespace CX

@@ -454,7 +454,7 @@ unsigned int Statement::GetColumnType(Size cIndex, Status *pnStatus/* = NULL*/)
 			*pnStatus = Status_NotInitialized;
 		}
 
-		return NULL;
+		return 0;
 	}
 
 	return (unsigned int)sqlite3_column_type((sqlite3_stmt *)m_pSTMT, (int)cIndex);

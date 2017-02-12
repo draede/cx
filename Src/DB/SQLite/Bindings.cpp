@@ -165,7 +165,7 @@ Status Bindings::Copy(const Bindings &bindings)
 	Status status;
 
 	Clear();
-	for (auto iter = bindings.m_vectorArgs.begin(); iter != bindings.m_vectorArgs.end(); ++iter)
+	for (ArgsVector::const_iterator iter = bindings.m_vectorArgs.begin(); iter != bindings.m_vectorArgs.end(); ++iter)
 	{
 		if (ArgType_Null == iter->nType)
 		{
@@ -435,7 +435,7 @@ Status Bindings::AddZeroBLOB(Size cbSize)
 
 Status Bindings::Clear()
 {
-	for (auto iter = m_vectorArgs.begin(); iter != m_vectorArgs.end(); ++iter)
+	for (ArgsVector::iterator iter = m_vectorArgs.begin(); iter != m_vectorArgs.end(); ++iter)
 	{
 		if (ArgType_String == iter->nType)
 		{
