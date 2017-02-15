@@ -57,7 +57,10 @@ public:
 
 	virtual bool IsAbsPath(const Char *szPath);
 
+#pragma push_macro("CopyFile")
+#undef CopyFile
 	virtual Status CopyFile(const Char *szOldPath, const Char *szNewPath);
+#pragma pop_macro("CopyFile")
 
 	virtual Status RenameFile(const Char *szOldPath, const Char *szNewPath);
 

@@ -12,8 +12,6 @@ else
 	LOCAL_CFLAGS += -DNDEBUG
 endif
 
-#LOCAL_CFLAGS += -DLZHAM_ANSI_CPLUSPLUS=1
-
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../../Include \
 $(LOCAL_PATH)/../../../Contrib/BLAKE2/Include \
@@ -28,7 +26,6 @@ $(LOCAL_PATH)/../../../Contrib/Expat/Src \
 $(LOCAL_PATH)/../../../Contrib/LZ4/Include \
 $(LOCAL_PATH)/../../../Contrib/LZHAM/Include \
 $(LOCAL_PATH)/../../../Contrib/MD5/Include \
-$(LOCAL_PATH)/../../../Contrib/Mintomic/Include \
 $(LOCAL_PATH)/../../../Contrib/RapidJSON/Include \
 $(LOCAL_PATH)/../../../Contrib/SHA/Include \
 $(LOCAL_PATH)/../../../Contrib/Snappy/Include \
@@ -129,6 +126,8 @@ $(LOCAL_PATH)/../../../../Src/Log/DefaultFormatter.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/Logger.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/StreamOutput.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/Platform/Android/SystemOutput_android.cpp \
+$(LOCAL_PATH)/../../../../Src/Network/URLParser.cpp \
+$(LOCAL_PATH)/../../../../Src/Network/HTTP/Client.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONReader.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONWriter.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/BINReader.cpp \
@@ -159,6 +158,7 @@ $(LOCAL_PATH)/../../../../Src/Var.cpp \
 $(LOCAL_PATH)/../../../../Src/CXVersion.cpp \
 $(LOCAL_PATH)/../../../../Src/Mem.cpp \
 $(LOCAL_PATH)/../../../../Src/Status.cpp \
+$(LOCAL_PATH)/../../../../Src/Value.cpp \
 $(LOCAL_PATH)/../../../../Src/Var.cpp 
 
 include $(BUILD_STATIC_LIBRARY)

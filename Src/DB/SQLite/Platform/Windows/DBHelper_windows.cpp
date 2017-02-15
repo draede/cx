@@ -189,7 +189,7 @@ Status DBHelper::Close()
 	{
 		Sys::Locker locker(&m_lockStatements);
 
-		for (auto iter = m_mapAvailStatements.begin(); iter != m_mapAvailStatements.end(); ++iter)
+		for (AvailStatementsMap::iterator iter = m_mapAvailStatements.begin(); iter != m_mapAvailStatements.end(); ++iter)
 		{
 			while (!iter->second.empty())
 			{

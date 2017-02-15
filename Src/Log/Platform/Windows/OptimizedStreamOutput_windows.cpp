@@ -182,7 +182,7 @@ unsigned long __stdcall  OptimizedStreamOutput::ThreadProc(void *pArg)
 		{
 			if (NULL != pThis->m_hFile)
 			{
-				for (auto iter = pVectorStrings->begin(); iter != pVectorStrings->end(); iter++)
+				for (StringsVector::iterator iter = pVectorStrings->begin(); iter != pVectorStrings->end(); iter++)
 				{
 					WriteFile(pThis->m_hFile, iter->c_str(), (DWORD)iter->size(), &dwAckSize, NULL);
 				}

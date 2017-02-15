@@ -99,7 +99,10 @@ bool LocalFileSysHelper::IsAbsPath(const Char *szPath)
 	return false;
 }
 
+#pragma push_macro("CopyFile")
+#undef CopyFile
 Status LocalFileSysHelper::CopyFile(const Char *szOldPath, const Char *szNewPath)
+#pragma pop_macro("CopyFile")
 {
 	WString wsOldPath;
 	WString wsNewPath;

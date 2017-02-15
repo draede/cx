@@ -179,7 +179,7 @@ bool Profiler::GetProfiling(IProfilingHandler *pProfilingHandler)
 		return false;
 	}
 
-	for (auto iter = vectorCalls.begin(); iter != vectorCalls.end(); ++iter)
+	for (HotSpotsVector::iterator iter = vectorCalls.begin(); iter != vectorCalls.end(); ++iter)
 	{
 		UInt64 cMin   = (UInt64)(iter->cMinDuration / lfRes);
 		UInt64 cMax   = (UInt64)(iter->cMaxDuration / lfRes);
@@ -204,7 +204,7 @@ bool Profiler::GetProfiling(IProfilingHandler *pProfilingHandler)
 		return false;
 	}
 
-	for (auto iter = vectorDurations.begin(); iter != vectorDurations.end(); ++iter)
+	for (HotSpotsVector::iterator iter = vectorDurations.begin(); iter != vectorDurations.end(); ++iter)
 	{
 		UInt64 cMin   = (UInt64)(iter->cMinDuration / lfRes);
 		UInt64 cMax   = (UInt64)(iter->cMaxDuration / lfRes);
@@ -372,17 +372,17 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 	{
 		HotSpotName hsn;
 
-		hsn.szFileName = pScope->szFileName;
+		hsn.szFileName  = pScope->szFileName;
 		hsn.szScopeName = pScope->szScopeName;
-		hsn.cLineNo = pScope->cLineNo;
+		hsn.cLineNo     = pScope->cLineNo;
 
 		{
-			auto    iterMap = mapCalls.find(hsn);
-			HotSpot hs;
+			HotSpotsMap::iterator   iterMap = mapCalls.find(hsn);
+			HotSpot                 hs;
 
 			if (mapCalls.end() != iterMap && vectorCalls.size() > iterMap->second)
 			{
-				auto iterVector = vectorCalls.begin() + iterMap->second;
+				HotSpotsVector::iterator iterVector = vectorCalls.begin() + iterMap->second;
 
 				if (iterVector->cMinDuration > pScope->cMinDuration)
 				{
@@ -410,7 +410,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 
 			bool bAdded = false;
 
-			for (auto iter = vectorCalls.begin(); iter != vectorCalls.end(); ++iter)
+			for (HotSpotsVector::iterator iter = vectorCalls.begin(); iter != vectorCalls.end(); ++iter)
 			{
 				if (iter->cCalls < hs.cCalls)
 				{
@@ -445,7 +445,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 			}
 			if (cMaxCallHotSpots < vectorCalls.size())
 			{
-				auto iter = vectorCalls.end();
+				HotSpotsVector::iterator iter = vectorCalls.end();
 
 				iter--;
 				mapCalls.erase(mapCalls.find(iter->name));
@@ -454,12 +454,12 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 		}
 
 		{
-			auto    iterMap = mapDurations.find(hsn);
-			HotSpot hs;
+			HotSpotsMap::iterator iterMap = mapDurations.find(hsn);
+			HotSpot               hs;
 
 			if (mapDurations.end() != iterMap && vectorDurations.size() > iterMap->second)
 			{
-				auto iterVector = vectorDurations.begin() + iterMap->second;
+				HotSpotsVector::iterator iterVector = vectorDurations.begin() + iterMap->second;
 
 				if (iterVector->cMinDuration > pScope->cMinDuration)
 				{
@@ -487,7 +487,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 
 			bool bAdded = false;
 
-			for (auto iter = vectorDurations.begin(); iter != vectorDurations.end(); ++iter)
+			for (HotSpotsVector::iterator iter = vectorDurations.begin(); iter != vectorDurations.end(); ++iter)
 			{
 				if (iter->cTotalDuration < hs.cTotalDuration)
 				{
@@ -522,7 +522,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 			}
 			if (cMaxDurationHotSpots < vectorDurations.size())
 			{
-				auto iter = vectorDurations.end();
+				HotSpotsVector::iterator iter = vectorDurations.end();
 
 				iter--;
 				mapDurations.erase(mapDurations.find(iter->name));

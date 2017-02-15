@@ -78,18 +78,18 @@ Status Client::Open(const Char *szHost, unsigned int nFlags/* = 0*/, UInt16 nPor
 	if ((nFlags & Flag_PersistentCookies))
 	{
 #ifdef CX_OS_WINDOWS
-		curl_easy_setopt(m_pHandle, CURLOPT_COOKIEJAR, "NUL");
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_COOKIEJAR, "NUL");
 #else
-		curl_easy_setopt(m_pHandle, CURLOPT_COOKIEJAR, "/dev/null");
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_COOKIEJAR, "/dev/null");
 #endif
 	}
 	if ((nFlags & Flag_Debug))
 	{
-		curl_easy_setopt(m_pHandle, CURLOPT_VERBOSE, 1);
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_VERBOSE, 1);
 	}
 	else
 	{
-		curl_easy_setopt(m_pHandle, CURLOPT_VERBOSE, 0);
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_VERBOSE, 0);
 	}
 
 	return Status();
@@ -104,7 +104,7 @@ Status Client::Close()
 	}
 	if (NULL != m_pHandle)
 	{
-		curl_easy_cleanup(m_pHandle);
+		curl_easy_cleanup((CURL *)m_pHandle);
 		m_pHandle = NULL;
 	}
 
@@ -125,7 +125,7 @@ Status Client::SetUserAgent(const Char *szUserAgent)
 
 	CURLcode nCode;
 
-	if (CURLE_OK != (nCode = curl_easy_setopt(m_pHandle, CURLOPT_USERAGENT, szUserAgent)))
+	if (CURLE_OK != (nCode = curl_easy_setopt((CURL *)m_pHandle, CURLOPT_USERAGENT, szUserAgent)))
 	{
 		return Status(Status_OperationFailed, "curl_easy_setopt(CURLOPT_USERAGENT) failed with error {1}", (int)nCode);
 	}
@@ -142,7 +142,7 @@ Status Client::SetReferer(const Char *szReferer)
 
 	CURLcode nCode;
 
-	if (CURLE_OK != (nCode = curl_easy_setopt(m_pHandle, CURLOPT_REFERER, szReferer)))
+	if (CURLE_OK != (nCode = curl_easy_setopt((CURL *)m_pHandle, CURLOPT_REFERER, szReferer)))
 	{
 		return Status(Status_OperationFailed, "curl_easy_setopt(CURLOPT_REFERER) failed with error {1}", (int)nCode);
 	}
@@ -198,7 +198,7 @@ Status Client::RemoveAllHeaders()
 	{
 		return Status_NotInitialized;
 	}
-	curl_easy_setopt(m_pHandle, CURLOPT_HTTPHEADER, NULL);
+	curl_easy_setopt((CURL *)m_pHandle, CURLOPT_HTTPHEADER, NULL);
 	if (NULL != m_pHeaders)
 	{
 		curl_slist_free_all((struct curl_slist *)m_pHeaders);
@@ -221,11 +221,11 @@ Status Client::Perform(const Char *szURI, const Char *szVerb, ScopePtr<IO::IInpu
 	WriteUserData wdata;
 
 	Print(&sURL, "{1}://{2}:{3}{4}", m_bSSL ? "https" : "http", m_sHost, m_nPort, szURI);
-	curl_easy_setopt(m_pHandle, CURLOPT_URL, sURL.c_str());
-	curl_easy_setopt(m_pHandle, CURLOPT_FOLLOWLOCATION, 1);
+	curl_easy_setopt((CURL *)m_pHandle, CURLOPT_URL, sURL.c_str());
+	curl_easy_setopt((CURL *)m_pHandle, CURLOPT_FOLLOWLOCATION, 1);
 	if (0 == cx_stricmp(szVerb, "POST") && request.IsValid())
 	{
-		curl_easy_setopt(m_pHandle, CURLOPT_POST, 1);
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_POST, 1);
 
 		UInt64 cbSize;
 		Status status;
@@ -238,29 +238,29 @@ Status Client::Perform(const Char *szURI, const Char *szVerb, ScopePtr<IO::IInpu
 		{
 			return Status_TooBig;
 		}
-		curl_easy_setopt(m_pHandle, CURLOPT_POSTFIELDSIZE, (size_t)cbSize);
-		curl_easy_setopt(m_pHandle, CURLOPT_READFUNCTION, &Client::ReadCallback);
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_POSTFIELDSIZE, (size_t)cbSize);
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_READFUNCTION, &Client::ReadCallback);
 		rdata.pClient      = this;
 		rdata.pInputStream = request.Get();
-		curl_easy_setopt(m_pHandle, CURLOPT_READDATA, (void *)&rdata);
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_READDATA, (void *)&rdata);
 	}
 	else
 	{
-		curl_easy_setopt(m_pHandle, CURLOPT_POST, 0);
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_POST, 0);
 	}
-	curl_easy_setopt(m_pHandle, CURLOPT_WRITEFUNCTION, &Client::WriteCallback);
+	curl_easy_setopt((CURL *)m_pHandle, CURLOPT_WRITEFUNCTION, &Client::WriteCallback);
 	wdata.pClient       = this;
 	wdata.pOutputStream = response.Get();
-	curl_easy_setopt(m_pHandle, CURLOPT_WRITEDATA, (void *)&wdata);
+	curl_easy_setopt((CURL *)m_pHandle, CURLOPT_WRITEDATA, (void *)&wdata);
 
 	if (NULL != m_pHeaders)
 	{
-		curl_easy_setopt(m_pHandle, CURLOPT_HTTPHEADER, m_pHeaders);
+		curl_easy_setopt((CURL *)m_pHandle, CURLOPT_HTTPHEADER, m_pHeaders);
 	}
 
 	CURLcode nCode;
 
-	if (CURLE_OK != (nCode = curl_easy_perform(m_pHandle)))
+	if (CURLE_OK != (nCode = curl_easy_perform((CURL *)m_pHandle)))
 	{
 		return Status(Status_OperationFailed, "curl_easy_perform failed with error {1}", (int)nCode);
 	}
@@ -269,7 +269,7 @@ Status Client::Perform(const Char *szURI, const Char *szVerb, ScopePtr<IO::IInpu
 	{
 		long nStatusCode;
 
-		if (CURLE_OK != (nCode = curl_easy_getinfo(m_pHandle, CURLINFO_RESPONSE_CODE, &nStatusCode)))
+		if (CURLE_OK != (nCode = curl_easy_getinfo((CURL *)m_pHandle, CURLINFO_RESPONSE_CODE, &nStatusCode)))
 		{
 			return Status(Status_OperationFailed, "curl_easy_getinfo failed with error {1}", (int)nCode);
 		}
@@ -359,7 +359,7 @@ Status Client::DownloadURL(const Char *szURL, ScopePtr<IO::IOutputStream> respon
 		return status;
 	}
 	client.SetUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0");
-	if (!(status = client.Perform(sURI.c_str(), "GET", NULL, response, &nStatusCode)))
+	if (!(status = client.Perform(sURI.c_str(), "GET", ScopePtr<IO::IInputStream>(NULL), response, &nStatusCode)))
 	{
 		return status;
 	}

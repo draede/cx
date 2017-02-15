@@ -215,7 +215,7 @@ unsigned long __stdcall TaskExecutor::ThreadProc(void *pArg)
 				if (!vectorTasks.empty())
 				{
 					pThis->m_pCustomExecutor->ExecuteTasks(vectorTasks);
-					for (auto iter = vectorTasks.begin(); iter != vectorTasks.end(); ++iter)
+					for (TaskQueue::TasksVector::iterator iter = vectorTasks.begin(); iter != vectorTasks.end(); ++iter)
 					{
 						(*iter)->Release();
 					}

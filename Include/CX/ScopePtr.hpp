@@ -125,6 +125,11 @@ public:
 		return m_pInst;
 	}
 
+	operator T*()
+	{
+		return m_pInst;
+	}
+
 private:
 
 	T    *m_pInst;
