@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := cx
 
-LOCAL_CFLAGS := -DHAVE_EXPAT_CONFIG_H
+LOCAL_CFLAGS := -DHAVE_EXPAT_CONFIG_H -DWFMO
 
 ifeq ($(APP_OPTIM), debug)
 	LOCAL_CFLAGS += -D_DEBUG -g
@@ -26,6 +26,7 @@ $(LOCAL_PATH)/../../../Contrib/Expat/Src \
 $(LOCAL_PATH)/../../../Contrib/LZ4/Include \
 $(LOCAL_PATH)/../../../Contrib/LZHAM/Include \
 $(LOCAL_PATH)/../../../Contrib/MD5/Include \
+$(LOCAL_PATH)/../../../Contrib/PEvents/Include \
 $(LOCAL_PATH)/../../../Contrib/RapidJSON/Include \
 $(LOCAL_PATH)/../../../Contrib/SHA/Include \
 $(LOCAL_PATH)/../../../Contrib/Snappy/Include \
@@ -101,12 +102,18 @@ $(LOCAL_PATH)/../../../../Src/Data/XML/XMLNode.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/XML/XMLSAXParser.cpp \
 $(LOCAL_PATH)/../../../../Src/DB/SQLite/Bindings.cpp \
 $(LOCAL_PATH)/../../../../Src/DB/SQLite/Database.cpp \
+$(LOCAL_PATH)/../../../../Src/DB/SQLite/DBHelper.cpp \
 $(LOCAL_PATH)/../../../../Src/DB/SQLite/Statement.cpp \
 $(LOCAL_PATH)/../../../../Src/DB/SQLite/Transaction.cpp \
+$(LOCAL_PATH)/../../../../Src/Debug/Profiler.cpp \
+$(LOCAL_PATH)/../../../../Src/Debug/ScopeProfiler.cpp \
+$(LOCAL_PATH)/../../../../Src/Debug/SysLogProfilingHandler.cpp \
+$(LOCAL_PATH)/../../../../Src/Debug/ThreadProfiler.cpp \
 $(LOCAL_PATH)/../../../../Src/Detail/DetailPrint/Platform/Android/DetailPrint_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/BLAKE2Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/CRC32Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/MD5Hash.cpp \
+$(LOCAL_PATH)/../../../../Src/Hash/MultiHash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA1Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA256Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA384Hash.cpp \
@@ -125,6 +132,7 @@ $(LOCAL_PATH)/../../../../Src/Log/ConsoleOutput.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/DefaultFormatter.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/Logger.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/StreamOutput.cpp \
+$(LOCAL_PATH)/../../../../Src/Log/OptimizedStreamOutput.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/Platform/Android/SystemOutput_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Network/URLParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Network/HTTP/Client.cpp \
@@ -142,10 +150,13 @@ $(LOCAL_PATH)/../../../../Src/Str/WildMat.cpp \
 $(LOCAL_PATH)/../../../../Src/Str/Z85BinStr.cpp \
 $(LOCAL_PATH)/../../../../Src/Str/Platform/Android/UTF8_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/DynLib_android.cpp \
+$(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Event_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Lock_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Process_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/RWLock_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Thread_android.cpp \
+$(LOCAL_PATH)/../../../../Src/Util/DynMember.cpp \
+$(LOCAL_PATH)/../../../../Src/Util/DynStruct.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/MemPool.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/RCMemBuffer.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/RCMemBufferMgr.cpp \

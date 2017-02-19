@@ -38,6 +38,8 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/APIDefs.hpp"
+#include <pthread.h>
+#include <functional>
 
 
 namespace CX
@@ -66,7 +68,20 @@ public:
 
 	static void Sleep(Size cMilliseconds);
 
+	Status Run(const std::function<void()> &func);
+
 private:
+
+	struct ThreadData
+	{
+		std::function<void()> func;
+		Thread                *pThis;
+	};
+
+	pthread_t   m_hThread;
+	bool        m_bRunning;
+
+	static void *ThreadProc(void *pArg);
 
 };
 

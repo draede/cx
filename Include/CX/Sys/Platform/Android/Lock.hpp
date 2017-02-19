@@ -39,6 +39,7 @@
 #include "CX/Status.hpp"
 #include "CX/Scope.hpp"
 #include "CX/APIDefs.hpp"
+#include <pthread.h>
 
 
 namespace CX
@@ -61,7 +62,8 @@ public:
 
 private:
 
-	bool              m_bMutexIsOK;
+	pthread_mutex_t   m_mutex;
+	bool              m_bOK;
 
 };
 

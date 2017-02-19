@@ -62,22 +62,26 @@ Status DynLib::Load(const Char *szPath)
 {
 	Unload();
 
-	WString wsPath;
-	Status  status;
-
-	status = Str::UTF8::ToWChar(szPath, &wsPath);
-	if (status.IsNOK())
-	{
-		return status;
-	}
-
-	if (NULL == (m_hHandle = LoadLibraryW(wsPath.c_str())))
+	if (NULL == (m_hHandle = LoadLibraryA(szPath)))
 	{
 		return Status(Status_FileNotFound, "Failed to load library");
 	}
 
 	return Status();
 }
+
+Status DynLib::Load(const WChar *wszPath)
+{
+	Unload();
+
+	if (NULL == (m_hHandle = LoadLibraryW(wszPath)))
+	{
+		return Status(Status_FileNotFound, "Failed to load library");
+	}
+
+	return Status();
+}
+
 
 Status DynLib::Unload()
 {

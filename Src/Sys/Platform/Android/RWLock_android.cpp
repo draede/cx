@@ -44,27 +44,55 @@ namespace Sys
 
 RWLock::RWLock()
 {
-	m_bRWLockIsOK = false;
+	m_bOK = (0 == pthread_rwlock_init(&m_rwlock, NULL));
 }
 
 RWLock::~RWLock()
 {
+	if (m_bOK)
+	{
+		pthread_rwlock_destroy(&m_rwlock);
+	}
 }
 
 void RWLock::EnterRead()
 {
+	if (!m_bOK)
+	{
+		return;
+	}
+
+	pthread_rwlock_rdlock(&m_rwlock);
 }
 
 void RWLock::LeaveRead()
 {
+	if (!m_bOK)
+	{
+		return;
+	}
+
+	pthread_rwlock_unlock(&m_rwlock);
 }
 
 void RWLock::EnterWrite()
 {
+	if (!m_bOK)
+	{
+		return;
+	}
+
+	pthread_rwlock_wrlock(&m_rwlock);
 }
 
 void RWLock::LeaveWrite()
 {
+	if (!m_bOK)
+	{
+		return;
+	}
+
+	pthread_rwlock_unlock(&m_rwlock);
 }
 
 }//namespace Sys

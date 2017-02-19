@@ -44,19 +44,35 @@ namespace Sys
 
 Lock::Lock()
 {
-	m_bMutexIsOK = false;
+	m_bOK = (0 == pthread_mutex_init(&m_mutex, NULL));
 }
 
 Lock::~Lock()
 {
+	if (m_bOK)
+	{
+		pthread_mutex_destroy(&m_mutex);
+	}
 }
 
 void Lock::Enter()
 {
+	if (!m_bOK)
+	{
+		return;
+	}
+
+	pthread_mutex_lock(&m_mutex);
 }
 
 void Lock::Leave()
 {
+	if (!m_bOK)
+	{
+		return;
+	}
+
+	pthread_mutex_unlock(&m_mutex);
 }
 
 }//namespace Sys

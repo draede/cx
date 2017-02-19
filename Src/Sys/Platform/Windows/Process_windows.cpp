@@ -149,7 +149,7 @@ Status Process::GetCurrentProcessDir(String &sDir)
 			}
 			pszPos--;
 		}
-		if (pszPos >= pszStart && '\\' == *pszPos)
+		if (pszPos >= pszStart && ('\\' == *pszPos || '/' == *pszPos))
 		{
 			sDir.assign(pszStart, pszPos - pszStart);
 		}

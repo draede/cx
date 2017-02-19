@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014-2015 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2017 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -42,8 +42,6 @@ using namespace CX;
 
 void DB_SQLite_Test()
 {
-	Print(stdout, "Begin DB SQLite test\n");
-
 	DB::SQLite::Database    db;
 	Status                  status;
 
@@ -149,8 +147,6 @@ void DB_SQLite_Test()
 	{
 		Print(stdout, "Open : {1}\n", status.GetMsg());
 	}
-
-	Print(stdout, "End DB SQLite test\n");
 }
 
 struct WriterData
@@ -411,9 +407,9 @@ void DB_SQLite_TestDBHelper()
 	unlink("testdbh.db");
 	if ((status = dbh.Open("testdbh.db")).IsOK())
 	{
-		Util::Timer timer;
-		double      lfElapsed;
-		Size        cCount = 1000000;
+		Util::Timer          timer;
+		double               lfElapsed;
+		Size                 cCount     = 1000000;
 		DB::SQLite::Bindings **bindings = (DB::SQLite::Bindings **)malloc(sizeof(DB::SQLite::Bindings *) *cCount);
 
 		for (Size i = 0; i < cCount; i++)

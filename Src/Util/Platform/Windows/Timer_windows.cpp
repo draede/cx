@@ -45,6 +45,7 @@ namespace Util
 Timer::Timer()
 {
 	QueryPerformanceFrequency(&m_liTimerResolution);
+	m_lfTimerResolutionNS = (double)m_liTimerResolution.QuadPart / 1000000000.0;
 	QueryPerformanceCounter(&m_liStartTimer);
 }
 
@@ -72,6 +73,18 @@ double Timer::GetElapsedTime() const
 	}
 
 	return (double)(lint.QuadPart - m_liStartTimer.QuadPart) / m_liTimerResolution.QuadPart;
+}
+
+UInt64 Timer::GetElapsedTimeInNS() const
+{
+	LARGE_INTEGER lint;
+
+	if (!QueryPerformanceCounter(&lint))
+	{
+		return 0;
+	}
+
+	return (UInt64)((lint.QuadPart - m_liStartTimer.QuadPart) / m_lfTimerResolutionNS);
 }
 
 }//namespace Util

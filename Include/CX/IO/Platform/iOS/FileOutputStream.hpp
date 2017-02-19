@@ -51,9 +51,9 @@ class CX_API FileOutputStream : public IOutputStream
 {
 public:
 
-	FileOutputStream(const Char *szPath);
+	FileOutputStream(const Char *szPath, bool bAppend = false);
 
-	FileOutputStream(const WChar *wszPath);
+	FileOutputStream(const WChar *wszPath, bool bAppend = false);
 
 	~FileOutputStream();
 

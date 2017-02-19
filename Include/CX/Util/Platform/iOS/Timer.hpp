@@ -59,9 +59,13 @@ public:
 
 	double GetElapsedTime() const;
 
+	UInt64 GetElapsedTimeInNS() const;
+
 private:
 
-	struct timeval   m_start;
+	struct timespec   m_start;
+
+	static void GetTimeSpecDiff(const struct timespec *pStart, const struct timespec *pStop, struct timespec *pDiff);
 
 };
 

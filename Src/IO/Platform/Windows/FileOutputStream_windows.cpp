@@ -43,7 +43,7 @@ namespace CX
 namespace IO
 {
 
-FileOutputStream::FileOutputStream(const Char *szPath)
+FileOutputStream::FileOutputStream(const Char *szPath, bool bAppend/* = false*/)
 {
 	WString wsPath;
 
@@ -51,15 +51,15 @@ FileOutputStream::FileOutputStream(const Char *szPath)
 	m_sPath = szPath;
 	if (Str::UTF8::ToWChar(szPath, &wsPath).IsOK())
 	{
-		OpenFile(wsPath.c_str());
+		OpenFile(wsPath.c_str(), bAppend);
 	}
 }
 
-FileOutputStream::FileOutputStream(const WChar *wszPath)
+FileOutputStream::FileOutputStream(const WChar *wszPath, bool bAppend/* = false*/)
 {
 	m_hFile = NULL;
 	Str::UTF8::FromWChar(wszPath, &m_sPath);
-	OpenFile(wszPath);
+	OpenFile(wszPath, bAppend);
 }
 
 FileOutputStream::~FileOutputStream()
@@ -71,9 +71,10 @@ FileOutputStream::~FileOutputStream()
 	}
 }
 
-Status FileOutputStream::OpenFile(const WChar *wszPath)
+Status FileOutputStream::OpenFile(const WChar *wszPath, bool bAppend)
 {
-	if (INVALID_HANDLE_VALUE == (m_hFile = CreateFileW(wszPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 
+	if (INVALID_HANDLE_VALUE == (m_hFile = CreateFileW(wszPath, bAppend ? FILE_APPEND_DATA : GENERIC_WRITE, 
+	                                                   FILE_SHARE_READ, NULL, bAppend ? OPEN_ALWAYS : CREATE_ALWAYS, 
 	                                                   FILE_ATTRIBUTE_NORMAL, NULL)))
 	{
 		m_hFile = NULL;

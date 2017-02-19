@@ -53,22 +53,45 @@ Timer::~Timer()
 
 Status Timer::ResetTimer()
 {
-	gettimeofday(&m_start, NULL);
+	clock_gettime(CLOCK_REALTIME, &m_start);
 
 	return Status();
 }
 
 double Timer::GetElapsedTime() const
 {
-	struct timeval 	stop;
-	double 				lfStart;
-	double 				lfStop;
-	
-	gettimeofday(&stop, NULL);
-	lfStart	= (double)(m_start.tv_sec) + 0.000001 * m_start.tv_usec;
-	lfStop	= (double)(stop.tv_sec) + 0.000001 * stop.tv_usec;
-	
-   return (lfStop - lfStart);
+	timespec stop;
+	timespec diff;
+
+	clock_gettime(CLOCK_REALTIME, &stop);
+	GetTimeSpecDiff(&m_start, &stop, &diff);
+
+	return (double)diff.tv_sec + (double)diff.tv_nsec / 1000000000.0;
+}
+
+UInt64 Timer::GetElapsedTimeInNS() const
+{
+	timespec stop;
+	timespec diff;
+
+	clock_gettime(CLOCK_REALTIME, &stop);
+	GetTimeSpecDiff(&m_start, &stop, &diff);
+
+	return diff.tv_sec * 1000000000 + diff.tv_nsec;
+}
+
+void Timer::GetTimeSpecDiff(const struct timespec *pStart, const struct timespec *pStop, struct timespec *pDiff)
+{
+	if ((pStop->tv_nsec - pStart->tv_nsec) < 0) 
+	{
+		pDiff->tv_sec = pStop->tv_sec - pStart->tv_sec - 1;
+		pDiff->tv_nsec = pStop->tv_nsec - pStart->tv_nsec + 1000000000;
+	}
+	else 
+	{
+		pDiff->tv_sec = pStop->tv_sec - pStart->tv_sec;
+		pDiff->tv_nsec = pStop->tv_nsec - pStart->tv_nsec;
+	}
 }
 
 }//namespace Util

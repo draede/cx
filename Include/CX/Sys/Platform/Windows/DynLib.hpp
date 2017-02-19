@@ -61,6 +61,8 @@ public:
 
 	Status Load(const Char *szPath);
 
+	Status Load(const WChar *wszPath);
+
 	Status Unload();
 
 	void *GetFunc(const Char *szName);

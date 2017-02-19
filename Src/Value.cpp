@@ -1,3 +1,30 @@
+/* 
+ * CX - C++ framework for general purpose development
+ *
+ * https://github.com/draede/cx
+ * 
+ * Copyright (C) 2014 - 2017 draede, draede [at] outlook [dot] com
+ *
+ * Released under the MIT License.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */ 
 
 #include "CX/Value.hpp"
 #include "CX/IO/MemInputStream.hpp"
@@ -375,8 +402,6 @@ Status Value::Copy(const Value &value)
 			return Status_InvalidArg;
 		}
 	}
-
-	return Status_InvalidArg;
 }
 
 Bool Value::HasParent()
@@ -453,13 +478,13 @@ Bool Value::IsArray() const
 	return (Type_Array == GetType()); 
 }
 
-Bool Value::GetNull(Status *pnStatus/* = NULL*/) const
+Bool Value::GetNull(Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return False;
@@ -467,18 +492,18 @@ Bool Value::GetNull(Status *pnStatus/* = NULL*/) const
 
 	if (IsNull())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_OK;
+			*pStatus = Status_OK;
 		}
 
 		return True;
 	}
 	else
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return False;
@@ -498,13 +523,13 @@ Status Value::SetNull()
 	return Status();
 }
 
-Bool Value::GetBool(Bool bDefault/* = DEFAULT_BOOL*/, Status *pnStatus/* = NULL*/) const
+Bool Value::GetBool(Bool bDefault/* = DEFAULT_BOOL*/, Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return DEFAULT_BOOL;
@@ -512,18 +537,18 @@ Bool Value::GetBool(Bool bDefault/* = DEFAULT_BOOL*/, Status *pnStatus/* = NULL*
 
 	if (IsBool())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_OK;
+			*pStatus = Status_OK;
 		}
 
 		return m_bBool;
 	}
 	else
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return bDefault;
@@ -544,13 +569,13 @@ Status Value::SetBool(Bool bValue)
 	return Status();
 }
 
-Int64 Value::GetInt(Int64 nDefault/* = DEFAULT_INT*/, Status *pnStatus/* = NULL*/) const
+Int64 Value::GetInt(Int64 nDefault/* = DEFAULT_INT*/, Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return DEFAULT_INT;
@@ -558,18 +583,18 @@ Int64 Value::GetInt(Int64 nDefault/* = DEFAULT_INT*/, Status *pnStatus/* = NULL*
 
 	if (IsInt())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_OK;
+			*pStatus = Status_OK;
 		}
 
 		return m_nInt;
 	}
 	else
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return nDefault;
@@ -590,13 +615,13 @@ Status Value::SetInt(Int64 nValue)
 	return Status();
 }
 
-Double Value::GetReal(Double lfDefault/* = DEFAULT_DOUBLE*/, Status *pnStatus/* = NULL*/) const
+Double Value::GetReal(Double lfDefault/* = DEFAULT_DOUBLE*/, Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return DEFAULT_REAL;
@@ -604,18 +629,18 @@ Double Value::GetReal(Double lfDefault/* = DEFAULT_DOUBLE*/, Status *pnStatus/* 
 
 	if (IsReal())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_OK;
+			*pStatus = Status_OK;
 		}
 
 		return m_lfReal;
 	}
 	else
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return lfDefault;
@@ -636,13 +661,13 @@ Status Value::SetReal(Double lfValue)
 	return Status();
 }
 
-const String &Value::GetString(const String &sDefault/* = DEFAULT_STRING*/, Status *pnStatus/* = NULL*/) const
+const String &Value::GetString(const String &sDefault/* = DEFAULT_STRING*/, Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return DEFAULT_STRING;
@@ -650,18 +675,18 @@ const String &Value::GetString(const String &sDefault/* = DEFAULT_STRING*/, Stat
 
 	if (IsString())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_OK;
+			*pStatus = Status_OK;
 		}
 
 		return *m_psString;
 	}
 	else
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return sDefault;
@@ -728,13 +753,13 @@ Status Value::SetAsObject()
 	return Status();
 }
 
-Size Value::GetItemsCount(Status *pnStatus/* = NULL*/) const
+Size Value::GetItemsCount(Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return 0;
@@ -742,31 +767,31 @@ Size Value::GetItemsCount(Status *pnStatus/* = NULL*/) const
 
 	if (IsArray())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_OK;
+			*pStatus = Status_OK;
 		}
 
 		return m_pArray->size();
 	}
 	else
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return 0;
 	}
 }
 
-Value &Value::AddItem(Status *pnStatus/* = NULL*/)
+Value &Value::AddItem(Status *pStatus/* = NULL*/)
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -774,9 +799,9 @@ Value &Value::AddItem(Status *pnStatus/* = NULL*/)
 
 	if (!IsArray())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -817,13 +842,13 @@ Status Value::AddItem(Value *pValue)
 	return Status();
 }
 
-Value &Value::InsertItem(int cIndex, Status *pnStatus/* = NULL*/)
+Value &Value::InsertItem(int cIndex, Status *pStatus/* = NULL*/)
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -831,9 +856,9 @@ Value &Value::InsertItem(int cIndex, Status *pnStatus/* = NULL*/)
 
 	if (!IsArray())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -841,9 +866,9 @@ Value &Value::InsertItem(int cIndex, Status *pnStatus/* = NULL*/)
 
 	if (0 > cIndex)
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -851,7 +876,7 @@ Value &Value::InsertItem(int cIndex, Status *pnStatus/* = NULL*/)
 
 	if (cIndex >= (int)m_pArray->size())
 	{
-		return AddItem(pnStatus);
+		return AddItem(pStatus);
 	}
 
 	Value *pValue;
@@ -950,13 +975,13 @@ Status Value::RemoveAllItems()
 	return Status();
 }
 
-const Value &Value::GetItem(int cIndex, Status *pnStatus/* = NULL*/) const
+const Value &Value::GetItem(int cIndex, Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -964,9 +989,9 @@ const Value &Value::GetItem(int cIndex, Status *pnStatus/* = NULL*/) const
 
 	if (!IsArray())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -974,9 +999,9 @@ const Value &Value::GetItem(int cIndex, Status *pnStatus/* = NULL*/) const
 
 	if (0 > cIndex || cIndex >= (int)m_pArray->size())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -985,13 +1010,13 @@ const Value &Value::GetItem(int cIndex, Status *pnStatus/* = NULL*/) const
 	return *(*m_pArray)[cIndex];
 }
 
-Value &Value::GetItem(int cIndex, Status *pnStatus/* = NULL*/) //-1 will create a new value at the end
+Value &Value::GetItem(int cIndex, Status *pStatus/* = NULL*/) //-1 will create a new value at the end
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -999,9 +1024,9 @@ Value &Value::GetItem(int cIndex, Status *pnStatus/* = NULL*/) //-1 will create 
 
 	if (!IsArray())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1009,14 +1034,14 @@ Value &Value::GetItem(int cIndex, Status *pnStatus/* = NULL*/) //-1 will create 
 
 	if (-1 == cIndex)
 	{
-		return AddItem(pnStatus);
+		return AddItem(pStatus);
 	}
 
 	if (0 > cIndex || cIndex >= (int)m_pArray->size())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1035,13 +1060,13 @@ Value &Value::operator[](int cIndex) //a non existing member will be created
 	return GetItem(cIndex);
 }
 
-Size Value::GetMembersCount(Status *pnStatus/* = NULL*/) const
+Size Value::GetMembersCount(Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return 0;
@@ -1049,9 +1074,9 @@ Size Value::GetMembersCount(Status *pnStatus/* = NULL*/) const
 
 	if (!IsObject())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return 0;
@@ -1060,13 +1085,13 @@ Size Value::GetMembersCount(Status *pnStatus/* = NULL*/) const
 	return m_pObject->size();
 }
 
-Bool Value::Exists(const String &sName, Status *pnStatus/* = NULL*/) const
+Bool Value::Exists(const String &sName, Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return False;
@@ -1074,9 +1099,9 @@ Bool Value::Exists(const String &sName, Status *pnStatus/* = NULL*/) const
 
 	if (!IsObject())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return False;
@@ -1085,13 +1110,13 @@ Bool Value::Exists(const String &sName, Status *pnStatus/* = NULL*/) const
 	return (m_pObject->end() != m_pObject->find(sName));
 }
 
-Value &Value::AddMember(const String &sName, Status *pnStatus/* = NULL*/)
+Value &Value::AddMember(const String &sName, Status *pStatus/* = NULL*/)
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -1099,9 +1124,9 @@ Value &Value::AddMember(const String &sName, Status *pnStatus/* = NULL*/)
 
 	if (!IsObject())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1200,13 +1225,13 @@ Status Value::RemoveAllMembers()
 	return Status();
 }
 
-Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Status *pnStatus/* = NULL*/)
+Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Status *pStatus/* = NULL*/)
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -1214,9 +1239,9 @@ Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Status *p
 
 	if (!IsObject())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1224,9 +1249,9 @@ Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Status *p
 
 	if (cIndex >= m_pObject->size())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1247,13 +1272,13 @@ Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Status *p
 	return *iter->second;
 }
 
-const Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Status *pnStatus/* = NULL*/) const
+const Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -1261,9 +1286,9 @@ const Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Sta
 
 	if (!IsObject())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1271,9 +1296,9 @@ const Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Sta
 
 	if (cIndex >= m_pObject->size())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1294,13 +1319,13 @@ const Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Sta
 	return *iter->second;
 }
 
-const Value &Value::GetMember(const String &sName, Status *pnStatus/* = NULL*/) const
+const Value &Value::GetMember(const String &sName, Status *pStatus/* = NULL*/) const
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -1308,9 +1333,9 @@ const Value &Value::GetMember(const String &sName, Status *pnStatus/* = NULL*/) 
 
 	if (!IsObject())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1320,9 +1345,9 @@ const Value &Value::GetMember(const String &sName, Status *pnStatus/* = NULL*/) 
 
 	if (m_pObject->end() == iter)
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_NotFound;
+			*pStatus = Status_NotFound;
 		}
 
 		return INVALID_VALUE;
@@ -1331,13 +1356,13 @@ const Value &Value::GetMember(const String &sName, Status *pnStatus/* = NULL*/) 
 	return *iter->second;
 }
 
-Value &Value::GetMember(const String &sName, Status *pnStatus/* = NULL*/) //a non existing member will be created
+Value &Value::GetMember(const String &sName, Status *pStatus/* = NULL*/) //a non existing member will be created
 {
 	if (IsInvalid())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidCall;
+			*pStatus = Status_InvalidCall;
 		}
 
 		return INVALID_VALUE;
@@ -1345,9 +1370,9 @@ Value &Value::GetMember(const String &sName, Status *pnStatus/* = NULL*/) //a no
 
 	if (!IsObject())
 	{
-		if (NULL != pnStatus)
+		if (NULL != pStatus)
 		{
-			*pnStatus = Status_InvalidArg;
+			*pStatus = Status_InvalidArg;
 		}
 
 		return INVALID_VALUE;
@@ -1357,7 +1382,7 @@ Value &Value::GetMember(const String &sName, Status *pnStatus/* = NULL*/) //a no
 
 	if (m_pObject->end() == iter)
 	{
-		return AddMember(sName, pnStatus);
+		return AddMember(sName, pStatus);
 	}
 
 	return *iter->second;

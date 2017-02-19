@@ -35,6 +35,8 @@
 #include "CX/Sys/Process.hpp"
 #include "CX/C/stdlib.h"
 #include "CX/Status.hpp"
+#include <sys/types.h>
+#include <unistd.h>
 
 
 namespace CX
@@ -53,21 +55,21 @@ Process::~Process()
 
 Process::ID Process::GetCurrentProcessID()
 {
-	return 0;
+	return (ID)getpid();
 }
 
 Status Process::GetCurrentProcessPath(String &sPath)
 {
 	sPath.clear();
 
-	return Status();
+	return Status_NotSupported;
 }
 
 Status Process::GetCurrentProcessDir(String &sDir)
 {
 	sDir.clear();
 
-	return Status();
+	return Status_NotSupported;
 }
 
 }//namespace Sys

@@ -331,12 +331,6 @@
     <Filter Include="Source Files\Debug">
       <UniqueIdentifier>{ec6d28de-dcb5-4657-849f-981e97802780}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Debug\Platform">
-      <UniqueIdentifier>{8b409c38-ab1a-4743-964a-690b4168feaa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Debug\Platform\Windows">
-      <UniqueIdentifier>{15059cf5-8125-464f-bb56-13dab681207e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Debug">
       <UniqueIdentifier>{3ed6d8fe-3a7f-4393-a887-98c992eb5412}</UniqueIdentifier>
     </Filter>
@@ -354,18 +348,6 @@
     </Filter>
     <Filter Include="Source Files\DB\SQLite">
       <UniqueIdentifier>{73e930a3-c2ea-4451-b402-06a89773849a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\DB\SQLite\Platform">
-      <UniqueIdentifier>{ecdc416d-bfc6-4eca-ada3-eff0a2d8c9e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\DB\SQLite\Platform\Windows">
-      <UniqueIdentifier>{69098033-5bb7-417b-82e4-12cd7f5647ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\DB\SQLite\Platform">
-      <UniqueIdentifier>{a8ae9908-02af-43ee-9c10-4dba69cd70d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\DB\SQLite\Platform\Windows">
-      <UniqueIdentifier>{4b8c436e-e943-44e3-802e-54180696387b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1005,9 +987,6 @@
     <ClInclude Include="..\..\Include\CX\Log\OptimizedStreamOutput.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\OptimizedStreamOutput.hpp">
-      <Filter>Header Files\Log\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\JSON\Node.hpp">
       <Filter>Header Files\Data\JSON</Filter>
     </ClInclude>
@@ -1068,11 +1047,29 @@
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Bindings.hpp">
       <Filter>Header Files\DB\SQLite</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\DB\SQLite\Platform\Windows\DBHelper.hpp">
-      <Filter>Header Files\DB\SQLite\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Value.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Event.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Event.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Event.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Event.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\MultiHash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\DynMember.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\DynStruct.hpp">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1475,9 +1472,6 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskExecutor.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Log\Platform\Windows\OptimizedStreamOutput_windows.cpp">
-      <Filter>Source Files\Log\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\Expat\Src\xmlparse.c">
       <Filter>Contrib\Expat</Filter>
     </ClCompile>
@@ -1505,15 +1499,6 @@
     <ClCompile Include="..\..\Src\Str\WildMat.cpp">
       <Filter>Source Files\Str</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Debug\Platform\Windows\Profiler_windows.cpp">
-      <Filter>Source Files\Debug\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Debug\Platform\Windows\SysLogProfilingHandler_windows.cpp">
-      <Filter>Source Files\Debug\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Debug\Platform\Windows\ThreadProfiler_windows.cpp">
-      <Filter>Source Files\Debug\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Debug\ScopeProfiler.cpp">
       <Filter>Source Files\Debug</Filter>
     </ClCompile>
@@ -1534,9 +1519,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\DB\SQLite\Bindings.cpp">
       <Filter>Source Files\DB\SQLite</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\DB\SQLite\Platform\Windows\DBHelper_windows.cpp">
-      <Filter>Source Files\DB\SQLite\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\cURL\Src\vauth\cleartext.c">
       <Filter>Contrib\cURL</Filter>
@@ -1924,6 +1906,39 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Value.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\Profiler.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\SysLogProfilingHandler.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\ThreadProfiler.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\DBHelper.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Event_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Event_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Event_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\MultiHash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\OptimizedStreamOutput.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\DynMember.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\DynStruct.cpp">
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

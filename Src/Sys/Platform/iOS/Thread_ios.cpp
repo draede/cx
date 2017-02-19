@@ -34,6 +34,8 @@
 
 #include "CX/Sys/Thread.hpp"
 #include "CX/Status.hpp"
+#include <unistd.h>
+#include <pthread.h>
 
 
 namespace CX
@@ -44,6 +46,7 @@ namespace Sys
 
 Thread::Thread()
 {
+	m_bRunning = false;
 }
 
 Thread::~Thread()
@@ -52,27 +55,91 @@ Thread::~Thread()
 
 Status Thread::Wait()
 {
-	return Status();
+	if (!m_bRunning)
+	{
+		return Status_NotInitialized;
+	}
+
+	int nRet;
+
+	if (0 == (nRet = pthread_join(m_hThread, NULL)))
+	{
+		m_bRunning = false;
+
+		return Status();
+	}
+	else
+	{
+		return Status(Status_OperationFailed, "pthread_join failed with error {1}", nRet);
+	}
 }
 
 Bool Thread::IsRunning()
 {
-	return false;
+	return m_bRunning;
 }
 
 Thread::ID Thread::GetID()
 {
-	return 0;
+	if (!m_bRunning)
+	{
+		return 0;
+	}
+
+	return (Thread::ID)m_hThread;
 }
 
 Thread::ID Thread::GetCurrentThreadID()
 {
-	return 0;
+	return (Thread::ID)pthread_self();
 }
 
 void Thread::Sleep(Size cMilliseconds)
 {
-	CX_UNUSED(cMilliseconds);
+	usleep(cMilliseconds * 1000);
+}
+
+Status Thread::Run(const std::function<void()> &func)
+{
+	if (m_bRunning)
+	{
+		return Status(Status_Busy, "Thread already started");
+	}
+
+	ThreadData *pData = new ThreadData();
+
+	if (NULL == pData)
+	{
+		return Status(Status_MemAllocFailed, "Memory allocation error");
+	}
+
+	int nRet;
+
+	if (0 == (nRet = pthread_create(&m_hThread, NULL, &Thread::ThreadProc, pData)))
+	{
+		return Status();
+	}
+	else
+	{
+		delete pData;
+
+		return Status(Status_OperationFailed, "pthread_create failed with error {1}", nRet);
+	}
+}
+
+void *Thread::ThreadProc(void *pArg)
+{
+	ThreadData *pData = (ThreadData *)pArg;
+
+	pData->pThis->m_bRunning = true;
+
+	pData->func();
+
+	pData->pThis->m_bRunning = false;
+
+	delete pData;
+
+	return NULL;
 }
 
 }//namespace Sys

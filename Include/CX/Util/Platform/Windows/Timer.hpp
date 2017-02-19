@@ -59,9 +59,12 @@ public:
 
 	double GetElapsedTime() const;
 
+	UInt64 GetElapsedTimeInNS() const;
+
 private:
 
 	LARGE_INTEGER m_liTimerResolution;
+	double        m_lfTimerResolutionNS;
 	LARGE_INTEGER m_liStartTimer;
 
 };

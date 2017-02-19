@@ -51,9 +51,9 @@ class CX_API FileOutputStream : public IOutputStream
 {
 public:
 
-	FileOutputStream(const Char *szPath);
+	FileOutputStream(const Char *szPath, bool bAppend = false);
 
-	FileOutputStream(const WChar *wszPath);
+	FileOutputStream(const WChar *wszPath, bool bAppend = false);
 
 	~FileOutputStream();
 
@@ -76,7 +76,7 @@ private:
 	String   m_sPath;
 #pragma warning(pop)
 
-	Status OpenFile(const WChar *wszPath);
+	Status OpenFile(const WChar *wszPath, bool bAppend);
 
 };
 

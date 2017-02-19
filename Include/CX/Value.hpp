@@ -1,3 +1,30 @@
+/* 
+ * CX - C++ framework for general purpose development
+ *
+ * https://github.com/draede/cx
+ * 
+ * Copyright (C) 2014 - 2017 draede, draede [at] outlook [dot] com
+ *
+ * Released under the MIT License.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */ 
 
 #pragma once
 
@@ -82,23 +109,23 @@ public:
 
 	Bool IsArray() const;
 
-	Bool GetNull(Status *pnStatus = NULL) const;
+	Bool GetNull(Status *pStatus = NULL) const;
 
 	Status SetNull();
 
-	Bool GetBool(Bool bDefault = DEFAULT_BOOL, Status *pnStatus = NULL) const;
+	Bool GetBool(Bool bDefault = DEFAULT_BOOL, Status *pStatus = NULL) const;
 
 	Status SetBool(Bool bValue);
 
-	Int64 GetInt(Int64 nDefault = DEFAULT_INT, Status *pnStatus = NULL) const;
+	Int64 GetInt(Int64 nDefault = DEFAULT_INT, Status *pStatus = NULL) const;
 
 	Status SetInt(Int64 nValue);
 
-	Double GetReal(Double lfDefault = DEFAULT_REAL, Status *pnStatus = NULL) const;
+	Double GetReal(Double lfDefault = DEFAULT_REAL, Status *pStatus = NULL) const;
 
 	Status SetReal(Double lfValue);
 
-	const String &GetString(const String &sDefault = DEFAULT_STRING, Status *pnStatus = NULL) const;
+	const String &GetString(const String &sDefault = DEFAULT_STRING, Status *pStatus = NULL) const;
 
 	Status SetString(const String &sValue);
 
@@ -106,13 +133,13 @@ public:
 
 	Status SetAsObject();
 
-	Size GetItemsCount(Status *pnStatus = NULL) const;
+	Size GetItemsCount(Status *pStatus = NULL) const;
 
-	Value &AddItem(Status *pnStatus = NULL);
+	Value &AddItem(Status *pStatus = NULL);
 
 	Status AddItem(Value *pValue);
 
-	Value &InsertItem(int cIndex, Status *pnStatus = NULL);
+	Value &InsertItem(int cIndex, Status *pStatus = NULL);
 
 	Status InsertItem(int cIndex, Value *pValue);
 
@@ -120,19 +147,19 @@ public:
 
 	Status RemoveAllItems();
 
-	const Value &GetItem(int cIndex, Status *pnStatus = NULL) const;
+	const Value &GetItem(int cIndex, Status *pStatus = NULL) const;
 
-	Value &GetItem(int cIndex, Status *pnStatus = NULL); //-1 will create a new value at the end
+	Value &GetItem(int cIndex, Status *pStatus = NULL); //-1 will create a new value at the end
 
 	const Value &operator[](int cIndex) const;
 
 	Value &operator[](int cIndex); //a non existing member will be created
 
-	Size GetMembersCount(Status *pnStatus = NULL) const;
+	Size GetMembersCount(Status *pStatus = NULL) const;
 
-	Bool Exists(const String &sName, Status *pnStatus = NULL) const;
+	Bool Exists(const String &sName, Status *pStatus = NULL) const;
 
-	Value &AddMember(const String &sName, Status *pnStatus = NULL);
+	Value &AddMember(const String &sName, Status *pStatus = NULL);
 
 	Status AddMember(const String &sName, Value *pValue);
 
@@ -140,13 +167,13 @@ public:
 
 	Status RemoveAllMembers();
 
-	Value &GetMemberByIndex(Size cIndex, String *psName = NULL, Status *pnStatus = NULL);
+	Value &GetMemberByIndex(Size cIndex, String *psName = NULL, Status *pStatus = NULL);
 
-	const Value &GetMemberByIndex(Size cIndex, String *psName = NULL, Status *pnStatus = NULL) const;
+	const Value &GetMemberByIndex(Size cIndex, String *psName = NULL, Status *pStatus = NULL) const;
 
-	const Value &GetMember(const String &sName, Status *pnStatus = NULL) const;
+	const Value &GetMember(const String &sName, Status *pStatus = NULL) const;
 
-	Value &GetMember(const String &sName, Status *pnStatus = NULL); //a non existing member will be created
+	Value &GetMember(const String &sName, Status *pStatus = NULL); //a non existing member will be created
 
 	const Value &operator[](const String &sName) const;
 

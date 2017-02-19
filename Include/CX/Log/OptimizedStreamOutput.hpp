@@ -32,9 +32,74 @@
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Log/Platform/Windows/OptimizedStreamOutput.hpp"
-#elif defined(CX_OS_ANDROID)
-	#error "OptimizedStreamOutput.hpp not implemented on this platform"
-#endif
+#include "CX/IO/FileOutputStream.hpp"
+#include "CX/Log/IOutput.hpp"
+#include "CX/Sys/Lock.hpp"
+#include "CX/Sys/Thread.hpp"
+#include "CX/Sys/Event.hpp"
+#include "CX/Vector.hpp"
+#include "CX/APIDefs.hpp"
 
+
+namespace CX
+{
+
+namespace Log
+{
+
+class CX_API OptimizedStreamOutput : public IOutput
+{
+public:
+
+	OptimizedStreamOutput(const Char *szPath, bool bAppend = false, UInt32 cFlushDelay = 3000, Size cbMaxMem = 1048576);
+
+	OptimizedStreamOutput(const WChar *wszPath, bool bAppend = false, UInt32 cFlushDelay = 3000, 
+	                      Size cbMaxMem = 1048576);
+
+	~OptimizedStreamOutput();
+
+	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
+
+	virtual bool NeedsReopenWithNewPath(String *psPath)
+	{
+		CX_UNUSED(psPath);
+
+		return false;
+	}
+
+	virtual bool NeedsReopenWithNewPath(WString *pwsPath)
+	{
+		CX_UNUSED(pwsPath);
+
+		return false;
+	}
+
+private:
+
+	typedef Vector<String>::Type StringsVector;
+
+	IO::FileOutputStream   *m_pFOS;
+	Sys::Thread            m_threadWrite;
+	Sys::Event             m_eventStop;
+	StringsVector          *m_pVectorStrings;
+	Sys::Lock              m_lockStrings;
+	UInt32                 m_cFlushDelay;
+	Size                   m_cbMaxMem;
+	Size                   m_cbCrMem;
+	bool                   m_bWide;
+
+	void WriteThread();
+
+	Status Init(UInt32 cFlushDelay, Size cMaxMem);
+
+	Status Uninit();
+
+	Status Reopen(const Char *szPath);
+
+	Status Reopen(const WChar *wszPath);
+
+};
+
+}//namespace Log
+
+}//namespace CX

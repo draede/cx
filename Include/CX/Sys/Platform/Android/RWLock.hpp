@@ -38,6 +38,7 @@
 #include "CX/Types.hpp"
 #include "CX/Scope.hpp"
 #include "CX/APIDefs.hpp"
+#include <pthread.h>
 
 
 namespace CX
@@ -64,7 +65,8 @@ public:
 
 private:
 
-	bool               m_bRWLockIsOK;
+	pthread_rwlock_t   m_rwlock;
+	bool               m_bOK;
 
 };
 

@@ -142,7 +142,6 @@
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Bindings.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Database.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\DBHelper.hpp" />
-    <ClInclude Include="..\..\Include\CX\DB\SQLite\Platform\Windows\DBHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Statement.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Transaction.hpp" />
     <ClInclude Include="..\..\Include\CX\Debug\IProfilingHandler.hpp" />
@@ -162,6 +161,7 @@
     <ClInclude Include="..\..\Include\CX\Hash\CRC32Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\IHash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.hpp" />
+    <ClInclude Include="..\..\Include\CX\Hash\MultiHash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\SHA1Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\SHA256Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\SHA384Hash.hpp" />
@@ -204,7 +204,6 @@
     <ClInclude Include="..\..\Include\CX\Log\OptimizedStreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Android\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\SystemOutput.hpp" />
-    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\OptimizedStreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp" />
@@ -258,18 +257,22 @@
     <ClInclude Include="..\..\Include\CX\Sys\BOM.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\DynLib.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Event.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\DynLib.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Event.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Process.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\RWLock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Thread.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\DynLib.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Event.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Process.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\RWLock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Thread.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Event.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Process.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\RWLock.hpp" />
@@ -286,6 +289,8 @@
     <ClInclude Include="..\..\Include\CX\UOMultiMap.hpp" />
     <ClInclude Include="..\..\Include\CX\UOMultiSet.hpp" />
     <ClInclude Include="..\..\Include\CX\UOSet.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\DynMember.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\DynStruct.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Timer.hpp" />
@@ -5528,19 +5533,20 @@
     <ClCompile Include="..\..\Src\Data\XML\XMLSAXParser.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Bindings.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Database.cpp" />
-    <ClCompile Include="..\..\Src\DB\SQLite\Platform\Windows\DBHelper_windows.cpp" />
+    <ClCompile Include="..\..\Src\DB\SQLite\DBHelper.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Statement.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Transaction.cpp" />
-    <ClCompile Include="..\..\Src\Debug\Platform\Windows\Profiler_windows.cpp" />
-    <ClCompile Include="..\..\Src\Debug\Platform\Windows\SysLogProfilingHandler_windows.cpp" />
-    <ClCompile Include="..\..\Src\Debug\Platform\Windows\ThreadProfiler_windows.cpp" />
+    <ClCompile Include="..\..\Src\Debug\Profiler.cpp" />
     <ClCompile Include="..\..\Src\Debug\ScopeProfiler.cpp" />
+    <ClCompile Include="..\..\Src\Debug\SysLogProfilingHandler.cpp" />
+    <ClCompile Include="..\..\Src\Debug\ThreadProfiler.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Android\DetailPrint_android.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\iOS\DetailPrint_ios.cpp" />
     <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp" />
     <ClCompile Include="..\..\Src\Hash\BLAKE2Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp" />
+    <ClCompile Include="..\..\Src\Hash\MultiHash.cpp" />
     <ClCompile Include="..\..\Src\Hash\SHA1Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\SHA256Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\SHA384Hash.cpp" />
@@ -5565,9 +5571,9 @@
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
+    <ClCompile Include="..\..\Src\Log\OptimizedStreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput_android.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp" />
-    <ClCompile Include="..\..\Src\Log\Platform\Windows\OptimizedStreamOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />
@@ -5590,22 +5596,27 @@
     <ClCompile Include="..\..\Src\Str\WildMat.cpp" />
     <ClCompile Include="..\..\Src\Str\Z85BinStr.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Android\DynLib_android.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Event_android.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Android\Lock_android.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Android\Process_android.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Android\RWLock_android.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Android\Thread_android.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\iOS\DynLib_ios.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Event_ios.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\iOS\Lock_ios.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\iOS\Process_ios.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\iOS\RWLock_ios.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\iOS\Thread_ios.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Event_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskExecutor.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskQueue.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
+    <ClCompile Include="..\..\Src\Util\DynMember.cpp" />
+    <ClCompile Include="..\..\Src\Util\DynStruct.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Android\Timer_android.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Android\Time_android.cpp" />
@@ -5889,7 +5900,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;COMPILED_FROM_DSP;XML_STATIC;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/PEvents/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -5911,7 +5922,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;COMPILED_FROM_DSP;XML_STATIC;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/PEvents/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -5983,7 +5994,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;COMPILED_FROM_DSP;XML_STATIC;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/PEvents/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -6005,7 +6016,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;COMPILED_FROM_DSP;XML_STATIC;_DEBUG;_WINDOWS;BUILDING_LIBCURL;DEBUGBUILD;CURL_STATICLIB;_USRDLL;CX_API_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/PEvents/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -6073,7 +6084,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;COMPILED_FROM_DSP;XML_STATIC;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/PEvents/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -6099,7 +6110,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;COMPILED_FROM_DSP;XML_STATIC;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/PEvents/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -6183,7 +6194,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;COMPILED_FROM_DSP;XML_STATIC;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/PEvents/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -6209,7 +6220,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;USE_WINDOWS_SSPI;USE_SCHANNEL;COMPILED_FROM_DSP;XML_STATIC;NDEBUG;_WINDOWS;_USRDLL;CX_API_DYNAMIC;BUILDING_LIBCURL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/PEvents/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>

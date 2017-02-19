@@ -29,12 +29,168 @@
 #pragma once
 
 
-#include "CX/Platform.hpp"
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/DB/SQLite/Database.hpp"
+#include "CX/DB/SQLite/Statement.hpp"
+#include "CX/DB/SQLite/Transaction.hpp"
+#include "CX/Map.hpp"
+#include "CX/Queue.hpp"
+#include "CX/Sys/Lock.hpp"
+#include "CX/Sys/Event.hpp"
+#include "CX/Sys/Thread.hpp"
+#include "CX/C/stdarg.h"
 
 
-#if defined(CX_OS_WINDOWS)
-#include "CX/DB/SQLite/Platform/Windows/DBHelper.hpp"
-#else
-#error "DBHelper.hpp not implemented on this platform"
-#endif
+namespace CX
+{
+
+namespace DB
+{
+
+namespace SQLite
+{
+
+class DBHelper
+{
+public:
+
+	static const Size   MAX_ASYNC_OPERATIONS       = 5000; //5000 inserts + updates + deletes
+	static const UInt32 MAX_ASYNC_FLUSH_TIMEOUT    = 500;  //500 ms
+
+	class StatementScope
+	{
+	public:
+
+		StatementScope(DBHelper *pDBHelper, Size cIndex);
+
+		~StatementScope();
+
+		DBHelper *GetDBHelper();
+
+		Statement *GetStatement();
+
+		Size GetIndex();
+
+	private:
+
+		DBHelper    *m_pDBHelper;
+		Statement   *m_pStatement;
+		Size        m_cIndex;
+
+	};
+
+	class IAsyncOperationHandler
+	{
+	public:
+
+		virtual ~IAsyncOperationHandler() { }
+
+		virtual void OnCompletion(Statement *pStatement, const Status &status) = 0;
+
+		virtual void Release() = 0;
+
+	};
+
+	DBHelper();
+
+	DBHelper(const Char *szPath, 
+	         Size cMaxAsyncOperations = MAX_ASYNC_OPERATIONS, 
+	         UInt32 cMaxAsyncFlushTimeout = MAX_ASYNC_FLUSH_TIMEOUT, 
+	         unsigned int nFlags = DB::SQLite::Database::OPEN_DEFAULT);
+
+	~DBHelper();
+
+	Status Open(const Char *szPath, 
+	            Size cMaxAsyncOperations = MAX_ASYNC_OPERATIONS,
+	            UInt32 cMaxAsyncFlushTimeout = MAX_ASYNC_FLUSH_TIMEOUT,
+	            unsigned int nFlags = DB::SQLite::Database::OPEN_DEFAULT);
+
+	//statements must not be in use here!
+	Status Close();
+
+	bool IsOK() const;
+
+	Database &GetDB();
+
+	const Database &GetDB() const;
+
+	Status GetInitStatus() const; //status from constructor with args
+
+	Bindings *CreateBindings();
+
+	Bindings *CreateBindings(const Char *szArgsType, ...);
+
+	Bindings *CreateBindings(const Char *szArgsType, va_list vl);
+
+	void DestroyBindings(Bindings *pBindings);
+
+	//pBindings must be create with CreateBindings (after this call the ownership of pBindings is taken by DBHelper)
+	//pAsyncOperationHandler will be released with pAsyncOperationHandler->Release()
+	Status AddAsyncOperation(Size cStatementIndex, Bindings *pBindings,
+	                         IAsyncOperationHandler *pAsyncOperationHandler = NULL);
+
+	Status FlushAsyncOperations();
+	
+	//do not use this statement from multiple threads!!!
+	Status AcquireStatement(Size cIndex, DB::SQLite::Statement **ppStatement);
+
+	Status ReleaseStatement(DB::SQLite::Statement *pStatement);
+
+	virtual const Char *GetDDL() const = 0;//DDL must use 'if not exists' on every create (DDL will be run on every Open)
+
+	virtual const Char **GetStatements() const = 0;
+
+	virtual Size GetStatementsCount() const = 0;
+
+	virtual Status OnPreOpen() { return Status(); }
+
+	virtual Status OnPostOpen() { return Status(); }
+
+	virtual Status OnPreClose() { return Status(); }
+	
+	virtual Status OnPostClose() { return Status(); }
+
+private:
+
+	typedef CX::Queue<Statement *>::Type            StatementsQueue;
+
+	typedef CX::Map<Size, StatementsQueue>::Type    AvailStatementsMap;
+
+	typedef CX::Map<Statement *, Size>::Type        UsedStatementsMap;
+
+	struct Operation
+	{
+		Size                   cStatementIndex;
+		Bindings               *pBindings;
+		IAsyncOperationHandler *pAsyncOperationHandler;
+	};
+
+	typedef CX::Queue<Operation>::Type              OperationsQueue;
+
+	Database             m_db;
+	Status               m_initStatus;
+
+	Size                 m_cMaxAsyncOperations;
+	UInt32               m_cMaxAsyncFlushTimeout;
+	Sys::Thread          m_asyncThread;
+	Sys::Event           m_eventStop;
+	Sys::Event           m_eventFlush;
+
+	AvailStatementsMap   m_mapAvailStatements;
+	UsedStatementsMap    m_mapUsedStatements;
+	Sys::Lock            m_lockStatements;
+
+	OperationsQueue      m_queueOperations;
+	Sys::Lock            m_lockOperations;
+
+	void AsyncOperationsThread();
+
+};
+
+}//namespace SQLite
+
+}//namespace DB
+
+}//namespace CX
 

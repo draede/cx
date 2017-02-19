@@ -26,6 +26,7 @@
     <ClCompile Include="..\..\Src\Data_XML_SAX.cpp" />
     <ClCompile Include="..\..\Src\DB_SQLite.cpp" />
     <ClCompile Include="..\..\Src\IO_Filters.cpp" />
+    <ClCompile Include="..\..\Src\Log_OptimizedStreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />
     <ClCompile Include="..\..\Src\Network_HTTP_Client.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="..\..\Src\Str_StringHelper.cpp" />
     <ClCompile Include="..\..\Src\Str_UTF8.cpp" />
     <ClCompile Include="..\..\Src\Tester.cpp" />
+    <ClCompile Include="..\..\Src\Util_DynStruct.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Tester.hpp" />

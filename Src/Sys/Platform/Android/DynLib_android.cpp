@@ -34,6 +34,7 @@
 
 #include "CX/Sys/DynLib.hpp"
 #include "CX/Status.hpp"
+#include <dlfcn.h>
 
 
 namespace CX
@@ -59,28 +60,41 @@ Bool DynLib::IsOK()
 
 Status DynLib::Load(const Char *szPath)
 {
-	CX_UNUSED(szPath);
-	
-	return Status(Status_NotSupported);
+	Unload();
+
+	if (NULL == (m_pHandle = dlopen(szPath, RTLD_NOW)))
+	{
+		return Status(Status_FileNotFound, "Failed to load library");
+	}
+
+	return Status_OK;
 }
 
 Status DynLib::Unload()
 {
+	int nRet;
+
+	if (NULL != m_pHandle)
+	{
+		if (0 != (nRet = dlclose(m_pHandle)))
+		{
+			return Status(Status_OperationFailed, "dlclose failed with error {1}", nRet);
+		}
+		m_pHandle = NULL;
+	}
+
 	return Status();
 }
 
 void *DynLib::GetFunc(const Char *szName)
 {
-	CX_UNUSED(szName);
-	
 	if (NULL == m_pHandle)
 	{
 		return NULL;
 	}
 
-	return NULL;
+	return dlsym(m_pHandle, szName);
 }
-
 
 }//namespace Sys
 

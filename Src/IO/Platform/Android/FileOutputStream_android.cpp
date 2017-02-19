@@ -45,9 +45,9 @@ namespace CX
 namespace IO
 {
 
-FileOutputStream::FileOutputStream(const Char *szPath)
+FileOutputStream::FileOutputStream(const Char *szPath, bool bAppend/* = false*/)
 {
-	if (NULL == (m_pFile = cx_fopen(szPath, "wb")))
+	if (NULL == (m_pFile = cx_fopen(szPath, bAppend ? "ab" : "wb")))
 #pragma warning(pop)
 	{
 		return;
@@ -56,7 +56,7 @@ FileOutputStream::FileOutputStream(const Char *szPath)
 	m_sPath = szPath;
 }
 
-FileOutputStream::FileOutputStream(const WChar *wszPath)
+FileOutputStream::FileOutputStream(const WChar *wszPath, bool bAppend/* = false*/)
 {
 	String sPath;
 
@@ -64,7 +64,7 @@ FileOutputStream::FileOutputStream(const WChar *wszPath)
 	{
 #pragma warning(push)
 #pragma warning(disable: 4996)
-		if (NULL == (m_pFile = cx_fopen(sPath.c_str(), "wb")))
+		if (NULL == (m_pFile = cx_fopen(sPath.c_str(), bAppend ? "ab" : "wb")))
 #pragma warning(pop)
 		{
 			return;

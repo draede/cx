@@ -1,3 +1,13 @@
+0.2.102 - 2017-02-19 - Fixed portability for Windows only classes
+  - Fixed portability for Windows only classes
+  - Added Hash::MultiHash
+  - Added Sys::Event
+  - Added Util::DynMember
+  - Added Util::DynStruct
+  - Added missing copyright notice
+  - Added support for append in FileOutputStream
+  - Added missing Android classes
+  - Naming fixes in Value
 0.2.101 - 2017-02-13 - Added NDK support for network classes
   - Added NDK support for network classes
   - Updated cURL sources

@@ -35,6 +35,8 @@
 #include "CX/Sys/Process.hpp"
 #include "CX/C/stdlib.h"
 #include "CX/Status.hpp"
+#include <sys/types.h>
+#include <unistd.h>
 
 
 namespace CX
@@ -53,19 +55,54 @@ Process::~Process()
 
 Process::ID Process::GetCurrentProcessID()
 {
-	return 0;
+	return (ID)getpid();
 }
 
 Status Process::GetCurrentProcessPath(String &sPath)
 {
 	sPath.clear();
 
-	return Status();
+	char    path[8192];
+	ssize_t cCount;
+
+	cCount = readlink("/proc/self/exe", path, sizeof(path) / sizeof(path[0]));
+
+	if (0 < cCount)
+	{
+		sPath.assign(path, cCount);
+	}
+
+	return Status_NotSupported;
 }
 
 Status Process::GetCurrentProcessDir(String &sDir)
 {
+	String sPath;
+	Status status;
+
 	sDir.clear();
+	if ((status = GetCurrentProcessPath(sPath)).IsNOK())
+	{
+		return status;
+	}
+	if (!sPath.empty())
+	{
+		const Char *pszStart = sPath.c_str();
+		const Char *pszPos = pszStart + sPath.size() - 1;
+
+		while (pszPos >= pszStart)
+		{
+			if ('/' == *pszPos)
+			{
+				break;
+			}
+			pszPos--;
+		}
+		if (pszPos >= pszStart && '/' == *pszPos)
+		{
+			sDir.assign(pszStart, pszPos - pszStart);
+		}
+	}
 
 	return Status();
 }
