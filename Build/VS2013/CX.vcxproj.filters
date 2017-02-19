@@ -1077,6 +1077,15 @@
     <ClInclude Include="..\..\Include\CX\Util\DynStruct.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -1945,6 +1954,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\DynStruct.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Atomic_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Atomic_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Atomic_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

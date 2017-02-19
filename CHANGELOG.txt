@@ -1,3 +1,6 @@
+0.2.103 - 2017-02-20 - Simplified Sys::Atomic
+  - Simplified Sys/Atomic
+  - Removed Mintomic contrib
 0.2.102 - 2017-02-19 - Fixed portability for Windows only classes
   - Fixed portability for Windows only classes
   - Added Hash::MultiHash

@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2017 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2017 draede, draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -26,19 +26,47 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Atomic.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Atomic.hpp"
-#elif defined(CX_OS_IOS)
-	#include "CX/Sys/Platform/iOS/Atomic.hpp"
-#else
-	#error "Atomic.hpp not implemented on this platform"
+#if defined(CX_OS_IOS)
+
+
+#include "CX/Sys/Atomic.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+Atomic::Atomic()
+{
+}
+
+Atomic::~Atomic()
+{
+}
+
+Int32 Atomic::Increment(long volatile *pnValue)
+{
+	return __sync_fetch_and_add(pnValue, 1);
+}
+
+Int32 Atomic::Decrement(long volatile *pnValue)
+{
+	return __sync_fetch_and_sub(pnValue, 1);
+}
+
+Int32 Atomic::CompareExchange(long volatile *pnValue, long nCompare, long nExchange)
+{
+	return __sync_val_compare_and_swap(pnValue, nCompare, nExchange);
+}
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
- 

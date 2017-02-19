@@ -149,6 +149,7 @@ $(LOCAL_PATH)/../../../../Src/Str/StringHelper.cpp \
 $(LOCAL_PATH)/../../../../Src/Str/WildMat.cpp \
 $(LOCAL_PATH)/../../../../Src/Str/Z85BinStr.cpp \
 $(LOCAL_PATH)/../../../../Src/Str/Platform/Android/UTF8_android.cpp \
+$(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Atomic_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/DynLib_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Event_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Lock_android.cpp \

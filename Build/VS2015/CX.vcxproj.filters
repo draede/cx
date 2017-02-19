@@ -31,9 +31,6 @@
     <Filter Include="Contrib\ByteOrder">
       <UniqueIdentifier>{ec081fa0-4c86-44e9-8b70-adffef1460c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contrib\Mintomic">
-      <UniqueIdentifier>{e6cd0a80-59b9-45ef-ae2e-a8b3faf770fa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Sys\Platform">
       <UniqueIdentifier>{692da411-0b00-45c1-89dc-5136ad459b9c}</UniqueIdentifier>
     </Filter>
@@ -407,24 +404,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h">
       <Filter>Contrib\ByteOrder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\Mintomic\Include\core.h">
-      <Filter>Contrib\Mintomic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\Mintomic\Include\mintomic.h">
-      <Filter>Contrib\Mintomic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\Mintomic\Include\platform_detect.h">
-      <Filter>Contrib\Mintomic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\core_msvc.h">
-      <Filter>Contrib\Mintomic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\mintomic_msvc.h">
-      <Filter>Contrib\Mintomic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\Mintomic\Include\private\stdint.h">
-      <Filter>Contrib\Mintomic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp">
       <Filter>Header Files</Filter>
@@ -1070,6 +1049,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\DynStruct.hpp">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1939,6 +1927,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\DynStruct.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Atomic_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Atomic_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Atomic_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

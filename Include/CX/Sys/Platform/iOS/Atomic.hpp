@@ -32,13 +32,41 @@
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Sys/Platform/Windows/Atomic.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Sys/Platform/Android/Atomic.hpp"
-#elif defined(CX_OS_IOS)
-	#include "CX/Sys/Platform/iOS/Atomic.hpp"
-#else
-	#error "Atomic.hpp not implemented on this platform"
+#if defined(CX_OS_IOS)
+
+
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/APIDefs.hpp"
+
+
+namespace CX
+{
+
+namespace Sys
+{
+
+class Atomic
+{
+public:
+
+	static Int32 Increment(long volatile *pnValue);
+	
+	static Int32 Decrement(long volatile *pnValue);
+	
+	static Int32 CompareExchange(long volatile *pnValue, long nCompare, long nExchange);
+
+private:
+
+	Atomic();
+
+	~Atomic();
+
+};
+
+}//namespace Sys
+
+}//namespace CX
+
+
 #endif
- 
