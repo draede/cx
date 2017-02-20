@@ -49,17 +49,17 @@ Atomic::~Atomic()
 {
 }
 
-Int32 Atomic::Increment(long volatile *pnValue)
+long Atomic::Increment(long volatile *pnValue)
 {
 	return __sync_fetch_and_add(pnValue, 1);
 }
 
-Int32 Atomic::Decrement(long volatile *pnValue)
+long Atomic::Decrement(long volatile *pnValue)
 {
 	return __sync_fetch_and_sub(pnValue, 1);
 }
 
-Int32 Atomic::CompareExchange(long volatile *pnValue, long nCompare, long nExchange)
+long Atomic::CompareExchange(long volatile *pnValue, long nCompare, long nExchange)
 {
 	return __sync_val_compare_and_swap(pnValue, nCompare, nExchange);
 }

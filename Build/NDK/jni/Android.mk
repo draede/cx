@@ -156,6 +156,7 @@ $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Lock_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Process_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/RWLock_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Thread_android.cpp \
+$(LOCAL_PATH)/../../../../Src/Util/Bitmap.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/DynMember.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/DynStruct.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/MemPool.cpp \

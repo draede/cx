@@ -26,47 +26,73 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Platform.hpp"
+#pragma once
 
 
-#if defined(CX_OS_ANDROID)
-
-
-#include "CX/Sys/Atomic.hpp"
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/Print.hpp"
 
 
 namespace CX
 {
 
-namespace Sys
+namespace Util
 {
 
-Atomic::Atomic()
+class Bitmap
 {
-}
+public:
 
-Atomic::~Atomic()
-{
-}
+	Bitmap(Size cBitsCount = 8);
 
-long Atomic::Increment(long volatile *pnValue)
-{
-	return __sync_fetch_and_add(pnValue, 1);
-}
+	Bitmap(const Bitmap &bitset);
 
-long Atomic::Decrement(long volatile *pnValue)
-{
-	return __sync_fetch_and_sub(pnValue, 1);
-}
+	~Bitmap();
 
-long Atomic::CompareExchange(long volatile *pnValue, long nCompare, long nExchange)
-{
-	return __sync_val_compare_and_swap(pnValue, nCompare, nExchange);
-}
+	Bitmap &operator=(const Bitmap &bitset);
 
-}//namespace Sys
+	Status Copy(const Bitmap &bitset);
+
+	Status SetBitsCount(Size cBitsCount);
+
+	Size GetBitsCount() const;
+
+	Size GetBytesCount() const;
+
+	Status SetBit(Size cIndex, bool bValue);
+
+	bool GetBit(Size cIndex, Status *pStatus = NULL) const;
+
+	Status SetBitsRange(bool bValue, Size cStart, Size cCount = (Size)-1);
+
+	void SetAllBits(bool bValue);
+
+	Byte *GetBytes();
+
+	const Byte *GetBytes() const;
+
+	template <typename OUTPUT>
+	void Dump(OUTPUT output)
+	{
+		for (Size i = 0; i < m_cBitsCount; i++)
+		{
+			Print(output, "{1}", 0 == (m_pBytes[i / 8] & POWS[i % 8]) ? '0' : '1');
+		}
+		Print(output, "\n");
+	}
+
+private:
+
+	static const Byte POWS[8];
+
+	Byte *m_pBytes;
+	Size m_cBitsCount;
+	Size m_cBytesCount;
+
+};
+
+}//namespace Util
 
 }//namespace CX
 
-
-#endif

@@ -50,17 +50,17 @@ Atomic::~Atomic()
 {
 }
 
-Int32 Atomic::Increment(long volatile *pnValue)
+long Atomic::Increment(long volatile *pnValue)
 {
 	return InterlockedIncrement(pnValue);
 }
 
-Int32 Atomic::Decrement(long volatile *pnValue)
+long Atomic::Decrement(long volatile *pnValue)
 {
 	return InterlockedDecrement(pnValue);
 }
 
-Int32 Atomic::CompareExchange(long volatile *pnValue, long nCompare, long nExchange)
+long Atomic::CompareExchange(long volatile *pnValue, long nCompare, long nExchange)
 {
 	return InterlockedCompareExchange(pnValue, nExchange, nCompare);
 }

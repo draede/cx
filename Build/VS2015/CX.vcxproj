@@ -286,6 +286,7 @@
     <ClInclude Include="..\..\Include\CX\UOMultiMap.hpp" />
     <ClInclude Include="..\..\Include\CX\UOMultiSet.hpp" />
     <ClInclude Include="..\..\Include\CX\UOSet.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Bitmap.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\DynMember.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\DynStruct.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
@@ -5615,6 +5616,7 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskExecutor.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskQueue.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
+    <ClCompile Include="..\..\Src\Util\Bitmap.cpp" />
     <ClCompile Include="..\..\Src\Util\DynMember.cpp" />
     <ClCompile Include="..\..\Src\Util\DynStruct.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />

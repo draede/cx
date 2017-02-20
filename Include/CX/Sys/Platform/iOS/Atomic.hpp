@@ -50,11 +50,11 @@ class Atomic
 {
 public:
 
-	static Int32 Increment(long volatile *pnValue);
+	static long Increment(long volatile *pnValue);
 	
-	static Int32 Decrement(long volatile *pnValue);
+	static long Decrement(long volatile *pnValue);
 	
-	static Int32 CompareExchange(long volatile *pnValue, long nCompare, long nExchange);
+	static long CompareExchange(long volatile *pnValue, long nCompare, long nExchange);
 
 private:
 
