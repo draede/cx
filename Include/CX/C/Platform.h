@@ -29,12 +29,16 @@
 #pragma once
 
 
-#if defined(_DEBUG) || !defined(NDEBUG)
-	#define CX_DEBUG
-#endif
-
 #define CX_UNUSED(x)   (void)x
 
+//debug | release
+#if defined(_DEBUG) || !defined(NDEBUG)
+	#define CX_DEBUG
+#else
+	#define CX_RELEASE
+#endif
+
+//OS
 #if defined(_WIN32)
 	#define CX_OS           "WINDOWS"
 	#define CX_OS_WINDOWS
@@ -42,74 +46,111 @@
 	#define CX_DLL_EXPORT   __declspec(dllexport)
 	#define CX_DLL_IMPORT   __declspec(dllimport)
 	#define CX_INLINE       __inline
-	
-#ifdef _WIN64
-	#define CX_64BIT_ARCH
-#else
-	#define CX_32BIT_ARCH
-#endif
-
-#if _MSC_VER == 1400
-	#define CX_BUILDSYS_VS2005
-	#define CX_BUILDSYS     "VS2005"
-#elif _MSC_VER == 1500
-	#define CX_BUILDSYS_VS2008
-	#define CX_BUILDSYS     "VS2008"
-#elif _MSC_VER == 1600
-	#define CX_BUILDSYS_VS2010
-	#define CX_BUILDSYS     "VS2010"
-#elif _MSC_VER == 1700
-	#define CX_BUILDSYS_VS2012
-	#define CX_BUILDSYS     "VS2012"
-#elif _MSC_VER == 1800
-	#define CX_BUILDSYS_VS2013
-	#define CX_BUILDSYS     "VS2013"
-#elif _MSC_VER == 1900
-	#define CX_BUILDSYS_VS2015
-	#define CX_BUILDSYS     "VS2015"
-#endif
-
-#endif
-
-#ifdef __ANDROID__
+	#ifdef _WIN64
+		#define CX_64BIT_ARCH
+	#else
+		#define CX_32BIT_ARCH
+	#endif
+#elif defined(__ANDROID__)
 	#define CX_OS           "ANDROID"
 	#define CX_OS_ANDROID
 	#define CX_TLS          __thread
 	#define CX_DLL_EXPORT
 	#define CX_DLL_IMPORT
 	#define CX_INLINE       inline
-
-#ifdef __LP64__
-	#define CX_64BIT_ARCH
-#else
-	#define CX_32BIT_ARCH
-#endif
-
-	#define CX_BUILDSYS_NDK
-	#define CX_BUILDSYS     "NDK"
-#endif
-
-#if defined(__APPLE__) && defined(__MACH__)
-	#include <TargetConditionals.h>
-
-#if TARGET_OS_IPHONE == 1
-	#define CX_OS           "IOS"
-	#define CX_OS_IOS
+	#ifdef __LP64__
+		#define CX_64BIT_ARCH
+	#else
+		#define CX_32BIT_ARCH
+	#endif
+#elif defined(__linux__)
+	#define CX_OS           "LINUX"
+	#define CX_OS_LINUX
 	#define CX_TLS          __thread
 	#define CX_DLL_EXPORT
 	#define CX_DLL_IMPORT
 	#define CX_INLINE       inline
-
-#ifdef __LP64__
-	#define CX_64BIT_ARCH
+	#ifdef __LP64__
+		#define CX_64BIT_ARCH
+	#else
+		#define CX_32BIT_ARCH
+	#endif
+#elif defined(__APPLE__) && defined(__MACH__)
+	#include <TargetConditionals.h>
+	#if TARGET_OS_IPHONE == 1
+		#define CX_OS           "IOS"
+		#define CX_OS_IOS
+		#define CX_TLS          __thread
+		#define CX_DLL_EXPORT
+		#define CX_DLL_IMPORT
+		#define CX_INLINE       inline
+	#elif TARGET_IPHONE_SIMULATOR == 1
+		#define CX_OS           "IOSSIM"
+		#define CX_OS_IOSSIM
+		#define CX_TLS          __thread
+		#define CX_DLL_EXPORT
+		#define CX_DLL_IMPORT
+		#define CX_INLINE       inline
+	#elif TARGET_OS_MAC == 1
+		#define CX_OS           "MAC"
+		#define CX_OS_MAC
+		#define CX_TLS          __thread
+		#define CX_DLL_EXPORT
+		#define CX_DLL_IMPORT
+		#define CX_INLINE       inline
+	#endif
+	#ifdef __LP64__
+		#define CX_64BIT_ARCH
+	#else
+		#define CX_32BIT_ARCH
+	#endif
 #else
-	#define CX_32BIT_ARCH
+	#error "Unknown OS" 
 #endif
 
-	#define CX_BUILDSYS_XCODE
-	#define CX_BUILDSYS     "XCODE"
+//compiler
+#ifdef _MSC_VER
+	#if _MSC_VER == 1400
+		#define CX_BUILDSYS_VS
+		#define CX_BUILDSYS_VS2005
+		#define CX_BUILDSYS     "VS2005"
+	#elif _MSC_VER == 1500
+		#define CX_BUILDSYS_VS
+		#define CX_BUILDSYS_VS2008
+		#define CX_BUILDSYS     "VS2008"
+	#elif _MSC_VER == 1600
+		#define CX_BUILDSYS_VS
+		#define CX_BUILDSYS_VS2010
+		#define CX_BUILDSYS     "VS2010"
+	#elif _MSC_VER == 1700
+		#define CX_BUILDSYS_VS
+		#define CX_BUILDSYS_VS2012
+		#define CX_BUILDSYS     "VS2012"
+	#elif _MSC_VER == 1800
+		#define CX_BUILDSYS_VS
+		#define CX_BUILDSYS_VS2013
+		#define CX_BUILDSYS     "VS2013"
+	#elif _MSC_VER == 1900
+		#define CX_BUILDSYS_VS
+		#define CX_BUILDSYS_VS2015
+		#define CX_BUILDSYS     "VS2015"
+	#elif _MSC_VER == 1910
+		#define CX_BUILDSYS_VS
+		#define CX_BUILDSYS_VS2017
+		#define CX_BUILDSYS     "VS2017"
+	#else
+		#error "Unknown Visual Studio Version" 
+	#endif
+#elif defined(__GNUC__) || defined(__GNUG__)
+	#define CX_BUILDSYS_GCC
+	#define CX_BUILDSYS        "GCC"
+	#ifdef __ANDROID__
+		#define CX_BUILDSYS_NDK
+	#endif
+#elif defined(__clang__)
+	#define CX_BUILDSYS_CLANG
+	#define CX_BUILDSYS        "CLANG"
+#elif
+	#error "Unknown compiler" 
 #endif
-
-#endif
-
 
