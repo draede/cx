@@ -12,17 +12,13 @@ public:
 
 	virtual const char *GetName() = 0;
 
-	virtual long Retain() = 0;
+	virtual void Retain() = 0;
 
-	virtual long Release() = 0;
+	virtual void Release() = 0;
 
-	virtual CX_IInterface *AcquireInterface(const char *szName) = 0;
+	virtual CX_IInterface *Acquire(const char *szName) = 0;
 
-	virtual bool ImplementsInterface(const char *szName) const = 0;
-
-	virtual size_t GetDirectInterfacesCount() const = 0;
-
-	virtual size_t GetAllInterfacesCount() const = 0;
+	virtual bool Implements(const char *szName) const = 0;
 
 protected:
 

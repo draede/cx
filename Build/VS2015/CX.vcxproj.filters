@@ -346,6 +346,9 @@
     <Filter Include="Source Files\DB\SQLite">
       <UniqueIdentifier>{73e930a3-c2ea-4451-b402-06a89773849a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\API">
+      <UniqueIdentifier>{c33d8e4e-08a9-4d73-ac51-82f13505f7e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1061,6 +1064,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\Bitmap.hpp">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API\IInterface.hpp">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API\InterfaceHelper.hpp">
+      <Filter>Header Files\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

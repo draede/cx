@@ -349,6 +349,9 @@
     <Filter Include="Contrib\SQLite">
       <UniqueIdentifier>{d09eec0d-f8d1-4402-9a09-440e52131523}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\API">
+      <UniqueIdentifier>{4bba409c-52b0-42bf-ac3e-70afd1d9237d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1085,6 +1088,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Atomic.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API\IInterface.hpp">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API\InterfaceHelper.hpp">
+      <Filter>Header Files\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
