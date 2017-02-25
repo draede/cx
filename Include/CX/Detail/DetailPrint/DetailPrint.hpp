@@ -399,6 +399,35 @@ inline StatusCode ToString<Char>(Char p, unsigned int nExtraFlags, Char *szOutpu
 }
 
 template <>
+inline StatusCode ToString<WChar>(WChar p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
+                                        Size cPrecision)
+{
+	CX_UNUSED(nExtraFlags);
+	CX_UNUSED(cPrecision);
+
+	String sTmp;
+	WChar  wszTmp[2] = { p, L'\0'};
+
+	if (!Detail::DetailPrint::WChartoUTF8(wszTmp, &sTmp))
+	{
+		return Status_ConversionFailed;
+	}
+
+	if (cLen < 1 + sTmp.size())
+	{
+		return Status_TooSmall;
+	}
+	for (Size i = 0; i < sTmp.size(); i++)
+	{
+		szOutput[i] = sTmp[i];
+	}
+	szOutput[sTmp.size()] = 0;
+	*pcFinalLen	= sTmp.size();
+
+	return Status_OK;
+}
+
+template <>
 inline StatusCode ToString<Bool>(Bool p, unsigned int nExtraFlags, Char *szOutput, Size cLen, Size *pcFinalLen, 
                                         Size cPrecision)
 {
