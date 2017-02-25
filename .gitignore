@@ -41,9 +41,10 @@ xcuserdata/
 *.user
 *.opendb
 *.suo
-Test/PlayGround/Build/VS2013/PlayGround.v12.suo
 *.suo
 *.suo
 *.suo
-Test/PlayGround/Build/VS2013/test.log
+*.log
 *.db
+*.log
+*.log

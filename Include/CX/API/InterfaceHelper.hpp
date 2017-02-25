@@ -22,7 +22,7 @@ public:
 
 	typedef void (CX_IInterface::*InterfaceDestroyFunc)();
 
-	virtual void Retain()
+	virtual void Retain() const
 	{
 		if (NULL == m_pParent)
 		{
@@ -38,7 +38,7 @@ public:
 		}
 	}
 
-	virtual void Release()
+	virtual void Release() const
 	{
 		if (NULL == m_pParent)
 		{
@@ -70,6 +70,19 @@ public:
 		return iter->second.pInstance;
 	}
 
+	virtual const CX_IInterface *Acquire(const char *szName) const
+	{
+		InterfacesMap::const_iterator iter;
+
+		if (m_mapInterfaces.end() == (iter = m_mapInterfaces.find(szName)))
+		{
+			return NULL;
+		}
+		Retain();
+
+		return iter->second.pInstance;
+	}
+
 	virtual bool Implements(const char *szName) const
 	{
 		return (m_mapInterfaces.end() != m_mapInterfaces.find(szName));
@@ -90,9 +103,9 @@ public:
 		m_mapInterfaces[pInterface->GetName()] = iface;
 	}
 
-	void Destroy()
+	void Destroy() const
 	{
-		for (InterfacesMap::iterator iter = m_mapInterfaces.begin(); iter != m_mapInterfaces.end(); ++iter)
+		for (InterfacesMap::const_iterator iter = m_mapInterfaces.begin(); iter != m_mapInterfaces.end(); ++iter)
 		{
 			(iter->second.pInstance->*iter->second.pfnDestroy)();
 		}
@@ -120,8 +133,8 @@ private:
 
 	typedef std::map<std::string, Interface>    InterfacesMap;
 
+	mutable long        m_cRefCount;
 	CX_IInterface       *m_pParent;
-	long                m_cRefCount;
 	InterfacesMap       m_mapInterfaces;
 
 };

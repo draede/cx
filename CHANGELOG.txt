@@ -1,3 +1,5 @@
+0.2.107 - 2017-02-25 - Added const support in Interface API
+  - Added const support in Interface API
 0.2.106 - 2017-02-23 - Updated Interface API
   - Updated Interface API
 0.2.105 - 2017-02-21 - Updated platform macros

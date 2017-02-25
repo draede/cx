@@ -10,13 +10,15 @@ class CX_IInterface
 {
 public:
 
-	virtual const char *GetName() = 0;
+	virtual const char *GetName() const = 0;
 
-	virtual void Retain() = 0;
+	virtual void Retain() const = 0;
 
-	virtual void Release() = 0;
+	virtual void Release() const = 0;
 
 	virtual CX_IInterface *Acquire(const char *szName) = 0;
+
+	virtual const CX_IInterface *Acquire(const char *szName) const = 0;
 
 	virtual bool Implements(const char *szName) const = 0;
 
@@ -30,7 +32,7 @@ protected:
 #define CX_DECLARE_INTERFACE(IFNAME)                                                                                   \
 	static const char *NAME() { return IFNAME; }                                                                        \
 	                                                                                                                    \
-	virtual const char *GetName()                                                                                       \
+	virtual const char *GetName() const                                                                                 \
 	{                                                                                                                   \
 		return NAME();                                                                                                   \
 	}
