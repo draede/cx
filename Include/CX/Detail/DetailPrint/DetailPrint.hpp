@@ -406,7 +406,7 @@ inline StatusCode ToString<WChar>(WChar p, unsigned int nExtraFlags, Char *szOut
 	CX_UNUSED(cPrecision);
 
 	String sTmp;
-	WChar  wszTmp[2] = { p, L'\0'};
+	WChar  wszTmp[2] = { p, L'\0' };
 
 	if (!Detail::DetailPrint::WChartoUTF8(wszTmp, &sTmp))
 	{
@@ -417,12 +417,9 @@ inline StatusCode ToString<WChar>(WChar p, unsigned int nExtraFlags, Char *szOut
 	{
 		return Status_TooSmall;
 	}
-	for (Size i = 0; i < sTmp.size(); i++)
-	{
-		szOutput[i] = sTmp[i];
-	}
+	memcpy(szOutput, sTmp.c_str(), sTmp.size());
 	szOutput[sTmp.size()] = 0;
-	*pcFinalLen	= sTmp.size();
+	*pcFinalLen = sTmp.size();
 
 	return Status_OK;
 }
