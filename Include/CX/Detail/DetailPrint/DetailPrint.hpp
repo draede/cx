@@ -417,7 +417,7 @@ inline StatusCode ToString<WChar>(WChar p, unsigned int nExtraFlags, Char *szOut
 	{
 		return Status_TooSmall;
 	}
-	memcpy(szOutput, sTmp.c_str(), sTmp.size());
+	memcpy(szOutput, sTmp.c_str(), sizeof(Char) * sTmp.size());
 	szOutput[sTmp.size()] = 0;
 	*pcFinalLen = sTmp.size();
 
