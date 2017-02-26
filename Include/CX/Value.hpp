@@ -49,7 +49,7 @@ class Value
 public:
 
 	static const Bool    DEFAULT_BOOL   = False;
-	static const Int8    DEFAULT_INT    = 0;
+	static const Int64   DEFAULT_INT    = 0;
 	static const Double  DEFAULT_REAL;
 	static const String  DEFAULT_STRING;
 
@@ -243,6 +243,8 @@ public:
 			Data::JSON::SAXParser::EscapeString(m_psString->c_str(), &sValue);
 
 			Print(output, "\"{1}\"", sValue);
+			
+			return;
 		}
 		else
 		if (Type_Object == m_nType)

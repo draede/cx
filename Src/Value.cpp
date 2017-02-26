@@ -532,7 +532,7 @@ Bool Value::GetBool(Bool bDefault/* = DEFAULT_BOOL*/, Status *pStatus/* = NULL*/
 			*pStatus = Status_InvalidCall;
 		}
 
-		return DEFAULT_BOOL;
+		return bDefault;
 	}
 
 	if (IsBool())
@@ -578,7 +578,7 @@ Int64 Value::GetInt(Int64 nDefault/* = DEFAULT_INT*/, Status *pStatus/* = NULL*/
 			*pStatus = Status_InvalidCall;
 		}
 
-		return DEFAULT_INT;
+		return nDefault;
 	}
 
 	if (IsInt())
@@ -624,7 +624,7 @@ Double Value::GetReal(Double lfDefault/* = DEFAULT_DOUBLE*/, Status *pStatus/* =
 			*pStatus = Status_InvalidCall;
 		}
 
-		return DEFAULT_REAL;
+		return lfDefault;
 	}
 
 	if (IsReal())
@@ -670,7 +670,7 @@ const String &Value::GetString(const String &sDefault/* = DEFAULT_STRING*/, Stat
 			*pStatus = Status_InvalidCall;
 		}
 
-		return DEFAULT_STRING;
+		return sDefault;
 	}
 
 	if (IsString())
