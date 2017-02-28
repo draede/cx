@@ -51,33 +51,25 @@ class CX_API OptimizedStreamOutput : public IOutput
 {
 public:
 
-	OptimizedStreamOutput(const Char *szPath, bool bAppend = false, UInt32 cFlushDelay = 3000, Size cbMaxMem = 1048576);
+	OptimizedStreamOutput(const Char *szPath, UInt64 cbMaxFileSize = 10485760, UInt32 cFlushDelay = 3000, 
+	                      Size cbMaxMem = 1048576);
 
-	OptimizedStreamOutput(const WChar *wszPath, bool bAppend = false, UInt32 cFlushDelay = 3000, 
+	OptimizedStreamOutput(const WChar *wszPath, UInt64 cbMaxFileSize = 10485760, UInt32 cFlushDelay = 3000, 
 	                      Size cbMaxMem = 1048576);
 
 	~OptimizedStreamOutput();
 
 	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
 
-	virtual bool NeedsReopenWithNewPath(String *psPath)
-	{
-		CX_UNUSED(psPath);
-
-		return false;
-	}
-
-	virtual bool NeedsReopenWithNewPath(WString *pwsPath)
-	{
-		CX_UNUSED(pwsPath);
-
-		return false;
-	}
-
 private:
 
 	typedef Vector<String>::Type StringsVector;
 
+#pragma warning(push)
+#pragma warning(disable: 4251)
+	String                 m_sPath;
+	WString                m_wsPath;
+#pragma warning(pop)
 	IO::FileOutputStream   *m_pFOS;
 	Sys::Thread            m_threadWrite;
 	Sys::Event             m_eventStop;
@@ -87,16 +79,14 @@ private:
 	Size                   m_cbMaxMem;
 	Size                   m_cbCrMem;
 	bool                   m_bWide;
+	UInt64                 m_cbMaxFileSize;
+	UInt64                 m_cbCrFileSize;
 
 	void WriteThread();
 
-	Status Init(UInt32 cFlushDelay, Size cMaxMem);
+	Status Init(UInt64 cbMaxFileSize, UInt32 cFlushDelay, Size cMaxMem);
 
 	Status Uninit();
-
-	Status Reopen(const Char *szPath);
-
-	Status Reopen(const WChar *wszPath);
 
 };
 

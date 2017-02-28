@@ -35,7 +35,7 @@
 using namespace CX;
 
 
-class ITestInterface : public CX_IInterface
+class ITestInterface : public IInterface
 {
 public:
 
@@ -45,7 +45,7 @@ public:
 
 };
 
-class IInfoLogger : public CX_IInterface
+class IInfoLogger : public IInterface
 {
 public:
 
@@ -55,7 +55,7 @@ public:
 
 };
 
-class IErrorLogger : public CX_IInterface
+class IErrorLogger : public IInterface
 {
 public:
 
@@ -65,7 +65,7 @@ public:
 
 };
 
-class ILogger : public CX_IInterface
+class ILogger : public IInterface
 {
 public:
 
@@ -73,7 +73,7 @@ public:
 
 };
 
-class TestInterface : public CX_InterfaceHelper<ITestInterface>
+class TestInterface : public InterfaceHelper<ITestInterface>
 {
 public:
 
@@ -99,7 +99,7 @@ protected:
 
 };
 
-class InfoLogger : public CX_InterfaceHelper<IInfoLogger>
+class InfoLogger : public InterfaceHelper<IInfoLogger>
 {
 public:
 
@@ -126,7 +126,7 @@ protected:
 
 };
 
-class ErrorLogger : public CX_InterfaceHelper<IErrorLogger>
+class ErrorLogger : public InterfaceHelper<IErrorLogger>
 {
 public:
 
@@ -152,7 +152,7 @@ protected:
 
 };
 
-class Logger : public CX_InterfaceHelper<ILogger>
+class Logger : public InterfaceHelper<ILogger>
 {
 public:
 

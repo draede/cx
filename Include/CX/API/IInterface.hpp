@@ -2,11 +2,13 @@
  * The author disclaims copyright to this source code.
  */ 
  
-#ifndef __CX__IINTERFACE__H__
-#define __CX__IINTERFACE__H__
+#pragma once
 
 
-class CX_IInterface
+namespace CX
+{
+
+class IInterface
 {
 public:
 
@@ -16,17 +18,19 @@ public:
 
 	virtual void Release() const = 0;
 
-	virtual CX_IInterface *Acquire(const char *szName) = 0;
+	virtual IInterface *Acquire(const char *szName) = 0;
 
-	virtual const CX_IInterface *Acquire(const char *szName) const = 0;
+	virtual const IInterface *Acquire(const char *szName) const = 0;
 
 	virtual bool Implements(const char *szName) const = 0;
 
 protected:
 
-	virtual ~CX_IInterface() { }
+	virtual ~IInterface() { }
 
 };
+
+}//namespace CX
 
 
 #define CX_DECLARE_INTERFACE(IFNAME)                                                                                   \
@@ -36,7 +40,4 @@ protected:
 	{                                                                                                                   \
 		return NAME();                                                                                                   \
 	}
-
-
-#endif
 

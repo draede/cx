@@ -39,7 +39,7 @@ void Log_OptimizedStreamOutput_Test()
 {
 	Print(stdout, "Begin Log OptimizedStreamOutput test\n");
 
-	Log::Logger::GetDefaultLogger().AddOutput(new (std::nothrow) Log::OptimizedStreamOutput("test.log", false));
+	Log::Logger::GetDefaultLogger().AddOutput(new (std::nothrow) Log::OptimizedStreamOutput("test.log"));
 	Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
 
 	for (Size i = 0; i < 1000000; i++)

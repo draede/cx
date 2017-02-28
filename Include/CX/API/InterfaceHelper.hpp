@@ -2,12 +2,12 @@
  * The author disclaims copyright to this source code.
  */ 
  
-#ifndef __CX__INTERFACE__H__
-#define __CX__INTERFACE__H__
+
+#pragma once
 
 
 #include "CX/API/IInterface.hpp"
-#ifdef WIN32
+#ifdef _WIN32
 	#include <windows.h>
 #endif
 #include <string>
@@ -15,18 +15,21 @@
 #include <new>
 
 
+namespace CX
+{
+
 template <typename INTERFACE>
-class CX_InterfaceHelper : public INTERFACE
+class InterfaceHelper : public INTERFACE
 {
 public:
 
-	typedef void (CX_IInterface::*InterfaceDestroyFunc)();
+	typedef void (IInterface::*InterfaceDestroyFunc)();
 
 	virtual void Retain() const
 	{
 		if (NULL == m_pParent)
 		{
-#ifdef WIN32
+#ifdef _WIN32
 			InterlockedIncrement(&m_cRefCount);
 #else
 			__sync_fetch_and_add(&m_cRefCount, 1);
@@ -42,7 +45,7 @@ public:
 	{
 		if (NULL == m_pParent)
 		{
-#ifdef WIN32
+#ifdef _WIN32
 			if (0 == InterlockedDecrement(&m_cRefCount))
 #else
 			if (0 == __sync_fetch_and_sub(&m_cRefCount, 1))
@@ -57,7 +60,7 @@ public:
 		}
 	}
 
-	virtual CX_IInterface *Acquire(const char *szName)
+	virtual IInterface *Acquire(const char *szName)
 	{
 		InterfacesMap::iterator iter;
 
@@ -70,7 +73,7 @@ public:
 		return iter->second.pInstance;
 	}
 
-	virtual const CX_IInterface *Acquire(const char *szName) const
+	virtual const IInterface *Acquire(const char *szName) const
 	{
 		InterfacesMap::const_iterator iter;
 
@@ -88,13 +91,13 @@ public:
 		return (m_mapInterfaces.end() != m_mapInterfaces.find(szName));
 	}
 
-	void Init(CX_IInterface *pParent)
+	void Init(IInterface *pParent)
 	{
 		m_cRefCount = 1;
 		m_pParent   = pParent;
 	}
 
-	void AddInterface(CX_IInterface *pInterface, InterfaceDestroyFunc pfnDestroy)
+	void AddInterface(IInterface *pInterface, InterfaceDestroyFunc pfnDestroy)
 	{
 		Interface iface;
 
@@ -115,11 +118,11 @@ public:
 
 protected:
 
-	CX_InterfaceHelper()
+	InterfaceHelper()
 	{
 	}
 
-	virtual ~CX_InterfaceHelper()
+	virtual ~InterfaceHelper()
 	{
 	}
 
@@ -127,20 +130,22 @@ private:
 
 	struct Interface
 	{
-		CX_IInterface          *pInstance;
+		IInterface             *pInstance;
 		InterfaceDestroyFunc   pfnDestroy;
 	};
 
 	typedef std::map<std::string, Interface>    InterfacesMap;
 
 	mutable long        m_cRefCount;
-	CX_IInterface       *m_pParent;
+	IInterface          *m_pParent;
 	InterfacesMap       m_mapInterfaces;
 
 };
 
+}//namespace CX
+
 #define CX_BEGIN_INTERFACE(CLASSNAME)                                                                                  \
-	static CLASSNAME *Create(CX_IInterface *pParent = NULL)                                                             \
+	static CLASSNAME *Create(IInterface *pParent = NULL)                                                                \
 	{                                                                                                                   \
 		CLASSNAME *pInstance = new (std::nothrow) CLASSNAME();                                                           \
                                                                                                                        \
@@ -153,6 +158,4 @@ private:
 
 #define CX_IMPLEMENT_INTERFACE(CLASSNAME)                                                                              \
 		pInstance->AddInterface(CLASSNAME::Create(pInstance), (InterfaceDestroyFunc)&CLASSNAME::Destroy);
-
-#endif
 

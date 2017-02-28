@@ -27,6 +27,8 @@
  */ 
  
 #include "CX/Log/OptimizedStreamOutput.hpp"
+#include "CX/Str/UTF8.hpp"
+#include "CX/C/stdio.h"
 
 
 namespace CX
@@ -35,23 +37,25 @@ namespace CX
 namespace Log
 {
 
-OptimizedStreamOutput::OptimizedStreamOutput(const Char *szPath, bool bAppend/* = false*/, 
+OptimizedStreamOutput::OptimizedStreamOutput(const Char *szPath, UInt64 cbMaxFileSize/* = 10485760*/, 
                                              UInt32 cFlushDelay/* = 3000*/, Size cbMaxMem/* = 1048576*/)
 {
 	m_bWide = false;
-	m_pFOS  = new (std::nothrow) IO::FileOutputStream(szPath, bAppend);
-	Init(cFlushDelay, cbMaxMem);
+	m_sPath = szPath;
+	m_pFOS  = new (std::nothrow) IO::FileOutputStream(szPath, true);
+	Init(cbMaxFileSize, cFlushDelay, cbMaxMem);
 }
 
-OptimizedStreamOutput::OptimizedStreamOutput(const WChar *wszPath, bool bAppend/* = false*/, 
+OptimizedStreamOutput::OptimizedStreamOutput(const WChar *wszPath, UInt64 cbMaxFileSize/* = 10485760*/, 
                                              UInt32 cFlushDelay/* = 3000*/, Size cbMaxMem/* = 1048576*/)
 {
-	m_bWide = true;
-	m_pFOS  = new (std::nothrow) IO::FileOutputStream(wszPath, bAppend);
-	Init(cFlushDelay, cbMaxMem);
+	m_bWide  = true;
+	m_wsPath = wszPath;
+	m_pFOS   = new (std::nothrow) IO::FileOutputStream(wszPath, true);
+	Init(cbMaxFileSize, cFlushDelay, cbMaxMem);
 }
 
-Status OptimizedStreamOutput::Init(UInt32 cFlushDelay, Size cbMaxMem)
+Status OptimizedStreamOutput::Init(UInt64 cbMaxFileSize, UInt32 cFlushDelay, Size cbMaxMem)
 {
 	Status status;
 
@@ -59,6 +63,10 @@ Status OptimizedStreamOutput::Init(UInt32 cFlushDelay, Size cbMaxMem)
 	m_cFlushDelay    = cFlushDelay;
 	m_cbMaxMem       = cbMaxMem;
 	m_cbCrMem        = 0;
+	m_cbMaxFileSize  = cbMaxFileSize / 2;
+	m_cbCrFileSize   = 0;
+
+	m_pFOS->GetSize(&m_cbCrFileSize);
 
 	for (;;)
 	{
@@ -172,31 +180,6 @@ void OptimizedStreamOutput::WriteThread()
 			pVectorStrings   = m_pVectorStrings;
 			m_pVectorStrings = new (std::nothrow) StringsVector();
 			m_cbCrMem        = 0;
-
-			if (m_bWide)
-			{
-				WString wsPath;
-
-				if (NeedsReopenWithNewPath(&wsPath))
-				{
-					if ((status = Reopen(wsPath.c_str())).IsNOK())
-					{
-						//
-					}
-				}
-			}
-			else
-			{
-				String sPath;
-
-				if (NeedsReopenWithNewPath(&sPath))
-				{
-					if ((status = Reopen(sPath.c_str())).IsNOK())
-					{
-						//
-					}
-				}
-			}
 		}
 
 		if (NULL != pVectorStrings)
@@ -205,7 +188,56 @@ void OptimizedStreamOutput::WriteThread()
 			{
 				for (StringsVector::iterator iter = pVectorStrings->begin(); iter != pVectorStrings->end(); iter++)
 				{
-					m_pFOS->Write(iter->c_str(), iter->size(), &cbAckSize);
+					if (0 < m_cbMaxFileSize && m_cbCrFileSize + iter->size() > m_cbMaxFileSize)
+					{
+						delete m_pFOS;
+						if (m_bWide)
+						{
+							WString wsNewPath;
+
+							wsNewPath = m_wsPath;
+							wsNewPath += L".old";
+#ifdef CX_OS_WINDOWS
+							MoveFileExW(m_wsPath.c_str(), wsNewPath.c_str(), 
+							            MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH);
+#else
+							String sPath;
+							String sNewPath;
+
+							Str::UTF8::FromWChar(m_wsPath.c_str(), &sPath);
+							Str::UTF8::FromWChar(wsNewPath.c_str(), &sNewPath);
+
+							rename(sPath.c_str(), sNewPath.c_str());
+#endif
+							m_pFOS         = new (std::nothrow) IO::FileOutputStream(m_wsPath.c_str(), false);
+							m_cbCrFileSize = 0;
+						}
+						else
+						{
+							String sNewPath;
+
+							sNewPath = m_sPath;
+							sNewPath += ".old";
+#ifdef CX_OS_WINDOWS
+							MoveFileExA(m_sPath.c_str(), sNewPath.c_str(),
+							            MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH);
+#else
+							rename(m_sPath.c_str(), sNewPath.c_str());
+#endif
+							m_pFOS         = new (std::nothrow) IO::FileOutputStream(m_sPath.c_str(), false);
+							m_cbCrFileSize = 0;
+						}
+						if (NULL == m_pFOS)
+						{
+							break;
+						}
+					}
+
+					if (NULL != m_pFOS)
+					{
+						m_pFOS->Write(iter->c_str(), iter->size(), &cbAckSize);
+						m_cbCrFileSize += cbAckSize;
+					}
 				}
 
 				m_pFOS->Flush();
@@ -223,55 +255,6 @@ void OptimizedStreamOutput::WriteThread()
 			break;
 		}
 	}
-}
-
-Status OptimizedStreamOutput::Reopen(const Char *szPath)
-{
-	if (NULL != m_pFOS)
-	{
-		m_pFOS->Flush();
-		delete m_pFOS;
-		m_pFOS = NULL;
-	}
-
-	if (NULL == (m_pFOS  = new (std::nothrow) IO::FileOutputStream(szPath, true)))
-	{
-		return Status_CreateFailed;
-	}
-	if (!m_pFOS->IsOK())
-	{
-		delete m_pFOS;
-		m_pFOS = NULL;
-
-		return Status_CreateFailed;
-	}
-
-	return Status();
-}
-
-Status OptimizedStreamOutput::Reopen(const WChar *wszPath)
-{
-	if (NULL != m_pFOS)
-	{
-		m_pFOS->Flush();
-		delete m_pFOS;
-		m_pFOS = NULL;
-	}
-
-	if (NULL == (m_pFOS = new (std::nothrow) IO::FileOutputStream(wszPath, true)))
-	{
-		return Status_CreateFailed;
-	}
-	if (!m_pFOS->IsOK())
-	{
-		delete m_pFOS;
-		m_pFOS = NULL;
-
-		return Status_CreateFailed;
-	}
-
-
-	return Status();
 }
 
 }//namespace Log
