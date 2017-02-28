@@ -64,6 +64,12 @@ public:
 	{
 		InterfacesMap::iterator iter;
 
+		if (0 == strcmp(szName, GetName()))
+		{
+			Retain();
+
+			return (INTERFACE *)this;
+		}
 		if (m_mapInterfaces.end() == (iter = m_mapInterfaces.find(szName)))
 		{
 			return NULL;
@@ -77,6 +83,12 @@ public:
 	{
 		InterfacesMap::const_iterator iter;
 
+		if (0 == strcmp(szName, GetName()))
+		{
+			Retain();
+
+			return (const INTERFACE *)this;
+		}
 		if (m_mapInterfaces.end() == (iter = m_mapInterfaces.find(szName)))
 		{
 			return NULL;
@@ -88,6 +100,11 @@ public:
 
 	virtual bool Implements(const char *szName) const
 	{
+		if (0 == strcmp(szName, GetName()))
+		{
+			return True;
+		}
+
 		return (m_mapInterfaces.end() != m_mapInterfaces.find(szName));
 	}
 

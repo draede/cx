@@ -1,5 +1,5 @@
-0.2.113 - 2017-02-28 - Fixes in API and Log::OptimizedStreamOutput
-  - Fixes in API and Log::OptimizedStreamOutput
+0.2.114 - 2017-02-28 - Fixes in API
+  - Fixes in API
 0.2.111 - 2017-02-26 - Fixed Print UTF8/UTF16 conversions
   - Fixed Print UTF8/UTF16 conversions
 0.2.110 - 2017-02-26 - Fixed Print UTF8/UTF16 conversions
