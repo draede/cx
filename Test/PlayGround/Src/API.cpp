@@ -27,7 +27,8 @@
  */ 
 
 #include "CX/Log/Logger.hpp"
-#include "CX/API/InterfaceHelper.hpp"
+#include "CX/API/IInterface.hpp"
+#include "CX/API/Object.hpp"
 #include "CX/Print.hpp"
 #include "Tester.hpp"
 
@@ -35,21 +36,21 @@
 using namespace CX;
 
 
-class ITestInterface : public IInterface
-{
-public:
-
-	CX_DECLARE_INTERFACE("ITestInterface")
-
-	virtual void Test() = 0;
-
-};
-
 class IInfoLogger : public IInterface
 {
 public:
 
 	CX_DECLARE_INTERFACE("IInfoLogger")
+
+	virtual void Log(const char *szMsg) = 0;
+
+};
+
+class IWarningLogger : public IInterface
+{
+public:
+
+	CX_DECLARE_INTERFACE("IWarningLogger")
 
 	virtual void Log(const char *szMsg) = 0;
 
@@ -65,103 +66,9 @@ public:
 
 };
 
-class ILogger : public IInterface
+class Logger : public Object<Logger, IInfoLogger, IWarningLogger, IErrorLogger>
 {
 public:
-
-	CX_DECLARE_INTERFACE("ILogger")
-
-};
-
-class TestInterface : public InterfaceHelper<ITestInterface>
-{
-public:
-
-	CX_BEGIN_INTERFACE(TestInterface)
-	CX_END_INTERFACE()
-
-	virtual void Test()
-	{
-		Print(stdout, "TEST\n");
-	}
-
-protected:
-
-	TestInterface()
-	{
-		Print(stdout, "TestInterface::TestInterface\n");
-	}
-
-	virtual ~TestInterface()
-	{
-		Print(stdout, "TestInterface::~TestInterface\n");
-	}
-
-};
-
-class InfoLogger : public InterfaceHelper<IInfoLogger>
-{
-public:
-
-	CX_BEGIN_INTERFACE(InfoLogger)
-		CX_IMPLEMENT_INTERFACE(TestInterface);
-	CX_END_INTERFACE()
-
-	virtual void Log(const char *szMsg)
-	{
-		Print(stdout, "INFO: {1}\n", szMsg);
-	}
-
-protected:
-
-	InfoLogger()
-	{
-		Print(stdout, "InfoLogger::InfoLogger\n");
-	}
-
-	virtual ~InfoLogger()
-	{
-		Print(stdout, "InfoLogger::~InfoLogger\n");
-	}
-
-};
-
-class ErrorLogger : public InterfaceHelper<IErrorLogger>
-{
-public:
-
-	CX_BEGIN_INTERFACE(ErrorLogger)
-	CX_END_INTERFACE()
-
-	virtual void Log(const char *szMsg)
-	{
-		Print(stdout, "ERROR: {1}\n", szMsg);
-	}
-
-protected:
-
-	ErrorLogger()
-	{
-		Print(stdout, "ErrorLogger::ErrorLogger\n");
-	}
-
-	virtual ~ErrorLogger()
-	{
-		Print(stdout, "ErrorLogger::~ErrorLogger\n");
-	}
-
-};
-
-class Logger : public InterfaceHelper<ILogger>
-{
-public:
-
-	CX_BEGIN_INTERFACE(Logger)
-		CX_IMPLEMENT_INTERFACE(InfoLogger);
-		CX_IMPLEMENT_INTERFACE(ErrorLogger);
-	CX_END_INTERFACE()
-
-protected:
 
 	Logger()
 	{
@@ -173,29 +80,44 @@ protected:
 		Print(stdout, "Logger::~Logger\n");
 	}
 
+	virtual void IInfoLogger::Log(const char *szMsg)
+	{
+		Print(stdout, "INFO: {1}\n", szMsg);
+	}
+
+	virtual void IWarningLogger::Log(const char *szMsg)
+	{
+		Print(stdout, "WARNING: {1}\n", szMsg);
+	}
+
+	virtual void IErrorLogger::Log(const char *szMsg)
+	{
+		Print(stdout, "ERROR: {1}\n", szMsg);
+	}
+
 };
 
 void API_Test1()
 {
-	ILogger *pLogger = (ILogger *)Logger::Create();
+	IObject *pLogger = (IObject *)Logger::Create();
 
-	IInfoLogger *pInfoLogger = (IInfoLogger *)pLogger->Acquire(IInfoLogger::NAME());
+	IInfoLogger *pInfoLogger = pLogger->Acquire<IInfoLogger>();
 
-	IErrorLogger *pErrorLogger = (IErrorLogger *)pLogger->Acquire(IErrorLogger::NAME());
+	IWarningLogger *pWarningLogger = pLogger->Acquire<IWarningLogger>();
 
-	pErrorLogger->Log("error log");
+	IErrorLogger *pErrorLogger = pLogger->Acquire<IErrorLogger>();
 
 	pInfoLogger->Log("info log");
 
-	ITestInterface *pTestInterface = (ITestInterface *)pInfoLogger->Acquire(ITestInterface::NAME());
+	pWarningLogger->Log("warning log");
 
-	pTestInterface->Test();
-
-	pTestInterface->Release();
+	pErrorLogger->Log("error log");
 
 	pErrorLogger->Release();
 
 	pInfoLogger->Release();
+
+	pWarningLogger->Release();
 
 	pLogger->Release();
 }

@@ -83,7 +83,8 @@
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
     <ClInclude Include="..\..\Include\CX\API\IInterface.hpp" />
-    <ClInclude Include="..\..\Include\CX\API\InterfaceHelper.hpp" />
+    <ClInclude Include="..\..\Include\CX\API\IObject.hpp" />
+    <ClInclude Include="..\..\Include\CX\API\Object.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZ4InputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZ4OutputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZHAMInputFilter.hpp" />

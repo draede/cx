@@ -1,8 +1,8 @@
-/* 
- * The author disclaims copyright to this source code.
- */ 
- 
+
 #pragma once
+
+
+#include "IObject.hpp"
 
 
 namespace CX
@@ -12,32 +12,36 @@ class IInterface
 {
 public:
 
+	struct Null { };
+
 	virtual const char *GetName() const = 0;
 
-	virtual void Retain() const = 0;
+	long Release() const
+	{
+		return m_pObject->Release();
+	}
 
-	virtual void Release() const = 0;
-
-	virtual IInterface *Acquire(const char *szName) = 0;
-
-	virtual const IInterface *Acquire(const char *szName) const = 0;
-
-	virtual bool Implements(const char *szName) const = 0;
+	void SetObject(IObject *pObject)
+	{
+		m_pObject = pObject;
+	}
 
 protected:
 
 	virtual ~IInterface() { }
 
+private:
+
+	IObject *m_pObject;
+
 };
 
 }//namespace CX
 
-
-#define CX_DECLARE_INTERFACE(IFNAME)                                                                                   \
-	static const char *NAME() { return IFNAME; }                                                                        \
+#define CX_DECLARE_INTERFACE(name)                                                                                     \
+	static const char *NAME() { return name; }                                                                          \
 	                                                                                                                    \
 	virtual const char *GetName() const                                                                                 \
 	{                                                                                                                   \
 		return NAME();                                                                                                   \
 	}
-

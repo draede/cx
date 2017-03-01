@@ -1,3 +1,5 @@
+0.2.115 - 2017-03-01 - Improved & simplified API classes
+  - Improved & simplified API classes
 0.2.114 - 2017-02-28 - Fixes in API
   - Fixes in API
 0.2.111 - 2017-02-26 - Fixed Print UTF8/UTF16 conversions

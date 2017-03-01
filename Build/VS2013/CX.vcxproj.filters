@@ -1092,7 +1092,10 @@
     <ClInclude Include="..\..\Include\CX\API\IInterface.hpp">
       <Filter>Header Files\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API\InterfaceHelper.hpp">
+    <ClInclude Include="..\..\Include\CX\API\IObject.hpp">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API\Object.hpp">
       <Filter>Header Files\API</Filter>
     </ClInclude>
   </ItemGroup>
