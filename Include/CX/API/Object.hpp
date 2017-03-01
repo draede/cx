@@ -1,4 +1,7 @@
-
+/* 
+ * The author disclaims copyright to this source code.
+ */ 
+ 
 #pragma once
 
 
