@@ -88,7 +88,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -219,7 +219,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -346,7 +346,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -469,7 +469,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -588,7 +588,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -703,7 +703,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -813,7 +813,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -919,7 +919,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -1020,7 +1020,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -1117,7 +1117,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -1210,7 +1210,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -1299,7 +1299,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -1384,7 +1384,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -1465,7 +1465,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -1542,7 +1542,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
@@ -1613,7 +1613,7 @@ public:
 			delete this;
 		}
 
-		return m_cRefCount;
+		return cRefCount;
 	}
 
 	virtual bool Implements(const char *szName) const
