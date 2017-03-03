@@ -91,11 +91,14 @@ IFormatter *Logger::GetFormatter()
 	return m_pFormatter;
 }
 
-Status Logger::AddOutput(IOutput *pOutput)
+Status Logger::AddOutput(IOutput *pOutput, FreeOutputFunc pfnFreeOutput/* = &Logger::DeleteOutput*/)
 {
 	Sys::Locker   locker(&m_fmLogger);
+	Output        output;
 
-	m_vectorOutputs.push_back(pOutput);
+	output.pOutput       = pOutput;
+	output.pfnFreeOutput = pfnFreeOutput;
+	m_vectorOutputs.push_back(output);
 
 	return Status();
 }
@@ -104,10 +107,12 @@ Status Logger::RemoveOutputs()
 {
 	Sys::Locker   locker(&m_fmLogger);
 
-	for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-	     iter != m_vectorOutputs.end(); ++iter)
+	for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 	{
-		delete *iter;
+		if (NULL != iter->pfnFreeOutput && NULL != iter->pOutput)
+		{
+			iter->pfnFreeOutput(iter->pOutput);
+		}
 	}
 	m_vectorOutputs.clear();
 

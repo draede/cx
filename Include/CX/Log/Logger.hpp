@@ -114,6 +114,10 @@ class CX_API Logger
 {
 public:
 
+	typedef void (* FreeOutputFunc)(IOutput *pOutput);
+
+	static void DeleteOutput(IOutput *pOutput) { delete pOutput; }
+
 	Logger();
 
 	virtual ~Logger();
@@ -128,7 +132,7 @@ public:
 
 	IFormatter *GetFormatter();
 
-	Status AddOutput(IOutput *pOutput);
+	Status AddOutput(IOutput *pOutput, FreeOutputFunc pfnFreeOutput = &Logger::DeleteOutput);
 
 	Status RemoveOutputs();
 
@@ -160,10 +164,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -193,10 +199,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -226,10 +234,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -259,10 +269,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -292,10 +304,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -326,10 +340,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -360,10 +376,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -395,10 +413,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -430,10 +450,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -465,10 +487,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -500,10 +524,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -535,10 +561,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -570,10 +598,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -606,10 +636,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -644,10 +676,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -682,10 +716,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -720,10 +756,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -757,10 +795,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -795,10 +835,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -833,10 +875,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -872,10 +916,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -911,10 +957,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -950,10 +998,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -989,10 +1039,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1029,10 +1081,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1069,10 +1123,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1109,10 +1165,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1149,10 +1207,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1189,10 +1249,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1230,10 +1292,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1272,10 +1336,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1315,10 +1381,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1358,10 +1426,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1401,10 +1471,12 @@ public:
 			return status;
 		}
 
-		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); 
-		     iter != m_vectorOutputs.end(); ++iter)
+		for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
 		{
-			m_pFormatter->Write(*iter, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			if (NULL != iter->pOutput)
+			{
+				m_pFormatter->Write(iter->pOutput, nLevel, szTag, sOutput.c_str(), sOutput.size());
+			}
 		}
 
 		return Status();
@@ -1412,7 +1484,13 @@ public:
 
 private:
 
-	typedef Vector<IOutput *>::Type   OutputsVector;
+	struct Output
+	{
+		IOutput          *pOutput;
+		FreeOutputFunc   pfnFreeOutput;
+	};
+
+	typedef Vector<Output>::Type   OutputsVector;
 
 	Level            m_nLevel;
 	IFormatter       *m_pFormatter;
