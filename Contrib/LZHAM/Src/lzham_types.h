@@ -3,7 +3,7 @@
 #pragma once
 
 // TODO
-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || (1900 == _MSC_VER)
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || (1900 <= _MSC_VER)
    #undef INT8_MIN
    #undef INT8_MAX
    #undef UINT8_MIN

@@ -1,0 +1,1959 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Sys">
+      <UniqueIdentifier>{d38e5aa9-fb1c-4394-a443-06c684ccf88f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C">
+      <UniqueIdentifier>{7f573871-9a6d-46f3-944b-2a0cb77999cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C\Platform">
+      <UniqueIdentifier>{b3619829-1c3a-4129-bbbe-ed136a0b237f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C\Platform\Windows">
+      <UniqueIdentifier>{a013a78c-1ef1-47d7-bdf0-79e246cce92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib">
+      <UniqueIdentifier>{1e608268-8048-4f27-8138-2be8641b9f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\ByteOrder">
+      <UniqueIdentifier>{ec081fa0-4c86-44e9-8b70-adffef1460c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform">
+      <UniqueIdentifier>{692da411-0b00-45c1-89dc-5136ad459b9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform\Windows">
+      <UniqueIdentifier>{9d055c34-9627-4104-99e8-1858e0ac8596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO">
+      <UniqueIdentifier>{98d003c2-2ce1-477b-8ac2-1242a9583a48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Detail">
+      <UniqueIdentifier>{f41a1864-0767-4554-803a-543ecdee5b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys">
+      <UniqueIdentifier>{4fc7bd34-eb29-45da-bd0d-c156e28af051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform">
+      <UniqueIdentifier>{87ce9721-7afe-45f2-92b2-727b5d9c04eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform\Windows">
+      <UniqueIdentifier>{b1f1a48d-b223-4c45-8061-9f97688522e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{80ef2c49-7042-43eb-9e35-812e5a88e5a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\DoubleConversion">
+      <UniqueIdentifier>{085c5130-f8b2-4190-aecb-4e8e2c229c56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{ee9ca4b0-32bf-4d59-b412-7b551e361f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str">
+      <UniqueIdentifier>{080b323d-57e7-4a9f-9f72-da3e5eff1cab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform">
+      <UniqueIdentifier>{0427a3db-096c-429f-8f00-f3d51d61f926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform\Windows">
+      <UniqueIdentifier>{5894e032-b371-49bd-b98e-69d8aeb07fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail">
+      <UniqueIdentifier>{67c352a5-f637-422e-ae6c-e1ae19779f5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Detail\DetailPrint">
+      <UniqueIdentifier>{cf54c2e1-6549-4119-b120-e814f158209e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint">
+      <UniqueIdentifier>{6ed61017-6194-4453-98d7-e83e8fc47137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str">
+      <UniqueIdentifier>{43aad8d5-7866-4eca-9ede-4c4cb16a01ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform">
+      <UniqueIdentifier>{c805dcee-738b-4fd4-b2d5-5a945da902e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform\Windows">
+      <UniqueIdentifier>{2eb70e77-58bc-4474-b7db-2bd089bcef8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{53d86764-a89c-48a6-aaa3-73ed19a8fb7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform">
+      <UniqueIdentifier>{227f41fc-1813-48ce-8a8b-4ec85124e50b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform\Windows">
+      <UniqueIdentifier>{6979b1ed-c14d-40bf-9c22-f66508523c67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform">
+      <UniqueIdentifier>{dd12c7ce-0a6b-4011-8007-f010cbfa3aa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform\Windows">
+      <UniqueIdentifier>{0edbcc58-58e5-4ea9-983b-835320f4b6d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data">
+      <UniqueIdentifier>{258466c1-a8ba-4584-a4dd-4439d5a04f1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data\JSON">
+      <UniqueIdentifier>{4baea398-be92-4d00-abc1-ddceb60bf675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data">
+      <UniqueIdentifier>{17302211-bf75-481b-ad7e-3f7de448fd88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\JSON">
+      <UniqueIdentifier>{25a65e68-6f86-413a-ae30-6c8d9e0c832a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log">
+      <UniqueIdentifier>{3bec0df9-4dd4-48b5-beb7-ce12aa00caf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log">
+      <UniqueIdentifier>{d77606a4-ae48-49d0-bc2d-c0c609bd0d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform">
+      <UniqueIdentifier>{ff2ade6b-e667-4734-880c-e018005bb159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform\Windows">
+      <UniqueIdentifier>{614cc691-28bf-4718-9af5-5b727f043131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Hash">
+      <UniqueIdentifier>{75917f81-ae6e-4678-a127-f60fe463c3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hash">
+      <UniqueIdentifier>{5fa311d1-83f4-42dc-9f11-b90e9b008fdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\MD5">
+      <UniqueIdentifier>{01faf7f2-ea37-4b4a-a2c5-2853e2e64a63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\SHA">
+      <UniqueIdentifier>{0e7caf65-d91f-431c-a751-4076c9e607f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C">
+      <UniqueIdentifier>{1ffd37c0-d3bb-4fd2-a690-cd6db0c16df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform">
+      <UniqueIdentifier>{eae569a8-4126-49dd-9954-9ad3cf1adef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform\Windows">
+      <UniqueIdentifier>{dc06b311-49f9-45a4-99b4-e161f617a0f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\Z85">
+      <UniqueIdentifier>{77433a82-b211-434d-9166-829847057fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\xxHash">
+      <UniqueIdentifier>{a71c9426-4c31-44fb-8cfc-690febfbeacc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\TinyMT">
+      <UniqueIdentifier>{4a1e2c92-3ede-479e-a392-8f74afa37fcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform">
+      <UniqueIdentifier>{a3d2af3b-1f9f-42df-b67e-2ec2ff5422b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform\Windows">
+      <UniqueIdentifier>{f4a4bb84-0f24-44a7-a935-96ba5abc0345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\CRC32Slice8">
+      <UniqueIdentifier>{1bbfa48c-4ef5-4fe2-abbb-4889c91f5e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Platform">
+      <UniqueIdentifier>{ce8bdf95-6245-4c54-bbde-7e33fc5f13e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Platform\Windows">
+      <UniqueIdentifier>{820a8f08-d433-4c24-85fc-27c15318ad16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform">
+      <UniqueIdentifier>{d0f82553-9ed3-4f4e-a952-068ba93c0195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform\Windows">
+      <UniqueIdentifier>{43d75adf-2a54-4261-ad01-01a8ef124bd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform">
+      <UniqueIdentifier>{fc72f02c-b630-48b6-961c-ee026638810e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform\Windows">
+      <UniqueIdentifier>{f9fef98d-8936-4e0d-96d8-5d9d4e29e5ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C\Platform\Android">
+      <UniqueIdentifier>{8deebe0d-072e-42e1-b306-20d684d32938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\C\Platform\iOS">
+      <UniqueIdentifier>{e6de4062-9f29-49f9-95d3-7179452da2f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Platform\Android">
+      <UniqueIdentifier>{5ca0d3dc-a536-4df4-8fe5-a84155837f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Platform\iOS">
+      <UniqueIdentifier>{d86d7842-f1e7-48ed-854c-eb11a2599131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform\Android">
+      <UniqueIdentifier>{4bc2772e-1ad0-4475-8413-204f2e17250f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log\Platform\iOS">
+      <UniqueIdentifier>{49cf426e-58d5-4f01-9c0d-d31fc840e398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform\Android">
+      <UniqueIdentifier>{37340d2c-c1f5-459e-8bd6-9e3aa6e6ae9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Str\Platform\iOS">
+      <UniqueIdentifier>{efc4c106-d7c0-4364-a2a2-25311be6d14b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform\Android">
+      <UniqueIdentifier>{d410981f-f22d-43b2-8fb3-2f121e657ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sys\Platform\iOS">
+      <UniqueIdentifier>{a79ee6c2-a571-4c44-bd93-f401a10a79b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform\Android">
+      <UniqueIdentifier>{22a148d9-9231-4330-91ad-b686f2165e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util\Platform\iOS">
+      <UniqueIdentifier>{c1b4852a-0ba5-436a-8457-85751ad406ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform\Android">
+      <UniqueIdentifier>{c0e73bc5-ce56-423d-87f1-54867e10d713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\C\Platform\iOS">
+      <UniqueIdentifier>{92a04ce5-1d22-4116-9ed0-4222ff5fce91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform\Android">
+      <UniqueIdentifier>{1420aa2e-060d-4fcd-a753-d71eb2f08023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Detail\DetailPrint\Platform\iOS">
+      <UniqueIdentifier>{a1046345-9db9-4df7-bd14-236207388ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform\Android">
+      <UniqueIdentifier>{4084a048-f1f5-4f23-842e-b50fdc47899d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Platform\iOS">
+      <UniqueIdentifier>{0384685b-5d69-480b-9bb9-b31cca9f1163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform\Android">
+      <UniqueIdentifier>{a94227b4-f8ab-46f0-9191-432cd5ab1390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log\Platform\iOS">
+      <UniqueIdentifier>{942cd640-c014-4794-b2df-7865b1ce71d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform\Android">
+      <UniqueIdentifier>{f1b3e3bb-fdda-4611-bdf3-6ac2f4131a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Str\Platform\iOS">
+      <UniqueIdentifier>{d9f544bd-6a6f-4c55-b61a-6b74e769de57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform\Android">
+      <UniqueIdentifier>{ebd9664d-dd28-4f9c-acf5-6376b2241784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sys\Platform\iOS">
+      <UniqueIdentifier>{d0f73c60-9beb-4fcc-93c3-a4aa99ac8f35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform\Android">
+      <UniqueIdentifier>{4004463c-e66f-4716-ac7b-06e0699a7aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util\Platform\iOS">
+      <UniqueIdentifier>{3571bb27-c70e-46dd-bf25-6d20541bf4a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\BLAKE2">
+      <UniqueIdentifier>{1a266b5a-6270-4dad-ad47-972b00a6ad71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SimpleBuffers">
+      <UniqueIdentifier>{d3ef37bc-d457-4e4b-8e5d-01c731c8a604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SimpleBuffers">
+      <UniqueIdentifier>{1e478e1c-83f2-416a-ae78-5d79435d7758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\LZHAM">
+      <UniqueIdentifier>{33f6a922-1eca-4688-af4c-16b0bd821fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Crypt">
+      <UniqueIdentifier>{79bff1ab-53cc-480b-9f2d-d855ade5c7b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Crypt">
+      <UniqueIdentifier>{e32ab18b-86f8-4da6-afc2-e7ca3a071a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Archive">
+      <UniqueIdentifier>{d5a523f0-5d6b-4ed6-b847-c8111e43c492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Archive">
+      <UniqueIdentifier>{dda57f85-90ef-43ef-85fa-da48db1f4abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\LZ4">
+      <UniqueIdentifier>{1494c80a-7707-4877-9a3d-155c55bf2d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\Snappy">
+      <UniqueIdentifier>{42b5f285-fbf5-4726-848d-4bc308eb0d0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\cURL">
+      <UniqueIdentifier>{d8e44830-afc5-4425-a99a-e8b9a9b42654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Network">
+      <UniqueIdentifier>{db83ef44-92da-4423-a031-d7d52a2b38a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Network\HTTP">
+      <UniqueIdentifier>{c8664dad-3c33-4d4a-92ac-e47b0b2a788b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{2975ffdd-9be4-42f1-ae04-5830cfb20ad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\HTTP">
+      <UniqueIdentifier>{56ec3950-f439-4f06-97f6-1c6ff3225c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\crypto-algorithms">
+      <UniqueIdentifier>{fedafd79-b9bd-40d5-82ab-f3f01584a4f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\Expat">
+      <UniqueIdentifier>{851b78e0-775e-42a5-958f-516ab290a289}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data\MO">
+      <UniqueIdentifier>{45798909-8284-4f2c-93b2-45ebf89ccd68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data\XML">
+      <UniqueIdentifier>{cd254ef0-3fd2-4a64-a7cc-8989e6afe0f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\MO">
+      <UniqueIdentifier>{29fcbe16-740a-4bdc-873d-4dc7bc09108b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\XML">
+      <UniqueIdentifier>{1f1ef256-8116-4256-a9a7-4f457597039f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debug">
+      <UniqueIdentifier>{ec6d28de-dcb5-4657-849f-981e97802780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Debug">
+      <UniqueIdentifier>{3ed6d8fe-3a7f-4393-a887-98c992eb5412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DB">
+      <UniqueIdentifier>{79fa87e5-1c3a-47d2-968f-f8f06fc17881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\SQLite">
+      <UniqueIdentifier>{ad479844-c1af-4b71-a732-533a85d90bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DB">
+      <UniqueIdentifier>{a1aa7d9d-92a8-4639-96fd-3dae204ce7d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DB\SQLite">
+      <UniqueIdentifier>{f155545d-05da-4994-a87c-abac70adcb6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DB\SQLite">
+      <UniqueIdentifier>{73e930a3-c2ea-4451-b402-06a89773849a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\API">
+      <UniqueIdentifier>{c33d8e4e-08a9-4d73-ac51-82f13505f7e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\BOM.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Deque.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Limits.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\List.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Map.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Platform.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Queue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Set.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Stack.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\String.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\UOMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\UOMultiMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\UOMultiSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\UOSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Vector.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h">
+      <Filter>Contrib\ByteOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\APIDefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Status.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\StatusCodes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Version.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\DynLib.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Print.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\EmptyType.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum-dtoa.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\cached-powers.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\diy-fp.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\double-conversion.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\fast-dtoa.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\fixed-dtoa.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\ieee.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\strtod.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\utils.h">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.hpp">
+      <Filter>Header Files\Str\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\UTF8.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.hpp">
+      <Filter>Header Files\Util\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Timer.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\MemOutputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Detail\DetailPrint\DetailPrint.hpp">
+      <Filter>Header Files\Detail\DetailPrint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Slice.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Thread.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Thread.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Var.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Level.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Logger.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\IOutput.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\IFormatter.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\DefaultFormatter.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Time.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.hpp">
+      <Filter>Header Files\Util\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Lock.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\RWLock.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\RWLock.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\CRC32Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\IHash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\MD5Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA1Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA256Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA384Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\APIDefs.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\ctype.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Limits.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Scope.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\StatusCodes.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\stdarg.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\stdio.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\stdlib.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\string.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Types.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\ctype.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdarg.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdio.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\stdlib.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\string.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Windows\Types.h">
+      <Filter>Header Files\C\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Version.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\IBinStr.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Z85BinStr.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\HexBinStr.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\Z85\Include\z85.h">
+      <Filter>Contrib\Z85</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\SAXParser.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Helper.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\RndGen.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
+      <Filter>Contrib\CRC32Slice8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Mem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Process.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Process.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DenseHashMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DenseHashSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SparseHashMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SparseHashSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DenseMultiHashMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DenseMultiHashSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SparseMultiHashMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SparseMultiHashSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\RCMemBuffer.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\RCMemBufferMgr.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IFileSysHelper.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileInputStream.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileOutputStream.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\SystemOutput.hpp">
+      <Filter>Header Files\Log\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\RapidJSONStreams.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SparseHashHelper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\ctype.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdarg.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdio.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\stdlib.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\string.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\Android\Types.h">
+      <Filter>Header Files\C\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\ctype.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdarg.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdio.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\stdlib.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\string.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Platform\iOS\Types.h">
+      <Filter>Header Files\C\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\FileInputStream.hpp">
+      <Filter>Header Files\IO\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\FileOutputStream.hpp">
+      <Filter>Header Files\IO\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Android\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\FileInputStream.hpp">
+      <Filter>Header Files\IO\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\FileOutputStream.hpp">
+      <Filter>Header Files\IO\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\iOS\LocalFileSysHelper.hpp">
+      <Filter>Header Files\IO\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Android\SystemOutput.hpp">
+      <Filter>Header Files\Log\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\SystemOutput.hpp">
+      <Filter>Header Files\Log\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Platform\Android\UTF8.hpp">
+      <Filter>Header Files\Str\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Platform\iOS\UTF8.hpp">
+      <Filter>Header Files\Str\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\DynLib.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Lock.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Process.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\RWLock.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Thread.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\DynLib.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Lock.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Process.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\RWLock.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Thread.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Time.hpp">
+      <Filter>Header Files\Util\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Timer.hpp">
+      <Filter>Header Files\Util\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Time.hpp">
+      <Filter>Header Files\Util\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Timer.hpp">
+      <Filter>Header Files\Util\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\BLAKE2Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\CPPGenerator.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataWriter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\IGenerator.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\IReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\IWriter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\JSONReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\JSONWriter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Member.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\MemberType.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Object.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Parser.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\ScopePtr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IFileSysEnumerator.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\LocalFileSysEnumerator.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysEnumerator.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\BLOB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Network\HTTP\Client.hpp">
+      <Filter>Header Files\Network\HTTP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Network\URLParser.hpp">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\StringHelper.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\ISimpleBuffer.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Version.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\C\Mem.h">
+      <Filter>Header Files\C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINRW.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINWriter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZ4InputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZ4OutputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZHAMInputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\LZHAMOutputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\SnappyInputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Archive\SnappyOutputFilter.hpp">
+      <Filter>Header Files\Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Crypt\AES128InputFilter.hpp">
+      <Filter>Header Files\Crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Crypt\AES128OutputFilter.hpp">
+      <Filter>Header Files\Crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FilteredInputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\FilteredOutputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IInputFilter.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\IOutputFilter.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataIniter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\BitSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\TaskQueue.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\TaskQueue.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\TaskExecutor.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\TaskExecutor.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\OptimizedStreamOutput.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\Node.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\MO\ISAXParserObserver.hpp">
+      <Filter>Header Files\Data\MO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\MO\Language.hpp">
+      <Filter>Header Files\Data\MO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\MO\SAXParser.hpp">
+      <Filter>Header Files\Data\MO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\XML\ISAXParserObserver.hpp">
+      <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\XML\Node.hpp">
+      <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\XML\SAXParser.hpp">
+      <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\IProfilingHandler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\PrintProfilingHandler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\Profiler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\ScopeProfiler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\SysLogProfilingHandler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Debug\ThreadProfiler.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Str\Base64BinStr.hpp">
+      <Filter>Header Files\Str</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Contrib\SQLite\Include\sqlite3.h">
+      <Filter>Contrib\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Database.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Statement.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Transaction.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\DBHelper.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Bindings.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Value.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Event.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Event.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Event.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Event.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\MultiHash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\DynMember.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\DynStruct.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\iOS\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Atomic.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Bitmap.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API\IInterface.hpp">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API\IObject.hpp">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\API\Object.hpp">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum-dtoa.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\cached-powers.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\diy-fp.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\double-conversion.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fast-dtoa.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\fixed-dtoa.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc">
+      <Filter>Contrib\DoubleConversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\MemInputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\MemPool.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Logger.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\StreamOutput.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp">
+      <Filter>Source Files\Log\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\hmac_sha1.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha2.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha1.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA1Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA256Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA384Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\C\Platform\Windows\Mem_windows.c">
+      <Filter>Source Files\C\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\HexBinStr.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Z85BinStr.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Z85\Src\z85.c">
+      <Filter>Contrib\Z85</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\xxHash\Src\xxhash.c">
+      <Filter>Contrib\xxHash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\xxHash32.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Helper.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\RndGen.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt32.c">
+      <Filter>Contrib\TinyMT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt64.c">
+      <Filter>Contrib\TinyMT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\xxHash64.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\CRC32Slice8\Src\crc32_internal.cpp">
+      <Filter>Contrib\CRC32Slice8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Mem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\RCMemBuffer.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\RCMemBufferMgr.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8_windows.cpp">
+      <Filter>Source Files\Str\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileInputStream_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\C\Platform\Android\Mem_android.c">
+      <Filter>Source Files\C\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\C\Platform\iOS\Mem_ios.c">
+      <Filter>Source Files\C\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Android\DetailPrint_android.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\iOS\DetailPrint_ios.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\FileInputStream_android.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\FileOutputStream_android.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\LocalFileSysHelper_android.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileInputStream_ios.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileOutputStream_ios.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\LocalFileSysHelper_ios.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput_android.cpp">
+      <Filter>Source Files\Log\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp">
+      <Filter>Source Files\Log\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8_android.cpp">
+      <Filter>Source Files\Str\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\iOS\UTF8_ios.cpp">
+      <Filter>Source Files\Str\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\DynLib_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Lock_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Process_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\RWLock_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Thread_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\DynLib_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Lock_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Process_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\RWLock_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Thread_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Android\Time_android.cpp">
+      <Filter>Source Files\Util\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Android\Timer_android.cpp">
+      <Filter>Source Files\Util\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\Time_ios.cpp">
+      <Filter>Source Files\Util\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\Timer_ios.cpp">
+      <Filter>Source Files\Util\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BLAKE2\Src\blake2b-ref.c">
+      <Filter>Contrib\BLAKE2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\BLAKE2Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\JSONReader.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\JSONWriter.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\Member.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\Object.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\Parser.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_assert.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_checksum.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_huffman_codes.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lib.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzbase.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzcomp.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzcomp_internal.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzcomp_state.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzdecomp.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_lzdecompbase.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_match_accel.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_mem.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_platform.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_prefix_coding.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_symbol_codec.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_timer.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZHAM\Src\lzham_vector.cpp">
+      <Filter>Contrib\LZHAM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysEnumerator.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4.c">
+      <Filter>Contrib\LZ4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4frame.c">
+      <Filter>Contrib\LZ4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\LZ4\Src\lz4hc.c">
+      <Filter>Contrib\LZ4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy.cc">
+      <Filter>Contrib\Snappy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy-sinksource.cc">
+      <Filter>Contrib\Snappy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Snappy\Src\snappy-stubs-internal.cc">
+      <Filter>Contrib\Snappy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\MD5\Src\md5_orig.c">
+      <Filter>Contrib\MD5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CXVersion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Network\HTTP\Client.cpp">
+      <Filter>Source Files\Network\HTTP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\StringHelper.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\BINReader.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\BINWriter.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Status.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZ4InputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZ4OutputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZHAMInputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\LZHAMOutputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\SnappyInputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Archive\SnappyOutputFilter.cpp">
+      <Filter>Source Files\Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Crypt\AES128InputFilter.cpp">
+      <Filter>Source Files\Crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Crypt\AES128OutputFilter.cpp">
+      <Filter>Source Files\Crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\FilteredInputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\FilteredOutputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\crypto-algorithms\Src\aes.cpp">
+      <Filter>Contrib\crypto-algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Var.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskQueue.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskExecutor.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\xmlparse.c">
+      <Filter>Contrib\Expat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\xmlrole.c">
+      <Filter>Contrib\Expat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\xmltok.c">
+      <Filter>Contrib\Expat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\JSONNode.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\MO\Language.cpp">
+      <Filter>Source Files\Data\MO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\MO\MOSAXParser.cpp">
+      <Filter>Source Files\Data\MO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\XML\XMLNode.cpp">
+      <Filter>Source Files\Data\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\XML\XMLSAXParser.cpp">
+      <Filter>Source Files\Data\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\WildMat.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\ScopeProfiler.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Base64BinStr.cpp">
+      <Filter>Source Files\Str</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SQLite\Src\sqlite3.c">
+      <Filter>Contrib\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Database.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Statement.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Transaction.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\Bindings.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\cleartext.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\cram.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\digest.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\digest_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\krb5_gssapi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\krb5_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\ntlm.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\ntlm_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\oauth2.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\spnego_gssapi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\spnego_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vauth\vauth.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\axtls.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\cyassl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\darwinssl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\gskit.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\gtls.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\mbedtls.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\nss.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\openssl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\polarssl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\polarssl_threadlock.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\schannel.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\vtls.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\amigaos.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\asyn-ares.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\asyn-thread.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\base64.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\conncache.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\connect.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\content_encoding.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\cookie.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_addrinfo.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_des.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_endian.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_fnmatch.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_gethostname.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_gssapi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_memrchr.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_multibyte.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_ntlm_core.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_ntlm_wb.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_rtmp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_sasl.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_threads.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\dict.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\dotdot.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\easy.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\escape.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\file.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\fileinfo.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\formdata.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ftp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ftplistparser.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\getenv.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\getinfo.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\gopher.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hash.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hmac.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostasyn.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostcheck.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostip.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostip4.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostip6.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\hostsyn.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_chunks.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_digest.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_negotiate.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_ntlm.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http_proxy.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\http2.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\idn_win32.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\if2ip.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\imap.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\inet_ntop.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\inet_pton.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\krb5.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ldap.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\llist.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\md4.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\md5.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\memdebug.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\mprintf.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\multi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\netrc.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\non-ascii.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\nonblock.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\nwlib.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\nwos.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\openldap.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\parsedate.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\pingpong.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\pipeline.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\pop3.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\progress.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\rawstr.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\rtsp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\security.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\select.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\sendf.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\share.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\slist.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\smb.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\smtp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\socks.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\socks_gssapi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\socks_sspi.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\speedcheck.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\splay.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ssh.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strdup.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strequal.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strerror.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strtok.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strtoofft.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\system_win32.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\telnet.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\tftp.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\timeval.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\transfer.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\url.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\version.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\warnless.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\wildcard.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\x509asn1.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Network\URLParser.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Value.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\Profiler.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\SysLogProfilingHandler.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Debug\ThreadProfiler.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\DBHelper.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Event_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Event_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Event_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\MultiHash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\OptimizedStreamOutput.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\DynMember.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\DynStruct.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Atomic_android.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Atomic_ios.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Atomic_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Bitmap.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
