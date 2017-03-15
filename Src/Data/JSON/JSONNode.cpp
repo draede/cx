@@ -71,6 +71,13 @@ Node::Node(IntType nValue)
 	SetInt(nValue);
 }
 
+Node::Node(UIntType uValue)
+{
+	m_pParent = NULL;
+	m_nType   = Type_Null;
+	SetUInt(uValue);
+}
+
 Node::Node(DoubleType lfValue)
 {
 	m_pParent = NULL;
@@ -143,6 +150,11 @@ Status Node::Copy(const Node &node)
 	if (Type_Int == node.GetType())
 	{
 		return SetInt(node.GetInt());
+	}
+	else
+	if (Type_UInt == node.GetType())
+	{
+		return SetUInt(node.GetUInt());
 	}
 	else
 	if (Type_Double == node.GetType())
@@ -254,6 +266,11 @@ bool Node::IsInt() const
 	return (Type_Int == m_nType);
 }
 
+bool Node::IsUInt() const
+{
+	return (Type_UInt == m_nType);
+}
+
 bool Node::IsDouble() const
 {
 	return (Type_Double == m_nType);
@@ -284,6 +301,11 @@ Status Node::SetType(Type nType)
 	if (Type_Int == nType)
 	{
 		return SetInt(INT_DEFAULT);
+	}
+	else
+	if (Type_UInt == nType)
+	{
+		return SetUInt(UINT_DEFAULT);
 	}
 	else
 	if (Type_Double == nType)
@@ -383,6 +405,35 @@ Node::IntType Node::GetInt(Status *pStatus/* = NULL*/) const
 	}
 }
 
+Status Node::SetUInt(UIntType uValue)
+{
+	if (Type_Invalid == m_nType)
+	{
+		return Status_InvalidCall;
+	}
+	FreeMem();
+	m_nType  = Type_UInt;
+	m_uValue = uValue;
+
+	return Status();
+}
+
+Node::UIntType Node::GetUInt(Status *pStatus/* = NULL*/) const
+{
+	if (Type_UInt == m_nType)
+	{
+		return m_uValue;
+	}
+	else
+	{
+		if (NULL != pStatus)
+		{
+			pStatus->Set(Status_InvalidCall, "");
+		}
+
+		return UINT_DEFAULT;
+	}
+}
 Status Node::SetDouble(DoubleType lfValue)
 {
 	if (Type_Invalid == m_nType)
@@ -959,6 +1010,11 @@ bool Node::operator == (const Node &node)
 		return (m_nValue == node.m_nValue);
 	}
 	else
+	if (Type_UInt == m_nType)
+	{
+		return (m_uValue == node.m_uValue);
+	}
+	else
 	if (Type_Double == m_nType)
 	{
 		return (m_lfValue == node.m_lfValue);
@@ -1067,6 +1123,16 @@ bool Node::operator == (IntType nValue)
 	return (m_nValue == nValue);
 }
 
+bool Node::operator == (UIntType uValue)
+{
+	if (Type_Int != m_nType)
+	{
+		return false;
+	}
+
+	return (m_uValue == uValue);
+}
+
 bool Node::operator == (DoubleType lfValue)
 {
 	if (Type_Double != m_nType)
@@ -1112,6 +1178,11 @@ bool Node::operator != (IntType nValue)
 	return (!(*this == nValue));
 }
 
+bool Node::operator != (UIntType uValue)
+{
+	return (!(*this == uValue));
+}
+
 bool Node::operator != (DoubleType lfValue)
 {
 	return (!(*this == lfValue));
@@ -1133,6 +1204,11 @@ Node::operator BoolType ()
 }
 
 Node::operator IntType ()
+{
+	return GetInt();
+}
+
+Node::operator UIntType ()
 {
 	return GetInt();
 }
@@ -1612,6 +1688,69 @@ Bool Node::SAXObserver::OnIntValue(Int64 nInt)
 			return False;
 		}
 		if ((status = pNode->SetInt(nInt)).IsNOK())
+		{
+			m_status = status;
+
+			return False;
+		}
+
+		return True;
+	}
+	else
+	{
+		m_status = Status(Status_InvalidArg, "Parent must be an object or an array");
+
+		return False;
+	}
+
+	return True;
+}
+
+Bool Node::SAXObserver::OnUIntValue(UInt64 uInt)
+{
+	Status status;
+
+	if (m_status.IsNOK())
+	{
+		return False;
+	}
+	if (NULL == m_pCrNode)
+	{
+		m_status = Status(Status_InvalidArg, "Root node must be an object or an array");
+
+		return False;
+	}
+	if (m_pCrNode->IsObject())
+	{
+		Node *pNode;
+
+		if (NULL == (pNode = m_pCrNode->AddMember(m_sKey)))
+		{
+			m_status = Status_MemAllocFailed;
+
+			return False;
+		}
+		if ((status = pNode->SetUInt(uInt)).IsNOK())
+		{
+			m_status = status;
+			
+			return False;
+		}
+
+		return True;
+	}
+	else
+	if (m_pCrNode->IsArray())
+	{
+		Node *pNode;
+
+		if (NULL == (pNode = m_pCrNode->AddItem()))
+		{
+			m_status = Status_MemAllocFailed;
+
+			return False;
+		}
+		if ((status = pNode->SetUInt(uInt)).IsNOK())
 		{
 			m_status = status;
 

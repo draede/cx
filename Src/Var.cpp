@@ -194,6 +194,20 @@ public:
 		return True;
 	}
 
+	virtual Bool OnUIntValue(UInt64 uInt)
+	{
+		if (m_pCurrent->IsObject())
+		{
+			(*m_pCurrent)[m_sKey].SetUInt(uInt);
+		}
+		else
+		{
+			(*m_pCurrent)[-1].SetUInt(uInt);
+		}
+
+		return True;
+	}
+
 	virtual Bool OnRealValue(Double lfReal)
 	{
 		if (m_pCurrent->IsObject())
@@ -231,11 +245,11 @@ const Char     *Var::DEFAULT_STRING = "";
 Var::Var(Bool a1, Bool a2, Bool a3, Bool a4, Bool a5)
 {
 	CX_UNUSED(a1);
-    CX_UNUSED(a2);
-    CX_UNUSED(a3);
-    CX_UNUSED(a4);
-    CX_UNUSED(a5);
-    
+	CX_UNUSED(a2);
+	CX_UNUSED(a3);
+	CX_UNUSED(a4);
+	CX_UNUSED(a5);
+
 	m_nType = Type_Invalid;
 }
 
@@ -258,6 +272,13 @@ Var::Var(Int64 nInt)
 	m_pParent = NULL;
 	m_nType   = Type_Null;
 	SetInt(nInt);
+}
+
+Var::Var(UInt64 uInt)
+{
+	m_pParent = NULL;
+	m_nType   = Type_Null;
+	SetUInt(uInt);
 }
 
 Var::Var(Double lfReal)
@@ -318,6 +339,11 @@ Status Var::Copy(const Var &var)
 	if (Type_Int == var.GetType())
 	{
 		return SetInt(var.GetInt());
+	}
+	else
+	if (Type_UInt == var.GetType())
+	{
+		return SetUInt(var.GetUInt());
 	}
 	else
 	if (Type_Real == var.GetType())
@@ -426,6 +452,11 @@ Bool Var::Equals(const Var &var, Bool bIgnoreCase/* = True*/) const
 	if (IsInt())
 	{
 		return (var.GetInt() == GetInt());
+	}
+	else
+	if (IsUInt())
+	{
+		return (var.GetUInt() == GetUInt());
 	}
 	else
 	if (IsReal())
@@ -630,6 +661,11 @@ Bool Var::IsInt() const
 	return (Type_Int == m_nType);
 }
 
+Bool Var::IsUInt() const
+{
+	return (Type_UInt == m_nType);
+}
+
 Bool Var::IsReal() const
 {
 	return (Type_Real == m_nType);
@@ -724,6 +760,38 @@ Int64 Var::GetInt(Int64 nIntDefault/* = DEFAULT_INT*/) const
 	return nIntDefault;
 }
 
+Status Var::SetUInt(UInt64 uUInt)
+{
+	Status status;
+
+	if (IsInvalid())
+	{
+		return Status(Status_InvalidCall, "Var is invalid");
+	}
+	status = SetType(Type_UInt);
+	if (status.IsNOK())
+	{
+		return status;
+	}
+	m_uUInt = uUInt;
+
+	return Status();
+}
+
+UInt64 Var::GetUInt(UInt64 uUIntDefault/* = DEFAULT_UINT*/) const
+{
+	if (IsInvalid())
+	{
+		return uUIntDefault;
+	}
+	if (IsUInt())
+	{
+		return m_uUInt;
+	}
+
+	return uUIntDefault;
+}
+
 Status Var::SetReal(Double lfReal)
 {
 	Status status;
@@ -755,6 +823,10 @@ Double Var::GetReal(Double lfRealDefault/* = DEFAULT_REAL*/) const
 	if (IsInt())
 	{
 		return m_nInt;
+	}
+	if (IsUInt())
+	{
+		return m_uUInt;
 	}
 
 	return lfRealDefault;
@@ -1083,6 +1155,13 @@ Var &Var::operator=(Int64 nInt)
 	return *this;
 }
 
+Var &Var::operator=(UInt64 uInt)
+{
+	SetUInt(uInt);
+
+	return *this;
+}
+
 Var &Var::operator=(Double lfReal)
 {
 	SetReal(lfReal);
@@ -1112,6 +1191,11 @@ Var::operator Bool() const
 Var::operator Int64 () const
 {
 	return GetInt();
+}
+
+Var::operator UInt64 () const
+{
+	return GetUInt();
 }
 
 Var::operator Double () const
@@ -1488,6 +1572,20 @@ Status Var::WriteNoRecScalar(const Var *pVar, IO::IOutputStream *pOutputStream, 
 	if (pVar->IsInt())
 	{
 		status = ToString(pVar->GetInt(), 0, szOutput, sizeof(szOutput) / sizeof(szOutput[0]), 
+								&cbAckSize, 0);
+		if (status.IsNOK())
+		{
+			return status;
+		}
+		status = pOutputStream->Write(szOutput, cbAckSize, &cbSize);
+		if (status.IsNOK())
+		{
+			return status;
+		}
+	}
+	if (pVar->IsUInt())
+	{
+		status = ToString(pVar->GetUInt(), 0, szOutput, sizeof(szOutput) / sizeof(szOutput[0]), 
 								&cbAckSize, 0);
 		if (status.IsNOK())
 		{

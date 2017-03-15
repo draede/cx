@@ -1074,6 +1074,15 @@
     <ClInclude Include="..\..\Include\CX\API\Object.hpp">
       <Filter>Header Files\API</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\CircularBuffer.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\BufferedInputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\BufferedOutputStream.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -1954,6 +1963,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\Bitmap.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\CircularBuffer.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\BufferedInputStream.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\BufferedOutputStream.cpp">
+      <Filter>Source Files\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

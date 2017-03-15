@@ -72,7 +72,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Uint(unsigned i)
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnUIntValue, (CX::UInt64)i))
 		{
 			return CX::False;
 		}
@@ -92,7 +92,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Uint64(uint64_t i)
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
+		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnUIntValue, (CX::UInt64)i))
 		{
 			return CX::False;
 		}
@@ -283,7 +283,7 @@ Status SAXParser::ParseStream(IO::IInputStream *pInputStream)
 
 	if (!m_pHandler->StartDoc())
 	{
-		return Status(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
 	rapidjson::GenericReader<rapidjson::UTF8<>, rapidjson::UTF8<> > reader;
@@ -327,7 +327,7 @@ Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 
 	if (!m_pHandler->StartDoc())
 	{
-		return Status(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
 	rapidjson::GenericReader<rapidjson::UTF8<>, rapidjson::UTF8<> > reader;
@@ -342,7 +342,7 @@ Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 
 	if (!m_pHandler->EndDoc())
 	{
-		return Status(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
 	return Status();
@@ -359,7 +359,7 @@ Status SAXParser::ParseString(const Char *szString)
 
 	if (!m_pHandler->StartDoc())
 	{
-		return Status(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
 	rapidjson::GenericReader<rapidjson::UTF8<>, rapidjson::UTF8<> > reader;
@@ -374,7 +374,7 @@ Status SAXParser::ParseString(const Char *szString)
 
 	if (!m_pHandler->EndDoc())
 	{
-		return Status(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
 	return Status();
@@ -391,7 +391,7 @@ Status SAXParser::ParseString(const String &sString)
 
 	if (!m_pHandler->StartDoc())
 	{
-		return Status(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
 	rapidjson::GenericReader<rapidjson::UTF8<>, rapidjson::UTF8<> > reader;
@@ -406,7 +406,7 @@ Status SAXParser::ParseString(const String &sString)
 
 	if (!m_pHandler->EndDoc())
 	{
-		return Status(Status_Cancelled, "Parsing was cancelled");
+		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
 	return Status();

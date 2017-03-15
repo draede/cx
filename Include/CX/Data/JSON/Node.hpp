@@ -58,6 +58,7 @@ public:
 		Type_Null,
 		Type_Bool,
 		Type_Int,
+		Type_UInt,
 		Type_Double,
 		Type_String,
 		Type_Object,
@@ -66,12 +67,14 @@ public:
 
 	typedef bool     BoolType;
 	typedef Int64    IntType;
+	typedef UInt64   UIntType;
 	typedef double   DoubleType;
 	typedef String   StringType;
 	typedef Char     CharType;
 
 	static const BoolType     BOOL_DEFAULT   = false;
 	static const IntType      INT_DEFAULT    = 0;
+	static const UIntType     UINT_DEFAULT   = 0;
 	static const DoubleType   DOUBLE_DEFAULT() { return 0.0; };
 	static const StringType   &STRING_DEFAULT() { static String tmp; return tmp; }
 
@@ -82,6 +85,8 @@ public:
 	Node(BoolType bValue);
 
 	Node(IntType nValue);
+
+	Node(UIntType uValue);
 
 	Node(DoubleType lfValue);
 
@@ -107,6 +112,8 @@ public:
 
 	bool IsInt() const;
 
+	bool IsUInt() const;
+
 	bool IsDouble() const;
 
 	bool IsObject() const;
@@ -124,6 +131,10 @@ public:
 	Status SetInt(IntType nValue);
 
 	IntType GetInt(Status *pStatus = NULL) const;
+
+	Status SetUInt(UIntType uValue);
+
+	UIntType GetUInt(Status *pStatus = NULL) const;
 
 	Status SetDouble(DoubleType lfValue);
 
@@ -187,6 +198,8 @@ public:
 
 	Node &operator = (IntType nValue);
 
+	Node &operator = (UIntType uValue);
+
 	Node &operator = (DoubleType lfValue);
 
 	Node &operator = (const StringType &sValue);
@@ -198,6 +211,8 @@ public:
 	bool operator == (BoolType bValue);
 
 	bool operator == (IntType nValue);
+
+	bool operator == (UIntType uValue);
 
 	bool operator == (DoubleType lfValue);
 
@@ -211,6 +226,8 @@ public:
 
 	bool operator != (IntType nValue);
 
+	bool operator != (UIntType nValue);
+
 	bool operator != (DoubleType lfValue);
 
 	bool operator != (const StringType &sValue);
@@ -220,6 +237,8 @@ public:
 	operator BoolType ();
 
 	operator IntType ();
+
+	operator UIntType ();
 
 	operator DoubleType ();
 
@@ -253,6 +272,7 @@ private:
 	{
 		BoolType      m_bValue;
 		IntType       m_nValue;
+		UIntType      m_uValue;
 		DoubleType    m_lfValue;
 		StringType    *m_psValue;
 		NodesMap      *m_pMapNodes;
@@ -281,6 +301,11 @@ private:
 		if (Type_Int == node.m_nType)
 		{
 			return Print(out, "{1}", node.m_nValue);
+		}
+		else
+		if (Type_UInt == node.m_nType)
+		{
+			return Print(out, "{1}", node.m_uValue);
 		}
 		else
 		if (Type_Double == node.m_nType)
@@ -424,6 +449,8 @@ private:
 		virtual Bool OnBoolValue(Bool bBool);
 
 		virtual Bool OnIntValue(Int64 nInt);
+
+		virtual Bool OnUIntValue(UInt64 uInt);
 
 		virtual Bool OnRealValue(Double lfReal);
 

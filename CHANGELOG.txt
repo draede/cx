@@ -1,3 +1,8 @@
+0.2.120 - 2017-03-15 - Added Util::CircularBuffer, IO::BufferedInputStream & IO::BufferedOutputStream
+  - Added IO::BufferedInputStream & IO::BufferedOutputStream
+  - Added Util::CircularBuffer 
+  - Added support for UInt64 in JSON classes
+  - Fixed some typos
 0.2.119 - 2017-03-09 - Added support for VS2017
   - Added support for VS2017
 0.2.118 - 2017-03-03 - Added custom free function for Logger outputs

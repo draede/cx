@@ -87,12 +87,19 @@ private:
 
 public:
 
+	static const Bool         DEFAULT_BOOL = False;
+	static const Int64        DEFAULT_INT  = 0;
+	static const UInt64       DEFAULT_UINT = 0;
+	static const Double       DEFAULT_REAL;
+	static const Char         *DEFAULT_STRING;
+
 	enum Type
 	{
 		Type_Invalid,
 		Type_Null,
 		Type_Bool,
 		Type_Int,
+		Type_UInt,
 		Type_Real,
 		Type_String,
 		Type_Object,
@@ -106,6 +113,8 @@ public:
 	Var(Bool bBool);
 
 	Var(Int64 nInt);
+
+	Var(UInt64 uInt);
 
 	Var(Double lfReal);
 
@@ -145,6 +154,8 @@ public:
 
 	Bool IsInt() const;
 
+	Bool IsUInt() const;
+
 	Bool IsReal() const;
 
 	Bool IsString() const;
@@ -162,6 +173,10 @@ public:
 	Status SetInt(Int64 nInt);
 
 	Int64 GetInt(Int64 nIntDefault = DEFAULT_INT) const;
+
+	Status SetUInt(UInt64 uUInt);
+
+	UInt64 GetUInt(UInt64 uUIntDefault = DEFAULT_UINT) const;
 
 	Status SetReal(Double lfReal);
 
@@ -335,6 +350,8 @@ public:
 
 	Var &operator=(Int64 nInt);
 
+	Var &operator=(UInt64 uInt);
+
 	Var &operator=(Double lfReal);
 
 	Var &operator=(const char *szString);
@@ -344,6 +361,8 @@ public:
 	operator Bool () const;
 
 	operator Int64 () const;
+
+	operator UInt64 () const;
 
 	operator Double () const;
 
@@ -367,11 +386,6 @@ protected:
 
 private:
 
-	static const Bool         DEFAULT_BOOL = False;
-	static const Int64        DEFAULT_INT  = 0;
-	static const Double       DEFAULT_REAL;
-	static const Char         *DEFAULT_STRING;
-
 	static Var INVALID_VAR;
 
 	Type     m_nType;
@@ -385,6 +399,7 @@ private:
 	{
 		Bool        m_bBool;
 		Int64       m_nInt;
+		UInt64      m_uUInt;
 		Double      m_lfReal;
 		String      *m_psString;
 		ObjectVar   *m_pObject;

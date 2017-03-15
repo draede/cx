@@ -114,6 +114,14 @@ public:
 		return True;
 	}
 
+	virtual Bool OnUIntValue(UInt64 uInt)
+	{
+		uInt;
+		//Print(stdout, "OnUIntValue : {1}\n", uInt);
+
+		return True;
+	}
+
 	virtual Bool OnRealValue(Double lfReal)
 	{
 		lfReal;

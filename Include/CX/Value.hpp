@@ -50,6 +50,7 @@ public:
 
 	static const Bool    DEFAULT_BOOL   = False;
 	static const Int64   DEFAULT_INT    = 0;
+	static const UInt64  DEFAULT_UINT   = 0;
 	static const Double  DEFAULT_REAL;
 	static const String  DEFAULT_STRING;
 
@@ -59,6 +60,7 @@ public:
 		Type_Null,
 		Type_Bool,
 		Type_Int,
+		Type_UInt,
 		Type_Real,
 		Type_String,
 		Type_Object,
@@ -72,6 +74,8 @@ public:
 	Value(Bool bValue);
 
 	Value(Int64 nValue);
+
+	Value(UInt64 uValue);
 
 	Value(Double lfValue);
 
@@ -101,6 +105,8 @@ public:
 
 	Bool IsInt() const;
 
+	Bool IsUInt() const;
+
 	Bool IsReal() const;
 
 	Bool IsString() const;
@@ -120,6 +126,10 @@ public:
 	Int64 GetInt(Int64 nDefault = DEFAULT_INT, Status *pStatus = NULL) const;
 
 	Status SetInt(Int64 nValue);
+
+	UInt64 GetUInt(UInt64 uDefault = DEFAULT_UINT, Status *pStatus = NULL) const;
+
+	Status SetUInt(UInt64 uValue);
 
 	Double GetReal(Double lfDefault = DEFAULT_REAL, Status *pStatus = NULL) const;
 
@@ -187,6 +197,8 @@ public:
 
 	Value &operator=(Int64 nInt);
 
+	Value &operator=(UInt64 uInt);
+
 	Value &operator=(Double lfReal);
 
 	Value &operator=(const String &sString);
@@ -196,6 +208,8 @@ public:
 	operator Bool () const;
 
 	operator Int64 () const;
+
+	operator UInt64 () const;
 
 	operator Double () const;
 
@@ -225,6 +239,13 @@ public:
 		if (Type_Int == m_nType)
 		{
 			Print(output, "{1}", m_nInt);
+
+			return;
+		}
+		else
+		if (Type_UInt == m_nType)
+		{
+			Print(output, "{1}", m_uInt);
 
 			return;
 		}
@@ -336,6 +357,12 @@ public:
 						node.iterObject++;
 					}
 					else
+					if (Type_UInt == node.iterObject->second->m_nType)
+					{
+						Print(output, "{1}", node.iterObject->second->m_uInt);
+						node.iterObject++;
+					}
+					else
 					if (Type_Real == node.iterObject->second->m_nType)
 					{
 						Print(output, "{1:.10}", node.iterObject->second->m_lfReal);
@@ -442,6 +469,12 @@ public:
 						node.iterArray++;
 					}
 					else
+					if (Type_UInt == (*node.iterArray)->m_nType)
+					{
+						Print(output, "{1}", (*node.iterArray)->m_uInt);
+						node.iterArray++;
+					}
+					else
 					if (Type_Real == (*node.iterArray)->m_nType)
 					{
 						Print(output, "{1:.10}", (*node.iterArray)->m_lfReal);
@@ -537,6 +570,7 @@ private:
 	{
 		Bool           m_bBool;
 		Int64          m_nInt;
+		UInt64         m_uInt;
 		Double         m_lfReal;
 		String         *m_psString;
 		Object         *m_pObject;

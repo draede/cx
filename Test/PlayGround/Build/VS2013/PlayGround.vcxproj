@@ -26,6 +26,7 @@
     <ClCompile Include="..\..\Src\Data_XML_Node.cpp" />
     <ClCompile Include="..\..\Src\Data_XML_SAX.cpp" />
     <ClCompile Include="..\..\Src\DB_SQLite.cpp" />
+    <ClCompile Include="..\..\Src\IO_Buffered.cpp" />
     <ClCompile Include="..\..\Src\IO_Filters.cpp" />
     <ClCompile Include="..\..\Src\Log_OptimizedStreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />

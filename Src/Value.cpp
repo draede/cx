@@ -183,6 +183,20 @@ public:
 		return True;
 	}
 
+	virtual Bool OnUIntValue(UInt64 uInt)
+	{
+		if (m_pCurrent->IsObject())
+		{
+			(*m_pCurrent)[m_sKey].SetUInt(uInt);
+		}
+		else
+		{
+			(*m_pCurrent)[-1].SetUInt(uInt);
+		}
+
+		return True;
+	}
+
 	virtual Bool OnRealValue(Double lfReal)
 	{
 		if (m_pCurrent->IsObject())
@@ -248,6 +262,7 @@ Value::Value(Type nType)
 	{
 		case Type_Bool:    SetBool(DEFAULT_BOOL); break;
 		case Type_Int:     SetInt(DEFAULT_INT); break;
+		case Type_UInt:    SetUInt(DEFAULT_UINT); break;
 		case Type_Real:    SetReal(DEFAULT_REAL); break;
 		case Type_String:  SetString(DEFAULT_STRING); break;
 		case Type_Object:  SetAsObject(); break;
@@ -270,6 +285,13 @@ Value::Value(Int64 nValue)
 	m_nType   = Type_Null;
 	m_pParent = NULL;
 	SetInt(nValue);
+}
+
+Value::Value(UInt64 uValue)
+{
+	m_nType   = Type_Null;
+	m_pParent = NULL;
+	SetUInt(uValue);
 }
 
 Value::Value(Double lfValue)
@@ -357,6 +379,7 @@ Status Value::Copy(const Value &value)
 		case Type_Null:    return SetNull();
 		case Type_Bool:    return SetBool(value.GetBool());
 		case Type_Int:     return SetInt(value.GetInt());
+		case Type_UInt:    return SetUInt(value.GetUInt());
 		case Type_Real:    return SetReal(value.GetReal());
 		case Type_String:  return SetString(value.GetString());
 		case Type_Object:
@@ -456,6 +479,11 @@ Bool Value::IsBool() const
 Bool Value::IsInt() const 
 { 
 	return (Type_Int == GetType()); 
+}
+
+Bool Value::IsUInt() const
+{
+	return (Type_UInt == GetType());
 }
 
 Bool Value::IsReal() const 
@@ -611,6 +639,52 @@ Status Value::SetInt(Int64 nValue)
 	FreeMem();
 	m_nType  = Type_Int;
 	m_nInt   = nValue;
+
+	return Status();
+}
+
+UInt64 Value::GetUInt(UInt64 uDefault/* = DEFAULT_UINT*/, Status *pStatus/* = NULL*/) const
+{
+	if (IsInvalid())
+	{
+		if (NULL != pStatus)
+		{
+			*pStatus = Status_InvalidCall;
+		}
+
+		return uDefault;
+	}
+
+	if (IsUInt())
+	{
+		if (NULL != pStatus)
+		{
+			*pStatus = Status_OK;
+		}
+
+		return m_uInt;
+	}
+	else
+	{
+		if (NULL != pStatus)
+		{
+			*pStatus = Status_InvalidArg;
+		}
+
+		return uDefault;
+	}
+}
+
+Status Value::SetUInt(UInt64 uValue)
+{
+	if (IsInvalid())
+	{
+		return Status_InvalidCall;
+	}
+
+	FreeMem();
+	m_nType = Type_UInt;
+	m_uInt  = uValue;
 
 	return Status();
 }
@@ -1422,6 +1496,13 @@ Value &Value::operator=(Int64 nInt)
 	return *this;
 }
 
+Value &Value::operator=(UInt64 uInt)
+{
+	SetUInt(uInt);
+
+	return *this;
+}
+
 Value &Value::operator=(Double lfReal)
 {
 	SetReal(lfReal);
@@ -1451,6 +1532,11 @@ Value::operator Bool () const
 Value::operator Int64 () const
 {
 	return GetInt();
+}
+
+Value::operator UInt64 () const
+{
+	return GetUInt();
 }
 
 Value::operator Double () const

@@ -68,6 +68,8 @@ public:
 
 	virtual Bool OnIntValue(Int64 nInt) = 0;
 
+	virtual Bool OnUIntValue(UInt64 uUInt) = 0;
+
 	virtual Bool OnRealValue(Double lfReal) = 0;
 
 	virtual Bool OnStringValue(const Char *pBuffer, Size cLen) = 0;

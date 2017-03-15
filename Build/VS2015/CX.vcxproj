@@ -165,6 +165,8 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\BufferedInputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\BufferedOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FilteredInputStream.hpp" />
@@ -290,6 +292,7 @@
     <ClInclude Include="..\..\Include\CX\UOMultiSet.hpp" />
     <ClInclude Include="..\..\Include\CX\UOSet.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Bitmap.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\CircularBuffer.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\DynMember.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\DynStruct.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
@@ -5554,6 +5557,8 @@
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash32.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash64.cpp" />
+    <ClCompile Include="..\..\Src\IO\BufferedInputStream.cpp" />
+    <ClCompile Include="..\..\Src\IO\BufferedOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FilteredInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FilteredOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\Helper.cpp" />
@@ -5620,6 +5625,7 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\TaskQueue.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Bitmap.cpp" />
+    <ClCompile Include="..\..\Src\Util\CircularBuffer.cpp" />
     <ClCompile Include="..\..\Src\Util\DynMember.cpp" />
     <ClCompile Include="..\..\Src\Util\DynStruct.cpp" />
     <ClCompile Include="..\..\Src\Util\MemPool.cpp" />
