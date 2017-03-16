@@ -41,10 +41,8 @@ xcuserdata/
 *.user
 *.opendb
 *.suo
-*.suo
-*.suo
-*.suo
-*.log
 *.db
 *.log
-*.log
+*.dat
+*.old
+

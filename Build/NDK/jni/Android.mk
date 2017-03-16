@@ -120,6 +120,8 @@ $(LOCAL_PATH)/../../../../Src/Hash/SHA384Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA512Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/xxHash32.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/xxHash64.cpp \
+$(LOCAL_PATH)/../../../../Src/IO/BufferedInputStream.cpp \
+$(LOCAL_PATH)/../../../../Src/IO/BufferedOutputStream.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/FilteredInputStream.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/FilteredOutputStream.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/Helper.cpp \
@@ -157,6 +159,7 @@ $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Process_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/RWLock_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Sys/Platform/Android/Thread_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/Bitmap.cpp \
+$(LOCAL_PATH)/../../../../Src/Util/CircularBuffer.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/DynMember.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/DynStruct.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/MemPool.cpp \

@@ -1,3 +1,7 @@
+0.2.121 - 2017-03-16 - Updated NDK build script & removed test output files
+  - Updated NDK build script
+  - removed test output files
+  - Fix in IO::BufferedInputStream
 0.2.120 - 2017-03-15 - Added Util::CircularBuffer, IO::BufferedInputStream & IO::BufferedOutputStream
   - Added IO::BufferedInputStream & IO::BufferedOutputStream
   - Added Util::CircularBuffer 

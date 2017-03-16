@@ -96,7 +96,7 @@ Status BufferedInputStream::Read(void *pBuffer, Size cbReqSize, Size *pcbAckSize
 			*pcbAckSize += cbSize;
 			m_cbPos += cbSize;
 		}
-		if (0 == m_cbSize)
+		if (0 == m_cbSize && 0 < cbReqSize)
 		{
 			m_cbOffset = 0;
 			if ((status = m_pInputStream->Read(m_pBuffer, m_cbTotalSize, &m_cbSize)).IsNOK())
