@@ -94,6 +94,15 @@ Status Base64BinStr::ToString(const void *pBinInput, Size cbBinInputSize, Char *
 	return Status();
 }
 
+Status Base64BinStr::ToString(const void *pBinInput, Size cbBinInputSize, String *psString)
+{
+	Size cLen = GetStrLenFromBinSize(pBinInput, cbBinInputSize);
+
+	psString->resize(cLen);
+
+	return ToString(pBinInput, cbBinInputSize, &(*psString)[0], cLen);
+}
+
 Status Base64BinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
                              Size cbBinOutputSize)
 {

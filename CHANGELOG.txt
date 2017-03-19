@@ -1,3 +1,5 @@
+0.2.121 - 2017-03-19 - Added IBinStr String support
+  - Added IBinStr String support
 0.2.121 - 2017-03-16 - Updated NDK build script & removed test output files
   - Updated NDK build script
   - removed test output files

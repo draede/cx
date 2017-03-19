@@ -89,6 +89,15 @@ Status HexBinStr::ToString(const void *pBinInput, Size cbBinInputSize, Char *pSt
 	return Status();
 }
 
+Status HexBinStr::ToString(const void *pBinInput, Size cbBinInputSize, String *psString)
+{
+	Size cLen = GetStrLenFromBinSize(pBinInput, cbBinInputSize);
+
+	psString->resize(cLen);
+
+	return ToString(pBinInput, cbBinInputSize, &(*psString)[0], cLen);
+}
+
 Status HexBinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
                              Size cbBinOutputSize)
 {

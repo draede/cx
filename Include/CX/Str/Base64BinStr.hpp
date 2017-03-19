@@ -50,6 +50,8 @@ public:
 	virtual Status ToString(const void *pBinInput, Size cbBinInputSize, Char *pStrOutput, 
 	                        Size cStrOutputLen);
 
+	virtual Status ToString(const void *pBinInput, Size cbBinInputSize, String *psString);
+
 	virtual Status FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
 	                          Size cbBinOutputSize);
 

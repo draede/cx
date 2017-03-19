@@ -58,6 +58,15 @@ Status Z85BinStr::ToString(const void *pBinInput, Size cbBinInputSize, Char *pSt
 	return Status();
 }
 
+Status Z85BinStr::ToString(const void *pBinInput, Size cbBinInputSize, String *psString)
+{
+	Size cLen = GetStrLenFromBinSize(pBinInput, cbBinInputSize);
+
+	psString->resize(cLen);
+
+	return ToString(pBinInput, cbBinInputSize, &(*psString)[0], cLen);
+}
+
 Status Z85BinStr::FromString(const Char *pStrInput, Size cStrInputLen, void *pBinOutput, 
                              Size cbBinOutputSize)
 {
