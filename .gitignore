@@ -45,7 +45,4 @@ xcuserdata/
 *.log
 *.dat
 *.old
-
-Test/PlayGround/Build/VS2015/testmt.db-journal
-*.db-journal
-*.db-journal
+*.db-*

@@ -1,51 +1,53 @@
-LATESTs
+0.2.124
+  - Copy optimization for SimpleBuffers DataReader (vector, set & map)
+  - Better changelog
   - Added custom reader support for SimpleBuffers (JSON only for now)
   - SimpleBuffers generated writers will used loaded info
-0.2.123 - 2017-03-20 - SimpleBuffers tool is now using MT
+0.2.123 - 2017-03-20
   - SimpleBuffers tool is now using MT
   - Updated NDK build script
-0.2.122 - 2017-03-19 - Added IBinStr String support
+0.2.122 - 2017-03-19
   - Added IBinStr String support
-0.2.121 - 2017-03-16 - Updated NDK build script & removed test output files
+0.2.121 - 2017-03-16
   - Updated NDK build script
   - removed test output files
   - Fix in IO::BufferedInputStream
-0.2.120 - 2017-03-15 - Added Util::CircularBuffer, IO::BufferedInputStream & IO::BufferedOutputStream
+0.2.120 - 2017-03-15
   - Added IO::BufferedInputStream & IO::BufferedOutputStream
   - Added Util::CircularBuffer 
   - Added support for UInt64 in JSON classes
   - Fixed some typos
-0.2.119 - 2017-03-09 - Added support for VS2017
+0.2.119 - 2017-03-09
   - Added support for VS2017
-0.2.118 - 2017-03-03 - Added custom free function for Logger outputs
+0.2.118 - 2017-03-03
   - Added custom free function for Logger outputs
-0.2.117 - 2017-03-02 - Fixed API Object::Release return 
+0.2.117 - 2017-03-02
   - Fixed API Object::Release return 
-0.2.116 - 2017-03-01 - Improved & simplified API classes
+0.2.116 - 2017-03-01
   - Improved & simplified API classes
-0.2.115 - 2017-03-01 - Improved & simplified API classes
+0.2.115 - 2017-03-01
   - Improved & simplified API classes
-0.2.114 - 2017-02-28 - Fixes in API
+0.2.114 - 2017-02-28
   - Fixes in API
-0.2.111 - 2017-02-26 - Fixed Print UTF8/UTF16 conversions
+0.2.111 - 2017-02-26
   - Fixed Print UTF8/UTF16 conversions
-0.2.110 - 2017-02-26 - Fixed Print UTF8/UTF16 conversions
+0.2.110 - 2017-02-26
   - Fixed Print UTF8/UTF16 conversions
-0.2.109 - 2017-02-25 - Removed log & db files
+0.2.109 - 2017-02-25
   - Removed log & db files
-0.2.108 - 2017-02-25 - Added support for WChar in Print
+0.2.108 - 2017-02-25
   - Added support for WChar in Print
-0.2.106 - 2017-02-23 - Updated Interface API
+0.2.106 - 2017-02-23
   - Updated Interface API
-0.2.105 - 2017-02-21 - Updated platform macros
+0.2.105 - 2017-02-21
   - Updated platform macros
-0.2.104 - 2017-02-20 - Added Interface API headers
+0.2.104 - 2017-02-20
   - Added Interface API headers
   - Added Util::Bitmap
-0.2.103 - 2017-02-20 - Simplified Sys::Atomic
+0.2.103 - 2017-02-20
   - Simplified Sys/Atomic
   - Removed Mintomic contrib
-0.2.102 - 2017-02-19 - Fixed portability for Windows only classes
+0.2.102 - 2017-02-19
   - Fixed portability for Windows only classes
   - Added Hash::MultiHash
   - Added Sys::Event
@@ -55,83 +57,83 @@ LATESTs
   - Added support for append in FileOutputStream
   - Added missing Android classes
   - Naming fixes in Value
-0.2.101 - 2017-02-13 - Added NDK support for network classes
+0.2.101 - 2017-02-13
   - Added NDK support for network classes
   - Updated cURL sources
   - Added Value class (will replace Var class in the future)
   - Added ScopePtr cast support
 0.1.100 - 2017-02-12 - Updated NDK build
   - Updated NDK build
-0.1.99 - 2017-02-08 - More fixes for SQLite wrapper
+0.1.99 - 2017-02-08
   - Fixed virtual handlers calls
-0.1.98 - 2017-01-30 - Fixes for SQLite wrapper
+0.1.98 - 2017-01-30
   - Fixed statement not removed from used map during AcquireStatement
   - Fixed non const arg in virtual methods of DBHelper
-0.1.97 - 2017-01-25 - Fixes & improvements for SQLite wrapper
+0.1.97 - 2017-01-25
   - Fixed SQLite Bindings class
   - Added support for completion handler for async operations in DBHelper
   - Added tester for multi thread use of DBHelper statements
-0.1.96 - 2017-01-21 - Fixed SQLite tester
+0.1.96 - 2017-01-21
   - Fixed SQLite tester
-0.1.95 - 2017-01-19 - Added SQLite wrapper
+0.1.95 - 2017-01-19
   - Added SQLite wrapper
   - Updated copyright years
-0.1.94 - 2017-01-13 - Added file handle arg in log reopening
+0.1.94 - 2017-01-13
   - Added file handle arg in log reopening
-0.1.93 - 2016-11-20 - Added log level check in logging macro
+0.1.93 - 2016-11-20
   - Added log level check in logging macro
-0.1.92 - 2016-10-25 - Added support for reopening of the file in Log::OptimizedStreamOutput (for log rotate)
+0.1.92 - 2016-10-25
   - Added support for reopening of the file in Log::OptimizedStreamOutput (for log rotate)
-0.1.91 - 2016-09-28 - Fixed profile issues
+0.1.91 - 2016-09-28
   - Fixed profile issues
-0.1.90 - 2016-09-16 - Added custom allocator for STL types
+0.1.90 - 2016-09-16
   - Added custom allocator for STL types - to disable alloc exceptions
   - added nothrow to new allocs where missing
-0.1.89 - 2016-09-08 - Added Base64BinStr
+0.1.89 - 2016-09-08
   - Added Base64BinStr
   - Added support for custom headers in HTTP client
-0.1.88 - 2016-09-02 - Fixed cxw_wcs* defined instead of cxw_str*
+0.1.88 - 2016-09-02
   - Fixed cxw_wcs* defined instead of cxw_str*
-0.1.87 - 2016-09-02 - Improved SimpleBuffers JSON error reporting
+0.1.87 - 2016-09-02
   - Improved SimpleBuffers JSON error reporting
 0.1.86 - 2016-08-29 - VS2013 fixes + more profiler fixes
   - VS2013 fixes + more profiler fixes
-0.1.85 - 2016-08-28 - Fixed C scope (D like scope)
+0.1.85 - 2016-08-28
   - Fixed C scope (D like scope)
-0.1.83 - 2016-08-26 - More profiler fixes
+0.1.83 - 2016-08-26
   - More profiler fixes
-0.1.82 - 2016-08-25 - Fixed profiler stats
+0.1.82 - 2016-08-25
   - Fixed profiler stats
-0.1.81 - 2016-08-25 - Fixed profiler scope merges
+0.1.81 - 2016-08-25
   - Fixed profiler scope merges
-0.1.80 - 2016-08-24 - Removed custom allocators
+0.1.80 - 2016-08-24
   - Removed custom allocators
   - Removed unused files
-0.1.79 - 2016-08-24 - Added Debug::Profiler
+0.1.79 - 2016-08-24
   - Added Debug::Profiler
-0.1.78 - 2016-08-21 - Var class improvements
+0.1.78 - 2016-08-21
   - Var::GetReal works with ints too
   - Var::[] supports const access
-0.1.77 - 2016-07-12 - Fixed printing of hex values
+0.1.77 - 2016-07-12
   - Fixed printing of hex values
-0.1.76 - 2016-06-23 - Fixed Print in std::wstring and WString
+0.1.76 - 2016-06-23
   - Fixed Print in std::wstring and WString
-0.1.75 - 2016-06-22 - Reverted to an older version of SparseHash
+0.1.75 - 2016-06-22
   - Reverted to an older version of SparseHash
-0.1.74 - 2016-06-19 - Fixed SimpleBuffers generator not using default in Init()
+0.1.74 - 2016-06-19
   - Fixed SimpleBuffers generator not using default in Init()
-0.1.73 - 2016-06-14 - Fixed IO::MemOutputStream invalid offset
+0.1.73 - 2016-06-14
   - Fixed IO::MemOutputStream invalid offset
-0.1.72 - 2016-06-10 - Fixed append support for OptimizedStreamOutput
+0.1.72 - 2016-06-10
   - Fixed append support for OptimizedStreamOutput
-0.1.71 - 2016-06-09 - Added append support for OptimizedStreamOutput
+0.1.71 - 2016-06-09
   - Added append support for OptimizedStreamOutput
-0.1.70 - 2016-05-31 - Fixes in SimpleBuffers::JSONReader
+0.1.70 - 2016-05-31
   - Fixed NULL szName used in status setup when element is an array
-0.1.69 - 2016-05-19 - Fixes in TaskExecutor
+0.1.69 - 2016-05-19
   - Fixed priority setup mistype in task thread
   - Threads prority is restored to normal in Stop (so that dormant threads can be stopped - Windows)
-0.1.68 - 2016-05-05 - Added XML & JSON Node
+0.1.68 - 2016-05-05
   - Fixed SparseHash warning (sparsehashtable.h:844)
   - Added XML parser
   - Added MO parser
@@ -140,34 +142,34 @@ LATESTs
   - Added Data::MO::Language class
   - Added wildmat support
   - Fixed IO::MemInputStream SetPos
-0.1.67 - 2016-04-21 - Updated SparseHash to 2.0.3
+0.1.67 - 2016-04-21
   - Updated SparseHash to 2.0.3
   - Fixed SparseHash readme
   - Added *.VC.db as ignored (VS2015 update 2)
-0.1.66 - 2016-04-07 - Fixed Task queue empty event not signaled on creation
+0.1.66 - 2016-04-07
   - Fixed Task queue empty event not signaled on creation
 0.1.65 - 2016-03-11 - Fixed RndGen compilation
   - Fixed RndGen compilation
   - Fixed version
-0.1.64 - 2016-03-11 - Fixed UTF8 conversion crash
+0.1.64 - 2016-03-11
   - Fixed UTF8 conversion crash
-0.1.63 - 2016-03-03 - Added Util::RndGen::Copy
+0.1.63 - 2016-03-03
   - Added Util::RndGen::Copy
   - Fixed copyright notice
-0.1.62 - 2016-02-23 - Simplebuffers JSONReader & Log::OptimizedStreamOutput fixes
+0.1.62 - 2016-02-23
   - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
   - Log::OptimizedStreamOutput fixes
   - Changed version
-0.1.62 - 2016-02-23 - Simplebuffers JSONReader & Log::OptimizedStreamOutput fixes
+0.1.62 - 2016-02-23
   - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
   - Log::OptimizedStreamOutput fixes
-0.1.60 - 2016-02-18 - added Log::OptimizedStreamOutput
+0.1.60 - 2016-02-18
   - Added Log::OptimizedStreamOutput
   - Improved TaskExecutor with custom executor
 0.1.59 - 2016-02-17 - added TaskExecutor & TaskQueue
   - Added TaskExecutor
   - Added TaskQueue
-0.1.58 - 2016-02-10 - SimpleBuffers fixes
+0.1.58 - 2016-02-10
   - CX::SimpleBuffers::ISimpleBuffer::GetMembersCount is now const
   - CX::SimpleBuffers::ISimpleBuffer::GetMemberLoaded is now const
   - Added static const Char *OBJECT_NAME() in all CX::SimpleBuffers::ISimpleBuffer
@@ -175,37 +177,37 @@ LATESTs
   - Float and double members of SimpleBuffers accept integers too in JSON
   - CX::Util::RndGen supports now multiple instances
   - Changed copyright from 2014-2015 to 2014 - 2026 :)
-0.1.57 - 2015-12-15 - Added VS 2015 support
+0.1.57 - 2015-12-15
   - Added VS 2015 support
-0.1.56 - 2015-12-15 - Added VS 2015 support
+0.1.56 - 2015-12-15
   - Added VS 2015 support
-0.1.55 - 2015-12-14 - Added VS 2015 support
+0.1.55 - 2015-12-14
   - Added VS 2015 support
-0.1.54 - 2015-12-03 - Better random ranges; fixed playground tester
+0.1.54 - 2015-12-03
   - Better random ranges; fixed playground tester
-0.1.53 - 2015-11-23 - SimpleBuffers: added support for testing if an optional member was loaded
+0.1.53 - 2015-11-23
   - SimpleBuffers: added support for testing if an optional member was loaded
-0.1.52 - 2015-11-15 - Removed mem tracking (win only) - for now
+0.1.52 - 2015-11-15
   - Removed mem tracking (win only) - for now
-0.1.51 - 2015-11-14 - Fixed InitOnceExecuteOnce param not set
+0.1.51 - 2015-11-14
   - Fixed InitOnceExecuteOnce param not set
-0.1.50 - 2015-11-08 - Fixed RndGen signed int range
+0.1.50 - 2015-11-08
   - Fixed RndGen signed int range
-0.1.49 - 2015-11-02 - Fixed SimpleBuffers CPP Generator (Init)
+0.1.49 - 2015-11-02
   - Fixed SimpleBuffers CPP Generator (Init)
-0.1.48 - 2015-11-01 - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
+0.1.48 - 2015-11-01
   - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
-0.1.47 - 2015-11-01 - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
+0.1.47 - 2015-11-01
   - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
-0.1.46 - 2015-10-31 - Fixed android build
+0.1.46 - 2015-10-31
   - Fixed android build
-0.1.45 - 2015-10-31 - Improved memory tracking (windows only), fixed contrib warnings, fixed SimpleBuffers, added CX version
+0.1.45 - 2015-10-31
   - Fixed contrib warnings
   - Updated CX version
   - Fixed BINReader & BINWriter
   - Fixed JSONReader & JSONWriter
   - Improved memory tracking (windows only)
-0.1.44 - 2015-10-27 - New IO filters and stream fixes
+0.1.44 - 2015-10-27
   - Added max mem alloc option for mem dbg
   - Revamped IO filters 
   - Refactored IO::FilteredInputStream

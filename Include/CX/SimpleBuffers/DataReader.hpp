@@ -175,17 +175,17 @@ struct DataReader<MemberType_Vector, K>
 		}
 		for (;;)
 		{
-			K k;
+			typename Vector<K>::Type::iterator iter = v.insert(v.end(), K());
 
-			if ((status = DataReader<MemberType_Scalar, K>::Read(pReader, k)).IsNOK())
+			if ((status = DataReader<MemberType_Scalar, K>::Read(pReader, *iter)).IsNOK())
 			{
+				v.erase(iter);
 				if (Status_NoMoreItems != status.GetCode())
 				{
 					return status;
 				}
 				break;
 			}
-			v.push_back(k);
 		}
 		if ((status = pReader->EndArray()).IsNOK())
 		{
@@ -209,13 +209,14 @@ struct DataReader<MemberType_Set, K>
 		}
 		for (;;)
 		{
-			K k;
+			typename Set<K>::Type::iterator iter = v.insert(v.end(), K());
 
-			if ((status = DataReader<MemberType_Scalar, K>::Read(pReader, k)).IsNOK())
+			if ((status = DataReader<MemberType_Scalar, K>::Read(pReader, *iter)).IsNOK())
 			{
+				v.erase(iter);
+
 				break;
 			}
-			v.insert(k);
 		}
 		if ((status = pReader->EndArray()).IsNOK())
 		{
@@ -240,7 +241,6 @@ struct DataReader<MemberType_Map, K, V>
 		for (;;)
 		{
 			K key;
-			V val;
 
 			if ((status = pReader->BeginObject()).IsNOK())
 			{
@@ -250,15 +250,21 @@ struct DataReader<MemberType_Map, K, V>
 			{
 				break;
 			}
-			if ((status = DataReader<MemberType_Scalar, V>::Read(pReader, val, "val")).IsNOK())
+
+			typename Map<K, V>::Type::iterator iter = v.insert(std::pair<K, V>(key, V()));
+
+			if ((status = DataReader<MemberType_Scalar, V>::Read(pReader, iter->second, "val")).IsNOK())
 			{
+				v.erase(iter);
+
 				break;
 			}
 			if ((status = pReader->EndObject()).IsNOK())
 			{
+				v.erase(iter);
+
 				break;
 			}
-			v[key] = val;
 		}
 		if ((status = pReader->EndArray()).IsNOK())
 		{
