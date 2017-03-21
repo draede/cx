@@ -611,42 +611,46 @@ public:
 					return status;
 				}
 			}
+
+			Print(out, "\t\tif (GetMemberLoaded(\"{1}\"))\n", iter->GetName());
+			Print(out, "\t\t{{\n");
+
 			switch (iter->GetMemberType())
 			{
 				case MemberType_Scalar:
 				{
-					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Scalar, {1}>::Write("
+					Print(out, "\t\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Scalar, {1}>::Write("
 					      "pWriter, this->{2}, \"{3}\")).IsNOK())" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName(), iter->GetName());
-					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
-					Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
-					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 				}
 				break;
 				case MemberType_Vector:
 				{
-					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Vector, {1}>::Write("
+					Print(out, "\t\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Vector, {1}>::Write("
 					      "pWriter, this->{2}, \"{3}\")).IsNOK())" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName(), iter->GetName());
-					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
-					Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
-					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 				}
 				break;
 				case MemberType_Set:
 				{
-					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Set, {1}>::Write("
+					Print(out, "\t\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Set, {1}>::Write("
 					      "pWriter, this->{2}, \"{3}\")).IsNOK())" CX_SB_LINE_TERMINATOR, sKeyType, iter->GetMemberName(), iter->GetName());
-					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
-					Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
-					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 				}
 				break;
 				case MemberType_Map:
 				{
-					Print(out, "\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Write("
+					Print(out, "\t\t\tif ((status = CX::SimpleBuffers::DataWriter<CX::SimpleBuffers::MemberType_Map, {1}, {2}>::Write("
 					      "pWriter, this->{3}, \"{4}\")).IsNOK())" CX_SB_LINE_TERMINATOR, sKeyType, sValType, iter->GetMemberName(), iter->GetName());
-					Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);
-					Print(out, "\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
-					Print(out, "\t\t}" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t{{" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t\treturn status;" CX_SB_LINE_TERMINATOR);
+					Print(out, "\t\t\t}" CX_SB_LINE_TERMINATOR);
 				}
 				break;
 				default:
@@ -654,6 +658,8 @@ public:
 					return Status(Status_InvalidArg, "Member {1} has invalid field type", iter->GetName());
 				}
 			}
+
+			Print(out, "\t\t}\n\n");
 		}
 		Print(out, "\t\tif ((status = pWriter->EndObject()).IsNOK())" CX_SB_LINE_TERMINATOR);
 		Print(out, "\t\t{{" CX_SB_LINE_TERMINATOR);

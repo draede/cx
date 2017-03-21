@@ -1,3 +1,6 @@
+LATESTs
+  - Added custom reader support for SimpleBuffers (JSON only for now)
+  - SimpleBuffers generated writers will used loaded info
 0.2.123 - 2017-03-20 - SimpleBuffers tool is now using MT
   - SimpleBuffers tool is now using MT
   - Updated NDK build script

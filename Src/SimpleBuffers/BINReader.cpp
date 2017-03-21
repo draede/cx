@@ -365,7 +365,10 @@ Status BINReader::ReadBLOB(BLOB &v, const Char *szName/* = NULL*/)
 
 Status BINReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 {
-	return Status_NotImplemented;
+	CX_UNUSED(pCustom);
+	CX_UNUSED(szName);
+
+	return Status_NotSupported;
 }
 
 Status BINReader::BeginObject(const Char *szName/* = NULL*/)
