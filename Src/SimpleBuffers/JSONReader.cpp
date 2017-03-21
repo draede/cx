@@ -28,6 +28,7 @@
  
 #include "CX/SimpleBuffers/JSONReader.hpp"
 #include "CX/Data/JSON/RapidJSONStreams.hpp"
+#include "CX/Stack.hpp"
 #include "stringbuffer.h"
 #include "writer.h"
 
@@ -200,6 +201,222 @@ Status JSONReader::ReadString(String &v, const Char *szName/* = NULL*/)
 Status JSONReader::ReadBLOB(BLOB &v, const Char *szName/* = NULL*/)
 {
 	return Read(v, szName);
+}
+
+Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
+{
+	rapidjson::Value *pValue;
+	Status           status;
+
+	if (m_stackStates.empty())
+	{
+		return Status(Status_InvalidCall);
+	}
+	if (State_Root == m_stackStates.top().nState)
+	{
+		if (0 < m_stackStates.top().cElems)
+		{
+			return Status(Status_InvalidCall, "Only one root object allowed");
+		}
+		if (!m_pDoc->IsObject())
+		{
+			return Status(Status_InvalidCall, "Root element must be an object");
+		}
+
+		pValue = m_pDoc;
+		m_stackStates.pop();
+	}
+	else
+	if (State_Object == m_stackStates.top().nState)
+	{
+		if (NULL == szName)
+		{
+			return Status(Status_InvalidCall, "Member must have a name");
+		}
+		if (NULL == m_stackStates.top().pValue)
+		{
+			return Status(Status_InvalidCall, "Internal error: parent element is null");
+		}
+		if (!m_stackStates.top().pValue->HasMember(szName))
+		{
+			return Status(Status_NotFound, "Member [{1}] not found", szName);
+		}
+		pValue = &(*m_stackStates.top().pValue)[szName];
+	}
+	else
+	if (State_Array == m_stackStates.top().nState)
+	{
+		if (NULL != szName)
+		{
+			return Status(Status_InvalidCall, "Item must not have a name");
+		}
+		if (NULL == m_stackStates.top().pValue)
+		{
+			return Status(Status_InvalidCall, "Internal error: parent element is null");
+		}
+		if (m_stackStates.top().pValue->Capacity() <= m_stackStates.top().cElems)
+		{
+			return Status(Status_NoMoreItems, "Member [{1}] not found", m_stackStates.top().cElems);
+		}
+		pValue = &(*m_stackStates.top().pValue)[(rapidjson::SizeType)m_stackStates.top().cElems];
+		m_stackStates.top().cElems++;
+	}
+	else
+	{
+		return Status(Status_InvalidCall, "Data must be placed inside objects or arrays");
+	}
+
+	struct Node
+	{
+		Node(rapidjson::Value *pVal)
+		{
+			pValue = pVal;
+			if (pValue->IsObject())
+			{
+				iterMembers = pValue->MemberBegin();
+			}
+			else
+			{
+				iterItems = pValue->Begin();
+			}
+		}
+
+		rapidjson::Value                   *pValue;
+		rapidjson::Value::MemberIterator   iterMembers;
+		rapidjson::Value::ValueIterator    iterItems;
+	};
+
+	Stack<Node>::Type   stackNodes;
+	Node                *pNode;
+	const Char          *szMemberName;
+
+	for (;;)
+	{
+		if (!stackNodes.empty())
+		{
+			pNode = &stackNodes.top();
+			if (pNode->pValue->IsObject())
+			{
+				if (pNode->iterMembers == pNode->pValue->MemberEnd())
+				{
+					if ((status = pCustom->OnEndObject()).IsNOK())
+					{
+						return status;
+					}
+					stackNodes.pop();
+					if (stackNodes.empty())
+					{
+						break;
+					}
+					
+					continue;
+				}
+				szMemberName = pNode->iterMembers->name.GetString();
+				pValue       = &pNode->iterMembers->value;
+			}
+			else
+			{
+				if (pNode->iterItems == pNode->pValue->End())
+				{
+					if ((status = pCustom->OnEndArray()).IsNOK())
+					{
+						return status;
+					}
+					stackNodes.pop();
+					if (stackNodes.empty())
+					{
+						break;
+					}
+
+					continue;
+				}
+				szMemberName = NULL;
+				pValue       = &*pNode->iterItems;
+			}
+		}
+		else
+		{
+			pNode        = NULL;
+			szMemberName = NULL;
+		}
+
+		if (pValue->IsBool())
+		{
+			if ((status = pCustom->OnBool(pValue->GetBool(), szMemberName)).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (pValue->IsUint64())
+		{
+			if ((status = pCustom->OnUInt(pValue->GetUint64(), szMemberName)).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (pValue->IsInt64())
+		{
+			if ((status = pCustom->OnInt(pValue->GetInt64(), szMemberName)).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (pValue->IsDouble())
+		{
+			if ((status = pCustom->OnDouble(pValue->GetDouble(), szMemberName)).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (pValue->IsString())
+		{
+			if ((status = pCustom->OnString(pValue->GetString(), szMemberName)).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (pValue->IsObject())
+		{
+			if ((status = pCustom->OnBeginObject(szMemberName)).IsNOK())
+			{
+				return status;
+			}
+			stackNodes.push(Node(pValue));
+		}
+		else
+		if (pValue->IsArray())
+		{
+			if ((status = pCustom->OnBeginArray(szMemberName)).IsNOK())
+			{
+				return status;
+			}
+			stackNodes.push(Node(pValue));
+		}
+
+		if (NULL != pNode)
+		{
+			if (pNode->pValue->IsObject())
+			{
+				pNode->iterMembers++;
+			}
+			else
+			{
+				pNode->iterItems++;
+			}
+		}
+
+		if (stackNodes.empty())
+		{
+			break;
+		}
+	}
+
+	return Status();
 }
 
 Status JSONReader::BeginObject(const Char *szName/* = NULL*/)

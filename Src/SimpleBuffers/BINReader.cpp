@@ -363,6 +363,11 @@ Status BINReader::ReadBLOB(BLOB &v, const Char *szName/* = NULL*/)
 	return Status();
 }
 
+Status BINReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
+{
+	return Status_NotImplemented;
+}
+
 Status BINReader::BeginObject(const Char *szName/* = NULL*/)
 {
 	BINRW::RecordType nRecordType;

@@ -79,6 +79,8 @@ public:
 
 	virtual Status ReadBLOB(BLOB &v, const Char *szName = NULL);
 
+	virtual Status ReadCustom(ICustom *pCustom, const Char *szName = NULL);
+
 	virtual Status BeginObject(const Char *szName = NULL);
 
 	virtual Status EndObject();
