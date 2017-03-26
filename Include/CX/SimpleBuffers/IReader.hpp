@@ -74,6 +74,8 @@ public:
 
 		virtual Status OnString(const Char *v, const Char *szName = NULL) = 0;
 
+		virtual Status OnBLOB(const void *v, Size cbSize, const Char *szName = NULL) = 0;
+
 	};
 
 	virtual ~IReader() { }

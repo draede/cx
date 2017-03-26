@@ -1,4 +1,6 @@
-0.2.124
+0.2.125
+  - Added custom reader support for SimpleBuffers (BINReader)
+0.2.124 - 2017-03-21
   - Copy optimization for SimpleBuffers DataReader (vector, set & map)
   - Better changelog
   - Added custom reader support for SimpleBuffers (JSON only for now)

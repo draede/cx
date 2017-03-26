@@ -365,10 +365,607 @@ Status BINReader::ReadBLOB(BLOB &v, const Char *szName/* = NULL*/)
 
 Status BINReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 {
-	CX_UNUSED(pCustom);
-	CX_UNUSED(szName);
+	State             nParentState;
+	BINRW::RecordType nRecordType;
+	Status            status;
 
-	return Status_NotSupported;
+	if (m_stackStates.empty())
+	{
+		return Status_InvalidArg;
+	}
+	if (State_Bin != m_stackStates.top() && State_Object != m_stackStates.top() && State_Array != m_stackStates.top())
+	{
+		return Status_InvalidArg;
+	}
+	if (!(status = Read(&nRecordType, sizeof(nRecordType))))
+	{
+		return status;
+	}
+	if (State_Bin == m_stackStates.top())
+	{
+		if (NULL != szName)
+		{
+			return Status_InvalidCall;
+		}
+		nParentState = State_Object;
+	}
+	else
+	if (State_Object == m_stackStates.top())
+	{
+		if (NULL == szName)
+		{
+			return Status_InvalidCall;
+		}
+		nParentState = State_Object;
+	}
+	else
+	if (State_Array == m_stackStates.top())
+	{
+		if (NULL != szName)
+		{
+			return Status_InvalidCall;
+		}
+		nParentState = State_Array;
+	}
+	else
+	{
+		return Status_InvalidCall;
+	}
+	
+	StatesStack stackStates;
+
+	for (;;)
+	{
+		String sName;
+
+		if (!stackStates.empty())
+		{
+			if (!(status = Read(&nRecordType, sizeof(nRecordType))))
+			{
+				return status;
+			}
+		}
+
+		if (BINRW::RECORD_BOOL == nRecordType)
+		{
+			Bool v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnBool(v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_INT8 == nRecordType)
+		{
+			Int8 v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnInt((Int64)v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_UINT8 == nRecordType)
+		{
+			UInt8 v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnUInt((UInt64)v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_INT16 == nRecordType)
+		{
+			Int16 v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnInt((Int64)v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_UINT16 == nRecordType)
+		{
+			UInt16 v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnUInt((UInt64)v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_INT32 == nRecordType)
+		{
+			Int32 v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnInt((Int64)v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_UINT32 == nRecordType)
+		{
+			UInt32 v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnUInt((UInt64)v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_INT64 == nRecordType)
+		{
+			Int64 v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnInt(v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_UINT64 == nRecordType)
+		{
+			UInt64 v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnUInt(v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_FLOAT == nRecordType)
+		{
+			Float v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnDouble((Double)v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_DOUBLE == nRecordType)
+		{
+			Double v;
+
+			if ((status = Read(&v, sizeof(v))).IsNOK())
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnDouble(v, sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_STRING_1 == nRecordType || BINRW::RECORD_STRING_2 == nRecordType || 
+		    BINRW::RECORD_STRING_4 == nRecordType)
+		{
+			Size   cbSize;
+			Size   cLen;
+			String sString;
+			Char   buffer[TMP_STR_BUFFER_SIZE];
+
+			if (BINRW::RECORD_STRING_1 == nRecordType)
+			{
+				UInt8 v;
+
+				if ((status = Read(&v, sizeof(v))).IsNOK())
+				{
+					return status;
+				}
+
+				cbSize = (Size)v;
+			}
+			else
+			if (BINRW::RECORD_STRING_2 == nRecordType)
+			{
+				UInt16 v;
+
+				if ((status = Read(&v, sizeof(v))).IsNOK())
+				{
+					return status;
+				}
+
+				cbSize = (Size)v;
+			}
+			else
+			{
+				UInt32 v;
+
+				if ((status = Read(&v, sizeof(v))).IsNOK())
+				{
+					return status;
+				}
+
+				cbSize = (Size)v;
+			}
+
+			cLen = cbSize / sizeof(Char);
+			if (BINRW::MAX_STRING_LEN < cLen)
+			{
+				return Status_ParseFailed;
+			}
+			sString.clear();
+			while (0 < cLen)
+			{
+				Size cLenTmp;
+
+				if (cLen > sizeof(buffer))
+				{
+					cLenTmp = sizeof(buffer);
+				}
+				else
+				{
+					cLenTmp = cLen;
+				}
+				if (!(status = Read(buffer, cLenTmp * sizeof(Char))))
+				{
+					return status;
+				}
+				sString.append(buffer, cLenTmp);
+				cLen -= cLenTmp;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnString(sString.c_str(), sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_BLOB_1 == nRecordType || BINRW::RECORD_BLOB_2 == nRecordType || 
+		    BINRW::RECORD_BLOB_4 == nRecordType)
+		{
+			BLOB   blob;
+			Size   cbSize;
+
+			if (BINRW::RECORD_BLOB_1 == nRecordType)
+			{
+				UInt8 v;
+
+				if ((status = Read(&v, sizeof(v))).IsNOK())
+				{
+					return status;
+				}
+
+				cbSize = (Size)v;
+			}
+			else
+			if (BINRW::RECORD_BLOB_2 == nRecordType)
+			{
+				UInt16 v;
+
+				if ((status = Read(&v, sizeof(v))).IsNOK())
+				{
+					return status;
+				}
+
+				cbSize = (Size)v;
+			}
+			else
+			{
+				UInt32 v;
+
+				if ((status = Read(&v, sizeof(v))).IsNOK())
+				{
+					return status;
+				}
+
+				cbSize = (Size)v;
+			}
+			if (BINRW::MAX_BLOB_SIZE < cbSize)
+			{
+				return Status_ParseFailed;
+			}
+			blob.resize(cbSize);
+			if (!(status = Read(&blob[0], cbSize)))
+			{
+				return status;
+			}
+			if (State_Object == nParentState)
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnBLOB(&blob[0], blob.size(), sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+		}
+		else
+		if (BINRW::RECORD_BEGIN_OBJECT == nRecordType)
+		{
+			if (State_Object == nParentState && !stackStates.empty())
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnBeginObject(sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+			stackStates.push(State_Object);
+		}
+		else
+		if (BINRW::RECORD_BEGIN_ARRAY == nRecordType)
+		{
+			if (State_Object == nParentState && !stackStates.empty())
+			{
+				if (!(status = ReadStr(sName)))
+				{
+					return status;
+				}
+#pragma warning(push)
+#pragma warning(disable: 4996)
+				if (stackStates.empty() && 0 != cx_stricmp(sName.c_str(), szName))
+#pragma warning(pop)
+				{
+					return Status_ParseFailed;
+				}
+			}
+			if ((status = pCustom->OnBeginArray(sName.c_str())).IsNOK())
+			{
+				return status;
+			}
+			stackStates.push(State_Array);
+		}
+		else
+		if (BINRW::RECORD_END_OBJECT == nRecordType)
+		{
+			if ((status = pCustom->OnEndObject()).IsNOK())
+			{
+				return status;
+			}
+			stackStates.pop();
+		}
+		else
+		if (BINRW::RECORD_END_ARRAY == nRecordType)
+		{
+			if ((status = pCustom->OnEndArray()).IsNOK())
+			{
+				return status;
+			}
+			stackStates.pop();
+		}
+		else
+		{
+			return Status_ParseFailed;
+		}
+
+		if (stackStates.empty())
+		{
+			break;
+		}
+	}
+
+	return Status();
 }
 
 Status BINReader::BeginObject(const Char *szName/* = NULL*/)
