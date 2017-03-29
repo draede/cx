@@ -27,7 +27,7 @@
  */ 
 
 #include "CX/Log/Logger.hpp"
-#include "CX/API/IInterface.hpp"
+#include "CX/API/IObject.hpp"
 #include "CX/API/Object.hpp"
 #include "CX/Print.hpp"
 #include "Tester.hpp"
@@ -36,7 +36,39 @@
 using namespace CX;
 
 
-class IInfoLogger : public IInterface
+class ICustomLoggerName : public IObject
+{
+public:
+
+	CX_DECLARE_INTERFACE("ICustomLoggerName")
+
+	virtual void Set(const char *szName) = 0;
+
+	virtual const char *Get() const = 0;
+
+};
+
+class CustomLoggerName : public Object<CustomLoggerName, ICustomLoggerName>
+{
+public:
+
+	virtual void Set(const char *szName)
+	{
+		m_sName = szName;
+	}
+
+	virtual const char *Get() const
+	{
+		return m_sName.c_str();
+	}
+
+private:
+
+	String m_sName;
+
+};
+
+class IInfoLogger : public IObject
 {
 public:
 
@@ -46,7 +78,41 @@ public:
 
 };
 
-class IWarningLogger : public IInterface
+class InfoLogger : public Object<InfoLogger, IInfoLogger, CustomLoggerName>
+{
+public:
+
+	virtual void Log(const char *szMsg)
+	{
+		ICustomLoggerName *pCustomLoggerName = (CustomLoggerName *)Acquire(ICustomLoggerName::OBJECT_NAME());
+
+		Print(stdout, "{1}: {2}\n", pCustomLoggerName->Get(), szMsg);
+
+		pCustomLoggerName->Release();
+	}
+
+	virtual void OnInitObject()
+	{
+		ICustomLoggerName *pCustomLoggerName = (CustomLoggerName *)Acquire(ICustomLoggerName::OBJECT_NAME());
+
+		pCustomLoggerName->Set("INFO");
+
+		pCustomLoggerName->Release();
+	}
+
+	InfoLogger()
+	{
+		Print(stdout, "InfoLogger::InfoLogger\n");
+	}
+
+	~InfoLogger()
+	{
+		Print(stdout, "InfoLogger::~InfoLogger\n");
+	}
+
+};
+
+class IWarningLogger : public IObject
 {
 public:
 
@@ -56,7 +122,41 @@ public:
 
 };
 
-class IErrorLogger : public IInterface
+class WarningLogger : public Object<WarningLogger, IWarningLogger, CustomLoggerName>
+{
+public:
+
+	virtual void Log(const char *szMsg)
+	{
+		ICustomLoggerName *pCustomLoggerName = (CustomLoggerName *)Acquire(ICustomLoggerName::OBJECT_NAME());
+
+		Print(stdout, "{1}: {2}\n", pCustomLoggerName->Get(), szMsg);
+
+		pCustomLoggerName->Release();
+	}
+
+	virtual void OnInitObject()
+	{
+		ICustomLoggerName *pCustomLoggerName = (CustomLoggerName *)Acquire(ICustomLoggerName::OBJECT_NAME());
+
+		pCustomLoggerName->Set("WARNING");
+
+		pCustomLoggerName->Release();
+	}
+
+	WarningLogger()
+	{
+		Print(stdout, "WarningLogger::WarningLogger\n");
+	}
+
+	~WarningLogger()
+	{
+		Print(stdout, "WarningLogger::~WarningLogger\n");
+	}
+
+};
+
+class IErrorLogger : public IObject
 {
 public:
 
@@ -66,58 +166,140 @@ public:
 
 };
 
-class Logger : public Object<Logger, IInfoLogger, IWarningLogger, IErrorLogger>
+class ErrorLogger : public Object<ErrorLogger, IErrorLogger, CustomLoggerName>
 {
 public:
+
+	virtual void Log(const char *szMsg)
+	{
+		ICustomLoggerName *pCustomLoggerName = (CustomLoggerName *)Acquire(ICustomLoggerName::OBJECT_NAME());
+
+		Print(stdout, "{1}: {2}\n", pCustomLoggerName->Get(), szMsg);
+
+		pCustomLoggerName->Release();
+	}
+
+	virtual void OnInitObject()
+	{
+		ICustomLoggerName *pCustomLoggerName = (CustomLoggerName *)Acquire(ICustomLoggerName::OBJECT_NAME());
+
+		pCustomLoggerName->Set("ERROR");
+
+		pCustomLoggerName->Release();
+	}
+
+	ErrorLogger()
+	{
+		Print(stdout, "ErrorLogger::ErrorLogger\n");
+	}
+
+	~ErrorLogger()
+	{
+		Print(stdout, "ErrorLogger::~ErrorLogger\n");
+	}
+
+};
+
+class ILogger : public IObject
+{
+public:
+
+	CX_DECLARE_INTERFACE("ILogger")
+
+	enum Level
+	{
+		Level_Info,
+		Level_Warning,
+		Level_Error,
+	};
+
+	virtual void Log(Level nLevel, const char *szMsg) = 0;
+
+};
+
+class Logger : public Object<Logger, ILogger, InfoLogger, WarningLogger, ErrorLogger>
+{
+public:
+
+	virtual void Log(Level nLevel, const char *szMsg)
+	{
+		if (Level_Info == nLevel)
+		{
+			IInfoLogger *pLogger = (IInfoLogger *)Acquire(IInfoLogger::OBJECT_NAME());
+
+			pLogger->Log(szMsg);
+
+			pLogger->Release();
+		}
+		else
+		if (Level_Warning == nLevel)
+		{
+			IWarningLogger *pLogger = (IWarningLogger *)Acquire(IWarningLogger::OBJECT_NAME());
+
+			pLogger->Log(szMsg);
+
+			pLogger->Release();
+		}
+		else
+		if (Level_Error == nLevel)
+		{
+			IErrorLogger *pLogger = (IErrorLogger *)Acquire(IErrorLogger::OBJECT_NAME());
+
+			pLogger->Log(szMsg);
+
+			pLogger->Release();
+		}
+	}
 
 	Logger()
 	{
 		Print(stdout, "Logger::Logger\n");
 	}
 
-	virtual ~Logger()
+	~Logger()
 	{
 		Print(stdout, "Logger::~Logger\n");
-	}
-
-	virtual void IInfoLogger::Log(const char *szMsg)
-	{
-		Print(stdout, "INFO: {1}\n", szMsg);
-	}
-
-	virtual void IWarningLogger::Log(const char *szMsg)
-	{
-		Print(stdout, "WARNING: {1}\n", szMsg);
-	}
-
-	virtual void IErrorLogger::Log(const char *szMsg)
-	{
-		Print(stdout, "ERROR: {1}\n", szMsg);
 	}
 
 };
 
 void API_Test1()
 {
-	IObject *pLogger = (IObject *)Logger::Create();
+	ILogger           *pLogger;
+	IInfoLogger       *pInfoLogger;
+	IWarningLogger    *pWarningLogger;
+	IErrorLogger      *pErrorLogger;
+	ICustomLoggerName *pCustomLoggerName;
 
-	IInfoLogger *pInfoLogger = pLogger->Acquire<IInfoLogger>();
+	pLogger = Logger::Create();
 
-	IWarningLogger *pWarningLogger = pLogger->Acquire<IWarningLogger>();
+	pInfoLogger    = pLogger->Acquire<IInfoLogger>();
+	pWarningLogger = pLogger->Acquire<IWarningLogger>();
+	pErrorLogger   = pLogger->Acquire<IErrorLogger>();
 
-	IErrorLogger *pErrorLogger = pLogger->Acquire<IErrorLogger>();
+	pLogger->Log(ILogger::Level_Info, "info from main logger");
+	pLogger->Log(ILogger::Level_Warning, "warning from main logger");
+	pLogger->Log(ILogger::Level_Error, "error from main logger");
 
-	pInfoLogger->Log("info log");
+	pCustomLoggerName = pInfoLogger->Acquire<ICustomLoggerName>();
+	pCustomLoggerName->Set("MYINFO");
+	pCustomLoggerName->Release();
 
-	pWarningLogger->Log("warning log");
+	pCustomLoggerName = pWarningLogger->Acquire<ICustomLoggerName>();
+	pCustomLoggerName->Set("MYWARNING");
+	pCustomLoggerName->Release();
 
-	pErrorLogger->Log("error log");
+	pCustomLoggerName = pErrorLogger->Acquire<ICustomLoggerName>();
+	pCustomLoggerName->Set("MYERROR");
+	pCustomLoggerName->Release();
 
-	pErrorLogger->Release();
+	pInfoLogger->Log("info from info logger");
+	pWarningLogger->Log("warning from warning logger");
+	pErrorLogger->Log("error from error logger");
 
 	pInfoLogger->Release();
-
 	pWarningLogger->Release();
+	pErrorLogger->Release();
 
 	pLogger->Release();
 }

@@ -7,1636 +7,327 @@
 
 #include "IObject.hpp"
 #include <string.h>
-#ifdef _WIN32
-	#include <windows.h>
-#endif
-#include <new>
 
 
 namespace CX
 {
 
-template 
+template
 <
-	typename OBJ, 
-	typename I1  = IInterface::Null, typename I2  = IInterface::Null, typename I3  = IInterface::Null, 
-	typename I4  = IInterface::Null, typename I5  = IInterface::Null, typename I6  = IInterface::Null, 
-	typename I7  = IInterface::Null, typename I8  = IInterface::Null, typename I9  = IInterface::Null,
-	typename I10 = IInterface::Null, typename I11 = IInterface::Null, typename I12 = IInterface::Null,
-	typename I13 = IInterface::Null, typename I14 = IInterface::Null, typename I15 = IInterface::Null,
-	typename I16 = IInterface::Null, typename I17 = IInterface::Null 
+	typename O1  = IObject::NullObject, typename O2  = IObject::NullObject, typename O3  = IObject::NullObject, 
+	typename O4  = IObject::NullObject, typename O5  = IObject::NullObject, typename O6  = IObject::NullObject, 
+	typename O7  = IObject::NullObject, typename O8  = IObject::NullObject, typename O9  = IObject::NullObject, 
+	typename O10 = IObject::NullObject, typename O11 = IObject::NullObject, typename O12 = IObject::NullObject, 
+	typename O13 = IObject::NullObject, typename O14 = IObject::NullObject, typename O15 = IObject::NullObject, 
+	typename O16 = IObject::NullObject, typename O17 = IObject::NullObject 
 >
-class Object;
+struct ObjectCounter;
 
-template 
+template
 <
-	typename OBJ, 
-	typename I1, typename I2,  typename I3,  typename I4,  typename I5,  typename I6,  typename I7,  typename I8, 
-	typename I9, typename I10, typename I11, typename I12, typename I13, typename I14, typename I15, typename I16 
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8, 
+	typename O9, typename O10, typename O11, typename O12, typename O13, typename O14, typename O15, typename O16 
 >
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16> : 
-	public IObject, 
-	public I1, public I2,  public I3,  public I4,  public I5,  public I6,  public I7,  public I8, 
-	public I9, public I10, public I11, public I12, public I13, public I14, public I15, public I16 
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12, O13, O14, O15, O16>
 {
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-		((I9 *)pObject)->SetObject(pObject);
-		((I10 *)pObject)->SetObject(pObject);
-		((I11 *)pObject)->SetObject(pObject);
-		((I12 *)pObject)->SetObject(pObject);
-		((I13 *)pObject)->SetObject(pObject);
-		((I14 *)pObject)->SetObject(pObject);
-		((I15 *)pObject)->SetObject(pObject);
-		((I16 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) return true;
-		else if (0 == strcmp(I2::GetName(),  szName)) return true;
-		else if (0 == strcmp(I3::GetName(),  szName)) return true;
-		else if (0 == strcmp(I4::GetName(),  szName)) return true;
-		else if (0 == strcmp(I5::GetName(),  szName)) return true;
-		else if (0 == strcmp(I6::GetName(),  szName)) return true;
-		else if (0 == strcmp(I7::GetName(),  szName)) return true;
-		else if (0 == strcmp(I8::GetName(),  szName)) return true;
-		else if (0 == strcmp(I9::GetName(),  szName)) return true;
-		else if (0 == strcmp(I10::GetName(), szName)) return true;
-		else if (0 == strcmp(I11::GetName(), szName)) return true;
-		else if (0 == strcmp(I12::GetName(), szName)) return true;
-		else if (0 == strcmp(I13::GetName(), szName)) return true;
-		else if (0 == strcmp(I14::GetName(), szName)) return true;
-		else if (0 == strcmp(I15::GetName(), szName)) return true;
-		else if (0 == strcmp(I16::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (I12 *)this; }
-		else if (0 == strcmp(I13::GetName(), szName)) { Retain(); return (I13 *)this; }
-		else if (0 == strcmp(I14::GetName(), szName)) { Retain(); return (I14 *)this; }
-		else if (0 == strcmp(I15::GetName(), szName)) { Retain(); return (I15 *)this; }
-		else if (0 == strcmp(I16::GetName(), szName)) { Retain(); return (I16 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (const I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (const I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (const I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (const I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (const I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (const I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (const I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (const I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (const I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (const I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (const I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (const I12 *)this; }
-		else if (0 == strcmp(I13::GetName(), szName)) { Retain(); return (const I13 *)this; }
-		else if (0 == strcmp(I14::GetName(), szName)) { Retain(); return (const I14 *)this; }
-		else if (0 == strcmp(I15::GetName(), szName)) { Retain(); return (const I15 *)this; }
-		else if (0 == strcmp(I16::GetName(), szName)) { Retain(); return (const I16 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
-};
-
-template 
-<
-	typename OBJ, 
-	typename I1, typename I2,  typename I3,  typename I4,  typename I5,  typename I6,  typename I7,  typename I8, 
-	typename I9, typename I10, typename I11, typename I12, typename I13, typename I14, typename I15 
->
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15> : 
-	public IObject, 
-	public I1,  public I2,  public I3,  public I4,  public I5,  public I6,  public I7,  public I8, public I9, 
-	public I10, public I11, public I12, public I13, public I14, public I15 
-{
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-		((I9 *)pObject)->SetObject(pObject);
-		((I10 *)pObject)->SetObject(pObject);
-		((I11 *)pObject)->SetObject(pObject);
-		((I12 *)pObject)->SetObject(pObject);
-		((I13 *)pObject)->SetObject(pObject);
-		((I14 *)pObject)->SetObject(pObject);
-		((I15 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) return true;
-		else if (0 == strcmp(I2::GetName(),  szName)) return true;
-		else if (0 == strcmp(I3::GetName(),  szName)) return true;
-		else if (0 == strcmp(I4::GetName(),  szName)) return true;
-		else if (0 == strcmp(I5::GetName(),  szName)) return true;
-		else if (0 == strcmp(I6::GetName(),  szName)) return true;
-		else if (0 == strcmp(I7::GetName(),  szName)) return true;
-		else if (0 == strcmp(I8::GetName(),  szName)) return true;
-		else if (0 == strcmp(I9::GetName(),  szName)) return true;
-		else if (0 == strcmp(I10::GetName(), szName)) return true;
-		else if (0 == strcmp(I11::GetName(), szName)) return true;
-		else if (0 == strcmp(I12::GetName(), szName)) return true;
-		else if (0 == strcmp(I13::GetName(), szName)) return true;
-		else if (0 == strcmp(I14::GetName(), szName)) return true;
-		else if (0 == strcmp(I15::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (I12 *)this; }
-		else if (0 == strcmp(I13::GetName(), szName)) { Retain(); return (I13 *)this; }
-		else if (0 == strcmp(I14::GetName(), szName)) { Retain(); return (I14 *)this; }
-		else if (0 == strcmp(I15::GetName(), szName)) { Retain(); return (I15 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (const I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (const I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (const I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (const I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (const I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (const I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (const I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (const I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (const I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (const I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (const I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (const I12 *)this; }
-		else if (0 == strcmp(I13::GetName(), szName)) { Retain(); return (const I13 *)this; }
-		else if (0 == strcmp(I14::GetName(), szName)) { Retain(); return (const I14 *)this; }
-		else if (0 == strcmp(I15::GetName(), szName)) { Retain(); return (const I15 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
-};
-
-template 
-<
-	typename OBJ, 
-	typename I1, typename I2,  typename I3,  typename I4,  typename I5,  typename I6,  typename I7, typename I8, 
-	typename I9, typename I10, typename I11, typename I12, typename I13, typename I14 
->
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14> : 
-	public IObject, 
-	public I1,  public I2,  public I3,  public I4,  public I5,  public I6,  public I7, public I8, public I9, public I10, 
-	public I11, public I12, public I13, public I14 
-{
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-		((I9 *)pObject)->SetObject(pObject);
-		((I10 *)pObject)->SetObject(pObject);
-		((I11 *)pObject)->SetObject(pObject);
-		((I12 *)pObject)->SetObject(pObject);
-		((I13 *)pObject)->SetObject(pObject);
-		((I14 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) return true;
-		else if (0 == strcmp(I2::GetName(),  szName)) return true;
-		else if (0 == strcmp(I3::GetName(),  szName)) return true;
-		else if (0 == strcmp(I4::GetName(),  szName)) return true;
-		else if (0 == strcmp(I5::GetName(),  szName)) return true;
-		else if (0 == strcmp(I6::GetName(),  szName)) return true;
-		else if (0 == strcmp(I7::GetName(),  szName)) return true;
-		else if (0 == strcmp(I8::GetName(),  szName)) return true;
-		else if (0 == strcmp(I9::GetName(),  szName)) return true;
-		else if (0 == strcmp(I10::GetName(), szName)) return true;
-		else if (0 == strcmp(I11::GetName(), szName)) return true;
-		else if (0 == strcmp(I12::GetName(), szName)) return true;
-		else if (0 == strcmp(I13::GetName(), szName)) return true;
-		else if (0 == strcmp(I14::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (I12 *)this; }
-		else if (0 == strcmp(I13::GetName(), szName)) { Retain(); return (I13 *)this; }
-		else if (0 == strcmp(I14::GetName(), szName)) { Retain(); return (I14 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (const I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (const I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (const I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (const I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (const I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (const I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (const I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (const I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (const I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (const I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (const I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (const I12 *)this; }
-		else if (0 == strcmp(I13::GetName(), szName)) { Retain(); return (const I13 *)this; }
-		else if (0 == strcmp(I14::GetName(), szName)) { Retain(); return (const I14 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
-};
-
-template 
-<
-	typename OBJ, 
-	typename I1, typename I2,  typename I3,  typename I4,  typename I5,  typename I6, typename I7, typename I8, 
-	typename I9, typename I10, typename I11, typename I12, typename I13 
->
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13> : 
-	public IObject, 
-	public I1,  public I2,  public I3,  public I4,  public I5,  public I6, public I7, public I8, public I9, public I10, 
-	public I11, public I12, public I13 
-{
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-		((I9 *)pObject)->SetObject(pObject);
-		((I10 *)pObject)->SetObject(pObject);
-		((I11 *)pObject)->SetObject(pObject);
-		((I12 *)pObject)->SetObject(pObject);
-		((I13 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) return true;
-		else if (0 == strcmp(I2::GetName(),  szName)) return true;
-		else if (0 == strcmp(I3::GetName(),  szName)) return true;
-		else if (0 == strcmp(I4::GetName(),  szName)) return true;
-		else if (0 == strcmp(I5::GetName(),  szName)) return true;
-		else if (0 == strcmp(I6::GetName(),  szName)) return true;
-		else if (0 == strcmp(I7::GetName(),  szName)) return true;
-		else if (0 == strcmp(I8::GetName(),  szName)) return true;
-		else if (0 == strcmp(I9::GetName(),  szName)) return true;
-		else if (0 == strcmp(I10::GetName(), szName)) return true;
-		else if (0 == strcmp(I11::GetName(), szName)) return true;
-		else if (0 == strcmp(I12::GetName(), szName)) return true;
-		else if (0 == strcmp(I13::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (I12 *)this; }
-		else if (0 == strcmp(I13::GetName(), szName)) { Retain(); return (I13 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (const I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (const I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (const I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (const I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (const I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (const I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (const I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (const I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (const I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (const I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (const I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (const I12 *)this; }
-		else if (0 == strcmp(I13::GetName(), szName)) { Retain(); return (const I13 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
-};
-
-template 
-<
-	typename OBJ, 
-	typename I1, typename I2,  typename I3,  typename I4,  typename I5, typename I6, typename I7, typename I8, 
-	typename I9, typename I10, typename I11, typename I12 
->
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12> : 
-	public IObject, 
-	public I1,  public I2,  public I3,  public I4,  public I5, public I6, public I7, public I8, public I9, public I10, 
-	public I11, public I12 
-{
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-		((I9 *)pObject)->SetObject(pObject);
-		((I10 *)pObject)->SetObject(pObject);
-		((I11 *)pObject)->SetObject(pObject);
-		((I12 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) return true;
-		else if (0 == strcmp(I2::GetName(),  szName)) return true;
-		else if (0 == strcmp(I3::GetName(),  szName)) return true;
-		else if (0 == strcmp(I4::GetName(),  szName)) return true;
-		else if (0 == strcmp(I5::GetName(),  szName)) return true;
-		else if (0 == strcmp(I6::GetName(),  szName)) return true;
-		else if (0 == strcmp(I7::GetName(),  szName)) return true;
-		else if (0 == strcmp(I8::GetName(),  szName)) return true;
-		else if (0 == strcmp(I9::GetName(),  szName)) return true;
-		else if (0 == strcmp(I10::GetName(), szName)) return true;
-		else if (0 == strcmp(I11::GetName(), szName)) return true;
-		else if (0 == strcmp(I12::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (I12 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (const I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (const I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (const I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (const I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (const I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (const I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (const I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (const I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (const I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (const I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (const I11 *)this; }
-		else if (0 == strcmp(I12::GetName(), szName)) { Retain(); return (const I12 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
-};
-
-template 
-<
-	typename OBJ, 
-	typename I1, typename I2,  typename I3,  typename I4, typename I5, typename I6, typename I7, typename I8, 
-	typename I9, typename I10, typename I11 
->
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11> : 
-	public IObject, 
-	public I1, public I2, public I3, public I4, public I5, public I6, public I7, public I8, public I9, public I10, 
-	public I11 
-{
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-		((I9 *)pObject)->SetObject(pObject);
-		((I10 *)pObject)->SetObject(pObject);
-		((I11 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) return true;
-		else if (0 == strcmp(I2::GetName(),  szName)) return true;
-		else if (0 == strcmp(I3::GetName(),  szName)) return true;
-		else if (0 == strcmp(I4::GetName(),  szName)) return true;
-		else if (0 == strcmp(I5::GetName(),  szName)) return true;
-		else if (0 == strcmp(I6::GetName(),  szName)) return true;
-		else if (0 == strcmp(I7::GetName(),  szName)) return true;
-		else if (0 == strcmp(I8::GetName(),  szName)) return true;
-		else if (0 == strcmp(I9::GetName(),  szName)) return true;
-		else if (0 == strcmp(I10::GetName(), szName)) return true;
-		else if (0 == strcmp(I11::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (I11 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (const I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (const I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (const I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (const I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (const I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (const I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (const I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (const I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (const I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (const I10 *)this; }
-		else if (0 == strcmp(I11::GetName(), szName)) { Retain(); return (const I11 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
-};
-
-template 
-<
-	typename OBJ, 
-	typename I1, typename I2,  typename I3,  typename I4,  typename I5,  typename I6,  typename I7,  typename I8, 
-	typename I9, typename I10 
->
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10> : 
-	public IObject, 
-	public I1, public I2, public I3, public I4, public I5, public I6, public I7, public I8, public I9, public I10     
-{
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-		((I9 *)pObject)->SetObject(pObject);
-		((I10 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) return true;
-		else if (0 == strcmp(I2::GetName(),  szName)) return true;
-		else if (0 == strcmp(I3::GetName(),  szName)) return true;
-		else if (0 == strcmp(I4::GetName(),  szName)) return true;
-		else if (0 == strcmp(I5::GetName(),  szName)) return true;
-		else if (0 == strcmp(I6::GetName(),  szName)) return true;
-		else if (0 == strcmp(I7::GetName(),  szName)) return true;
-		else if (0 == strcmp(I8::GetName(),  szName)) return true;
-		else if (0 == strcmp(I9::GetName(),  szName)) return true;
-		else if (0 == strcmp(I10::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (I10 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (const I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (const I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (const I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (const I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (const I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (const I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (const I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (const I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (const I9 *)this;  }
-		else if (0 == strcmp(I10::GetName(), szName)) { Retain(); return (const I10 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
-};
-
-template 
-<
-	typename OBJ, 
-	typename I1, typename I2, typename I3, typename I4, typename I5, typename I6, typename I7, typename I8, 
-	typename I9 
->
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8, I9> : 
-	public IObject, 
-	public I1, public I2, public I3, public I4, public I5, public I6, public I7, public I8, public I9 
-{
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-		((I9 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) return true;
-		else if (0 == strcmp(I2::GetName(), szName)) return true;
-		else if (0 == strcmp(I3::GetName(), szName)) return true;
-		else if (0 == strcmp(I4::GetName(), szName)) return true;
-		else if (0 == strcmp(I5::GetName(), szName)) return true;
-		else if (0 == strcmp(I6::GetName(), szName)) return true;
-		else if (0 == strcmp(I7::GetName(), szName)) return true;
-		else if (0 == strcmp(I8::GetName(), szName)) return true;
-		else if (0 == strcmp(I9::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (I5 *)this; }
-		else if (0 == strcmp(I6::GetName(), szName)) { Retain(); return (I6 *)this; }
-		else if (0 == strcmp(I7::GetName(), szName)) { Retain(); return (I7 *)this; }
-		else if (0 == strcmp(I8::GetName(), szName)) { Retain(); return (I8 *)this; }
-		else if (0 == strcmp(I9::GetName(), szName)) { Retain(); return (I9 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(),  szName)) { Retain(); return (const I1 *)this;  }
-		else if (0 == strcmp(I2::GetName(),  szName)) { Retain(); return (const I2 *)this;  }
-		else if (0 == strcmp(I3::GetName(),  szName)) { Retain(); return (const I3 *)this;  }
-		else if (0 == strcmp(I4::GetName(),  szName)) { Retain(); return (const I4 *)this;  }
-		else if (0 == strcmp(I5::GetName(),  szName)) { Retain(); return (const I5 *)this;  }
-		else if (0 == strcmp(I6::GetName(),  szName)) { Retain(); return (const I6 *)this;  }
-		else if (0 == strcmp(I7::GetName(),  szName)) { Retain(); return (const I7 *)this;  }
-		else if (0 == strcmp(I8::GetName(),  szName)) { Retain(); return (const I8 *)this;  }
-		else if (0 == strcmp(I9::GetName(),  szName)) { Retain(); return (const I9 *)this;  }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
+	static const size_t COUNT = 16;
 };
 
 template
 <
-	typename OBJ,
-	typename I1, typename I2, typename I3, typename I4, typename I5, typename I6, typename I7, typename I8
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8, 
+	typename O9, typename O10, typename O11, typename O12, typename O13, typename O14, typename O15 
 >
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7, I8> :
-	public IObject,
-	public I1, public I2, public I3, public I4, public I5, public I6, public I7, public I8
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12, O13, O14, O15>
 {
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-		((I8 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		if (0 == strcmp(I1::GetName(), szName)) return true;
-		else if (0 == strcmp(I2::GetName(), szName)) return true;
-		else if (0 == strcmp(I3::GetName(), szName)) return true;
-		else if (0 == strcmp(I4::GetName(), szName)) return true;
-		else if (0 == strcmp(I5::GetName(), szName)) return true;
-		else if (0 == strcmp(I6::GetName(), szName)) return true;
-		else if (0 == strcmp(I7::GetName(), szName)) return true;
-		else if (0 == strcmp(I8::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (I5 *)this; }
-		else if (0 == strcmp(I6::GetName(), szName)) { Retain(); return (I6 *)this; }
-		else if (0 == strcmp(I7::GetName(), szName)) { Retain(); return (I7 *)this; }
-		else if (0 == strcmp(I8::GetName(), szName)) { Retain(); return (I8 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (const I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (const I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (const I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (const I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (const I5 *)this; }
-		else if (0 == strcmp(I6::GetName(), szName)) { Retain(); return (const I6 *)this; }
-		else if (0 == strcmp(I7::GetName(), szName)) { Retain(); return (const I7 *)this; }
-		else if (0 == strcmp(I8::GetName(), szName)) { Retain(); return (const I8 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
-};
-
-template 
-<
-	typename OBJ, 
-	typename I1, typename I2, typename I3, typename I4, typename I5, typename I6, typename I7  
->
-class Object<OBJ, I1, I2, I3, I4, I5, I6, I7> : 
-	public IObject, 
-	public I1, public I2, public I3, public I4, public I5, public I6, public I7 
-{
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-		((I7 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) return true;
-		else if (0 == strcmp(I2::GetName(), szName)) return true;
-		else if (0 == strcmp(I3::GetName(), szName)) return true;
-		else if (0 == strcmp(I4::GetName(), szName)) return true;
-		else if (0 == strcmp(I5::GetName(), szName)) return true;
-		else if (0 == strcmp(I6::GetName(), szName)) return true;
-		else if (0 == strcmp(I7::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (I5 *)this; }
-		else if (0 == strcmp(I6::GetName(), szName)) { Retain(); return (I6 *)this; }
-		else if (0 == strcmp(I7::GetName(), szName)) { Retain(); return (I7 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (const I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (const I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (const I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (const I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (const I5 *)this; }
-		else if (0 == strcmp(I6::GetName(), szName)) { Retain(); return (const I6 *)this; }
-		else if (0 == strcmp(I7::GetName(), szName)) { Retain(); return (const I7 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
+	static const size_t COUNT = 15;
 };
 
 template
 <
-	typename OBJ,
-	typename I1, typename I2, typename I3, typename I4, typename I5, typename I6
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8, 
+	typename O9, typename O10, typename O11, typename O12, typename O13, typename O14 
 >
-class Object<OBJ, I1, I2, I3, I4, I5, I6> :
-	public IObject,
-	public I1, public I2, public I3, public I4, public I5, public I6
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12, O13, O14>
 {
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-		((I6 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		if (0 == strcmp(I1::GetName(), szName)) return true;
-		else if (0 == strcmp(I2::GetName(), szName)) return true;
-		else if (0 == strcmp(I3::GetName(), szName)) return true;
-		else if (0 == strcmp(I4::GetName(), szName)) return true;
-		else if (0 == strcmp(I5::GetName(), szName)) return true;
-		else if (0 == strcmp(I6::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (I5 *)this; }
-		else if (0 == strcmp(I6::GetName(), szName)) { Retain(); return (I6 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (const I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (const I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (const I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (const I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (const I5 *)this; }
-		else if (0 == strcmp(I6::GetName(), szName)) { Retain(); return (const I6 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
+	static const size_t COUNT = 14;
 };
 
-template 
+template
 <
-	typename OBJ, 
-	typename I1, typename I2, typename I3, typename I4, typename I5 
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8, 
+	typename O9, typename O10, typename O11, typename O12, typename O13 
 >
-class Object<OBJ, I1, I2, I3, I4, I5> : 
-	public IObject, 
-	public I1, public I2, public I3, public I4, public I5 
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12, O13>
 {
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-		((I5 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) return true;
-		else if (0 == strcmp(I2::GetName(), szName)) return true;
-		else if (0 == strcmp(I3::GetName(), szName)) return true;
-		else if (0 == strcmp(I4::GetName(), szName)) return true;
-		else if (0 == strcmp(I5::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (I5 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (const I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (const I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (const I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (const I4 *)this; }
-		else if (0 == strcmp(I5::GetName(), szName)) { Retain(); return (const I5 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
+	static const size_t COUNT = 13;
 };
 
-template 
+template
 <
-	typename OBJ, 
-	typename I1, typename I2, typename I3, typename I4   
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8, 
+	typename O9, typename O10, typename O11, typename O12 
 >
-class Object<OBJ, I1, I2, I3, I4> : 
-	public IObject, 
-	public I1, public I2, public I3, public I4 
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12>
 {
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-		((I4 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) return true;
-		else if (0 == strcmp(I2::GetName(), szName)) return true;
-		else if (0 == strcmp(I3::GetName(), szName)) return true;
-		else if (0 == strcmp(I4::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (I4 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (const I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (const I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (const I3 *)this; }
-		else if (0 == strcmp(I4::GetName(), szName)) { Retain(); return (const I4 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
+	static const size_t COUNT = 12;
 };
 
-template 
+template
 <
-	typename OBJ, 
-	typename I1, typename I2, typename I3  
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8, 
+	typename O9, typename O10, typename O11 
 >
-class Object<OBJ, I1, I2, I3> : 
-	public IObject, 
-	public I1, public I2, public I3 
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11>
 {
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-		((I3 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) return true;
-		else if (0 == strcmp(I2::GetName(), szName)) return true;
-		else if (0 == strcmp(I3::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (I3 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (const I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (const I2 *)this; }
-		else if (0 == strcmp(I3::GetName(), szName)) { Retain(); return (const I3 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
+	static const size_t COUNT = 11;
 };
 
-template 
+template
 <
-	typename OBJ, 
-	typename I1, typename I2 
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8, 
+	typename O9, typename O10 
 >
-class Object<OBJ, I1, I2> : 
-	public IObject, 
-	public I1, public I2
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9, O10>
 {
-public:
-
-	static OBJ *Create()
-	{
-		OBJ *pObject = new (std::nothrow) OBJ();
-
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
-		((I2 *)pObject)->SetObject(pObject);
-
-		return pObject;
-	}
-
-	virtual long Retain() const
-	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
-	}
-
-	virtual long Release() const
-	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
-		{
-			delete this;
-		}
-
-		return cRefCount;
-	}
-
-	virtual bool Implements(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) return true;
-		else if (0 == strcmp(I2::GetName(), szName)) return true;
-		else return false;
-	}
-
-	virtual IInterface *Acquire(const char *szName)
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (I2 *)this; }
-		else return NULL;
-	}
-
-	virtual const IInterface *Acquire(const char *szName) const
-	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (const I1 *)this; }
-		else if (0 == strcmp(I2::GetName(), szName)) { Retain(); return (const I2 *)this; }
-		else return NULL;
-	}
-
-private:
-
-	mutable volatile long m_cRefCount;
-
+	static const size_t COUNT = 10;
 };
 
-template 
+template
 <
-	typename OBJ, 
-	typename I1 
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8, 
+	typename O9 
 >
-class Object<OBJ, I1> : public IObject, public I1
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9>
+{
+	static const size_t COUNT = 9;
+};
+
+template
+<
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7,  typename O8
+>
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8>
+{
+	static const size_t COUNT = 8;
+};
+
+template
+<
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6,  typename O7
+>
+struct ObjectCounter<O1, O2, O3, O4, O5, O6, O7>
+{
+	static const size_t COUNT = 7;
+};
+
+template
+<
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5,  typename O6
+>
+struct ObjectCounter<O1, O2, O3, O4, O5, O6>
+{
+	static const size_t COUNT = 6;
+};
+
+template
+<
+	typename O1, typename O2,  typename O3,  typename O4,  typename O5
+>
+struct ObjectCounter<O1, O2, O3, O4, O5>
+{
+	static const size_t COUNT = 5;
+};
+
+template
+<
+	typename O1, typename O2,  typename O3,  typename O4
+>
+struct ObjectCounter<O1, O2, O3, O4>
+{
+	static const size_t COUNT = 4;
+};
+
+template
+<
+	typename O1, typename O2,  typename O3
+>
+struct ObjectCounter<O1, O2, O3>
+{
+	static const size_t COUNT = 3;
+};
+
+template
+<
+	typename O1, typename O2
+>
+struct ObjectCounter<O1, O2>
+{
+	static const size_t COUNT = 2;
+};
+
+template
+<
+	typename O1
+>
+struct ObjectCounter<O1>
+{
+	static const size_t COUNT = 1;
+};
+
+template
+<
+>
+struct ObjectCounter< >
+{
+	static const size_t COUNT = 0;
+};
+
+template
+<
+	typename OBJECT_CLASS, typename OBJECT_INTERFACE,
+	typename O1  = IObject::NullObject, typename O2  = IObject::NullObject, typename O3  = IObject::NullObject, 
+	typename O4  = IObject::NullObject, typename O5  = IObject::NullObject, typename O6  = IObject::NullObject,
+	typename O7  = IObject::NullObject, typename O8  = IObject::NullObject, typename O9  = IObject::NullObject,
+	typename O10 = IObject::NullObject, typename O11 = IObject::NullObject, typename O12 = IObject::NullObject,
+	typename O13 = IObject::NullObject, typename O14 = IObject::NullObject, typename O15 = IObject::NullObject,
+	typename O16 = IObject::NullObject 
+>
+class Object : public OBJECT_INTERFACE
 {
 public:
 
-	static OBJ *Create()
+	static OBJECT_INTERFACE *Create(IObject *pParent = NULL)
 	{
-		OBJ *pObject = new (std::nothrow) OBJ();
+		OBJECT_INTERFACE *pObject;
 
-		pObject->m_cRefCount = 1;
-		((I1 *)pObject)->SetObject(pObject);
+		if (NULL == (pObject = new (std::nothrow) OBJECT_CLASS()))
+		{
+			return NULL;
+		}
+		pObject->InitObject(pParent);
 
 		return pObject;
 	}
 
-	virtual long Retain() const
+	virtual size_t GetImplementationsCount() const
 	{
-#ifdef _WIN32
-		return InterlockedIncrement(&m_cRefCount);
-#else
-		return __sync_fetch_and_add(&m_cRefCount, 1);
-#endif
+		return OBJECTS_COUNT;
 	}
 
-	virtual long Release() const
+	virtual const char *GetImplementationName(size_t cIndex) const
 	{
-		long cRefCount;
-
-#ifdef _WIN32
-		if (0 == (cRefCount = InterlockedDecrement(&m_cRefCount)))
-#else
-		if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
-#endif
+		if (OBJECTS_COUNT > cIndex)
 		{
-			delete this;
+			return __objects__[cIndex - 1]->GetObjectName();
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+	virtual size_t GetImplementationIndex(const char *szName) const
+	{
+		for (size_t i = 0; i < OBJECTS_COUNT; i++)
+		{
+			if (0 == strcmp(szName, __objects__[i]->GetObjectName()))
+			{
+				return i;
+			}
 		}
 
-		return cRefCount;
+		return (size_t)-1;
 	}
 
 	virtual bool Implements(const char *szName) const
 	{
-		     if (0 == strcmp(I1::GetName(), szName)) return true;
-		else return false;
+		return ((size_t)-1 != GetImplementationIndex(szName));
 	}
 
-	virtual IInterface *Acquire(const char *szName)
+	virtual IObject *Acquire(const char *szName)
 	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (I1 *)this; }
-		else return NULL;
+		size_t cIndex;
+
+		if ((size_t)-1 != (cIndex = GetImplementationIndex(szName)))
+		{
+			Retain();
+
+			return __objects__[cIndex];
+		}
+		else
+		{
+			return NULL;
+		}
 	}
 
-	virtual const IInterface *Acquire(const char *szName) const
+	virtual const IObject *Acquire(const char *szName) const
 	{
-		     if (0 == strcmp(I1::GetName(), szName)) { Retain(); return (const I1 *)this; }
-		else return NULL;
+		size_t cIndex;
+
+		if ((size_t)-1 != (cIndex = GetImplementationIndex(szName)))
+		{
+			Retain();
+
+			return __objects__[cIndex];
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+
+protected:
+
+	void InitObject(IObject *pParent = NULL)
+	{
+		SetupObject(pParent);
+
+		__objects__[0]  = this;
+		__objects__[1]  = O1::Create(this);
+		__objects__[2]  = O2::Create(this);
+		__objects__[3]  = O3::Create(this);
+		__objects__[4]  = O4::Create(this);
+		__objects__[5]  = O5::Create(this);
+		__objects__[6]  = O6::Create(this);
+		__objects__[7]  = O7::Create(this);
+		__objects__[8]  = O8::Create(this);
+		__objects__[9]  = O9::Create(this);
+		__objects__[10] = O10::Create(this);
+		__objects__[11] = O11::Create(this);
+		__objects__[12] = O12::Create(this);
+		__objects__[13] = O13::Create(this);
+		__objects__[14] = O14::Create(this);
+		__objects__[15] = O15::Create(this);
+		__objects__[16] = O16::Create(this);
+
+		OnInitObject();
+	}
+
+	virtual void UninitObject() const
+	{
+		delete this;
+	}
+
+	~Object()
+	{
+		OnUninitObject();
+
+		for (size_t i = 1; i < OBJECTS_COUNT; i++)
+		{
+			__objects__[i]->SetupObject(NULL);
+			__objects__[i]->Release();
+		}
 	}
 
 private:
 
-	mutable volatile long m_cRefCount;
+	static const size_t MAX_OBJECTS_COUNT = 16;
+
+	static const size_t OBJECTS_COUNT = 
+	                   ObjectCounter<O1, O2, O3, O4, O5, O6, O7, O8, O9, O10, O11, O12, O13, O14, O15, O16>::COUNT + 1;
+
+	IObject *__objects__[MAX_OBJECTS_COUNT + 1];
 
 };
 

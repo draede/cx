@@ -1089,9 +1089,6 @@
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Atomic.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API\IInterface.hpp">
-      <Filter>Header Files\API</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\API\IObject.hpp">
       <Filter>Header Files\API</Filter>
     </ClInclude>

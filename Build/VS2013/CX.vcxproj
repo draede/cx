@@ -88,7 +88,6 @@
     <ClInclude Include="..\..\Contrib\SQLite\Include\sqlite3.h" />
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
-    <ClInclude Include="..\..\Include\CX\API\IInterface.hpp" />
     <ClInclude Include="..\..\Include\CX\API\IObject.hpp" />
     <ClInclude Include="..\..\Include\CX\API\Object.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZ4InputFilter.hpp" />

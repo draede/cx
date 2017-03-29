@@ -1065,9 +1065,6 @@
     <ClInclude Include="..\..\Include\CX\Util\Bitmap.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API\IInterface.hpp">
-      <Filter>Header Files\API</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\API\IObject.hpp">
       <Filter>Header Files\API</Filter>
     </ClInclude>

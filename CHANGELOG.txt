@@ -1,4 +1,6 @@
-0.2.126
+0.2.127
+  - Improved API implementation (added recursive interfaces support)
+0.2.126 - 2017-03-27
   - Removed test artifacts
 0.2.125 - 2017-03-27
   - Added custom reader support for SimpleBuffers (BINReader)

@@ -1065,15 +1065,6 @@
     <ClInclude Include="..\..\Include\CX\Util\Bitmap.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API\IInterface.hpp">
-      <Filter>Header Files\API</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API\IObject.hpp">
-      <Filter>Header Files\API</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API\Object.hpp">
-      <Filter>Header Files\API</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\CircularBuffer.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -1082,6 +1073,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\BufferedOutputStream.hpp">
       <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\CX\Include\CX\API\IObject.hpp">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\CX\Include\CX\API\Object.hpp">
+      <Filter>Header Files\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
