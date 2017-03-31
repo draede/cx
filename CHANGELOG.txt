@@ -1,3 +1,7 @@
+0.2.129
+  - Fixed memory leak in MultiHash
+0.2.128 - 2017-03-30
+  - Added scope classes for API
 0.2.127
   - Improved API implementation (added recursive interfaces support)
 0.2.126 - 2017-03-27

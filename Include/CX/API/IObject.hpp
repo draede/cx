@@ -30,9 +30,9 @@ public:
 	struct NullObject 
 	{
 
-		static IObject *Create(IObject *pObject)
+		static IObject *Create(IObject *pParent = NULL)
 		{
-			(void)pObject;
+			(void)pParent;
 
 			return NULL;
 		}
@@ -76,6 +76,16 @@ public:
 	{
 		return (const T *)Acquire(T::OBJECT_NAME());
 	}
+	
+	IObject *GetParentObject()
+	{
+		return m_pParent;
+	}
+
+	const IObject *GetParentObject() const
+	{
+		return m_pParent;
+	}
 
 	void Retain() const
 	{
@@ -104,7 +114,7 @@ public:
 #ifdef _WIN32
 			if (0 == InterlockedDecrement(&m_cRefCount))
 #else
-			if (0 == (cRefCount = __sync_fetch_and_sub(&m_cRefCount, 1)))
+			if (0 == __sync_fetch_and_sub(&m_cRefCount, 1))
 #endif
 			{
 				UninitObject();
@@ -144,5 +154,160 @@ private:
 	mutable volatile long m_cRefCount;
 
 };
+
+template <typename OBJECT>
+class ObjectScope
+{
+public:
+
+	ObjectScope(OBJECT *pObject)
+	{
+		m_pObject = pObject;
+		if (NULL != m_pObject)
+		{
+			m_pObject->Retain();
+		}
+	}
+
+	~ObjectScope()
+	{
+		if (NULL != m_pObject)
+		{
+			m_pObject->Release();
+		}
+	}
+
+	bool IsOK()
+	{
+		return (NullPtr != m_pObject);
+	}
+
+	OBJECT *Get()
+	{
+		return m_pObject;
+	}
+
+protected:
+
+	OBJECT *m_pObject;
+
+};
+
+template <typename OBJECT>
+class ConstObjectScope
+{
+public:
+
+	ConstObjectScope(const OBJECT *pObject)
+	{
+		m_pObject = pObject;
+		if (NULL != m_pObject)
+		{
+			m_pObject->Retain();
+		}
+	}
+
+	~ConstObjectScope()
+	{
+		if (NULL != m_pObject)
+		{
+			m_pObject->Release();
+		}
+	}
+
+	bool IsOK()
+	{
+		return (NullPtr != m_pObject);
+	}
+
+	const OBJECT *Get()
+	{
+		return m_pObject;
+	}
+
+protected:
+
+	const OBJECT *m_pObject;
+
+};
+
+template <typename INTERFACE>
+class InterfaceScope
+{
+public:
+
+	InterfaceScope(IObject *pObject, const char *szName)
+	{
+		m_pInterface = (INTERFACE *)pObject->Acquire(szName);
+	}
+
+	InterfaceScope(IObject *pObject)
+	{
+		m_pInterface = pObject->Acquire<INTERFACE>();
+	}
+
+	~InterfaceScope()
+	{
+		if (NullPtr != m_pInterface)
+		{
+			m_pInterface->Release();
+		}
+	}
+
+	bool IsOK()
+	{
+		return (NullPtr != m_pInterface);
+	}
+
+	INTERFACE *Get()
+	{
+		return m_pInterface;
+	}
+
+protected:
+
+	INTERFACE *m_pInterface;
+
+};
+
+template <typename INTERFACE>
+class ConstInterfaceScope
+{
+public:
+
+	ConstInterfaceScope(const IObject *pObject, const char *szName)
+	{
+		m_pInterface = (const INTERFACE *)pObject->Acquire(szName);
+	}
+
+	ConstInterfaceScope(const IObject *pObject)
+	{
+		m_pInterface = pObject->Acquire<INTERFACE>();
+	}
+
+	~ConstInterfaceScope()
+	{
+		if (NullPtr != m_pInterface)
+		{
+			m_pInterface->Release();
+		}
+	}
+
+	bool IsOK()
+	{
+		return (NullPtr != m_pInterface);
+	}
+
+	const INTERFACE *Get()
+	{
+		return m_pInterface;
+	}
+
+protected:
+
+	const INTERFACE *m_pInterface;
+
+};
+
 
 }//namespace CX

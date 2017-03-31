@@ -50,6 +50,10 @@ MultiHash::~MultiHash()
 			iter->second.pData = NULL;
 			iter->second.cbSize = 0;
 		}
+		if (NULL != iter->second.pHash)
+		{
+			delete iter->second.pHash;
+		}
 	}
 	m_mapHashes.clear();
 }

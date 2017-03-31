@@ -1074,10 +1074,10 @@
     <ClInclude Include="..\..\Include\CX\IO\BufferedOutputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\CX\Include\CX\API\IObject.hpp">
+    <ClInclude Include="..\..\Include\CX\API\IObject.hpp">
       <Filter>Header Files\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\CX\Include\CX\API\Object.hpp">
+    <ClInclude Include="..\..\Include\CX\API\Object.hpp">
       <Filter>Header Files\API</Filter>
     </ClInclude>
   </ItemGroup>

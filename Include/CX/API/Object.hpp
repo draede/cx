@@ -197,9 +197,9 @@ class Object : public OBJECT_INTERFACE
 {
 public:
 
-	static OBJECT_INTERFACE *Create(IObject *pParent = NULL)
+	static OBJECT_CLASS *Create(IObject *pParent = NULL)
 	{
-		OBJECT_INTERFACE *pObject;
+		OBJECT_CLASS *pObject;
 
 		if (NULL == (pObject = new (std::nothrow) OBJECT_CLASS()))
 		{
