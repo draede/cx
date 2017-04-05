@@ -1,4 +1,7 @@
-0.2.129
+0.2.130
+  - Refactored IObject & Object
+  - Added support for duplicate interface detection in Object
+0.2.129 - 2017-03-31
   - Fixed memory leak in MultiHash
 0.2.128 - 2017-03-30
   - Added scope classes for API

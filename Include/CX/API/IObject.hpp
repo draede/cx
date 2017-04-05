@@ -41,12 +41,6 @@ public:
 
 	virtual const char *GetObjectName() const = 0;
 
-	virtual size_t GetImplementationsCount() const = 0;
-
-	virtual const char *GetImplementationName(size_t cIndex) const = 0;
-
-	virtual size_t GetImplementationIndex(const char *szName) const = 0;
-
 	virtual bool Implements(const char *szName) const = 0;
 
 	virtual IObject *Acquire(const char *szName) = 0;
@@ -308,6 +302,5 @@ protected:
 	const INTERFACE *m_pInterface;
 
 };
-
 
 }//namespace CX
