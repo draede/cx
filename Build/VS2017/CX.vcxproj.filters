@@ -1080,6 +1080,9 @@
     <ClInclude Include="..\..\Include\CX\IO\BufferedOutputStream.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\LogScope.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -1969,6 +1972,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\BufferedOutputStream.cpp">
       <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\LogScope.cpp">
+      <Filter>Source Files\Log</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

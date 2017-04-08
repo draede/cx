@@ -1,4 +1,6 @@
-0.2.130
+0.2.131
+  - Added LogScope
+0.2.130 - 2017-04-05
   - Refactored IObject & Object
   - Added support for duplicate interface detection in Object
 0.2.129 - 2017-03-31

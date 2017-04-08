@@ -205,6 +205,7 @@
     <ClInclude Include="..\..\Include\CX\Log\IOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Level.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Logger.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\LogScope.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\OptimizedStreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Android\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\SystemOutput.hpp" />
@@ -3031,6 +3032,7 @@
     <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
+    <ClCompile Include="..\..\Src\Log\LogScope.cpp" />
     <ClCompile Include="..\..\Src\Log\OptimizedStreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput_android.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp" />
