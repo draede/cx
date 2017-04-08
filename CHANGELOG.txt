@@ -1,4 +1,7 @@
-0.2.131
+0.2.132
+  - Fixed API
+  - Fixed LogScope
+0.2.131 - 2017-04-08
   - Added LogScope
 0.2.130 - 2017-04-05
   - Refactored IObject & Object

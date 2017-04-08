@@ -173,7 +173,7 @@ public:
 
 	bool IsOK()
 	{
-		return (NullPtr != m_pObject);
+		return (NULL != m_pObject);
 	}
 
 	OBJECT *Get()
@@ -211,7 +211,7 @@ public:
 
 	bool IsOK()
 	{
-		return (NullPtr != m_pObject);
+		return (NULL != m_pObject);
 	}
 
 	const OBJECT *Get()
@@ -242,7 +242,7 @@ public:
 
 	~InterfaceScope()
 	{
-		if (NullPtr != m_pInterface)
+		if (NULL != m_pInterface)
 		{
 			m_pInterface->Release();
 		}
@@ -250,7 +250,7 @@ public:
 
 	bool IsOK()
 	{
-		return (NullPtr != m_pInterface);
+		return (NULL != m_pInterface);
 	}
 
 	INTERFACE *Get()
@@ -281,7 +281,7 @@ public:
 
 	~ConstInterfaceScope()
 	{
-		if (NullPtr != m_pInterface)
+		if (NULL != m_pInterface)
 		{
 			m_pInterface->Release();
 		}
@@ -289,7 +289,7 @@ public:
 
 	bool IsOK()
 	{
-		return (NullPtr != m_pInterface);
+		return (NULL != m_pInterface);
 	}
 
 	const INTERFACE *Get()
