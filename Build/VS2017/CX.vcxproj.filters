@@ -1083,6 +1083,9 @@
     <ClInclude Include="..\..\Include\CX\Log\LogScope.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\XML\SAXParserObserverBase.hpp">
+      <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -1975,6 +1978,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Log\LogScope.cpp">
       <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\XML\SAXParserObserverBase.cpp">
+      <Filter>Source Files\Data\XML</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

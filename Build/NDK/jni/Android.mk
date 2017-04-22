@@ -100,6 +100,7 @@ $(LOCAL_PATH)/../../../../Src/Data/MO/Language.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/MO/MOSAXParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/XML/XMLNode.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/XML/XMLSAXParser.cpp \
+$(LOCAL_PATH)/../../../../Src/Data/XML/SAXParserObserverBase.cpp \
 $(LOCAL_PATH)/../../../../Src/DB/SQLite/Bindings.cpp \
 $(LOCAL_PATH)/../../../../Src/DB/SQLite/Database.cpp \
 $(LOCAL_PATH)/../../../../Src/DB/SQLite/DBHelper.cpp \

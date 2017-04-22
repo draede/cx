@@ -160,6 +160,26 @@ Status SAXParser::RemoveObservers()
 	return Status();
 }
 
+Size SAXParser::GetCurrentLine()
+{
+	if (NULL == m_pParser)
+	{
+		return 0;
+	}
+	
+	return (Size)XML_GetCurrentLineNumber((XML_Parser)m_pParser);
+}
+
+Size SAXParser::GetCurrentColumn()
+{
+	if (NULL == m_pParser)
+	{
+		return 0;
+	}
+
+	return (Size)XML_GetCurrentColumnNumber((XML_Parser)m_pParser);
+}
+
 void SAXParser::StartElementHandler(void *pContext, const void *szName, const void **pszAttrs)
 {
 	SAXParser *pThis = (SAXParser *)pContext;

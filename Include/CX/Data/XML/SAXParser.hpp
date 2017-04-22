@@ -66,6 +66,10 @@ public:
 
 	Status RemoveObservers();
 
+	Size GetCurrentLine();
+
+	Size GetCurrentColumn();
+
 	static Status EscapeString(const Char *szStr, String *psStr);
 
 private:

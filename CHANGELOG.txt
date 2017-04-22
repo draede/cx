@@ -1,4 +1,7 @@
-0.2.132
+0.2.133
+  - Added line & column getters in Data::XML::SAXParser
+  - Added Data::XML::SAXParserObserverBase for easier state parsing
+0.2.132 - 2017-04-08
   - Fixed API
   - Fixed LogScope
 0.2.131 - 2017-04-08
