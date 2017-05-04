@@ -28,23 +28,12 @@
 
 #include "Tester.hpp"
 
-#include "CX/Log/Logger.hpp"
-#include "CX/Log/ConsoleOutput.hpp"
-
 
 using namespace CX;
 
 
 int main(int argc, char *argv[])
 {
-	Log::Logger::GetDefaultLogger().AddOutput(new Log::ConsoleOutput());
-	Log::Logger::GetDefaultLogger().SetLevel(Log::Level_Debug);
-	CXERR("TAG", "{} {2:x}", "error", 255);
-	CXWARN("TAG", "{} {2:x}", "warning", 65536);
-	CXINFO("TAG", "{} {2:x}", "info", 64);
-	CXVERB("TAG", "{} {2:x}", "verbose", 100);
-	CXDBG("TAG", "{} {2:x}", "debug", 300);
-
 	CX_UNUSED(argc);
 	CX_UNUSED(argv);
 

@@ -1,4 +1,6 @@
-0.2.134
+0.2.135
+  - Added support for {} in Print & support for console colors in Console Log Output
+0.2.134 - 2017-05-04
   - Removed API headers
   - Added support for {} in Print
   - Fixed hex Print

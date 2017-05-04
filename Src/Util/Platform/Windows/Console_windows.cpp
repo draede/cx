@@ -63,7 +63,7 @@ void Console::SetColor(Color fgColor, Color bgColor)
 		GetData().m_wAttr  = csbi.wAttributes;
 		GetData().m_bFirst = False;
 	}
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), fgColor | (bgColor << 4));
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(fgColor | (bgColor << 4)));
 }
 
 void Console::Reset()
