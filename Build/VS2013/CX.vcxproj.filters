@@ -349,9 +349,6 @@
     <Filter Include="Contrib\SQLite">
       <UniqueIdentifier>{d09eec0d-f8d1-4402-9a09-440e52131523}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\API">
-      <UniqueIdentifier>{4bba409c-52b0-42bf-ac3e-70afd1d9237d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -541,9 +538,6 @@
       <Filter>Header Files\Log</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp">
-      <Filter>Header Files\Log</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.hpp">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Log\SystemOutput.hpp">
@@ -1089,12 +1083,6 @@
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Atomic.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API\IObject.hpp">
-      <Filter>Header Files\API</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\API\Object.hpp">
-      <Filter>Header Files\API</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Util\CircularBuffer.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -1109,6 +1097,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\XML\SAXParserObserverBase.hpp">
       <Filter>Header Files\Data\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Console.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Console.hpp">
+      <Filter>Header Files\Util\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.hpp">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Android\ConsoleOutput.hpp">
+      <Filter>Header Files\Log\Platform\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\ConsoleOutput.hpp">
+      <Filter>Header Files\Log\Platform\iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\ConsoleOutput.hpp">
+      <Filter>Header Files\Log\Platform\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1162,9 +1168,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp">
       <Filter>Source Files\Log\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp">
-      <Filter>Source Files\Log</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp">
       <Filter>Source Files\Log</Filter>
@@ -2002,6 +2005,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\XML\SAXParserObserverBase.cpp">
       <Filter>Source Files\Data\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Console_windows.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Android\ConsoleOutput_android.cpp">
+      <Filter>Source Files\Log\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\iOS\ConsoleOutput_ios.cpp">
+      <Filter>Source Files\Log\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\ConsoleOutput_windows.cpp">
+      <Filter>Source Files\Log\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

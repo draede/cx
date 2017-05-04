@@ -26,6 +26,12 @@
  * SOFTWARE.
  */ 
 
+#include "CX/Platform.hpp"
+
+
+#if defined(CX_OS_ANDROID)
+
+ 
 #include "CX/Log/ConsoleOutput.hpp"
 #include "CX/C/stdio.h"
 #include "CX/Status.hpp"
@@ -60,3 +66,5 @@ Status ConsoleOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer
 
 }//namespace CX
 
+
+#endif

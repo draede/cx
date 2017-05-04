@@ -66,9 +66,6 @@
     <ClCompile Include="..\..\Src\Util_DynStruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\API.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\IO_Buffered.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

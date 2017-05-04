@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2017 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2017 draede, draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -26,19 +26,45 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Log/Platform/Windows/ConsoleOutput.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Log/Platform/Android/ConsoleOutput.hpp"
-#elif defined(CX_OS_IOS)
-	#include "CX/Log/Platform/iOS/ConsoleOutput.hpp"
-#else
-	#error "ConsoleOutput.hpp not implemented on this platform"
-#endif
+#if defined(CX_OS_IOS)
 
+ 
+#include "CX/Log/ConsoleOutput.hpp"
+#include "CX/C/stdio.h"
+#include "CX/Status.hpp"
+
+
+namespace CX
+{
+
+namespace Log
+{
+
+ConsoleOutput::ConsoleOutput()
+{
+}
+
+ConsoleOutput::~ConsoleOutput()
+{
+}
+
+Status ConsoleOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen)
+{
+	CX_UNUSED(nLevel);
+	CX_UNUSED(szTag);
+	CX_UNUSED(cLen);
+
+	cx_printf("%s", pBuffer);
+
+	return Status();
+}
+
+}//namespace Log
+
+}//namespace CX
+
+
+#endif

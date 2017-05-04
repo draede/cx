@@ -1,4 +1,9 @@
-0.2.133
+0.2.134
+  - Removed API headers
+  - Added support for {} in Print
+  - Fixed hex Print
+  - Added support for console colors in Console Log Output
+0.2.133 - 2017-04-22
   - Added line & column getters in Data::XML::SAXParser
   - Added Data::XML::SAXParserObserverBase for easier state parsing
 0.2.132 - 2017-04-08

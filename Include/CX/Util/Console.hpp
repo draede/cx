@@ -33,12 +33,8 @@
 
 
 #if defined(CX_OS_WINDOWS)
-	#include "CX/Log/Platform/Windows/ConsoleOutput.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Log/Platform/Android/ConsoleOutput.hpp"
-#elif defined(CX_OS_IOS)
-	#include "CX/Log/Platform/iOS/ConsoleOutput.hpp"
+	#include "CX/Util/Platform/Windows/Console.hpp"
 #else
-	#error "ConsoleOutput.hpp not implemented on this platform"
+	#error "Console.hpp not implemented on this platform"
 #endif
 

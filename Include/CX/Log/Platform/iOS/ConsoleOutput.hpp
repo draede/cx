@@ -32,13 +32,36 @@
 #include "CX/Platform.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/Log/Platform/Windows/ConsoleOutput.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Log/Platform/Android/ConsoleOutput.hpp"
-#elif defined(CX_OS_IOS)
-	#include "CX/Log/Platform/iOS/ConsoleOutput.hpp"
-#else
-	#error "ConsoleOutput.hpp not implemented on this platform"
-#endif
+#if defined(CX_OS_IOS)
 
+
+#include "CX/Log/IOutput.hpp"
+#include "CX/APIDefs.hpp"
+
+
+namespace CX
+{
+
+namespace Log
+{
+
+class CX_API ConsoleOutput : public IOutput
+{
+public:
+
+	ConsoleOutput();
+
+	~ConsoleOutput();
+
+	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
+
+private:
+
+};
+
+}//namespace Log
+
+}//namespace CX
+
+
+#endif

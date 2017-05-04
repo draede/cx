@@ -88,8 +88,6 @@
     <ClInclude Include="..\..\Contrib\SQLite\Include\sqlite3.h" />
     <ClInclude Include="..\..\Contrib\Z85\Include\z85.h" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
-    <ClInclude Include="..\..\Include\CX\API\IObject.hpp" />
-    <ClInclude Include="..\..\Include\CX\API\Object.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZ4InputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZ4OutputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZHAMInputFilter.hpp" />
@@ -208,8 +206,11 @@
     <ClInclude Include="..\..\Include\CX\Log\Logger.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\LogScope.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\OptimizedStreamOutput.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Android\ConsoleOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Android\SystemOutput.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\ConsoleOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\iOS\SystemOutput.hpp" />
+    <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\ConsoleOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\OptimizedStreamOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\SystemOutput.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\StreamOutput.hpp" />
@@ -301,6 +302,7 @@
     <ClInclude Include="..\..\Include\CX\UOMultiSet.hpp" />
     <ClInclude Include="..\..\Include\CX\UOSet.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\CircularBuffer.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Console.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\DynMember.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\DynStruct.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\MemPool.hpp" />
@@ -308,6 +310,7 @@
     <ClInclude Include="..\..\Include\CX\Util\Platform\Android\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\iOS\Timer.hpp" />
+    <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Console.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Time.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\Platform\Windows\Timer.hpp" />
     <ClInclude Include="..\..\Include\CX\Util\RCMemBuffer.hpp" />
@@ -3031,13 +3034,15 @@
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysEnumerator.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp" />
-    <ClCompile Include="..\..\Src\Log\ConsoleOutput.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
     <ClCompile Include="..\..\Src\Log\LogScope.cpp" />
     <ClCompile Include="..\..\Src\Log\OptimizedStreamOutput.cpp" />
+    <ClCompile Include="..\..\Src\Log\Platform\Android\ConsoleOutput_android.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput_android.cpp" />
+    <ClCompile Include="..\..\Src\Log\Platform\iOS\ConsoleOutput_ios.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp" />
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\ConsoleOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Mem.cpp" />
@@ -3090,6 +3095,7 @@
     <ClCompile Include="..\..\Src\Util\Platform\Android\Time_android.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\iOS\Timer_ios.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\iOS\Time_ios.cpp" />
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Console_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp" />
     <ClCompile Include="..\..\Src\Util\RCMemBuffer.cpp" />

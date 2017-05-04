@@ -129,12 +129,12 @@ $(LOCAL_PATH)/../../../../Src/IO/MemOutputStream.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/Platform/Android/LocalFileSysHelper_android.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/Platform/Android/FileInputStream_android.cpp \
 $(LOCAL_PATH)/../../../../Src/IO/Platform/Android/FileOutputStream_android.cpp \
-$(LOCAL_PATH)/../../../../Src/Log/ConsoleOutput.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/DefaultFormatter.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/Logger.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/LogScope.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/StreamOutput.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/OptimizedStreamOutput.cpp \
+$(LOCAL_PATH)/../../../../Src/Log/Platform/Android/ConsoleOutput_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Log/Platform/Android/SystemOutput_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Network/URLParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Network/HTTP/Client.cpp \

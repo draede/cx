@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2017 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2017 draede, draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -26,19 +26,56 @@
  * SOFTWARE.
  */ 
 
-#pragma once
-
-
 #include "CX/Platform.hpp"
 
 
 #if defined(CX_OS_WINDOWS)
-	#include "CX/Log/Platform/Windows/ConsoleOutput.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Log/Platform/Android/ConsoleOutput.hpp"
-#elif defined(CX_OS_IOS)
-	#include "CX/Log/Platform/iOS/ConsoleOutput.hpp"
-#else
-	#error "ConsoleOutput.hpp not implemented on this platform"
-#endif
 
+
+#include "CX/Util/Console.hpp"
+
+
+namespace CX
+{
+
+Console::Console()
+{
+}
+
+Console::~Console()
+{
+}
+
+Console::Data &Console::GetData()
+{
+	static Data data = { True, 0 };
+
+	return data;
+}
+
+void Console::SetColor(Color fgColor, Color bgColor)
+{
+	if (GetData().m_bFirst)
+	{
+		CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+		GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+		GetData().m_wAttr  = csbi.wAttributes;
+		GetData().m_bFirst = False;
+	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), fgColor | (bgColor << 4));
+}
+
+void Console::Reset()
+{
+	if (GetData().m_bFirst)
+	{
+		return;
+	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GetData().m_wAttr);
+}
+
+}//namespace CX
+
+
+#endif

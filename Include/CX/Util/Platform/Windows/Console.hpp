@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2017 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2017 draede, draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -24,7 +24,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */ 
+ */
 
 #pragma once
 
@@ -33,12 +33,59 @@
 
 
 #if defined(CX_OS_WINDOWS)
-	#include "CX/Log/Platform/Windows/ConsoleOutput.hpp"
-#elif defined(CX_OS_ANDROID)
-	#include "CX/Log/Platform/Android/ConsoleOutput.hpp"
-#elif defined(CX_OS_IOS)
-	#include "CX/Log/Platform/iOS/ConsoleOutput.hpp"
-#else
-	#error "ConsoleOutput.hpp not implemented on this platform"
-#endif
 
+
+#include "CX/Types.hpp"
+#include "CX/C/Platform/Windows/windows.h"
+
+
+namespace CX
+{
+
+class Console
+{
+public:
+
+	enum Color
+	{
+		BLACK          = 0x00,
+		BLUE           = 0x01,
+		GREN           = 0x02,
+		CYAN           = 0x03,
+		RED            = 0x04,
+		MAGENTA        = 0x05,
+		YELLOW         = 0x06,
+		WHITE          = 0x07,
+		GRAY           = 0x08,
+		BRIGHT_BLUE    = 0x09,
+		BRIGHT_GREN    = 0x0A,
+		BRIGHT_CYAN    = 0x0B,
+		BRIGHT_RED     = 0x0C,
+		BRIGHT_MAGENTA = 0x0D,
+		BRIGHT_YELLOW  = 0x0E,
+		BRIGHT_WHITE   = 0x0F,
+	};
+
+	static void SetColor(Color fgColor, Color bgColor);
+
+	static void Reset();
+
+private:
+
+	struct Data
+	{
+		Bool  m_bFirst;
+		WORD  m_wAttr;
+	};
+
+	Console();
+
+	~Console();
+
+	static Data &GetData();
+
+};
+
+}//namespace CX
+
+#endif
