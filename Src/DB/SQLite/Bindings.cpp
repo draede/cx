@@ -329,6 +329,7 @@ Status Bindings::AddBLOB(const void *pData, Size cbSize)
 		return Status_MemAllocFailed;
 	}
 	memcpy(arg.pBLOB->pData, pData, cbSize);
+	arg.pBLOB->cbSize = cbSize;
 
 	m_vectorArgs.push_back(arg);
 
