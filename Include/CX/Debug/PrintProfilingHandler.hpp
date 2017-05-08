@@ -46,39 +46,16 @@ class PrintProfilingHandler : public IProfilingHandler
 {
 public:
 
-	PrintProfilingHandler(OUTPUT output, Resolution nResolution = Resolution_NanoSeconds)
+	PrintProfilingHandler(OUTPUT output)
 	{
 		m_output      = output;
-		m_nResolution = nResolution;
 		m_cDepth      = 0;
-	}
-
-	virtual Resolution GetResolution()
-	{
-		return m_nResolution;
 	}
 
 	virtual bool OnBeginProfiling()
 	{
-		if (IProfilingHandler::Resolution_Seconds == m_nResolution)
-		{
-			Print(m_output, "\nBEGIN PROFILING (seconds)\n\n");
-			Print(m_output, "\nBEGIN SCOPE (seconds)\n\n");
-		}
-		else
-		if (IProfilingHandler::Resolution_MilliSeconds == m_nResolution)
-		{
-			Print(m_output, "\nBEGIN PROFILING (milliseconds)\n\n");
-		}
-		else
-		if (IProfilingHandler::Resolution_MicroSeconds == m_nResolution)
-		{
-			Print(m_output, "\nBEGIN PROFILING (microseconds)\n\n");
-		}
-		else
-		{
-			Print(m_output, "\nBEGIN PROFILING (nanoseconds)\n\n");
-		}
+		Print(m_output, "\nBEGIN PROFILING\n\n");
+		Print(m_output, "\nBEGIN SCOPE\n\n");
 
 		return true;
 	}
@@ -172,7 +149,6 @@ public:
 private:
 
 	OUTPUT     m_output;
-	Resolution m_nResolution;
 	Size       m_cDepth;
 
 };
