@@ -1,6 +1,8 @@
-0.2.137
+0.2.138
+  - Added support for batch async operations in DB::SQLite::DBHelper
+0.2.137 - 2017-05-08
   - Fixed IProfilingHandler
-0.2.136
+0.2.136 - 2017-05-05
   - Fixed DB::SQLite::Bindings::BindBLOB (size was not saved)
 0.2.135 - 2017-05-04
   - Added support for {} in Print & support for console colors in Console Log Output

@@ -84,7 +84,8 @@ DBHelper::DBHelper(const Char *szPath,
                    UInt32 cMaxAsyncFlushTimeout/* = MAX_ASYNC_FLUSH_TIMEOUT*/, 
                    unsigned int nFlags/* = DB::SQLite::Database::OPEN_DEFAULT*/)
 {
-	m_initStatus = Open(szPath, cMaxAsyncOperations, cMaxAsyncFlushTimeout, nFlags);
+	m_initStatus            = Open(szPath, cMaxAsyncOperations, cMaxAsyncFlushTimeout, nFlags);
+	m_cAsyncOperationsCount = 0;
 }
 
 DBHelper::~DBHelper()
@@ -102,6 +103,8 @@ Status DBHelper::Open(const Char *szPath,
 	Status status;
 
 	Close();
+
+	m_cAsyncOperationsCount = 0;
 	if ((status = OnPreOpen()).IsNOK())
 	{
 		return status;
@@ -190,6 +193,7 @@ Status DBHelper::Close()
 	}
 	m_db.Close();
 	OnPostClose();
+	m_cAsyncOperationsCount = 0;
 
 	return Status();
 }
@@ -244,18 +248,35 @@ void DBHelper::DestroyBindings(Bindings *pBindings)
 Status DBHelper::AddAsyncOperation(Size cStatementIndex, Bindings *pBindings,
                                    IAsyncOperationHandler *pAsyncOperationHandler/* = NULL*/)
 {
-	Sys::Locker locker(&m_lockOperations);
-	Operation   oper;
+	Operation        oper;
+	OperationsVector vectorOperations;
+
+	oper.cStatementIndex = cStatementIndex;
+	oper.pBindings       = pBindings;
+	vectorOperations.push_back(oper);
+
+	return AddAsyncOperations(vectorOperations, pAsyncOperationHandler);
+}
+
+Status DBHelper::AddAsyncOperations(const OperationsVector &vectorOperations,
+                                    IAsyncOperationHandler *pAsyncOperationHandler/* = NULL*/)
+{
+	Sys::Locker      locker(&m_lockOperationBatches);
+	OperationBatch   batch;
 
 	if (!m_db.IsOK())
 	{
 		return Status_NotInitialized;
 	}
-	oper.cStatementIndex        = cStatementIndex;
-	oper.pBindings              = pBindings;
-	oper.pAsyncOperationHandler = pAsyncOperationHandler;
-	m_queueOperations.push(oper);
-	if (m_queueOperations.size() >= m_cMaxAsyncOperations)
+	if (vectorOperations.empty())
+	{
+		return Status_InvalidArg;
+	}
+	batch.vectorOperations       = vectorOperations;
+	batch.pAsyncOperationHandler = pAsyncOperationHandler;
+	m_queueOperationBatches.push(batch);
+	m_cAsyncOperationsCount += vectorOperations.size();
+	if (m_cAsyncOperationsCount >= m_cMaxAsyncOperations)
 	{
 		m_eventFlush.Set();
 	}
@@ -354,19 +375,21 @@ void DBHelper::AsyncOperationsThread()
 		{
 			Transaction tr(&m_db);
 
-			Sys::Locker locker(&m_lockOperations);
+			Sys::Locker locker(&m_lockOperationBatches);
 
-			while (!m_queueOperations.empty())
+			while (!m_queueOperationBatches.empty())
 			{
-				Operation oper = m_queueOperations.front();
-				m_queueOperations.pop();
+				OperationBatch batch = m_queueOperationBatches.front();
+				m_queueOperationBatches.pop();
 				
+				for (OperationsVector::iterator iter = batch.vectorOperations.begin(); 
+				     iter != batch.vectorOperations.end(); ++iter)
 				{
-					StatementScope scope(this, oper.cStatementIndex);
+					StatementScope scope(this, iter->cStatementIndex);
 
 					if (NULL != scope.GetStatement())
 					{
-						if ((status = scope.GetStatement()->Bind(*oper.pBindings)).IsOK())
+						if ((status = scope.GetStatement()->Bind(*iter->pBindings)).IsOK())
 						{
 							if (Statement::Result_Done == scope.GetStatement()->Step())
 							{
@@ -378,17 +401,25 @@ void DBHelper::AsyncOperationsThread()
 					{
 						status = Status(Status_OperationFailed, "Failed to get statement");
 					}
-					if (NULL != oper.pAsyncOperationHandler)
+
+					delete iter->pBindings;
+					
+					if (!status)
 					{
-						oper.pAsyncOperationHandler->OnCompletion(scope.GetStatement(), status);
+						break;
+					}
+
+					if (0 < m_cAsyncOperationsCount)
+					{
+						m_cAsyncOperationsCount--;
 					}
 				}
 
-				if (NULL != oper.pAsyncOperationHandler)
+				if (NULL != batch.pAsyncOperationHandler)
 				{
-					oper.pAsyncOperationHandler->Release();
+					batch.pAsyncOperationHandler->OnCompletion(status);
+					batch.pAsyncOperationHandler->Release();
 				}
-				delete oper.pBindings;
 			}
 		}
 		if (Sys::Event::Wait_OK == nWaitRes && 0 == cEventIndex)

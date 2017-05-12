@@ -80,13 +80,31 @@ public:
 
 	};
 
+	struct Operation
+	{
+		Operation()
+		{
+		}
+
+		Operation(Size cStatementIndex, Bindings *pBindings)
+		{
+			this->cStatementIndex = cStatementIndex;
+			this->pBindings = pBindings;
+		}
+
+		Size       cStatementIndex;
+		Bindings   *pBindings;
+	};
+
+	typedef Vector<Operation>::Type   OperationsVector;
+
 	class IAsyncOperationHandler
 	{
 	public:
 
 		virtual ~IAsyncOperationHandler() { }
 
-		virtual void OnCompletion(Statement *pStatement, const Status &status) = 0;
+		virtual void OnCompletion(const Status &status) = 0;
 
 		virtual void Release() = 0;
 
@@ -130,6 +148,9 @@ public:
 	Status AddAsyncOperation(Size cStatementIndex, Bindings *pBindings,
 	                         IAsyncOperationHandler *pAsyncOperationHandler = NULL);
 
+	Status AddAsyncOperations(const OperationsVector &vectorOperations,
+	                          IAsyncOperationHandler *pAsyncOperationHandler = NULL);
+
 	Status FlushAsyncOperations();
 	
 	//do not use this statement from multiple threads!!!
@@ -153,36 +174,36 @@ public:
 
 private:
 
-	typedef CX::Queue<Statement *>::Type            StatementsQueue;
+	typedef Queue<Statement *>::Type            StatementsQueue;
 
-	typedef CX::Map<Size, StatementsQueue>::Type    AvailStatementsMap;
+	typedef Map<Size, StatementsQueue>::Type    AvailStatementsMap;
 
-	typedef CX::Map<Statement *, Size>::Type        UsedStatementsMap;
+	typedef Map<Statement *, Size>::Type        UsedStatementsMap;
 
-	struct Operation
+	struct OperationBatch
 	{
-		Size                   cStatementIndex;
-		Bindings               *pBindings;
+		OperationsVector       vectorOperations;
 		IAsyncOperationHandler *pAsyncOperationHandler;
 	};
 
-	typedef CX::Queue<Operation>::Type              OperationsQueue;
+	typedef Queue<OperationBatch>::Type              OperationBatchesQueue;
 
-	Database             m_db;
-	Status               m_initStatus;
+	Database                m_db;
+	Status                  m_initStatus;
 
-	Size                 m_cMaxAsyncOperations;
-	UInt32               m_cMaxAsyncFlushTimeout;
-	Sys::Thread          m_asyncThread;
-	Sys::Event           m_eventStop;
-	Sys::Event           m_eventFlush;
+	Size                    m_cMaxAsyncOperations;
+	UInt32                  m_cMaxAsyncFlushTimeout;
+	Sys::Thread             m_asyncThread;
+	Sys::Event              m_eventStop;
+	Sys::Event              m_eventFlush;
 
-	AvailStatementsMap   m_mapAvailStatements;
-	UsedStatementsMap    m_mapUsedStatements;
-	Sys::Lock            m_lockStatements;
+	AvailStatementsMap      m_mapAvailStatements;
+	UsedStatementsMap       m_mapUsedStatements;
+	Sys::Lock               m_lockStatements;
 
-	OperationsQueue      m_queueOperations;
-	Sys::Lock            m_lockOperations;
+	OperationBatchesQueue   m_queueOperationBatches;
+	Size                    m_cAsyncOperationsCount;
+	Sys::Lock               m_lockOperationBatches;
 
 	void AsyncOperationsThread();
 
