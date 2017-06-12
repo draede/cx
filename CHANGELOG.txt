@@ -1,4 +1,7 @@
-0.2.138
+0.2.139 - 2017-06-11
+  - Moved to a single solution for Visual Studio builds (2013, 2015 & 2017)
+  - Fixed Platform.h #elif used insteaf of #else
+0.2.138 - 2017-05-12
   - Added support for batch async operations in DB::SQLite::DBHelper
 0.2.137 - 2017-05-08
   - Fixed IProfilingHandler

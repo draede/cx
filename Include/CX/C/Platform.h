@@ -150,7 +150,7 @@
 #elif defined(__clang__)
 	#define CX_BUILDSYS_CLANG
 	#define CX_BUILDSYS        "CLANG"
-#elif
+#else
 	#error "Unknown compiler" 
 #endif
 

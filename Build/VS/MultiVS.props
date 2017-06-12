@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v90'">VS2008</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v90_xp'">VS2008XP</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v100'">VS2010</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v100_xp'">VS2010XP</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v110'">VS2012</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v110_xp'">VS2012XP</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v120'">VS2013</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v120_xp'">VS2013XP</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v140'">VS2015</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v140_xp'">VS2015XP</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v141'">VS2017</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v141_xp'">VS2017XP</MVS_Version>
+
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2008_(.*)'))">$(Configuration.Replace('VS2008_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2008XP_(.*)'))">$(Configuration.Replace('VS2008XP_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2010_(.*)'))">$(Configuration.Replace('VS2010_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2010XP_(.*)'))">$(Configuration.Replace('VS2010XP_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2012_(.*)'))">$(Configuration.Replace('VS2012_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2012XP_(.*)'))">$(Configuration.Replace('VS2012XP_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2013_(.*)'))">$(Configuration.Replace('VS2013_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2013XP_(.*)'))">$(Configuration.Replace('VS2013XP_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2015_(.*)'))">$(Configuration.Replace('VS2015_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2015XP_(.*)'))">$(Configuration.Replace('VS2015XP_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2017_(.*)'))">$(Configuration.Replace('VS2017_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2017XP_(.*)'))">$(Configuration.Replace('VS2017XP_', ''))</MVS_Configuration>
+  
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="MVS_Version">
+      <Value>$(MVS_Version)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="MVS_Configuration">
+      <Value>$(MVS_Configuration)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
