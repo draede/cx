@@ -66,19 +66,21 @@ Status OptimizedStreamOutput::Init(UInt64 cbMaxFileSize, UInt32 cFlushDelay, Siz
 	m_cbMaxFileSize  = cbMaxFileSize / 2;
 	m_cbCrFileSize   = 0;
 
-	m_pFOS->GetSize(&m_cbCrFileSize);
 
 	for (;;)
 	{
 		if (NULL == m_pFOS)
 		{
 			status  = Status(Status_CreateFailed, "Failed to create log file");
-
 			break;
 		}
+
+		m_pFOS->GetSize(&m_cbCrFileSize);
+
 		if (!m_pFOS->IsOK())
 		{
 			delete m_pFOS;
+			m_pFOS = 0;
 			status = Status(Status_CreateFailed, "Failed to create log file");
 
 			break;
