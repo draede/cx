@@ -1,3 +1,5 @@
+0.2.141 - 2017-06-30 
+  - Fixed HTTP client flags
 0.2.140 - 2017-06-13
   - Fixed crash in OptimizedStreamOutput
 0.2.139 - 2017-06-11

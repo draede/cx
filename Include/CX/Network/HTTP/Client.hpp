@@ -56,9 +56,9 @@ public:
 
 	enum Flags
 	{
-		Flag_SSL,
-		Flag_PersistentCookies,
-		Flag_Debug,
+		Flag_SSL               = 1,
+		Flag_PersistentCookies = 2,
+		Flag_Debug             = 4,
 	};
 
 	Client();
