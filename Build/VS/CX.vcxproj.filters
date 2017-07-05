@@ -346,6 +346,12 @@
     <Filter Include="Source Files\DB\SQLite">
       <UniqueIdentifier>{73e930a3-c2ea-4451-b402-06a89773849a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contrib\JSONSL">
+      <UniqueIdentifier>{a0fca49f-8a8a-40e2-97e1-30d1a88798ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\BSON">
+      <UniqueIdentifier>{cd555cee-d76c-4082-963b-a87d040de3fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -897,15 +903,6 @@
     <ClInclude Include="..\..\Include\CX\C\Mem.h">
       <Filter>Header Files\C</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINReader.hpp">
-      <Filter>Header Files\SimpleBuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINRW.hpp">
-      <Filter>Header Files\SimpleBuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BINWriter.hpp">
-      <Filter>Header Files\SimpleBuffers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Archive\LZ4InputFilter.hpp">
       <Filter>Header Files\Archive</Filter>
     </ClInclude>
@@ -1091,6 +1088,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Log\Platform\Windows\ConsoleOutput.hpp">
       <Filter>Header Files\Log\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BSONReader.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BSONWriter.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Generic.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1438,12 +1444,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\StringHelper.cpp">
       <Filter>Source Files\Str</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SimpleBuffers\BINReader.cpp">
-      <Filter>Source Files\SimpleBuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\SimpleBuffers\BINWriter.cpp">
-      <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Status.cpp">
       <Filter>Source Files</Filter>
@@ -1996,6 +1996,78 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Log\Platform\Windows\ConsoleOutput_windows.cpp">
       <Filter>Source Files\Log\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\JSONSL\Src\jsonsl.c">
+      <Filter>Contrib\JSONSL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bcon.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-atomic.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-clock.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-context.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-decimal128.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-error.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-iso8601.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-iter.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-json.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-keys.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-md5.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-memory.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-oid.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-reader.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-string.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-timegm.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-utf8.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-value.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-version-functions.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\BSON\Src\bson-writer.c">
+      <Filter>Contrib\BSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\BSONReader.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\BSONWriter.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

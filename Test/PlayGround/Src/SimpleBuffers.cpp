@@ -27,8 +27,8 @@
  */ 
 
 #include "CX/Str/StringHelper.hpp"
-#include "CX/SimpleBuffers/BINReader.hpp"
-#include "CX/SimpleBuffers/BINWriter.hpp"
+#include "CX/SimpleBuffers/BSONReader.hpp"
+#include "CX/SimpleBuffers/BSONWriter.hpp"
 #include "CX/SimpleBuffers/JSONReader.hpp"
 #include "CX/SimpleBuffers/JSONWriter.hpp"
 #include "CX/IO/MemOutputStream.hpp"
@@ -39,9 +39,9 @@
 
 using namespace CX;
 
-struct BINSBNAME
+struct BSONSBNAME
 {
-	static const Char *NAME() { return "BIN"; }
+	static const Char *NAME() { return "BSON"; }
 };
 
 struct JSONSBNAME
@@ -74,7 +74,7 @@ void SimpleBuffers_TestReaderWriter()
 		t2.Setvalue_float(9.0f);
 		t2.Setvalue_double(10.0);
 		t2.Setvalue_string("test string");
-		t2.Setvalue_blob(BLOB(blob, blob + sizeof(blob) - 1));
+		t2.Setvalue_blob(CX::BLOB(blob, blob + sizeof(blob) - 1));
 		t2.GettestSimpleBuffers1().Setvalue_bool(false);
 		t2.GettestSimpleBuffers1().Setvalue_int8(1);
 		t2.GettestSimpleBuffers1().Setvalue_uint8(2);
@@ -87,7 +87,7 @@ void SimpleBuffers_TestReaderWriter()
 		t2.GettestSimpleBuffers1().Setvalue_float(9.0f);
 		t2.GettestSimpleBuffers1().Setvalue_double(10.0);
 		t2.GettestSimpleBuffers1().Setvalue_string("test string");
-		t2.GettestSimpleBuffers1().Setvalue_blob(BLOB(blob, blob + sizeof(blob) - 1));
+		t2.GettestSimpleBuffers1().Setvalue_blob(CX::BLOB(blob, blob + sizeof(blob) - 1));
 
 		status = writer.Begin(&mos);
 		status = t2.Write(&writer);
@@ -131,7 +131,7 @@ void SimpleBuffers_TestReaderWriter()
 
 void SimpleBuffers_TestBinReaderWriter()
 {
-	SimpleBuffers_TestReaderWriter<SimpleBuffers::BINReader, SimpleBuffers::BINWriter, BINSBNAME>();
+	SimpleBuffers_TestReaderWriter<SimpleBuffers::BSONReader, SimpleBuffers::BSONWriter, BSONSBNAME>();
 }
 
 void SimpleBuffers_TestJSONReaderWriter()

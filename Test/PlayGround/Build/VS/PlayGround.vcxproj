@@ -1,0 +1,519 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="VS2013_Debug|Win32">
+      <Configuration>VS2013_Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2013_Debug|x64">
+      <Configuration>VS2013_Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2013_Release|Win32">
+      <Configuration>VS2013_Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2013_Release|x64">
+      <Configuration>VS2013_Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2015_Debug|Win32">
+      <Configuration>VS2015_Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2015_Debug|x64">
+      <Configuration>VS2015_Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2015_Release|Win32">
+      <Configuration>VS2015_Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2015_Release|x64">
+      <Configuration>VS2015_Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2017_Debug|Win32">
+      <Configuration>VS2017_Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2017_Debug|x64">
+      <Configuration>VS2017_Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2017_Release|Win32">
+      <Configuration>VS2017_Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VS2017_Release|x64">
+      <Configuration>VS2017_Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Src\Data_JSON_Node.cpp" />
+    <ClCompile Include="..\..\Src\Data_JSON_SAX.cpp" />
+    <ClCompile Include="..\..\Src\Data_MO_SAX.cpp" />
+    <ClCompile Include="..\..\Src\Data_XML_Node.cpp" />
+    <ClCompile Include="..\..\Src\Data_XML_SAX.cpp" />
+    <ClCompile Include="..\..\Src\DB_SQLite.cpp" />
+    <ClCompile Include="..\..\Src\IO_Buffered.cpp" />
+    <ClCompile Include="..\..\Src\IO_Filters.cpp" />
+    <ClCompile Include="..\..\Src\Log_OptimizedStreamOutput.cpp" />
+    <ClCompile Include="..\..\Src\Main.cpp" />
+    <ClCompile Include="..\..\Src\Mem.cpp" />
+    <ClCompile Include="..\..\Src\Network_HTTP_Client.cpp" />
+    <ClCompile Include="..\..\Src\Networl_URLParser.cpp" />
+    <ClCompile Include="..\..\Src\SimpleBuffers.cpp" />
+    <ClCompile Include="..\..\Src\Str_StringHelper.cpp" />
+    <ClCompile Include="..\..\Src\Str_UTF8.cpp" />
+    <ClCompile Include="..\..\Src\Tester.cpp" />
+    <ClCompile Include="..\..\Src\Util_DynStruct.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Src\Tester.hpp" />
+    <ClInclude Include="..\..\Src\TestSimpleBuffers1.hpp" />
+    <ClInclude Include="..\..\Src\TestSimpleBuffers2.hpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>PlayGround</RootNamespace>
+    <ProjectName>PlayGround</ProjectName>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\Build\VS\MultiVS.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../../../Bin/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/</OutDir>
+    <IntDir>../../../../Temp/$(MVS_Version)/$(Platform)/$(MVS_Configuration)/Test/PlayGround/</IntDir>
+    <TargetName>playground</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;_DEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;CX_API_STATIC;NDEBUG;_CONSOLE;_LIB;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../../../Include;../../../../Contrib/SparseHash/Include;../../../../Contrib/RapidJSON/Include;../../../../Contrib/TinyAES128/Include;../../../../Contrib/Snappy/Include;../../../../Contrib/LZ4/Include;../../../../Contrib/LZHAM/Include;../../../../Contrib/BSON/Include;../../../../Contrib/JSONSL/Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

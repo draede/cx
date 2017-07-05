@@ -1587,4 +1587,327 @@ Status Value::Read(const Char *szData)
 	return Read(String(szData));
 }
 
+int Value::Compare(const Value &v) const
+{
+	struct Node
+	{
+		const Value *pV1;
+		const Value *pV2;
+		int         cIndex;
+	};
+
+	typedef Stack<Node>::Type   NodesStack;
+
+	NodesStack  stackNodes;
+	const Value *pV1 = this;
+	const Value *pV2 = &v;
+	bool         bReady;
+	Status       status;
+
+	for (;;)
+	{
+		if (!stackNodes.empty())
+		{
+			stackNodes.top().cIndex++;
+			if (stackNodes.top().pV1->IsObject())
+			{
+				String sName;
+
+				if ((Size)stackNodes.top().cIndex < stackNodes.top().pV1->GetMembersCount())
+				{
+					pV1 = &stackNodes.top().pV1->GetMemberByIndex((Size)stackNodes.top().cIndex, &sName, &status);
+					if (!status)
+					{
+						return status;
+					}
+					pV2 = &stackNodes.top().pV2->GetMember(sName, &status);
+					if (!status)
+					{
+						return status;
+					}
+				}
+				else
+				{
+					stackNodes.pop();
+					if (stackNodes.empty())
+					{
+						break;
+					}
+					else
+					{
+						continue;
+					}
+				}
+			}
+			else
+			{
+				if ((Size)stackNodes.top().cIndex < stackNodes.top().pV1->GetItemsCount())
+				{
+					pV1 = &stackNodes.top().pV1->GetItem((Size)stackNodes.top().cIndex, &status);
+					if (!status)
+					{
+						return status;
+					}
+					pV2 = &stackNodes.top().pV2->GetItem((Size)stackNodes.top().cIndex, &status);
+					if (!status)
+					{
+						return status;
+					}
+				}
+				else
+				{
+					stackNodes.pop();
+					if (stackNodes.empty())
+					{
+						break;
+					}
+					else
+					{
+						continue;
+					}
+				}
+			}
+		}
+
+		bReady = false;
+		if (pV1->IsInt())
+		{
+			if (pV2->IsUInt())
+			{
+				if (0 > pV1->GetInt())
+				{
+					return -1;
+				}
+				else
+				{
+					if ((UInt64)pV1->GetInt() < pV2->GetUInt())
+					{
+						return -1;
+					}
+					else
+					if ((UInt64)pV1->GetInt() > pV2->GetUInt())
+					{
+						return 1;
+					}
+				}
+				bReady = true;
+			}
+			else
+			if (pV2->IsReal())
+			{
+				if ((double)pV1->GetInt() < pV2->GetReal())
+				{
+					return -1;
+				}
+				else
+				if ((double)pV1->GetInt() > pV2->GetReal())
+				{
+					return 1;
+				}
+				bReady = true;
+			}
+		}
+		else
+		if (pV1->IsUInt())
+		{
+			if (pV2->IsInt())
+			{
+				if (0 > pV2->GetInt())
+				{
+					return 1;
+				}
+				else
+				{
+					if (pV1->GetUInt() < (UInt64)pV2->GetInt())
+					{
+						return -1;
+					}
+					else
+					if (pV1->GetUInt() > (UInt64)pV2->GetInt())
+					{
+						return 1;
+					}
+				}
+				bReady = true;
+			}
+			else
+			if (pV2->IsReal())
+			{
+				if ((double)pV1->GetUInt() < pV2->GetReal())
+				{
+					return -1;
+				}
+				else
+				if ((double)pV1->GetUInt() > pV2->GetReal())
+				{
+					return 1;
+				}
+				bReady = true;
+			}
+		}
+		else
+		if (pV1->IsReal())
+		{
+			if (pV2->IsInt())
+			{
+				if (pV1->GetReal() < (double)pV2->GetInt())
+				{
+					return -1;
+				}
+				else
+				if (pV1->GetReal() > (double)pV2->GetInt())
+				{
+					return 1;
+				}
+				bReady = true;
+			}
+			else
+			if (pV2->IsUInt())
+			{
+				if (pV1->GetReal() < (double)pV2->GetUInt())
+				{
+					return -1;
+				}
+				else
+				if (pV1->GetReal() > (double)pV2->GetUInt())
+				{
+					return 1;
+				}
+				bReady = true;
+			}
+		}
+		if (!bReady)
+		{
+			if (pV1->GetType() < pV2->GetType())
+			{
+				return -1;
+			}
+			else
+			if (pV1->GetType() > pV2->GetType())
+			{
+				return 1;
+			}
+			else
+			{
+				if (pV1->IsNull())
+				{
+					//nothing to do
+				}
+				else
+				if (pV1->IsBool())
+				{
+					if (pV1->GetBool() < pV2->GetBool())
+					{
+						return -1;
+					}
+					else
+					if (pV1->GetBool() > pV2->GetBool())
+					{
+						return 1;
+					}
+				}
+				else
+				if (pV1->IsInt())
+				{
+					if (pV1->GetInt() < pV2->GetInt())
+					{
+						return -1;
+					}
+					if (pV1->GetInt() > pV2->GetInt())
+					{
+						return 1;
+					}
+				}
+				else
+				if (pV1->IsUInt())
+				{
+					if (pV1->GetUInt() < pV2->GetUInt())
+					{
+						return -1;
+					}
+					if (pV1->GetUInt() > pV2->GetUInt())
+					{
+						return 1;
+					}
+				}
+				else
+				if (pV1->IsReal())
+				{
+					if (pV1->GetReal() < pV2->GetReal())
+					{
+						return -1;
+					}
+					if (pV1->GetReal() > pV2->GetReal())
+					{
+						return 1;
+					}
+				}
+				else
+				if (pV1->IsString())
+				{
+					int nCmp = cx_strcmp(pV1->GetString().c_str(), pV2->GetString().c_str());
+
+					if (0 != nCmp)
+					{
+						return nCmp;
+					}
+				}
+				else
+				if (pV1->IsObject())
+				{
+					if (pV1->GetMembersCount() < pV2->GetMembersCount())
+					{
+						return -1;
+					}
+					else
+					if (pV1->GetMembersCount() > pV2->GetMembersCount())
+					{
+						return 1;
+					}
+
+					Node node;
+
+					node.pV1    = pV1;
+					node.pV2    = pV2;
+					node.cIndex = -1;
+
+					stackNodes.push(node);
+				}
+				else
+				if (pV1->IsArray())
+				{
+					if (pV1->GetItemsCount() < pV2->GetItemsCount())
+					{
+						return -1;
+					}
+					else
+					if (pV1->GetItemsCount() > pV2->GetItemsCount())
+					{
+						return 1;
+					}
+
+					Node node;
+
+					node.pV1    = pV1;
+					node.pV2    = pV2;
+					node.cIndex = -1;
+
+					stackNodes.push(node);
+				}
+				else
+				{
+					return -1;
+				}
+			}
+		}
+
+		if (stackNodes.empty())
+		{
+			break;
+		}
+	}
+
+	return 0;
+}
+
 }//namespace CX

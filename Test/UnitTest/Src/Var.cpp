@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.hpp"
+#include "CX/Types.hpp"
 #include "CX/Var.hpp"
 #include "CX/Print.hpp"
 #include "CX/IO/FileInputStream.hpp"

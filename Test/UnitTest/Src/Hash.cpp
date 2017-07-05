@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.hpp"
+#include "CX/Types.hpp"
 #include "CX/Hash/CRC32Hash.hpp"
 #include "CX/Hash/MD5Hash.hpp"
 #include "CX/Hash/SHA1Hash.hpp"

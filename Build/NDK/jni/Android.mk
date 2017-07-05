@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := cx
 
-LOCAL_CFLAGS := -DHAVE_EXPAT_CONFIG_H -DWFMO
+LOCAL_CFLAGS := -DHAVE_EXPAT_CONFIG_H -DWFMO -DBSON_COMPILATION
 
 ifeq ($(APP_OPTIM), debug)
 	LOCAL_CFLAGS += -D_DEBUG -g
@@ -15,6 +15,7 @@ endif
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../../Include \
 $(LOCAL_PATH)/../../../Contrib/BLAKE2/Include \
+$(LOCAL_PATH)/../../../Contrib/BSON/Include \
 $(LOCAL_PATH)/../../../Contrib/ByteOrder/Include \
 $(LOCAL_PATH)/../../../Contrib/Catch/Include \
 $(LOCAL_PATH)/../../../Contrib/CRC32Slice8/Include \
@@ -23,6 +24,7 @@ $(LOCAL_PATH)/../../../Contrib/cURL/Include \
 $(LOCAL_PATH)/../../../Contrib/DoubleConversion/Include \
 $(LOCAL_PATH)/../../../Contrib/Expat/Include \
 $(LOCAL_PATH)/../../../Contrib/Expat/Src \
+$(LOCAL_PATH)/../../../Contrib/JSONSL/Include \
 $(LOCAL_PATH)/../../../Contrib/LZ4/Include \
 $(LOCAL_PATH)/../../../Contrib/LZHAM/Include \
 $(LOCAL_PATH)/../../../Contrib/MD5/Include \
@@ -35,10 +37,31 @@ $(LOCAL_PATH)/../../../Contrib/SQLite/Include \
 $(LOCAL_PATH)/../../../Contrib/TinyMT/Include \
 $(LOCAL_PATH)/../../../Contrib/UTF8ToUCS4/Include \
 $(LOCAL_PATH)/../../../Contrib/xxHash/Include \
-$(LOCAL_PATH)/../../../Contrib/Z85/Include
+$(LOCAL_PATH)/../../../Contrib/Z85/Include 
 
 LOCAL_SRC_FILES := \
 $(LOCAL_PATH)/../../../../Contrib/BLAKE2/Src/blake2b-ref.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bcon.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-atomic.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-clock.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-context.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-decimal128.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-error.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-iso8601.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-iter.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-json.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-keys.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-md5.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-memory.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-oid.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-reader.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-string.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-timegm.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-utf8.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-value.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-version-functions.c \
+$(LOCAL_PATH)/../../../../Contrib/BSON/Src/bson-writer.c \
 $(LOCAL_PATH)/../../../../Contrib/CRC32Slice8/Src/crc32_internal.cpp \
 $(LOCAL_PATH)/../../../../Contrib/crypto-algorithms/Src/aes.cpp \
 $(LOCAL_PATH)/../../../../Contrib/DoubleConversion/Src/bignum.cc \
@@ -52,6 +75,7 @@ $(LOCAL_PATH)/../../../../Contrib/DoubleConversion/Src/strtod.cc \
 $(LOCAL_PATH)/../../../../Contrib/Expat/Src/xmlparse.c \
 $(LOCAL_PATH)/../../../../Contrib/Expat/Src/xmlrole.c \
 $(LOCAL_PATH)/../../../../Contrib/Expat/Src/xmltok.c \
+$(LOCAL_PATH)/../../../../Contrib/JSONSL/Src/jsonsl.c \
 $(LOCAL_PATH)/../../../../Contrib/LZ4/Src/lz4.c \
 $(LOCAL_PATH)/../../../../Contrib/LZ4/Src/lz4frame.c \
 $(LOCAL_PATH)/../../../../Contrib/LZ4/Src/lz4hc.c \
@@ -140,8 +164,8 @@ $(LOCAL_PATH)/../../../../Src/Network/URLParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Network/HTTP/Client.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONReader.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONWriter.cpp \
-$(LOCAL_PATH)/../../../../Src/SimpleBuffers/BINReader.cpp \
-$(LOCAL_PATH)/../../../../Src/SimpleBuffers/BINWriter.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/BSONReader.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/BSONWriter.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/Member.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/Object.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/Parser.cpp \

@@ -1,10 +1,23 @@
+0.2.142 - 2017-07-05
+  - Added CX::SimpleBuffers::BSONReader
+  - Added CX::SimpleBuffers::BSONWriter
+  - Added CX::SimpleBuffers::Generic (with 'generic' proto type as alias of CX::Value)
+  - Changed SimpleBuffersCompiler to single solution build
+  - Changed Playground to single solution build
+  - Changed UnitTest to single solution build
+  - Added libbson to contribs
+  - Added jsonsl to contribs
+  - Removed CX::SimpleBuffers::BINReader
+  - Removed CX::SimpleBuffers::BINWriter
+  - Improved CX::Util::DynMemPool performance 
+  - Fixed compiler / linker pdb duplicate name (VS2017)
 0.2.141 - 2017-06-30 
   - Fixed HTTP client flags
 0.2.140 - 2017-06-13
   - Fixed crash in OptimizedStreamOutput
 0.2.139 - 2017-06-11
   - Moved to a single solution for Visual Studio builds (2013, 2015 & 2017)
-  - Fixed Platform.h #elif used insteaf of #else
+  - Fixed Platform.h #elif used instead of #else
 0.2.138 - 2017-05-12
   - Added support for batch async operations in DB::SQLite::DBHelper
 0.2.137 - 2017-05-08

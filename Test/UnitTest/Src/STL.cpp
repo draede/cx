@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.hpp"
+#include "CX/Types.hpp"
 #include "CX/Deque.hpp"
 #include "CX/List.hpp"
 #include "CX/Map.hpp"

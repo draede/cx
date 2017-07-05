@@ -697,19 +697,20 @@ void Parser::UpdateType(String &sType, const AliasesMap &mapAliases)
 
 void Parser::PopulateAliases(AliasesMap &mapAliases)
 {
-	mapAliases["bool"]   = "CX.Bool";
-	mapAliases["int8"]   = "CX.Int8";
-	mapAliases["uint8"]  = "CX.UInt8";
-	mapAliases["int16"]  = "CX.Int16";
-	mapAliases["uint16"] = "CX.UInt16";
-	mapAliases["int32"]  = "CX.Int32";
-	mapAliases["uint32"] = "CX.UInt32";
-	mapAliases["int64"]  = "CX.Int64";
-	mapAliases["uint64"] = "CX.UInt64";
-	mapAliases["float"]  = "CX.Float";
-	mapAliases["double"] = "CX.Double";
-	mapAliases["string"] = "CX.String";
-	mapAliases["blob"]   = "CX.BLOB";
+	mapAliases["bool"]    = "CX.Bool";
+	mapAliases["int8"]    = "CX.Int8";
+	mapAliases["uint8"]   = "CX.UInt8";
+	mapAliases["int16"]   = "CX.Int16";
+	mapAliases["uint16"]  = "CX.UInt16";
+	mapAliases["int32"]   = "CX.Int32";
+	mapAliases["uint32"]  = "CX.UInt32";
+	mapAliases["int64"]   = "CX.Int64";
+	mapAliases["uint64"]  = "CX.UInt64";
+	mapAliases["float"]   = "CX.Float";
+	mapAliases["double"]  = "CX.Double";
+	mapAliases["string"]  = "CX.String";
+	mapAliases["blob"]    = "CX.BLOB";
+	mapAliases["generic"] = "CX.Value";
 }
 
 Status Parser::Parse(const Char *pBuffer, Size cLen, Object &object)

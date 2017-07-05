@@ -71,6 +71,7 @@ public:
 		Print(out, "#include \"CX/Set.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/Map.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/BLOB.hpp\"" CX_SB_LINE_TERMINATOR);
+		Print(out, "#include \"CX/Value.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/BitSet.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/C/string.h\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/MemberType.hpp\"" CX_SB_LINE_TERMINATOR);
@@ -78,6 +79,7 @@ public:
 		Print(out, "#include \"CX/SimpleBuffers/DataReader.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/DataIniter.hpp\"" CX_SB_LINE_TERMINATOR);
 		Print(out, "#include \"CX/SimpleBuffers/ISimpleBuffer.hpp\"" CX_SB_LINE_TERMINATOR);
+		Print(out, "#include \"CX/SimpleBuffers/Generic.hpp\"" CX_SB_LINE_TERMINATOR);
 
 		const Object::PragmasVector &vectorPrologPragmas = object.GetPragmasByLocation(Object::PRAGMA_LOCATION_PROLOG());
 

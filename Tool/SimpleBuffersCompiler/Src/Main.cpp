@@ -51,7 +51,6 @@ Generator *CreateCPPGenerator()
 	return new (std::nothrow) SimpleBuffers::CPPGenerator<IO::IOutputStream *>();
 }
 
-
 GeneratorData GENERATOR_FACTORIES[] = 
 {
 	{ "cpp", "C++", &CreateCPPGenerator },

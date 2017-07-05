@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/CX.hpp"
+#include "CX/Types.hpp"
 #include "CX/Log/Logger.hpp"
 #include "CX/Log/DefaultFormatter.hpp"
 

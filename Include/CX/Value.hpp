@@ -538,6 +538,18 @@ public:
 
 	Status Read(const Char *szData);
 
+	int Compare(const Value &v) const;
+
+	bool operator<(const Value &v) const
+	{
+		return (0 > Compare(v));
+	}
+
+	bool operator>(const Value &v) const
+	{
+		return (0 < Compare(v));
+	}
+
 protected:
 
 	friend class VarJSONSAXParserObserver;

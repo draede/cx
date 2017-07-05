@@ -289,7 +289,7 @@ Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 	Stack<Node>::Type   stackNodes;
 	Node                *pNode;
 	const Char          *szMemberName;
-
+	
 	for (;;)
 	{
 		if (!stackNodes.empty())
@@ -313,6 +313,7 @@ Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 				}
 				szMemberName = pNode->iterMembers->name.GetString();
 				pValue       = &pNode->iterMembers->value;
+				pNode->iterMembers++;
 			}
 			else
 			{
@@ -332,6 +333,7 @@ Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 				}
 				szMemberName = NULL;
 				pValue       = &*pNode->iterItems;
+				pNode->iterItems++;
 			}
 		}
 		else
@@ -343,14 +345,6 @@ Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 		if (pValue->IsBool())
 		{
 			if ((status = pCustom->OnBool(pValue->GetBool(), szMemberName)).IsNOK())
-			{
-				return status;
-			}
-		}
-		else
-		if (pValue->IsUint64())
-		{
-			if ((status = pCustom->OnUInt(pValue->GetUint64(), szMemberName)).IsNOK())
 			{
 				return status;
 			}
@@ -396,18 +390,6 @@ Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 				return status;
 			}
 			stackNodes.push(Node(pValue));
-		}
-
-		if (NULL != pNode)
-		{
-			if (pNode->pValue->IsObject())
-			{
-				pNode->iterMembers++;
-			}
-			else
-			{
-				pNode->iterItems++;
-			}
 		}
 
 		if (stackNodes.empty())

@@ -92,13 +92,20 @@ Status DynMemPool::SetSize(Size cbSize)
 		return Status(Status_TooBig, "Dynamic mem pool max size will be exceeded");
 	}
 
-	Size cbFinalSize;
+	Size cbFinalSize = m_cbTotalSize;
 
-	cbFinalSize = (cbSize / 4096) * 4096;
-
-	if (0 < cbSize % 4096)
+	if (0 == cbFinalSize)
 	{
-		cbFinalSize += 4096;
+		cbFinalSize = 4096;
+	}
+
+	while (cbFinalSize < cbSize)
+	{
+		cbFinalSize = cbFinalSize << 1;
+		if (cbFinalSize > m_cbMaxSize)
+		{
+			cbFinalSize = m_cbMaxSize;
+		}
 	}
 
 	void *pFinalMem;
