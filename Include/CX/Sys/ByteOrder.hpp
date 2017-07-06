@@ -50,7 +50,7 @@ public:
 	};
 
 	static inline Type Get()
-	{		
+	{
 		if (BIG_ENDIAN == ByteOrderTest())
 		{
 			return BigEndian;

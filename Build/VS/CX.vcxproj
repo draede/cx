@@ -352,6 +352,7 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\Generic.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Helper.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\IGenerator.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\IReader.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\ISimpleBuffer.hpp" />
