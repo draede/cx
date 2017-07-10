@@ -45,6 +45,12 @@ class CX_API BSONReader : public IReader
 {
 public:
 
+	struct CustomData
+	{
+		void *pData;
+		Size cbSize;
+	};
+
 	BSONReader();
 
 	~BSONReader();
@@ -80,6 +86,9 @@ public:
 	virtual Status ReadBLOB(BLOB &v, const Char *szName = NULL);
 
 	virtual Status ReadCustom(ICustom *pCustom, const Char *szName = NULL);
+
+	virtual Status ReadCustom(ICustom::Type nType, void *pData, ICustom::Allocator *pAllocator, 
+	                          const Char *szName = NULL);
 
 	virtual Status BeginObject(const Char *szName = NULL);
 

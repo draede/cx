@@ -95,22 +95,29 @@ Status Helper::LoadStream(IInputStream *pInputStream, Vector<Byte>::Type &vector
 	{
 		return status;
 	}
-	cbReqSize = (Size)cbSize;
-	try
+	if (0 < cbSize)
 	{
-		vectorData.resize(cbReqSize);
+		cbReqSize = (Size)cbSize;
+		try
+		{
+			vectorData.resize(cbReqSize);
+		}
+		catch (...)
+		{
+			return Status(Status_MemAllocFailed);
+		}
+		if ((status = pInputStream->Read(&vectorData[0], cbReqSize, &cbAckSize)).IsNOK())
+		{
+			return status;
+		}
+		if (cbAckSize != cbReqSize)
+		{
+			return Status(Status_ReadFailed);
+		}
 	}
-	catch(...)
+	else
 	{
-		return Status(Status_MemAllocFailed);
-	}
-	if ((status = pInputStream->Read(&vectorData[0], cbReqSize, &cbAckSize)).IsNOK())
-	{
-		return status;
-	}
-	if (cbAckSize != cbReqSize)
-	{
-		return Status(Status_ReadFailed);
+		vectorData.resize(0);
 	}
 
 	return Status();

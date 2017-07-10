@@ -1101,6 +1101,12 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\Helper.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BSONValue.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Custom.hpp">
+      <Filter>Header Files\SimpleBuffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2070,6 +2076,9 @@
       <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\SimpleBuffers\BSONWriter.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\BSONValue.cpp">
       <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
   </ItemGroup>

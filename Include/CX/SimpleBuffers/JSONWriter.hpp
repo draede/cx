@@ -81,6 +81,8 @@ public:
 
 	virtual Status WriteBLOB(const void *pData, Size cbSize, const Char *szName = NULL);
 
+	virtual Status WriteCustom(ICustom::Type nType, const void *pData, const Char *szName = NULL);
+
 	virtual Status BeginObject(const Char *szName = NULL);
 
 	virtual Status EndObject();

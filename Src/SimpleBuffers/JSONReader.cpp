@@ -266,6 +266,11 @@ Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 		return Status(Status_InvalidCall, "Data must be placed inside objects or arrays");
 	}
 
+	if (!pValue->IsObject())
+	{
+		return Status(Status_InvalidCall, "Custom data must be an object");
+	}
+
 	struct Node
 	{
 		Node(rapidjson::Value *pVal)
@@ -399,6 +404,17 @@ Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 	}
 
 	return Status();
+}
+
+Status JSONReader::ReadCustom(ICustom::Type nType, void *pData, ICustom::Allocator *pAllocator, 
+                              const Char *szName/* = NULL*/)
+{
+	CX_UNUSED(nType);
+	CX_UNUSED(pData);
+	CX_UNUSED(pAllocator);
+	CX_UNUSED(szName);
+
+	return Status_NotSupported;
 }
 
 Status JSONReader::BeginObject(const Char *szName/* = NULL*/)

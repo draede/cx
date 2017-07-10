@@ -37,6 +37,8 @@
 #include "CX/Map.hpp"
 #include "CX/C/string.h"
 #include "CX/C/stdarg.h"
+#include "CX/Mem.hpp"
+#include "CX/SimpleBuffers/Custom.hpp"
 #include "CX/APIDefs.hpp"
 
 
@@ -50,30 +52,6 @@ class CX_API IReader
 {
 public:
 
-	class ICustom
-	{
-	public:
-
-		virtual ~ICustom() { }
-
-		virtual Status OnBeginObject(const Char *szName = NULL) = 0;
-
-		virtual Status OnEndObject() = 0;
-
-		virtual Status OnBeginArray(const Char *szName = NULL) = 0;
-
-		virtual Status OnEndArray() = 0;
-
-		virtual Status OnBool(Bool v, const Char *szName = NULL) = 0;
-
-		virtual Status OnInt(Int64 v, const Char *szName = NULL) = 0;
-
-		virtual Status OnDouble(Double v, const Char *szName = NULL) = 0;
-
-		virtual Status OnString(const Char *v, const Char *szName = NULL) = 0;
-
-	};
-	
 	virtual ~IReader() { }
 
 	virtual Status Begin(IO::IInputStream *pInputStream) = 0;
@@ -107,6 +85,9 @@ public:
 	virtual Status ReadBLOB(BLOB &v, const Char *szName = NULL) = 0;
 	
 	virtual Status ReadCustom(ICustom *pCustom, const Char *szName = NULL) = 0;
+
+	virtual Status ReadCustom(ICustom::Type nType, void *pData, ICustom::Allocator *pAllocator, 
+	                          const Char *szName = NULL) = 0;
 
 	virtual Status BeginObject(const Char *szName = NULL) = 0;
 

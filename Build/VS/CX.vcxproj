@@ -346,8 +346,10 @@
     <ClInclude Include="..\..\Include\CX\ScopePtr.hpp" />
     <ClInclude Include="..\..\Include\CX\Set.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\BSONReader.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\BSONValue.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\BSONWriter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\CPPGenerator.hpp" />
+    <ClInclude Include="..\..\Include\CX\SimpleBuffers\Custom.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataIniter.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataReader.hpp" />
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\DataWriter.hpp" />
@@ -17615,6 +17617,7 @@
     <ClCompile Include="..\..\Src\Network\HTTP\Client.cpp" />
     <ClCompile Include="..\..\Src\Network\URLParser.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\BSONReader.cpp" />
+    <ClCompile Include="..\..\Src\SimpleBuffers\BSONValue.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\BSONWriter.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\JSONReader.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\JSONWriter.cpp" />

@@ -38,6 +38,7 @@
 #include "CX/SimpleBuffers/DataWriter.hpp"
 #include "CX/SimpleBuffers/DataIniter.hpp"
 #include "CX/Value.hpp"
+#include "CX/SimpleBuffers/BSONValue.hpp"
 
 
 namespace CX
@@ -231,7 +232,7 @@ struct DataReader<MemberType_Scalar, Value>
 	static Status Read(IReader *pReader, Value &v, const CX::Char *szName = NULL)
 	{
 
-		struct Helper : public IReader::ICustom
+		struct Helper : public ICustom
 		{
 			Value *pValue;
 			Value *pCurrent;
@@ -619,6 +620,33 @@ struct DataIniter<MemberType_Scalar, Value>
 	static void Init(Value &v)
 	{
 		v.SetNull();
+	}
+};
+
+template <>
+struct DataWriter<MemberType_Scalar, BSONValue>
+{
+	static Status Write(IWriter *pWriter, const BSONValue &v, const CX::Char *szName = NULL)
+	{
+		return v.Write(pWriter, szName);
+	}
+};
+
+template <>
+struct DataReader<MemberType_Scalar, BSONValue>
+{
+	static Status Read(IReader *pReader, BSONValue &v, const CX::Char *szName = NULL)
+	{
+		return v.Read(pReader, szName);
+	}
+};
+
+template <>
+struct DataIniter<MemberType_Scalar, BSONValue>
+{
+	static void Init(BSONValue &v)
+	{
+		v.Init();
 	}
 };
 

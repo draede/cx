@@ -165,6 +165,7 @@ $(LOCAL_PATH)/../../../../Src/Network/HTTP/Client.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONReader.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/JSONWriter.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/BSONReader.cpp \
+$(LOCAL_PATH)/../../../../Src/SimpleBuffers/BSONValue.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/BSONWriter.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/Member.cpp \
 $(LOCAL_PATH)/../../../../Src/SimpleBuffers/Object.cpp \

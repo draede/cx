@@ -248,6 +248,15 @@ Status JSONWriter::WriteBLOB(const void *pData, Size cbSize, const Char *szName/
 	return status;
 }
 
+Status JSONWriter::WriteCustom(ICustom::Type nType, const void *pData, const Char *szName/* = NULL*/)
+{
+	CX_UNUSED(nType);
+	CX_UNUSED(pData);
+	CX_UNUSED(szName);
+
+	return Status_NotSupported;
+}
+
 Status JSONWriter::BeginObject(const Char *szName/* = NULL*/)
 {
 	if (m_stackStates.empty())

@@ -35,6 +35,7 @@
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/BLOB.hpp"
 #include "CX/C/stdarg.h"
+#include "CX/SimpleBuffers/Custom.hpp"
 #include "CX/APIDefs.hpp"
 
 
@@ -91,6 +92,8 @@ public:
 			return WriteBLOB("", 0, szName);
 		}
 	}
+
+	virtual Status WriteCustom(ICustom::Type nType, const void *pData, const Char *szName = NULL) = 0;
 
 	virtual Status BeginObject(const Char *szName = NULL) = 0;
 

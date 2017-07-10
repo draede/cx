@@ -27,6 +27,7 @@
  */ 
  
 #include "CX/SimpleBuffers/BSONWriter.hpp"
+#include "CX/SimpleBuffers/BSONReader.hpp"
 
 
 namespace CX
@@ -393,6 +394,64 @@ Status BSONWriter::WriteBLOB(const void *pData, Size cbSize, const Char *szName/
 	return Status();
 }
 
+Status BSONWriter::WriteCustom(ICustom::Type nType, const void *pData, const Char *szName/* = NULL*/)
+{
+	if (ICustom::Type_BSON != nType)
+	{
+		return Status_NotSupported;
+	}
+
+	BSONReader::CustomData *pCustomData = (BSONReader::CustomData *)pData;
+
+	const char  *pszName = "";
+	static char szTmpName[40];
+
+	if (NULL == m_pBSON)
+	{
+		return Status_InvalidCall;
+	}
+	if (m_stackStates.empty())
+	{
+		return Status_InvalidCall;
+	}
+	else
+	if (State_Object == m_stackStates.top().nState)
+	{
+		if (NULL == szName)
+		{
+			return Status_InvalidArg;
+		}
+		pszName = szName;
+	}
+	else
+	if (State_Array == m_stackStates.top().nState)
+	{
+		if (NULL != szName)
+		{
+			return Status_InvalidArg;
+		}
+		UInt64ToString(m_stackStates.top().cCount, szTmpName);
+		pszName = szTmpName;
+	}
+	else
+	{
+		return Status_InvalidCall;
+	}
+
+	bson_t bson;
+
+	if (!bson_init_static(&bson, (const uint8_t *)pCustomData->pData, pCustomData->cbSize))
+	{
+		return Status_OperationFailed;
+	}
+	if (!bson_append_document(m_stackStates.top().pBSON, pszName, -1, &bson))
+	{
+		return Status_OperationFailed;
+	}
+
+	return Status();
+}
+
 Status BSONWriter::BeginObject(const Char *szName/* = NULL*/)
 {
 	const char  *pszName = "";
@@ -429,7 +488,6 @@ Status BSONWriter::BeginObject(const Char *szName/* = NULL*/)
 		{
 			return Status_InvalidArg;
 		}
-		//sprintf(szTmpName, "%zu", m_stackStates.top().cCount);
 		UInt64ToString(m_stackStates.top().cCount, szTmpName);
 		pszName = szTmpName;
 		state.pBSON = (bson_t *)malloc(sizeof(bson_t));

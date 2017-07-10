@@ -417,12 +417,19 @@ Status BSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 		return Status_InvalidCall;
 	}
 
+	nType = bson_iter_type(pIter);
+
+	if (BSON_TYPE_DOCUMENT != nType)
+	{
+		return Status(Status_InvalidCall, "Custom data must be an object");
+	}
+
 	struct Node
 	{
 		bson_iter_t iter;
 		bool        bObject;
 	};
-	
+
 	typedef Stack<Node>::Type   NodesStack;
 
 	NodesStack stackNodes;
@@ -548,6 +555,81 @@ Status BSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 			break;
 		}
 	}
+
+	return Status();
+}
+
+Status BSONReader::ReadCustom(ICustom::Type nCustomType, void *pData, ICustom::Allocator *pAllocator, 
+                              const Char *szName/* = NULL*/)
+{
+	if (ICustom::Type_BSON != nCustomType)
+	{
+		return Status_NotSupported;
+	}
+
+	BSONReader::CustomData *pCustomData = (BSONReader::CustomData *)pData;
+
+	bson_iter_t   *pIter;
+	bson_type_t   nType;
+	uint32_t      cbBSONSize;
+	const uint8_t *pBSONData;
+	bool          bObject;
+
+	if (m_stackStates.empty())
+	{
+		return Status_InvalidCall;
+	}
+	if (State_Object == m_stackStates.top().nState)
+	{
+		if (NULL == szName)
+		{
+			return Status_InvalidCall;
+		}
+		if (!bson_iter_find(&m_stackStates.top().iter, szName))
+		{
+			return Status_InvalidCall;
+		}
+		pIter   = &m_stackStates.top().iter;
+		bObject = true;
+	}
+	else
+	if (State_Array == m_stackStates.top().nState)
+	{
+		if (NULL != szName)
+		{
+			return Status_InvalidCall;
+		}
+		if (!bson_iter_next(&m_stackStates.top().iter))
+		{
+			return Status_NoMoreItems;
+		}
+		pIter   = &m_stackStates.top().iter;
+		bObject = false;
+	}
+	else
+	{
+		return Status_InvalidCall;
+	}
+
+	nType = bson_iter_type(pIter);
+
+	if (BSON_TYPE_DOCUMENT != nType)
+	{
+		return Status(Status_InvalidCall, "Custom data must be an object");
+	}
+
+	nType = bson_iter_type(pIter);
+	bson_iter_document(pIter, &cbBSONSize, &pBSONData);
+	if (NULL == pData || 0 == cbBSONSize)
+	{
+		return Status_InvalidCall;
+	}
+	if (NULL == (pCustomData->pData = pAllocator->Alloc(NULL, (Size)cbBSONSize, pAllocator->pCTX)))
+	{
+		return Status_MemAllocFailed;
+	}
+	pCustomData->cbSize = (Size)cbBSONSize;
+	memcpy(pCustomData->pData, pBSONData, (Size)cbBSONSize);
 
 	return Status();
 }
@@ -753,7 +835,6 @@ Status BSONReader::EndArray()
 
 	return Status();
 }
-
 
 Status BSONReader::PrepareRead(const Char *szName, bson_type_t *pnType)
 {
