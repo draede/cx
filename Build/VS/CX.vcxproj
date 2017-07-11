@@ -17619,6 +17619,7 @@
     <ClCompile Include="..\..\Src\SimpleBuffers\BSONReader.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\BSONValue.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\BSONWriter.cpp" />
+    <ClCompile Include="..\..\Src\SimpleBuffers\SBHelper.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\JSONReader.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\JSONWriter.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers\Member.cpp" />

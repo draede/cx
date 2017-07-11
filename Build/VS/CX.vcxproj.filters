@@ -2081,5 +2081,8 @@
     <ClCompile Include="..\..\Src\SimpleBuffers\BSONValue.cpp">
       <Filter>Source Files\SimpleBuffers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\SimpleBuffers\SBHelper.cpp">
+      <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -40,7 +40,7 @@
 #include "CX/SimpleBuffers/BSONReader.hpp"
 #include "CX/SimpleBuffers/BSONWriter.hpp"
 #include "CX/SimpleBuffers/JSONReader.hpp"
-#include "CX/SimpleBuffers/BSONWriter.hpp"
+#include "CX/SimpleBuffers/JSONWriter.hpp"
 #include "CX/Sys/ByteOrder.hpp"
 
 
@@ -401,11 +401,27 @@ public:
 		return Status();
 	}
 
+	class IOutput
+	{
+	public:
+
+		virtual ~IOutput() { }
+
+		virtual Status Add(const void *pData, Size cbSize) = 0;
+
+	};
+
+	static Status BSON2JSON(const void *pData, Size cbSize, IOutput *pOutput);
+
+	static Status JSON2BSON(const void *pData, Size cbSize, IOutput *pOutput);
+
 private:
 
 	Helper();
 
 	~Helper();
+
+	static Status AddIndent(Size cIndent, IOutput *pOutput);
 
 };
 
