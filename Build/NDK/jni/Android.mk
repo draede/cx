@@ -193,6 +193,7 @@ $(LOCAL_PATH)/../../../../Src/Util/RCMemBufferMgr.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/RndGen.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/Platform/Android/Time_android.cpp \
 $(LOCAL_PATH)/../../../../Src/Util/Platform/Android/Timer_android.cpp \
+$(LOCAL_PATH)/../../../../Src/IInterface.cpp \
 $(LOCAL_PATH)/../../../../Src/Mem.cpp \
 $(LOCAL_PATH)/../../../../Src/Status.cpp \
 $(LOCAL_PATH)/../../../../Src/Var.cpp \

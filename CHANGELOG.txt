@@ -1,497 +1,500 @@
+0.2.146 - 2017-07-12
+ - Small BSON fixes
+ - Added IInterface, IObject & Object
 0.2.145 - 2017-07-11
-  - Added JSON <-> BSON conversions to CX::SimpleBuffers::Helper
+ - Added JSON <-> BSON conversions to CX::SimpleBuffers::Helper
 0.2.144 - 2017-07-10
-  - Added CX::SimpleBuffers::BSONValue
-  - Added support for custom read/write in CX::SimpleBuffers
+ - Added CX::SimpleBuffers::BSONValue
+ - Added support for custom read/write in CX::SimpleBuffers
 0.2.143 - 2017-07-06
-  - Added CX::SimpleBuffers::Helper
+ - Added CX::SimpleBuffers::Helper
 0.2.142 - 2017-07-05
-  - Added CX::SimpleBuffers::BSONReader
-  - Added CX::SimpleBuffers::BSONWriter
-  - Added CX::SimpleBuffers::Generic (with 'generic' proto type as alias of CX::Value)
-  - Changed SimpleBuffersCompiler to single solution build
-  - Changed Playground to single solution build
-  - Changed UnitTest to single solution build
-  - Added libbson to contribs
-  - Added jsonsl to contribs
-  - Removed CX::SimpleBuffers::BINReader
-  - Removed CX::SimpleBuffers::BINWriter
-  - Improved CX::Util::DynMemPool performance 
-  - Fixed compiler / linker pdb duplicate name (VS2017)
+ - Added CX::SimpleBuffers::BSONReader
+ - Added CX::SimpleBuffers::BSONWriter
+ - Added CX::SimpleBuffers::Generic (with 'generic' proto type as alias of CX::Value)
+ - Changed SimpleBuffersCompiler to single solution build
+ - Changed Playground to single solution build
+ - Changed UnitTest to single solution build
+ - Added libbson to contribs
+ - Added jsonsl to contribs
+ - Removed CX::SimpleBuffers::BINReader
+ - Removed CX::SimpleBuffers::BINWriter
+ - Improved CX::Util::DynMemPool performance 
+ - Fixed compiler / linker pdb duplicate name (VS2017)
 0.2.141 - 2017-06-30 
-  - Fixed HTTP client flags
+ - Fixed HTTP client flags
 0.2.140 - 2017-06-13
-  - Fixed crash in OptimizedStreamOutput
+ - Fixed crash in OptimizedStreamOutput
 0.2.139 - 2017-06-11
-  - Moved to a single solution for Visual Studio builds (2013, 2015 & 2017)
-  - Fixed Platform.h #elif used instead of #else
+ - Moved to a single solution for Visual Studio builds (2013, 2015 & 2017)
+ - Fixed Platform.h #elif used instead of #else
 0.2.138 - 2017-05-12
-  - Added support for batch async operations in DB::SQLite::DBHelper
+ - Added support for batch async operations in DB::SQLite::DBHelper
 0.2.137 - 2017-05-08
-  - Fixed IProfilingHandler
+ - Fixed IProfilingHandler
 0.2.136 - 2017-05-05
-  - Fixed DB::SQLite::Bindings::BindBLOB (size was not saved)
+ - Fixed DB::SQLite::Bindings::BindBLOB (size was not saved)
 0.2.135 - 2017-05-04
-  - Added support for {} in Print & support for console colors in Console Log Output
+ - Added support for {} in Print & support for console colors in Console Log Output
 0.2.134 - 2017-05-04
-  - Removed API headers
-  - Added support for {} in Print
-  - Fixed hex Print
-  - Added support for console colors in Console Log Output
+ - Removed API headers
+ - Added support for {} in Print
+ - Fixed hex Print
+ - Added support for console colors in Console Log Output
 0.2.133 - 2017-04-22
-  - Added line & column getters in Data::XML::SAXParser
-  - Added Data::XML::SAXParserObserverBase for easier state parsing
+ - Added line & column getters in Data::XML::SAXParser
+ - Added Data::XML::SAXParserObserverBase for easier state parsing
 0.2.132 - 2017-04-08
-  - Fixed API
-  - Fixed LogScope
+ - Fixed API
+ - Fixed LogScope
 0.2.131 - 2017-04-08
-  - Added LogScope
+ - Added LogScope
 0.2.130 - 2017-04-05
-  - Refactored IObject & Object
-  - Added support for duplicate interface detection in Object
+ - Refactored IObject & Object
+ - Added support for duplicate interface detection in Object
 0.2.129 - 2017-03-31
-  - Fixed memory leak in MultiHash
+ - Fixed memory leak in MultiHash
 0.2.128 - 2017-03-30
-  - Added scope classes for API
+ - Added scope classes for API
 0.2.127
-  - Improved API implementation (added recursive interfaces support)
+ - Improved API implementation (added recursive interfaces support)
 0.2.126 - 2017-03-27
-  - Removed test artifacts
+ - Removed test artifacts
 0.2.125 - 2017-03-27
-  - Added custom reader support for SimpleBuffers (BINReader)
+ - Added custom reader support for SimpleBuffers (BINReader)
 0.2.124 - 2017-03-21
-  - Copy optimization for SimpleBuffers DataReader (vector, set & map)
-  - Better changelog
-  - Added custom reader support for SimpleBuffers (JSON only for now)
-  - SimpleBuffers generated writers will used loaded info
+ - Copy optimization for SimpleBuffers DataReader (vector, set & map)
+ - Better changelog
+ - Added custom reader support for SimpleBuffers (JSON only for now)
+ - SimpleBuffers generated writers will used loaded info
 0.2.123 - 2017-03-20
-  - SimpleBuffers tool is now using MT
-  - Updated NDK build script
+ - SimpleBuffers tool is now using MT
+ - Updated NDK build script
 0.2.122 - 2017-03-19
-  - Added IBinStr String support
+ - Added IBinStr String support
 0.2.121 - 2017-03-16
-  - Updated NDK build script
-  - removed test output files
-  - Fix in IO::BufferedInputStream
+ - Updated NDK build script
+ - removed test output files
+ - Fix in IO::BufferedInputStream
 0.2.120 - 2017-03-15
-  - Added IO::BufferedInputStream & IO::BufferedOutputStream
-  - Added Util::CircularBuffer 
-  - Added support for UInt64 in JSON classes
-  - Fixed some typos
+ - Added IO::BufferedInputStream & IO::BufferedOutputStream
+ - Added Util::CircularBuffer 
+ - Added support for UInt64 in JSON classes
+ - Fixed some typos
 0.2.119 - 2017-03-09
-  - Added support for VS2017
+ - Added support for VS2017
 0.2.118 - 2017-03-03
-  - Added custom free function for Logger outputs
+ - Added custom free function for Logger outputs
 0.2.117 - 2017-03-02
-  - Fixed API Object::Release return 
+ - Fixed API Object::Release return 
 0.2.116 - 2017-03-01
-  - Improved & simplified API classes
+ - Improved & simplified API classes
 0.2.115 - 2017-03-01
-  - Improved & simplified API classes
+ - Improved & simplified API classes
 0.2.114 - 2017-02-28
-  - Fixes in API
+ - Fixes in API
 0.2.111 - 2017-02-26
-  - Fixed Print UTF8/UTF16 conversions
+ - Fixed Print UTF8/UTF16 conversions
 0.2.110 - 2017-02-26
-  - Fixed Print UTF8/UTF16 conversions
+ - Fixed Print UTF8/UTF16 conversions
 0.2.109 - 2017-02-25
-  - Removed log & db files
+ - Removed log & db files
 0.2.108 - 2017-02-25
-  - Added support for WChar in Print
+ - Added support for WChar in Print
 0.2.106 - 2017-02-23
-  - Updated Interface API
+ - Updated Interface API
 0.2.105 - 2017-02-21
-  - Updated platform macros
+ - Updated platform macros
 0.2.104 - 2017-02-20
-  - Added Interface API headers
-  - Added Util::Bitmap
+ - Added Interface API headers
+ - Added Util::Bitmap
 0.2.103 - 2017-02-20
-  - Simplified Sys/Atomic
-  - Removed Mintomic contrib
+ - Simplified Sys/Atomic
+ - Removed Mintomic contrib
 0.2.102 - 2017-02-19
-  - Fixed portability for Windows only classes
-  - Added Hash::MultiHash
-  - Added Sys::Event
-  - Added Util::DynMember
-  - Added Util::DynStruct
-  - Added missing copyright notice
-  - Added support for append in FileOutputStream
-  - Added missing Android classes
-  - Naming fixes in Value
+ - Fixed portability for Windows only classes
+ - Added Hash::MultiHash
+ - Added Sys::Event
+ - Added Util::DynMember
+ - Added Util::DynStruct
+ - Added missing copyright notice
+ - Added support for append in FileOutputStream
+ - Added missing Android classes
+ - Naming fixes in Value
 0.2.101 - 2017-02-13
-  - Added NDK support for network classes
-  - Updated cURL sources
-  - Added Value class (will replace Var class in the future)
-  - Added ScopePtr cast support
+ - Added NDK support for network classes
+ - Updated cURL sources
+ - Added Value class (will replace Var class in the future)
+ - Added ScopePtr cast support
 0.1.100 - 2017-02-12 - Updated NDK build
-  - Updated NDK build
+ - Updated NDK build
 0.1.99 - 2017-02-08
-  - Fixed virtual handlers calls
+ - Fixed virtual handlers calls
 0.1.98 - 2017-01-30
-  - Fixed statement not removed from used map during AcquireStatement
-  - Fixed non const arg in virtual methods of DBHelper
+ - Fixed statement not removed from used map during AcquireStatement
+ - Fixed non const arg in virtual methods of DBHelper
 0.1.97 - 2017-01-25
-  - Fixed SQLite Bindings class
-  - Added support for completion handler for async operations in DBHelper
-  - Added tester for multi thread use of DBHelper statements
+ - Fixed SQLite Bindings class
+ - Added support for completion handler for async operations in DBHelper
+ - Added tester for multi thread use of DBHelper statements
 0.1.96 - 2017-01-21
-  - Fixed SQLite tester
+ - Fixed SQLite tester
 0.1.95 - 2017-01-19
-  - Added SQLite wrapper
-  - Updated copyright years
+ - Added SQLite wrapper
+ - Updated copyright years
 0.1.94 - 2017-01-13
-  - Added file handle arg in log reopening
+ - Added file handle arg in log reopening
 0.1.93 - 2016-11-20
-  - Added log level check in logging macro
+ - Added log level check in logging macro
 0.1.92 - 2016-10-25
-  - Added support for reopening of the file in Log::OptimizedStreamOutput (for log rotate)
+ - Added support for reopening of the file in Log::OptimizedStreamOutput (for log rotate)
 0.1.91 - 2016-09-28
-  - Fixed profile issues
+ - Fixed profile issues
 0.1.90 - 2016-09-16
-  - Added custom allocator for STL types - to disable alloc exceptions
-  - added nothrow to new allocs where missing
+ - Added custom allocator for STL types - to disable alloc exceptions
+ - added nothrow to new allocs where missing
 0.1.89 - 2016-09-08
-  - Added Base64BinStr
-  - Added support for custom headers in HTTP client
+ - Added Base64BinStr
+ - Added support for custom headers in HTTP client
 0.1.88 - 2016-09-02
-  - Fixed cxw_wcs* defined instead of cxw_str*
+ - Fixed cxw_wcs* defined instead of cxw_str*
 0.1.87 - 2016-09-02
-  - Improved SimpleBuffers JSON error reporting
+ - Improved SimpleBuffers JSON error reporting
 0.1.86 - 2016-08-29 - VS2013 fixes + more profiler fixes
-  - VS2013 fixes + more profiler fixes
+ - VS2013 fixes + more profiler fixes
 0.1.85 - 2016-08-28
-  - Fixed C scope (D like scope)
+ - Fixed C scope (D like scope)
 0.1.83 - 2016-08-26
-  - More profiler fixes
+ - More profiler fixes
 0.1.82 - 2016-08-25
-  - Fixed profiler stats
+ - Fixed profiler stats
 0.1.81 - 2016-08-25
-  - Fixed profiler scope merges
+ - Fixed profiler scope merges
 0.1.80 - 2016-08-24
-  - Removed custom allocators
-  - Removed unused files
+ - Removed custom allocators
+ - Removed unused files
 0.1.79 - 2016-08-24
-  - Added Debug::Profiler
+ - Added Debug::Profiler
 0.1.78 - 2016-08-21
-  - Var::GetReal works with ints too
-  - Var::[] supports const access
+ - Var::GetReal works with ints too
+ - Var::[] supports const access
 0.1.77 - 2016-07-12
-  - Fixed printing of hex values
+ - Fixed printing of hex values
 0.1.76 - 2016-06-23
-  - Fixed Print in std::wstring and WString
+ - Fixed Print in std::wstring and WString
 0.1.75 - 2016-06-22
-  - Reverted to an older version of SparseHash
+ - Reverted to an older version of SparseHash
 0.1.74 - 2016-06-19
-  - Fixed SimpleBuffers generator not using default in Init()
+ - Fixed SimpleBuffers generator not using default in Init()
 0.1.73 - 2016-06-14
-  - Fixed IO::MemOutputStream invalid offset
+ - Fixed IO::MemOutputStream invalid offset
 0.1.72 - 2016-06-10
-  - Fixed append support for OptimizedStreamOutput
+ - Fixed append support for OptimizedStreamOutput
 0.1.71 - 2016-06-09
-  - Added append support for OptimizedStreamOutput
+ - Added append support for OptimizedStreamOutput
 0.1.70 - 2016-05-31
-  - Fixed NULL szName used in status setup when element is an array
+ - Fixed NULL szName used in status setup when element is an array
 0.1.69 - 2016-05-19
-  - Fixed priority setup mistype in task thread
-  - Threads prority is restored to normal in Stop (so that dormant threads can be stopped - Windows)
+ - Fixed priority setup mistype in task thread
+ - Threads prority is restored to normal in Stop (so that dormant threads can be stopped - Windows)
 0.1.68 - 2016-05-05
-  - Fixed SparseHash warning (sparsehashtable.h:844)
-  - Added XML parser
-  - Added MO parser
-  - Added XML Node
-  - Added JSON Node
-  - Added Data::MO::Language class
-  - Added wildmat support
-  - Fixed IO::MemInputStream SetPos
+ - Fixed SparseHash warning (sparsehashtable.h:844)
+ - Added XML parser
+ - Added MO parser
+ - Added XML Node
+ - Added JSON Node
+ - Added Data::MO::Language class
+ - Added wildmat support
+ - Fixed IO::MemInputStream SetPos
 0.1.67 - 2016-04-21
-  - Updated SparseHash to 2.0.3
-  - Fixed SparseHash readme
-  - Added *.VC.db as ignored (VS2015 update 2)
+ - Updated SparseHash to 2.0.3
+ - Fixed SparseHash readme
+ - Added *.VC.db as ignored (VS2015 update 2)
 0.1.66 - 2016-04-07
-  - Fixed Task queue empty event not signaled on creation
+ - Fixed Task queue empty event not signaled on creation
 0.1.65 - 2016-03-11 - Fixed RndGen compilation
-  - Fixed RndGen compilation
-  - Fixed version
+ - Fixed RndGen compilation
+ - Fixed version
 0.1.64 - 2016-03-11
-  - Fixed UTF8 conversion crash
+ - Fixed UTF8 conversion crash
 0.1.63 - 2016-03-03
-  - Added Util::RndGen::Copy
-  - Fixed copyright notice
+ - Added Util::RndGen::Copy
+ - Fixed copyright notice
 0.1.62 - 2016-02-23
-  - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
-  - Log::OptimizedStreamOutput fixes
-  - Changed version
+ - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
+ - Log::OptimizedStreamOutput fixes
+ - Changed version
 0.1.62 - 2016-02-23
-  - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
-  - Log::OptimizedStreamOutput fixes
+ - Simplebuffers JSONReader fixes for type detection (int64 & uint64)
+ - Log::OptimizedStreamOutput fixes
 0.1.60 - 2016-02-18
-  - Added Log::OptimizedStreamOutput
-  - Improved TaskExecutor with custom executor
+ - Added Log::OptimizedStreamOutput
+ - Improved TaskExecutor with custom executor
 0.1.59 - 2016-02-17 - added TaskExecutor & TaskQueue
-  - Added TaskExecutor
-  - Added TaskQueue
+ - Added TaskExecutor
+ - Added TaskQueue
 0.1.58 - 2016-02-10
-  - CX::SimpleBuffers::ISimpleBuffer::GetMembersCount is now const
-  - CX::SimpleBuffers::ISimpleBuffer::GetMemberLoaded is now const
-  - Added static const Char *OBJECT_NAME() in all CX::SimpleBuffers::ISimpleBuffer
-  - Added virtual const Char *GetObjectName() const in CX::SimpleBuffers::ISimpleBuffer
-  - Float and double members of SimpleBuffers accept integers too in JSON
-  - CX::Util::RndGen supports now multiple instances
-  - Changed copyright from 2014-2015 to 2014 - 2026 :)
+ - CX::SimpleBuffers::ISimpleBuffer::GetMembersCount is now const
+ - CX::SimpleBuffers::ISimpleBuffer::GetMemberLoaded is now const
+ - Added static const Char *OBJECT_NAME() in all CX::SimpleBuffers::ISimpleBuffer
+ - Added virtual const Char *GetObjectName() const in CX::SimpleBuffers::ISimpleBuffer
+ - Float and double members of SimpleBuffers accept integers too in JSON
+ - CX::Util::RndGen supports now multiple instances
+ - Changed copyright from 2014-2015 to 2014 - 2026 :)
 0.1.57 - 2015-12-15
-  - Added VS 2015 support
+ - Added VS 2015 support
 0.1.56 - 2015-12-15
-  - Added VS 2015 support
+ - Added VS 2015 support
 0.1.55 - 2015-12-14
-  - Added VS 2015 support
+ - Added VS 2015 support
 0.1.54 - 2015-12-03
-  - Better random ranges; fixed playground tester
+ - Better random ranges; fixed playground tester
 0.1.53 - 2015-11-23
-  - SimpleBuffers: added support for testing if an optional member was loaded
+ - SimpleBuffers: added support for testing if an optional member was loaded
 0.1.52 - 2015-11-15
-  - Removed mem tracking (win only) - for now
+ - Removed mem tracking (win only) - for now
 0.1.51 - 2015-11-14
-  - Fixed InitOnceExecuteOnce param not set
+ - Fixed InitOnceExecuteOnce param not set
 0.1.50 - 2015-11-08
-  - Fixed RndGen signed int range
+ - Fixed RndGen signed int range
 0.1.49 - 2015-11-02
-  - Fixed SimpleBuffers CPP Generator (Init)
+ - Fixed SimpleBuffers CPP Generator (Init)
 0.1.48 - 2015-11-01
-  - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
+ - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
 0.1.47 - 2015-11-01
-  - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
+ - Added SimpleBuffers DataIniter & ISimpleBuffer::Init
 0.1.46 - 2015-10-31
-  - Fixed android build
+ - Fixed android build
 0.1.45 - 2015-10-31
-  - Fixed contrib warnings
-  - Updated CX version
-  - Fixed BINReader & BINWriter
-  - Fixed JSONReader & JSONWriter
-  - Improved memory tracking (windows only)
+ - Fixed contrib warnings
+ - Updated CX version
+ - Fixed BINReader & BINWriter
+ - Fixed JSONReader & JSONWriter
+ - Improved memory tracking (windows only)
 0.1.44 - 2015-10-27
-  - Added max mem alloc option for mem dbg
-  - Revamped IO filters 
-  - Refactored IO::FilteredInputStream
-  - Refactored IO::FilteredOutputStream
-  - Removed Archive/LZHAMFilter
-  - Removed Archive/CryptFilter
-  - Added Crypt/AES128InputFilter
-  - Added Crypt/AES128OutputFilter
-  - Added Archive/LZHAMInputFilter
-  - Added Archive/LZHAMOutputFilter
-  - Added Archive/LZ4InputFilter
-  - Added Archive/LZ4OutputFilter
-  - Added Archive/SnappyInputFilter
-  - Added Archive/SnappyOutputFilter
-  - Fixed IO::MemOutputStream MemPool copy 
-  - Fixed IO::MemInputStream read EOF
-  - Fixed Android build
+ - Added max mem alloc option for mem dbg
+ - Revamped IO filters 
+ - Refactored IO::FilteredInputStream
+ - Refactored IO::FilteredOutputStream
+ - Removed Archive/LZHAMFilter
+ - Removed Archive/CryptFilter
+ - Added Crypt/AES128InputFilter
+ - Added Crypt/AES128OutputFilter
+ - Added Archive/LZHAMInputFilter
+ - Added Archive/LZHAMOutputFilter
+ - Added Archive/LZ4InputFilter
+ - Added Archive/LZ4OutputFilter
+ - Added Archive/SnappyInputFilter
+ - Added Archive/SnappyOutputFilter
+ - Fixed IO::MemOutputStream MemPool copy 
+ - Fixed IO::MemInputStream read EOF
+ - Fixed Android build
 0.1.43 - 2015-10-27
-  - Added max mem alloc option for mem dbg
-  - Revamped IO filters 
-  - Refactored IO::FilteredInputStream
-  - Refactored IO::FilteredOutputStream
-  - Removed Archive/LZHAMFilter
-  - Removed Archive/CryptFilter
-  - Added Crypt/AES128InputFilter
-  - Added Crypt/AES128OutputFilter
-  - Added Archive/LZHAMInputFilter
-  - Added Archive/LZHAMOutputFilter
-  - Added Archive/LZ4InputFilter
-  - Added Archive/LZ4OutputFilter
-  - Added Archive/SnappyInputFilter
-  - Added Archive/SnappyOutputFilter
-  - Fixed IO::MemOutputStream MemPool copy 
-  - Fixed IO::MemInputStream read EOF
+ - Added max mem alloc option for mem dbg
+ - Revamped IO filters 
+ - Refactored IO::FilteredInputStream
+ - Refactored IO::FilteredOutputStream
+ - Removed Archive/LZHAMFilter
+ - Removed Archive/CryptFilter
+ - Added Crypt/AES128InputFilter
+ - Added Crypt/AES128OutputFilter
+ - Added Archive/LZHAMInputFilter
+ - Added Archive/LZHAMOutputFilter
+ - Added Archive/LZ4InputFilter
+ - Added Archive/LZ4OutputFilter
+ - Added Archive/SnappyInputFilter
+ - Added Archive/SnappyOutputFilter
+ - Fixed IO::MemOutputStream MemPool copy 
+ - Fixed IO::MemInputStream read EOF
 0.1.42 - 2015-10-14
-  - Fixed map read & write in SimpleBuffers
+ - Fixed map read & write in SimpleBuffers
 0.1.41 - 2015-10-13
-  - Added support for const in SimpleBuffers
+ - Added support for const in SimpleBuffers
 0.1.40 - 2015-10-13
-  - Added support for const in SimpleBuffers
+ - Added support for const in SimpleBuffers
 0.1.39 - 2015-10-12
-  - Fixed NDK build
+ - Fixed NDK build
 0.1.38 - 2015-10-11
-  - Revamped mem stats / mem leak detector - moved all functionality from C++ to C (C++ relays to C now)
-  - Fixed SimpleBuffer::JSONWriter::WriteBLOB not writing field separator + indent + newline
-  - Added SimpleBuffer::BINWriter
-  - Added SimpleBuffer::BINReader
-  - Added Mem::New, Mem::Delete, Mem::NewArr, Mem::DeleteArr
+ - Revamped mem stats / mem leak detector - moved all functionality from C++ to C (C++ relays to C now)
+ - Fixed SimpleBuffer::JSONWriter::WriteBLOB not writing field separator + indent + newline
+ - Added SimpleBuffer::BINWriter
+ - Added SimpleBuffer::BINReader
+ - Added Mem::New, Mem::Delete, Mem::NewArr, Mem::DeleteArr
 0.1.37 - 2015-09-27
-  - Added x86 build for NDK
-  - Fixed IObject not being used for non-abstract classes
-  - Fixed IObject used in abstract classes
+ - Added x86 build for NDK
+ - Fixed IObject not being used for non-abstract classes
+ - Fixed IObject used in abstract classes
 0.1.36 - 2015-09-20
-  - Read from an array in SimpleBuffer will return Status_NoMoreItems at the end of the array
-  - SimpleBuffer is using \r\n as line terminator for generators now
-  - Added support for member params in SimpleBuffer (member=name, getter=name, setter=name, optional=false, default=value)
-  - Getter in SimpleBuffer are not const and non const
+ - Read from an array in SimpleBuffer will return Status_NoMoreItems at the end of the array
+ - SimpleBuffer is using \r\n as line terminator for generators now
+ - Added support for member params in SimpleBuffer (member=name, getter=name, setter=name, optional=false, default=value)
+ - Getter in SimpleBuffer are not const and non const
 0.1.35 - 2015-09-14
-  - added SimpleBuffers::IWriter::WriteBLOB(data, size)
+ - added SimpleBuffers::IWriter::WriteBLOB(data, size)
 0.1.34 - 2015-09-14
-  - added SimpleBuffers::IWriter::WriteEnum
-  - added SimpleBuffers::IReader::ReadEnum
-  - escaped SimpleBuffers::IWriter::WriteString
+ - added SimpleBuffers::IWriter::WriteEnum
+ - added SimpleBuffers::IReader::ReadEnum
+ - escaped SimpleBuffers::IWriter::WriteString
 0.1.33 - 2015-09-12
-  - added watermark in files generated by SimpleBuffersCompiler
-  - added SimpleBuffers/Version.hpp
-  - added flags support for Network::HTTP::Client::Open
-  - added support for debug in Network::HTTP::Client
-  - added support for persistent cookies in Network::HTTP::Client
+ - added watermark in files generated by SimpleBuffersCompiler
+ - added SimpleBuffers/Version.hpp
+ - added flags support for Network::HTTP::Client::Open
+ - added support for debug in Network::HTTP::Client
+ - added support for persistent cookies in Network::HTTP::Client
 0.1.32 - 2015-09-09
-  - added Network::URLParser:Encode
-  - added Network::URLParser:Decode
-  - added optional member support in SimpleBuffers
-  - added member name support in SimpleBuffers
-  - fixed SimpleBuffersParser
+ - added Network::URLParser:Encode
+ - added Network::URLParser:Decode
+ - added optional member support in SimpleBuffers
+ - added member name support in SimpleBuffers
+ - fixed SimpleBuffersParser
 0.1.31 - 2015-09-06
-  - added UChar type (unsigned char)
-  - Added Str::StringHelper::Compare
-  - Added Str::StringHelper::Split
-  - Added Str::StringHelper::Strip
-  - Added Str::StringHelper::Replace
+ - added UChar type (unsigned char)
+ - Added Str::StringHelper::Compare
+ - Added Str::StringHelper::Split
+ - Added Str::StringHelper::Strip
+ - Added Str::StringHelper::Replace
 0.1.30 - 2015-09-05
-  - Fixed Network::HTTP::Client::DownloadURL
+ - Fixed Network::HTTP::Client::DownloadURL
 0.1.29 - 2015-09-04
-  - Added Network::HTTP::URLParser
-  - Added Network::HTTP::Client::DownloadURL
-  - Added Str::StringHelper
+ - Added Network::HTTP::URLParser
+ - Added Network::HTTP::Client::DownloadURL
+ - Added Str::StringHelper
 0.1.28 - 2015-09-01
-  - Added IO::IOutputStream::Flush
-  - Added flush & lock to Log::StreamOutput
-  - Fixed snappy SDL warnings
-  - Updated lzham with latest sources from github + patch for android
-  - Added cURL contrib
-  - Added Network/HTTP/Client
-  - Removed Test/FilterTest
-  - Refactored Test/PlayGround
+ - Added IO::IOutputStream::Flush
+ - Added flush & lock to Log::StreamOutput
+ - Fixed snappy SDL warnings
+ - Updated lzham with latest sources from github + patch for android
+ - Added cURL contrib
+ - Added Network/HTTP/Client
+ - Removed Test/FilterTest
+ - Refactored Test/PlayGround
 0.1.27 - 2015-08-30
-  - Added ScopePtr
-  - Fixed copyright in files
-  - Fixed LZHAM usage of malloc_usable_size (android issues)
-  - Added IO/IFileSysEnumerator
-  - Added IO/LocalFileSysEnumerator
-  - Switched Windows FileInputStream & FileOutputStream to Win32 API (from FILE)
-  - Fixed CX_API missing from some classes
-  - Moved SimpleBuffers/BLOB to /
-  - Added LZ4 contrib
-  - Added Snappy contrib
-  - Added some testers
-  - Print should still work event when args are wrong (a Print(out, "test {3}") when there are only 2 args should result in "test {3}")
-  - Added IO::IFilter::Reset method
+ - Added ScopePtr
+ - Fixed copyright in files
+ - Fixed LZHAM usage of malloc_usable_size (android issues)
+ - Added IO/IFileSysEnumerator
+ - Added IO/LocalFileSysEnumerator
+ - Switched Windows FileInputStream & FileOutputStream to Win32 API (from FILE)
+ - Fixed CX_API missing from some classes
+ - Moved SimpleBuffers/BLOB to /
+ - Added LZ4 contrib
+ - Added Snappy contrib
+ - Added some testers
+ - Print should still work event when args are wrong (a Print(out, "test {3}") when there are only 2 args should result in "test {3}")
+ - Added IO::IFilter::Reset method
 0.1.26 - 2015-08-23
-  - fixed Src/Str/Platform/UTF8_windows.cpp line 116 ( removed invalid NULL == szUTF8 return)
-  - fixed IO::Helper CopyStream (EOF issue)
-  - renamed Archive to SimpleBuffers
-  - renamed ArchiveCompiler to SimpleBuffersCompiler
-  - added missing info files for SparseHash contrib
-  - added Status_Duplicate
-  - added IO::IFilter
-  - added IO::FilteredInputStream
-  - added IO::FilteredOutputStream
-  - added IO::BlockFilter
-  - added LZHAM contrib
-  - added Archive::LZHAMFilter
-  - added TinyAES128 contrib
-  - added Crypt::AES128Filter
+ - fixed Src/Str/Platform/UTF8_windows.cpp line 116 ( removed invalid NULL == szUTF8 return)
+ - fixed IO::Helper CopyStream (EOF issue)
+ - renamed Archive to SimpleBuffers
+ - renamed ArchiveCompiler to SimpleBuffersCompiler
+ - added missing info files for SparseHash contrib
+ - added Status_Duplicate
+ - added IO::IFilter
+ - added IO::FilteredInputStream
+ - added IO::FilteredOutputStream
+ - added IO::BlockFilter
+ - added LZHAM contrib
+ - added Archive::LZHAMFilter
+ - added TinyAES128 contrib
+ - added Crypt::AES128Filter
 0.1.25 - 2015-08-13
-  - fixed typos
-  - removed IO/IDataReader
-  - removed IO/IDataWriter
-  - added IO/Helper::LoadStream
-  - added CX/Archive
-  - added Tool/ArchiveCompiler (ac)
-  - added CX_UNUSED
-  - added operator bool for Status
-  - added operator StatusCode for Status
+ - fixed typos
+ - removed IO/IDataReader
+ - removed IO/IDataWriter
+ - added IO/Helper::LoadStream
+ - added CX/Archive
+ - added Tool/ArchiveCompiler (ac)
+ - added CX_UNUSED
+ - added operator bool for Status
+ - added operator StatusCode for Status
 0.1.24 - 2015-08-03
-  - replaced calls to new to new (std::nothrow)
-  - fixed automatic detected issues
+ - replaced calls to new to new (std::nothrow)
+ - fixed automatic detected issues
 0.1.23 - 2015-07-19
-  - Increased Print internal ToString buffer from 1KB to 8KB
-  - Added support for ignored allocs in mem leak detector
-  - Added ignored allocs list (static vars)
+ - Increased Print internal ToString buffer from 1KB to 8KB
+ - Added support for ignored allocs in mem leak detector
+ - Added ignored allocs list (static vars)
 0.2.22 - 2015-07-08
-  - Fixed wide char case order policies (on win os)
+ - Fixed wide char case order policies (on win os)
 0.2.21 - 2015-07-07
-  - Added wide char case order policies
+ - Added wide char case order policies
 0.1.21 - 2015-07-06
-  - small fix for BLAKE2Hash (SIZE not declared as static const var)
+ - small fix for BLAKE2Hash (SIZE not declared as static const var)
 0.2.20 - 2015-07-05
-  - Fixed xxhash.h included as xxHash.h (xcode)
-  - Added BLAKE2 hash
+ - Fixed xxhash.h included as xxHash.h (xcode)
+ - Added BLAKE2 hash
 0.1.19 - 2015-07-04
-  - Fixed ToString<long> & ToString<unsigned long> not defined on iOS
-  - Fixed missing contrib sources in XCODE project
+ - Fixed ToString<long> & ToString<unsigned long> not defined on iOS
+ - Fixed missing contrib sources in XCODE project
 0.1.18 - 2015-07-02
-  - changed XCODE project name to uppercase (CX)
-  - fixed CC_TARGET_OS_IPHONE not defined
+ - changed XCODE project name to uppercase (CX)
+ - fixed CC_TARGET_OS_IPHONE not defined
 0.1.17 - 2015-07-01
-  - removed function
-  - removed container
-  - switched to std::function for Thread
-  - refactored cross platform support
-  - added XCODE buildsys (ios)
+ - removed function
+ - removed container
+ - switched to std::function for Thread
+ - refactored cross platform support
+ - added XCODE buildsys (ios)
 0.1.16 - 2015-06-30
-  - fixed header names in messages
-  - removed KVDB
-  - removed ForestDB contrib
+ - fixed header names in messages
+ - removed KVDB
+ - removed ForestDB contrib
 0.1.15 - 2015-06-20
-  - Fixed htonl used in UTF8ToUCS4 (NDK)
-  - Check for debug/release in NDK build
-  - Fixed StreamOutput.cpp being used multiple times in NDK makefile
-  - Removed GCC build sys
-  - More fixes for NDK build sys
-  - Moved KVDB::MemDatabase::MAGIC initialization to cpp file (NDK complaining while linking)
-  - Added SparseHashHelper.hpp (specialize CX::String & CX::WString hash for posix)
-  - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a string char at the end) (again!)
+ - Fixed htonl used in UTF8ToUCS4 (NDK)
+ - Check for debug/release in NDK build
+ - Fixed StreamOutput.cpp being used multiple times in NDK makefile
+ - Removed GCC build sys
+ - More fixes for NDK build sys
+ - Moved KVDB::MemDatabase::MAGIC initialization to cpp file (NDK complaining while linking)
+ - Added SparseHashHelper.hpp (specialize CX::String & CX::WString hash for posix)
+ - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a string char at the end) (again!)
 0.1.14 - 2015-04-15
-  - Fixed string conversions
+ - Fixed string conversions
 0.1.13 - 2015-06-14
-  - Fixed using missing Src/IO/Scope.hpp
-  - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a string char at the end)
-  - Added Lock, RWLock, Process, Thread for Android (nop mostly)
+ - Fixed using missing Src/IO/Scope.hpp
+ - Fixed Src/Str/UTF8_windows.cpp (storing 0 as a string char at the end)
+ - Added Lock, RWLock, Process, Thread for Android (nop mostly)
 0.1.12 - 2015-06-09
-  - Initial support for NDK build sys
+ - Initial support for NDK build sys
 0.1.11 - 2015-06-08
-  - Moved json input stream header from src to include
-  - Reduced json input stream stack usage from 16KB to 8KB
-  - Removed SB
-  - Added doc for CX::Mem::PrintAllocs
-  - Fixed PlayGround tester (usage of CX::Mem::PrintAllocs)
+ - Moved json input stream header from src to include
+ - Reduced json input stream stack usage from 16KB to 8KB
+ - Removed SB
+ - Added doc for CX::Mem::PrintAllocs
+ - Fixed PlayGround tester (usage of CX::Mem::PrintAllocs)
 0.1.10 - 2015-05-03
-  - Initial support for GCC / linux build
+ - Initial support for GCC / linux build
 0.1.9 - 2015-04-23
-  - PDB files are copied next to cx libs
-  - Added IO::IFileSysHelper::GetPathSep
-  - Added IO::IFileSysHelper::AppendPath
-  - Added IO::IFileSysHelper::IsAbsPath
-  - Fixed KVDB::MemDatabase save & load
-  - Fixed KVDB::MemIterator::Get
-  - Fixed KVDB::MemIterator::GetKeySize
-  - Fixed KVDB::MemTable not using set_deleted_key
-  - Fixed KVDB::MemDatabase not using set_deleted_key
-  - Small fix in Log::DefaultFormatter (extra space in output)
+ - PDB files are copied next to cx libs
+ - Added IO::IFileSysHelper::GetPathSep
+ - Added IO::IFileSysHelper::AppendPath
+ - Added IO::IFileSysHelper::IsAbsPath
+ - Fixed KVDB::MemDatabase save & load
+ - Fixed KVDB::MemIterator::Get
+ - Fixed KVDB::MemIterator::GetKeySize
+ - Fixed KVDB::MemTable not using set_deleted_key
+ - Fixed KVDB::MemDatabase not using set_deleted_key
+ - Small fix in Log::DefaultFormatter (extra space in output)
 0.1.8 - 2015-04-21
-  - Added RCMemBuffer
-  - Added Mem KVDB (not ready for use)
-  - Fixed VS Code Analysis warnings for ForestDB
-  - Added FileSysHelper
+ - Added RCMemBuffer
+ - Added Mem KVDB (not ready for use)
+ - Fixed VS Code Analysis warnings for ForestDB
+ - Added FileSysHelper
 0.1.7 - 2015-04-19
-  - Fixed Sparse/Dense MultiHashSet/MultiHashMap
-  - Fixed typo in description
+ - Fixed Sparse/Dense MultiHashSet/MultiHashMap
+ - Fixed typo in description
 0.1.6 - 2015-04-18
-  - Small fix in SB Generator
+ - Small fix in SB Generator
 0.1.4 - 2015-04-18
-  - Added SparseHashSet
-  - Added SparseHashMap
-  - Added DenseHashSet
-  - Added DenseHashMap
-  - Added SparseMultiHashSet
-  - Added SparseMultiHashMap
-  - Added DenseMultiHashSet
-  - Added DenseMultiHashMap  
+ - Added SparseHashSet
+ - Added SparseHashMap
+ - Added DenseHashSet
+ - Added DenseHashMap
+ - Added SparseMultiHashSet
+ - Added SparseMultiHashMap
+ - Added DenseMultiHashSet
+ - Added DenseMultiHashMap  
 0.1.3 - 2015-04-16
-  - Added Sys::Process
-  - Added MT configurations
+ - Added Sys::Process
+ - Added MT configurations
    

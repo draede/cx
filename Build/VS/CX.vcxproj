@@ -291,6 +291,8 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA512Hash.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash32.hpp" />
     <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp" />
+    <ClInclude Include="..\..\Include\CX\IInterface.hpp" />
+    <ClInclude Include="..\..\Include\CX\IObject.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\BufferedInputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\BufferedOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\FileInputStream.hpp" />
@@ -340,6 +342,7 @@
     <ClInclude Include="..\..\Include\CX\Mem.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\HTTP\Client.hpp" />
     <ClInclude Include="..\..\Include\CX\Network\URLParser.hpp" />
+    <ClInclude Include="..\..\Include\CX\Object.hpp" />
     <ClInclude Include="..\..\Include\CX\Platform.hpp" />
     <ClInclude Include="..\..\Include\CX\Print.hpp" />
     <ClInclude Include="..\..\Include\CX\Queue.hpp" />
@@ -17585,6 +17588,7 @@
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash32.cpp" />
     <ClCompile Include="..\..\Src\Hash\xxHash64.cpp" />
+    <ClCompile Include="..\..\Src\IInterface.cpp" />
     <ClCompile Include="..\..\Src\IO\BufferedInputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\BufferedOutputStream.cpp" />
     <ClCompile Include="..\..\Src\IO\FilteredInputStream.cpp" />

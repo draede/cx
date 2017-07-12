@@ -280,7 +280,7 @@ Status Helper::BSON2JSON(const void *pData, Size cbSize, IOutput *pOutput)
 		{
 			String sTmp;
 
-			size_t      cLen  = bson_iter_utf8_len_unsafe(&stackStates.top().iter);
+			size_t     cLen;
 			const char *szStr = bson_iter_utf8_unsafe(&stackStates.top().iter, &cLen);
 
 			Data::JSON::SAXParser::EscapeString(szStr, &sTmp);

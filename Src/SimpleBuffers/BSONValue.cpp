@@ -327,7 +327,7 @@ Status BSONValue::Write(IWriter *pWriter, const CX::Char *szName/* = NULL*/) con
 		else
 		if (BSON_TYPE_UTF8 == nType)
 		{
-			size_t      cLen = bson_iter_utf8_len_unsafe(pIter);
+			size_t     cLen;
 			const char *szStr = bson_iter_utf8_unsafe(pIter, &cLen);
 
 			if ((status = pWriter->WriteString(szStr, szKey)).IsNOK())

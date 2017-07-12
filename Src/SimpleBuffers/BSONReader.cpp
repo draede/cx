@@ -346,7 +346,7 @@ Status BSONReader::ReadString(String &v, const Char *szName/* = NULL*/)
 	{
 		return Status_InvalidCall;
 	}
-	size_t      cLen = bson_iter_utf8_len_unsafe(&m_stackStates.top().iter);
+	size_t     cLen;
 	const char *szStr = bson_iter_utf8_unsafe(&m_stackStates.top().iter, &cLen);
 	v.assign(szStr, cLen);
 
@@ -509,7 +509,7 @@ Status BSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 		else
 		if (BSON_TYPE_UTF8 == nType)
 		{
-			size_t      cLen = bson_iter_utf8_len_unsafe(pIter);
+			size_t     cLen;
 			const char *szStr = bson_iter_utf8_unsafe(pIter, &cLen);
 
 			if ((status = pCustom->OnString(szStr, szKey)).IsNOK())
