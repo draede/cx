@@ -107,16 +107,10 @@ typedef SSIZE_T ssize_t;
 #endif
 #pragma warning(default : 4142)
 #endif
-#define PRIi32 "d"
-#define PRId32 "d"
-#define PRIu32 "u"
-#define PRIi64 "I64i"
-#define PRId64 "I64i"
-#define PRIu64 "I64u"
 #else
 #include "bson-stdint.h"
-#include <inttypes.h>
 #endif
+#include <inttypes.h>
 
 #if defined(__MINGW32__) && !defined(INIT_ONCE_STATIC_INIT)
 #define INIT_ONCE_STATIC_INIT RTL_RUN_ONCE_INIT

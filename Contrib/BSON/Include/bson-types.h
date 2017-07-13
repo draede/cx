@@ -271,6 +271,8 @@ typedef enum {
  *--------------------------------------------------------------------------
  */
 
+#pragma warning(push)
+#pragma warning(disable: 4359)
 BSON_ALIGNED_BEGIN (8)
 typedef struct _bson_value_t {
    bson_type_t value_type;
@@ -326,6 +328,7 @@ typedef struct _bson_value_t {
       bson_decimal128_t v_decimal128;
    } value;
 } bson_value_t BSON_ALIGNED_END (8);
+#pragma warning(pop)
 
 
 /**
@@ -339,6 +342,8 @@ typedef struct _bson_value_t {
  * This structure is safe to discard on the stack. No cleanup is necessary
  * after using it.
  */
+#pragma warning(push)
+#pragma warning(disable: 4359)
 BSON_ALIGNED_BEGIN (128)
 typedef struct {
    const uint8_t *raw; /* The raw buffer being iterated. */
@@ -354,6 +359,7 @@ typedef struct {
    uint32_t err_off;   /* The offset of the error. */
    bson_value_t value; /* Internal value for various state. */
 } bson_iter_t BSON_ALIGNED_END (128);
+#pragma warning(pop)
 
 
 /**
@@ -365,11 +371,14 @@ typedef struct {
  * incoming mongo packet.
  */
 
+#pragma warning(push)
+#pragma warning(disable: 4324)
 BSON_ALIGNED_BEGIN (BSON_ALIGN_OF_PTR)
 typedef struct {
    uint32_t type;
    /*< private >*/
 } bson_reader_t BSON_ALIGNED_END (BSON_ALIGN_OF_PTR);
+#pragma warning(pop)
 
 
 /**

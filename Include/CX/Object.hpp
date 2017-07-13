@@ -7,9 +7,13 @@
 
 #include "CX/IObject.hpp"
 #include <string.h>
+#include <stdio.h>
 #include <new>
-#ifdef CX_OS_WINDOWS
-	#include "CX/C/Platform/Windows/windows.h"
+#ifdef _WIN32
+	#ifndef WIN32_LEAN_AND_MEAN
+		#define WIN32_LEAN_AND_MEAN
+	#endif
+	#include <windows.h>
 #endif
 
 
@@ -26,13 +30,13 @@ public:
 		return new (std::nothrow) CLASS();
 	}
 
-	virtual Bool Implements(const Char *szInterface) const
+	virtual bool Implements(const char *szInterface) const
 	{
 		return ImplementsHelper<INTERFACES...>::Implements(szInterface);
 	}
 	
 	template <typename T>
-	Bool Implements() const
+	bool Implements() const
 	{
 		return Implements(T::INTERFACE());
 	}
@@ -55,7 +59,7 @@ public:
 #endif
 	}
 
-	virtual IInterface *Acquire(const Char *szInterface)
+	virtual IInterface *Acquire(const char *szInterface)
 	{
 		IInterface *pInstance = AcquireHelper<INTERFACES...>::Acquire(this, szInterface);
 
@@ -68,7 +72,7 @@ public:
 		return pInstance;
 	}
 
-	virtual const IInterface *Acquire(const Char *szInterface) const
+	virtual const IInterface *Acquire(const char *szInterface) const
 	{
 		const IInterface *pInstance = AcquireHelper<INTERFACES...>::Acquire(this, szInterface);
 
@@ -125,6 +129,21 @@ public:
 		return cRefCount;
 	}
 
+	virtual void SetObjectManager(IObjectManager *pObjectManager)
+	{
+		m_pObjectManager = pObjectManager;
+	}
+
+	virtual IObjectManager *GetObjectManager()
+	{
+		return m_pObjectManager;
+	}
+
+	virtual const IObjectManager *GetObjectManager() const
+	{
+		return m_pObjectManager;
+	}
+
 	virtual void GetImplementedInterfaces(IInterfaceList *pListInterfaces) const
 	{
 		GetImplementedInterfacesHelper<INTERFACES...>::GetImplementedInterfaces(pListInterfaces);
@@ -134,7 +153,8 @@ protected:
 
 	Object()
 	{
-		m_cRefCount = 1;
+		m_cRefCount      = 1;
+		m_pObjectManager = NULL;
 	}
 
 	~Object()
@@ -143,6 +163,7 @@ protected:
 
 private:
 
+	IObjectManager        *m_pObjectManager;
 	mutable volatile long m_cRefCount;
 
 	template <typename... Args>
@@ -152,9 +173,9 @@ private:
 	struct ImplementsHelper<>
 	{
 
-		static Bool Implements(const Char *szInterface)
+		static bool Implements(const char *szInterface)
 		{
-			return False;
+			return false;
 		}
 
 	};
@@ -163,11 +184,11 @@ private:
 	struct ImplementsHelper<FIRST, REST...>
 	{
 
-		static Bool Implements(const Char *szInterface)
+		static bool Implements(const char *szInterface)
 		{
 			if (0 == strcmp(szInterface, FIRST::INTERFACE()))
 			{
-				return True;
+				return true;
 			}
 			else
 			{
@@ -184,12 +205,12 @@ private:
 	struct AcquireHelper<>
 	{
 
-		static IInterface *Acquire(Object *pObject, const Char *szInterface)
+		static IInterface *Acquire(Object *pObject, const char *szInterface)
 		{
 			return NULL;
 		}
 
-		static const IInterface *Acquire(const Object *pObject, const Char *szInterface)
+		static const IInterface *Acquire(const Object *pObject, const char *szInterface)
 		{
 			return NULL;
 		}
@@ -200,7 +221,7 @@ private:
 	struct AcquireHelper<FIRST, REST...>
 	{
 
-		static IInterface *Acquire(Object *pObject, const Char *szInterface)
+		static IInterface *Acquire(Object *pObject, const char *szInterface)
 		{
 			if (0 == strcmp(szInterface, FIRST::INTERFACE()))
 			{
@@ -212,7 +233,7 @@ private:
 			}
 		}
 
-		static const IInterface *Acquire(const Object *pObject, const Char *szInterface)
+		static const IInterface *Acquire(const Object *pObject, const char *szInterface)
 		{
 			if (0 == strcmp(szInterface, FIRST::INTERFACE()))
 			{

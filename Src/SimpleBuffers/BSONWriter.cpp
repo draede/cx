@@ -366,7 +366,7 @@ Status BSONWriter::WriteString(const String &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (!bson_append_utf8(m_stackStates.top().pBSON, pszName, -1, v.c_str(), v.size()))
+	if (!bson_append_utf8(m_stackStates.top().pBSON, pszName, -1, v.c_str(), (int)v.size()))
 	{
 		return Status_OperationFailed;
 	}

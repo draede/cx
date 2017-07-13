@@ -64,14 +64,14 @@ public:
 
 		static void *DefaultAlloc(void *pOldPtr, Size cbSize, void *pAllocatorCtx)
 		{
-			pAllocatorCtx;
+			CX_UNUSED(pAllocatorCtx);
 
 			return Mem::Realloc(pOldPtr, cbSize);
 		}
 
 		static void DefaultFree(void *pPtr, void *pAllocatorCtx)
 		{
-			pAllocatorCtx;
+			CX_UNUSED(pAllocatorCtx);
 
 			Mem::Free(pPtr);
 		}

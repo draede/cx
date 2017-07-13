@@ -5,13 +5,14 @@
 #pragma once
 
 
-#include "CX/Types.hpp"
+#include "CX/IObject.hpp"
+#include <stdlib.h>
 
 
 #define CX_DECLARE_INTERFACE(name)                                                                                     \
-	static const CX::Char *INTERFACE() { return name; }                                                                 \
+	static const char *INTERFACE() { return name; }                                                                     \
 	                                                                                                                    \
-	virtual const CX::Char *GetInterfaceName() const { return INTERFACE(); }
+	virtual const char *GetInterfaceName() const { return INTERFACE(); }
 
 
 namespace CX
@@ -22,23 +23,65 @@ class IInterface
 {
 public:
 
-	IInterface();
+	IInterface()
+	{
+		m_pObject      = NULL;
+		m_pConstObject = NULL;
+	}
 
-	virtual ~IInterface();
+	virtual ~IInterface()
+	{
+	}
 
-	virtual const Char *GetInterfaceName() const = 0;
+	virtual const char *GetInterfaceName() const = 0;
 
-	virtual long Retain();
+	virtual long Retain()
+	{
+		return m_pObject->Retain();
+	}
 
-	virtual long Retain() const;
+	virtual long Retain() const
+	{
+		return m_pConstObject->Retain();
+	}
 
-	virtual long Release();
+	virtual long Release()
+	{
+		return m_pObject->Release();
+	}
 
-	virtual long Release() const;
+	virtual long Release() const
+	{
+		return m_pConstObject->Release();
+	}
 
-	void SetObject(IObject *pObject);
+	IObject *GetObject()
+	{
+		return m_pObject;
+	}
 
-	void SetObject(const IObject *pConstObject) const;
+	const IObject *GetObject() const
+	{
+		return m_pConstObject;
+	}
+
+	void SetObject(IObject *pObject)
+	{
+		if (NULL != m_pObject)
+		{
+			return;
+		}
+		m_pObject = pObject;
+	}
+
+	void SetObject(const IObject *pConstObject) const
+	{
+		if (NULL != m_pConstObject)
+		{
+			return;
+		}
+		m_pConstObject = pConstObject;
+	}
 
 private:
 

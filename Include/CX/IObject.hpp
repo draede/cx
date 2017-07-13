@@ -5,35 +5,39 @@
 #pragma once
 
 
-#include "CX/Types.hpp"
-#include "CX/IInterface.hpp"
 #include "CX/IInterfaceList.hpp"
+
+
+#define CX_DECLARE_OBJECT(name)                                                                                        \
+	static const char *OBJECT() { return name; }                                                                        \
+	                                                                                                                    \
+	virtual const char *GetObjectName() const { return OBJECT(); }
 
 
 namespace CX
 {
 
-class IObject : public IInterface
+class IInterface;
+class IObjectManager;
+class IObject
 {
 public:
 
-	CX_DECLARE_INTERFACE("IObject")
+	virtual ~IObject() { }
 
-	virtual Bool Implements(const Char *szInterface) const = 0;
+	virtual const char *GetObjectName() const = 0;
+
+	virtual bool Implements(const char *szInterface) const = 0;
 
 	template <typename T>
-	Bool Implements() const
+	bool Implements() const
 	{
 		return Implements(T::INTERFACE());
 	}
 
-	virtual long Retain() = 0;
+	virtual IInterface *Acquire(const char *szInterface) = 0;
 
-	virtual long Retain() const = 0;
-
-	virtual IInterface *Acquire(const Char *szInterface) = 0;
-
-	virtual const IInterface *Acquire(const Char *szInterface) const = 0;
+	virtual const IInterface *Acquire(const char *szInterface) const = 0;
 
 	template <typename T>
 	T *Acquire()
@@ -47,9 +51,19 @@ public:
 		return (const T *)Acquire(T::INTERFACE());
 	}
 
+	virtual long Retain() = 0;
+
+	virtual long Retain() const = 0;
+
 	virtual long Release() = 0;
 
 	virtual long Release() const = 0;
+
+	virtual void SetObjectManager(IObjectManager *pObjectManager) = 0;
+
+	virtual IObjectManager *GetObjectManager() = 0;
+
+	virtual const IObjectManager *GetObjectManager() const = 0;
 
 	virtual void GetImplementedInterfaces(IInterfaceList *pListInterfaces) const = 0;
 

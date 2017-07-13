@@ -5,9 +5,9 @@
 #pragma once
 
 
-#include "CX/Types.hpp"
-#include "CX/Set.hpp"
-#include "CX/String.hpp"
+#include <set>
+#include <string>
+#include <stddef.h>
 #include "CX/IInterfaceList.hpp"
 
 
@@ -26,44 +26,44 @@ public:
 	{
 	}
 
-	virtual Bool AddInterface(const Char *szInterface)
+	virtual bool AddInterface(const char *szInterface)
 	{
 		m_setInterfaces.insert(szInterface);
 
-		return True;
+		return true;
 	}
 
-	virtual Bool HasInterface(const Char *szInterface) const
+	virtual bool HasInterface(const char *szInterface) const
 	{
 		return (m_setInterfaces.end() != m_setInterfaces.find(szInterface));
 	}
 
-	virtual Bool RemoveInterface(const Char *szInterface)
+	virtual bool RemoveInterface(const char *szInterface)
 	{
 		StringsSet::iterator iter = m_setInterfaces.find(szInterface);
 
 		if (m_setInterfaces.end() == iter)
 		{
-			return False;
+			return false;
 		}
 		m_setInterfaces.erase(iter);
 
-		return True;
+		return true;
 	}
 
-	virtual Bool RemoveInterfaces()
+	virtual bool RemoveInterfaces()
 	{
 		m_setInterfaces.clear();
 
-		return True;
+		return true;
 	}
 
-	virtual Size GetInterfacesCount() const
+	virtual size_t GetInterfacesCount() const
 	{
 		return m_setInterfaces.size();
 	}
 
-	virtual Bool GetInterface(Size cIndex, const Char **pszInterface) const
+	virtual bool GetInterface(size_t cIndex, const char **pszInterface) const
 	{
 		StringsSet::const_iterator iter = m_setInterfaces.begin();
 
@@ -74,16 +74,16 @@ public:
 		}
 		if (m_setInterfaces.end() == iter)
 		{
-			return False;
+			return false;
 		}
 		*pszInterface = iter->c_str();
 
-		return True;
+		return true;
 	}
 
 private:
 
-	typedef Set<String>::Type   StringsSet;
+	typedef std::set<std::string>   StringsSet;
 
 	StringsSet   m_setInterfaces;
 
