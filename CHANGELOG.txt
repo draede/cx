@@ -1,3 +1,5 @@
+0.2.147 - 2017-07-13
+ - Added interface/object list
 0.2.146 - 2017-07-12
  - Small BSON fixes
  - Added IInterface, IObject & Object

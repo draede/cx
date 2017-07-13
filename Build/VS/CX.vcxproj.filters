@@ -1107,13 +1107,13 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\Custom.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IInterface.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IObject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Object.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IInterfaceList.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\InterfaceList.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
