@@ -5,6 +5,7 @@
 #pragma once
 
 
+#include "CX/Types.hpp"
 #include "CX/IInterface.hpp"
 #include "CX/IObject.hpp"
 

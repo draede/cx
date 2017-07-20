@@ -5,10 +5,11 @@
 #pragma once
 
 
+#include "CX/Types.hpp"
 #include "CX/IObjectManager.hpp"
 #include "CX/Object.hpp"
-#include "CX/Sys/RWLock.hpp"
-#include "CX/Map.hpp"
+#include "CX/Sys/Lock.hpp"
+#include "CX/Vector.hpp"
 #include "CX/String.hpp"
 
 
@@ -19,7 +20,7 @@ class ObjectManager : public Object<ObjectManager, IObjectManager>
 {
 public:
 
-	CX_DECLARE_OBJECT("ObjectManager")
+	CX_DECLARE_OBJECT("CX.ObjectManager")
 
 	ObjectManager()
 	{
@@ -32,118 +33,176 @@ public:
 
 	//Retain will be called on pObject on success
 	//During this call the internal objects list will be locked
-	virtual bool AddObject(IObject *pObject)
+	virtual StatusCode AddObject(IObject *pObject)
 	{
-		Sys::WLocker         locker(&m_rwlObjects);
-		ObjectsMap::iterator iter;
+		CX::Sys::Locker         locker(&m_lockObjects);
+		ObjectsVector::iterator iter;
 
-		if (m_mapObjects.end() != (iter = m_mapObjects.find(pObject->GetObjectName())))
+		if (m_vectorObjects.end() != (iter = FindObject(pObject->GetObjectName())))
 		{
-			return false;
+			return Status_Duplicate;
 		}
-		m_mapObjects[pObject->GetObjectName()] = pObject;
+
+		m_vectorObjects.push_back(pObject);
 		pObject->Retain();
 		pObject->SetObjectManager(this);
 
-		return true;
+		return Status_OK;
 	}
 
 	//Release will be called on object
 	//During this call the internal objects list will be locked
-	virtual bool RemoveObject(const char *szObjectName)
+	virtual StatusCode RemoveObject(const Char *szObjectName)
 	{
-		Sys::WLocker         locker(&m_rwlObjects);
-		ObjectsMap::iterator iter;
+		CX::Sys::Locker         locker(&m_lockObjects);
+		ObjectsVector::iterator iter;
 
-		if (m_mapObjects.end() == (iter = m_mapObjects.find(szObjectName)))
+		if (m_vectorObjects.end() == (iter = FindObject(szObjectName)))
 		{
-			return false;
+			return Status_NotFound;
 		}
-		iter->second->SetObjectManager(NULL);
-		iter->second->Release();
-		m_mapObjects.erase(iter);
 
-		return true;
+		(*iter)->SetObjectManager(NULL);
+		(*iter)->Release();
+		m_vectorObjects.erase(iter);
+
+		return Status_OK;
 	}
 
 	//Release will be called on every object
 	//During this call the internal objects list will be locked
-	virtual bool RemoveAllObjects()
+	virtual StatusCode RemoveAllObjects()
 	{
-		Sys::WLocker locker(&m_rwlObjects);
+		CX::Sys::Locker           locker(&m_lockObjects);
+		ObjectsVector::iterator   iter;
 		
-		for (ObjectsMap::iterator iter = m_mapObjects.begin(); iter != m_mapObjects.end(); ++iter)
+		while (!m_vectorObjects.empty())
 		{
-			iter->second->SetObjectManager(NULL);
-			iter->second->Release();
-		}
-		m_mapObjects.clear();
+			iter = m_vectorObjects.end();
+			iter--;
 
-		return true;
+			(*iter)->SetObjectManager(NULL);
+			(*iter)->Release();
+
+			m_vectorObjects.erase(iter);
+		}
+
+		return Status_OK;
 	}
 
 	//After this call the internal objects list will be locked
-	virtual bool BeginEnum(IIterator **ppIterator)
+	virtual StatusCode BeginEnum(IIterator **ppIterator)
 	{
 		Iterator *pIterator;
 
 		if (NULL == (pIterator = new (std::nothrow) Iterator(this)))
 		{
-			return false;
+			return Status_MemAllocFailed;
 		}
 		*ppIterator = pIterator;
-		m_rwlObjects.EnterRead();
+		m_lockObjects.Enter();
 
-		return true;
+		return Status_OK;
 	}
 
 	//After this call the internal objects list will be unlocked
-	virtual bool EndEnum(IIterator *pIterator)
+	virtual StatusCode EndEnum(IIterator *pIterator)
 	{
 		if (NULL == pIterator)
 		{
-			return false;
+			return Status_InvalidArg;
 		}
 		delete pIterator;
-		m_rwlObjects.LeaveRead();
+		m_lockObjects.Leave();
 
-		return true;
+		return Status_OK;
 	}
 
 	//After this call the internal objects list will be locked
-	virtual bool BeginEnum(IConstIterator **ppConstIterator) const
+	virtual StatusCode BeginEnum(IConstIterator **ppConstIterator) const
 	{
 		ConstIterator *pConstIterator;
 
 		if (NULL == (pConstIterator = new (std::nothrow) ConstIterator(this)))
 		{
-			return false;
+			return Status_MemAllocFailed;
 		}
 		*ppConstIterator = pConstIterator;
-		m_rwlObjects.EnterRead();
+		m_lockObjects.Enter();
 
-		return true;
+		return Status_OK;
 	}
 
 	//After this call the internal objects list will be unlocked
-	virtual bool EndEnum(IConstIterator *pConstIterator) const
+	virtual StatusCode EndEnum(IConstIterator *pConstIterator) const
 	{
 		if (NULL == pConstIterator)
 		{
-			return false;
+			return Status_InvalidArg;
 		}
 		delete pConstIterator;
-		m_rwlObjects.LeaveRead();
+		m_lockObjects.Leave();
 
-		return true;
+		return Status_OK;
+	}
+
+	//During this call the internal objects list will be locked
+	virtual StatusCode EnumObjects(const std::function<StatusCode (IObject *)> &pfnEnumObjects)
+	{
+		CX::Sys::Locker           locker(&m_lockObjects);
+		StatusCode                nStatus;
+
+		for (ObjectsVector::iterator iter = m_vectorObjects.begin(); iter != m_vectorObjects.end(); ++iter)
+		{
+			if (CX_NOK(nStatus = pfnEnumObjects(*iter)))
+			{
+				return nStatus;
+			}
+		}
+
+		return Status_OK;
+	}
+
+	//During this call the internal objects list will be locked
+	virtual StatusCode EnumObjects(const std::function<StatusCode (const IObject *)> &pfnEnumConstObjects) const
+	{
+		CX::Sys::Locker           locker(&m_lockObjects);
+		StatusCode                nStatus;
+
+		for (ObjectsVector::const_iterator iter = m_vectorObjects.begin(); iter != m_vectorObjects.end(); ++iter)
+		{
+			if (CX_NOK(nStatus = pfnEnumConstObjects(*iter)))
+			{
+				return nStatus;
+			}
+		}
+
+		return Status_OK;
 	}
 
 private:
 
-	typedef Map<String, IObject *>::Type   ObjectsMap;
+	typedef CX::Vector<IObject *>::Type   ObjectsVector;
 
-	mutable Sys::RWLock   m_rwlObjects;
-	ObjectsMap            m_mapObjects;
+	mutable CX::Sys::Lock     m_lockObjects;
+	ObjectsVector             m_vectorObjects;
+
+	ObjectsVector::iterator FindObject(const Char *szName)
+	{
+		ObjectsVector::iterator iter;
+
+		iter = m_vectorObjects.begin();
+		while (m_vectorObjects.end() != iter)
+		{
+			if (0 == strcmp((*iter)->GetObjectName(), szName))
+			{
+				return iter;
+			}
+			iter++;
+		}
+
+		return m_vectorObjects.end();
+	}
 
 	class Iterator : public IIterator
 	{
@@ -152,39 +211,39 @@ private:
 		Iterator(ObjectManager *pObjectManager)
 		{
 			m_pObjectManager = pObjectManager;
-			m_bInitialized   = false;
+			m_bInitialized   = False;
 		}
 
-		virtual bool Next(IObject **ppObject)
+		virtual Bool Next(IObject **ppObject)
 		{
 			if (!m_bInitialized)
 			{
-				m_iter         = m_pObjectManager->m_mapObjects.begin();
-				m_bInitialized = true;
+				m_iter         = m_pObjectManager->m_vectorObjects.begin();
+				m_bInitialized = True;
 			}
 			else
 			{
-				if (m_pObjectManager->m_mapObjects.end() == m_iter)
+				if (m_pObjectManager->m_vectorObjects.end() == m_iter)
 				{
-					return false;
+					return False;
 				}
 
 				m_iter++;
 			}
-			if (m_pObjectManager->m_mapObjects.end() == m_iter)
+			if (m_pObjectManager->m_vectorObjects.end() == m_iter)
 			{
-				return false;
+				return False;
 			}
-			*ppObject = m_iter->second;
+			*ppObject = *m_iter;
 
-			return true;
+			return True;
 		}
 
 	private:
 
-		ObjectManager                         *m_pObjectManager;
-		ObjectManager::ObjectsMap::iterator   m_iter;
-		bool                                  m_bInitialized;
+		ObjectManager                            *m_pObjectManager;
+		ObjectManager::ObjectsVector::iterator   m_iter;
+		Bool                                     m_bInitialized;
 
 	};
 
@@ -195,39 +254,39 @@ private:
 		ConstIterator(const ObjectManager *pObjectManager)
 		{
 			m_pObjectManager = pObjectManager;
-			m_bInitialized   = false;
+			m_bInitialized   = False;
 		}
 
-		virtual bool Next(const IObject **ppObject)
+		virtual Bool Next(const IObject **ppObject)
 		{
 			if (!m_bInitialized)
 			{
-				m_iter         = m_pObjectManager->m_mapObjects.begin();
-				m_bInitialized = true;
+				m_iter         = m_pObjectManager->m_vectorObjects.begin();
+				m_bInitialized = True;
 			}
 			else
 			{
-				if (m_pObjectManager->m_mapObjects.end() == m_iter)
+				if (m_pObjectManager->m_vectorObjects.end() == m_iter)
 				{
-					return false;
+					return False;
 				}
 
 				m_iter++;
 			}
-			if (m_pObjectManager->m_mapObjects.end() == m_iter)
+			if (m_pObjectManager->m_vectorObjects.end() == m_iter)
 			{
-				return false;
+				return False;
 			}
-			*ppObject = m_iter->second;
+			*ppObject = *m_iter;
 
-			return true;
+			return True;
 		}
 
 	private:
 
-		const ObjectManager                         *m_pObjectManager;
-		ObjectManager::ObjectsMap::const_iterator   m_iter;
-		bool                                        m_bInitialized;
+		const ObjectManager                            *m_pObjectManager;
+		ObjectManager::ObjectsVector::const_iterator   m_iter;
+		Bool                                           m_bInitialized;
 	};
 
 };

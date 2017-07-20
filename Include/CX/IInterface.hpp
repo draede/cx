@@ -5,14 +5,15 @@
 #pragma once
 
 
+#include "CX/Types.hpp"
 #include "CX/IObject.hpp"
 #include <stdlib.h>
 
 
 #define CX_DECLARE_INTERFACE(name)                                                                                     \
-	static const char *INTERFACE() { return name; }                                                                     \
+	static const CX::Char *INTERFACE() { return name; }                                                                 \
 	                                                                                                                    \
-	virtual const char *GetInterfaceName() const { return INTERFACE(); }
+	virtual const CX::Char *GetInterfaceName() const { return INTERFACE(); }
 
 
 namespace CX
@@ -33,7 +34,7 @@ public:
 	{
 	}
 
-	virtual const char *GetInterfaceName() const = 0;
+	virtual const Char *GetInterfaceName() const = 0;
 
 	virtual long Retain()
 	{
@@ -91,4 +92,3 @@ private:
 };
 
 }//namespace CX
-

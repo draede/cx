@@ -5,7 +5,9 @@
 #pragma once
 
 
+#include "CX/Types.hpp"
 #include "CX/IInterface.hpp"
+#include <functional>
 
 
 namespace CX
@@ -15,7 +17,10 @@ class IObjectManager : public IInterface
 {
 public:
 
-	CX_DECLARE_INTERFACE("ObjectManager")
+	CX_DECLARE_INTERFACE("CX.ObjectManager")
+
+	typedef std::function<StatusCode (IObject *)>         ObjectsEnumFunction;
+	typedef std::function<StatusCode (const IObject *)>   ConstObjectsEnumFunction;
 
 	class IIterator
 	{
@@ -23,7 +28,7 @@ public:
 
 		virtual ~IIterator() { }
 
-		virtual bool Next(IObject **ppObject) = 0;
+		virtual Bool Next(IObject **ppObject) = 0;
 
 	};
 
@@ -33,35 +38,43 @@ public:
 
 		virtual ~IConstIterator() { }
 
-		virtual bool Next(const IObject **ppObject) = 0;
+		virtual Bool Next(const IObject **ppObject) = 0;
 
 	};
 
 	virtual ~IObjectManager() { }
 
+	//recursive locks are mandatory
+
 	//Retain will be called on pObject on success
 	//During this call the internal objects list will be locked
-	virtual bool AddObject(IObject *pObject) = 0;
+	virtual StatusCode AddObject(IObject *pObject) = 0;
 
 	//Release will be called on object
 	//During this call the internal objects list will be locked
-	virtual bool RemoveObject(const char *szObjectName) = 0;
+	virtual StatusCode RemoveObject(const char *szObjectName) = 0;
 
 	//Release will be called on every object
 	//During this call the internal objects list will be locked
-	virtual bool RemoveAllObjects() = 0;
+	virtual StatusCode RemoveAllObjects() = 0;
 
 	//After this call the internal objects list will be locked
-	virtual bool BeginEnum(IIterator **ppIterator) = 0;
+	virtual StatusCode BeginEnum(IIterator **ppIterator) = 0;
 
 	//After this call the internal objects list will be unlocked
-	virtual bool EndEnum(IIterator *pIterator) = 0;
+	virtual StatusCode EndEnum(IIterator *pIterator) = 0;
 
 	//After this call the internal objects list will be locked
-	virtual bool BeginEnum(IConstIterator **ppConstIterator) const = 0;
+	virtual StatusCode BeginEnum(IConstIterator **ppConstIterator) const = 0;
 
 	//After this call the internal objects list will be unlocked
-	virtual bool EndEnum(IConstIterator *pConstIterator) const = 0;
+	virtual StatusCode EndEnum(IConstIterator *pConstIterator) const = 0;
+
+	//During this call the internal objects list will be locked
+	virtual StatusCode EnumObjects(const std::function<StatusCode (IObject *)> &pfnEnumObjects) = 0;
+
+	//During this call the internal objects list will be locked
+	virtual StatusCode EnumObjects(const std::function<StatusCode (const IObject *)> &pfnEnumConstObjects) const = 0;
 
 };
 

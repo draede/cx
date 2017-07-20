@@ -5,13 +5,14 @@
 #pragma once
 
 
+#include "CX/Types.hpp"
 #include "CX/IInterfaceList.hpp"
 
 
 #define CX_DECLARE_OBJECT(name)                                                                                        \
-	static const char *OBJECT() { return name; }                                                                        \
+	static const CX::Char *OBJECT() { return name; }                                                                    \
 	                                                                                                                    \
-	virtual const char *GetObjectName() const { return OBJECT(); }
+	virtual const CX::Char *GetObjectName() const { return OBJECT(); }
 
 
 namespace CX
@@ -25,19 +26,19 @@ public:
 
 	virtual ~IObject() { }
 
-	virtual const char *GetObjectName() const = 0;
+	virtual const Char *GetObjectName() const = 0;
 
-	virtual bool Implements(const char *szInterface) const = 0;
+	virtual Bool Implements(const Char *szInterface) const = 0;
 
 	template <typename T>
-	bool Implements() const
+	Bool Implements() const
 	{
 		return Implements(T::INTERFACE());
 	}
 
-	virtual IInterface *Acquire(const char *szInterface) = 0;
+	virtual IInterface *Acquire(const Char *szInterface) = 0;
 
-	virtual const IInterface *Acquire(const char *szInterface) const = 0;
+	virtual const IInterface *Acquire(const Char *szInterface) const = 0;
 
 	template <typename T>
 	T *Acquire()
@@ -64,6 +65,12 @@ public:
 	virtual IObjectManager *GetObjectManager() = 0;
 
 	virtual const IObjectManager *GetObjectManager() const = 0;
+
+	virtual void SetParent(IObject *pParent) = 0;
+
+	virtual IObject *GetParent() = 0;
+
+	virtual const IObject *GetParent() const = 0;
 
 	virtual void GetImplementedInterfaces(IInterfaceList *pListInterfaces) const = 0;
 

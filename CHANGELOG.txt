@@ -1,3 +1,5 @@
+0.2.149 - 2017-11-20
+ - More fixes Interface, Object, ObjectManager
 0.2.148 - 2017-07-13
  - Added ObjectsManager
  - Changed IInterface to header only

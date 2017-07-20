@@ -5,6 +5,7 @@
 #pragma once
 
 
+#include "CX/Types.hpp"
 #include <stddef.h>
 
 
@@ -17,17 +18,17 @@ public:
 
 	virtual ~IInterfaceList() { }
 
-	virtual bool AddInterface(const char *szInterface) = 0;
+	virtual StatusCode AddInterface(const Char *szInterface) = 0;
 
-	virtual bool HasInterface(const char *szInterface) const = 0;
+	virtual Bool HasInterface(const Char *szInterface) const = 0;
 
-	virtual bool RemoveInterface(const char *szInterface) = 0;
+	virtual StatusCode RemoveInterface(const Char *szInterface) = 0;
 
-	virtual bool RemoveInterfaces() = 0;
+	virtual StatusCode RemoveInterfaces() = 0;
 
-	virtual size_t GetInterfacesCount() const = 0;
+	virtual Size GetInterfacesCount() const = 0;
 
-	virtual bool GetInterface(size_t cIndex, const char **pszInterface) const = 0;
+	virtual StatusCode GetInterface(Size cIndex, const Char **pszInterface) const = 0;
 
 };
 
