@@ -49,6 +49,8 @@ public:
 
 	BSONValue();
 
+	BSONValue(const BSONValue &v);
+
 	~BSONValue();
 
 	const void *GetBuffer() const;
@@ -64,6 +66,10 @@ public:
 	Size GetAllBufferSize() const;
 
 	int Compare(const BSONValue &v) const;
+
+	Status Copy(const BSONValue &v);
+
+	BSONValue &operator=(const BSONValue &v);
 
 	bool operator<(const BSONValue &v) const;
 

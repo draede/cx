@@ -111,6 +111,15 @@ BSONValue::BSONValue()
 	m_cbSize    = 0;
 }
 
+BSONValue::BSONValue(const BSONValue &v)
+{
+	m_pAllData  = NULL;
+	m_cbAllSize = 0;
+	m_pData     = NULL;
+	m_cbSize    = 0;
+	Copy(v);
+}
+
 BSONValue::~BSONValue()
 {
 	Init();
@@ -168,6 +177,28 @@ int BSONValue::Compare(const BSONValue &v) const
 			return memcmp(m_pData, v.m_pData, m_cbSize);
 		}
 	}
+}
+
+Status BSONValue::Copy(const BSONValue &v)
+{
+	void *pData;
+
+	if (NULL == (pData = m_allocator.Alloc(NULL, v.m_cbSize, m_allocator.pCTX)))
+	{
+		return Status_MemAllocFailed;
+	}
+	Init();
+	m_pData  = m_pAllData  = pData;
+	m_cbSize = m_cbAllSize = v.m_cbSize;
+
+	return Status();
+}
+
+BSONValue &BSONValue::operator=(const BSONValue &v)
+{
+	Copy(v);
+
+	return *this;
 }
 
 bool BSONValue::operator<(const BSONValue &v) const

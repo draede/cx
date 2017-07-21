@@ -1,3 +1,5 @@
+0.2.150 - 2017-11-21
+ - Added copy constructor & operator to BSONValue
 0.2.149 - 2017-11-20
  - More fixes Interface, Object, ObjectManager
 0.2.148 - 2017-07-13
