@@ -181,6 +181,13 @@ int BSONValue::Compare(const BSONValue &v) const
 
 Status BSONValue::Copy(const BSONValue &v)
 {
+	if (0 == v.m_cbSize)
+	{
+		Init();
+
+		return Status();
+	}
+
 	void *pData;
 
 	if (NULL == (pData = m_allocator.Alloc(NULL, v.m_cbSize, m_allocator.pCTX)))
@@ -188,6 +195,7 @@ Status BSONValue::Copy(const BSONValue &v)
 		return Status_MemAllocFailed;
 	}
 	Init();
+	memcpy(pData, v.m_pData, v.m_cbSize);
 	m_pData  = m_pAllData  = pData;
 	m_cbSize = m_cbAllSize = v.m_cbSize;
 
