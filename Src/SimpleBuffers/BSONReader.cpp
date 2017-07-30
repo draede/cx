@@ -162,11 +162,19 @@ Status BSONReader::ReadInt8(Int8 &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BSON_TYPE_INT32 != nType)
+	if (BSON_TYPE_INT32 == nType)
+	{
+		v = (Int8)bson_iter_int32_unsafe(&m_stackStates.top().iter);
+	}
+	else
+	if (BSON_TYPE_INT64 == nType)
+	{
+		v = (Int8)bson_iter_int64_unsafe(&m_stackStates.top().iter);
+	}
+	else
 	{
 		return Status_InvalidCall;
 	}
-	v = (Int8)bson_iter_int32_unsafe(&m_stackStates.top().iter);
 
 	return Status();
 }
@@ -180,11 +188,19 @@ Status BSONReader::ReadUInt8(UInt8 &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BSON_TYPE_INT32 != nType)
+	if (BSON_TYPE_INT32 == nType)
+	{
+		v = (UInt8)bson_iter_int32_unsafe(&m_stackStates.top().iter);
+	}
+	else
+	if (BSON_TYPE_INT64 == nType)
+	{
+		v = (UInt8)bson_iter_int64_unsafe(&m_stackStates.top().iter);
+	}
+	else
 	{
 		return Status_InvalidCall;
 	}
-	v = (UInt8)bson_iter_int32_unsafe(&m_stackStates.top().iter);
 
 	return Status();
 }
@@ -198,11 +214,19 @@ Status BSONReader::ReadInt16(Int16 &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BSON_TYPE_INT32 != nType)
+	if (BSON_TYPE_INT32 == nType)
+	{
+		v = (Int16)bson_iter_int32_unsafe(&m_stackStates.top().iter);
+	}
+	else
+	if (BSON_TYPE_INT64 == nType)
+	{
+		v = (Int16)bson_iter_int64_unsafe(&m_stackStates.top().iter);
+	}
+	else
 	{
 		return Status_InvalidCall;
 	}
-	v = (Int16)bson_iter_int32_unsafe(&m_stackStates.top().iter);
 
 	return Status();
 }
@@ -216,11 +240,19 @@ Status BSONReader::ReadUInt16(UInt16 &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BSON_TYPE_INT32 != nType)
+	if (BSON_TYPE_INT32 == nType)
+	{
+		v = (UInt16)bson_iter_int32_unsafe(&m_stackStates.top().iter);
+	}
+	else
+	if (BSON_TYPE_INT64 == nType)
+	{
+		v = (UInt16)bson_iter_int64_unsafe(&m_stackStates.top().iter);
+	}
+	else
 	{
 		return Status_InvalidCall;
 	}
-	v = (UInt16)bson_iter_int32_unsafe(&m_stackStates.top().iter);
 
 	return Status();
 }
@@ -234,11 +266,19 @@ Status BSONReader::ReadInt32(Int32 &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BSON_TYPE_INT32 != nType)
+	if (BSON_TYPE_INT32 == nType)
+	{
+		v = (Int32)bson_iter_int32_unsafe(&m_stackStates.top().iter);
+	}
+	else
+	if (BSON_TYPE_INT64 == nType)
+	{
+		v = (Int32)bson_iter_int64_unsafe(&m_stackStates.top().iter);
+	}
+	else
 	{
 		return Status_InvalidCall;
 	}
-	v = (Int32)bson_iter_int32_unsafe(&m_stackStates.top().iter);
 
 	return Status();
 }
@@ -252,11 +292,19 @@ Status BSONReader::ReadUInt32(UInt32 &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BSON_TYPE_INT64 != nType)
+	if (BSON_TYPE_INT32 == nType)
+	{
+		v = (UInt32)bson_iter_int32_unsafe(&m_stackStates.top().iter);
+	}
+	else
+	if (BSON_TYPE_INT64 == nType)
+	{
+		v = (UInt32)bson_iter_int64_unsafe(&m_stackStates.top().iter);
+	}
+	else
 	{
 		return Status_InvalidCall;
 	}
-	v = (UInt32)bson_iter_int64_unsafe(&m_stackStates.top().iter);
 
 	return Status();
 }
@@ -270,11 +318,19 @@ Status BSONReader::ReadInt64(Int64 &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BSON_TYPE_INT64 != nType)
+	if (BSON_TYPE_INT32 == nType)
+	{
+		v = (Int64)bson_iter_int32_unsafe(&m_stackStates.top().iter);
+	}
+	else
+	if (BSON_TYPE_INT64 == nType)
+	{
+		v = (Int64)bson_iter_int64_unsafe(&m_stackStates.top().iter);
+	}
+	else
 	{
 		return Status_InvalidCall;
 	}
-	v = (Int64)bson_iter_int64_unsafe(&m_stackStates.top().iter);
 
 	return Status();
 }
@@ -288,11 +344,19 @@ Status BSONReader::ReadUInt64(UInt64 &v, const Char *szName/* = NULL*/)
 	{
 		return status;
 	}
-	if (BSON_TYPE_INT64 != nType)
+	if (BSON_TYPE_INT32 == nType)
+	{
+		v = (UInt64)bson_iter_int32_unsafe(&m_stackStates.top().iter);
+	}
+	else
+	if (BSON_TYPE_INT64 == nType)
+	{
+		v = (UInt64)bson_iter_int64_unsafe(&m_stackStates.top().iter);
+	}
+	else
 	{
 		return Status_InvalidCall;
 	}
-	v = (UInt64)bson_iter_int64_unsafe(&m_stackStates.top().iter);
 
 	return Status();
 }
@@ -393,7 +457,11 @@ Status BSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 		}
 		if (!bson_iter_find(&m_stackStates.top().iter, szName))
 		{
-			return Status_InvalidCall;
+			m_stackStates.top().iter = m_stackStates.top().iterStart;
+			if (!bson_iter_find(&m_stackStates.top().iter, szName))
+			{
+				return Status_InvalidCall;
+			}
 		}
 		pIter   = &m_stackStates.top().iter;
 		bObject = true;
@@ -587,7 +655,11 @@ Status BSONReader::ReadCustom(ICustom::Type nCustomType, void *pData, ICustom::A
 		}
 		if (!bson_iter_find(&m_stackStates.top().iter, szName))
 		{
-			return Status_InvalidCall;
+			m_stackStates.top().iter = m_stackStates.top().iterStart;
+			if (!bson_iter_find(&m_stackStates.top().iter, szName))
+			{
+				return Status_InvalidCall;
+			}
 		}
 		pIter   = &m_stackStates.top().iter;
 		bObject = true;
@@ -652,6 +724,7 @@ Status BSONReader::BeginObject(const Char *szName/* = NULL*/)
 		StateData state(State_Object);
 
 		bson_iter_init(&state.iter, m_pBSON);
+		state.iterStart = state.iter;
 		m_stackStates.push(state);
 
 		return Status();
@@ -665,7 +738,11 @@ Status BSONReader::BeginObject(const Char *szName/* = NULL*/)
 		}
 		if (!bson_iter_find(&m_stackStates.top().iter, szName))
 		{
-			return Status_InvalidCall;
+			m_stackStates.top().iter = m_stackStates.top().iterStart;
+			if (!bson_iter_find(&m_stackStates.top().iter, szName))
+			{
+				return Status_InvalidCall;
+			}
 		}
 		nType = bson_iter_type(&m_stackStates.top().iter);
 		if (BSON_TYPE_DOCUMENT != nType)
@@ -679,6 +756,7 @@ Status BSONReader::BeginObject(const Char *szName/* = NULL*/)
 		{
 			return Status_InvalidCall;
 		}
+		state.iterStart = state.iter;
 		m_stackStates.push(state);
 
 		return Status();
@@ -706,6 +784,7 @@ Status BSONReader::BeginObject(const Char *szName/* = NULL*/)
 		{
 			return Status_InvalidCall;
 		}
+		state.iterStart = state.iter;
 		m_stackStates.push(state);
 
 		return Status();
@@ -753,6 +832,7 @@ Status BSONReader::BeginArray(const Char *szName/* = NULL*/)
 		StateData state(State_Array);
 
 		bson_iter_init(&state.iter, m_pBSON);
+		state.iterStart = state.iter;
 		m_stackStates.push(state);
 
 		return Status();
@@ -766,7 +846,11 @@ Status BSONReader::BeginArray(const Char *szName/* = NULL*/)
 		}
 		if (!bson_iter_find(&m_stackStates.top().iter, szName))
 		{
-			return Status_InvalidCall;
+			m_stackStates.top().iter = m_stackStates.top().iterStart;
+			if (!bson_iter_find(&m_stackStates.top().iter, szName))
+			{
+				return Status_InvalidCall;
+			}
 		}
 		nType = bson_iter_type(&m_stackStates.top().iter);
 		if (BSON_TYPE_ARRAY != nType)
@@ -780,6 +864,7 @@ Status BSONReader::BeginArray(const Char *szName/* = NULL*/)
 		{
 			return Status_InvalidCall;
 		}
+		state.iterStart = state.iter;
 		m_stackStates.push(state);
 
 		return Status();
@@ -807,6 +892,7 @@ Status BSONReader::BeginArray(const Char *szName/* = NULL*/)
 		{
 			return Status_InvalidCall;
 		}
+		state.iterStart = state.iter;
 		m_stackStates.push(state);
 
 		return Status();
@@ -854,7 +940,11 @@ Status BSONReader::PrepareRead(const Char *szName, bson_type_t *pnType)
 		}
 		if (!bson_iter_find(&m_stackStates.top().iter, szName))
 		{
-			return Status_InvalidCall;
+			m_stackStates.top().iter = m_stackStates.top().iterStart;
+			if (!bson_iter_find(&m_stackStates.top().iter, szName))
+			{
+				return Status_InvalidCall;
+			}
 		}
 		*pnType = bson_iter_type(&m_stackStates.top().iter);
 

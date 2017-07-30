@@ -1,3 +1,6 @@
+0.2.252 - 2017-07-28
+ - Fixed BSONReader ReadInt*
+ - Fixed BSONReader reading of out of order object members
 0.2.151 - 2017-07-22
  - Fixed BSONValue::Copy
 0.2.150 - 2017-11-21

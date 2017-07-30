@@ -121,6 +121,7 @@ private:
 
 		State       nState;
 		bson_iter_t iter;
+		bson_iter_t iterStart;
 	};
 
 	typedef Stack<StateData>::Type StatesStack;
