@@ -1,3 +1,5 @@
+0.2.153 - 2017-08-02
+ - Added support for WChar in SimpleBuffers::Helper
 0.2.152 - 2017-07-28
  - Fixed BSONReader ReadInt*
  - Fixed BSONReader reading of out of order object members

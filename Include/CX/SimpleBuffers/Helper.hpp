@@ -96,6 +96,19 @@ public:
 	}
 
 	template <typename SIMPLEBUFFER>
+	static Status LoadJSON(SIMPLEBUFFER *pSB, const WChar *wszPath)
+	{
+		IO::FileInputStream is(wszPath);
+
+		if (!is.IsOK())
+		{
+			return Status_OpenFailed;
+		}
+
+		return LoadJSON(pSB, &is);
+	}
+
+	template <typename SIMPLEBUFFER>
 	static Status LoadJSON(SIMPLEBUFFER *pSB, const void *pData, Size cbSize)
 	{
 		IO::MemInputStream is(pData, cbSize);
@@ -139,6 +152,19 @@ public:
 	}
 
 	template <typename SIMPLEBUFFER>
+	static Status SaveJSON(const SIMPLEBUFFER *pSB, const WChar *wszPath)
+	{
+		IO::FileOutputStream os(wszPath);
+
+		if (!os.IsOK())
+		{
+			return Status_CreateFailed;
+		}
+
+		return SaveJSON(pSB, &os);
+	}
+
+	template <typename SIMPLEBUFFER>
 	static Status LoadBSON(SIMPLEBUFFER *pSB, IO::IInputStream *pInputStream)
 	{
 		SimpleBuffers::BSONReader reader;
@@ -164,6 +190,19 @@ public:
 	static Status LoadBSON(SIMPLEBUFFER *pSB, const Char *szPath)
 	{
 		IO::FileInputStream is(szPath);
+
+		if (!is.IsOK())
+		{
+			return Status_OpenFailed;
+		}
+
+		return LoadBSON(pSB, &is);
+	}
+
+	template <typename SIMPLEBUFFER>
+	static Status LoadBSON(SIMPLEBUFFER *pSB, const WChar *wszPath)
+	{
+		IO::FileInputStream is(wszPath);
 
 		if (!is.IsOK())
 		{
@@ -217,6 +256,19 @@ public:
 	}
 
 	template <typename SIMPLEBUFFER>
+	static Status SaveBSON(const SIMPLEBUFFER *pSB, const WChar *wszPath)
+	{
+		IO::FileOutputStream os(wszPath);
+
+		if (!os.IsOK())
+		{
+			return Status_CreateFailed;
+		}
+
+		return SaveBSON(pSB, &os);
+	}
+
+	template <typename SIMPLEBUFFER>
 	static Status Load(Type nType, SIMPLEBUFFER *pSB, IO::IInputStream *pInputStream)
 	{
 		if (Type_JSON == nType)
@@ -245,6 +297,24 @@ public:
 		if (Type_BSON == nType)
 		{
 			return LoadBSON(pSB, szPath);
+		}
+		else
+		{
+			return Status_InvalidArg;
+		}
+	}
+
+	template <typename SIMPLEBUFFER>
+	static Status Load(Type nType, SIMPLEBUFFER *pSB, const WChar *wszPath)
+	{
+		if (Type_JSON == nType)
+		{
+			return LoadJSON(pSB, wszPath);
+		}
+		else
+		if (Type_BSON == nType)
+		{
+			return LoadBSON(pSB, wszPath);
 		}
 		else
 		{
@@ -307,6 +377,24 @@ public:
 	}
 
 	template <typename SIMPLEBUFFER>
+	static Status Save(Type nType, const SIMPLEBUFFER *pSB, const WChar *wszPath)
+	{
+		if (Type_JSON == nType)
+		{
+			return SaveJSON(pSB, wszPath);
+		}
+		else
+		if (Type_BSON == nType)
+		{
+			return SaveBSON(pSB, wszPath);
+		}
+		else
+		{
+			return Status_InvalidArg;
+		}
+	}
+
+	template <typename SIMPLEBUFFER>
 	static Status Load(SIMPLEBUFFER *pSB, IO::IInputStream *pInputStream, Type *pnDetectedType)
 	{
 		Type   nType;
@@ -339,6 +427,19 @@ public:
 	static Status Load(SIMPLEBUFFER *pSB, const Char *szPath, Type *pnDetectedType)
 	{
 		IO::FileInputStream is(szPath);
+
+		if (!is.IsOK())
+		{
+			return Status_OpenFailed;
+		}
+
+		return Load(pSB, &is, pnDetectedType);
+	}
+
+	template <typename SIMPLEBUFFER>
+	static Status Load(SIMPLEBUFFER *pSB, const WChar *wszPath, Type *pnDetectedType)
+	{
+		IO::FileInputStream is(wszPath);
 
 		if (!is.IsOK())
 		{
