@@ -33,7 +33,7 @@ public:
 
 	bool IsOK()
 	{
-		return m_pInstance;
+		return (NULL != m_pInstance);
 	}
 
 	T *Get()
@@ -77,7 +77,7 @@ public:
 
 	const T *Get()
 	{
-		return m_pInstance;
+		return (NULL != m_pInstance);
 	}
 
 	const T *operator->()

@@ -1,3 +1,6 @@
+0.2.154 - 2017-08-04
+ - Fixed VS2013/VS2015 platform tools version
+ - Fixed warnings
 0.2.153 - 2017-08-02
  - Added support for WChar in SimpleBuffers::Helper
 0.2.152 - 2017-07-28
