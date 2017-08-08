@@ -27,11 +27,14 @@
  */ 
 
 #include "CX/DB/SQLite/Database.hpp"
+#include "CX/DB/SQLite/Statement.hpp"
+#include "CX/Print.hpp"
 #include "sqlite3.h"
 
 
 #define SQLSTATUS(status, func, ret)                                                                                   \
 Status(status, "{1} failed with code {2}, message '{3}'", func, ret, sqlite3_errstr(ret))
+
 
 namespace CX
 {
@@ -188,6 +191,165 @@ Size Database::GetLastExecChangesCount()
 	}
 
 	return (Size)sqlite3_changes((sqlite3 *)m_pDB);
+}
+
+Status Database::GetPragma(const Char *szName, Int64 *pnValue)
+{
+	if (NULL == m_pDB)
+	{
+		return Status_NotInitialized;
+	}
+
+	String sSQL;
+	Status status;
+
+	Print(&sSQL, "PRAGMA {1};", szName);
+
+	Statement select(this, sSQL.c_str());
+
+	if (!select.IsOK())
+	{
+		return select.GetInitStatus();
+	}
+	if (Statement::Result_Row != select.Step(&status))
+	{
+		return status;
+	}
+	*pnValue = select.GetInt(0);
+
+	return Status();
+}
+
+Status Database::SetPragma(const Char *szName, Int64 nValue)
+{
+	if (NULL == m_pDB)
+	{
+		return Status_NotInitialized;
+	}
+
+	String sSQL;
+	Status status;
+
+	Print(&sSQL, "PRAGMA {1}={2};", szName, nValue);
+
+	Statement update(this, sSQL.c_str());
+
+	if (!update.IsOK())
+	{
+		return update.GetInitStatus();
+	}
+	if (Statement::Result_Done != update.Step(&status))
+	{
+		return status;
+	}
+
+	return Status();
+}
+
+Status Database::GetPragma(const Char *szName, Double *plfValue)
+{
+	if (NULL == m_pDB)
+	{
+		return Status_NotInitialized;
+	}
+
+	String sSQL;
+	Status status;
+
+	Print(&sSQL, "PRAGMA {1};", szName);
+
+	Statement select(this, sSQL.c_str());
+
+	if (!select.IsOK())
+	{
+		return select.GetInitStatus();
+	}
+	if (Statement::Result_Row != select.Step(&status))
+	{
+		return status;
+	}
+	*plfValue = select.GetReal(0);
+
+	return Status();
+}
+
+Status Database::SetPragma(const Char *szName, Double lfValue)
+{
+	if (NULL == m_pDB)
+	{
+		return Status_NotInitialized;
+	}
+
+	String sSQL;
+	Status status;
+
+	Print(&sSQL, "PRAGMA {1}={2};", szName, lfValue);
+
+	Statement update(this, sSQL.c_str());
+
+	if (!update.IsOK())
+	{
+		return update.GetInitStatus();
+	}
+	if (Statement::Result_Done != update.Step(&status))
+	{
+		return status;
+	}
+
+	return Status();
+}
+
+Status Database::GetPragma(const Char *szName, String *psValue)
+{
+	if (NULL == m_pDB)
+	{
+		return Status_NotInitialized;
+	}
+
+	String sSQL;
+	Status status;
+
+	Print(&sSQL, "PRAGMA {1};", szName);
+
+	Statement select(this, sSQL.c_str());
+
+	if (!select.IsOK())
+	{
+		return select.GetInitStatus();
+	}
+	if (Statement::Result_Row != select.Step(&status))
+	{
+		return status;
+	}
+	psValue->assign(select.GetString(0), select.GetStringLen(0));
+
+	return Status();
+}
+
+Status Database::SetPragma(const Char *szName, const Char *szValue)
+{
+	if (NULL == m_pDB)
+	{
+		return Status_NotInitialized;
+	}
+
+	String sSQL;
+	Status status;
+
+	Print(&sSQL, "PRAGMA {1}=\"{2}\";", szName, szValue);
+
+	Statement update(this, sSQL.c_str());
+
+	if (!update.IsOK())
+	{
+		return update.GetInitStatus();
+	}
+	if (Statement::Result_Done != update.Step(&status))
+	{
+		return status;
+	}
+
+	return Status();
 }
 
 void *Database::GetHandle() const

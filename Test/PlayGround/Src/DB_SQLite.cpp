@@ -136,6 +136,16 @@ void DB_SQLite_Test()
 					Print(stdout, "Select : {1}\n", select.GetInitStatus().GetMsg());
 				}
 			}
+
+			Int64 cbPageSize;
+			Int64 cTotalPagesCount;
+			Int64 cFreePagesCount;
+
+			status = db.GetPragma("page_size", &cbPageSize);
+			status = db.GetPragma("page_count", &cTotalPagesCount);
+			status = db.GetPragma("freelist_count", &cFreePagesCount);
+
+			cbPageSize = cbPageSize;
 		}
 		else
 		{

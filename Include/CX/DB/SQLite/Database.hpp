@@ -96,6 +96,18 @@ public:
 
 	Size GetLastExecChangesCount();
 
+	Status GetPragma(const Char *szName, Int64 *pnValue);
+
+	Status SetPragma(const Char *szName, Int64 nValue);
+
+	Status GetPragma(const Char *szName, Double *plfValue);
+
+	Status SetPragma(const Char *szName, Double lfValue);
+
+	Status GetPragma(const Char *szName, String *psValue);
+
+	Status SetPragma(const Char *szName, const Char *szValue);
+
 	void *GetHandle() const;
 
 private:

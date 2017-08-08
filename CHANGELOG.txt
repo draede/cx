@@ -1,3 +1,5 @@
+0.2.155 - 2017-08-08
+ - Added Get/Set Pragma to DB::SQLite::Database
 0.2.154 - 2017-08-04
  - Fixed VS2013/VS2015 platform tools version
  - Fixed warnings
