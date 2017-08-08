@@ -229,11 +229,24 @@ public:
 				else
 				{
 					const Char *pszPos;
+					Bool       bNumber = False;
+					Bool       bFirst  = True;
 
 					pszPos = iter->GetDefault().c_str();
 					while (0 != *pszPos)
 					{
-						if ('.' == *pszPos)
+						if (bFirst)
+						{
+							if (!cx_isspace(*pszPos))
+							{
+								bFirst = False;
+								if (!cx_isalpha(*pszPos) && '_' != *pszPos)
+								{
+									bNumber = True;
+								}
+							}
+						}
+						if (!bNumber && '.' == *pszPos)
 						{
 							sDefault += "::";
 						}

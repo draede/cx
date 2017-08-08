@@ -34,7 +34,7 @@
 
 #define CX_VER_MAJOR               0
 #define CX_VER_MINOR               2
-#define CX_VER_BUILD               155
+#define CX_VER_BUILD               156
 #define CX_VER_REVISION            0
 
 #define CX_VER_NAME                "CX" 

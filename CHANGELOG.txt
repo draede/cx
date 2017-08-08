@@ -1,3 +1,5 @@
+0.2.156 - 2017-08-08
+ - Fixed parsing of floating point numbers as default values in SimpleBuffer CPP generator
 0.2.155 - 2017-08-08
  - Added Get/Set Pragma to DB::SQLite::Database
 0.2.154 - 2017-08-04
