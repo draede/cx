@@ -138,6 +138,10 @@
 		#define CX_BUILDSYS_VS
 		#define CX_BUILDSYS_VS2017
 		#define CX_BUILDSYS     "VS2017"
+	#elif _MSC_VER == 1911
+		#define CX_BUILDSYS_VS
+		#define CX_BUILDSYS_VS2017
+		#define CX_BUILDSYS     "VS2017"
 	#else
 		#error "Unknown Visual Studio Version" 
 	#endif
