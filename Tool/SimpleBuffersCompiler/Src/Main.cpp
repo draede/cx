@@ -61,7 +61,7 @@ Size   GENERATOR_FACTORIES_COUNT = sizeof(GENERATOR_FACTORIES) / sizeof(GENERATO
 
 void Usage()
 {
-	Print(stdout, "USAGE: ac <language> <input_proto_file> <output_lang_file>\n");
+	Print(stdout, "USAGE: sbc <language> <input_proto_file> <output_lang_file>\n");
 	Print(stdout, "Languages:\n");
 	for (Size i = 0; i < GENERATOR_FACTORIES_COUNT; i++)
 	{

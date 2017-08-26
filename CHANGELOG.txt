@@ -1,3 +1,5 @@
+0.2.158 - 2017-08-26
+ - Added CBuffers (C gen only)
 0.2.157 - 2017-08-18
  - Updated to support MSC_VER 1911 (VS 2017 15.3)
 0.2.156 - 2017-08-08

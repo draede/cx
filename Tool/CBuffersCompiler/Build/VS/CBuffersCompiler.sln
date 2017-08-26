@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{163F2CB0-C079-411C-834E-A885409D3B99}") = "CBuffersCompiler", "CBuffersCompiler.vcxproj", "{E39FD47D-A86D-446C-9A21-E804D2033057}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		VS2013_Debug|Win32 = VS2013_Debug|Win32
+		VS2013_Debug|x64 = VS2013_Debug|x64
+		VS2013_Release|Win32 = VS2013_Release|Win32
+		VS2013_Release|x64 = VS2013_Release|x64
+		VS2015_Debug|Win32 = VS2015_Debug|Win32
+		VS2015_Debug|x64 = VS2015_Debug|x64
+		VS2015_Release|Win32 = VS2015_Release|Win32
+		VS2015_Release|x64 = VS2015_Release|x64
+		VS2017_Debug|Win32 = VS2017_Debug|Win32
+		VS2017_Debug|x64 = VS2017_Debug|x64
+		VS2017_Release|Win32 = VS2017_Release|Win32
+		VS2017_Release|x64 = VS2017_Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2013_Debug|Win32.ActiveCfg = VS2013_Debug|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2013_Debug|Win32.Build.0 = VS2013_Debug|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2013_Debug|x64.ActiveCfg = VS2013_Debug|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2013_Debug|x64.Build.0 = VS2013_Debug|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2013_Release|Win32.ActiveCfg = VS2013_Release|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2013_Release|Win32.Build.0 = VS2013_Release|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2013_Release|x64.ActiveCfg = VS2013_Release|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2013_Release|x64.Build.0 = VS2013_Release|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2015_Debug|Win32.ActiveCfg = VS2015_Debug|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2015_Debug|Win32.Build.0 = VS2015_Debug|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2015_Debug|x64.ActiveCfg = VS2015_Debug|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2015_Debug|x64.Build.0 = VS2015_Debug|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2015_Release|Win32.ActiveCfg = VS2015_Release|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2015_Release|Win32.Build.0 = VS2015_Release|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2015_Release|x64.ActiveCfg = VS2015_Release|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2015_Release|x64.Build.0 = VS2015_Release|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2017_Debug|Win32.ActiveCfg = VS2017_Debug|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2017_Debug|Win32.Build.0 = VS2017_Debug|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2017_Debug|x64.ActiveCfg = VS2017_Debug|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2017_Debug|x64.Build.0 = VS2017_Debug|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2017_Release|Win32.ActiveCfg = VS2017_Release|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2017_Release|Win32.Build.0 = VS2017_Release|Win32
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2017_Release|x64.ActiveCfg = VS2017_Release|x64
+		{E39FD47D-A86D-446C-9A21-E804D2033057}.VS2017_Release|x64.Build.0 = VS2017_Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

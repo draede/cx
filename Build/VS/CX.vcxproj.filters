@@ -352,6 +352,15 @@
     <Filter Include="Contrib\BSON">
       <UniqueIdentifier>{cd555cee-d76c-4082-963b-a87d040de3fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\CBuffers">
+      <UniqueIdentifier>{b91f5283-c590-4f6d-a0e2-d855b8e5b844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CBuffers\Tools">
+      <UniqueIdentifier>{9ebeba93-8d83-451b-8967-f36326495f90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CBuffers">
+      <UniqueIdentifier>{308adb6d-cd08-4a10-8676-281439adc944}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1133,6 +1142,42 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Objects.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Buffer.h">
+      <Filter>Header Files\CBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\CLibEnvironment.h">
+      <Filter>Header Files\CBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Environment.h">
+      <Filter>Header Files\CBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Struct.h">
+      <Filter>Header Files\CBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Types.h">
+      <Filter>Header Files\CBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Tools\C_Generator.hpp">
+      <Filter>Header Files\CBuffers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Tools\IGenerator.hpp">
+      <Filter>Header Files\CBuffers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Tools\IMemoryStream.hpp">
+      <Filter>Header Files\CBuffers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Tools\InputStreamStream.hpp">
+      <Filter>Header Files\CBuffers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Tools\IStream.hpp">
+      <Filter>Header Files\CBuffers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Tools\Parser.hpp">
+      <Filter>Header Files\CBuffers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CBuffers\Tools\ParserData.hpp">
+      <Filter>Header Files\CBuffers\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2110,6 +2155,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\SimpleBuffers\SBHelper.cpp">
       <Filter>Source Files\SimpleBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CBuffers\Buffer.c">
+      <Filter>Source Files\CBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CBuffers\CLibEnvironment.c">
+      <Filter>Source Files\CBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CBuffers\Struct.c">
+      <Filter>Source Files\CBuffers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
