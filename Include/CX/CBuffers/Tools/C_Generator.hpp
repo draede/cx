@@ -160,9 +160,9 @@ private:
 		Print(pOS, "\n");
 		Print(pOS, "#include \"CX/C/Types.h\"\n");
 		Print(pOS, "#include \"CX/C/StatusCodes.h\"\n");
-		Print(pOS, "#include \"Buffer.h\"\n");
-		Print(pOS, "#include \"Environment.h\"\n");
-		Print(pOS, "#include \"Types.h\"\n");
+		Print(pOS, "#include \"CX/CBuffers/Buffer.h\"\n");
+		Print(pOS, "#include \"CX/CBuffers/Environment.h\"\n");
+		Print(pOS, "#include \"CX/CBuffers/Types.h\"\n");
 		for (auto iter = strct.vectorMembers.begin(); iter != strct.vectorMembers.end(); ++iter)
 		{
 			if (Type_Struct != iter->nType)
@@ -293,7 +293,7 @@ private:
 
 		Print(pOS, "\n");
 		Print(pOS, "#include \"{1}.h\"\n", sFullName);
-		Print(pOS, "#include \"Struct.h\"\n");
+		Print(pOS, "#include \"CX/CBuffers/Struct.h\"\n");
 		Print(pOS, "\n");
 		Print(pOS, "\n");
 		Print(pOS, "typedef struct _{1}_Ex\n", sFullName);
@@ -353,6 +353,8 @@ private:
 				{
 					Print(pOS, "static CX_StatusCode {1}_Get{2}Count(struct _{1} *pThis)\n", sFullName, iter->sName);
 					Print(pOS, "{{\n");
+					Print(pOS, "\tCX_UNUSED(pThis);\n");
+					Print(pOS, "\n");
 					Print(pOS, "\treturn {1};\n", iter->cItemsCount);
 					Print(pOS, "}\n");
 					Print(pOS, "\n");
@@ -463,6 +465,8 @@ private:
 				{
 					Print(pOS, "static CX_StatusCode {1}_Get{2}Count(struct _{1} *pThis)\n", sFullName, iter->sName);
 					Print(pOS, "{{\n");
+					Print(pOS, "\tCX_UNUSED(pThis);\n");
+					Print(pOS, "\n");
 					Print(pOS, "\treturn {1};\n", iter->cItemsCount);
 					Print(pOS, "}\n");
 					Print(pOS, "\n");

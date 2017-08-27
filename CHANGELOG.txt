@@ -1,3 +1,7 @@
+0.2.159 - 2017-08-27
+ - Added string, wstring & blob aliases in CBuffers
+ - Added playground test for CBuffers
+ - Multiple CBuffers fixes
 0.2.158 - 2017-08-26
  - Added CBuffers (C gen only)
 0.2.157 - 2017-08-18

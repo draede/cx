@@ -1,0 +1,10 @@
+
+include "Struct1.fxd";
+
+struct My.Namespace.Struct2
+{
+	bool                      MyBool;
+	My.Namespace.Struct1      MyStruct1;
+	My.Namespace.Struct1[2]   MyStruct1StaticArray;
+	My.Namespace.Struct1[]    MyStruct1Array;
+};

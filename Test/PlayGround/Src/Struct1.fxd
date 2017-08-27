@@ -1,0 +1,47 @@
+
+struct My.Namespace.Struct1
+{
+	bool          MyBool;
+	int8          MyInt8;
+	uint8         MyUInt8;
+	int16         MyInt16;
+	uint16        MyUInt16;
+	int32         MyInt32;
+	uint32        MyUInt32;
+	int64         MyInt64;
+	uint64        MyUInt64;
+	float         MyFloat;
+	double        MyDouble;
+	char          MyChar;
+	wchar         MyWChar;
+	string        MyString;
+	wstring       MyWString;
+	blob          MyBLOB;
+	bool[1]       MyBoolStaticArray;
+	int8[2]       MyInt8StaticArray;
+	uint8[3]      MyUInt8StaticArray;
+	int16[4]      MyInt16StaticArray;
+	uint16[5]     MyUInt16StaticArray;
+	int32[6]      MyInt32StaticArray;
+	uint32[7]     MyUInt32StaticArray;
+	int64[8]      MyInt64StaticArray;
+	uint64[9]     MyUInt64StaticArray;
+	float[10]     MyFloatStaticArray;
+	double[11]    MyDoubleStaticArray;
+	char[12]      MyCharStaticArray;
+	wchar[13]     MyWCharStaticArray;
+	bool[]        MyBoolArray;
+	int8[]        MyInt8Array;
+	uint8[]       MyUInt8Array;
+	int16[]       MyInt16Array;
+	uint16[]      MyUInt16Array;
+	int32[]       MyInt32Array;
+	uint32[]      MyUInt32Array;
+	int64[]       MyInt64Array;
+	uint64[]      MyUInt64Array;
+	float[]       MyFloatArray;
+	double[]      MyDoubleArray;
+	char[]        MyCharArray;
+	wchar[]       MyWCharArray;
+};
+

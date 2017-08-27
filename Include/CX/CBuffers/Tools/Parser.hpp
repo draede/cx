@@ -484,6 +484,40 @@ private:
 		{
 			return Status(Status_ParseFailed, "Expected ';' at line {1}, column {2}", ctx.cLine, ctx.cColumn);
 		}
+		
+		if (0 == cx_strcmp(m.sTypeName.c_str(), "string"))
+		{
+			if (Aggregate_Scalar != m.nAggregateType)
+			{
+				return Status(Status_ParseFailed, "string type already is an array (member '{1}')", m.sName);
+			}
+			m.nType           = Type_Char;
+			m.sActualTypeName = "CX_Char";
+			m.nAggregateType  = Aggregate_Array;
+		}
+		else
+		if (0 == cx_strcmp(m.sTypeName.c_str(), "wstring"))
+		{
+			if (Aggregate_Scalar != m.nAggregateType)
+			{
+				return Status(Status_ParseFailed, "wstring type already is an array (member '{1}')", m.sName);
+			}
+			m.nType           = Type_WChar;
+			m.sActualTypeName = "CX_WChar";
+			m.nAggregateType  = Aggregate_Array;
+		}
+		else
+		if (0 == cx_strcmp(m.sTypeName.c_str(), "blob"))
+		{
+			if (Aggregate_Scalar != m.nAggregateType)
+			{
+				return Status(Status_ParseFailed, "blob type already is an array (member '{1}')", m.sName);
+			}
+			m.nType           = Type_UInt8;
+			m.sActualTypeName = "CX_UInt8";
+			m.nAggregateType  = Aggregate_Array;
+		}
+
 		ctx.pStream->Next();
 
 		return Status();
