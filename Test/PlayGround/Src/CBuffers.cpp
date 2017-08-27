@@ -32,6 +32,8 @@
 #include "CX/CBuffers/CLibEnvironment.h"
 #include "My_Namespace_Struct1.h"
 #include "My_Namespace_Struct2.h"
+#include "Struct1.hpp"
+#include "Struct2.hpp"
 #include "CX/Print.hpp"
 #include "Tester.hpp"
 
@@ -549,9 +551,470 @@ static void Setup()
 }
 
 
+static void Setup1CPP(My::Namespace::Struct1 *pStruct1)
+{
+	CX_CB_Size      cCount;
+	CX_Bool         *pBoolPtr;
+	CX_Int8         *pInt8Ptr;
+	CX_UInt8        *pUInt8Ptr;
+	CX_Int16        *pInt16Ptr;
+	CX_UInt16       *pUInt16Ptr;
+	CX_Int32        *pInt32Ptr;
+	CX_UInt32       *pUInt32Ptr;
+	CX_Int64        *pInt64Ptr;
+	CX_UInt64       *pUInt64Ptr;
+	CX_Float        *pFloatPtr;
+	CX_Double       *pDoublePtr;
+	CX_Char         *pCharPtr;
+	CX_WChar        *pWCharPtr;
+	CX_StatusCode   nStatus;
+
+	CHECK(nStatus = pStruct1->SetMyBool(bool_));
+	CHECK(nStatus = pStruct1->SetMyInt8(int8));
+	CHECK(nStatus = pStruct1->SetMyUInt8(uint8));
+	CHECK(nStatus = pStruct1->SetMyInt16(int16));
+	CHECK(nStatus = pStruct1->SetMyUInt16(uint16));
+	CHECK(nStatus = pStruct1->SetMyInt32(int32));
+	CHECK(nStatus = pStruct1->SetMyUInt32(uint32));
+	CHECK(nStatus = pStruct1->SetMyInt64(int64));
+	CHECK(nStatus = pStruct1->SetMyUInt64(uint64));
+	CHECK(nStatus = pStruct1->SetMyFloat(float_));
+	CHECK(nStatus = pStruct1->SetMyDouble(double_));
+	CHECK(nStatus = pStruct1->SetMyChar(char_));
+	CHECK(nStatus = pStruct1->SetMyWChar(wchar));
+
+	cCount = pStruct1->GetMyBoolStaticArrayCount();
+	pBoolPtr = pStruct1->GetMyBoolStaticArray();
+	VERIFY(cCount, sizeof(arr_st_bool) / sizeof(arr_st_bool[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pBoolPtr[i] = arr_st_bool[i];
+	}
+
+	cCount = pStruct1->GetMyInt8StaticArrayCount();
+	pInt8Ptr = pStruct1->GetMyInt8StaticArray();
+	VERIFY(cCount, sizeof(arr_st_int8) / sizeof(arr_st_int8[0]));
+	memcpy(pInt8Ptr, arr_st_int8, sizeof(arr_st_int8));
+
+	cCount = pStruct1->GetMyUInt8StaticArrayCount();
+	pUInt8Ptr = pStruct1->GetMyUInt8StaticArray();
+	VERIFY(cCount, sizeof(arr_st_uint8) / sizeof(arr_st_uint8[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pUInt8Ptr[i] = arr_st_uint8[i];
+	}
+
+	cCount = pStruct1->GetMyInt16StaticArrayCount();
+	pInt16Ptr = pStruct1->GetMyInt16StaticArray();
+	VERIFY(cCount, sizeof(arr_st_int16) / sizeof(arr_st_int16[0]));
+	memcpy(pInt16Ptr, arr_st_int16, sizeof(arr_st_int16));
+
+	cCount = pStruct1->GetMyUInt16StaticArrayCount();
+	pUInt16Ptr = pStruct1->GetMyUInt16StaticArray();
+	VERIFY(cCount, sizeof(arr_st_uint16) / sizeof(arr_st_uint16[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pUInt16Ptr[i] = arr_st_uint16[i];
+	}
+
+	cCount = pStruct1->GetMyInt32StaticArrayCount();
+	pInt32Ptr = pStruct1->GetMyInt32StaticArray();
+	VERIFY(cCount, sizeof(arr_st_int32) / sizeof(arr_st_int32[0]));
+	memcpy(pInt32Ptr, arr_st_int32, sizeof(arr_st_int32));
+
+	cCount = pStruct1->GetMyUInt32StaticArrayCount();
+	pUInt32Ptr = pStruct1->GetMyUInt32StaticArray();
+	VERIFY(cCount, sizeof(arr_st_uint32) / sizeof(arr_st_uint32[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pUInt32Ptr[i] = arr_st_uint32[i];
+	}
+
+	cCount = pStruct1->GetMyInt64StaticArrayCount();
+	pInt64Ptr = pStruct1->GetMyInt64StaticArray();
+	VERIFY(cCount, sizeof(arr_st_int64) / sizeof(arr_st_int64[0]));
+	memcpy(pInt64Ptr, arr_st_int64, sizeof(arr_st_int64));
+
+	cCount = pStruct1->GetMyUInt64StaticArrayCount();
+	pUInt64Ptr = pStruct1->GetMyUInt64StaticArray();
+	VERIFY(cCount, sizeof(arr_st_uint64) / sizeof(arr_st_uint64[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pUInt64Ptr[i] = arr_st_uint64[i];
+	}
+
+	cCount = pStruct1->GetMyFloatStaticArrayCount();
+	pFloatPtr = pStruct1->GetMyFloatStaticArray();
+	VERIFY(cCount, sizeof(arr_st_float) / sizeof(arr_st_float[0]));
+	memcpy(pFloatPtr, arr_st_float, sizeof(arr_st_float));
+
+	cCount = pStruct1->GetMyDoubleStaticArrayCount();
+	pDoublePtr = pStruct1->GetMyDoubleStaticArray();
+	VERIFY(cCount, sizeof(arr_st_double) / sizeof(arr_st_double[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pDoublePtr[i] = arr_st_double[i];
+	}
+
+	cCount = pStruct1->GetMyCharStaticArrayCount();
+	pCharPtr = pStruct1->GetMyCharStaticArray();
+	VERIFY(cCount, sizeof(arr_st_char) / sizeof(arr_st_char[0]));
+	memcpy(pCharPtr, arr_st_char, sizeof(arr_st_char));
+
+	cCount = pStruct1->GetMyWCharStaticArrayCount();
+	pWCharPtr = pStruct1->GetMyWCharStaticArray();
+	VERIFY(cCount, sizeof(arr_st_wchar) / sizeof(arr_st_wchar[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pWCharPtr[i] = arr_st_wchar[i];
+	}
+
+	cCount = sizeof(arr_bool) / sizeof(arr_bool[0]);
+	CHECK(nStatus = pStruct1->SetMyBoolArrayCount(cCount));
+	pBoolPtr = pStruct1->GetMyBoolArray();
+	cCount = pStruct1->GetMyBoolArrayCount();
+	VERIFY(cCount, sizeof(arr_bool) / sizeof(arr_bool[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pBoolPtr[i] = arr_bool[i];
+	}
+
+	cCount = sizeof(arr_int8) / sizeof(arr_int8[0]);
+	CHECK(nStatus = pStruct1->SetMyInt8ArrayCount(cCount));
+	pInt8Ptr = pStruct1->GetMyInt8Array();
+	cCount = pStruct1->GetMyInt8ArrayCount();
+	VERIFY(cCount, sizeof(arr_int8) / sizeof(arr_int8[0]));
+	memcpy(pInt8Ptr, arr_int8, sizeof(arr_int8));
+
+	cCount = sizeof(arr_uint8) / sizeof(arr_uint8[0]);
+	CHECK(nStatus = pStruct1->SetMyUInt8ArrayCount(cCount));
+	pUInt8Ptr = pStruct1->GetMyUInt8Array();
+	cCount = pStruct1->GetMyUInt8ArrayCount();
+	VERIFY(cCount, sizeof(arr_uint8) / sizeof(arr_uint8[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pUInt8Ptr[i] = arr_uint8[i];
+	}
+
+	cCount = sizeof(arr_int16) / sizeof(arr_int16[0]);
+	CHECK(nStatus = pStruct1->SetMyInt16ArrayCount(cCount));
+	pInt16Ptr = pStruct1->GetMyInt16Array();
+	cCount = pStruct1->GetMyInt16ArrayCount();
+	VERIFY(cCount, sizeof(arr_int16) / sizeof(arr_int16[0]));
+	memcpy(pInt16Ptr, arr_int16, sizeof(arr_int16));
+
+	cCount = sizeof(arr_uint16) / sizeof(arr_uint16[0]);
+	CHECK(nStatus = pStruct1->SetMyUInt16ArrayCount(cCount));
+	pUInt16Ptr = pStruct1->GetMyUInt16Array();
+	cCount = pStruct1->GetMyUInt16ArrayCount();
+	VERIFY(cCount, sizeof(arr_uint16) / sizeof(arr_uint16[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pUInt16Ptr[i] = arr_uint16[i];
+	}
+
+	cCount = sizeof(arr_int32) / sizeof(arr_int32[0]);
+	CHECK(nStatus = pStruct1->SetMyInt32ArrayCount(cCount));
+	pInt32Ptr = pStruct1->GetMyInt32Array();
+	cCount = pStruct1->GetMyInt32ArrayCount();
+	VERIFY(cCount, sizeof(arr_int32) / sizeof(arr_int32[0]));
+	memcpy(pInt32Ptr, arr_int32, sizeof(arr_int32));
+
+	cCount = sizeof(arr_uint32) / sizeof(arr_uint32[0]);
+	CHECK(nStatus = pStruct1->SetMyUInt32ArrayCount(cCount));
+	pUInt32Ptr = pStruct1->GetMyUInt32Array();
+	cCount = pStruct1->GetMyUInt32ArrayCount();
+	VERIFY(cCount, sizeof(arr_uint32) / sizeof(arr_uint32[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pUInt32Ptr[i] = arr_uint32[i];
+	}
+
+	cCount = sizeof(arr_int64) / sizeof(arr_int64[0]);
+	CHECK(nStatus = pStruct1->SetMyInt64ArrayCount(cCount));
+	pInt64Ptr = pStruct1->GetMyInt64Array();
+	cCount = pStruct1->GetMyInt64ArrayCount();
+	VERIFY(cCount, sizeof(arr_int64) / sizeof(arr_int64[0]));
+	memcpy(pInt64Ptr, arr_int64, sizeof(arr_int64));
+
+	cCount = sizeof(arr_uint64) / sizeof(arr_uint64[0]);
+	CHECK(nStatus = pStruct1->SetMyUInt64ArrayCount(cCount));
+	pUInt64Ptr = pStruct1->GetMyUInt64Array();
+	cCount = pStruct1->GetMyUInt64ArrayCount();
+	VERIFY(cCount, sizeof(arr_uint64) / sizeof(arr_uint64[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pUInt64Ptr[i] = arr_uint64[i];
+	}
+
+	cCount = sizeof(arr_float) / sizeof(arr_float[0]);
+	CHECK(nStatus = pStruct1->SetMyFloatArrayCount(cCount));
+	pFloatPtr = pStruct1->GetMyFloatArray();
+	cCount = pStruct1->GetMyFloatArrayCount();
+	VERIFY(cCount, sizeof(arr_float) / sizeof(arr_float[0]));
+	memcpy(pFloatPtr, arr_float, sizeof(arr_float));
+
+	cCount = sizeof(arr_double) / sizeof(arr_double[0]);
+	CHECK(nStatus = pStruct1->SetMyDoubleArrayCount(cCount));
+	pDoublePtr = pStruct1->GetMyDoubleArray();
+	cCount = pStruct1->GetMyDoubleArrayCount();
+	VERIFY(cCount, sizeof(arr_double) / sizeof(arr_double[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pDoublePtr[i] = arr_double[i];
+	}
+
+	cCount = sizeof(arr_char) / sizeof(arr_char[0]);
+	CHECK(nStatus = pStruct1->SetMyCharArrayCount(cCount));
+	pCharPtr = pStruct1->GetMyCharArray();
+	cCount = pStruct1->GetMyCharArrayCount();
+	VERIFY(cCount, sizeof(arr_char) / sizeof(arr_char[0]));
+	memcpy(pCharPtr, arr_char, sizeof(arr_char));
+
+	cCount = sizeof(arr_wchar) / sizeof(arr_wchar[0]);
+	CHECK(nStatus = pStruct1->SetMyWCharArrayCount(cCount));
+	pWCharPtr = pStruct1->GetMyWCharArray();
+	cCount = pStruct1->GetMyWCharArrayCount();
+	VERIFY(cCount, sizeof(arr_wchar) / sizeof(arr_wchar[0]));
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		pWCharPtr[i] = arr_wchar[i];
+	}
+}
+
+static void Check1CPP(My::Namespace::Struct1 *pStruct1)
+{
+	CX_CB_Size      cCount;
+	CX_Bool         *pBoolPtr;
+	CX_Int8         *pInt8Ptr;
+	CX_UInt8        *pUInt8Ptr;
+	CX_Int16        *pInt16Ptr;
+	CX_UInt16       *pUInt16Ptr;
+	CX_Int32        *pInt32Ptr;
+	CX_UInt32       *pUInt32Ptr;
+	CX_Int64        *pInt64Ptr;
+	CX_UInt64       *pUInt64Ptr;
+	CX_Float        *pFloatPtr;
+	CX_Double       *pDoublePtr;
+	CX_Char         *pCharPtr;
+	CX_WChar        *pWCharPtr;
+
+	VERIFY(pStruct1->GetMyBool(), bool_);
+	VERIFY(pStruct1->GetMyInt8(), int8);
+	VERIFY(pStruct1->GetMyUInt8(), uint8);
+	VERIFY(pStruct1->GetMyInt16(), int16);
+	VERIFY(pStruct1->GetMyUInt16(), uint16);
+	VERIFY(pStruct1->GetMyInt32(), int32);
+	VERIFY(pStruct1->GetMyUInt32(), uint32);
+	VERIFY(pStruct1->GetMyInt64(), int64);
+	VERIFY(pStruct1->GetMyUInt64(), uint64);
+	VERIFY(pStruct1->GetMyFloat(), float_);
+	VERIFY(pStruct1->GetMyDouble(), double_);
+	VERIFY(pStruct1->GetMyChar(), char_);
+	VERIFY(pStruct1->GetMyWChar(), wchar);
+
+	cCount = pStruct1->GetMyBoolStaticArrayCount();
+	pBoolPtr = pStruct1->GetMyBoolStaticArray();
+	VERIFY(cCount, sizeof(arr_st_bool) / sizeof(arr_st_bool[0]));
+	VERIFYPTR(pBoolPtr, arr_st_bool, sizeof(arr_st_bool));
+
+	cCount = pStruct1->GetMyInt8StaticArrayCount();
+	pInt8Ptr = pStruct1->GetMyInt8StaticArray();
+	VERIFY(cCount, sizeof(arr_st_int8) / sizeof(arr_st_int8[0]));
+	VERIFYPTR(pInt8Ptr, arr_st_int8, sizeof(arr_st_int8));
+
+	cCount = pStruct1->GetMyUInt8StaticArrayCount();
+	pUInt8Ptr = pStruct1->GetMyUInt8StaticArray();
+	VERIFY(cCount, sizeof(arr_st_uint8) / sizeof(arr_st_uint8[0]));
+	VERIFYPTR(pUInt8Ptr, arr_st_uint8, sizeof(arr_st_uint8));
+
+	cCount = pStruct1->GetMyInt16StaticArrayCount();
+	pInt16Ptr = pStruct1->GetMyInt16StaticArray();
+	VERIFY(cCount, sizeof(arr_st_int16) / sizeof(arr_st_int16[0]));
+	VERIFYPTR(pInt16Ptr, arr_st_int16, sizeof(arr_st_int16));
+
+	cCount = pStruct1->GetMyUInt16StaticArrayCount();
+	pUInt16Ptr = pStruct1->GetMyUInt16StaticArray();
+	VERIFY(cCount, sizeof(arr_st_uint16) / sizeof(arr_st_uint16[0]));
+	VERIFYPTR(pUInt16Ptr, arr_st_uint16, sizeof(arr_st_uint16));
+
+	cCount = pStruct1->GetMyInt32StaticArrayCount();
+	pInt32Ptr = pStruct1->GetMyInt32StaticArray();
+	VERIFY(cCount, sizeof(arr_st_int32) / sizeof(arr_st_int32[0]));
+	VERIFYPTR(pInt32Ptr, arr_st_int32, sizeof(arr_st_int32));
+
+	cCount = pStruct1->GetMyUInt32StaticArrayCount();
+	pUInt32Ptr = pStruct1->GetMyUInt32StaticArray();
+	VERIFY(cCount, sizeof(arr_st_uint32) / sizeof(arr_st_uint32[0]));
+	VERIFYPTR(pUInt32Ptr, arr_st_uint32, sizeof(arr_st_uint32));
+
+	cCount = pStruct1->GetMyInt64StaticArrayCount();
+	pInt64Ptr = pStruct1->GetMyInt64StaticArray();
+	VERIFY(cCount, sizeof(arr_st_int64) / sizeof(arr_st_int64[0]));
+	VERIFYPTR(pInt64Ptr, arr_st_int64, sizeof(arr_st_int64));
+
+	cCount = pStruct1->GetMyUInt64StaticArrayCount();
+	pUInt64Ptr = pStruct1->GetMyUInt64StaticArray();
+	VERIFY(cCount, sizeof(arr_st_uint64) / sizeof(arr_st_uint64[0]));
+	VERIFYPTR(pUInt64Ptr, arr_st_uint64, sizeof(arr_st_uint64));
+
+	cCount = pStruct1->GetMyFloatStaticArrayCount();
+	pFloatPtr = pStruct1->GetMyFloatStaticArray();
+	VERIFY(cCount, sizeof(arr_st_float) / sizeof(arr_st_float[0]));
+	VERIFYPTR(pFloatPtr, arr_st_float, sizeof(arr_st_float));
+
+	cCount = pStruct1->GetMyDoubleStaticArrayCount();
+	pDoublePtr = pStruct1->GetMyDoubleStaticArray();
+	VERIFY(cCount, sizeof(arr_st_double) / sizeof(arr_st_double[0]));
+	VERIFYPTR(pDoublePtr, arr_st_double, sizeof(arr_st_double));
+
+	cCount = pStruct1->GetMyCharStaticArrayCount();
+	pCharPtr = pStruct1->GetMyCharStaticArray();
+	VERIFY(cCount, sizeof(arr_st_char) / sizeof(arr_st_char[0]));
+	VERIFYPTR(pCharPtr, arr_st_char, sizeof(arr_st_char));
+
+	cCount = pStruct1->GetMyWCharStaticArrayCount();
+	pWCharPtr = pStruct1->GetMyWCharStaticArray();
+	VERIFY(cCount, sizeof(arr_st_wchar) / sizeof(arr_st_wchar[0]));
+	VERIFYPTR(pWCharPtr, arr_st_wchar, sizeof(arr_st_wchar));
+
+	cCount = sizeof(arr_bool) / sizeof(arr_bool[0]);
+	pBoolPtr = pStruct1->GetMyBoolArray();
+	cCount = pStruct1->GetMyBoolArrayCount();
+	VERIFY(cCount, sizeof(arr_bool) / sizeof(arr_bool[0]));
+	VERIFYPTR(pBoolPtr, arr_bool, sizeof(arr_bool));
+
+	cCount = sizeof(arr_int8) / sizeof(arr_int8[0]);
+	pInt8Ptr = pStruct1->GetMyInt8Array();
+	cCount = pStruct1->GetMyInt8ArrayCount();
+	VERIFY(cCount, sizeof(arr_int8) / sizeof(arr_int8[0]));
+	VERIFYPTR(pInt8Ptr, arr_int8, sizeof(arr_int8));
+
+	pUInt8Ptr = pStruct1->GetMyUInt8Array();
+	cCount = pStruct1->GetMyUInt8ArrayCount();
+	VERIFY(cCount, sizeof(arr_uint8) / sizeof(arr_uint8[0]));
+	VERIFYPTR(pUInt8Ptr, arr_uint8, sizeof(arr_uint8));
+
+	pInt16Ptr = pStruct1->GetMyInt16Array();
+	cCount = pStruct1->GetMyInt16ArrayCount();
+	VERIFY(cCount, sizeof(arr_int16) / sizeof(arr_int16[0]));
+	VERIFYPTR(pInt16Ptr, arr_int16, sizeof(arr_int16));
+
+	pUInt16Ptr = pStruct1->GetMyUInt16Array();
+	cCount = pStruct1->GetMyUInt16ArrayCount();
+	VERIFY(cCount, sizeof(arr_uint16) / sizeof(arr_uint16[0]));
+	VERIFYPTR(pUInt16Ptr, arr_uint16, sizeof(arr_uint16));
+
+	pInt32Ptr = pStruct1->GetMyInt32Array();
+	cCount = pStruct1->GetMyInt32ArrayCount();
+	VERIFY(cCount, sizeof(arr_int32) / sizeof(arr_int32[0]));
+	VERIFYPTR(pInt32Ptr, arr_int32, sizeof(arr_int32));
+
+	pUInt32Ptr = pStruct1->GetMyUInt32Array();
+	cCount = pStruct1->GetMyUInt32ArrayCount();
+	VERIFY(cCount, sizeof(arr_uint32) / sizeof(arr_uint32[0]));
+	VERIFYPTR(pUInt32Ptr, arr_uint32, sizeof(arr_uint32));
+
+	pInt64Ptr = pStruct1->GetMyInt64Array();
+	cCount = pStruct1->GetMyInt64ArrayCount();
+	VERIFY(cCount, sizeof(arr_int64) / sizeof(arr_int64[0]));
+	VERIFYPTR(pInt64Ptr, arr_int64, sizeof(arr_int64));
+
+	pUInt64Ptr = pStruct1->GetMyUInt64Array();
+	cCount = pStruct1->GetMyUInt64ArrayCount();
+	VERIFY(cCount, sizeof(arr_uint64) / sizeof(arr_uint64[0]));
+	VERIFYPTR(pUInt64Ptr, arr_uint64, sizeof(arr_uint64));
+
+	pFloatPtr = pStruct1->GetMyFloatArray();
+	cCount = pStruct1->GetMyFloatArrayCount();
+	VERIFY(cCount, sizeof(arr_float) / sizeof(arr_float[0]));
+	VERIFYPTR(pFloatPtr, arr_float, sizeof(arr_float));
+
+	pDoublePtr = pStruct1->GetMyDoubleArray();
+	cCount = pStruct1->GetMyDoubleArrayCount();
+	VERIFY(cCount, sizeof(arr_double) / sizeof(arr_double[0]));
+	VERIFYPTR(pDoublePtr, arr_double, sizeof(arr_double));
+
+	pCharPtr = pStruct1->GetMyCharArray();
+	cCount = pStruct1->GetMyCharArrayCount();
+	VERIFY(cCount, sizeof(arr_char) / sizeof(arr_char[0]));
+	VERIFYPTR(pCharPtr, arr_char, sizeof(arr_char));
+
+	pWCharPtr = pStruct1->GetMyWCharArray();
+	cCount = pStruct1->GetMyWCharArrayCount();
+	VERIFY(cCount, sizeof(arr_wchar) / sizeof(arr_wchar[0]));
+	VERIFYPTR(pWCharPtr, arr_wchar, sizeof(arr_wchar));
+}
+
+static void Setup2CPP(My::Namespace::Struct2 *pStruct2)
+{
+	static const CX_CB_Size COUNT = 3;
+
+	My::Namespace::Struct1   *pStruct1;
+	CX_CB_Size               cCount;
+	CX_StatusCode            nStatus;
+
+	CHECK(nStatus = pStruct2->SetMyBool(bool_));
+	CHECK(nStatus = pStruct2->GetMyStruct1(&pStruct1));
+	Setup1CPP(pStruct1);
+	Check1CPP(pStruct1);
+	pStruct1->Destroy();
+
+	cCount = pStruct2->GetMyStruct1StaticArrayCount();
+	VERIFY(cCount, 2);
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		CHECK(nStatus = pStruct2->GetMyStruct1StaticArrayItem(i, &pStruct1));
+		Setup1CPP(pStruct1);
+		Check1CPP(pStruct1);
+		pStruct1->Destroy();
+	}
+
+	CHECK(nStatus = pStruct2->SetMyStruct1ArrayCount(COUNT));
+	cCount = pStruct2->GetMyStruct1ArrayCount();
+	VERIFY(cCount, COUNT);
+	for (CX_CB_Size i = 0; i < cCount; i++)
+	{
+		CHECK(nStatus = pStruct2->GetMyStruct1ArrayItem(i, &pStruct1));
+		Setup1CPP(pStruct1);
+		Check1CPP(pStruct1);
+		pStruct1->Destroy();
+	}
+}
+
+static void Check2CPP(My::Namespace::Struct2 *pStruct2)
+{
+	VERIFY(pStruct2->GetMyBool(), bool_);
+}
+
+static void SetupCPP()
+{
+	My::Namespace::Struct2   *pStruct2;
+	CX_CB_Buffer             buffer;
+	CX_CB_Environment        *pEnv;
+	CX_StatusCode            nStatus;
+
+	CHECK(nStatus = CX_CB_CLibEnvironment_Create(&pEnv));
+	CHECK(nStatus = CX_CB_Buffer_Init(&buffer));
+
+	pStruct2 = My::Namespace::Struct2::Create(pEnv, &buffer, 0);
+	Setup2CPP(pStruct2);
+	Check2CPP(pStruct2);
+	pStruct2->Destroy();
+
+	FILE *pFile = fopen("d:\\temp\\struct.bin", "wb");
+	fwrite(buffer.pData, 1, buffer.cbUsedSize, pFile);
+	fclose(pFile);
+
+	CHECK(nStatus = CX_CB_Buffer_Uninit(&buffer, pEnv));
+	CHECK(pEnv->Destroy(pEnv));
+}
+
+
 void CBuffers_Test()
 {
 	Setup();
+	SetupCPP();
 }
 
 REGISTER_TEST(CBuffers_Test);

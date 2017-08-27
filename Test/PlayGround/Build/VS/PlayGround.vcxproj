@@ -68,6 +68,8 @@
     <ClCompile Include="..\..\Src\Network_HTTP_Client.cpp" />
     <ClCompile Include="..\..\Src\Networl_URLParser.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers.cpp" />
+    <ClCompile Include="..\..\Src\Struct1CPP.cpp" />
+    <ClCompile Include="..\..\Src\Struct2CPP.cpp" />
     <ClCompile Include="..\..\Src\Str_StringHelper.cpp" />
     <ClCompile Include="..\..\Src\Str_UTF8.cpp" />
     <ClCompile Include="..\..\Src\Tester.cpp" />
@@ -76,16 +78,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\My_Namespace_Struct1.h" />
     <ClInclude Include="..\..\Src\My_Namespace_Struct2.h" />
+    <ClInclude Include="..\..\Src\Struct1.hpp" />
+    <ClInclude Include="..\..\Src\Struct2.hpp" />
     <ClInclude Include="..\..\Src\Tester.hpp" />
     <ClInclude Include="..\..\Src\TestSimpleBuffers1.hpp" />
     <ClInclude Include="..\..\Src\TestSimpleBuffers2.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\Src\leftover.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Src\TestSimpleBuffers1.sbc" />
-    <None Include="..\..\Src\TestSimpleBuffers2.sbc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>

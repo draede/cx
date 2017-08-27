@@ -284,8 +284,8 @@ private:
 		return Status();
 	}
 
-	static inline Status GenerateSource(IO::IOutputStream *pOS, const String &sFullName, const String &sName, 
-	                                    const Struct &strct, const StructsMap &mapStructs)
+	Status GenerateSource(IO::IOutputStream *pOS, const String &sFullName, const String &sName, 
+	                      const Struct &strct, const StructsMap &mapStructs)
 	{
 		CX_UNUSED(sName);
 
@@ -332,7 +332,7 @@ private:
 				{
 					Print(pOS, "static CX_StatusCode {1}_Get{2}(struct _{1} *pThis, {3} **ppStruct)\n", sFullName, iter->sName, sMemberType);
 					Print(pOS, "{{\n");
-					Print(pOS, "\tCX_Byte             *pValue;\n", iter->sActualTypeName);
+					Print(pOS, "\tCX_Byte             *pValue;\n");
 					Print(pOS, "\tCX_CB_Environment   *pEnv;\n");
 					Print(pOS, "\tCX_CB_Buffer        *pBuffer;\n");
 					Print(pOS, "\tCX_StatusCode       nStatus;\n");
@@ -386,7 +386,7 @@ private:
 				{
 					Print(pOS, "static CX_CB_Size {1}_Get{2}Count(struct _{1} *pThis)\n", sFullName, iter->sName);
 					Print(pOS, "{{\n");
-					Print(pOS, "\tCX_CB_Size      cCount;\n", iter->sActualTypeName);
+					Print(pOS, "\tCX_CB_Size      cCount;\n");
 					Print(pOS, "\tCX_StatusCode   nStatus;\n");
 					Print(pOS, "\n");
 					Print(pOS, "\tif (CXNOK(nStatus = CX_CB_Struct_GetArrayItemCount_Ex(pThis, CX_SB_OFFSETOF({1}_Ex, helper), {2}, &cCount)))\n", sFullName, iter->cbOffset);
@@ -409,7 +409,7 @@ private:
 					Print(pOS, "\tCX_Byte             *pValues;\n");
 					Print(pOS, "\tCX_CB_Environment   *pEnv;\n");
 					Print(pOS, "\tCX_CB_Buffer        *pBuffer;\n");
-					Print(pOS, "\tCX_CB_Size          cCount;\n", iter->sActualTypeName);
+					Print(pOS, "\tCX_CB_Size          cCount;\n");
 					Print(pOS, "\tCX_StatusCode       nStatus;\n");
 					Print(pOS, "\n");
 					Print(pOS, "\tif (CXNOK(nStatus = CX_CB_Struct_GetArrayItemCount_Ex(pThis, CX_SB_OFFSETOF({1}_Ex, helper), {2}, &cCount)))\n", sFullName, iter->cbOffset);
@@ -490,7 +490,7 @@ private:
 				{
 					Print(pOS, "static CX_CB_Size {1}_Get{2}Count(struct _{1} *pThis)\n", sFullName, iter->sName);
 					Print(pOS, "{{\n");
-					Print(pOS, "\tCX_CB_Size      cCount;\n", iter->sActualTypeName);
+					Print(pOS, "\tCX_CB_Size      cCount;\n");
 					Print(pOS, "\tCX_StatusCode   nStatus;\n");
 					Print(pOS, "\n");
 					Print(pOS, "\tif (CXNOK(nStatus = CX_CB_Struct_GetArrayItemCount_Ex(pThis, CX_SB_OFFSETOF({1}_Ex, helper), {2}, &cCount)))\n", sFullName, iter->cbOffset);
@@ -574,7 +574,7 @@ private:
 		Print(pOS, "\t\t\n");
 		Print(pOS, "\t\t\treturn nStatus;\n");
 		Print(pOS, "\t\t}\n");
-		Print(pOS, "\tpEnv->MemSet(pEnv, (CX_Byte *)pBuffer->pData + cbStartOffset, 0, {1});\n", strct.cbSize);
+		Print(pOS, "\t\tpEnv->MemSet(pEnv, (CX_Byte *)pBuffer->pData + cbStartOffset, 0, {1});\n", strct.cbSize);
 		Print(pOS, "\t}\n");
 		for (auto iter = strct.vectorMembers.begin(); iter != strct.vectorMembers.end(); ++iter)
 		{

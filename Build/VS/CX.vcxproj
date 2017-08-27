@@ -213,6 +213,7 @@
     <ClInclude Include="..\..\Include\CX\CBuffers\CLibEnvironment.h" />
     <ClInclude Include="..\..\Include\CX\CBuffers\Environment.h" />
     <ClInclude Include="..\..\Include\CX\CBuffers\Struct.h" />
+    <ClInclude Include="..\..\Include\CX\CBuffers\Tools\CPP_Generator.hpp" />
     <ClInclude Include="..\..\Include\CX\CBuffers\Tools\C_Generator.hpp" />
     <ClInclude Include="..\..\Include\CX\CBuffers\Tools\IGenerator.hpp" />
     <ClInclude Include="..\..\Include\CX\CBuffers\Tools\IMemoryStream.hpp" />

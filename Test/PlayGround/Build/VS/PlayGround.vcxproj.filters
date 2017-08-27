@@ -30,6 +30,12 @@
     <ClCompile Include="..\..\Src\My_Namespace_Struct2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Struct1CPP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Struct2CPP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Data_JSON_Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -95,18 +101,11 @@
     <ClInclude Include="..\..\Src\My_Namespace_Struct2.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\Src\leftover.txt">
+    <ClInclude Include="..\..\Src\Struct1.hpp">
       <Filter>Source Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Src\TestSimpleBuffers1.sbc">
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Struct2.hpp">
       <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\Src\TestSimpleBuffers2.sbc">
-      <Filter>Source Files</Filter>
-    </None>
+    </ClInclude>
   </ItemGroup>
 </Project>

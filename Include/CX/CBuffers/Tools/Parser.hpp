@@ -826,7 +826,7 @@ private:
 		else
 		{
 			m.nType           = Type_Struct;
-			m.sActualTypeName = "";
+			m.sActualTypeName = sTypeName;
 		}
 #pragma warning(pop)
 

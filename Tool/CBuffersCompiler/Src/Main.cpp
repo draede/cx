@@ -29,6 +29,7 @@
 #include "CX/CBuffers/Tools/Parser.hpp"
 #include "CX/CBuffers/Tools/ParserData.hpp"
 #include "CX/CBuffers/Tools/C_Generator.hpp"
+#include "CX/CBuffers/Tools/CPP_Generator.hpp"
 #include "CX/CBuffers/Buffer.h"
 #include "CX/CBuffers/CLibEnvironment.h"
 #include "CX/Print.hpp"
@@ -52,13 +53,15 @@ void Usage(const GeneratorsMap &mapGenerators)
 
 int main(int argc, char *argv[])
 {
-	CBuffers::Tools::C_Generator   gen_c;
-	GeneratorsMap                  mapGenerators;
-	GeneratorsMap::iterator        iterGenerators;
-	CBuffers::Tools::StructsMap    mapStructs;
-	Status                         status;
+	CBuffers::Tools::C_Generator     gen_c;
+	CBuffers::Tools::CPP_Generator   gen_cpp;
+	GeneratorsMap                    mapGenerators;
+	GeneratorsMap::iterator          iterGenerators;
+	CBuffers::Tools::StructsMap      mapStructs;
+	Status                           status;
 
-	mapGenerators[gen_c.GetID()] = &gen_c;
+	mapGenerators[gen_c.GetID()]   = &gen_c;
+	mapGenerators[gen_cpp.GetID()] = &gen_cpp;
 
 	if (4 != argc)
 	{
