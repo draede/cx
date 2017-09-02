@@ -268,8 +268,9 @@ private:
 	{
 		Struct       s;
 		StringsSet   setMembers;
-		Size         cLine = ctx.cLine;
+		Size         cLine   = ctx.cLine;
 		Size         cColumn = ctx.cColumn;
+		Bool         bReady  = False;
 		Status       status;
 
 		s.cbSize = 0;
@@ -293,7 +294,7 @@ private:
 			}
 			if ((Byte)'{' != ctx.pStream->Peek())
 			{
-				return Status(Status_ParseFailed, "Expected '{' at line {1}, column {2}", ctx.cLine, ctx.cColumn);
+				return Status(Status_ParseFailed, "Expected '{{' at line {1}, column {2}", ctx.cLine, ctx.cColumn);
 			}
 			ctx.pStream->Next();
 			if (!(status = ParseWhiteSpace(ctx)))
@@ -326,6 +327,7 @@ private:
 						return Status(Status_ParseFailed, "Expected ';' at line {1}, column {2}", ctx.cLine, ctx.cColumn);
 					}
 					ctx.pStream->Next();
+					bReady = True;
 
 					break;
 				}
@@ -362,6 +364,10 @@ private:
 				}
 			}
 
+			if (bReady)
+			{
+				break;
+			}
 			if (!(status = ParseWhiteSpace(ctx)))
 			{
 				return status;
@@ -546,6 +552,72 @@ private:
 					ctx.cColumn++;
 				}
 				ctx.pStream->Next();
+			}
+			else
+			if ('/' == ch)
+			{
+				ctx.cColumn++;
+				ctx.pStream->Next();
+				ch = ctx.pStream->Peek();
+				if ('/' == ch)
+				{
+					ctx.pStream->Next();
+					for (;;)
+					{
+						ch = ctx.pStream->Peek();
+						if ('\n' == ch)
+						{
+							ctx.pStream->Next();
+							ctx.cLine++;
+							ctx.cColumn = 1;
+
+							break;
+						}
+						else
+						{
+							ctx.pStream->Next();
+						}
+					}
+				}
+				else
+				if ('*' == ch)
+				{
+					ctx.pStream->Next();
+					for (;;)
+					{
+						ch = ctx.pStream->Peek();
+						if ('\n' == ch)
+						{
+							ctx.pStream->Next();
+							ctx.cLine++;
+							ctx.cColumn = 1;
+						}
+						else
+						if ('*' == ch)
+						{
+							ctx.pStream->Next();
+							ch = ctx.pStream->Peek();
+							if ('/' == ch)
+							{
+								ctx.pStream->Next();
+
+								break;
+							}
+							else
+							{
+								ctx.pStream->Next();
+							}
+						}
+						else
+						{
+							ctx.pStream->Next();
+						}
+					}
+				}
+				else
+				{
+					return Status(Status_ParseFailed, "Unexpected '/' at line {1}, column {2}", ctx.cLine, ctx.cColumn);
+				}
 			}
 			else
 			{

@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 	{
 		Print(stdout, "Failed to generate structs : {1}\n", status.GetMsg());
 
-		return 4;
+		return 5;
 	}
 
 	return 0;

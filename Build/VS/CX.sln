@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CX", "CX.vcxproj", "{DC97160C-7040-40EB-8552-F76C36302622}"
 EndProject
@@ -119,8 +119,8 @@ Global
 		{DC97160C-7040-40EB-8552-F76C36302622}.VS2015_StaticRelease|x64.Build.0 = VS2015_StaticRelease|x64
 		{DC97160C-7040-40EB-8552-F76C36302622}.VS2015_StaticReleaseMT|Win32.ActiveCfg = VS2015_StaticReleaseMT|Win32
 		{DC97160C-7040-40EB-8552-F76C36302622}.VS2015_StaticReleaseMT|Win32.Build.0 = VS2015_StaticReleaseMT|Win32
-		{DC97160C-7040-40EB-8552-F76C36302622}.VS2015_StaticReleaseMT|x64.ActiveCfg = VS2015_StaticDebugMT|x64
-		{DC97160C-7040-40EB-8552-F76C36302622}.VS2015_StaticReleaseMT|x64.Build.0 = VS2015_StaticDebugMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.VS2015_StaticReleaseMT|x64.ActiveCfg = VS2015_StaticReleaseMT|x64
+		{DC97160C-7040-40EB-8552-F76C36302622}.VS2015_StaticReleaseMT|x64.Build.0 = VS2015_StaticReleaseMT|x64
 		{DC97160C-7040-40EB-8552-F76C36302622}.VS2017_Debug|Win32.ActiveCfg = VS2017_Debug|Win32
 		{DC97160C-7040-40EB-8552-F76C36302622}.VS2017_Debug|Win32.Build.0 = VS2017_Debug|Win32
 		{DC97160C-7040-40EB-8552-F76C36302622}.VS2017_Debug|x64.ActiveCfg = VS2017_Debug|x64
@@ -156,5 +156,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {990B9487-53DD-431E-8AFE-B00115C0A552}
 	EndGlobalSection
 EndGlobal

@@ -1,5 +1,5 @@
 
-include "Struct1.fxd";
+include "Struct1.cv";
 
 struct My.Namespace.Struct2
 {
