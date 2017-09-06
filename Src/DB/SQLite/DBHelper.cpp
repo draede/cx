@@ -312,6 +312,10 @@ Status DBHelper::AcquireStatement(Size cIndex, DB::SQLite::Statement **ppStateme
 	{
 		*ppStatement = iterAvailStatements->second.front();
 		iterAvailStatements->second.pop();
+		if (iterAvailStatements->second.empty())
+		{
+			m_mapAvailStatements.erase(iterAvailStatements);
+		}
 	}
 	else
 	{
