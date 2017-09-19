@@ -163,12 +163,12 @@ Event::WaitResult Event::WaitForMultipleEvents(Event **events, Size cCount, bool
 		dwRet = WaitForMultipleObjects((DWORD)cCount, handles, (BOOL)bWaitAll, (DWORD)cTimeout);
 		if (WAIT_TIMEOUT == dwRet)
 		{
-			dwRet = Wait_Timeout;
+			nRes = Wait_Timeout;
 		}
 		else
 		if (dwRet >= WAIT_ABANDONED_0)
 		{
-			return Wait_Error;
+			nRes = Wait_Error;
 		}
 		else
 		{
