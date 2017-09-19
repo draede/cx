@@ -1,3 +1,5 @@
+0.2.163 - 2017-09-19
+ - Fixed Event::WaitForMultipleEvents returning wrong code (Wait_OK) in case of timeout (Wait_Timeout)
 0.2.162 - 2017-09-06
  - Fixed SQLite DBHelper queue front() was used when empty 
 0.2.161 - 2017-08-28
