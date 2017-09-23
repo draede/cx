@@ -577,7 +577,7 @@ Size Statement::GetWStringLen(Size cIndex, Status *pnStatus/* = NULL*/)
 		return 0;
 	}
 
-	return (Size)(sqlite3_column_bytes((sqlite3_stmt *)m_pSTMT, (int)cIndex) / 2);
+	return (Size)sqlite3_column_bytes16((sqlite3_stmt *)m_pSTMT, (int)cIndex) / 2;
 }
 
 const void *Statement::GetBLOB(Size cIndex, Status *pnStatus/* = NULL*/)
