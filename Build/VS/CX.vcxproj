@@ -222,7 +222,6 @@
     <ClInclude Include="..\..\Include\CX\CBuffers\Tools\Parser.hpp" />
     <ClInclude Include="..\..\Include\CX\CBuffers\Tools\ParserData.hpp" />
     <ClInclude Include="..\..\Include\CX\CBuffers\Types.h" />
-    <ClInclude Include="..\..\Include\CX\Objects.hpp" />
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZ4InputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\Archive\LZ4OutputFilter.hpp" />

@@ -1140,9 +1140,6 @@
     <ClInclude Include="..\..\Include\CX\ObjectManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Objects.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\CBuffers\Buffer.h">
       <Filter>Header Files\CBuffers</Filter>
     </ClInclude>
