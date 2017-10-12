@@ -30,7 +30,7 @@
 
 
 #include "CX/Types.hpp"
-#include "../../../Contrib/ByteOrder/Include/byteorder.h"
+#include "byteorder.h"
 
 
 namespace CX
