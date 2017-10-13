@@ -943,7 +943,7 @@ Status BSONReader::PrepareRead(const Char *szName, bson_type_t *pnType)
 			m_stackStates.top().iter = m_stackStates.top().iterStart;
 			if (!bson_iter_find(&m_stackStates.top().iter, szName))
 			{
-				return Status_InvalidCall;
+				return Status_NotFound;
 			}
 		}
 		*pnType = bson_iter_type(&m_stackStates.top().iter);
