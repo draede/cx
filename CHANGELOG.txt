@@ -1,3 +1,5 @@
+0.2.169 - 2017-10-21
+ - Fixed profiler
 0.2.168 - 2017-10-13
  - Fixed BSON SimpleBuffers reader
 0.2.167 - 2017-10-12

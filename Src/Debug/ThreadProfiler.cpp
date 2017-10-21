@@ -49,7 +49,7 @@ ThreadProfiler::Scope *ThreadProfiler::CreateScope(const Char *szFileName, const
 	Size  cbSize;
 	Scope *pScope;
 
-	if (NULL == (pScope = (Scope *)Mem::Alloc(sizeof(Scope))))
+	if (NULL == (pScope = new (std::nothrow) Scope()))
 	{
 		return NULL;
 	}
@@ -57,7 +57,7 @@ ThreadProfiler::Scope *ThreadProfiler::CreateScope(const Char *szFileName, const
 	cbSize = sizeof(Char) * (cLen + 1);
 	if (NULL == (pScope->szFileName = (Char *)Mem::Alloc(cbSize)))
 	{
-		Mem::Free(pScope);
+		delete pScope;
 
 		return NULL;
 	}
@@ -67,7 +67,7 @@ ThreadProfiler::Scope *ThreadProfiler::CreateScope(const Char *szFileName, const
 	if (NULL == (pScope->szScopeName = (Char *)Mem::Alloc(cbSize)))
 	{
 		Mem::Free(pScope->szFileName);
-		Mem::Free(pScope);
+		delete pScope;
 
 		return NULL;
 	}
@@ -102,7 +102,7 @@ void ThreadProfiler::DestroyScope(Scope *pScope)
 		{
 			Mem::Free(pScope->szScopeName);
 		}
-		Mem::Free(pScope);
+		delete pScope;
 	}
 }
 
@@ -194,7 +194,7 @@ void ThreadProfiler::LeaveScope()
 		return;
 	}
 
-	nDuration = g_pTHScope->timer.GetElapsedTimeInNS();
+	nDuration = (UInt64)(g_pTHScope->timer.GetElapsedTime() * 1000.0);
 
 	if (0 == g_pTHScope->cCalls || g_pTHScope->cMinDuration > nDuration)
 	{

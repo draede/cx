@@ -67,10 +67,10 @@ protected:
 
 private:
 
-	Sys::Lock               m_lock;
-	IProfilingHandler       *m_pOnDestructProfilingHandler;
-	ThreadProfiler::Scope   m_root;
-	bool                    m_bEnabled;
+	Sys::Lock                     m_lock;
+	IProfilingHandler             *m_pOnDestructProfilingHandler;
+	ThreadProfiler::Scope         m_root;
+	bool                          m_bEnabled;
 
 	struct HotSpotName
 	{

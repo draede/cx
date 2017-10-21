@@ -42,9 +42,9 @@ Profiler::Profiler()
 	m_root.cMaxDuration             = 0;
 	m_root.cTotalDuration           = 0;
 
-	m_root.szFileName[0]            = 0;
-	m_root.szScopeName[0]           = 0;
-	m_root.cLineNo                  = 0;
+	m_root.szFileName               = NULL;
+	m_root.szScopeName              = NULL;
+	m_root.cLineNo                  = NULL;
 
 	m_root.timer.ResetTimer();
 
@@ -233,8 +233,8 @@ bool Profiler::GetProfiling(ThreadProfiler::Scope *pScope, IProfilingHandler *pP
 {
 	ThreadProfiler::Scope *pTmp;
 
-	if (!pProfilingHandler->OnBeginScope(pScope->szFileName, pScope->szScopeName, pScope->cLineNo, pScope->cMinDuration, 
-	                                     pScope->cMaxDuration, 
+	if (!pProfilingHandler->OnBeginScope(pScope->szFileName, pScope->szScopeName, pScope->cLineNo, 
+	                                     pScope->cMinDuration, pScope->cMaxDuration, 
 	                                     (UInt64)((double)pScope->cTotalDuration / (double)pScope->cCalls),
 	                                     pScope->cTotalDuration, pScope->cCalls, bRootScope))
 	{

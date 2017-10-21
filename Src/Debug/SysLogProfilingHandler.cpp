@@ -27,6 +27,7 @@
  */ 
  
 #include "CX/Debug/SysLogProfilingHandler.hpp"
+#include "CX/Debug/Profiler.hpp"
 
 
 namespace CX
@@ -42,7 +43,9 @@ SysLogProfilingHandler::SysLogProfilingHandler()
 
 bool SysLogProfilingHandler::OnBeginProfiling()
 {
-	String sOutput = "\nBEGIN PROFILING (nanoseconds)\n\n";
+	String sOutput;
+	
+	sOutput = "\nBEGIN PROFILING\n\n";
 
 	m_sysout.Write(Log::Level_Debug, "", sOutput.c_str(), sOutput.size());
 

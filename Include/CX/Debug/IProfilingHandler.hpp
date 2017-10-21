@@ -43,8 +43,8 @@ class IProfilingHandler
 {
 public:
 
-	static const Size   MAX_CALL_HOT_SPOTS      = 100;
-	static const Size   MAX_DURATIONS_HOT_SPOTS = 100;
+	static const Size       MAX_CALL_HOT_SPOTS      = 100;
+	static const Size       MAX_DURATIONS_HOT_SPOTS = 100;
 
 	virtual ~IProfilingHandler() { }
 

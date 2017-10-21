@@ -55,6 +55,7 @@ public:
 	virtual bool OnBeginProfiling()
 	{
 		Print(m_output, "\nBEGIN PROFILING\n\n");
+
 		Print(m_output, "\nBEGIN SCOPE\n\n");
 
 		return true;
