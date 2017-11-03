@@ -1,3 +1,5 @@
+0.2.171 - 2017-11-03
+ - Fixed SimpleBufferCompiler not handling Unix line terminator correctly in pragma parsing
 0.2.170 - 2017-11-01
  - Fixed DB::SQLite::DBHelper::ReleaseStatement not resetting the statement
 0.2.169 - 2017-10-21

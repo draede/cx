@@ -203,6 +203,8 @@ Status Parser::ParsePragma(CTX *pCTX, String &sID, String &sValue)
 			}
 			pCTX->cColumn = 1;
 			pCTX->cLine++;
+
+			break;
 		}
 		else
 		if ('\r' == *(pCTX->pBuffer + pCTX->cbIndex))
