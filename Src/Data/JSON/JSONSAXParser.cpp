@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2017 draede, draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2018 draede, draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -34,17 +34,65 @@
 #include "CX/Data/JSON/RapidJSONStreams.hpp"
 
 
+static const CX::Char ERROR_MAX_DEPTH_EXCEEDED[]       = "Max include depth exceeded";
+static const CX::Char ERROR_INCLUDE_ENTRY_NOT_STRING[] = "Include entry must be a string";
+static const CX::Char ERROR_INCLUDE_PATH_NOT_FOUND[]   = "Include path not found";
+
+
 struct CX_Data_JSON_SAX_Handler
 {
 	typedef CX::Vector<CX::Data::JSON::ISAXParserObserver *>::Type   ObserversVector;
 
-	ObserversVector *m_pVectorObservers;
+	CX::Data::JSON::SAXParser   *m_pParser;
+	CX_Data_JSON_SAX_Handler    *m_pRelay;
+	CX::Bool                    m_bInclude;
+	CX::Size                    m_cDepth;
+
+	CX_Data_JSON_SAX_Handler()
+	{
+		m_bInclude = CX::False;
+		m_pRelay   = NULL;
+		m_cDepth   = 0;
+	}
 
 	CX::Bool Null()
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnNullValue))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                      sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->Null())
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnNullValue))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -52,9 +100,42 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Bool(CX::Bool b)
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBoolValue, b))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                      sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->Bool(b))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBoolValue, b))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -62,9 +143,42 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Int(int i)
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                      sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->Int(i))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -72,9 +186,42 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Uint(unsigned i)
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnUIntValue, (CX::UInt64)i))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                     sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->Uint(i))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnUIntValue, (CX::UInt64)i))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -82,9 +229,42 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Int64(int64_t i)
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                     sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->Int64(i))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnIntValue, (CX::Int64)i))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -92,9 +272,42 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Uint64(uint64_t i)
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnUIntValue, (CX::UInt64)i))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                      sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->Uint64(i))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnUIntValue, (CX::UInt64)i))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -102,9 +315,42 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Double(double d)
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnRealValue, d))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                      sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->Double(d))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnRealValue, d))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -112,11 +358,91 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool String(const char *str, rapidjson::SizeType length, CX::Bool copy)
 	{
-		CX_UNUSED(copy);
-
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, str, (CX::Size)length))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (m_pParser->m_cIncludeCurrentDepth >= m_pParser->m_cIncludeMaxDepth || 0 == length)
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnKey, ERROR_MAX_DEPTH_EXCEEDED, 
+				            sizeof(ERROR_MAX_DEPTH_EXCEEDED) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				CX::Data::JSON::SAXParser   parser;
+				CX::String                  sPath;
+				CX::Status                  status;
+
+				if ('/' == str[0] || '\\' == str[0] || (2 <= length && cx_isalpha(str[0]) && ':' == str[1]))
+				{
+					sPath.assign(str, length);
+				}
+				else
+				{
+					if (m_pParser->m_sFilePath.empty())
+					{
+						sPath.assign(str, length);
+					}
+					else
+					{
+						const CX::Char *pszStart = m_pParser->m_sFilePath.c_str();
+						const CX::Char *pszPos;
+
+						pszPos = pszStart + m_pParser->m_sFilePath.size() - 1;
+						while ('/' != *pszPos && '\\' != *pszPos && pszPos > pszStart)
+						{
+							pszPos--;
+						}
+						if ('/' == *pszPos || '\\' == *pszPos)
+						{
+							sPath.assign(pszStart, pszPos - pszStart + 1);
+							sPath.append(str, length);
+						}
+						else
+						{
+							sPath.assign(str, length);
+						}
+					}
+				}
+
+				parser.SetIncludeEntryName(m_pParser->m_sIncludeEntryName.c_str());
+				parser.SetIncludeMaxDepth(m_pParser->m_cIncludeMaxDepth);
+				parser.SetCurrentIncludeDepth(m_pParser->m_cIncludeCurrentDepth + 1);
+				parser.m_pHandler->m_pRelay = this;
+
+				if (!(status = parser.ParseStream(sPath.c_str())))
+				{
+					if (CX::Status_OpenFailed == status.GetCode())
+					{
+						if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnKey, ERROR_INCLUDE_PATH_NOT_FOUND, 
+						            sizeof(ERROR_INCLUDE_PATH_NOT_FOUND) - sizeof(CX::Char)))
+						{
+							return CX::False;
+						}
+					}
+
+					return CX::False;
+				}
+			}
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(str, length, copy))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, str, (CX::Size)length))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -124,10 +450,48 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool StartObject()
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginObject))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                      sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
 		}
+		else
+		{
+			if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+			{
+				if (NULL != m_pRelay)
+				{
+					if (!m_pRelay->StartObject())
+					{
+						return CX::False;
+					}
+				}
+				else
+				{
+					if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginObject))
+					{
+						return CX::False;
+					}
+				}
+			}
+		}
+
+		m_cDepth++;
 
 		return CX::True;
 	}
@@ -136,9 +500,27 @@ struct CX_Data_JSON_SAX_Handler
 	{
 		CX_UNUSED(copy);
 
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnKey, str, (CX::Size)length))
+		if (!m_pParser->m_sIncludeEntryName.empty() && length == m_pParser->m_sIncludeEntryName.size() && 
+		    0 == memcmp(str, m_pParser->m_sIncludeEntryName.c_str(), length))
 		{
-			return CX::False;
+			m_bInclude = CX::True;
+		}
+		else
+		{
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->Key(str, length, copy))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnKey, str, (CX::Size)length))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -146,11 +528,24 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool EndObject(rapidjson::SizeType memberCount)
 	{
-		CX_UNUSED(memberCount);
+		m_cDepth--;
 
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndObject))
+		if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
 		{
-			return CX::False;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->EndObject(memberCount))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndObject))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -158,21 +553,72 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool StartArray()
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginArray))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->String(ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				                      sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char), CX::True))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnStringValue, ERROR_INCLUDE_ENTRY_NOT_STRING, 
+				            sizeof(ERROR_INCLUDE_ENTRY_NOT_STRING) - sizeof(CX::Char)))
+				{
+					return CX::False;
+				}
+			}
 		}
+		else
+		{
+			if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+			{
+				if (NULL != m_pRelay)
+				{
+					if (!m_pRelay->StartArray())
+					{
+						return CX::False;
+					}
+				}
+				else
+				{
+					if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginArray))
+					{
+						return CX::False;
+					}
+				}
+			}
+		}
+
+		m_cDepth++;
 
 		return CX::True;
 	}
 
 	CX::Bool EndArray(rapidjson::SizeType elementCount)
 	{
-		CX_UNUSED(elementCount);
+		m_cDepth--;
 
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndArray))
+		if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
 		{
-			return CX::False;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->EndArray(elementCount))
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndArray))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -180,9 +626,34 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool StartDoc()
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginParse))
+		if (m_bInclude)
 		{
-			return CX::False;
+			m_bInclude = false;
+			if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnKey, m_pParser->m_sIncludeEntryName.c_str(), 
+			            m_pParser->m_sIncludeEntryName.size()))
+			{
+				return CX::False;
+			}
+		}
+		else
+		{
+			if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+			{
+				if (NULL != m_pRelay)
+				{
+					if (!m_pRelay->StartDoc())
+					{
+						return CX::False;
+					}
+				}
+				else
+				{
+					if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnBeginParse))
+					{
+						return CX::False;
+					}
+				}
+			}
 		}
 
 		return CX::True;
@@ -190,9 +661,22 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool EndDoc()
 	{
-		if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndParse))
+		if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
 		{
-			return CX::False;
+			if (NULL != m_pRelay)
+			{
+				if (!m_pRelay->EndDoc())
+				{
+					return CX::False;
+				}
+			}
+			else
+			{
+				if (!Notify(&CX::Data::JSON::ISAXParserObserver::OnEndParse))
+				{
+					return CX::False;
+				}
+			}
 		}
 
 		return CX::True;
@@ -200,12 +684,22 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool Notify(CX::Bool (CX::Data::JSON::ISAXParserObserver::*pfnHandler)())
 	{
-		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
-		     iter != m_pVectorObservers->end(); ++iter)
+		if (NULL != m_pRelay)
 		{
-			if (!((*iter)->*pfnHandler)())
+			if (!m_pRelay->Notify(pfnHandler))
 			{
 				return CX::False;
+			}
+		}
+		else
+		{
+			for (ObserversVector::iterator iter = m_pParser->m_vectorObservers.begin();
+			     iter != m_pParser->m_vectorObservers.end(); ++iter)
+			{
+				if (!((*iter)->*pfnHandler)())
+				{
+					return CX::False;
+				}
 			}
 		}
 
@@ -215,12 +709,22 @@ struct CX_Data_JSON_SAX_Handler
 	template <typename T1>
 	CX::Bool Notify(CX::Bool (CX::Data::JSON::ISAXParserObserver::*pfnHandler)(T1), T1 p1)
 	{
-		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
-		     iter != m_pVectorObservers->end(); ++iter)
+		if (NULL != m_pRelay)
 		{
-			if (!((*iter)->*pfnHandler)(p1))
+			if (!m_pRelay->Notify(pfnHandler, p1))
 			{
 				return CX::False;
+			}
+		}
+		else
+		{
+			for (ObserversVector::iterator iter = m_pParser->m_vectorObservers.begin();
+			     iter != m_pParser->m_vectorObservers.end(); ++iter)
+			{
+				if (!((*iter)->*pfnHandler)(p1))
+				{
+					return CX::False;
+				}
 			}
 		}
 
@@ -228,15 +732,24 @@ struct CX_Data_JSON_SAX_Handler
 	}
 
 	template <typename T1, typename T2>
-	CX::Bool Notify(CX::Bool (CX::Data::JSON::ISAXParserObserver::*pfnHandler)(T1, T2), T1 p1, 
-	                T2 p2)
+	CX::Bool Notify(CX::Bool (CX::Data::JSON::ISAXParserObserver::*pfnHandler)(T1, T2), T1 p1, T2 p2)
 	{
-		for (ObserversVector::iterator iter = m_pVectorObservers->begin();
-		     iter != m_pVectorObservers->end(); ++iter)
+		if (NULL != m_pRelay)
 		{
-			if (!((*iter)->*pfnHandler)(p1, p2))
+			if (!m_pRelay->Notify(pfnHandler, p1, p2))
 			{
 				return CX::False;
+			}
+		}
+		else
+		{
+			for (ObserversVector::iterator iter = m_pParser->m_vectorObservers.begin();
+			     iter != m_pParser->m_vectorObservers.end(); ++iter)
+			{
+				if (!((*iter)->*pfnHandler)(p1, p2))
+				{
+					return CX::False;
+				}
 			}
 		}
 
@@ -259,8 +772,10 @@ SAXParser::SAXParser()
 {
 	if (NULL != (m_pHandler = new (std::nothrow) CX_Data_JSON_SAX_Handler()))
 	{
-		m_pHandler->m_pVectorObservers = &m_vectorObservers;
+		m_pHandler->m_pParser = this;
 	}
+	m_cIncludeMaxDepth     = INCLUDE_MAX_DEPTH;
+	m_cIncludeCurrentDepth = 0;
 }
 
 SAXParser::~SAXParser()
@@ -277,6 +792,17 @@ Status SAXParser::ParseStream(IO::IInputStream *pInputStream)
 	if (NULL == m_pHandler)
 	{
 		return Status(Status_MemAllocFailed, "Failed to allocate sax handler");
+	}
+
+	IO::FileInputStream *pFIS = dynamic_cast<IO::FileInputStream *>(pInputStream);
+	
+	if (NULL != pFIS)
+	{
+		m_sFilePath = pFIS->GetPath();
+	}
+	else
+	{
+		m_sFilePath.clear();
 	}
 
 	RapidJSONInputStream str(pInputStream);
@@ -301,12 +827,16 @@ Status SAXParser::ParseStream(IO::IInputStream *pInputStream)
 		return Status(Status_Cancelled, "Parsing was canceled");
 	}
 
+	m_sFilePath.clear();
+
 	return Status();
 }
 
 Status SAXParser::ParseStream(const Char *szPath)
 {
 	IO::FileInputStream fis(szPath);
+
+	m_sFilePath = szPath;
 
 	if (!fis.IsOK())
 	{
@@ -322,6 +852,8 @@ Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 	{
 		return Status(Status_MemAllocFailed, "Failed to allocate sax handler");
 	}
+
+	m_sFilePath.clear();
 
 	RapidJSONBufferInputStream str((const char *)pBuffer, cbSize);
 
@@ -355,6 +887,8 @@ Status SAXParser::ParseString(const Char *szString)
 		return Status(Status_MemAllocFailed, "Failed to allocate sax handler");
 	}
 
+	m_sFilePath.clear();
+
 	RapidJSONStringInputStream str(szString);
 
 	if (!m_pHandler->StartDoc())
@@ -386,6 +920,8 @@ Status SAXParser::ParseString(const String &sString)
 	{
 		return Status(Status_MemAllocFailed, "Failed to allocate sax handler");
 	}
+
+	m_sFilePath.clear();
 
 	RapidJSONStringInputStream str(sString.c_str());
 
@@ -424,6 +960,35 @@ Status SAXParser::RemoveObservers()
 	m_vectorObservers.clear();
 
 	return Status();
+}
+
+Status SAXParser::SetIncludeEntryName(const Char *szIncludeEntryName/* = INCLUDE_ENTRY_NAME()*/)
+{
+	m_sIncludeEntryName = szIncludeEntryName;
+
+	return Status();
+}
+
+const Char *SAXParser::GetIncludeEntryName() const
+{
+	return m_sIncludeEntryName.c_str();
+}
+
+Status SAXParser::SetIncludeMaxDepth(Size cIncludeMaxDepth/* = INCLUDE_MAX_DEPTH*/)
+{
+	m_cIncludeMaxDepth = cIncludeMaxDepth;
+
+	return Status();
+}
+
+Size SAXParser::GetIncludeMaxDepth() const
+{
+	return m_cIncludeMaxDepth;
+}
+
+void SAXParser::SetCurrentIncludeDepth(Size cCurrentIncludeDepth)
+{
+	m_cIncludeCurrentDepth = cCurrentIncludeDepth;
 }
 
 Status SAXParser::EscapeString(const Char *szStr, String *psStr)

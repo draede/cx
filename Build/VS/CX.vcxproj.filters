@@ -1179,6 +1179,9 @@
     <ClInclude Include="..\..\Include\CX\CBuffers\Tools\CPP_Generator.hpp">
       <Filter>Header Files\CBuffers\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DumpSAXParserObserver.hpp">
+      <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2164,6 +2167,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\CBuffers\Struct.c">
       <Filter>Source Files\CBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\DumpSAXParserObserver.cpp">
+      <Filter>Source Files\Data\JSON</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

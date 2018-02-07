@@ -120,6 +120,7 @@ $(LOCAL_PATH)/../../../../Src/Crypt/AES128InputFilter.cpp \
 $(LOCAL_PATH)/../../../../Src/Crypt/AES128OutputFilter.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/JSON/JSONSAXParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/JSON/JSONNode.cpp \
+$(LOCAL_PATH)/../../../../Src/Data/JSON/DumpSAXParserObserver.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/MO/Language.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/MO/MOSAXParser.cpp \
 $(LOCAL_PATH)/../../../../Src/Data/XML/XMLNode.cpp \

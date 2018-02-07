@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2017 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2018 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -53,6 +53,9 @@ class CX_API SAXParser
 {
 public:
 
+	static const Size  INCLUDE_MAX_DEPTH    = 16;
+	static const Char  *INCLUDE_ENTRY_NAME() { return "$include$"; }
+
 	SAXParser();
 
 	~SAXParser();
@@ -71,15 +74,34 @@ public:
 
 	Status RemoveObservers();
 
+	//if "" == szIncludeEntryName => no includes (default)
+	//only include jsons with an object as root!
+
+	Status SetIncludeEntryName(const Char *szIncludeEntryName = INCLUDE_ENTRY_NAME());
+
+	const Char *GetIncludeEntryName() const;
+
+	Status SetIncludeMaxDepth(Size cIncludeMaxDepth = INCLUDE_MAX_DEPTH);
+
+	Size GetIncludeMaxDepth() const;
+
 	static Status EscapeString(const Char *szStr, String *psStr);
 
-private:
+protected:
+
+	friend struct CX_Data_JSON_SAX_Handler;
+
+	void SetCurrentIncludeDepth(Size cCurrentIncludeDepth);
 
 	typedef Vector<ISAXParserObserver *>::Type   ObserversVector;
 
 #pragma warning(push)
 #pragma warning(disable: 4251)
+	String            m_sFilePath;
 	ObserversVector   m_vectorObservers;
+	String            m_sIncludeEntryName;
+	Size              m_cIncludeMaxDepth;
+	Size              m_cIncludeCurrentDepth;
 #pragma warning(push)
 
 	CX_Data_JSON_SAX_Handler *m_pHandler;

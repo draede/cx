@@ -264,6 +264,7 @@
     <ClInclude Include="..\..\Include\CX\C\string.h" />
     <ClInclude Include="..\..\Include\CX\C\Types.h" />
     <ClInclude Include="..\..\Include\CX\C\Version.h" />
+    <ClInclude Include="..\..\Include\CX\Data\JSON\DumpSAXParserObserver.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\ISAXParserObserver.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\Node.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\JSON\RapidJSONStreams.hpp" />
@@ -17580,6 +17581,7 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='VS2013_StaticReleaseMT|x64'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='VS2015_StaticReleaseMT|x64'">CompileAsC</CompileAs>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Data\JSON\DumpSAXParserObserver.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONNode.cpp" />
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp" />
     <ClCompile Include="..\..\Src\Data\MO\Language.cpp" />
