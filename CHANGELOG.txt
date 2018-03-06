@@ -1,3 +1,5 @@
+0.2.173 - 2018-03-06
+ - Added last VS2017 MSC_VER version (really MS?!)
 0.2.173 - 2018-02-07
  - Added support for JSON includes ("$include$")
  - Changed copyright for 2018 :)

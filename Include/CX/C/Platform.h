@@ -138,7 +138,7 @@
 		#define CX_BUILDSYS_VS
 		#define CX_BUILDSYS_VS2017
 		#define CX_BUILDSYS     "VS2017"
-	#elif _MSC_VER == 1911 || _MSC_VER == 1912
+	#elif _MSC_VER == 1911 || _MSC_VER == 1912 || _MSC_VER == 1913
 		#define CX_BUILDSYS_VS
 		#define CX_BUILDSYS_VS2017
 		#define CX_BUILDSYS     "VS2017"
