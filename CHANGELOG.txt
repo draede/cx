@@ -1,4 +1,8 @@
-0.2.173 - 2018-03-06
+0.2.175 - 2018-03-18
+ - Added Util::CmdLine
+ - Improved IO::IFileSysEnumerator
+ - Improved IO::IFileSysHelper
+0.2.174 - 2018-03-06
  - Added last VS2017 MSC_VER version (really MS?!)
 0.2.173 - 2018-02-07
  - Added support for JSON includes ("$include$")

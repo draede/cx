@@ -61,8 +61,11 @@ private:
 
 	Status Enum(IItemHandler *pHandler, const WChar *wszMask, const WChar *wszPath, bool *pbContinue);
 
-	Status Notify(IItemHandler *pHandler, const Char *szPath, const WChar *wszName, IItemHandler::Type nType, UInt64 cbSize, 
-	              bool *pbContinue);
+	Status NotifyEnterFolder(IItemHandler *pHandler, const Char *szPath, const WChar *wszName, bool *pbContinue);
+
+	Status NotifyLeaveFolder(IItemHandler *pHandler, const Char *szPath, const WChar *wszName, bool *pbContinue);
+
+	Status NotifyFile(IItemHandler *pHandler, const Char *szPath, const WChar *wszName, UInt64 cbSize, bool *pbContinue);
 
 };
 

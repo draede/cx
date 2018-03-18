@@ -44,6 +44,16 @@ class CX_API IFileSysHelper
 {
 public:
 
+	enum FileSizeType
+	{
+		FileSizeType_Bytes,     // < 1024
+		FileSizeType_KiloBytes, // < 1048576
+		FileSizeType_MegaBytes, // < 1073741824
+		FileSizeType_GigaBytes, // < 1099511627776
+		FileSizeType_TeraBytes, // < 1125899906842624
+		FileSizeType_PetaBytes,
+	};
+
 	virtual ~IFileSysHelper() { }
 
 	virtual const Char *GetPathSep() = 0;
@@ -66,6 +76,50 @@ public:
 	virtual Status RenameFolder(const Char *szOldPath, const Char *szNewPath) = 0;
 
 	virtual Status RemoveFolder(const Char *szPath) = 0;
+
+	virtual Double GetNiceSize(UInt64 cbSize, FileSizeType *pnFileSizeType)
+	{
+		if (1024 > cbSize)
+		{
+			*pnFileSizeType = FileSizeType_Bytes;
+
+			return (Double)cbSize;
+		}
+		else
+		if (1048576 > cbSize)
+		{
+			*pnFileSizeType = FileSizeType_KiloBytes;
+
+			return (Double)cbSize / 1024.0;
+		}
+		else
+		if (1073741824 > cbSize)
+		{
+			*pnFileSizeType = FileSizeType_MegaBytes;
+
+			return (Double)cbSize / 1048576.0;
+		}
+		else
+		if (1099511627776 > cbSize)
+		{
+			*pnFileSizeType = FileSizeType_GigaBytes;
+
+			return (Double)cbSize / 1073741824.0;
+		}
+		else
+		if (1125899906842624 > cbSize)
+		{
+			*pnFileSizeType = FileSizeType_TeraBytes;
+
+			return (Double)cbSize / 1099511627776.0;
+		}
+		else
+		{
+			*pnFileSizeType = FileSizeType_PetaBytes;
+
+			return (Double)cbSize / 1125899906842624.0;
+		}
+	}
 
 };
 

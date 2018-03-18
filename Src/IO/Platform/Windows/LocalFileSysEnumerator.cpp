@@ -107,12 +107,16 @@ Status LocalFileSysEnumerator::EnumDrives(IItemHandler *pHandler, const WChar *w
 				{
 					if (wszPath < pPos)
 					{
-						if (!(status = Notify(pHandler, "", wszPath, IItemHandler::Type_Folder, 0, &bContinue)))
+						if (!(status = NotifyEnterFolder(pHandler, "", wszPath, &bContinue)))
 						{
 							if (bContinue)
 							{
 								status.Clear();
 							}
+						}
+						if (bContinue)
+						{
+							break;
 						}
 						if (!(status = Enum(pHandler, wszMask, wszPath, &bContinue)))
 						{
@@ -120,6 +124,21 @@ Status LocalFileSysEnumerator::EnumDrives(IItemHandler *pHandler, const WChar *w
 							{
 								status.Clear();
 							}
+						}
+						if (bContinue)
+						{
+							break;
+						}
+						if (!(status = NotifyLeaveFolder(pHandler, "", wszPath, &bContinue)))
+						{
+							if (bContinue)
+							{
+								status.Clear();
+							}
+						}
+						if (bContinue)
+						{
+							break;
 						}
 					}
 
@@ -149,8 +168,7 @@ Status LocalFileSysEnumerator::EnumDrives(IItemHandler *pHandler, const WChar *w
 	return status;
 }
 
-Status LocalFileSysEnumerator::Notify(IItemHandler *pHandler, const Char *szPath, const WChar *wszName, 
-                                      IItemHandler::Type nType, UInt64 cbSize, bool *pbContinue)
+Status LocalFileSysEnumerator::NotifyEnterFolder(IItemHandler *pHandler, const Char *szPath, const WChar *wszName, bool *pbContinue)
 {
 	String sName;
 	Status status;
@@ -160,7 +178,45 @@ Status LocalFileSysEnumerator::Notify(IItemHandler *pHandler, const Char *szPath
 	{
 		return status;
 	}
-	if (!(status = pHandler->OnItem(szPath, sName.c_str(), nType, cbSize)))
+	if (!(status = pHandler->OnEnterFolder(szPath, sName.c_str())))
+	{
+		*pbContinue = false;
+	}
+
+	return status;
+}
+
+Status LocalFileSysEnumerator::NotifyLeaveFolder(IItemHandler *pHandler, const Char *szPath, const WChar *wszName, 
+                                                 bool *pbContinue)
+{
+	String sName;
+	Status status;
+
+	*pbContinue = true;
+	if (!(status = Str::UTF8::FromWChar(wszName, &sName)))
+	{
+		return status;
+	}
+	if (!(status = pHandler->OnLeaveFolder(szPath, sName.c_str())))
+	{
+		*pbContinue = false;
+	}
+
+	return status;
+}
+
+Status LocalFileSysEnumerator::NotifyFile(IItemHandler *pHandler, const Char *szPath, const WChar *wszName, 
+                                          UInt64 cbSize, bool *pbContinue)
+{
+	String sName;
+	Status status;
+
+	*pbContinue = true;
+	if (!(status = Str::UTF8::FromWChar(wszName, &sName)))
+	{
+		return status;
+	}
+	if (!(status = pHandler->OnFile(szPath, sName.c_str(), cbSize)))
 	{
 		*pbContinue = false;
 	}
@@ -208,7 +264,7 @@ Status LocalFileSysEnumerator::Enum(IItemHandler *pHandler, const WChar *wszMask
 			{
 				if ((FILE_ATTRIBUTE_DIRECTORY & data.dwFileAttributes))
 				{
-					if (!(status = Notify(pHandler, sPath.c_str(), data.cFileName, IItemHandler::Type_Folder, 0, pbContinue)))
+					if (!(status = NotifyEnterFolder(pHandler, sPath.c_str(), data.cFileName, pbContinue)))
 					{
 						if ((*pbContinue))
 						{
@@ -219,7 +275,11 @@ Status LocalFileSysEnumerator::Enum(IItemHandler *pHandler, const WChar *wszMask
 							break;
 						}
 					}
-					
+					if (!*pbContinue)
+					{
+						break;
+					}
+
 					WString wsNextPath;
 
 					wsNextPath = wsPath;
@@ -238,13 +298,8 @@ Status LocalFileSysEnumerator::Enum(IItemHandler *pHandler, const WChar *wszMask
 					{
 						break;
 					}
-				}
-				else
-				{
-					uliSize.LowPart  = data.nFileSizeLow;
-					uliSize.HighPart = data.nFileSizeHigh;
-					if (!(status = Notify(pHandler, sPath.c_str(), data.cFileName, IItemHandler::Type_File, uliSize.QuadPart, 
-					                      pbContinue)))
+
+					if (!(status = NotifyLeaveFolder(pHandler, sPath.c_str(), data.cFileName, pbContinue)))
 					{
 						if ((*pbContinue))
 						{
@@ -254,6 +309,30 @@ Status LocalFileSysEnumerator::Enum(IItemHandler *pHandler, const WChar *wszMask
 						{
 							break;
 						}
+					}
+					if (!*pbContinue)
+					{
+						break;
+					}
+				}
+				else
+				{
+					uliSize.LowPart  = data.nFileSizeLow;
+					uliSize.HighPart = data.nFileSizeHigh;
+					if (!(status = NotifyFile(pHandler, sPath.c_str(), data.cFileName, uliSize.QuadPart, pbContinue)))
+					{
+						if ((*pbContinue))
+						{
+							status.Clear();
+						}
+						else
+						{
+							break;
+						}
+					}
+					if (!*pbContinue)
+					{
+						break;
 					}
 				}
 			}

@@ -26,45 +26,30 @@
  * SOFTWARE.
  */ 
 
-#pragma once
+#include "CX/Util/CmdLine.hpp"
+#include "Tester.hpp"
+#include "CX/Print.hpp"
 
 
-#include "CX/Types.hpp"
-#include "CX/Status.hpp"
-#include "CX/APIDefs.hpp"
+using namespace CX;
 
 
-namespace CX
+void Util_CmdLine_Test1()
 {
+	Util::CmdLine   cmdline;
+	Status          status;
 
-namespace IO
-{
+	cmdline.SetBanner("USAGE: a.exe")
+	       .SetMinPositionalParams(1)
+	       .AddOption('a', "aaa", "a option")
+	       .AddOption('b', "bbb", "b option")
+	       .AddOption('c', "ccc", "c option")
+	       .AddOption('d', "ddd", "d option")
+	       .AddParam(cmdline.ParamType_String, "path", "path param", True);
 
-class CX_API IFileSysEnumerator
-{
-public:
+	cmdline.ShowUsage();
 
-	class IItemHandler
-	{
-	public:
+	status = cmdline.Parse("a.exe -abc --ddd --path \"xxx\\\"yyy\\\"zzz\" arg1 arg2", True);
+}
 
-		virtual ~IItemHandler() { }
-
-		virtual Status OnEnterFolder(const Char *szPath, const Char *szName) = 0;
-		
-		virtual Status OnLeaveFolder(const Char *szPath, const Char *szName) = 0;
-
-		virtual Status OnFile(const Char *szPath, const Char *szName, UInt64 cbSize) = 0;
-
-	};
-
-	virtual ~IFileSysEnumerator() { }
-
-	virtual Status Enumerate(IItemHandler *pHandler, const Char *szMask = NULL, const Char *szPath = NULL) = 0;
-
-};
-
-}//namespace IO
-
-}//namespace CX
-
+REGISTER_TEST(Util_CmdLine_Test1);
