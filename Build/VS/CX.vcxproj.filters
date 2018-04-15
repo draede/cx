@@ -361,6 +361,12 @@
     <Filter Include="Source Files\CBuffers">
       <UniqueIdentifier>{308adb6d-cd08-4a10-8676-281439adc944}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\CLI">
+      <UniqueIdentifier>{ed1080f7-b218-43f6-a081-32aaceea377e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CLI">
+      <UniqueIdentifier>{c49c5484-62d5-4862-b457-5bfd4abbec6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1181,6 +1187,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\JSON\DumpSAXParserObserver.hpp">
       <Filter>Header Files\Data\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CLI\CmdLine.hpp">
+      <Filter>Header Files\CLI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CLI\ICommand.hpp">
+      <Filter>Header Files\CLI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CLI\IModule.hpp">
+      <Filter>Header Files\CLI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CLI\Modules.hpp">
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2170,6 +2188,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\DumpSAXParserObserver.cpp">
       <Filter>Source Files\Data\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CLI\Modules.cpp">
+      <Filter>Source Files\CLI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

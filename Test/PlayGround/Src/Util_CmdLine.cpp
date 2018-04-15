@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Util/CmdLine.hpp"
+#include "CX/CLI/CmdLine.hpp"
 #include "Tester.hpp"
 #include "CX/Print.hpp"
 
@@ -36,8 +36,8 @@ using namespace CX;
 
 void Util_CmdLine_Test1()
 {
-	Util::CmdLine   cmdline;
-	Status          status;
+	CLI::CmdLine   cmdline;
+	Status         status;
 
 	cmdline.SetBanner("USAGE: a.exe")
 	       .SetMinPositionalParams(1)

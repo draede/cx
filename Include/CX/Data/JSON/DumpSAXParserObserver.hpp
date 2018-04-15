@@ -80,8 +80,11 @@ private:
 	typedef Stack<Node>::Type   NodesStack;
 
 	IO::IOutputStream   *m_pOutputStream;
+#pragma warning(push)
+#pragma warning(disable: 4251)
 	NodesStack          m_stackNodes;
 	String              m_sKey;
+#pragma warning(pop)
 
 	template <typename T>
 	Bool DumpValue(const T &value)

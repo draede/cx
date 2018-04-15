@@ -42,7 +42,7 @@
 namespace CX
 {
 
-namespace Util
+namespace CLI
 {
 
 template <typename CHAR_TYPE, typename STRING_TYPE, typename ISTRINGSTREAM_TYPE>
@@ -1023,6 +1023,6 @@ private:
 typedef CmdLineBase<Char, String, std::istringstream>      CmdLine;
 typedef CmdLineBase<WChar, WString, std::wistringstream>   CmdLineW;
 
-}//namespace Util
+}//namespace CLI
 
 }//namespace CX
