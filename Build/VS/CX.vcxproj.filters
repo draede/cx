@@ -1200,6 +1200,12 @@
     <ClInclude Include="..\..\Include\CX\CLI\Modules.hpp">
       <Filter>Header Files\CLI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\MemoryMappedFile.hpp">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\MemoryMappedFile.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2191,6 +2197,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\CLI\Modules.cpp">
       <Filter>Source Files\CLI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\MemoryMappedFile_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

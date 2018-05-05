@@ -326,6 +326,7 @@
     <ClInclude Include="..\..\Include\CX\IO\IFileSysHelper.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IInputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IInputStream.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\MemoryMappedFile.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IOutputFilter.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\IOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\LocalFileSysEnumerator.hpp" />
@@ -342,6 +343,7 @@
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileOutputStream.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysEnumerator.hpp" />
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\LocalFileSysHelper.hpp" />
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\MemoryMappedFile.hpp" />
     <ClInclude Include="..\..\Include\CX\Limits.hpp" />
     <ClInclude Include="..\..\Include\CX\List.hpp" />
     <ClInclude Include="..\..\Include\CX\Log\ConsoleOutput.hpp" />
@@ -17633,6 +17635,7 @@
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysEnumerator.cpp" />
     <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp" />
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\MemoryMappedFile_windows.cpp" />
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp" />
     <ClCompile Include="..\..\Src\Log\Logger.cpp" />
     <ClCompile Include="..\..\Src\Log\LogScope.cpp" />
@@ -18531,7 +18534,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18553,7 +18556,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18575,7 +18578,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18598,7 +18601,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18621,7 +18624,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18644,7 +18647,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18666,7 +18669,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18690,7 +18693,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18714,7 +18717,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18739,7 +18742,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18764,7 +18767,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18789,7 +18792,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18813,7 +18816,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18835,7 +18838,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18857,7 +18860,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18880,7 +18883,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18903,7 +18906,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18926,7 +18929,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18948,7 +18951,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18969,7 +18972,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -18990,7 +18993,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19012,7 +19015,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19034,7 +19037,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19056,7 +19059,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19079,7 +19082,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19105,7 +19108,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19131,7 +19134,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19158,7 +19161,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19185,7 +19188,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19212,7 +19215,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19238,7 +19241,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19266,7 +19269,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19294,7 +19297,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19323,7 +19326,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19352,7 +19355,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19381,7 +19384,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19409,7 +19412,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19435,7 +19438,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19461,7 +19464,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19488,7 +19491,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19515,7 +19518,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19542,7 +19545,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19568,7 +19571,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19593,7 +19596,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19618,7 +19621,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19644,7 +19647,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19670,7 +19673,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -19696,7 +19699,7 @@
       <AdditionalIncludeDirectories>../../Include;../../Contrib/SparseHash/Include;../../Contrib/RapidJSON/Include;../../Contrib/LZHAM/Include;../../Contrib/LZ4/Include;../../Contrib/Snappy/Include;../../Contrib/crypto-algorithms/Include;../../Contrib/cURL/Include;../../Contrib/cURL/Src;../../Contrib/Expat/Include;../../Contrib/Expat/Src;../../Contrib/SQLite/Include;../../Contrib/JSONSL/Include;../../Contrib/BSON/Include;../../Contrib/PEvents/Include;../../Contrib/ByteOrder/Include;../../Contrib/xxHash/Include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutputPath)$(TargetName).Compiler.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
