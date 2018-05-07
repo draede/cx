@@ -1,3 +1,5 @@
+0.2.179 - 2018-05-07
+ - Updated _MSC_VER support (VS2017)
 0.2.178 - 2018-05-07
  - Fixed Hash::SHA1Hash modifying input buffer
 0.2.177 - 2018-05-05
