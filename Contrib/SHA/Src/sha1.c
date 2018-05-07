@@ -23,6 +23,8 @@
  * SUCH DAMAGE.
  */
 
+ #define SHA1HANDSOFF * Copies data before messing with it. 
+
 #include "../Include/sha.h"
 #include <string.h>
 
@@ -58,7 +60,13 @@ void SHA1_Transform(sha1_quadbyte state[5], sha1_byte buffer[64]) {
 	sha1_quadbyte	a, b, c, d, e;
 	BYTE64QUAD16	*block;
 
+#ifdef SHA1HANDSOFF
+	static unsigned char workspace[64];
+	block = (BYTE64QUAD16*)workspace;
+	memcpy(block, buffer, 64);
+#else
 	block = (BYTE64QUAD16*)buffer;
+#endif
 	/* Copy context->state[] to working vars */
 	a = state[0];
 	b = state[1];
@@ -153,5 +161,8 @@ void SHA1_Final(sha1_byte digest[SHA1_DIGEST_LENGTH], SHA_CTX *context) {
 	memset(context->state, 0, SHA1_DIGEST_LENGTH);
 	memset(context->count, 0, 8);
 	memset(&finalcount, 0, 8);
+#ifdef SHA1HANDSOFF  /* make SHA1Transform overwrite it's own static vars */
+	SHA1_Transform(context->state, context->buffer);
+#endif
 }
 
