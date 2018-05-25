@@ -31,6 +31,7 @@ $(LOCAL_PATH)/../../../Contrib/MD5/Include \
 $(LOCAL_PATH)/../../../Contrib/PEvents/Include \
 $(LOCAL_PATH)/../../../Contrib/RapidJSON/Include \
 $(LOCAL_PATH)/../../../Contrib/SHA/Include \
+$(LOCAL_PATH)/../../../Contrib/SHA/Src \
 $(LOCAL_PATH)/../../../Contrib/Snappy/Include \
 $(LOCAL_PATH)/../../../Contrib/SparseHash/Include \
 $(LOCAL_PATH)/../../../Contrib/SQLite/Include \
@@ -97,9 +98,10 @@ $(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_symbol_codec.cpp \
 $(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_timer.cpp \
 $(LOCAL_PATH)/../../../../Contrib/LZHAM/Src/lzham_vector.cpp \
 $(LOCAL_PATH)/../../../../Contrib/MD5/Src/md5_orig.c \
-$(LOCAL_PATH)/../../../../Contrib/SHA/Src/hmac_sha1.c \
 $(LOCAL_PATH)/../../../../Contrib/SHA/Src/sha1.c \
-$(LOCAL_PATH)/../../../../Contrib/SHA/Src/sha2.c \
+$(LOCAL_PATH)/../../../../Contrib/SHA/Src/sha224.c \
+$(LOCAL_PATH)/../../../../Contrib/SHA/Src/sha384-512.c \
+$(LOCAL_PATH)/../../../../Contrib/SHA/Src/usha.c \
 $(LOCAL_PATH)/../../../../Contrib/Snappy/Src/snappy.cc \
 $(LOCAL_PATH)/../../../../Contrib/Snappy/Src/snappy-sinksource.cc \
 $(LOCAL_PATH)/../../../../Contrib/Snappy/Src/snappy-stubs-internal.cc \
@@ -142,6 +144,7 @@ $(LOCAL_PATH)/../../../../Src/Hash/MD5Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/MultiHash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA1Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA256Hash.cpp \
+$(LOCAL_PATH)/../../../../Src/Hash/SHA224Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA384Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/SHA512Hash.cpp \
 $(LOCAL_PATH)/../../../../Src/Hash/xxHash32.cpp \

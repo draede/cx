@@ -26,7 +26,7 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/SHA512Hash.hpp"
+#include "CX/Hash/SHA224Hash.hpp"
 #include "CX/Status.hpp"
 #include "../../Contrib/SHA/Include/sha.h"
 
@@ -37,9 +37,9 @@ namespace CX
 namespace Hash
 {
 
-const Char SHA512Hash::NAME[] = "SHA512";
+const Char SHA224Hash::NAME[] = "SHA224";
 
-SHA512Hash::SHA512Hash()
+SHA224Hash::SHA224Hash()
 {
 	if (NULL == (m_pCTX = new (std::nothrow) USHAContext()))
 	{
@@ -49,22 +49,22 @@ SHA512Hash::SHA512Hash()
 	Init();
 }
 
-SHA512Hash::~SHA512Hash()
+SHA224Hash::~SHA224Hash()
 {
 	delete (USHAContext *)m_pCTX;
 }
 
-const Char *SHA512Hash::GetName()
+const Char *SHA224Hash::GetName()
 {
 	return NAME;
 }
 
-Size SHA512Hash::GetSize()
+Size SHA224Hash::GetSize()
 {
 	return SIZE;
 }
 
-Status SHA512Hash::Init(const void *pHash/* = NULL*/)
+Status SHA224Hash::Init(const void *pHash/* = NULL*/)
 {
 	(void)(pHash);
 
@@ -73,12 +73,12 @@ Status SHA512Hash::Init(const void *pHash/* = NULL*/)
 		return Status(Status_NotInitialized, "Context not initialized");
 	}
 
-	USHAReset((USHAContext *)m_pCTX, SHA512);
+	USHAReset((USHAContext *)m_pCTX, SHA224);
 
 	return Status();
 }
 
-Status SHA512Hash::Update(const void *pBuffer, Size cbSize)
+Status SHA224Hash::Update(const void *pBuffer, Size cbSize)
 {
 	if (NULL == m_pCTX)
 	{
@@ -90,7 +90,7 @@ Status SHA512Hash::Update(const void *pBuffer, Size cbSize)
 	return Status();
 }
 
-Status SHA512Hash::Done(void *pHash)
+Status SHA224Hash::Done(void *pHash)
 {
 	if (NULL == m_pCTX)
 	{

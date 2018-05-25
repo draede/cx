@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2018 draede, draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2018 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -26,9 +26,11 @@
  * SOFTWARE.
  */ 
 
-#include "CX/Hash/SHA512Hash.hpp"
-#include "CX/Status.hpp"
-#include "../../Contrib/SHA/Include/sha.h"
+#pragma once
+
+
+#include "CX/Hash/IHash.hpp"
+#include "CX/APIDefs.hpp"
 
 
 namespace CX
@@ -37,70 +39,32 @@ namespace CX
 namespace Hash
 {
 
-const Char SHA512Hash::NAME[] = "SHA512";
-
-SHA512Hash::SHA512Hash()
+class CX_API SHA224Hash : public IHash
 {
-	if (NULL == (m_pCTX = new (std::nothrow) USHAContext()))
-	{
-		return;
-	}
+public:
 
-	Init();
-}
+	static const Char     NAME[];
+	static const Size     SIZE   = 28;
 
-SHA512Hash::~SHA512Hash()
-{
-	delete (USHAContext *)m_pCTX;
-}
+	SHA224Hash();
 
-const Char *SHA512Hash::GetName()
-{
-	return NAME;
-}
+	virtual ~SHA224Hash();
 
-Size SHA512Hash::GetSize()
-{
-	return SIZE;
-}
+	virtual const Char *GetName();
 
-Status SHA512Hash::Init(const void *pHash/* = NULL*/)
-{
-	(void)(pHash);
+	virtual Size GetSize();
 
-	if (NULL == m_pCTX)
-	{
-		return Status(Status_NotInitialized, "Context not initialized");
-	}
+	virtual Status Init(const void *pCrypt = NULL);
 
-	USHAReset((USHAContext *)m_pCTX, SHA512);
+	virtual Status Update(const void *pBuffer, Size cbSize);
 
-	return Status();
-}
+	virtual Status Done(void *pCrypt);
 
-Status SHA512Hash::Update(const void *pBuffer, Size cbSize)
-{
-	if (NULL == m_pCTX)
-	{
-		return Status(Status_NotInitialized, "Context not initialized");
-	}
+private:
 
-	USHAInput((USHAContext *)m_pCTX, (const uint8_t *)pBuffer, (unsigned int)cbSize);
+	void *m_pCTX;
 
-	return Status();
-}
-
-Status SHA512Hash::Done(void *pHash)
-{
-	if (NULL == m_pCTX)
-	{
-		return Status(Status_NotInitialized, "Context not initialized");
-	}
-
-	USHAResult((USHAContext *)m_pCTX, (uint8_t *)pHash);
-
-	return Status();
-}
+};
 
 }//namespace Hash
 

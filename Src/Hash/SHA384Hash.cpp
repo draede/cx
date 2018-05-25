@@ -28,7 +28,7 @@
 
 #include "CX/Hash/SHA384Hash.hpp"
 #include "CX/Status.hpp"
-#include "../../Contrib/SHA/Include/sha2.h"
+#include "../../Contrib/SHA/Include/sha.h"
 
 
 namespace CX
@@ -41,7 +41,7 @@ const Char SHA384Hash::NAME[] = "SHA384";
 
 SHA384Hash::SHA384Hash()
 {
-	if (NULL == (m_pCTX = new (std::nothrow) SHA384_CTX()))
+	if (NULL == (m_pCTX = new (std::nothrow) USHAContext()))
 	{
 		return;
 	}
@@ -51,7 +51,7 @@ SHA384Hash::SHA384Hash()
 
 SHA384Hash::~SHA384Hash()
 {
-	delete (SHA384_CTX *)m_pCTX;
+	delete (USHAContext *)m_pCTX;
 }
 
 const Char *SHA384Hash::GetName()
@@ -73,7 +73,7 @@ Status SHA384Hash::Init(const void *pHash/* = NULL*/)
 		return Status(Status_NotInitialized, "Context not initialized");
 	}
 
-	SHA384_Init((SHA384_CTX *)m_pCTX);
+	USHAReset((USHAContext *)m_pCTX, SHA384);
 
 	return Status();
 }
@@ -85,7 +85,7 @@ Status SHA384Hash::Update(const void *pBuffer, Size cbSize)
 		return Status(Status_NotInitialized, "Context not initialized");
 	}
 
-	SHA384_Update((SHA384_CTX *)m_pCTX, (const u_int8_t *)pBuffer, cbSize);
+	USHAInput((USHAContext *)m_pCTX, (const uint8_t *)pBuffer, (unsigned int)cbSize);
 
 	return Status();
 }
@@ -97,7 +97,7 @@ Status SHA384Hash::Done(void *pHash)
 		return Status(Status_NotInitialized, "Context not initialized");
 	}
 
-	SHA384_Final((u_int8_t *)pHash, (SHA384_CTX *)m_pCTX);
+	USHAResult((USHAContext *)m_pCTX, (uint8_t *)pHash);
 
 	return Status();
 }

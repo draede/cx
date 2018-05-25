@@ -1,1 +1,1 @@
-1.0.0
+https://github.com/Azure/azure-c-shared-utility/commit/adcdd2306fc68b537d1c090068a235e5f85437d4

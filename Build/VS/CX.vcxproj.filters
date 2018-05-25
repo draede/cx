@@ -1206,6 +1206,9 @@
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\MemoryMappedFile.hpp">
       <Filter>Header Files\IO\Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Hash\SHA224Hash.hpp">
+      <Filter>Header Files\Hash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -1276,15 +1279,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\MD5Hash.cpp">
       <Filter>Source Files\Hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\SHA\Src\hmac_sha1.c">
-      <Filter>Contrib\SHA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\SHA\Src\sha2.c">
-      <Filter>Contrib\SHA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\SHA\Src\sha1.c">
-      <Filter>Contrib\SHA</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\SHA1Hash.cpp">
       <Filter>Source Files\Hash</Filter>
@@ -2200,6 +2194,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\Platform\Windows\MemoryMappedFile_windows.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha1.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha224.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\sha384-512.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\SHA\Src\usha.c">
+      <Filter>Contrib\SHA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Hash\SHA224Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
