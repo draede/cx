@@ -34,6 +34,7 @@
 
 #include "CX/IO/FileOutputStream.hpp"
 #include "CX/Log/IOutput.hpp"
+#include "CX/Util/MemPool.hpp"
 #include "CX/Sys/Lock.hpp"
 #include "CX/Sys/Thread.hpp"
 #include "CX/Sys/Event.hpp"
@@ -73,8 +74,8 @@ private:
 	IO::FileOutputStream   *m_pFOS;
 	Sys::Thread            m_threadWrite;
 	Sys::Event             m_eventStop;
-	StringsVector          *m_pVectorStrings;
-	Sys::Lock              m_lockStrings;
+	Util::DynMemPool       *m_pMemPool;
+	Sys::Lock              m_lockData;
 	UInt32                 m_cFlushDelay;
 	Size                   m_cbMaxMem;
 	Size                   m_cbCrMem;

@@ -980,7 +980,6 @@ namespace lzham
 
       uint is_match_model_index = LZHAM_IS_MATCH_MODEL_INDEX(m_cur_state);
 
-#pragma warning(suppress: 6340)
       printf("  pos: %u, state: %u, match_pred: %u, is_match_model_index: %u, is_match: %u, cost: %f\n",
          lzdec.m_pos,
          m_cur_state,
@@ -1026,13 +1025,11 @@ namespace lzham
                }
                else
                {
-#pragma warning(suppress: 6340)
                   printf("!!!Rep 0 full len %u\n", lzdec.m_len);
                }
             }
             else
             {
-#pragma warning(suppress: 6340)
                printf("!!!Rep %u full len %u\n", match_hist_index, lzdec.m_len);
             }
          }
@@ -1063,7 +1060,6 @@ namespace lzham
             //uint main_sym = match_low_sym | (match_high_sym << 3);
 
             uint num_extra_bits = lzbase.m_lzx_position_extra_bits[match_slot];
-#pragma warning(suppress: 6340)
             printf("^^^Full match Len %u Dist %u, Slot %u, ExtraBits: %u", lzdec.m_len, lzdec.m_dist, match_slot, num_extra_bits);
 
             if (num_extra_bits < 3)
@@ -1071,7 +1067,6 @@ namespace lzham
             }
             else
             {
-#pragma warning(suppress: 6340)
                printf("  (Low 4 bits: %u vs. %u)", lzdec.m_dist & 15, match_extra & 15);
             }
             printf("\n");

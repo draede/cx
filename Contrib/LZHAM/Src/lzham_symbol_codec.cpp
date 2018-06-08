@@ -523,7 +523,6 @@ namespace lzham
       if (!max_code_size)
       {
          uint table_size = get_generate_huffman_codes_table_size();
-#pragma warning(suppress: 6255)
          void *pTables = alloca(table_size);
 
          uint total_freq = 0;                  

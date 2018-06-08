@@ -822,11 +822,11 @@ Double Var::GetReal(Double lfRealDefault/* = DEFAULT_REAL*/) const
 	}
 	if (IsInt())
 	{
-		return m_nInt;
+		return (Double)m_nInt;
 	}
 	if (IsUInt())
 	{
-		return m_uUInt;
+		return (Double)m_uUInt;
 	}
 
 	return lfRealDefault;

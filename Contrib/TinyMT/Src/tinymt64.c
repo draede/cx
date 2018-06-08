@@ -13,7 +13,7 @@
  * The 3-clause BSD License is applied to this software, see
  * LICENSE.txt
  */
-#include "../Include/tinymt64.h"
+#include "tinymt64.h"
 
 #define MIN_LOOP 8
 
@@ -56,10 +56,9 @@ static void period_certification(tinymt64_t * random) {
  * @param seed a 64-bit unsigned integer used as a seed.
  */
 void tinymt64_init(tinymt64_t * random, uint64_t seed) {
-    int i;
-	 random->status[0] = seed ^ ((uint64_t)random->mat1 << 32);
+    random->status[0] = seed ^ ((uint64_t)random->mat1 << 32);
     random->status[1] = random->mat2 ^ random->tmat;
-    for (i = 1; i < MIN_LOOP; i++) {
+    for (int i = 1; i < MIN_LOOP; i++) {
 	random->status[i & 1] ^= i + UINT64_C(6364136223846793005)
 	    * (random->status[(i - 1) & 1]
 	       ^ (random->status[(i - 1) & 1] >> 62));

@@ -40,7 +40,7 @@
 #ifndef UTIL_GTL_HASHTABLE_COMMON_H_
 #define UTIL_GTL_HASHTABLE_COMMON_H_
 
-#include "sparsehash/internal/sparseconfig.h"
+#include <sparsehash/internal/sparseconfig.h>
 #include <assert.h>
 #include <stdio.h>
 #include <stddef.h>                  // for size_t
@@ -51,7 +51,7 @@ _START_GOOGLE_NAMESPACE_
 
 template <bool> struct SparsehashCompileAssert { };
 #define SPARSEHASH_COMPILE_ASSERT(expr, msg) \
-  typedef SparsehashCompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+  __attribute__((unused)) typedef SparsehashCompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
 
 namespace sparsehash_internal {
 

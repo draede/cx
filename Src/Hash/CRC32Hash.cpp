@@ -74,7 +74,7 @@ Status CRC32Hash::Init(const void *pHash/* = NULL*/)
 
 Status CRC32Hash::Update(const void *pBuffer, Size cbSize)
 {
-	m_nCRC32 = crc32_8bytes_internal(pBuffer, cbSize, m_nCRC32);
+	m_nCRC32 = crc32_fast(pBuffer, cbSize, m_nCRC32);
 
 	return Status();
 }

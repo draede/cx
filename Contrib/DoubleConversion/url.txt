@@ -1,1 +1,1 @@
-https://github.com/floitsch/double-conversion
+https://github.com/google/double-conversion

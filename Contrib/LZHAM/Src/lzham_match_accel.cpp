@@ -305,7 +305,6 @@ namespace lzham
 
          if (num_matches)
          {
-#pragma warning(suppress: 28199)
             pDstMatch[-1].m_dist |= 0x80000000;
 
             const uint num_matches_to_write = LZHAM_MIN(num_matches, m_max_matches);

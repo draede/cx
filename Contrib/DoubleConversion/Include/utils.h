@@ -39,9 +39,23 @@
 #ifndef UNIMPLEMENTED
 #define UNIMPLEMENTED() (abort())
 #endif
+#ifndef DOUBLE_CONVERSION_NO_RETURN
+#ifdef _MSC_VER
+#define DOUBLE_CONVERSION_NO_RETURN __declspec(noreturn)
+#else
+#define DOUBLE_CONVERSION_NO_RETURN __attribute__((noreturn))
+#endif
+#endif
 #ifndef UNREACHABLE
+#ifdef _MSC_VER
+void DOUBLE_CONVERSION_NO_RETURN abort_noreturn();
+inline void abort_noreturn() { abort(); }
+#define UNREACHABLE()   (abort_noreturn())
+#else
 #define UNREACHABLE()   (abort())
 #endif
+#endif
+
 
 // Double operations detection based on target architecture.
 // Linux uses a 80bit wide floating point stack on x86. This induces double
@@ -62,7 +76,8 @@
     defined(__sparc__) || defined(__sparc) || defined(__s390__) || \
     defined(__SH4__) || defined(__alpha__) || \
     defined(_MIPS_ARCH_MIPS32R2) || \
-    defined(__AARCH64EL__) || defined(__aarch64__)
+    defined(__AARCH64EL__) || defined(__aarch64__) || \
+    defined(__riscv)
 #define DOUBLE_CONVERSION_CORRECT_DOUBLE_OPERATIONS 1
 #elif defined(__mc68000__)
 #undef DOUBLE_CONVERSION_CORRECT_DOUBLE_OPERATIONS

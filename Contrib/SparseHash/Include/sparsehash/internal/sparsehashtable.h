@@ -95,15 +95,15 @@
 #ifndef _SPARSEHASHTABLE_H_
 #define _SPARSEHASHTABLE_H_
 
-#include "sparsehash/internal/sparseconfig.h"
+#include <sparsehash/internal/sparseconfig.h>
 #include <assert.h>
 #include <algorithm>                 // For swap(), eg
 #include <iterator>                  // for iterator tags
 #include <limits>                    // for numeric_limits
 #include <utility>                   // for pair
-#include "sparsehash/type_traits.h"        // for remove_const
-#include "sparsehash/internal/hashtable-common.h"
-#include "sparsehash/sparsetable"    // IWYU pragma: export
+#include <sparsehash/type_traits.h>        // for remove_const
+#include <sparsehash/internal/hashtable-common.h>
+#include <sparsehash/sparsetable>    // IWYU pragma: export
 #include <stdexcept>                 // For length_error
 
 _START_GOOGLE_NAMESPACE_
@@ -165,7 +165,7 @@ struct sparse_hashtable_iterator {
  public:
   typedef sparse_hashtable_iterator<V,K,HF,ExK,SetK,EqK,A>       iterator;
   typedef sparse_hashtable_const_iterator<V,K,HF,ExK,SetK,EqK,A> const_iterator;
-  typedef typename sparsetable<V,DEFAULT_GROUP_SIZE,A>::nonempty_iterator
+  typedef typename sparsetable<V,DEFAULT_GROUP_SIZE,value_alloc_type>::nonempty_iterator
       st_iterator;
 
   typedef std::forward_iterator_tag iterator_category;  // very little defined!
@@ -217,7 +217,7 @@ struct sparse_hashtable_const_iterator {
  public:
   typedef sparse_hashtable_iterator<V,K,HF,ExK,SetK,EqK,A>       iterator;
   typedef sparse_hashtable_const_iterator<V,K,HF,ExK,SetK,EqK,A> const_iterator;
-  typedef typename sparsetable<V,DEFAULT_GROUP_SIZE,A>::const_nonempty_iterator
+  typedef typename sparsetable<V,DEFAULT_GROUP_SIZE,value_alloc_type>::const_nonempty_iterator
       st_iterator;
 
   typedef std::forward_iterator_tag iterator_category;  // very little defined!
@@ -271,7 +271,7 @@ struct sparse_hashtable_destructive_iterator {
 
  public:
   typedef sparse_hashtable_destructive_iterator<V,K,HF,ExK,SetK,EqK,A> iterator;
-  typedef typename sparsetable<V,DEFAULT_GROUP_SIZE,A>::destructive_iterator
+  typedef typename sparsetable<V,DEFAULT_GROUP_SIZE,value_alloc_type>::destructive_iterator
       st_iterator;
 
   typedef std::forward_iterator_tag iterator_category;  // very little defined!
@@ -841,7 +841,7 @@ class sparse_hashtable {
     size_type bucknum = hash(key) & bucket_count_minus_one;
     size_type insert_pos = ILLEGAL_BUCKET; // where we would insert
     SPARSEHASH_STAT_UPDATE(total_lookups += 1);
-    for (;;) {                          // probe until something happens
+    while ( 1 ) {                          // probe until something happens
       if ( !table.test(bucknum) ) {        // bucket is empty
         SPARSEHASH_STAT_UPDATE(total_probes += num_probes);
         if ( insert_pos == ILLEGAL_BUCKET )  // found no prior place to insert

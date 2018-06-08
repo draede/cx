@@ -28,9 +28,6 @@
     <Filter Include="Contrib">
       <UniqueIdentifier>{1e608268-8048-4f27-8138-2be8641b9f9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contrib\ByteOrder">
-      <UniqueIdentifier>{ec081fa0-4c86-44e9-8b70-adffef1460c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Sys\Platform">
       <UniqueIdentifier>{692da411-0b00-45c1-89dc-5136ad459b9c}</UniqueIdentifier>
     </Filter>
@@ -423,9 +420,6 @@
     <ClInclude Include="..\..\Include\CX\Vector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Contrib\ByteOrder\Include\byteorder.h">
-      <Filter>Contrib\ByteOrder</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\APIDefs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -458,36 +452,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\MemInputStream.hpp">
       <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\bignum-dtoa.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\cached-powers.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\diy-fp.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\double-conversion.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\fast-dtoa.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\fixed-dtoa.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\ieee.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\strtod.h">
-      <Filter>Contrib\DoubleConversion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\DoubleConversion\Include\utils.h">
-      <Filter>Contrib\DoubleConversion</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Str\Platform\Windows\UTF8.hpp">
       <Filter>Header Files\Str\Platform\Windows</Filter>
@@ -651,9 +615,6 @@
     <ClInclude Include="..\..\Include\CX\Str\HexBinStr.hpp">
       <Filter>Header Files\Str</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Contrib\Z85\Include\z85.h">
-      <Filter>Contrib\Z85</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\JSON\SAXParser.hpp">
       <Filter>Header Files\Data\JSON</Filter>
     </ClInclude>
@@ -671,9 +632,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Hash\xxHash64.hpp">
       <Filter>Header Files\Hash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\CRC32Slice8\Include\crc32.h">
-      <Filter>Contrib\CRC32Slice8</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Mem.hpp">
       <Filter>Header Files</Filter>
@@ -1016,9 +974,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Str\Base64BinStr.hpp">
       <Filter>Header Files\Str</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Contrib\SQLite\Include\sqlite3.h">
-      <Filter>Contrib\SQLite</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Database.hpp">
       <Filter>Header Files\DB\SQLite</Filter>
@@ -1706,12 +1661,6 @@
     <ClCompile Include="..\..\Contrib\cURL\Src\vtls\polarssl_threadlock.c">
       <Filter>Contrib\cURL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\schannel.c">
-      <Filter>Contrib\cURL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\vtls.c">
-      <Filter>Contrib\cURL</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\cURL\Src\amigaos.c">
       <Filter>Contrib\cURL</Filter>
     </ClCompile>
@@ -1931,9 +1880,6 @@
     <ClCompile Include="..\..\Contrib\cURL\Src\progress.c">
       <Filter>Contrib\cURL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Contrib\cURL\Src\rawstr.c">
-      <Filter>Contrib\cURL</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\cURL\Src\rtsp.c">
       <Filter>Contrib\cURL</Filter>
     </ClCompile>
@@ -1977,9 +1923,6 @@
       <Filter>Contrib\cURL</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\cURL\Src\strdup.c">
-      <Filter>Contrib\cURL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\cURL\Src\strequal.c">
       <Filter>Contrib\cURL</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\cURL\Src\strerror.c">
@@ -2209,6 +2152,42 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\SHA224Hash.cpp">
       <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_ctype.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_path.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\curl_range.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\mime.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\rand.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\setopt.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\sha256.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\ssh-libssh.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\strcase.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\vtls.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\cURL\Src\vtls\schannel.c">
+      <Filter>Contrib\cURL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\Expat\Src\loadlibrary.c">
+      <Filter>Contrib\Expat</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

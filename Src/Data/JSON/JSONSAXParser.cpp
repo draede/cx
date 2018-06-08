@@ -313,6 +313,15 @@ struct CX_Data_JSON_SAX_Handler
 		return CX::True;
 	}
 
+	bool RawNumber(const char* str, rapidjson::SizeType length, bool copy) 
+	{
+		str;
+		length;
+		copy;
+
+		return false;
+	}
+
 	CX::Bool Double(double d)
 	{
 		if (m_bInclude)

@@ -162,9 +162,7 @@ _bson_iso8601_date_parse (const char *str,
       DEFAULT_DATE_PARSE_ERR;
    }
 
-	sec_ptr = ptr;
-
-	/* if the minute has a ':' at the end look for seconds */
+   /* if the minute has a ':' at the end look for seconds */
    if (min_ptr[min_len] == ':') {
       if (remaining < 2) {
          DATE_PARSE_ERR ("reached end of date while looking for seconds");
@@ -177,9 +175,7 @@ _bson_iso8601_date_parse (const char *str,
       }
    }
 
-	millis_ptr = remaining;
-
-	/* if we had a second and it is followed by a '.' look for milliseconds */
+   /* if we had a second and it is followed by a '.' look for milliseconds */
    if (sec_len && sec_ptr[sec_len] == '.') {
       if (remaining < 2) {
          DATE_PARSE_ERR ("reached end of date while looking for milliseconds");
@@ -298,4 +294,36 @@ _bson_iso8601_date_parse (const char *str,
    *out = millis;
 
    return true;
+}
+
+
+void
+_bson_iso8601_date_format (int64_t msec_since_epoch, bson_string_t *str)
+{
+   time_t t;
+   int64_t msecs_part;
+   char buf[64];
+
+   msecs_part = msec_since_epoch % 1000;
+   t = (time_t) (msec_since_epoch / 1000);
+
+#ifdef BSON_HAVE_GMTIME_R
+   {
+      struct tm posix_date;
+      gmtime_r (&t, &posix_date);
+      strftime (buf, sizeof buf, "%Y-%m-%dT%H:%M:%S", &posix_date);
+   }
+#else
+   {
+      /* Windows gmtime is thread-safe */
+      strftime (buf, sizeof buf, "%Y-%m-%dT%H:%M:%S", gmtime (&t));
+   }
+#endif
+
+   if (msecs_part) {
+      bson_string_append_printf (str, "%s.%3" PRId64 "Z", buf, msecs_part);
+   } else {
+      bson_string_append (str, buf);
+      bson_string_append_c (str, 'Z');
+   }
 }

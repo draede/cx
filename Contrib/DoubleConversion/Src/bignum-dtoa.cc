@@ -27,10 +27,10 @@
 
 #include <math.h>
 
-#include "../Include/bignum-dtoa.h"
+#include "bignum-dtoa.h"
 
-#include "../Include/bignum.h"
-#include "../Include/ieee.h"
+#include "bignum.h"
+#include "ieee.h"
 
 namespace double_conversion {
 

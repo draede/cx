@@ -95,7 +95,7 @@ typedef enum {
  * Many functions will require that you provide a bson_context_t such as OID
  * generation.
  *
- * This structure is oqaque in that you cannot see the contents of the
+ * This structure is opaque in that you cannot see the contents of the
  * structure. However, it is stack allocatable in that enough padding is
  * provided in _bson_context_t to hold the structure.
  */
@@ -146,7 +146,7 @@ typedef struct _bson_t {
    }
 
 
-BSON_STATIC_ASSERT (sizeof (bson_t) == 128);
+BSON_STATIC_ASSERT2 (bson_t, sizeof (bson_t) == 128);
 
 
 /**
@@ -160,7 +160,7 @@ typedef struct {
    uint8_t bytes[12];
 } bson_oid_t;
 
-BSON_STATIC_ASSERT (sizeof (bson_oid_t) == 12);
+BSON_STATIC_ASSERT2 (oid_t, sizeof (bson_oid_t) == 12);
 
 /**
  * bson_decimal128_t:
@@ -271,8 +271,6 @@ typedef enum {
  *--------------------------------------------------------------------------
  */
 
-#pragma warning(push)
-#pragma warning(disable: 4359)
 BSON_ALIGNED_BEGIN (8)
 typedef struct _bson_value_t {
    bson_type_t value_type;
@@ -328,7 +326,6 @@ typedef struct _bson_value_t {
       bson_decimal128_t v_decimal128;
    } value;
 } bson_value_t BSON_ALIGNED_END (8);
-#pragma warning(pop)
 
 
 /**
@@ -342,8 +339,6 @@ typedef struct _bson_value_t {
  * This structure is safe to discard on the stack. No cleanup is necessary
  * after using it.
  */
-#pragma warning(push)
-#pragma warning(disable: 4359)
 BSON_ALIGNED_BEGIN (128)
 typedef struct {
    const uint8_t *raw; /* The raw buffer being iterated. */
@@ -359,7 +354,6 @@ typedef struct {
    uint32_t err_off;   /* The offset of the error. */
    bson_value_t value; /* Internal value for various state. */
 } bson_iter_t BSON_ALIGNED_END (128);
-#pragma warning(pop)
 
 
 /**
@@ -371,14 +365,11 @@ typedef struct {
  * incoming mongo packet.
  */
 
-#pragma warning(push)
-#pragma warning(disable: 4324)
 BSON_ALIGNED_BEGIN (BSON_ALIGN_OF_PTR)
 typedef struct {
    uint32_t type;
    /*< private >*/
 } bson_reader_t BSON_ALIGNED_END (BSON_ALIGN_OF_PTR);
-#pragma warning(pop)
 
 
 /**
@@ -510,7 +501,7 @@ typedef struct _bson_error_t {
 } bson_error_t BSON_ALIGNED_END (8);
 
 
-BSON_STATIC_ASSERT (sizeof (bson_error_t) == 512);
+BSON_STATIC_ASSERT2 (error_t, sizeof (bson_error_t) == 512);
 
 
 /**

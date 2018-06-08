@@ -19,16 +19,12 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-#ifndef UINT32_C
-#define UINT32_C(c) c ## UL
-#endif
-
 #define TINYMT32_MEXP 127
 #define TINYMT32_SH0 1
 #define TINYMT32_SH1 10
 #define TINYMT32_SH8 8
 #define TINYMT32_MASK UINT32_C(0x7fffffff)
-#define TINYMT32_MUL (1.0f / 4294967296.0f)
+#define TINYMT32_MUL (1.0f / 16777216.0f)
 
 #if defined(__cplusplus)
 extern "C" {
@@ -56,26 +52,12 @@ void tinymt32_init_by_array(tinymt32_t * random, uint32_t init_key[],
  * @param random not used
  * @return always 127
  */
-static
-#ifdef WIN32 
-__inline 
-#else 
-inline
-#endif 
-int tinymt32_get_mexp(
+inline static int tinymt32_get_mexp(
     tinymt32_t * random  __attribute__((unused))) {
     return TINYMT32_MEXP;
 }
 #else
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-int tinymt32_get_mexp(tinymt32_t * random) {
-	random;
-
+static int tinymt32_get_mexp(tinymt32_t * random) {
     return TINYMT32_MEXP;
 }
 #endif
@@ -85,13 +67,7 @@ int tinymt32_get_mexp(tinymt32_t * random) {
  * Users should not call this function directly.
  * @param random tinymt internal status
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-void tinymt32_next_state(tinymt32_t * random) {
+static void tinymt32_next_state(tinymt32_t * random) {
     uint32_t x;
     uint32_t y;
 
@@ -115,13 +91,7 @@ void tinymt32_next_state(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return 32-bit unsigned pseudorandom number
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-uint32_t tinymt32_temper(tinymt32_t * random) {
+static uint32_t tinymt32_temper(tinymt32_t * random) {
     uint32_t t0, t1;
     t0 = random->status[3];
 #if defined(LINEARITY_CHECK)
@@ -142,13 +112,7 @@ uint32_t tinymt32_temper(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (1.0 <= r < 2.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-float tinymt32_temper_conv(tinymt32_t * random) {
+static float tinymt32_temper_conv(tinymt32_t * random) {
     uint32_t t0, t1;
     union {
 	uint32_t u;
@@ -175,13 +139,7 @@ float tinymt32_temper_conv(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (1.0 < r < 2.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-float tinymt32_temper_conv_open(tinymt32_t * random) {
+static float tinymt32_temper_conv_open(tinymt32_t * random) {
     uint32_t t0, t1;
     union {
 	uint32_t u;
@@ -207,34 +165,22 @@ float tinymt32_temper_conv_open(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return 32-bit unsigned integer r (0 <= r < 2^32)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-uint32_t tinymt32_generate_uint32(tinymt32_t * random) {
+static uint32_t tinymt32_generate_uint32(tinymt32_t * random) {
     tinymt32_next_state(random);
     return tinymt32_temper(random);
 }
 
 /**
  * This function outputs floating point number from internal state.
- * This function is implemented using multiplying by 1 / 2^32.
+ * This function is implemented using multiplying by (1 / 2^24).
  * floating point multiplication is faster than using union trick in
  * my Intel CPU.
  * @param random tinymt internal status
  * @return floating point number r (0.0 <= r < 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-float tinymt32_generate_float(tinymt32_t * random) {
+static float tinymt32_generate_float(tinymt32_t * random) {
     tinymt32_next_state(random);
-    return tinymt32_temper(random) * TINYMT32_MUL;
+    return (tinymt32_temper(random) >> 8) * TINYMT32_MUL;
 }
 
 /**
@@ -243,13 +189,7 @@ float tinymt32_generate_float(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (1.0 <= r < 2.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-float tinymt32_generate_float12(tinymt32_t * random) {
+static float tinymt32_generate_float12(tinymt32_t * random) {
     tinymt32_next_state(random);
     return tinymt32_temper_conv(random);
 }
@@ -260,13 +200,7 @@ float tinymt32_generate_float12(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (0.0 <= r < 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-float tinymt32_generate_float01(tinymt32_t * random) {
+static float tinymt32_generate_float01(tinymt32_t * random) {
     tinymt32_next_state(random);
     return tinymt32_temper_conv(random) - 1.0f;
 }
@@ -277,13 +211,7 @@ float tinymt32_generate_float01(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (0.0 < r <= 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-float tinymt32_generate_floatOC(tinymt32_t * random) {
+static float tinymt32_generate_floatOC(tinymt32_t * random) {
     tinymt32_next_state(random);
     return 1.0f - tinymt32_generate_float(random);
 }
@@ -294,13 +222,7 @@ float tinymt32_generate_floatOC(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (0.0 < r < 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-float tinymt32_generate_floatOO(tinymt32_t * random) {
+static float tinymt32_generate_floatOO(tinymt32_t * random) {
     tinymt32_next_state(random);
     return tinymt32_temper_conv_open(random) - 1.0f;
 }
@@ -313,13 +235,7 @@ float tinymt32_generate_floatOO(tinymt32_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (0.0 < r <= 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-double tinymt32_generate_32double(tinymt32_t * random) {
+static double tinymt32_generate_32double(tinymt32_t * random) {
     tinymt32_next_state(random);
     return tinymt32_temper(random) * (1.0 / 4294967296.0);
 }

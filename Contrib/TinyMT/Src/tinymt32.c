@@ -13,7 +13,7 @@
  * The 3-clause BSD License is applied to this software, see
  * LICENSE.txt
  */
-#include "../Include/tinymt32.h"
+#include "tinymt32.h"
 #define MIN_LOOP 8
 #define PRE_LOOP 8
 
@@ -60,18 +60,17 @@ static void period_certification(tinymt32_t * random) {
  * @param seed a 32-bit unsigned integer used as a seed.
  */
 void tinymt32_init(tinymt32_t * random, uint32_t seed) {
-    int i;
-	 random->status[0] = seed;
+    random->status[0] = seed;
     random->status[1] = random->mat1;
     random->status[2] = random->mat2;
     random->status[3] = random->tmat;
-	 for (i = 1; i < MIN_LOOP; i++) {
+    for (int i = 1; i < MIN_LOOP; i++) {
 	random->status[i & 3] ^= i + UINT32_C(1812433253)
 	    * (random->status[(i - 1) & 3]
 	       ^ (random->status[(i - 1) & 3] >> 30));
     }
     period_certification(random);
-    for (i = 0; i < PRE_LOOP; i++) {
+    for (int i = 0; i < PRE_LOOP; i++) {
 	tinymt32_next_state(random);
     }
 }

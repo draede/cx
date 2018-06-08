@@ -1,1 +1,1 @@
-https://github.com/floitsch/double-conversion/commit/8d33ba7f83b693ba59c1dcb2c2e1a059c1e77fd5
+https://github.com/google/double-conversion/commit/9a8e518bedcf171d99eb1c00eef4beb1ecc20a4b

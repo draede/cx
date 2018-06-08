@@ -19,16 +19,12 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-#ifndef UINT64_C
-#define UINT64_C(c) c ## ULL
-#endif
-
 #define TINYMT64_MEXP 127
 #define TINYMT64_SH0 12
 #define TINYMT64_SH1 11
 #define TINYMT64_SH8 8
 #define TINYMT64_MASK UINT64_C(0x7fffffffffffffff)
-#define TINYMT64_MUL (1.0 / 18446744073709551616.0)
+#define TINYMT64_MUL (1.0 / 9007199254740992.0)
 
 #if defined(__cplusplus)
 extern "C" {
@@ -56,25 +52,12 @@ void tinymt64_init_by_array(tinymt64_t * random, const uint64_t init_key[],
  * @param random not used
  * @return always 127
  */
-static
-#ifdef WIN32 
-__inline 
-#else 
-inline
-#endif 
-int tinymt64_get_mexp(
+inline static int tinymt64_get_mexp(
     tinymt64_t * random  __attribute__((unused))) {
     return TINYMT64_MEXP;
 }
 #else
-static
-#ifdef WIN32 
-__inline 
-#else 
-inline
-#endif 
-int tinymt64_get_mexp(tinymt64_t * random) {
-	random;
+static int tinymt64_get_mexp(tinymt64_t * random) {
     return TINYMT64_MEXP;
 }
 #endif
@@ -84,13 +67,7 @@ int tinymt64_get_mexp(tinymt64_t * random) {
  * Users should not call this function directly.
  * @param random tinymt internal status
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-void tinymt64_next_state(tinymt64_t * random) {
+static void tinymt64_next_state(tinymt64_t * random) {
     uint64_t x;
 
     random->status[0] &= TINYMT64_MASK;
@@ -111,13 +88,7 @@ void tinymt64_next_state(tinymt64_t * random) {
  * @param random tinymt internal status
  * @return 64-bit unsigned pseudorandom number
  */
-static
-#ifdef WIN32 
-__inline 
-#else 
-inline
-#endif 
-uint64_t tinymt64_temper(tinymt64_t * random) {
+static uint64_t tinymt64_temper(tinymt64_t * random) {
     uint64_t x;
 #if defined(LINEARITY_CHECK)
     x = random->status[0] ^ random->status[1];
@@ -135,13 +106,7 @@ uint64_t tinymt64_temper(tinymt64_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (1.0 <= r < 2.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-double tinymt64_temper_conv(tinymt64_t * random) {
+static double tinymt64_temper_conv(tinymt64_t * random) {
     uint64_t x;
     union {
 	uint64_t u;
@@ -164,14 +129,7 @@ double tinymt64_temper_conv(tinymt64_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (1.0 < r < 2.0)
  */
-
-static 
-#ifdef WIN32 
-__inline 
-#else 
-inline 
-#endif 
-double tinymt64_temper_conv_open(tinymt64_t * random) {
+static double tinymt64_temper_conv_open(tinymt64_t * random) {
     uint64_t x;
     union {
 	uint64_t u;
@@ -193,33 +151,20 @@ double tinymt64_temper_conv_open(tinymt64_t * random) {
  * @param random tinymt internal status
  * @return 64-bit unsigned integer r (0 <= r < 2^64)
  */
-
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-uint64_t tinymt64_generate_uint64(tinymt64_t * random) {
+static uint64_t tinymt64_generate_uint64(tinymt64_t * random) {
     tinymt64_next_state(random);
     return tinymt64_temper(random);
 }
 
 /**
  * This function outputs floating point number from internal state.
- * This function is implemented using multiplying by 1 / 2^64.
+ * This function is implemented using multiplying by (1 / 2^53).
  * @param random tinymt internal status
  * @return floating point number r (0.0 <= r < 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-double tinymt64_generate_double(tinymt64_t * random) {
+static double tinymt64_generate_double(tinymt64_t * random) {
     tinymt64_next_state(random);
-    return tinymt64_temper(random) * TINYMT64_MUL;
+    return (tinymt64_temper(random) >> 11) * TINYMT64_MUL;
 }
 
 /**
@@ -228,13 +173,7 @@ double tinymt64_generate_double(tinymt64_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (0.0 <= r < 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-double tinymt64_generate_double01(tinymt64_t * random) {
+static double tinymt64_generate_double01(tinymt64_t * random) {
     tinymt64_next_state(random);
     return tinymt64_temper_conv(random) - 1.0;
 }
@@ -245,13 +184,7 @@ double tinymt64_generate_double01(tinymt64_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (1.0 <= r < 2.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-double tinymt64_generate_double12(tinymt64_t * random) {
+static double tinymt64_generate_double12(tinymt64_t * random) {
     tinymt64_next_state(random);
     return tinymt64_temper_conv(random);
 }
@@ -262,13 +195,7 @@ double tinymt64_generate_double12(tinymt64_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (0.0 < r <= 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-double tinymt64_generate_doubleOC(tinymt64_t * random) {
+static double tinymt64_generate_doubleOC(tinymt64_t * random) {
     tinymt64_next_state(random);
     return 2.0 - tinymt64_temper_conv(random);
 }
@@ -279,13 +206,7 @@ double tinymt64_generate_doubleOC(tinymt64_t * random) {
  * @param random tinymt internal status
  * @return floating point number r (0.0 < r < 1.0)
  */
-static
-#ifdef WIN32 
-__inline
-#else 
-inline
-#endif 
-double tinymt64_generate_doubleOO(tinymt64_t * random) {
+static double tinymt64_generate_doubleOO(tinymt64_t * random) {
     tinymt64_next_state(random);
     return tinymt64_temper_conv_open(random) - 1.0;
 }

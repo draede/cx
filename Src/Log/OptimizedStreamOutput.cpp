@@ -59,7 +59,7 @@ Status OptimizedStreamOutput::Init(UInt64 cbMaxFileSize, UInt32 cFlushDelay, Siz
 {
 	Status status;
 
-	m_pVectorStrings = NULL;
+	m_pMemPool       = NULL;
 	m_cFlushDelay    = cFlushDelay;
 	m_cbMaxMem       = cbMaxMem;
 	m_cbCrMem        = 0;
@@ -85,10 +85,10 @@ Status OptimizedStreamOutput::Init(UInt64 cbMaxFileSize, UInt32 cFlushDelay, Siz
 
 			break;
 		}
-		if (NULL == (m_pVectorStrings = new (std::nothrow) StringsVector()))
+		if (NULL == (m_pMemPool = new (std::nothrow) Util::DynMemPool()))
 		{
-			status  = Status(Status_MemAllocFailed, "Failed to allocate strings");
-			
+			status = Status(Status_MemAllocFailed, "Failed to allocate memory");
+
 			break;
 		}
 		if ((status = m_eventStop.Create(false, false)).IsNOK())
@@ -131,10 +131,10 @@ Status OptimizedStreamOutput::Uninit()
 		delete m_pFOS;
 		m_pFOS = NULL;
 	}
-	if (NULL != m_pVectorStrings)
+	if (NULL != m_pMemPool)
 	{
-		delete m_pVectorStrings;
-		m_pVectorStrings = NULL;
+		delete m_pMemPool;
+		m_pMemPool = NULL;
 	}
 
 	return Status();
@@ -148,15 +148,15 @@ Status OptimizedStreamOutput::Write(Level nLevel, const Char *szTag, const Char 
 	String sLog(pBuffer, cLen);
 
 	{
-		Sys::Locker locker(&m_lockStrings);
+		Sys::Locker locker(&m_lockData);
 
 		if (m_cbCrMem + cLen > m_cbMaxMem)
 		{
 			return Status_TooBig;
 		}
-		if (NULL != m_pVectorStrings)
+		if (NULL != m_pMemPool)
 		{
-			m_pVectorStrings->push_back(sLog);
+			m_pMemPool->Add(sLog.c_str(), sLog.size());
 			m_cbCrMem += cLen;
 		}
 	}
@@ -174,86 +174,72 @@ void OptimizedStreamOutput::WriteThread()
 	{
 		nWaitRes = m_eventStop.Wait(m_cFlushDelay);
 
-		StringsVector *pVectorStrings = NULL;
+		Util::DynMemPool *pMemPool = m_pMemPool;
 
 		{
-			Sys::Locker locker(&m_lockStrings);
+			Sys::Locker locker(&m_lockData);
 
-			pVectorStrings   = m_pVectorStrings;
-			m_pVectorStrings = new (std::nothrow) StringsVector();
-			m_cbCrMem        = 0;
+			pMemPool   = m_pMemPool;
+			m_pMemPool = new (std::nothrow) Util::DynMemPool();
+			m_cbCrMem  = 0;
 		}
 
-		if (NULL != pVectorStrings)
+		if (NULL != pMemPool)
 		{
 			if (NULL != m_pFOS)
 			{
-				for (StringsVector::iterator iter = pVectorStrings->begin(); iter != pVectorStrings->end(); iter++)
+				if (0 < m_cbMaxFileSize && m_cbCrFileSize + pMemPool->GetSize() > m_cbMaxFileSize)
 				{
-					if (0 < m_cbMaxFileSize && m_cbCrFileSize + iter->size() > m_cbMaxFileSize)
+					delete m_pFOS;
+					if (m_bWide)
 					{
-						delete m_pFOS;
-						if (m_bWide)
-						{
-							WString wsNewPath;
+						WString wsNewPath;
 
-							wsNewPath = m_wsPath;
-							wsNewPath += L".old";
+						wsNewPath = m_wsPath;
+						wsNewPath += L".old";
 #ifdef CX_OS_WINDOWS
-							MoveFileExW(m_wsPath.c_str(), wsNewPath.c_str(), 
-							            MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH);
+						MoveFileExW(m_wsPath.c_str(), wsNewPath.c_str(), 
+							         MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH);
 #else
-							String sPath;
-							String sNewPath;
+						String sPath;
+						String sNewPath;
 
-							Str::UTF8::FromWChar(m_wsPath.c_str(), &sPath);
-							Str::UTF8::FromWChar(wsNewPath.c_str(), &sNewPath);
+						Str::UTF8::FromWChar(m_wsPath.c_str(), &sPath);
+						Str::UTF8::FromWChar(wsNewPath.c_str(), &sNewPath);
 
-							rename(sPath.c_str(), sNewPath.c_str());
+						rename(sPath.c_str(), sNewPath.c_str());
 #endif
-							m_pFOS         = new (std::nothrow) IO::FileOutputStream(m_wsPath.c_str(), false);
-							m_cbCrFileSize = 0;
-						}
-						else
-						{
-							String sNewPath;
-
-							sNewPath = m_sPath;
-							sNewPath += ".old";
-#ifdef CX_OS_WINDOWS
-							MoveFileExA(m_sPath.c_str(), sNewPath.c_str(),
-							            MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH);
-#else
-							rename(m_sPath.c_str(), sNewPath.c_str());
-#endif
-							m_pFOS         = new (std::nothrow) IO::FileOutputStream(m_sPath.c_str(), false);
-							m_cbCrFileSize = 0;
-						}
-						if (NULL == m_pFOS)
-						{
-							break;
-						}
+						m_pFOS         = new (std::nothrow) IO::FileOutputStream(m_wsPath.c_str(), false);
+						m_cbCrFileSize = 0;
 					}
-
-					if (NULL != m_pFOS)
+					else
 					{
-						m_pFOS->Write(iter->c_str(), iter->size(), &cbAckSize);
-						m_cbCrFileSize += cbAckSize;
+						String sNewPath;
+
+						sNewPath = m_sPath;
+						sNewPath += ".old";
+#ifdef CX_OS_WINDOWS
+						MoveFileExA(m_sPath.c_str(), sNewPath.c_str(),
+							         MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH);
+#else
+						rename(m_sPath.c_str(), sNewPath.c_str());
+#endif
+						m_pFOS         = new (std::nothrow) IO::FileOutputStream(m_sPath.c_str(), false);
+						m_cbCrFileSize = 0;
 					}
 				}
-
-				m_pFOS->Flush();
+				if (NULL != m_pFOS)
+				{
+					m_pFOS->Write(pMemPool->GetMem(), pMemPool->GetSize(), &cbAckSize);
+					m_cbCrFileSize += cbAckSize;
+					m_pFOS->Flush();
+				}
 			}
-			delete pVectorStrings;
+			delete pMemPool;
 		}
 
 		if (Sys::Event::Wait_OK == nWaitRes)
 		{
-			if (NULL != m_pFOS)
-			{
-				m_pFOS->Flush();
-			}
-
 			break;
 		}
 	}

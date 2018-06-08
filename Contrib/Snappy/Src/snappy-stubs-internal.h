@@ -28,16 +28,13 @@
 //
 // Various stubs for the open-source version of Snappy.
 
-#ifndef UTIL_SNAPPY_OPENSOURCE_SNAPPY_STUBS_INTERNAL_H_
-#define UTIL_SNAPPY_OPENSOURCE_SNAPPY_STUBS_INTERNAL_H_
-
-#pragma warning(disable: 4996 4100 4244 4018 4127 4389 4505)
+#ifndef THIRD_PARTY_SNAPPY_OPENSOURCE_SNAPPY_STUBS_INTERNAL_H_
+#define THIRD_PARTY_SNAPPY_OPENSOURCE_SNAPPY_STUBS_INTERNAL_H_
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
-#include <iostream>
 #include <string>
 
 #include <assert.h>
@@ -48,12 +45,28 @@
 #include <sys/mman.h>
 #endif
 
-#include "../Include/snappy-stubs-public.h"
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#if defined(_MSC_VER)
+#include <intrin.h>
+#endif  // defined(_MSC_VER)
+
+#include "snappy-stubs-public.h"
 
 #if defined(__x86_64__)
 
 // Enable 64-bit optimized versions of some routines.
 #define ARCH_K8 1
+
+#elif defined(__ppc64__)
+
+#define ARCH_PPC 1
+
+#elif defined(__aarch64__)
+
+#define ARCH_ARM 1
 
 #endif
 
@@ -61,10 +74,6 @@
 #ifndef MAP_ANONYMOUS
 #define MAP_ANONYMOUS MAP_ANON
 #endif
-
-// Pull in std::min, std::ostream, and the likes. This is safe because this
-// header file is never used from any public header files.
-using namespace std;
 
 // The size of an array, if known at compile-time.
 // Will give unexpected results if used on a pointer.
@@ -76,11 +85,11 @@ using namespace std;
 
 // Static prediction hints.
 #ifdef HAVE_BUILTIN_EXPECT
-#define PREDICT_FALSE(x) (__builtin_expect(x, 0))
-#define PREDICT_TRUE(x) (__builtin_expect(!!(x), 1))
+#define SNAPPY_PREDICT_FALSE(x) (__builtin_expect(x, 0))
+#define SNAPPY_PREDICT_TRUE(x) (__builtin_expect(!!(x), 1))
 #else
-#define PREDICT_FALSE(x) x
-#define PREDICT_TRUE(x) x
+#define SNAPPY_PREDICT_FALSE(x) x
+#define SNAPPY_PREDICT_TRUE(x) x
 #endif
 
 // This is only used for recomputing the tag byte table used during
@@ -88,100 +97,21 @@ using namespace std;
 // version (anyone who wants to regenerate it can just do the call
 // themselves within main()).
 #define DEFINE_bool(flag_name, default_value, description) \
-  bool FLAGS_ ## flag_name = default_value;
+  bool FLAGS_ ## flag_name = default_value
 #define DECLARE_bool(flag_name) \
-  extern bool FLAGS_ ## flag_name;
-#define REGISTER_MODULE_INITIALIZER(name, code)
+  extern bool FLAGS_ ## flag_name
 
 namespace snappy {
 
 static const uint32 kuint32max = static_cast<uint32>(0xFFFFFFFF);
 static const int64 kint64max = static_cast<int64>(0x7FFFFFFFFFFFFFFFLL);
 
-// Logging.
-
-#define LOG(level) LogMessage()
-#define VLOG(level) true ? (void)0 : \
-    snappy::LogMessageVoidify() & snappy::LogMessage()
-
-class LogMessage {
- public:
-  LogMessage() { }
-  ~LogMessage() {
-    cerr << endl;
-  }
-
-  LogMessage& operator<<(const std::string& msg) {
-    cerr << msg;
-    return *this;
-  }
-  LogMessage& operator<<(int x) {
-    cerr << x;
-    return *this;
-  }
-};
-
-// Asserts, both versions activated in debug mode only,
-// and ones that are always active.
-
-#define CRASH_UNLESS(condition) \
-    PREDICT_TRUE(condition) ? (void)0 : \
-    snappy::LogMessageVoidify() & snappy::LogMessageCrash()
-
-class LogMessageCrash : public LogMessage {
- public:
-  LogMessageCrash() { }
-  ~LogMessageCrash() {
-    cerr << endl;
-    //abort();
-  }
-};
-
-// This class is used to explicitly ignore values in the conditional
-// logging macros.  This avoids compiler warnings like "value computed
-// is not used" and "statement has no effect".
-
-class LogMessageVoidify {
- public:
-  LogMessageVoidify() { }
-  // This has to be an operator with a precedence lower than << but
-  // higher than ?:
-  void operator&(const LogMessage&) { }
-};
-
-#define CHECK(cond) CRASH_UNLESS(cond)
-#define CHECK_LE(a, b) CRASH_UNLESS((a) <= (b))
-#define CHECK_GE(a, b) CRASH_UNLESS((a) >= (b))
-#define CHECK_EQ(a, b) CRASH_UNLESS((a) == (b))
-#define CHECK_NE(a, b) CRASH_UNLESS((a) != (b))
-#define CHECK_LT(a, b) CRASH_UNLESS((a) < (b))
-#define CHECK_GT(a, b) CRASH_UNLESS((a) > (b))
-
-#ifdef NDEBUG
-
-#define DCHECK(cond) CRASH_UNLESS(true)
-#define DCHECK_LE(a, b) CRASH_UNLESS(true)
-#define DCHECK_GE(a, b) CRASH_UNLESS(true)
-#define DCHECK_EQ(a, b) CRASH_UNLESS(true)
-#define DCHECK_NE(a, b) CRASH_UNLESS(true)
-#define DCHECK_LT(a, b) CRASH_UNLESS(true)
-#define DCHECK_GT(a, b) CRASH_UNLESS(true)
-
-#else
-
-#define DCHECK(cond) CHECK(cond)
-#define DCHECK_LE(a, b) CHECK_LE(a, b)
-#define DCHECK_GE(a, b) CHECK_GE(a, b)
-#define DCHECK_EQ(a, b) CHECK_EQ(a, b)
-#define DCHECK_NE(a, b) CHECK_NE(a, b)
-#define DCHECK_LT(a, b) CHECK_LT(a, b)
-#define DCHECK_GT(a, b) CHECK_GT(a, b)
-
-#endif
-
 // Potentially unaligned loads and stores.
 
-#if defined(__i386__) || defined(__x86_64__) || defined(__powerpc__)
+// x86, PowerPC, and ARM64 can simply do these loads and stores native.
+
+#if defined(__i386__) || defined(__x86_64__) || defined(__powerpc__) || \
+    defined(__aarch64__)
 
 #define UNALIGNED_LOAD16(_p) (*reinterpret_cast<const uint16 *>(_p))
 #define UNALIGNED_LOAD32(_p) (*reinterpret_cast<const uint32 *>(_p))
@@ -190,6 +120,86 @@ class LogMessageVoidify {
 #define UNALIGNED_STORE16(_p, _val) (*reinterpret_cast<uint16 *>(_p) = (_val))
 #define UNALIGNED_STORE32(_p, _val) (*reinterpret_cast<uint32 *>(_p) = (_val))
 #define UNALIGNED_STORE64(_p, _val) (*reinterpret_cast<uint64 *>(_p) = (_val))
+
+// ARMv7 and newer support native unaligned accesses, but only of 16-bit
+// and 32-bit values (not 64-bit); older versions either raise a fatal signal,
+// do an unaligned read and rotate the words around a bit, or do the reads very
+// slowly (trip through kernel mode). There's no simple #define that says just
+// “ARMv7 or higher”, so we have to filter away all ARMv5 and ARMv6
+// sub-architectures.
+//
+// This is a mess, but there's not much we can do about it.
+//
+// To further complicate matters, only LDR instructions (single reads) are
+// allowed to be unaligned, not LDRD (two reads) or LDM (many reads). Unless we
+// explicitly tell the compiler that these accesses can be unaligned, it can and
+// will combine accesses. On armcc, the way to signal this is done by accessing
+// through the type (uint32 __packed *), but GCC has no such attribute
+// (it ignores __attribute__((packed)) on individual variables). However,
+// we can tell it that a _struct_ is unaligned, which has the same effect,
+// so we do that.
+
+#elif defined(__arm__) && \
+      !defined(__ARM_ARCH_4__) && \
+      !defined(__ARM_ARCH_4T__) && \
+      !defined(__ARM_ARCH_5__) && \
+      !defined(__ARM_ARCH_5T__) && \
+      !defined(__ARM_ARCH_5TE__) && \
+      !defined(__ARM_ARCH_5TEJ__) && \
+      !defined(__ARM_ARCH_6__) && \
+      !defined(__ARM_ARCH_6J__) && \
+      !defined(__ARM_ARCH_6K__) && \
+      !defined(__ARM_ARCH_6Z__) && \
+      !defined(__ARM_ARCH_6ZK__) && \
+      !defined(__ARM_ARCH_6T2__)
+
+#if __GNUC__
+#define ATTRIBUTE_PACKED __attribute__((__packed__))
+#else
+#define ATTRIBUTE_PACKED
+#endif
+
+namespace base {
+namespace internal {
+
+struct Unaligned16Struct {
+  uint16 value;
+  uint8 dummy;  // To make the size non-power-of-two.
+} ATTRIBUTE_PACKED;
+
+struct Unaligned32Struct {
+  uint32 value;
+  uint8 dummy;  // To make the size non-power-of-two.
+} ATTRIBUTE_PACKED;
+
+}  // namespace internal
+}  // namespace base
+
+#define UNALIGNED_LOAD16(_p) \
+    ((reinterpret_cast<const ::snappy::base::internal::Unaligned16Struct *>(_p))->value)
+#define UNALIGNED_LOAD32(_p) \
+    ((reinterpret_cast<const ::snappy::base::internal::Unaligned32Struct *>(_p))->value)
+
+#define UNALIGNED_STORE16(_p, _val) \
+    ((reinterpret_cast< ::snappy::base::internal::Unaligned16Struct *>(_p))->value = \
+         (_val))
+#define UNALIGNED_STORE32(_p, _val) \
+    ((reinterpret_cast< ::snappy::base::internal::Unaligned32Struct *>(_p))->value = \
+         (_val))
+
+// TODO(user): NEON supports unaligned 64-bit loads and stores.
+// See if that would be more efficient on platforms supporting it,
+// at least for copies.
+
+inline uint64 UNALIGNED_LOAD64(const void *p) {
+  uint64 t;
+  memcpy(&t, p, sizeof t);
+  return t;
+}
+
+inline void UNALIGNED_STORE64(void *p, uint64 v) {
+  memcpy(p, &v, sizeof v);
+}
 
 #else
 
@@ -229,7 +239,7 @@ inline void UNALIGNED_STORE64(void *p, uint64 v) {
 #endif
 
 // The following guarantees declaration of the byte swap functions.
-#ifdef WORDS_BIGENDIAN
+#if defined(SNAPPY_IS_BIG_ENDIAN)
 
 #ifdef HAVE_SYS_BYTEORDER_H
 #include <sys/byteorder.h>
@@ -286,7 +296,7 @@ inline uint64 bswap_64(uint64 x) {
 
 #endif
 
-#endif  // WORDS_BIGENDIAN
+#endif  // defined(SNAPPY_IS_BIG_ENDIAN)
 
 // Convert to little-endian storage, opposite of network format.
 // Convert x from host to little endian: x = LittleEndian.FromHost(x);
@@ -300,7 +310,7 @@ inline uint64 bswap_64(uint64 x) {
 class LittleEndian {
  public:
   // Conversion functions.
-#ifdef WORDS_BIGENDIAN
+#if defined(SNAPPY_IS_BIG_ENDIAN)
 
   static uint16 FromHost16(uint16 x) { return bswap_16(x); }
   static uint16 ToHost16(uint16 x) { return bswap_16(x); }
@@ -310,7 +320,7 @@ class LittleEndian {
 
   static bool IsLittleEndian() { return false; }
 
-#else  // !defined(WORDS_BIGENDIAN)
+#else  // !defined(SNAPPY_IS_BIG_ENDIAN)
 
   static uint16 FromHost16(uint16 x) { return x; }
   static uint16 ToHost16(uint16 x) { return x; }
@@ -320,7 +330,7 @@ class LittleEndian {
 
   static bool IsLittleEndian() { return true; }
 
-#endif  // !defined(WORDS_BIGENDIAN)
+#endif  // !defined(SNAPPY_IS_BIG_ENDIAN)
 
   // Functions to do unaligned loads and stores in little-endian order.
   static uint16 Load16(const void *p) {
@@ -350,10 +360,15 @@ class Bits {
   // undefined value if n == 0.  FindLSBSetNonZero() is similar to ffs() except
   // that it's 0-indexed.
   static int FindLSBSetNonZero(uint32 n);
+
+#if defined(ARCH_K8) || defined(ARCH_PPC) || defined(ARCH_ARM)
   static int FindLSBSetNonZero64(uint64 n);
+#endif  // defined(ARCH_K8) || defined(ARCH_PPC) || defined(ARCH_ARM)
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(Bits);
+  // No copying
+  Bits(const Bits&);
+  void operator=(const Bits&);
 };
 
 #ifdef HAVE_BUILTIN_CTZ
@@ -366,9 +381,36 @@ inline int Bits::FindLSBSetNonZero(uint32 n) {
   return __builtin_ctz(n);
 }
 
+#if defined(ARCH_K8) || defined(ARCH_PPC) || defined(ARCH_ARM)
 inline int Bits::FindLSBSetNonZero64(uint64 n) {
   return __builtin_ctzll(n);
 }
+#endif  // defined(ARCH_K8) || defined(ARCH_PPC) || defined(ARCH_ARM)
+
+#elif defined(_MSC_VER)
+
+inline int Bits::Log2Floor(uint32 n) {
+  unsigned long where;
+  if (_BitScanReverse(&where, n)) {
+    return where;
+  } else {
+    return -1;
+  }
+}
+
+inline int Bits::FindLSBSetNonZero(uint32 n) {
+  unsigned long where;
+  if (_BitScanForward(&where, n)) return static_cast<int>(where);
+  return 32;
+}
+
+#if defined(ARCH_K8) || defined(ARCH_PPC) || defined(ARCH_ARM)
+inline int Bits::FindLSBSetNonZero64(uint64 n) {
+  unsigned long where;
+  if (_BitScanForward64(&where, n)) return static_cast<int>(where);
+  return 64;
+}
+#endif  // defined(ARCH_K8) || defined(ARCH_PPC) || defined(ARCH_ARM)
 
 #else  // Portable versions.
 
@@ -402,6 +444,7 @@ inline int Bits::FindLSBSetNonZero(uint32 n) {
   return rc;
 }
 
+#if defined(ARCH_K8) || defined(ARCH_PPC) || defined(ARCH_ARM)
 // FindLSBSetNonZero64() is defined in terms of FindLSBSetNonZero().
 inline int Bits::FindLSBSetNonZero64(uint64 n) {
   const uint32 bottombits = static_cast<uint32>(n);
@@ -412,6 +455,7 @@ inline int Bits::FindLSBSetNonZero64(uint64 n) {
     return FindLSBSetNonZero(bottombits);
   }
 }
+#endif  // defined(ARCH_K8) || defined(ARCH_PPC) || defined(ARCH_ARM)
 
 #endif  // End portable versions.
 
@@ -514,4 +558,4 @@ inline char* string_as_array(string* str) {
 
 }  // namespace snappy
 
-#endif  // UTIL_SNAPPY_OPENSOURCE_SNAPPY_STUBS_INTERNAL_H_
+#endif  // THIRD_PARTY_SNAPPY_OPENSOURCE_SNAPPY_STUBS_INTERNAL_H_

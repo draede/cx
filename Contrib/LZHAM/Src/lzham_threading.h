@@ -2,6 +2,7 @@
 // See Copyright Notice and license at the end of include/lzham.h
 
 #if 0
+
 #if LZHAM_USE_WIN32_API
    #include "lzham_win32_threading.h"
 #elif LZHAM_USE_PTHREADS_API
@@ -13,4 +14,3 @@
 #endif
 
 #include "lzham_null_threading.h"
-

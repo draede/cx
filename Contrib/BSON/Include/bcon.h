@@ -205,14 +205,11 @@ typedef enum {
    BCON_TYPE_ERROR,
 } bcon_type_t;
 
-#pragma warning(push)
-#pragma warning(disable: 4324)
 typedef struct bcon_append_ctx_frame {
    int i;
    bool is_array;
    bson_t bson;
 } bcon_append_ctx_frame_t;
-#pragma warning(pop)
 
 typedef struct bcon_extract_ctx_frame {
    int i;
