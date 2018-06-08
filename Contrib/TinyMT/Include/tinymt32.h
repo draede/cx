@@ -19,6 +19,8 @@
 #include <stdint.h>
 #include <inttypes.h>
 
+#pragma warning(disable: 4505)
+
 #define TINYMT32_MEXP 127
 #define TINYMT32_SH0 1
 #define TINYMT32_SH1 10
@@ -58,6 +60,8 @@ inline static int tinymt32_get_mexp(
 }
 #else
 static int tinymt32_get_mexp(tinymt32_t * random) {
+    random;
+
     return TINYMT32_MEXP;
 }
 #endif

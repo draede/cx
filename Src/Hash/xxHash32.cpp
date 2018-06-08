@@ -40,11 +40,15 @@ const Char xxHash32::NAME[] = "xxHash32";
 
 xxHash32::xxHash32()
 {
+	m_pState = XXH32_createState();
+
 	Init();
 }
 
 xxHash32::~xxHash32()
 {
+	XXH32_freeState(m_pState);
+	m_pState = NULL;
 }
 
 const Char *xxHash32::GetName()
@@ -63,11 +67,11 @@ Status xxHash32::Init(const void *pHash/* = NULL*/)
 
 	if (NULL != pHash)
 	{
-		ec = XXH32_reset(&m_state, *((UInt32 *)pHash));
+		ec = XXH32_reset(m_pState, *((UInt32 *)pHash));
 	}
 	else
 	{
-		ec = XXH32_reset(&m_state, 0);
+		ec = XXH32_reset(m_pState, 0);
 	}
 	if (XXH_OK != ec)
 	{
@@ -81,7 +85,7 @@ Status xxHash32::Update(const void *pBuffer, Size cbSize)
 {
 	XXH_errorcode ec;
 
-	ec = XXH32_update(&m_state, pBuffer, cbSize);
+	ec = XXH32_update(m_pState, pBuffer, cbSize);
 	if (XXH_OK != ec)
 	{
 		return Status(Status_OperationFailed, "XXH32_update failed with code {1}", (int)ec);
@@ -92,7 +96,7 @@ Status xxHash32::Update(const void *pBuffer, Size cbSize)
 
 Status xxHash32::Done(void *pHash)
 {
-	*((UInt32 *)pHash) = XXH32_digest(&m_state);
+	*((UInt32 *)pHash) = XXH32_digest(m_pState);
 
 	return Status();
 }

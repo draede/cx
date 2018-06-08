@@ -58,6 +58,7 @@ inline static int tinymt64_get_mexp(
 }
 #else
 static int tinymt64_get_mexp(tinymt64_t * random) {
+    random;
     return TINYMT64_MEXP;
 }
 #endif

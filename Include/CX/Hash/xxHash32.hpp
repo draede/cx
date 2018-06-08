@@ -65,7 +65,7 @@ public:
 
 private:
 
-	XXH32_state_t   m_state;
+	XXH32_state_t   *m_pState;
 
 };
 

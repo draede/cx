@@ -19,6 +19,10 @@
 #define BSON_TYPES_H
 
 
+#pragma warning(push)
+#pragma warning(disable: 4359)
+
+
 #if !defined(BSON_INSIDE) && !defined(BSON_COMPILATION)
 #error "Only <bson.h> can be included directly."
 #endif
@@ -542,5 +546,7 @@ bson_is_power_of_two (uint32_t v)
 
 BSON_END_DECLS
 
+
+#pragma warning(pop)
 
 #endif /* BSON_TYPES_H */

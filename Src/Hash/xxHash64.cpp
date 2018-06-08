@@ -40,11 +40,15 @@ const Char xxHash64::NAME[] = "xxHash64";
 
 xxHash64::xxHash64()
 {
+	m_pState = XXH64_createState();
+
 	Init();
 }
 
 xxHash64::~xxHash64()
 {
+	XXH64_freeState(m_pState);
+	m_pState = NULL;
 }
 
 const Char *xxHash64::GetName()
@@ -63,11 +67,11 @@ Status xxHash64::Init(const void *pHash/* = NULL*/)
 
 	if (NULL != pHash)
 	{
-		ec = XXH64_reset(&m_state, *((UInt64 *)pHash));
+		ec = XXH64_reset(m_pState, *((UInt64 *)pHash));
 	}
 	else
 	{
-		ec = XXH64_reset(&m_state, 0);
+		ec = XXH64_reset(m_pState, 0);
 	}
 	if (XXH_OK != ec)
 	{
@@ -81,7 +85,7 @@ Status xxHash64::Update(const void *pBuffer, Size cbSize)
 {
 	XXH_errorcode ec;
 
-	ec = XXH64_update(&m_state, pBuffer, cbSize);
+	ec = XXH64_update(m_pState, pBuffer, cbSize);
 	if (XXH_OK != ec)
 	{
 		return Status(Status_OperationFailed, "XXH64_update failed with code {1}", (int)ec);
@@ -92,7 +96,7 @@ Status xxHash64::Update(const void *pBuffer, Size cbSize)
 
 Status xxHash64::Done(void *pHash)
 {
-	*((UInt64 *)pHash) = XXH64_digest(&m_state);
+	*((UInt64 *)pHash) = XXH64_digest(m_pState);
 
 	return Status();
 }
