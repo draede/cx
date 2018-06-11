@@ -119,7 +119,7 @@ Status UTF8::FromWChar(const WChar *wszWChar, Size cWCharLen, Char *szUTF8, Size
 	}
 	if (0 == cWCharLen)
 	{
-		if (NULL == wszWChar)
+		if (NULL == szUTF8)
 		{
 			*pcUTF8Len = 1;
 
