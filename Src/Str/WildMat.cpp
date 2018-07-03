@@ -78,7 +78,7 @@ int WildMat::StrMatchA(const Char *szString, const Char *szPattern, bool bIgnore
 
 	for (x = 0, y = 0; szPattern[y]; ++y, ++x)
 	{
-		if (!szPattern[x] && (szPattern[y] != '*' || szPattern[y] != '?'))
+		if (!szString[x] && (szPattern[y] != '*' && szPattern[y] != '?'))
 		{
 			return -1;
 		}
@@ -138,7 +138,7 @@ int WildMat::StrMatchW(const WChar *wszString, const CX::WChar *wszPattern, bool
 
 	for (x = 0, y = 0; wszPattern[y]; ++y, ++x)
 	{
-		if (!wszPattern[x] && (wszPattern[y] != L'*' || wszPattern[y] != L'?'))
+		if (!wszString[x] && (wszPattern[y] != L'*' && wszPattern[y] != L'?'))
 		{
 			return -1;
 		}

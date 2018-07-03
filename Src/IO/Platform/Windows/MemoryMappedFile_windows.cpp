@@ -122,7 +122,7 @@ Status MemoryMappedFile::OpenInternal(const WChar *wszPath, UInt64 cbMapOffset/*
 	LARGE_INTEGER   liSize;
 	Status          status;
 
-
+	dwFlags = 0;
 	if (Flag_AttrNormal == (Flag_AttrNormal & nFlags))
 	{
 		dwFlags |= FILE_ATTRIBUTE_NORMAL;

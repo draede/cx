@@ -54,26 +54,37 @@ TaskQueue::TaskQueue(Size cConsumers/* = 1*/)
 {
 	m_cConsumers = cConsumers;
 	m_pSync      = new (std::nothrow) Sync();
-	InitializeCriticalSection(&((Sync *)m_pSync)->cs);
-	((Sync *)m_pSync)->hEmptyEvent        = CreateEventA(NULL, FALSE, TRUE, NULL);
-	((Sync *)m_pSync)->hShutdownSemaphore = CreateSemaphoreA(NULL, 0, (LONG)m_cConsumers, NULL);
-	((Sync *)m_pSync)->hTasksSemaphore    = CreateSemaphoreA(NULL, 0, LONG_MAX, NULL);
+	if (NULL != m_pSync)
+	{
+		InitializeCriticalSection(&((Sync *)m_pSync)->cs);
+		((Sync *)m_pSync)->hEmptyEvent = CreateEventA(NULL, FALSE, TRUE, NULL);
+		((Sync *)m_pSync)->hShutdownSemaphore = CreateSemaphoreA(NULL, 0, (LONG)m_cConsumers, NULL);
+		((Sync *)m_pSync)->hTasksSemaphore = CreateSemaphoreA(NULL, 0, LONG_MAX, NULL);
+	}
 }
 
 TaskQueue::~TaskQueue()
 {
 	Clear();
 
-	CloseHandle(((Sync *)m_pSync)->hEmptyEvent);
-	CloseHandle(((Sync *)m_pSync)->hShutdownSemaphore);
-	CloseHandle(((Sync *)m_pSync)->hTasksSemaphore);
-	DeleteCriticalSection(&((Sync *)m_pSync)->cs);
-	delete (Sync *)m_pSync;
-	m_pSync = NULL;
+	if (NULL != m_pSync)
+	{
+		CloseHandle(((Sync *)m_pSync)->hTasksSemaphore);
+		CloseHandle(((Sync *)m_pSync)->hShutdownSemaphore);
+		CloseHandle(((Sync *)m_pSync)->hEmptyEvent);
+		DeleteCriticalSection(&((Sync *)m_pSync)->cs);
+		delete (Sync *)m_pSync;
+		m_pSync = NULL;
+	}
 }
 
 Status TaskQueue::Push(ITask *pTask)
 {
+	if (NULL == m_pSync)
+	{
+		return Status_NotInitialized;
+	}
+
 	Status status;
 
 	EnterCriticalSection(&((Sync *)m_pSync)->cs);
@@ -87,6 +98,11 @@ Status TaskQueue::Push(ITask *pTask)
 
 Status TaskQueue::Pop(ITask **ppTask)
 {
+	if (NULL == m_pSync)
+	{
+		return Status_NotInitialized;
+	}
+
 	HANDLE handles[2] = { ((Sync *)m_pSync)->hShutdownSemaphore, ((Sync *)m_pSync)->hTasksSemaphore };
 	DWORD  dwRet;
 	Status status;
@@ -121,6 +137,11 @@ Status TaskQueue::Pop(ITask **ppTask)
 
 Status TaskQueue::Pop(TasksVector *pVectorTasks, Size cCount/* = 0*/)
 {
+	if (NULL == m_pSync)
+	{
+		return Status_NotInitialized;
+	}
+
 	HANDLE handles[2] = { ((Sync *)m_pSync)->hShutdownSemaphore, ((Sync *)m_pSync)->hTasksSemaphore };
 	DWORD  dwRet;
 	Status status;
@@ -159,6 +180,11 @@ Status TaskQueue::Pop(TasksVector *pVectorTasks, Size cCount/* = 0*/)
 
 Status TaskQueue::Shutdown()
 {
+	if (NULL == m_pSync)
+	{
+		return Status_NotInitialized;
+	}
+
 	ReleaseSemaphore(((Sync *)m_pSync)->hShutdownSemaphore, (LONG)m_cConsumers, NULL);
 
 	return Status();
@@ -166,6 +192,11 @@ Status TaskQueue::Shutdown()
 
 Status TaskQueue::Wait()
 {
+	if (NULL == m_pSync)
+	{
+		return Status_NotInitialized;
+	}
+
 	WaitForSingleObject(((Sync *)m_pSync)->hEmptyEvent, INFINITE);
 
 	return Status();
@@ -173,6 +204,11 @@ Status TaskQueue::Wait()
 
 Status TaskQueue::Clear()
 {
+	if (NULL == m_pSync)
+	{
+		return Status_NotInitialized;
+	}
+
 	EnterCriticalSection(&((Sync *)m_pSync)->cs);
 	while (!m_queueTasks.empty())
 	{

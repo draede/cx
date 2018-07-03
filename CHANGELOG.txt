@@ -1,3 +1,5 @@
+0.2.186 - 2018-07-03
+ - Fixed some issues (Code Analysis)
 0.2.185 - 2018-06-11
  - Fixed crash in UTF8 converter
 0.2.184 - 2018-06-08
