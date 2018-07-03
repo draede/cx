@@ -39,39 +39,36 @@ typedef struct _CX_CB_CLibEnvironment
 
 static void *CX_CB_CLibEnvironment_MemAlloc(struct _CX_CB_Environment *pThis, CX_CB_Size cbSize)
 {
-	CX_CB_CLibEnvironment *pEnv;
+	CX_UNUSED(pThis);
 
 	if (NULL == pThis)
 	{
 		return NULL;
 	}
-	pEnv = (CX_CB_CLibEnvironment *)pThis;
 
 	return malloc(cbSize);
 }
 
 static void *CX_CB_CLibEnvironment_MemRealloc(struct _CX_CB_Environment *pThis, void *pPtr, CX_CB_Size cbSize)
 {
-	CX_CB_CLibEnvironment *pEnv;
+	CX_UNUSED(pThis);
 
 	if (NULL == pThis)
 	{
 		return NULL;
 	}
-	pEnv = (CX_CB_CLibEnvironment *)pThis;
 
 	return realloc(pPtr, cbSize);
 }
 
 static CX_StatusCode CX_CB_CLibEnvironment_MemFree(struct _CX_CB_Environment *pThis, void *pPtr)
 {
-	CX_CB_CLibEnvironment *pEnv;
+	CX_UNUSED(pThis);
 	
 	if (NULL == pThis)
 	{
 		return CX_Status_InvalidArg;
 	}
-	pEnv = (CX_CB_CLibEnvironment *)pThis;
 	free(pPtr);
 
 	return CX_Status_OK;
@@ -80,13 +77,12 @@ static CX_StatusCode CX_CB_CLibEnvironment_MemFree(struct _CX_CB_Environment *pT
 static CX_StatusCode CX_CB_CLibEnvironment_MemSet(struct _CX_CB_Environment *pThis, void *pPtr, CX_UInt8 value, 
                                                   CX_CB_Size cbSize)
 {
-	CX_CB_CLibEnvironment *pEnv;
+	CX_UNUSED(pThis);
 
 	if (NULL == pThis)
 	{
 		return CX_Status_InvalidArg;
 	}
-	pEnv = (CX_CB_CLibEnvironment *)pThis;
 	memset(pPtr, value, cbSize);
 
 	return CX_Status_OK;
@@ -95,13 +91,12 @@ static CX_StatusCode CX_CB_CLibEnvironment_MemSet(struct _CX_CB_Environment *pTh
 static CX_StatusCode CX_CB_CLibEnvironment_MemCpy(struct _CX_CB_Environment *pThis, void *pDest, const void *pSrc, 
                                                   CX_CB_Size cbSize)
 {
-	CX_CB_CLibEnvironment *pEnv;
+	CX_UNUSED(pThis);
 
 	if (NULL == pThis)
 	{
 		return CX_Status_InvalidArg;
 	}
-	pEnv = (CX_CB_CLibEnvironment *)pThis;
 	memcpy(pDest, pSrc, cbSize);
 
 	return CX_Status_OK;
@@ -109,26 +104,24 @@ static CX_StatusCode CX_CB_CLibEnvironment_MemCpy(struct _CX_CB_Environment *pTh
 
 static CX_CB_Size CX_CB_CLibEnvironment_StrLen(struct _CX_CB_Environment *pThis, const CX_Char *szStr)
 {
-	CX_CB_CLibEnvironment *pEnv;
+	CX_UNUSED(pThis);
 
 	if (NULL == pThis)
 	{
 		return 0;
 	}
-	pEnv = (CX_CB_CLibEnvironment *)pThis;
 	
 	return (CX_CB_Size)strlen(szStr);
 }
 
 static CX_CB_Size CX_CB_CLibEnvironment_WStrLen(struct _CX_CB_Environment *pThis, const CX_WChar *wszStr)
 {
-	CX_CB_CLibEnvironment *pEnv;
+	CX_UNUSED(pThis);
 
 	if (NULL == pThis)
 	{
 		return 0;
 	}
-	pEnv = (CX_CB_CLibEnvironment *)pThis;
 
 	return (CX_CB_Size)wcslen(wszStr);
 }
@@ -142,7 +135,6 @@ static CX_StatusCode CX_CB_CLibEnvironment_Destroy(struct _CX_CB_Environment *pT
 		return CX_Status_InvalidArg;
 	}
 	pEnv = (CX_CB_CLibEnvironment *)pThis;
-
 	free(pEnv);
 
 	return CX_Status_OK;

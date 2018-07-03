@@ -96,7 +96,7 @@ const String &Language::GetString(Size cIndex) const
 
 	while (0 < cIndex)
 	{
-		iter++;
+		++iter;
 		cIndex--;
 	}
 
@@ -116,7 +116,7 @@ const String &Language::GetTranslation(Size cIndex) const
 
 	while (0 < cIndex)
 	{
-		iter++;
+		++iter;
 		cIndex--;
 	}
 

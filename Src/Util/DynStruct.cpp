@@ -138,7 +138,7 @@ const String &DynStruct::GetName(Size cIndex)
 	while (0 < cIndex)
 	{
 		cIndex--;
-		iter++;
+		++iter;
 	}
 
 	return iter->first;

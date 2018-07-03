@@ -40,13 +40,11 @@ class MemTest
 
 void Mem_Test1()
 {
-	MemTest *pTest = new (std::nothrow) MemTest();
 	char    *x     = (char *)Mem::Alloc(sizeof(char) * 100);
 
 	memcpy(x, "this is a test", 14);
 
 	Mem::Free(x);
-	delete pTest;
 }
 
 class Cls1

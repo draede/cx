@@ -61,7 +61,6 @@ Status Event::Create(bool bManualReset/* = false*/, bool bInitialState/* = false
 Status Event::Destroy()
 {
 	return Status_NotImplemented;
-	return Status();
 }
 
 bool Event::IsOK()

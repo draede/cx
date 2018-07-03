@@ -3,7 +3,5 @@
     <paths>
         <dir name="Include"/>
         <dir name="Src"/>
-        <dir name="Test"/>
-		  <dir name="Tool"/>
     </paths>
 </project>

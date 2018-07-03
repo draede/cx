@@ -1335,7 +1335,7 @@ Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Status *p
 
 	while (0 < cIndex)
 	{
-		iter++;
+		++iter;
 		cIndex--;
 	}
 	if (NULL != psName)
@@ -1382,7 +1382,7 @@ const Value &Value::GetMemberByIndex(Size cIndex, String *psName/* = NULL*/, Sta
 
 	while (0 < cIndex)
 	{
-		iter++;
+		++iter;
 		cIndex--;
 	}
 	if (NULL != psName)

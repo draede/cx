@@ -75,7 +75,7 @@ const Char *MultiHash::GetHashName(Size cIndex) const
 	while (0 < cIndex)
 	{
 		cIndex--;
-		iter++;
+		--iter;
 	}
 
 	return iter->first.c_str();

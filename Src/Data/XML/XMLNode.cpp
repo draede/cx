@@ -267,7 +267,7 @@ const String &Node::GetAttrName(Size cIndex) const
 
 	while(0 < cIndex)
 	{
-		iter++;
+		++iter;
 		cIndex--;
 	}
 
@@ -287,7 +287,7 @@ const String &Node::GetAttrValue(Size cIndex) const
 
 	while (0 < cIndex)
 	{
-		iter++;
+		++iter;
 		cIndex--;
 	}
 
@@ -328,7 +328,7 @@ Status Node::RemoveAttribute(Size cIndex)
 
 	while (0 < cIndex)
 	{
-		iter++;
+		++iter;
 		cIndex--;
 	}
 	m_mapAttrs.erase(iter);

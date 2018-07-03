@@ -441,7 +441,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 			{
 				HotSpotsVector::iterator iter = vectorCalls.end();
 
-				iter--;
+				--iter;
 				mapCalls.erase(mapCalls.find(iter->name));
 				vectorCalls.erase(iter);
 			}
@@ -518,7 +518,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 			{
 				HotSpotsVector::iterator iter = vectorDurations.end();
 
-				iter--;
+				--iter;
 				mapDurations.erase(mapDurations.find(iter->name));
 				vectorDurations.erase(iter);
 			}

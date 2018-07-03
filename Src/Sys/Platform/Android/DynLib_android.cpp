@@ -72,8 +72,6 @@ Status DynLib::Load(const Char *szPath)
 
 Status DynLib::Unload()
 {
-	int nRet;
-
 	if (NULL != m_pHandle)
 	{
 		if (0 != (nRet = dlclose(m_pHandle)))

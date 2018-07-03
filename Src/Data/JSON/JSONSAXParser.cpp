@@ -50,6 +50,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX_Data_JSON_SAX_Handler()
 	{
+		m_pParser  = NULL;
 		m_bInclude = CX::False;
 		m_pRelay   = NULL;
 		m_cDepth   = 0;
@@ -481,7 +482,7 @@ struct CX_Data_JSON_SAX_Handler
 		}
 		else
 		{
-			if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+			if (NULL == m_pRelay || 0 < m_cDepth)
 			{
 				if (NULL != m_pRelay)
 				{
@@ -539,7 +540,7 @@ struct CX_Data_JSON_SAX_Handler
 	{
 		m_cDepth--;
 
-		if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+		if (NULL == m_pRelay || 0 < m_cDepth)
 		{
 			if (NULL != m_pRelay)
 			{
@@ -584,7 +585,7 @@ struct CX_Data_JSON_SAX_Handler
 		}
 		else
 		{
-			if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+			if (NULL == m_pRelay || 0 < m_cDepth)
 			{
 				if (NULL != m_pRelay)
 				{
@@ -612,7 +613,7 @@ struct CX_Data_JSON_SAX_Handler
 	{
 		m_cDepth--;
 
-		if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+		if (NULL == m_pRelay || 0 < m_cDepth)
 		{
 			if (NULL != m_pRelay)
 			{
@@ -646,7 +647,7 @@ struct CX_Data_JSON_SAX_Handler
 		}
 		else
 		{
-			if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+			if (NULL == m_pRelay || 0 < m_cDepth)
 			{
 				if (NULL != m_pRelay)
 				{
@@ -670,7 +671,7 @@ struct CX_Data_JSON_SAX_Handler
 
 	CX::Bool EndDoc()
 	{
-		if (NULL == m_pRelay || (NULL != m_pRelay && 0 < m_cDepth))
+		if (NULL == m_pRelay || 0 < m_cDepth)
 		{
 			if (NULL != m_pRelay)
 			{

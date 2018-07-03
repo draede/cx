@@ -81,13 +81,14 @@ Status Process::GetCurrentProcessPathW(WString &wsPath)
 	WChar    *wszPath;
 	WChar    *wszTmpPath;
 	DWORD    dwLen;
-	DWORD    dwRet;
 	Status   status;
 
 	wszPath = NULL;
 	dwLen   = 128;
 	for (;;)
 	{
+		DWORD    dwRet;
+
 		dwLen *= 2;
 		if (32768 < dwLen)
 		{

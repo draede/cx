@@ -56,10 +56,10 @@ TaskQueue::TaskQueue(Size cConsumers/* = 1*/)
 	m_pSync      = new (std::nothrow) Sync();
 	if (NULL != m_pSync)
 	{
-		InitializeCriticalSection(&((Sync *)m_pSync)->cs);
-		((Sync *)m_pSync)->hEmptyEvent = CreateEventA(NULL, FALSE, TRUE, NULL);
-		((Sync *)m_pSync)->hShutdownSemaphore = CreateSemaphoreA(NULL, 0, (LONG)m_cConsumers, NULL);
-		((Sync *)m_pSync)->hTasksSemaphore = CreateSemaphoreA(NULL, 0, LONG_MAX, NULL);
+		InitializeCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
+		static_cast<Sync *>(m_pSync)->hEmptyEvent        = CreateEventA(NULL, FALSE, TRUE, NULL);
+		static_cast<Sync *>(m_pSync)->hShutdownSemaphore = CreateSemaphoreA(NULL, 0, (LONG)m_cConsumers, NULL);
+		static_cast<Sync *>(m_pSync)->hTasksSemaphore    = CreateSemaphoreA(NULL, 0, LONG_MAX, NULL);
 	}
 }
 
@@ -69,11 +69,11 @@ TaskQueue::~TaskQueue()
 
 	if (NULL != m_pSync)
 	{
-		CloseHandle(((Sync *)m_pSync)->hTasksSemaphore);
-		CloseHandle(((Sync *)m_pSync)->hShutdownSemaphore);
-		CloseHandle(((Sync *)m_pSync)->hEmptyEvent);
-		DeleteCriticalSection(&((Sync *)m_pSync)->cs);
-		delete (Sync *)m_pSync;
+		CloseHandle(static_cast<Sync *>(m_pSync)->hTasksSemaphore);
+		CloseHandle(static_cast<Sync *>(m_pSync)->hShutdownSemaphore);
+		CloseHandle(static_cast<Sync *>(m_pSync)->hEmptyEvent);
+		DeleteCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
+		delete static_cast<Sync *>(m_pSync);
 		m_pSync = NULL;
 	}
 }
@@ -87,11 +87,11 @@ Status TaskQueue::Push(ITask *pTask)
 
 	Status status;
 
-	EnterCriticalSection(&((Sync *)m_pSync)->cs);
+	EnterCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
 	m_queueTasks.push(pTask);
-	ReleaseSemaphore(((Sync *)m_pSync)->hTasksSemaphore, 1, NULL);
-	ResetEvent(((Sync *)m_pSync)->hEmptyEvent);
-	LeaveCriticalSection(&((Sync *)m_pSync)->cs);
+	ReleaseSemaphore(static_cast<Sync *>(m_pSync)->hTasksSemaphore, 1, NULL);
+	ResetEvent(static_cast<Sync *>(m_pSync)->hEmptyEvent);
+	LeaveCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
 
 	return status;
 }
@@ -103,7 +103,11 @@ Status TaskQueue::Pop(ITask **ppTask)
 		return Status_NotInitialized;
 	}
 
-	HANDLE handles[2] = { ((Sync *)m_pSync)->hShutdownSemaphore, ((Sync *)m_pSync)->hTasksSemaphore };
+	HANDLE handles[2] = 
+	{ 
+		static_cast<Sync *>(m_pSync)->hShutdownSemaphore, 
+		static_cast<Sync *>(m_pSync)->hTasksSemaphore 
+	};
 	DWORD  dwRet;
 	Status status;
 
@@ -115,17 +119,17 @@ Status TaskQueue::Pop(ITask **ppTask)
 	else
 	if (WAIT_OBJECT_0 + 1 == dwRet)
 	{
-		EnterCriticalSection(&((Sync *)m_pSync)->cs);
+		EnterCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
 		if (!m_queueTasks.empty())
 		{
 			*ppTask = m_queueTasks.front();
 			m_queueTasks.pop();
 			if (m_queueTasks.empty())
 			{
-				SetEvent(((Sync *)m_pSync)->hEmptyEvent);
+				SetEvent(static_cast<Sync *>(m_pSync)->hEmptyEvent);
 			}
 		}
-		LeaveCriticalSection(&((Sync *)m_pSync)->cs);
+		LeaveCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
 	}
 	else
 	{
@@ -142,7 +146,11 @@ Status TaskQueue::Pop(TasksVector *pVectorTasks, Size cCount/* = 0*/)
 		return Status_NotInitialized;
 	}
 
-	HANDLE handles[2] = { ((Sync *)m_pSync)->hShutdownSemaphore, ((Sync *)m_pSync)->hTasksSemaphore };
+	HANDLE handles[2] = 
+	{ 
+		static_cast<Sync *>(m_pSync)->hShutdownSemaphore, 
+		static_cast<Sync *>(m_pSync)->hTasksSemaphore 
+	};
 	DWORD  dwRet;
 	Status status;
 
@@ -155,7 +163,7 @@ Status TaskQueue::Pop(TasksVector *pVectorTasks, Size cCount/* = 0*/)
 	else
 	if (WAIT_OBJECT_0 + 1 == dwRet)
 	{
-		EnterCriticalSection(&((Sync *)m_pSync)->cs);
+		EnterCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
 		if (!m_queueTasks.empty())
 		{
 			while (!m_queueTasks.empty() && (0 == cCount || pVectorTasks->size() < cCount))
@@ -165,10 +173,10 @@ Status TaskQueue::Pop(TasksVector *pVectorTasks, Size cCount/* = 0*/)
 			}
 			if (m_queueTasks.empty())
 			{
-				SetEvent(((Sync *)m_pSync)->hEmptyEvent);
+				SetEvent(static_cast<Sync *>(m_pSync)->hEmptyEvent);
 			}
 		}
-		LeaveCriticalSection(&((Sync *)m_pSync)->cs);
+		LeaveCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
 	}
 	else
 	{
@@ -185,7 +193,7 @@ Status TaskQueue::Shutdown()
 		return Status_NotInitialized;
 	}
 
-	ReleaseSemaphore(((Sync *)m_pSync)->hShutdownSemaphore, (LONG)m_cConsumers, NULL);
+	ReleaseSemaphore(static_cast<Sync *>(m_pSync)->hShutdownSemaphore, (LONG)m_cConsumers, NULL);
 
 	return Status();
 }
@@ -197,7 +205,7 @@ Status TaskQueue::Wait()
 		return Status_NotInitialized;
 	}
 
-	WaitForSingleObject(((Sync *)m_pSync)->hEmptyEvent, INFINITE);
+	WaitForSingleObject(static_cast<Sync *>(m_pSync)->hEmptyEvent, INFINITE);
 
 	return Status();
 }
@@ -209,13 +217,13 @@ Status TaskQueue::Clear()
 		return Status_NotInitialized;
 	}
 
-	EnterCriticalSection(&((Sync *)m_pSync)->cs);
+	EnterCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
 	while (!m_queueTasks.empty())
 	{
 		m_queueTasks.front()->Release();
 		m_queueTasks.pop();
 	}
-	LeaveCriticalSection(&((Sync *)m_pSync)->cs);
+	LeaveCriticalSection(&static_cast<Sync *>(m_pSync)->cs);
 
 	return Status();
 }

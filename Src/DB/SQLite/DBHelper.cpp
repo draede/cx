@@ -154,7 +154,6 @@ Status DBHelper::Open(const Char *szPath,
 
 Status DBHelper::Close()
 {
-	Statement   *pStatement;
 	Status      status;
 
 	if (!m_db.IsOK())
@@ -183,6 +182,8 @@ Status DBHelper::Close()
 		{
 			while (!iter->second.empty())
 			{
+				Statement   *pStatement;
+				
 				pStatement = iter->second.front();
 				iter->second.pop();
 				pStatement->Close();

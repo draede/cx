@@ -641,7 +641,6 @@ Status BSONReader::ReadCustom(ICustom::Type nCustomType, void *pData, ICustom::A
 	bson_type_t   nType;
 	uint32_t      cbBSONSize;
 	const uint8_t *pBSONData;
-	bool          bObject;
 
 	if (m_stackStates.empty())
 	{
@@ -662,7 +661,6 @@ Status BSONReader::ReadCustom(ICustom::Type nCustomType, void *pData, ICustom::A
 			}
 		}
 		pIter   = &m_stackStates.top().iter;
-		bObject = true;
 	}
 	else
 	if (State_Array == m_stackStates.top().nState)
@@ -676,7 +674,6 @@ Status BSONReader::ReadCustom(ICustom::Type nCustomType, void *pData, ICustom::A
 			return Status_NoMoreItems;
 		}
 		pIter   = &m_stackStates.top().iter;
-		bObject = false;
 	}
 	else
 	{

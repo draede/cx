@@ -612,7 +612,7 @@ Node &Node::GetMember(Size cIndex)
 			while (0 < cIndex)
 			{
 				cIndex--;
-				iter++;
+				++iter;
 			}
 
 			return *iter->second;
@@ -633,7 +633,7 @@ const Node &Node::GetMember(Size cIndex) const
 			while (0 < cIndex)
 			{
 				cIndex--;
-				iter++;
+				++iter;
 			}
 
 			return *iter->second;
@@ -1031,7 +1031,7 @@ bool Node::operator == (const Node &node)
 		{
 			return false;
 		}
-		for (NodesMap::const_iterator iter = m_pMapNodes->begin(); iter != m_pMapNodes->end(); iter++)
+		for (NodesMap::const_iterator iter = m_pMapNodes->begin(); iter != m_pMapNodes->end(); ++iter)
 		{
 			NodesMap::const_iterator iterEx = node.m_pMapNodes->find(iter->first);
 
@@ -1044,7 +1044,7 @@ bool Node::operator == (const Node &node)
 				return false;
 			}
 		}
-		for (NodesMap::const_iterator iter = node.m_pMapNodes->begin(); iter != node.m_pMapNodes->end(); iter++)
+		for (NodesMap::const_iterator iter = node.m_pMapNodes->begin(); iter != node.m_pMapNodes->end(); ++iter)
 		{
 			NodesMap::const_iterator iterEx = m_pMapNodes->find(iter->first);
 

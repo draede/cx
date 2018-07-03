@@ -273,7 +273,7 @@ Status JSONReader::ReadCustom(ICustom *pCustom, const Char *szName/* = NULL*/)
 
 	struct Node
 	{
-		Node(rapidjson::Value *pVal)
+		explicit Node(rapidjson::Value *pVal)
 		{
 			pValue = pVal;
 			if (pValue->IsObject())

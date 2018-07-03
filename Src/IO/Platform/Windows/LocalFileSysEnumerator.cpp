@@ -56,7 +56,6 @@ Status LocalFileSysEnumerator::EnumDrives(IItemHandler *pHandler, const WChar *w
 {
 	WChar       wszName[64];
 	WChar       *wszPath;
-	const WChar *pPos;
 	DWORD       cPathLen;
 	DWORD       cPathLenNeeded;
 	HANDLE      hVolFind;
@@ -72,6 +71,8 @@ Status LocalFileSysEnumerator::EnumDrives(IItemHandler *pHandler, const WChar *w
 	status.Clear();
 	for (;;)
 	{
+		const WChar *pPos;
+		
 		if (!GetVolumePathNamesForVolumeNameW(wszName, wszPath, cPathLen, &cPathLenNeeded))
 		{
 			if (ERROR_MORE_DATA != GetLastError())

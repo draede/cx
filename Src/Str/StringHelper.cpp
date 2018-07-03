@@ -52,7 +52,7 @@ bool StringHelper::Compare(const Char *pStr1, Size cStr1Len, const Char *pStr2, 
 	bool       bHas1Len = (0 < cStr1Len);
 	bool       bHas2Len = (0 < cStr2Len);
 
-	if (0 == cMaxLen && bHas1Len && bHas1Len && cStr1Len != cStr2Len)
+	if (0 == cMaxLen && bHas1Len && bHas2Len && cStr1Len != cStr2Len)
 	{
 		return false;
 	}

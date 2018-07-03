@@ -57,12 +57,10 @@ void Network_URLParser_Test_EncodeDecode()
 	String sIn = "abcdef!*\'x();:aa@&=+$/aa?%#aa[a\n]";
 	String sOut1;
 	String sOut2;
-	bool   bRes;
 	Status status;
 
 	status = Network::URLParser::Encode(sIn.c_str(), sOut1);
 	status = Network::URLParser::Decode(sOut1.c_str(), sOut2);
-	bRes   = (sIn == sOut2);
 }
 
 REGISTER_TEST(Network_URLParser_Test_Parse);

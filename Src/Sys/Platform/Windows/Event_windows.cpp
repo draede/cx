@@ -141,11 +141,12 @@ Event::WaitResult Event::WaitForMultipleEvents(Event **events, Size cCount, bool
 
 	HANDLE     handles[64];
 	WaitResult nRes;
-	DWORD      dwRet;
 
 	nRes = Wait_OK;
 	for (;;)
 	{
+		DWORD      dwRet;
+		
 		for (Size i = 0; i < cCount; i++)
 		{
 			if (NULL == events[i]->m_hEvent)
