@@ -35,6 +35,7 @@
 #include "CX/Util/Time.hpp"
 #include "CX/Status.hpp"
 #include "CX/C/Platform/Windows/windows.h"
+#include <time.h>
 
 
 namespace CX
@@ -226,18 +227,16 @@ unsigned Time::GetMillisecond() const
 
 UInt64 Time::GetTimeStampMS()
 {
-	UInt64 nTSMS;
+	struct tm  tmstruct;
 
-	nTSMS = 0;
-	nTSMS += (UInt64)m_nMillisecond;
-	nTSMS += ((UInt64)m_nSecond << 16);
-	nTSMS += ((UInt64)m_nMinute << 24);
-	nTSMS += ((UInt64)m_nHour << 32);
-	nTSMS += ((UInt64)m_nDay << 40);
-	nTSMS += ((UInt64)m_nMonth << 48);
-	nTSMS += ((UInt64)(m_nYear - 1900) << 56);
-	
-	return nTSMS;
+	tmstruct.tm_hour = m_nHour;
+	tmstruct.tm_min  = m_nMinute;
+	tmstruct.tm_sec  = m_nSecond;
+	tmstruct.tm_year = m_nYear - 1900;
+	tmstruct.tm_mon  = m_nMonth - 1;
+	tmstruct.tm_mday = m_nDay;
+
+	return mktime(&tmstruct) * 1000 + m_nMillisecond;
 }
 
 }//namespace Util

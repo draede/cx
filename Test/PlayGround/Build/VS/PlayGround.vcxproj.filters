@@ -21,19 +21,10 @@
     <ClCompile Include="..\..\Src\Tester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\DB_Flat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\CBuffers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\My_Namespace_Struct1.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\My_Namespace_Struct2.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Struct1CPP.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Struct2CPP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data_JSON_Node.cpp">
@@ -66,6 +57,12 @@
     <ClCompile Include="..\..\Src\Mem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\My_Namespace_Struct1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\My_Namespace_Struct2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Network_HTTP_Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,10 +78,16 @@
     <ClCompile Include="..\..\Src\Str_UTF8.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Util_DynStruct.cpp">
+    <ClCompile Include="..\..\Src\Struct1CPP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Struct2CPP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Util_CmdLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util_DynStruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,5 +113,19 @@
     <ClInclude Include="..\..\Src\Struct2.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Src\Struct1.cb">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\Src\Struct2.cb">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\Src\TestSimpleBuffers1.sbc">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\Src\TestSimpleBuffers2.sbc">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

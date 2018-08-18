@@ -266,6 +266,10 @@
     <ClInclude Include="..\..\Include\CX\Data\XML\Node.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\XML\SAXParser.hpp" />
     <ClInclude Include="..\..\Include\CX\Data\XML\SAXParserObserverBase.hpp" />
+    <ClInclude Include="..\..\Include\CX\DB\Flat\Platform\Windows\Reader.hpp" />
+    <ClInclude Include="..\..\Include\CX\DB\Flat\Platform\Windows\Writer.hpp" />
+    <ClInclude Include="..\..\Include\CX\DB\Flat\Reader.hpp" />
+    <ClInclude Include="..\..\Include\CX\DB\Flat\Writer.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Bindings.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Database.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\DBHelper.hpp" />
@@ -18627,6 +18631,8 @@
     <ClCompile Include="..\..\Src\Data\XML\SAXParserObserverBase.cpp" />
     <ClCompile Include="..\..\Src\Data\XML\XMLNode.cpp" />
     <ClCompile Include="..\..\Src\Data\XML\XMLSAXParser.cpp" />
+    <ClCompile Include="..\..\Src\DB\Flat\Platform\Windows\Reader_windows.cpp" />
+    <ClCompile Include="..\..\Src\DB\Flat\Platform\Windows\Writer_windows.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Bindings.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Database.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\DBHelper.cpp" />

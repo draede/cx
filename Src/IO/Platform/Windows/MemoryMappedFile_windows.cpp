@@ -152,16 +152,32 @@ Status MemoryMappedFile::OpenInternal(const WChar *wszPath, UInt64 cbMapOffset/*
 			break;
 		}
 		m_cbFileSize = (UInt64)liSize.QuadPart;
+		if (cbMapOffset > m_cbFileSize)
+		{
+			status = Status(Status_OpenFailed, "Invalid offset");
+
+			break;
+		}
 		if (NULL == (m_pFileMap = ::CreateFileMapping(m_pFile, NULL, PAGE_READONLY, 0, 0, NULL)))
 		{
 			status = Status(Status_OpenFailed, "CreateFileMapping failed with error {1}", GetLastError());
 
 			break;
 		}
+		if (0 == cbMapSize)
+		{
+			cbMapSize = m_cbFileSize;
+		}
+		if (cbMapSize > m_cbFileSize - cbMapOffset)
+		{
+			cbMapSize = m_cbFileSize - cbMapOffset;
+		}
 		if (!(status = Remap(cbMapOffset, cbMapSize)))
 		{
 			break;
 		}
+		m_cbMapOffset = cbMapOffset;
+		m_cbMapSize   = cbMapSize;
 
 		break;
 	}

@@ -27,6 +27,7 @@
  */ 
 
 #include "CX/Str/StringHelper.hpp"
+#include "CX/Print.hpp"
 
 
 namespace CX
@@ -322,6 +323,161 @@ Status StringHelper::Replace(const Char *pText, Size cTextLen, const Char *pWhat
 	}
 
 	return Status();
+}
+
+void StringHelper::GetNiceSize(UInt64 cbSize, String *psSize, const Char *szBytesFmt/* = "{1} B"*/, 
+                               const Char *szKBytesFmt/* = "{1:.3} KB"*/, const Char *szMBytesFmt/* = "{1:.3} MB"*/, 
+                               const Char *szGBytesFmt/* = "{1:.3} GB"*/, const Char *szTBytesFmt/* = "{1:.3} TB"*/)
+{
+	if (1024 > cbSize)
+	{
+		Print(psSize, szBytesFmt, cbSize);
+	}
+	else
+	if (1048576 > cbSize)
+	{
+		Print(psSize, szKBytesFmt, (Double)cbSize / 1024.0);
+	}
+	else
+	if (1073741824 > cbSize)
+	{
+		Print(psSize, szMBytesFmt, (Double)cbSize / 1048576.0);
+	}
+	else
+	if (1099511627776 > cbSize)
+	{
+		Print(psSize, szGBytesFmt, (Double)cbSize / 1073741824.0);
+	}
+	else
+	{
+		Print(psSize, szTBytesFmt, (Double)cbSize / 1099511627776.0);
+	}
+}
+
+void StringHelper::GetNiceCount(UInt64 cCount, String *psCount, const Char *szSmallFmt/* = "{1}"*/, 
+                                const Char *szKiloFmt/* = "{1:.3} K"*/, const Char *szMegaFmt/* = "{1:.3} M"*/, 
+                                const Char *szGigaFmt/* = "{1:.3} G"*/, const Char *szTerraFmt/* = "{1:.3} T"*/)
+{
+	if (1000 > cCount)
+	{
+		Print(psCount, szSmallFmt, cCount);
+	}
+	else
+	if (1000000 > cCount)
+	{
+		Print(psCount, szKiloFmt, (Double)cCount / 1000.0);
+	}
+	else
+	if (1000000000 > cCount)
+	{
+		Print(psCount, szMegaFmt, (Double)cCount / 1000000.0);
+	}
+	else
+	if (1000000000000 > cCount)
+	{
+		Print(psCount, szGigaFmt, (Double)cCount / 1000000000.0);
+	}
+	else
+	{
+		Print(psCount, szTerraFmt, (Double)cCount / 1000000000000.0);
+	}
+}
+
+void StringHelper::GetNiceElapsedTime(Double lfElapsed, String *psElapsed, 
+                                      const Char *szHourFmt/* = "{1} hour"*/, 
+                                      const Char *szHoursFmt/* = "{1} hours"*/, 
+                                      const Char *szMinuteFmt/* = "{1} minute"*/, 
+                                      const Char *szMinutesFmt/* = "{1} minutes"*/, 
+                                      const Char *szSecondFmt/* = "{1} second"*/, 
+                                      const Char *szSecondsFmt/* = "{1} seconds"*/, 
+                                      const Char *szMillisecondFmt/* = "{1} millisecond"*/, 
+                                      const Char *szMillisecondsFmt/* = "{1} milliseconds"*/)
+{
+	UInt64 cElapsed  = (UInt64)(lfElapsed * 1000.0);
+	UInt64 cHours    = (UInt64)(cElapsed / 3600000); cElapsed -= cHours * 3600000;
+	UInt64 cMinutes  = (UInt64)(cElapsed / 60000); cElapsed -= cMinutes * 60000;
+	UInt64 cSeconds  = (UInt64)(cElapsed / 1000); cElapsed -= cSeconds * 1000;
+	UInt64 cMSeconds = (UInt64)cElapsed;
+	Bool   bFirst    = True;
+
+	*psElapsed = "";
+
+	if (0 < cHours)
+	{
+		if (!bFirst)
+		{
+			*psElapsed += ", ";
+		}
+		else
+		{
+			bFirst  = False;
+		}
+		if (1 == cHours)
+		{
+			Print(psElapsed, szHourFmt, cHours);
+		}
+		else
+		{
+			Print(psElapsed, szHoursFmt, cHours);
+		}
+	}
+
+	if (0 < cMinutes)
+	{
+		if (!bFirst)
+		{
+			*psElapsed += ", ";
+		}
+		else
+		{
+			bFirst  = False;
+		}
+		if (1 == cMinutes)
+		{
+			Print(psElapsed, szMinuteFmt, cMinutes);
+		}
+		else
+		{
+			Print(psElapsed, szMinutesFmt, cMinutes);
+		}
+	}
+
+	if (0 < cSeconds)
+	{
+		if (!bFirst)
+		{
+			*psElapsed += ", ";
+		}
+		else
+		{
+			bFirst  = False;
+		}
+		if (1 == cSeconds)
+		{
+			Print(psElapsed, szSecondFmt, cSeconds);
+		}
+		else
+		{
+			Print(psElapsed, szSecondsFmt, cSeconds);
+		}
+	}
+
+	if (!bFirst)
+	{
+		*psElapsed += ", ";
+	}
+	else
+	{
+		bFirst  = False;
+	}
+	if (1 == cMSeconds)
+	{
+		Print(psElapsed, szMillisecondFmt, cMSeconds);
+	}
+	else
+	{
+		Print(psElapsed, szMillisecondsFmt, cMSeconds);
+	}
 }
 
 }//namespace Str

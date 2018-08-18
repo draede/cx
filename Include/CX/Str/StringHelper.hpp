@@ -80,6 +80,21 @@ public:
 	static Status Replace(const Char *pText, Size cTextLen, const Char *pWhat, Size cWhatLen, const Char *pWithWhat, 
 	                      Size cWithWhatLen, bool bCaseSensitive, String &sString, bool bAll = true);
 
+	static void GetNiceSize(UInt64 cbSize, String *psSize, const Char *szBytesFmt = "{1} B", 
+	                        const Char *szKBytesFmt = "{1:.3} KB", const Char *szMBytesFmt = "{1:.3} MB", 
+	                        const Char *szGBytesFmt = "{1:.3} GB", const Char *szTBytesFmt = "{1:.3} TB");
+
+	static void GetNiceCount(UInt64 cCount, String *psCount, const Char *szSmallFmt = "{1}", 
+	                         const Char *szKiloFmt = "{1:.3} K", const Char *szMegaFmt = "{1:.3} M", 
+	                         const Char *szGigaFmt = "{1:.3} G", const Char *szTerraFmt = "{1:.3} T");
+
+	static void GetNiceElapsedTime(Double lfElapsed, String *psElapsed, 
+	                               const Char *szHourFmt = "{1} hour", const Char *szHoursFmt = "{1} hours", 
+	                               const Char *szMinuteFmt = "{1} minute", const Char *szMinutesFmt = "{1} minutes", 
+	                               const Char *szSecondFmt = "{1} second", const Char *szSecondsFmt = "{1} seconds", 
+	                               const Char *szMillisecondFmt = "{1} millisecond", 
+	                               const Char *szMillisecondsFmt = "{1} milliseconds");
+
 private:
 
 	StringHelper();

@@ -1,3 +1,8 @@
+0.2.189 - 2018-08-19
+ - Improved Str::StringHelper
+ - Added RecordDB
+ - Fixed Util::Time::GetTimestampMS
+ - Fixed IO::MemoryMappedFile
 0.2.188 - 2018-08-15
  - Updated to VS 2018 15.8.0
 0.2.187 - 2018-07-03

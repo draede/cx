@@ -57,6 +57,7 @@
     <ClCompile Include="..\..\Src\Data_MO_SAX.cpp" />
     <ClCompile Include="..\..\Src\Data_XML_Node.cpp" />
     <ClCompile Include="..\..\Src\Data_XML_SAX.cpp" />
+    <ClCompile Include="..\..\Src\DB_Flat.cpp" />
     <ClCompile Include="..\..\Src\DB_SQLite.cpp" />
     <ClCompile Include="..\..\Src\IO_Buffered.cpp" />
     <ClCompile Include="..\..\Src\IO_Filters.cpp" />
@@ -84,6 +85,12 @@
     <ClInclude Include="..\..\Src\Tester.hpp" />
     <ClInclude Include="..\..\Src\TestSimpleBuffers1.hpp" />
     <ClInclude Include="..\..\Src\TestSimpleBuffers2.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Src\Struct1.cb" />
+    <None Include="..\..\Src\Struct2.cb" />
+    <None Include="..\..\Src\TestSimpleBuffers1.sbc" />
+    <None Include="..\..\Src\TestSimpleBuffers2.sbc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{017DBD76-9CC8-4BF7-A7E0-E78161E15B00}</ProjectGuid>
