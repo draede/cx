@@ -1,6 +1,8 @@
+0.2.190 - 2018-08-19
+ - Fixed Var
 0.2.189 - 2018-08-19
  - Improved Str::StringHelper
- - Added RecordDB
+ - Added DB::Flat
  - Fixed Util::Time::GetTimestampMS
  - Fixed IO::MemoryMappedFile
 0.2.188 - 2018-08-15

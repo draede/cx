@@ -1148,6 +1148,48 @@ Var &Var::operator=(Bool bBool)
 	return *this;
 }
 
+Var &Var::operator=(Int8 nInt)
+{
+	SetInt((Int64)nInt);
+
+	return *this;
+}
+
+Var &Var::operator=(UInt8 uInt)
+{
+	SetUInt((UInt64)uInt);
+
+	return *this;
+}
+
+Var &Var::operator=(Int16 nInt)
+{
+	SetInt((Int64)nInt);
+
+	return *this;
+}
+
+Var &Var::operator=(UInt16 uInt)
+{
+	SetUInt((UInt64)uInt);
+
+	return *this;
+}
+
+Var &Var::operator=(Int32 nInt)
+{
+	SetInt((Int64)nInt);
+
+	return *this;
+}
+
+Var &Var::operator=(UInt32 uInt)
+{
+	SetUInt((UInt64)uInt);
+
+	return *this;
+}
+
 Var &Var::operator=(Int64 nInt)
 {
 	SetInt(nInt);
@@ -1158,6 +1200,13 @@ Var &Var::operator=(Int64 nInt)
 Var &Var::operator=(UInt64 uInt)
 {
 	SetUInt(uInt);
+
+	return *this;
+}
+
+Var &Var::operator=(Float fReal)
+{
+	SetReal((Double)fReal);
 
 	return *this;
 }
@@ -1188,6 +1237,36 @@ Var::operator Bool() const
 	return GetBool();
 }
 
+Var::operator Int8 () const
+{
+	return (Int8)GetInt();
+}
+
+Var::operator UInt8 () const
+{
+	return (UInt8)GetUInt();
+}
+
+Var::operator Int16 () const
+{
+	return (Int16)GetInt();
+}
+
+Var::operator UInt16 () const
+{
+	return (UInt16)GetUInt();
+}
+
+Var::operator Int32 () const
+{
+	return (Int32)GetInt();
+}
+
+Var::operator UInt32 () const
+{
+	return (UInt32)GetUInt();
+}
+
 Var::operator Int64 () const
 {
 	return GetInt();
@@ -1196,6 +1275,11 @@ Var::operator Int64 () const
 Var::operator UInt64 () const
 {
 	return GetUInt();
+}
+
+Var::operator Float () const
+{
+	return (Float)GetReal();
 }
 
 Var::operator Double () const
@@ -1583,6 +1667,7 @@ Status Var::WriteNoRecScalar(const Var *pVar, IO::IOutputStream *pOutputStream, 
 			return status;
 		}
 	}
+	else
 	if (pVar->IsUInt())
 	{
 		status = ToString(pVar->GetUInt(), 0, szOutput, sizeof(szOutput) / sizeof(szOutput[0]), 

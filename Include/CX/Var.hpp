@@ -348,9 +348,23 @@ public:
 
 	Var &operator=(Bool bBool);
 
+	Var &operator=(Int8 nInt);
+
+	Var &operator=(UInt8 uInt);
+
+	Var &operator=(Int16 nInt);
+
+	Var &operator=(UInt16 uInt);
+
+	Var &operator=(Int32 nInt);
+
+	Var &operator=(UInt32 uInt);
+
 	Var &operator=(Int64 nInt);
 
 	Var &operator=(UInt64 uInt);
+
+	Var &operator=(Float fReal);
 
 	Var &operator=(Double lfReal);
 
@@ -360,9 +374,23 @@ public:
 
 	operator Bool () const;
 
+	operator Int8 () const;
+
+	operator UInt8 () const;
+
+	operator Int16 () const;
+
+	operator UInt16 () const;
+
+	operator Int32 () const;
+
+	operator UInt32 () const;
+
 	operator Int64 () const;
 
 	operator UInt64 () const;
+
+	operator Float () const;
 
 	operator Double () const;
 
