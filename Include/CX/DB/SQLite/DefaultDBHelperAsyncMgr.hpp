@@ -31,9 +31,9 @@
 
 #include "CX/DB/SQLite/IDBHelperAsyncMgr.hpp"
 #include "CX/Sys/FastRWLock.hpp"
+#include "CX/Util/Timer.hpp"
 #include "CX/Vector.hpp"
 #include "CX/Map.hpp"
-#include "CX/Set.hpp"
 #include "CX/Sys/Event.hpp"
 #include "CX/Sys/Thread.hpp"
 
@@ -93,21 +93,19 @@ private:
 
 	typedef Vector<OperationsBatch>::Type   OperationsBatchesVector;
 
-	struct Operations
+	struct Helper
 	{
 		OperationsBatchesVector    vectorOperationsBatches;
 		Size                       cTotalCount;
+		Util::Timer                timer;
+		Bool                       bFlush;
 	};
 
-	typedef Map<DBHelper *, Operations>::Type   OperationsMap;
-
-	typedef Set<DBHelper *>::Type               FlushDBHelpersSet;
+	typedef Map<DBHelper *, Helper>::Type   HelpersMap;
 
 	Size                   m_cMaxAsyncOperations;
 	UInt32                 m_cMaxAsyncFlushTimeout;
-	OperationsMap          m_mapOperations;
-	FlushDBHelpersSet      m_setFlushDBHelpers;
-	Bool                   m_bFlushAll;
+	HelpersMap             m_mapHelpers;
 	Sys::Thread            m_thread;
 	Sys::Event             m_eventStop;
 	Sys::Event             m_eventFlush;

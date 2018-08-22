@@ -1,3 +1,5 @@
+0.2.193 - 2018-08-22
+ - Some fixes in DefaultDBHelperAsyncMgr
 0.2.192 - 2018-08-22
  - Added Flush in DBHelper Close
 0.2.191 - 2018-08-22

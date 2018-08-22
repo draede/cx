@@ -43,7 +43,6 @@ DefaultDBHelperAsyncMgr::DefaultDBHelperAsyncMgr()
 {
 	m_cMaxAsyncOperations   = MAX_ASYNC_OPERATIONS;
 	m_cMaxAsyncFlushTimeout = MAX_ASYNC_FLUSH_TIMEOUT;
-	m_bFlushAll             = False;
 	m_eventStop.Create();
 	m_eventFlush.Create();
 }
@@ -65,9 +64,7 @@ Status DefaultDBHelperAsyncMgr::Start(Size cMaxAsyncOperations/* = DBHelper::MAX
 	}
 	m_cMaxAsyncOperations   = cMaxAsyncOperations;
 	m_cMaxAsyncFlushTimeout = cMaxAsyncFlushTimeout;
-	m_bFlushAll             = False;
-	m_setFlushDBHelpers.clear();
-	m_mapOperations.clear();
+	m_mapHelpers.clear();
 
 	Status   status;
 
@@ -89,9 +86,7 @@ Status DefaultDBHelperAsyncMgr::Stop()
 	m_thread.Wait();
 	m_cMaxAsyncOperations   = MAX_ASYNC_OPERATIONS;
 	m_cMaxAsyncFlushTimeout = MAX_ASYNC_FLUSH_TIMEOUT;
-	m_bFlushAll             = False;
-	m_setFlushDBHelpers.clear();
-	m_mapOperations.clear();
+	m_mapHelpers.clear();
 
 	return Status();
 }
@@ -165,11 +160,16 @@ Status DefaultDBHelperAsyncMgr::AddAsyncOperations(DBHelper *pDBHelper,
 	}
 	batch.vectorOperations       = vectorOperations;
 	batch.pAsyncOperationHandler = pAsyncOperationHandler;
-	m_mapOperations[pDBHelper].vectorOperationsBatches.push_back(batch);
-	m_mapOperations[pDBHelper].cTotalCount += vectorOperations.size();
-	if (m_mapOperations[pDBHelper].cTotalCount >= m_cMaxAsyncOperations)
+	if (m_mapHelpers.end() == m_mapHelpers.find(pDBHelper))
 	{
-		m_setFlushDBHelpers.insert(pDBHelper);
+		m_mapHelpers[pDBHelper].bFlush = False;
+		m_mapHelpers[pDBHelper].timer.ResetTimer();
+	}
+	m_mapHelpers[pDBHelper].vectorOperationsBatches.push_back(batch);
+	m_mapHelpers[pDBHelper].cTotalCount += vectorOperations.size();
+	if (m_mapHelpers[pDBHelper].cTotalCount >= m_cMaxAsyncOperations)
+	{
+		m_mapHelpers[pDBHelper].bFlush = True;
 		m_eventFlush.Set();
 	}
 
@@ -180,8 +180,13 @@ Status DefaultDBHelperAsyncMgr::FlushAsyncOperations(DBHelper *pDBHelper)
 {
 	Sys::FastWLocker   locker(&m_frwLock);
 
-	m_setFlushDBHelpers.insert(pDBHelper);
-	m_eventFlush.Set();
+	auto iter = m_mapHelpers.find(pDBHelper);
+
+	if (m_mapHelpers.end() != iter)
+	{
+		iter->second.bFlush = True;
+		m_eventFlush.Set();
+	}
 
 	return Status();
 }
@@ -190,7 +195,10 @@ Status DefaultDBHelperAsyncMgr::FlushAsyncOperations()
 {
 	Sys::FastWLocker   locker(&m_frwLock);
 
-	m_bFlushAll = True;
+	for (auto iter = m_mapHelpers.begin(); iter != m_mapHelpers.end(); ++iter)
+	{
+		iter->second.bFlush = True;
+	}
 	m_eventFlush.Set();
 
 	return Status();
@@ -206,7 +214,7 @@ void DefaultDBHelperAsyncMgr::AsyncOperationsThread()
 	for (;;)
 	{
 		nWaitRes = Sys::Event::WaitForMultipleEvents(events, 2, false, &cEventIndex, m_cMaxAsyncFlushTimeout);
-		if (Sys::Event::Wait_OK != nWaitRes)
+		if (Sys::Event::Wait_Error == nWaitRes)
 		{
 			continue;
 		}
@@ -214,17 +222,15 @@ void DefaultDBHelperAsyncMgr::AsyncOperationsThread()
 		{
 			Sys::FastWLocker   locker(&m_frwLock);
 
-			auto iterHelpers = m_mapOperations.begin();
-
-			while (m_mapOperations.end() != iterHelpers)
+			for (auto iterHelpers = m_mapHelpers.begin(); iterHelpers != m_mapHelpers.end(); ++iterHelpers)
 			{
-				if (0 == cEventIndex || m_bFlushAll || 
-				    m_setFlushDBHelpers.end() != m_setFlushDBHelpers.find(iterHelpers->first))
+				if ((Sys::Event::Wait_OK == nWaitRes && 0 == cEventIndex) || iterHelpers->second.bFlush ||
+				    (Double)(m_cMaxAsyncFlushTimeout / 1000.0) <= iterHelpers->second.timer.GetElapsedTime())
 				{
-					Transaction   tr(&iterHelpers->first->GetDB());
-
 					if (0 < iterHelpers->second.cTotalCount)
 					{
+						Transaction   tr(&iterHelpers->first->GetDB());
+
 						for (auto iterBatches = iterHelpers->second.vectorOperationsBatches.begin(); 
 						     iterBatches != iterHelpers->second.vectorOperationsBatches.end(); ++iterBatches)
 						{
@@ -240,9 +246,9 @@ void DefaultDBHelperAsyncMgr::AsyncOperationsThread()
 								{
 									if ((statusTmp = scope.GetStatement()->Bind(*iterOpers->pBindings)).IsOK())
 									{
-										if (Statement::Result_Done == scope.GetStatement()->Step())
+										if (Statement::Result_Done == scope.GetStatement()->Step(&statusTmp))
 										{
-											statusTmp = scope.GetStatement()->Reset();
+											scope.GetStatement()->Reset();
 										}
 									}
 								}
@@ -254,10 +260,7 @@ void DefaultDBHelperAsyncMgr::AsyncOperationsThread()
 								{
 									status = statusTmp;
 								}
-
-								DestroyBindings(iterOpers->pBindings);
 							}
-
 							if (NULL != iterBatches->pAsyncOperationHandler)
 							{
 								iterBatches->pAsyncOperationHandler->OnCompletion(status);
@@ -265,14 +268,12 @@ void DefaultDBHelperAsyncMgr::AsyncOperationsThread()
 							}
 						}
 					}
-					iterHelpers = m_mapOperations.erase(iterHelpers);
-				}
-				else
-				{
-					iterHelpers++;
+					iterHelpers->second.vectorOperationsBatches.clear();
+					iterHelpers->second.cTotalCount = 0;
+					iterHelpers->second.bFlush      = False;
+					iterHelpers->second.timer.ResetTimer();
 				}
 			}
-			m_bFlushAll = False;
 		}
 
 		if (0 == cEventIndex)
