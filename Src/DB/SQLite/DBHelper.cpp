@@ -155,12 +155,16 @@ Status DBHelper::Close()
 	{
 		return status;
 	}
-	if (m_bAsyncMgrOwnership && NULL != m_pAsyncMgr)
+	if (NULL != m_pAsyncMgr)
 	{
-		m_pAsyncMgr->Stop();
-		delete m_pAsyncMgr;
-		m_pAsyncMgr          = NULL;
-		m_bAsyncMgrOwnership = False;
+		m_pAsyncMgr->FlushAsyncOperations(this);
+		if (m_bAsyncMgrOwnership)
+		{
+			m_pAsyncMgr->Stop();
+			delete m_pAsyncMgr;
+			m_pAsyncMgr          = NULL;
+			m_bAsyncMgrOwnership = False;
+		}
 	}
 	if (!m_mapUsedStatements.empty())
 	{
