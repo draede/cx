@@ -37,8 +37,6 @@
 #include "CX/Map.hpp"
 #include "CX/Queue.hpp"
 #include "CX/Sys/Lock.hpp"
-#include "CX/Sys/Event.hpp"
-#include "CX/Sys/Thread.hpp"
 #include "CX/C/stdarg.h"
 
 
@@ -51,12 +49,10 @@ namespace DB
 namespace SQLite
 {
 
+class IDBHelperAsyncMgr;
 class DBHelper
 {
 public:
-
-	static const Size   MAX_ASYNC_OPERATIONS       = 5000; //5000 inserts + updates + deletes
-	static const UInt32 MAX_ASYNC_FLUSH_TIMEOUT    = 500;  //500 ms
 
 	class StatementScope
 	{
@@ -112,16 +108,12 @@ public:
 
 	DBHelper();
 
-	DBHelper(const Char *szPath, 
-	         Size cMaxAsyncOperations = MAX_ASYNC_OPERATIONS, 
-	         UInt32 cMaxAsyncFlushTimeout = MAX_ASYNC_FLUSH_TIMEOUT, 
+	DBHelper(const Char *szPath, IDBHelperAsyncMgr *pAsyncMgr = NULL, 
 	         unsigned int nFlags = DB::SQLite::Database::OPEN_DEFAULT);
 
 	~DBHelper();
 
-	Status Open(const Char *szPath, 
-	            Size cMaxAsyncOperations = MAX_ASYNC_OPERATIONS,
-	            UInt32 cMaxAsyncFlushTimeout = MAX_ASYNC_FLUSH_TIMEOUT,
+	Status Open(const Char *szPath, IDBHelperAsyncMgr *pAsyncMgr = NULL, 
 	            unsigned int nFlags = DB::SQLite::Database::OPEN_DEFAULT);
 
 	//statements must not be in use here!
@@ -180,32 +172,14 @@ private:
 
 	typedef Map<Statement *, Size>::Type        UsedStatementsMap;
 
-	struct OperationBatch
-	{
-		OperationsVector       vectorOperations;
-		IAsyncOperationHandler *pAsyncOperationHandler;
-	};
-
-	typedef Queue<OperationBatch>::Type              OperationBatchesQueue;
-
 	Database                m_db;
 	Status                  m_initStatus;
 
-	Size                    m_cMaxAsyncOperations;
-	UInt32                  m_cMaxAsyncFlushTimeout;
-	Sys::Thread             m_asyncThread;
-	Sys::Event              m_eventStop;
-	Sys::Event              m_eventFlush;
-
 	AvailStatementsMap      m_mapAvailStatements;
 	UsedStatementsMap       m_mapUsedStatements;
+	IDBHelperAsyncMgr       *m_pAsyncMgr;
+	Bool                    m_bAsyncMgrOwnership;
 	Sys::Lock               m_lockStatements;
-
-	OperationBatchesQueue   m_queueOperationBatches;
-	Size                    m_cAsyncOperationsCount;
-	Sys::Lock               m_lockOperationBatches;
-
-	void AsyncOperationsThread();
 
 };
 

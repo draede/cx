@@ -1,3 +1,7 @@
+0.2.191 - 2018-08-22
+ - Added Sys::FastRWLock
+ - Added IDBHelperAsyncMgr
+ - Added DefaultDBHelperAsyncMgr
 0.2.190 - 2018-08-19
  - Fixed Var
 0.2.189 - 2018-08-19

@@ -273,6 +273,8 @@
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Bindings.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Database.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\DBHelper.hpp" />
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\DefaultDBHelperAsyncMgr.hpp" />
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\IDBHelperAsyncMgr.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Statement.hpp" />
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Transaction.hpp" />
     <ClInclude Include="..\..\Include\CX\Debug\IProfilingHandler.hpp" />
@@ -409,6 +411,7 @@
     <ClInclude Include="..\..\Include\CX\Sys\ByteOrder.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\DynLib.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Event.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\FastRWLock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\Atomic.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Android\DynLib.hpp" />
@@ -427,6 +430,7 @@
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Atomic.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\DynLib.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Event.hpp" />
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\FastRWLock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Lock.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\Process.hpp" />
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\RWLock.hpp" />
@@ -18636,6 +18640,7 @@
     <ClCompile Include="..\..\Src\DB\SQLite\Bindings.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Database.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\DBHelper.cpp" />
+    <ClCompile Include="..\..\Src\DB\SQLite\DefaultDBHelperAsyncMgr.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Statement.cpp" />
     <ClCompile Include="..\..\Src\DB\SQLite\Transaction.cpp" />
     <ClCompile Include="..\..\Src\Debug\Profiler.cpp" />
@@ -18723,6 +18728,7 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Atomic_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Event_windows.cpp" />
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\FastRWLock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process_windows.cpp" />
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp" />

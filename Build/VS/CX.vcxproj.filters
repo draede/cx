@@ -1194,6 +1194,18 @@
     <ClInclude Include="..\..\Include\CX\DB\Flat\Platform\Windows\Reader.hpp">
       <Filter>Header Files\DB\Flat\Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\IDBHelperAsyncMgr.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\FastRWLock.hpp">
+      <Filter>Header Files\Sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\FastRWLock.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\DefaultDBHelperAsyncMgr.hpp">
+      <Filter>Header Files\DB\SQLite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2224,6 +2236,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\DB\Flat\Platform\Windows\Reader_windows.cpp">
       <Filter>Source Files\DB\Flat\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\FastRWLock_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\SQLite\DefaultDBHelperAsyncMgr.cpp">
+      <Filter>Source Files\DB\SQLite</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
