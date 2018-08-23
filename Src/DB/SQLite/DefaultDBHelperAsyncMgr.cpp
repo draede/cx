@@ -260,6 +260,7 @@ void DefaultDBHelperAsyncMgr::AsyncOperationsThread()
 								{
 									status = statusTmp;
 								}
+								DestroyBindings(iterOpers->pBindings);
 							}
 							if (NULL != iterBatches->pAsyncOperationHandler)
 							{
