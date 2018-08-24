@@ -162,7 +162,8 @@ Status DefaultDBHelperAsyncMgr::AddAsyncOperations(DBHelper *pDBHelper,
 	batch.pAsyncOperationHandler = pAsyncOperationHandler;
 	if (m_mapHelpers.end() == m_mapHelpers.find(pDBHelper))
 	{
-		m_mapHelpers[pDBHelper].bFlush = False;
+		m_mapHelpers[pDBHelper].cTotalCount = 0;
+		m_mapHelpers[pDBHelper].bFlush      = False;
 		m_mapHelpers[pDBHelper].timer.ResetTimer();
 	}
 	m_mapHelpers[pDBHelper].vectorOperationsBatches.push_back(batch);
