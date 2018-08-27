@@ -278,12 +278,13 @@ void DefaultDBHelperAsyncMgr::AsyncOperationsThread()
 			}
 		}
 
-		if (0 == cEventIndex)
+		if (Sys::Event::Wait_OK == nWaitRes && 0 == cEventIndex)
 		{
 			break;
 		}
 	}
 }
+
 }//namespace SQLite
 
 }//namespace DB

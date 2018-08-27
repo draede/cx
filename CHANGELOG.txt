@@ -1,3 +1,5 @@
+0.2.196 - 2018-08-27
+ - Fixed exit condition in DefaultDBHelperAsyncMgr thread
 0.2.195 - 2018-08-24
  - Fixed unitialized version DefaultDBHelperAsyncMgr
 0.2.194 - 2018-08-23
