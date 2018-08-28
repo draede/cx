@@ -102,6 +102,38 @@ inline StatusCode HexPrintHelper(const void *p, Size cbSize, Char *szOutput, Siz
 	return Status_OK;
 }
 
+inline StatusCode RevHexPrintHelper(const void *p, Size cbSize, Char *szOutput, Size cLen, Size *pcFinalLen,
+                                    bool bUpperCase = true)
+{
+	static const Char hexdigits1[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	static const Char hexdigits2[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	Char              *hexdigits;
+	Char              *pPos;
+
+	if (2 * cbSize > cLen)
+	{
+		return Status_TooSmall;
+	}
+	if (bUpperCase)
+	{
+		hexdigits = (Char *)hexdigits1;
+	}
+	else
+	{
+		hexdigits = (Char *)hexdigits2;
+	}
+	pPos = szOutput;
+	for (Size i = 0; i < cbSize; i++)
+	{
+		*pPos = hexdigits[(*((Byte *)p + cbSize - 1 - i)) / 16];
+		pPos++;
+		*pPos = hexdigits[(*((Byte *)p + cbSize - 1 - i)) % 16];
+		pPos++;
+	}
+	*pcFinalLen = cbSize * 2;
+
+	return Status_OK;
+}
 CX_API Bool DoubleToString(Double lfValue, Char *szOutput, Size cLen, Size cPrecision);
 
 CX_API Bool UTF8toWChar(const Char *szUTF8, WString *pwsWChar, Size cUTF8Len = TYPE_SIZE_MAX);
@@ -411,8 +443,8 @@ inline StatusCode ToString<Int8>(Int8 p, unsigned int nExtraFlags, Char *szOutpu
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, 
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, 
+		                                             (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -451,8 +483,8 @@ inline StatusCode ToString<UInt8>(UInt8 p, unsigned int nExtraFlags, Char *szOut
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -476,8 +508,8 @@ inline StatusCode ToString<Int16>(Int16 p, unsigned int nExtraFlags, Char *szOut
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -516,8 +548,8 @@ inline StatusCode ToString<UInt16>(UInt16 p, unsigned int nExtraFlags, Char *szO
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -541,8 +573,8 @@ inline StatusCode ToString<Int32>(Int32 p, unsigned int nExtraFlags, Char *szOut
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -581,8 +613,8 @@ inline StatusCode ToString<UInt32>(UInt32 p, unsigned int nExtraFlags, Char *szO
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -606,8 +638,8 @@ inline StatusCode ToString<Int64>(Int64 p, unsigned int nExtraFlags, Char *szOut
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, 
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, 
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -646,8 +678,8 @@ inline StatusCode ToString<UInt64>(UInt64 p, unsigned int nExtraFlags, Char *szO
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen,
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -723,8 +755,8 @@ inline StatusCode ToString<long>(long p, unsigned int nExtraFlags, Char *szOutpu
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, 
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, 
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
@@ -763,8 +795,8 @@ inline StatusCode ToString<unsigned long>(unsigned long p, unsigned int nExtraFl
 
 	if (Detail::ExtraFlag_HexLower == nExtraFlags || Detail::ExtraFlag_HexUpper == nExtraFlags)
 	{
-		return Detail::DetailPrint::HexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, 
-		                                           (Detail::ExtraFlag_HexUpper == nExtraFlags));
+		return Detail::DetailPrint::RevHexPrintHelper(&p, sizeof(p), szOutput, cLen, pcFinalLen, 
+		                                              (Detail::ExtraFlag_HexUpper == nExtraFlags));
 	}
 	else
 	{
