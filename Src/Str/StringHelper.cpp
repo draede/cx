@@ -384,6 +384,11 @@ void StringHelper::GetNiceCount(UInt64 cCount, String *psCount, const Char *szSm
 }
 
 void StringHelper::GetNiceElapsedTime(Double lfElapsed, String *psElapsed, 
+                                      const Char *szYearFmt/* = "{1} year"*/, const Char *szYearsFmt/* = "{1} years"*/, 
+                                      const Char *szMonthFmt/* = "{1} month"*/, 
+                                      const Char *szMonthsFmt/* = "{1} months"*/, 
+                                      const Char *szWeekFmt/* = "{1} week"*/, const Char *szWeeksFmt/* = "{1} weeks"*/, 
+                                      const Char *szDayFmt/* = "{1} day"*/, const Char *szDaysFmt/* = "{1} days"*/, 
                                       const Char *szHourFmt/* = "{1} hour"*/, 
                                       const Char *szHoursFmt/* = "{1} hours"*/, 
                                       const Char *szMinuteFmt/* = "{1} minute"*/, 
@@ -394,6 +399,10 @@ void StringHelper::GetNiceElapsedTime(Double lfElapsed, String *psElapsed,
                                       const Char *szMillisecondsFmt/* = "{1} milliseconds"*/)
 {
 	UInt64 cElapsed  = (UInt64)(lfElapsed * 1000.0);
+	UInt64 cYears    = (UInt64)(cElapsed / 31536000000); cElapsed -= cYears * 31536000000;
+	UInt64 cMonths   = (UInt64)(cElapsed / 2628000000); cElapsed -= cMonths * 2628000000;
+	UInt64 cWeeks    = (UInt64)(cElapsed / 604800000); cElapsed -= cWeeks * 604800000;
+	UInt64 cDays     = (UInt64)(cElapsed / 86400000); cElapsed -= cDays * 86400000;
 	UInt64 cHours    = (UInt64)(cElapsed / 3600000); cElapsed -= cHours * 3600000;
 	UInt64 cMinutes  = (UInt64)(cElapsed / 60000); cElapsed -= cMinutes * 60000;
 	UInt64 cSeconds  = (UInt64)(cElapsed / 1000); cElapsed -= cSeconds * 1000;
@@ -401,6 +410,86 @@ void StringHelper::GetNiceElapsedTime(Double lfElapsed, String *psElapsed,
 	Bool   bFirst    = True;
 
 	*psElapsed = "";
+
+	if (0 < cYears)
+	{
+		if (!bFirst)
+		{
+			*psElapsed += ", ";
+		}
+		else
+		{
+			bFirst  = False;
+		}
+		if (1 == cYears)
+		{
+			Print(psElapsed, szYearFmt, cYears);
+		}
+		else
+		{
+			Print(psElapsed, szYearsFmt, cYears);
+		}
+	}
+
+	if (0 < cMonths)
+	{
+		if (!bFirst)
+		{
+			*psElapsed += ", ";
+		}
+		else
+		{
+			bFirst  = False;
+		}
+		if (1 == cMonths)
+		{
+			Print(psElapsed, szMonthFmt, cMonths);
+		}
+		else
+		{
+			Print(psElapsed, szMonthsFmt, cMonths);
+		}
+	}
+
+	if (0 < cWeeks)
+	{
+		if (!bFirst)
+		{
+			*psElapsed += ", ";
+		}
+		else
+		{
+			bFirst  = False;
+		}
+		if (1 == cWeeks)
+		{
+			Print(psElapsed, szWeekFmt, cWeeks);
+		}
+		else
+		{
+			Print(psElapsed, szWeeksFmt, cWeeks);
+		}
+	}
+
+	if (0 < cDays)
+	{
+		if (!bFirst)
+		{
+			*psElapsed += ", ";
+		}
+		else
+		{
+			bFirst  = False;
+		}
+		if (1 == cDays)
+		{
+			Print(psElapsed, szDayFmt, cDays);
+		}
+		else
+		{
+			Print(psElapsed, szDaysFmt, cDays);
+		}
+	}
 
 	if (0 < cHours)
 	{

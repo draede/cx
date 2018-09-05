@@ -89,6 +89,10 @@ public:
 	                         const Char *szGigaFmt = "{1:.3} G", const Char *szTerraFmt = "{1:.3} T");
 
 	static void GetNiceElapsedTime(Double lfElapsed, String *psElapsed, 
+	                               const Char *szYearFmt = "{1} year", const Char *szYearsFmt = "{1} years", 
+	                               const Char *szMonthFmt = "{1} month", const Char *szMonthsFmt = "{1} months", 
+	                               const Char *szWeekFmt = "{1} week", const Char *szWeeksFmt = "{1} weeks", 
+	                               const Char *szDayFmt = "{1} day", const Char *szDaysFmt = "{1} days", 
 	                               const Char *szHourFmt = "{1} hour", const Char *szHoursFmt = "{1} hours", 
 	                               const Char *szMinuteFmt = "{1} minute", const Char *szMinutesFmt = "{1} minutes", 
 	                               const Char *szSecondFmt = "{1} second", const Char *szSecondsFmt = "{1} seconds", 
