@@ -551,21 +551,32 @@ void StringHelper::GetNiceElapsedTime(Double lfElapsed, String *psElapsed,
 		}
 	}
 
-	if (!bFirst)
-	{
-		*psElapsed += ", ";
-	}
-	else
-	{
-		bFirst  = False;
-	}
 	if (1 == cMSeconds)
 	{
+		if (!bFirst)
+		{
+			*psElapsed += ", ";
+		}
+		else
+		{
+			bFirst  = False;
+		}
 		Print(psElapsed, szMillisecondFmt, cMSeconds);
 	}
 	else
 	{
-		Print(psElapsed, szMillisecondsFmt, cMSeconds);
+		if (0 < cMSeconds || (0 == cMSeconds && psElapsed->empty()))
+		{
+			if (!bFirst)
+			{
+				*psElapsed += ", ";
+			}
+			else
+			{
+				bFirst  = False;
+			}
+			Print(psElapsed, szMillisecondsFmt, cMSeconds);
+		}
 	}
 }
 

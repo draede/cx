@@ -138,7 +138,7 @@ Status Writer::CreateInternal(UInt32 nMagic, UInt32 cbHeaderSize, UInt32 cbRecor
 			{
 				return status;
 			}
-			cbHeaderSize -= m_buffer.GetSize();
+			cbHeaderSize -= (UInt32)m_buffer.GetSize();
 		}
 		else
 		{
