@@ -81,12 +81,12 @@ void RndGen::Seed64(UInt64 nSeed)
 
 UInt32 RndGen::GetRange32(UInt32 cValues)
 {
-	return GetUInt32() / (TYPE_UINT32_MAX / cValues);
+	return GetUInt32() / (1 + TYPE_UINT32_MAX / cValues);
 }
 
 UInt64 RndGen::GetRange64(UInt64 cValues)
 {
-	return GetUInt64() / (TYPE_UINT64_MAX / cValues);
+	return GetUInt64() / (1 + TYPE_UINT64_MAX / cValues);
 }
 
 UInt32 RndGen::GetUInt32()
