@@ -54,9 +54,6 @@
     <ClCompile Include="..\..\Src\Log_OptimizedStreamOutput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Mem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\My_Namespace_Struct1.c">
       <Filter>Source Files</Filter>
     </ClCompile>

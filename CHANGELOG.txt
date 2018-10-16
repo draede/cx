@@ -1,3 +1,6 @@
+0.2.201 - 2018-10-17
+ - Removed old mem new/delete
+ - Switch Sys::Lock to SRW (Windows)
 0.2.200 - 2018-09-23
  - Fixed Util::RndGen range generators overflowing
 0.2.199 - 2018-09-15

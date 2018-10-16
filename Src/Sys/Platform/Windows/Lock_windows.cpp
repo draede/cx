@@ -44,24 +44,21 @@ namespace Sys
 
 Lock::Lock()
 {
-	InitializeCriticalSection(&m_cs);
+	InitializeSRWLock(&m_srwLock);
 }
 
 Lock::~Lock()
 {
-	DeleteCriticalSection(&m_cs);
 }
 
-#pragma warning(suppress: 26135)
 void Lock::Enter()
 {
-	EnterCriticalSection(&m_cs);
+	AcquireSRWLockExclusive(&m_srwLock);
 }
 
-#pragma warning(suppress: 26135)
 void Lock::Leave()
 {
-	LeaveCriticalSection(&m_cs);
+	ReleaseSRWLockExclusive(&m_srwLock);
 }
 
 }//namespace Sys

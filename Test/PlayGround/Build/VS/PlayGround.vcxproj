@@ -63,7 +63,6 @@
     <ClCompile Include="..\..\Src\IO_Filters.cpp" />
     <ClCompile Include="..\..\Src\Log_OptimizedStreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />
-    <ClCompile Include="..\..\Src\Mem.cpp" />
     <ClCompile Include="..\..\Src\My_Namespace_Struct1.c" />
     <ClCompile Include="..\..\Src\My_Namespace_Struct2.c" />
     <ClCompile Include="..\..\Src\Network_HTTP_Client.cpp" />

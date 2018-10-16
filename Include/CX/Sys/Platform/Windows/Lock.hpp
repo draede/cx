@@ -62,7 +62,7 @@ public:
 
 private:
 
-	CRITICAL_SECTION m_cs;
+	SRWLOCK   m_srwLock;
 
 };
 
