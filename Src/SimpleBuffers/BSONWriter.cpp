@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/SimpleBuffers/BSONWriter.hpp"
 #include "CX/SimpleBuffers/BSONReader.hpp"
 

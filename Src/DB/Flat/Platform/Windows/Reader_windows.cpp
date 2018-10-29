@@ -26,12 +26,15 @@
  * SOFTWARE.
  */ 
 
-#include "CX/DB/Flat/Reader.hpp"
-#include "CX/C/stdio.h"
+#include "CX/precomp.hpp"
 #include "CX/Platform.hpp"
 
 
 #if defined(CX_OS_WINDOWS)
+
+
+#include "CX/DB/Flat/Reader.hpp"
+#include "CX/C/stdio.h"
 
 
 namespace CX

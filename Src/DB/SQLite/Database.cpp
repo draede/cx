@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/DB/SQLite/Database.hpp"
 #include "CX/DB/SQLite/Statement.hpp"
 #include "CX/Print.hpp"

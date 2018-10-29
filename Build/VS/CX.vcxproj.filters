@@ -1206,6 +1206,9 @@
     <ClInclude Include="..\..\Include\CX\DB\SQLite\DefaultDBHelperAsyncMgr.hpp">
       <Filter>Header Files\DB\SQLite</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\precomp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2242,6 +2245,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\DB\SQLite\DefaultDBHelperAsyncMgr.cpp">
       <Filter>Source Files\DB\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\precomp.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

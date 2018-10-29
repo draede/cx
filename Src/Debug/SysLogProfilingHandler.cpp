@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Debug/SysLogProfilingHandler.hpp"
 #include "CX/Debug/Profiler.hpp"
 

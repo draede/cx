@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Log/OptimizedStreamOutput.hpp"
 #include "CX/Str/UTF8.hpp"
 #include "CX/C/stdio.h"

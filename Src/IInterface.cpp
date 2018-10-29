@@ -2,6 +2,7 @@
  * The author disclaims copyright to this source code.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/IInterface.hpp"
 #include "CX/IObject.hpp"
 #include <stdio.h>

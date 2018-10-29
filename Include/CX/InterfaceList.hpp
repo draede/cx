@@ -6,6 +6,7 @@
 
 
 #include "CX/Types.hpp"
+#include "CX/C/StatusCodes.h"
 #include "CX/Set.hpp"
 #include "CX/String.hpp"
 #include "CX/IInterfaceList.hpp"
@@ -51,7 +52,7 @@ public:
 		return Status_OK;
 	}
 
-	virtual Status_Code RemoveInterfaces()
+	virtual StatusCode RemoveInterfaces()
 	{
 		m_setInterfaces.clear();
 

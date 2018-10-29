@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/DB/SQLite/DBHelper.hpp"
 #include "CX/DB/SQLite/DefaultDBHelperAsyncMgr.hpp"
 

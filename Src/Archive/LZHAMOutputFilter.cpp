@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Archive/LZHAMOutputFilter.hpp"
 #include "CX/Hash/BLAKE2Hash.hpp"
 #include "CX/Util/RndGen.hpp"

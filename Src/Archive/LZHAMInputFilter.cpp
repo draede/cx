@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Archive/LZHAMInputFilter.hpp"
 #include "lzham.h"
 

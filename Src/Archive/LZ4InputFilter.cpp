@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Archive/LZ4InputFilter.hpp"
 #include "LZ4.h"
 

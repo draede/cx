@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/DB/SQLite/Transaction.hpp"
 #include "sqlite3.h"
 

@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Util/RCMemBufferMgr.hpp"
 #include "CX/Mem.hpp"
 

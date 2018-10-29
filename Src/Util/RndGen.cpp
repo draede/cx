@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Util/RndGen.hpp"
 #include "../../Contrib/TinyMT/Include/tinymt32.h"
 #include "../../Contrib/TinyMT/Include/tinymt64.h"

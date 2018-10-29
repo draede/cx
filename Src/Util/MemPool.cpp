@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Util/MemPool.hpp"
 #include "CX/Status.hpp"
 #include "CX/Mem.hpp"

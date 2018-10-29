@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Status.hpp"
 #include "CX/C/stdio.h"
 #include "CX/Detail/DetailPrint/DetailPrint.hpp"

@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/DB/SQLite/Bindings.hpp"
 #include "CX/C/stdarg.h"
 

@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Data/XML/Node.hpp"
 #include "CX/IO/FileInputStream.hpp"
 #include "CX/IO/FileOutputStream.hpp"

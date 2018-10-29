@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/IO/Helper.hpp"
 #include "CX/Stack.hpp"
 

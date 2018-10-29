@@ -154,7 +154,7 @@ public:
 
 		for (ObjectsVector::iterator iter = m_vectorObjects.begin(); iter != m_vectorObjects.end(); ++iter)
 		{
-			if (CX_NOK(nStatus = pfnEnumObjects(*iter)))
+			if (CXNOK(nStatus = pfnEnumObjects(*iter)))
 			{
 				return nStatus;
 			}
@@ -171,7 +171,7 @@ public:
 
 		for (ObjectsVector::const_iterator iter = m_vectorObjects.begin(); iter != m_vectorObjects.end(); ++iter)
 		{
-			if (CX_NOK(nStatus = pfnEnumConstObjects(*iter)))
+			if (CXNOK(nStatus = pfnEnumConstObjects(*iter)))
 			{
 				return nStatus;
 			}

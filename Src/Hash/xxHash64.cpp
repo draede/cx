@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Hash/xxHash64.hpp"
 #include "CX/Status.hpp"
 

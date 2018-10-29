@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Crypt/AES128InputFilter.hpp"
 #include "CX/Hash/BLAKE2Hash.hpp"
 #include "CX/Util/RndGen.hpp"

@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Data/XML/SAXParser.hpp"
 #include "CX/Status.hpp"
 #include "CX/IO/FileInputStream.hpp"

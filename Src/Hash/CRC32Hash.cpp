@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Hash/CRC32Hash.hpp"
 #include "CX/Status.hpp"
 #include "../../Contrib/CRC32Slice8/Include/crc32.h"

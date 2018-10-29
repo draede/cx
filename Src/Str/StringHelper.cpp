@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Str/StringHelper.hpp"
 #include "CX/Print.hpp"
 

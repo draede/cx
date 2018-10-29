@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Data/MO/Language.hpp"
 #include "CX/IO/FileInputStream.hpp"
 

@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Var.hpp"
 #include "CX/Status.hpp"
 #include "CX/IO/MemInputStream.hpp"

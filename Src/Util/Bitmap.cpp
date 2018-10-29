@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Util/Bitmap.hpp"
 #include "CX/Mem.hpp"
 

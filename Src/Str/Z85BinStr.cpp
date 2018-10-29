@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Str/Z85BinStr.hpp"
 #include "CX/Status.hpp"
 #include "../../Contrib/Z85/Include/z85.h"

@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Hash/BLAKE2Hash.hpp"
 #include "CX/Status.hpp"
 #include "CX/Mem.hpp"

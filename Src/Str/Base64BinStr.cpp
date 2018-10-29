@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Str/Base64BinStr.hpp"
 #include "CX/Status.hpp"
 

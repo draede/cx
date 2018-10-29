@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/CLI/Modules.hpp"
 #include "CX/Print.hpp"
 

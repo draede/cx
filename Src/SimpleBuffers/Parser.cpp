@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/SimpleBuffers/Parser.hpp"
 #include "CX/IO/FileInputStream.hpp"
 #include "CX/IO/Helper.hpp"

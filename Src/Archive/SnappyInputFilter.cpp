@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Archive/SnappyInputFilter.hpp"
 #include "snappy.h"
 

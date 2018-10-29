@@ -29,7 +29,7 @@
 #pragma once
 
 
-#include "CX/CBuffers/IStream.hpp"
+#include "CX/CBuffers/Tools/IStream.hpp"
 
 
 namespace CX

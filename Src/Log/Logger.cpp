@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Log/Logger.hpp"
 #include "CX/Log/DefaultFormatter.hpp"
 

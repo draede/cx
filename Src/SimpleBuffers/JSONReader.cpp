@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/SimpleBuffers/JSONReader.hpp"
 #include "CX/Data/JSON/RapidJSONStreams.hpp"
 #include "CX/Stack.hpp"

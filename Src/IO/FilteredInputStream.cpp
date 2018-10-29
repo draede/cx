@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/IO/FilteredInputStream.hpp"
 #include "aes.h"
 

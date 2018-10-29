@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
  
+#include "CX/precomp.hpp"
 #include "CX/Debug/ThreadProfiler.hpp"
 #include "CX/Debug/Profiler.hpp"
 #include "CX/Mem.hpp"
