@@ -1,3 +1,5 @@
+0.2.203 - 2018-11-01
+ - Fixed Util::Time::GetTimeStampMS
 0.2.202 - 2018-10-29
  - Added precompiled headers
 0.2.201 - 2018-10-17

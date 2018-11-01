@@ -240,12 +240,13 @@ UInt64 Time::GetTimeStampMS()
 {
 	struct tm  tmstruct;
 
-	tmstruct.tm_hour = m_nHour;
-	tmstruct.tm_min  = m_nMinute;
-	tmstruct.tm_sec  = m_nSecond;
-	tmstruct.tm_year = m_nYear - 1900;
-	tmstruct.tm_mon  = m_nMonth - 1;
-	tmstruct.tm_mday = m_nDay;
+	tmstruct.tm_hour  = m_nHour;
+	tmstruct.tm_min   = m_nMinute;
+	tmstruct.tm_sec   = m_nSecond;
+	tmstruct.tm_year  = m_nYear - 1900;
+	tmstruct.tm_mon   = m_nMonth - 1;
+	tmstruct.tm_mday  = m_nDay;
+	tmstruct.tm_isdst = -1;
 
 	return mktime(&tmstruct) * 1000 + m_nMillisecond;
 }
