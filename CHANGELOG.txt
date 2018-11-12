@@ -1,3 +1,5 @@
+0.2.204 - 2018-11-12
+ - Improved support for custom allocations in SQLite bindings
 0.2.203 - 2018-11-01
  - Fixed Util::Time::GetTimeStampMS
 0.2.202 - 2018-10-29

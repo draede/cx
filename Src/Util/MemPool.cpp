@@ -143,6 +143,27 @@ Status DynMemPool::Add(const void *pMem, Size cbSize)
 	return Status();
 }
 
+Status DynMemPool::Detach()
+{
+	m_pMem         = NULL;
+	m_cbSize       = 0;
+	m_cbTotalSize  = 0;
+
+	return Status();
+}
+
+Status DynMemPool::FreeDetachedMem(void *pMem)
+{
+	Mem::Free(m_pMem);
+
+	return Status();
+}
+
+void DynMemPool::StaticFreeDetachedMem(void *pMem)
+{
+	Mem::Free(pMem);
+}
+
 StaticMemPool::StaticMemPool(void *pMem, Size cbSize)
 {
 	m_pMem         = pMem;
@@ -208,6 +229,23 @@ Status StaticMemPool::Add(const void *pMem, Size cbSize)
 	memcpy((Byte *)m_pMem + cbOldSize, pMem, cbSize);
 	
 	return Status();
+}
+
+Status StaticMemPool::Detach()
+{
+	return Status_NotSupported;
+}
+
+Status StaticMemPool::FreeDetachedMem(void *pMem)
+{
+	CX_UNUSED(pMem);
+
+	return Status_NotSupported;
+}
+
+void StaticMemPool::StaticFreeDetachedMem(void *pMem)
+{
+	CX_UNUSED(pMem);
 }
 
 }//namespace Util

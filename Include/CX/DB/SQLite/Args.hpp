@@ -31,9 +31,6 @@
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/String.hpp"
-#include "CX/Vector.hpp"
-#include "CX/DB/SQLite/Args.hpp"
 
 
 namespace CX
@@ -45,49 +42,59 @@ namespace DB
 namespace SQLite
 {
 
-class Bindings
+enum ArgType
 {
-public:
+	ArgType_Null,
+	ArgType_Int,
+	ArgType_Real,
+	ArgType_String,
+	ArgType_WString,
+	ArgType_BLOB,
+	ArgType_ZeroBLOB,
+};
 
-	Bindings();
+enum ArgStoreType
+{
+	ArgStore_Static    = 1,
+	ArgStore_Transient = 2,
+	ArgStore_Custom    = 3,
+	ArgStore_Default   = ArgStore_Static,
+};
 
-	~Bindings();
+typedef void (* FreeArgStoreProc)(void *pData);
 
-	Status AddNull();
+struct StringData
+{
+	Char     *szString;
+	Size     cLen;
+};
 
-	Status AddInt(Int64 nValue);
+struct WStringData
+{
+	WChar    *wszString;
+	Size     cLen;
+};
 
-	Status AddReal(Double lfValue);
+struct BLOBData
+{
+	void     *pBLOB;
+	Size     cbSize;
+};
 
-	Status AddString(const Char *szString, Size cLen = (Size)-1, ArgStoreType nArgStoreType = ArgStore_Transient, 
-	                  FreeArgStoreProc pfnFreeArgStore = NULL);
-
-	Status AddWString(const WChar *wszString, Size cLen = (Size)-1, ArgStoreType nArgStoreType = ArgStore_Transient, 
-	                  FreeArgStoreProc pfnFreeArgStore = NULL);
-
-	Status AddBLOB(const void *pData, Size cbSize, ArgStoreType nArgStoreType = ArgStore_Transient, 
-	                  FreeArgStoreProc pfnFreeArgStore = NULL);
-
-	Status AddZeroBLOB(Size cbSize);
-
-	Status Clear();
-
-	Size GetArgsCount() const;
-
-	Arg *GetArg(Size cIndex);
-
-private:
-
-	typedef CX::Vector<Arg>::Type   ArgsVector;
-
-	ArgsVector   m_vectorArgs;
-
-	Bindings(const Bindings &bindings);
-
-	Bindings &operator=(const Bindings &bindings);
-
-	static void FreeArgStore(void *pData);
-
+struct Arg
+{
+	ArgType            nType;
+	ArgStoreType       nStoreType;
+	FreeArgStoreProc   pfnFreeArgStore;
+	union
+	{
+		Int64        nIntValue;
+		Double       lfRealValue;
+		StringData   str;
+		WStringData  wstr;
+		BLOBData     blob;
+		Size         cbZeroBLOB;
+	};
 };
 
 }//namespace SQLite

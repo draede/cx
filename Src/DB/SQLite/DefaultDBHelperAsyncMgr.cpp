@@ -102,23 +102,6 @@ Bindings *DefaultDBHelperAsyncMgr::CreateBindings()
 	return new (std::nothrow) Bindings();
 }
 
-Bindings *DefaultDBHelperAsyncMgr::CreateBindings(const Char *szArgsType, ...)
-{
-	Bindings *pBindings;
-	va_list  vl;
-
-	va_start(vl, szArgsType);
-	pBindings = CreateBindings(szArgsType, vl);
-	va_end(vl);
-
-	return pBindings;
-}
-
-Bindings *DefaultDBHelperAsyncMgr::CreateBindings(const Char *szArgsType, va_list vl)
-{
-	return new (std::nothrow) Bindings(szArgsType, vl);
-}
-
 void DefaultDBHelperAsyncMgr::DestroyBindings(Bindings *pBindings)
 {
 	delete pBindings;

@@ -67,6 +67,10 @@ public:
 
 	virtual Status Add(const void *pMem, Size cbSize) = 0;
 
+	virtual Status Detach() = 0;
+
+	virtual Status FreeDetachedMem(void *pMem) = 0;
+
 };
 
 class CX_API DynMemPool : public IMemPool
@@ -95,6 +99,12 @@ public:
 	virtual Status Add(Size cbSize);
 
 	virtual Status Add(const void *pMem, Size cbSize);
+
+	virtual Status Detach();
+
+	virtual Status FreeDetachedMem(void *pMem);
+
+	static void StaticFreeDetachedMem(void *pMem);
 
 private:
 
@@ -131,6 +141,12 @@ public:
 	virtual Status Add(Size cbSize);
 
 	virtual Status Add(const void *pMem, Size cbSize);
+
+	virtual Status Detach();
+
+	virtual Status FreeDetachedMem(void *pMem);
+
+	void StaticFreeDetachedMem(void *pMem);
 
 private:
 

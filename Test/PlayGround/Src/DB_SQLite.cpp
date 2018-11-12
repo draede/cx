@@ -94,7 +94,12 @@ void DB_SQLite_Test()
 						//test bindings
 						insert.ClearBindings();
 
-						insert.Bind(DB::SQLite::Bindings("ss", "name3", "value3"));
+						DB::SQLite::Bindings   bindings;
+
+						bindings.AddString("name3");
+						bindings.AddString("value3");
+
+						insert.Bind(bindings);
 						if (DB::SQLite::Statement::Result_Done == (nResult = insert.Step(&status)))
 						{
 							bOK = true;
@@ -207,13 +212,13 @@ DWORD WINAPI WriterThread(void *pArgs)
 						String sText;
 
 						Print(&sText, "name-{1}-{2}", pData->cIndex, cLocalIndex);
-						insert.BindString(sText.c_str(), insert.ArgStore_Transient);
+						insert.BindString(sText.c_str(), sText.size(), DB::SQLite::ArgStore_Transient);
 					}
 					{
 						String sText;
 
 						Print(&sText, "value-{1}-{2}", pData->cIndex, cLocalIndex);
-						insert.BindString(sText.c_str(), insert.ArgStore_Transient);
+						insert.BindString(sText.c_str(), sText.size(), DB::SQLite::ArgStore_Transient);
 					}
 					if (DB::SQLite::Statement::Result_Done == (nResult = insert.Step(&status)))
 					{
@@ -429,7 +434,9 @@ void DB_SQLite_TestDBHelper()
 
 			Print(&sName, "name-{1}", i + 1);
 			Print(&sValue, "value-{1}", i + 1);
-			bindings[i] = dbh.CreateBindings("ss", sName.c_str(), sValue.c_str());
+			bindings[i] = dbh.CreateBindings();
+			bindings[i]->AddString(sName.c_str());
+			bindings[i]->AddString(sValue.c_str());
 		}
 
 		timer.ResetTimer();

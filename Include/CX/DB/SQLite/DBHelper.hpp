@@ -37,7 +37,6 @@
 #include "CX/Map.hpp"
 #include "CX/Queue.hpp"
 #include "CX/Sys/Lock.hpp"
-#include "CX/C/stdarg.h"
 
 
 namespace CX
@@ -128,10 +127,6 @@ public:
 	Status GetInitStatus() const; //status from constructor with args
 
 	Bindings *CreateBindings();
-
-	Bindings *CreateBindings(const Char *szArgsType, ...);
-
-	Bindings *CreateBindings(const Char *szArgsType, va_list vl);
 
 	void DestroyBindings(Bindings *pBindings);
 

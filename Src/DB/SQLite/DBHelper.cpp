@@ -224,33 +224,6 @@ Bindings *DBHelper::CreateBindings()
 	return m_pAsyncMgr->CreateBindings();
 }
 
-Bindings *DBHelper::CreateBindings(const Char *szArgsType, ...)
-{
-	if (!m_db.IsOK())
-	{
-		return NULL;
-	}
-
-	Bindings *pBindings;
-	va_list  vl;
-
-	va_start(vl, szArgsType);
-	pBindings = m_pAsyncMgr->CreateBindings(szArgsType, vl);
-	va_end(vl);
-
-	return pBindings;
-}
-
-Bindings *DBHelper::CreateBindings(const Char *szArgsType, va_list vl)
-{
-	if (!m_db.IsOK())
-	{
-		return NULL;
-	}
-
-	return m_pAsyncMgr->CreateBindings(szArgsType, vl);
-}
-
 void DBHelper::DestroyBindings(Bindings *pBindings)
 {
 	if (!m_db.IsOK())

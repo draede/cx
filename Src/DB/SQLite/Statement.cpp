@@ -259,7 +259,9 @@ Status Statement::BindNull()
 	return Status();
 }
 
-Status Statement::BindString(const Char *szString, ArgStoreType nArgStoreType/* = ArgStore_Default*/)
+Status Statement::BindString(const Char *szString, Size cLen/* = (Size)-1*/, 
+                             ArgStoreType nArgStoreType/* = ArgStore_Default*/, 
+                             FreeArgStoreProc pfnFreeArgStore/* = NULL*/)
 {
 	sqlite3_destructor_type nDestructorType;
 	int                     nRet;
@@ -268,15 +270,29 @@ Status Statement::BindString(const Char *szString, ArgStoreType nArgStoreType/* 
 	{
 		return Status(Status_NotInitialized, "Statement was not created");
 	}
+	if ((Size)-1 == cLen)
+	{
+		cLen = cx_strlen(szString);
+	}
+	if (ArgStore_Static == nArgStoreType)
+	{
+		nDestructorType = SQLITE_STATIC;
+	}
+	else
 	if (ArgStore_Transient == nArgStoreType)
 	{
 		nDestructorType = SQLITE_TRANSIENT;
 	}
 	else
+	if (ArgStore_Custom == nArgStoreType)
 	{
-		nDestructorType = SQLITE_STATIC;
+		nDestructorType = pfnFreeArgStore;
 	}
-	if (SQLITE_OK != (nRet = sqlite3_bind_text((sqlite3_stmt *)m_pSTMT, (int)m_cBindIndex, szString, -1, 
+	else
+	{
+		return Status(Status_InvalidArg, "Invalid arg store type");
+	}
+	if (SQLITE_OK != (nRet = sqlite3_bind_text((sqlite3_stmt *)m_pSTMT, (int)m_cBindIndex, szString, (int)cLen, 
 	                                           nDestructorType)))
 	{
 		return SQLSTATUS(Status_OperationFailed, "sqlite3_bind_text", nRet);
@@ -286,7 +302,9 @@ Status Statement::BindString(const Char *szString, ArgStoreType nArgStoreType/* 
 	return Status();
 }
 
-Status Statement::BindWString(const WChar *wszString, ArgStoreType nArgStoreType/* = ArgStore_Static*/)
+Status Statement::BindWString(const WChar *wszString, Size cLen/* = (Size)-1*/, 
+                              ArgStoreType nArgStoreType/* = ArgStore_Static*/, 
+                              FreeArgStoreProc pfnFreeArgStore/* = NULL*/)
 {
 	sqlite3_destructor_type nDestructorType;
 	int                     nRet;
@@ -295,16 +313,30 @@ Status Statement::BindWString(const WChar *wszString, ArgStoreType nArgStoreType
 	{
 		return Status(Status_NotInitialized, "Statement was not created");
 	}
+	if ((Size)-1 == cLen)
+	{
+		cLen = cxw_strlen(wszString);
+	}
+	if (ArgStore_Static == nArgStoreType)
+	{
+		nDestructorType = SQLITE_STATIC;
+	}
+	else
 	if (ArgStore_Transient == nArgStoreType)
 	{
 		nDestructorType = SQLITE_TRANSIENT;
 	}
 	else
+	if (ArgStore_Custom == nArgStoreType)
 	{
-		nDestructorType = SQLITE_STATIC;
+		nDestructorType = pfnFreeArgStore;
 	}
-	if (SQLITE_OK != (nRet = sqlite3_bind_text16((sqlite3_stmt *)m_pSTMT, (int)m_cBindIndex, wszString, -1,
-	                                             nDestructorType)))
+	else
+	{
+		return Status(Status_InvalidArg, "Invalid arg store type");
+	}
+	if (SQLITE_OK != (nRet = sqlite3_bind_text16((sqlite3_stmt *)m_pSTMT, (int)m_cBindIndex, wszString, 
+	                                             (int)(sizeof(WChar) * cLen), nDestructorType)))
 	{
 		return SQLSTATUS(Status_OperationFailed, "sqlite3_bind_text", nRet);
 	}
@@ -313,7 +345,8 @@ Status Statement::BindWString(const WChar *wszString, ArgStoreType nArgStoreType
 	return Status();
 }
 
-Status Statement::BindBLOB(const void *pData, Size cbSize, ArgStoreType nArgStoreType/* = ArgStore_Static*/)
+Status Statement::BindBLOB(const void *pData, Size cbSize, ArgStoreType nArgStoreType/* = ArgStore_Static*/, 
+                           FreeArgStoreProc pfnFreeArgStore/* = NULL*/)
 {
 	sqlite3_destructor_type nDestructorType;
 	int                     nRet;
@@ -322,13 +355,23 @@ Status Statement::BindBLOB(const void *pData, Size cbSize, ArgStoreType nArgStor
 	{
 		return Status(Status_NotInitialized, "Statement was not created");
 	}
+	if (ArgStore_Static == nArgStoreType)
+	{
+		nDestructorType = SQLITE_STATIC;
+	}
+	else
 	if (ArgStore_Transient == nArgStoreType)
 	{
 		nDestructorType = SQLITE_TRANSIENT;
 	}
 	else
+	if (ArgStore_Custom == nArgStoreType)
 	{
-		nDestructorType = SQLITE_STATIC;
+		nDestructorType = pfnFreeArgStore;
+	}
+	else
+	{
+		return Status(Status_InvalidArg, "Invalid arg store type");
 	}
 	if (SQLITE_OK != (nRet = sqlite3_bind_blob((sqlite3_stmt *)m_pSTMT, (int)m_cBindIndex, pData, (int)cbSize,
 	                                           nDestructorType)))
@@ -357,9 +400,9 @@ Status Statement::BindZeroBLOB(Size cbSize)
 	return Status();
 }
 
-Status Statement::Bind(const Bindings &bindings)
+Status Statement::Bind(Bindings &bindings)
 {
-	Bindings::ArgType nArgType;
+	Arg               *pArg;
 	Size              cCount;
 	Status            status;
 
@@ -370,9 +413,9 @@ Status Statement::Bind(const Bindings &bindings)
 	cCount = bindings.GetArgsCount();
 	for (Size i = 0; i < cCount; i++)
 	{
-		nArgType = bindings.GetArgType(i);
+		pArg = bindings.GetArg(i);
 
-		if (Bindings::ArgType_Null == nArgType)
+		if (ArgType_Null == pArg->nType)
 		{
 			if ((status = BindNull()).IsNOK())
 			{
@@ -380,49 +423,56 @@ Status Statement::Bind(const Bindings &bindings)
 			}
 		}
 		else
-		if (Bindings::ArgType_Int == nArgType)
+		if (ArgType_Int == pArg->nType)
 		{
-			if ((status = BindInt(bindings.GetInt(i))).IsNOK())
+			if ((status = BindInt(pArg->nIntValue)).IsNOK())
 			{
 				return status;
 			}
 		}
 		else
-		if (Bindings::ArgType_Real == nArgType)
+		if (ArgType_Real == pArg->nType)
 		{
-			if ((status = BindReal(bindings.GetReal(i))).IsNOK())
+			if ((status = BindReal(pArg->lfRealValue)).IsNOK())
 			{
 				return status;
 			}
 		}
 		else
-		if (Bindings::ArgType_String == nArgType)
+		if (ArgType_String == pArg->nType)
 		{
-			if ((status = BindString(bindings.GetString(i), ArgStore_Transient)).IsNOK())
+			if ((status = BindString(pArg->str.szString, pArg->str.cLen, pArg->nStoreType, pArg->pfnFreeArgStore)).IsNOK())
 			{
 				return status;
 			}
+			pArg->str.szString = NULL;
+			pArg->str.cLen     = 0;
 		}
 		else
-		if (Bindings::ArgType_WString == nArgType)
+		if (ArgType_WString == pArg->nType)
 		{
-			if ((status = BindWString(bindings.GetWString(i), ArgStore_Transient)).IsNOK())
+			if ((status = BindWString(pArg->wstr.wszString, pArg->wstr.cLen, pArg->nStoreType, 
+			                          pArg->pfnFreeArgStore)).IsNOK())
 			{
 				return status;
 			}
+			pArg->wstr.wszString = NULL;
+			pArg->wstr.cLen     = 0;
 		}
 		else
-		if (Bindings::ArgType_BLOB == nArgType)
+		if (ArgType_BLOB == pArg->nType)
 		{
-			if ((status = BindBLOB(bindings.GetBLOB(i), bindings.GetBLOBSize(i), ArgStore_Transient)).IsNOK())
+			if ((status = BindBLOB(pArg->blob.pBLOB, pArg->blob.cbSize, pArg->nStoreType, pArg->pfnFreeArgStore)).IsNOK())
 			{
 				return status;
 			}
+			pArg->blob.pBLOB  = NULL;
+			pArg->blob.cbSize = 0;
 		}
 		else
-		if (Bindings::ArgType_ZeroBLOB == nArgType)
+		if (ArgType_ZeroBLOB == pArg->nType)
 		{
-			if ((status = BindZeroBLOB(bindings.GetBLOBSize(i))).IsNOK())
+			if ((status = BindZeroBLOB(pArg->cbZeroBLOB)).IsNOK())
 			{
 				return status;
 			}

@@ -1209,6 +1209,9 @@
     <ClInclude Include="..\..\Include\CX\precomp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\SQLite\Args.hpp">
+      <Filter>Source Files\DB\SQLite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">

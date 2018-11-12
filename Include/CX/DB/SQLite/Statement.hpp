@@ -34,6 +34,7 @@
 #include "CX/String.hpp"
 #include "CX/DB/SQLite/Database.hpp"
 #include "CX/DB/SQLite/Bindings.hpp"
+#include "CX/DB/SQLite/Args.hpp"
 
 
 namespace CX
@@ -48,13 +49,6 @@ namespace SQLite
 class Statement
 {
 public:
-
-	enum ArgStoreType
-	{
-		ArgStore_Static    = 1,
-		ArgStore_Transient = 2,
-		ArgStore_Default   = ArgStore_Static,
-	};
 
 	enum Result
 	{
@@ -105,15 +99,18 @@ public:
 
 	Status BindReal(Double lfValue);
 
-	Status BindString(const Char *szString, ArgStoreType nArgStoreType = ArgStore_Default);
+	Status BindString(const Char *szString, Size cLen = (Size)-1, ArgStoreType nArgStoreType = ArgStore_Default, 
+	                  FreeArgStoreProc pfnFreeArgStore = NULL);
 
-	Status BindWString(const WChar *wszString, ArgStoreType nArgStoreType = ArgStore_Default);
+	Status BindWString(const WChar *wszString, Size cLen = (Size)-1, ArgStoreType nArgStoreType = ArgStore_Default, 
+	                   FreeArgStoreProc pfnFreeArgStore = NULL);
 
-	Status BindBLOB(const void *pData, Size cbSize, ArgStoreType nArgStoreType = ArgStore_Default);
+	Status BindBLOB(const void *pData, Size cbSize, ArgStoreType nArgStoreType = ArgStore_Default, 
+	                FreeArgStoreProc pfnFreeArgStore = NULL);
 
 	Status BindZeroBLOB(Size cbSize);
 
-	Status Bind(const Bindings &bindings); //will call ClearBindings first
+	Status Bind(Bindings &bindings); //will call ClearBindings first
 
 	Size GetColumnsCount();
 

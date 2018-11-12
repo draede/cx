@@ -59,10 +59,6 @@ public:
 
 	virtual Bindings *CreateBindings() = 0;
 
-	virtual Bindings *CreateBindings(const Char *szArgsType, ...) = 0;
-
-	virtual Bindings *CreateBindings(const Char *szArgsType, va_list vl) = 0;
-
 	virtual void DestroyBindings(Bindings *pBindings) = 0;
 
 	//pBindings must be create with CreateBindings (after this call the ownership of pBindings is taken by DBHelper)
