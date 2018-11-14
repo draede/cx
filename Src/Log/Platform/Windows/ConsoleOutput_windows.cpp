@@ -60,14 +60,14 @@ Status ConsoleOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer
 
 	switch (nLevel)
 	{
-		case Level_Error:       Console::SetColor(ERROR_FG, ERROR_BG); break;
-		case Level_Warning:     Console::SetColor(WARNING_FG, WARNING_BG); break;
-		case Level_Info:        Console::SetColor(INFORMATION_FG, INFORMATION_BG); break;
-		case Level_Verbose:     Console::SetColor(VERBOSE_FG, VERBOSE_BG); break;
-		case Level_Debug:       Console::SetColor(DEBUG_FG, DEBUG_BG); break;
+		case Level_Error:       Util::Console::SetForegroundColor(ERROR_COLOR); break;
+		case Level_Warning:     Util::Console::SetForegroundColor(WARNING_COLOR); break;
+		case Level_Info:        Util::Console::SetForegroundColor(INFORMATION_COLOR); break;
+		case Level_Verbose:     Util::Console::SetForegroundColor(VERBOSE_COLOR); break;
+		case Level_Debug:       Util::Console::SetForegroundColor(DEBUG_COLOR); break;
 	}
 	cx_printf("%s", pBuffer);
-	Console::Reset();
+	Util::Console::Reset();
 
 	return Status();
 }

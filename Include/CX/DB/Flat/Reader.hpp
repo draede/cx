@@ -24,17 +24,76 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */ 
+ */
 
 #pragma once
 
 
-#include "CX/Platform.hpp"
+#include "CX/Types.hpp"
+#include "CX/Status.hpp"
+#include "CX/IO/MemoryMappedFile.hpp"
+#include "CX/DB/Flat/Header.hpp"
+#include "CX/DB/Flat/Footer.hpp"
 
 
-#if defined(CX_OS_WINDOWS)
-	#include "CX/DB/Flat/Platform/Windows/Reader.hpp"
-#else
-	#error "Reader.hpp not implemented on this platform"
-#endif
- 
+namespace CX
+{
+
+namespace DB
+{
+
+namespace Flat
+{
+
+class Reader
+{
+public:
+
+	Reader();
+
+	~Reader();
+
+	Status Open(const Char *szPath);
+
+	Status Open(const WChar *wszPath);
+
+	Status Close();
+
+	Bool IsOK() const;
+
+	UInt32 GetRecordSize() const;
+
+	UInt32 GetRecordsCount() const;
+
+	UInt32 GetHeaderSize() const;
+
+	const void *GetHeader() const;
+
+	UInt32 GetFooterSize() const;
+
+	const void *GetFooter() const;
+
+	const void *GetRecords() const;
+
+	const void *GetRecord(UInt32 cIndex) const;
+
+private:
+
+	IO::MemoryMappedFile   m_mmf;
+	UInt32                 m_cRecords;
+	UInt32                 m_cbRecordSize;
+	const void             *m_pRecords;
+	UInt32                 m_cbHeaderSize;
+	const void             *m_pHeader;
+	UInt32                 m_cbFooterSize;
+	const void             *m_pFooter;
+
+	Status Open();
+
+};
+
+}//namespace Flat
+
+}//namespace DB
+
+}//namespace CX

@@ -154,7 +154,7 @@ Status DynMemPool::Detach()
 
 Status DynMemPool::FreeDetachedMem(void *pMem)
 {
-	Mem::Free(m_pMem);
+	Mem::Free(pMem);
 
 	return Status();
 }

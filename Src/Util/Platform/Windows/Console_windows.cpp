@@ -39,6 +39,9 @@
 namespace CX
 {
 
+namespace Util
+{
+
 Console::Console()
 {
 }
@@ -54,17 +57,19 @@ Console::Data &Console::GetData()
 	return data;
 }
 
-void Console::SetColor(Color fgColor, Color bgColor)
+void Console::SetColors(Color fgColor, Color bgColor)
 {
-	if (GetData().m_bFirst)
-	{
-		CONSOLE_SCREEN_BUFFER_INFO csbi;
+	SetColors((WORD)(fgColor | (bgColor << 4)));
+}
 
-		GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-		GetData().m_wAttr  = csbi.wAttributes;
-		GetData().m_bFirst = False;
-	}
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)(fgColor | (bgColor << 4)));
+void Console::SetForegroundColor(Color fgColor)
+{
+	SetColors((WORD)fgColor);
+}
+
+void Console::SetBackgroundColor(Color bgColor)
+{
+	SetColors((WORD)(bgColor << 4));
 }
 
 void Console::Reset()
@@ -75,6 +80,21 @@ void Console::Reset()
 	}
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GetData().m_wAttr);
 }
+
+void Console::SetColors(WORD wColors)
+{
+	if (GetData().m_bFirst)
+	{
+		CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+		GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+		GetData().m_wAttr  = csbi.wAttributes;
+		GetData().m_bFirst = False;
+	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), wColors);
+}
+
+}//namespace Util
 
 }//namespace CX
 

@@ -42,6 +42,9 @@
 namespace CX
 {
 
+namespace Util
+{
+
 class Console
 {
 public:
@@ -66,7 +69,11 @@ public:
 		BRIGHT_WHITE   = 0x0F,
 	};
 
-	static void SetColor(Color fgColor, Color bgColor);
+	static void SetColors(Color fgColor, Color bgColor);
+
+	static void SetForegroundColor(Color fgColor);
+
+	static void SetBackgroundColor(Color bgColor);
 
 	static void Reset();
 
@@ -84,7 +91,11 @@ private:
 
 	static Data &GetData();
 
+	static void SetColors(WORD wColors);
+
 };
+
+}//namespace Util
 
 }//namespace CX
 

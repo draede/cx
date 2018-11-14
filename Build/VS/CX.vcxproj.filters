@@ -370,18 +370,6 @@
     <Filter Include="Source Files\DB\Flat">
       <UniqueIdentifier>{65085412-87a7-4293-8dfd-58e581504c11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\DB\Flat\Platform">
-      <UniqueIdentifier>{b1e4efd0-4be6-4ba7-8c5e-115264f1bb0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\DB\Flat\Platform">
-      <UniqueIdentifier>{e810f66a-6066-49a6-b191-9dd098ca24a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\DB\Flat\Platform\Windows">
-      <UniqueIdentifier>{1f3449af-bf08-4c20-8d4c-3aaf6f5e712c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\DB\Flat\Platform\Windows">
-      <UniqueIdentifier>{2c866eae-9515-447d-b0bf-1986cc57d192}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1182,18 +1170,6 @@
     <ClInclude Include="..\..\Include\CX\Hash\SHA224Hash.hpp">
       <Filter>Header Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\DB\Flat\Writer.hpp">
-      <Filter>Header Files\DB\Flat</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\DB\Flat\Platform\Windows\Writer.hpp">
-      <Filter>Header Files\DB\Flat\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\DB\Flat\Reader.hpp">
-      <Filter>Header Files\DB\Flat</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\DB\Flat\Platform\Windows\Reader.hpp">
-      <Filter>Header Files\DB\Flat\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\DB\SQLite\IDBHelperAsyncMgr.hpp">
       <Filter>Header Files\DB\SQLite</Filter>
     </ClInclude>
@@ -1211,6 +1187,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\DB\SQLite\Args.hpp">
       <Filter>Source Files\DB\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\Flat\Footer.hpp">
+      <Filter>Header Files\DB\Flat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\Flat\Header.hpp">
+      <Filter>Header Files\DB\Flat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\Flat\Reader.hpp">
+      <Filter>Header Files\DB\Flat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\DB\Flat\Writer.hpp">
+      <Filter>Header Files\DB\Flat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2237,12 +2225,6 @@
     <ClCompile Include="..\..\Contrib\Expat\Src\loadlibrary.c">
       <Filter>Contrib\Expat</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\DB\Flat\Platform\Windows\Writer_windows.cpp">
-      <Filter>Source Files\DB\Flat\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\DB\Flat\Platform\Windows\Reader_windows.cpp">
-      <Filter>Source Files\DB\Flat\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\FastRWLock_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
@@ -2251,6 +2233,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\precomp.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\Flat\Reader.cpp">
+      <Filter>Source Files\DB\Flat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\DB\Flat\Writer.cpp">
+      <Filter>Source Files\DB\Flat</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

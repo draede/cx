@@ -50,16 +50,11 @@ class CX_API ConsoleOutput : public IOutput
 {
 public:
 
-	static const Console::Color ERROR_FG       = Console::BRIGHT_RED;
-	static const Console::Color ERROR_BG       = Console::BLACK;
-	static const Console::Color WARNING_FG     = Console::BRIGHT_YELLOW;
-	static const Console::Color WARNING_BG     = Console::BLACK;
-	static const Console::Color INFORMATION_FG = Console::WHITE;
-	static const Console::Color INFORMATION_BG = Console::BLACK;
-	static const Console::Color VERBOSE_FG     = Console::CYAN;
-	static const Console::Color VERBOSE_BG     = Console::BLACK;
-	static const Console::Color DEBUG_FG       = Console::GRAY;
-	static const Console::Color DEBUG_BG       = Console::BLACK;
+	static const Util::Console::Color ERROR_COLOR       = Util::Console::BRIGHT_RED;
+	static const Util::Console::Color WARNING_COLOR     = Util::Console::BRIGHT_YELLOW;
+	static const Util::Console::Color INFORMATION_COLOR = Util::Console::WHITE;
+	static const Util::Console::Color VERBOSE_COLOR     = Util::Console::CYAN;
+	static const Util::Console::Color DEBUG_COLOR       = Util::Console::GRAY;
 	
 	ConsoleOutput();
 

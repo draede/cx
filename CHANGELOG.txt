@@ -1,3 +1,6 @@
+0.2.205 - 2018-11-14
+ - Refactored DB::Flat
+ - Enhanced Util::Console
 0.2.204 - 2018-11-12
  - Improved support for custom allocations in SQLite bindings
 0.2.203 - 2018-11-01

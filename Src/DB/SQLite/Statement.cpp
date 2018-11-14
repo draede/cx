@@ -402,9 +402,8 @@ Status Statement::BindZeroBLOB(Size cbSize)
 
 Status Statement::Bind(Bindings &bindings)
 {
-	Arg               *pArg;
-	Size              cCount;
-	Status            status;
+	Size     cCount;
+	Status   status;
 
 	if ((status = ClearBindings()).IsNOK())
 	{
@@ -413,7 +412,7 @@ Status Statement::Bind(Bindings &bindings)
 	cCount = bindings.GetArgsCount();
 	for (Size i = 0; i < cCount; i++)
 	{
-		pArg = bindings.GetArg(i);
+		Arg   *pArg = bindings.GetArg(i);
 
 		if (ArgType_Null == pArg->nType)
 		{
