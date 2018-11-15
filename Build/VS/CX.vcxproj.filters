@@ -1155,12 +1155,6 @@
     <ClInclude Include="..\..\Include\CX\CLI\ICommand.hpp">
       <Filter>Header Files\CLI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\CLI\IModule.hpp">
-      <Filter>Header Files\CLI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\CLI\Modules.hpp">
-      <Filter>Header Files\CLI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\MemoryMappedFile.hpp">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
@@ -1199,6 +1193,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\DB\Flat\Writer.hpp">
       <Filter>Header Files\DB\Flat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\CLI\Commands.hpp">
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2168,9 +2165,6 @@
     <ClCompile Include="..\..\Src\Data\JSON\DumpSAXParserObserver.cpp">
       <Filter>Source Files\Data\JSON</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\CLI\Modules.cpp">
-      <Filter>Source Files\CLI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\IO\Platform\Windows\MemoryMappedFile_windows.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
     </ClCompile>
@@ -2239,6 +2233,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\DB\Flat\Writer.cpp">
       <Filter>Source Files\DB\Flat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CLI\Commands.cpp">
+      <Filter>Source Files\CLI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

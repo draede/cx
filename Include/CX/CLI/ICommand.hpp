@@ -51,7 +51,7 @@ public:
 
 	virtual const Char *GetDescription() = 0;
 
-	virtual Status Init(int argc, Char *argv[]) = 0;
+	virtual Status Init(int argc, const Char *argv[]) = 0;
 
 	virtual Status Run() = 0;
 

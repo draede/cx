@@ -236,7 +236,7 @@ public:
 		return AddParam(ParamType_StringArray, szName, szDescription, bRequired, pfnValidate, pUsrCtx);
 	}
 
-	Status Parse(const CHAR_TYPE *szCmdLine, Bool bSkipFirstArg = True)
+	Status Parse(const CHAR_TYPE *szCmdLine, int cSkipFirstArgs = 1)
 	{
 		StringsVector      vectorArgs;
 		StringPtrsVector   vectorArgPtrs;
@@ -332,21 +332,20 @@ public:
 			vectorArgPtrs.push_back((CHAR_TYPE *)iter->c_str());
 		}
 
-		return Parse((int)vectorArgPtrs.size(), &vectorArgPtrs[0], bSkipFirstArg);
+		return Parse((int)vectorArgPtrs.size(), &vectorArgPtrs[0], cSkipFirstArgs);
 	}
 
-	Status Parse(int argc, CHAR_TYPE *argv[], Bool bSkipFirstArg = True)
+	Status Parse(int argc, CHAR_TYPE *argv[], int cSkipFirstArgs = 1)
 	{
 		Clear();
 
-		int      cStart = 0;
 		Status   status;
 
-		if (bSkipFirstArg)
+		if (0 > cSkipFirstArgs)
 		{
-			cStart++;
+			cSkipFirstArg = 0;
 		}
-		for (int i = cStart; i < argc; i++)
+		for (int i = cSkipFirstArgs; i < argc; i++)
 		{
 			if ((CHAR_TYPE)'-' == argv[i][0])
 			{
