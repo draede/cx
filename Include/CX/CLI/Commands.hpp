@@ -65,6 +65,8 @@ public:
 	Status Run(int argc, Char *argv[], const Char *szNoArgs = "ERROR: No arguments provided", 
 	           const Char *szCommandNotFound = "ERROR: Unknown command '{1}'");
 
+	void ShowUsage();
+
 private:
 
 	String   m_sAppName;
@@ -85,8 +87,6 @@ private:
 	Commands();
 
 	~Commands();
-
-	void ShowUsage();
 
 };
 
