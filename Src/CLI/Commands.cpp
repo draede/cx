@@ -125,7 +125,6 @@ Status Commands::Run(int argc, Char *argv[], const Char *szNoArgs/* = "ERROR: No
 		if (1 >= argc)
 		{
 			ShowUsage();
-			Print(stdout, "\n");
 			status = Status(Status_InvalidArg, "{1}", szNoArgs);
 
 			break;
@@ -139,7 +138,6 @@ Status Commands::Run(int argc, Char *argv[], const Char *szNoArgs/* = "ERROR: No
 		if (m_mapCommands.end() == iter)
 		{
 			ShowUsage();
-			Print(stdout, "\n");
 			status = Status(Status_NotFound, szCommandNotFound, argv[0]);
 
 			break;
@@ -148,7 +146,6 @@ Status Commands::Run(int argc, Char *argv[], const Char *szNoArgs/* = "ERROR: No
 		if (NULL == (pCommand = iter->second.pfnFactory()))
 		{
 			ShowUsage();
-			Print(stdout, "\n");
 			status = Status(Status_OperationFailed, "Failed to create '{1}' command", argv[0]);
 
 			break;
@@ -176,10 +173,6 @@ Status Commands::Run(int argc, Char *argv[], const Char *szNoArgs/* = "ERROR: No
 		}
 		pCommand->Destroy();
 		pCommand = NULL;
-	}
-	if (!status)
-	{
-		Print(stdout, "{1}\n", status.GetMsg());
 	}
 
 	return status;
