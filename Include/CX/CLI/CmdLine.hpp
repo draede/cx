@@ -74,13 +74,6 @@ public:
 		m_cMinPositionalParams = 0;
 	}
 
-	CmdLineBase(const CHAR_TYPE *szBanner)
-	{
-		m_cMinPositionalParams = 0;
-
-		SetBanner(szBanner);
-	}
-
 	~CmdLineBase()
 	{
 		Reset();
@@ -90,7 +83,6 @@ public:
 	{
 		Clear();
 
-		m_sBanner.clear();
 		m_cMinPositionalParams = 0;
 		m_vectorOptions.clear();
 		m_vectorParams.clear();
@@ -127,13 +119,6 @@ public:
 		}
 
 		return Status();
-	}
-
-	CmdLineBase &SetBanner(const CHAR_TYPE *szBanner)
-	{
-		m_sBanner = szBanner;
-
-		return *this;
 	}
 
 	CmdLineBase &SetMinPositionalParams(Size cMinPositionalParams = 0)
@@ -343,7 +328,7 @@ public:
 
 		if (0 > cSkipFirstArgs)
 		{
-			cSkipFirstArg = 0;
+			cSkipFirstArgs = 0;
 		}
 		for (int i = cSkipFirstArgs; i < argc; i++)
 		{
@@ -456,12 +441,11 @@ public:
 		return Status();
 	}
 
-	Status ShowUsage() const
+	Status ShowUsage(const Char *szIndent = "") const
 	{
-		CX::Print(stdout, "{1}\n", m_sBanner);
 		for (auto iter = m_vectorOptions.begin(); iter != m_vectorOptions.end(); ++iter)
 		{
-			CX::Print(stdout, " -{1}, --{2} : {3}\n", iter->chShortName, iter->sLongName, iter->sDescription);
+			CX::Print(stdout, "{1}-{2}, --{3} : {4}\n", szIndent, iter->chShortName, iter->sLongName, iter->sDescription);
 		}
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
@@ -469,37 +453,37 @@ public:
 			{
 				case ParamType_Int:
 				{
-					CX::Print(stdout, " --{1} (int) {2} : {3}\n", iter->sName, iter->bRequired ? "(REQUIRED)" : "", 
+					CX::Print(stdout, "{1}--{2} (int) {3} : {4}\n", szIndent, iter->sName, iter->bRequired ? "(REQUIRED)" : "", 
 					          iter->sDescription);
 				}
 				break;
 				case ParamType_Double:
 				{
-					CX::Print(stdout, " --{1} (double) {2} : {3}\n", iter->sName, iter->bRequired ? "(REQUIRED)" : "", 
+					CX::Print(stdout, "{1}--{2} (double) {3} : {4}\n", szIndent, iter->sName, iter->bRequired ? "(REQUIRED)" : "", 
 					          iter->sDescription);
 				}
 				break;
 				case ParamType_String:
 				{
-					CX::Print(stdout, " --{1} (string) {2} : {3}\n", iter->sName, iter->bRequired ? "(REQUIRED)" : "", 
+					CX::Print(stdout, "{1}--{2} (string) {3} : {4}\n", szIndent, iter->sName, iter->bRequired ? "(REQUIRED)" : "", 
 					          iter->sDescription);
 				}
 				break;
 				case ParamType_IntArray:
 				{
-					CX::Print(stdout, " --{1} (int - multiple) {2} : {3}\n", iter->sName, 
+					CX::Print(stdout, "{1}--{2} (int - multiple) {3} : {4}\n", szIndent, iter->sName, 
 					          iter->bRequired ? "(REQUIRED)" : "", iter->sDescription);
 				}
 				break;
 				case ParamType_DoubleArray:
 				{
-					CX::Print(stdout, " --{1} (int - multiple) {2} : {3}\n", iter->sName, 
+					CX::Print(stdout, "{1}--{2} (double - multiple) {3} : {4}\n", szIndent, iter->sName, 
 					          iter->bRequired ? "(REQUIRED)" : "", iter->sDescription);
 				}
 				break;
 				case ParamType_StringArray:
 				{
-					CX::Print(stdout, " --{1} (int - multiple) {2} : {3}\n", iter->sName, 
+					CX::Print(stdout, "{1}--{2} (string - multiple) {3} : {4}\n", szIndent, iter->sName, 
 					          iter->bRequired ? "(REQUIRED)" : "", iter->sDescription);
 				}
 				break;
@@ -792,7 +776,8 @@ public:
 		return 0;
 	}
 
-	const CHAR_TYPE *GetStringArrayParamItem(const CHAR_TYPE *szName, const STRING_TYPE &sDefault = DEFAULT_STRING(), 
+	const CHAR_TYPE *GetStringArrayParamItem(const CHAR_TYPE *szName, Size cIndex, 
+	                                         const STRING_TYPE &sDefault = DEFAULT_STRING(), 
 	                                         Bool *pbFound = NULL) const
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
@@ -829,7 +814,7 @@ public:
 			*pbFound = False;
 		}
 
-		return sDefault;
+		return sDefault.c_str();
 	}
 
 	Size GetPositionalParamsCount() const
@@ -897,7 +882,6 @@ private:
 	typedef typename Vector<STRING_TYPE>::Type   PositionalParamsVector;
 
 	Size                     m_cMinPositionalParams;
-	STRING_TYPE              m_sBanner;
 	OptionsVector            m_vectorOptions;
 	ParamsVector             m_vectorParams;
 	PositionalParamsVector   m_vectorPositionalParams;
