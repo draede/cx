@@ -105,6 +105,7 @@ private:
 	Sys::Thread            m_thread;
 	Sys::Event             m_eventStop;
 	Sys::Event             m_eventFlush;
+	Sys::Event             m_eventFlushReady;
 	Sys::FastRWLock        m_frwLock;
 
 	void AsyncOperationsThread();

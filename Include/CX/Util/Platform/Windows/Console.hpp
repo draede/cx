@@ -53,7 +53,7 @@ public:
 	{
 		BLACK          = 0x00,
 		BLUE           = 0x01,
-		GREN           = 0x02,
+		GREEN          = 0x02,
 		CYAN           = 0x03,
 		RED            = 0x04,
 		MAGENTA        = 0x05,
@@ -61,7 +61,7 @@ public:
 		WHITE          = 0x07,
 		GRAY           = 0x08,
 		BRIGHT_BLUE    = 0x09,
-		BRIGHT_GREN    = 0x0A,
+		BRIGHT_GREEN   = 0x0A,
 		BRIGHT_CYAN    = 0x0B,
 		BRIGHT_RED     = 0x0C,
 		BRIGHT_MAGENTA = 0x0D,

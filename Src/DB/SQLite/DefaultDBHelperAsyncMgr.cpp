@@ -46,12 +46,14 @@ DefaultDBHelperAsyncMgr::DefaultDBHelperAsyncMgr()
 	m_cMaxAsyncFlushTimeout = MAX_ASYNC_FLUSH_TIMEOUT;
 	m_eventStop.Create();
 	m_eventFlush.Create();
+	m_eventFlushReady.Create(true, false);
 }
 
 DefaultDBHelperAsyncMgr::~DefaultDBHelperAsyncMgr()
 {
 	Stop();
 
+	m_eventFlushReady.Destroy();
 	m_eventFlush.Destroy();
 	m_eventStop.Destroy();
 }
@@ -163,28 +165,25 @@ Status DefaultDBHelperAsyncMgr::AddAsyncOperations(DBHelper *pDBHelper,
 
 Status DefaultDBHelperAsyncMgr::FlushAsyncOperations(DBHelper *pDBHelper)
 {
-	Sys::FastWLocker   locker(&m_frwLock);
+	CX_UNUSED(pDBHelper);
 
-	auto iter = m_mapHelpers.find(pDBHelper);
-
-	if (m_mapHelpers.end() != iter)
-	{
-		iter->second.bFlush = True;
-		m_eventFlush.Set();
-	}
-
-	return Status();
+	return FlushAsyncOperations();
 }
 
 Status DefaultDBHelperAsyncMgr::FlushAsyncOperations()
 {
-	Sys::FastWLocker   locker(&m_frwLock);
-
-	for (auto iter = m_mapHelpers.begin(); iter != m_mapHelpers.end(); ++iter)
 	{
-		iter->second.bFlush = True;
+		Sys::FastWLocker   locker(&m_frwLock);
+
+		m_eventFlushReady.Reset();
+
+		for (auto iter = m_mapHelpers.begin(); iter != m_mapHelpers.end(); ++iter)
+		{
+			iter->second.bFlush = True;
+		}
+		m_eventFlush.Set();
 	}
-	m_eventFlush.Set();
+	m_eventFlushReady.Wait();
 
 	return Status();
 }
@@ -261,6 +260,8 @@ void DefaultDBHelperAsyncMgr::AsyncOperationsThread()
 				}
 			}
 		}
+
+		m_eventFlushReady.Set();
 
 		if (Sys::Event::Wait_OK == nWaitRes && 0 == cEventIndex)
 		{

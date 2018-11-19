@@ -1,3 +1,5 @@
+0.2.210 - 2018-11-18
+ - Fixed DBHelper::Close
 0.2.209 - 2018-11-18
  - Fixed CLI::CmdLine
 0.2.208 - 2018-11-16

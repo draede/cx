@@ -158,11 +158,16 @@ Status DBHelper::Close()
 	}
 	if (NULL != m_pAsyncMgr)
 	{
-		m_pAsyncMgr->FlushAsyncOperations(this);
 		if (m_bAsyncMgrOwnership)
 		{
 			m_pAsyncMgr->Stop();
 			delete m_pAsyncMgr;
+			m_pAsyncMgr          = NULL;
+			m_bAsyncMgrOwnership = False;
+		}
+		else
+		{
+			m_pAsyncMgr->FlushAsyncOperations(this);
 			m_pAsyncMgr          = NULL;
 			m_bAsyncMgrOwnership = False;
 		}
