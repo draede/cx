@@ -80,7 +80,7 @@ MemoryMappedFile::MemoryMappedFile(const WChar *wszPath, UInt64 cbMapOffset/* = 
 
 MemoryMappedFile::~MemoryMappedFile()
 {
-
+	Close();
 }
 
 Status MemoryMappedFile::Open(const Char *szPath, UInt64 cbMapOffset/* = 0*/, UInt64 cbMapSize/* = 0*/,
@@ -142,7 +142,8 @@ Status MemoryMappedFile::OpenInternal(const WChar *wszPath, UInt64 cbMapOffset/*
 		if (INVALID_HANDLE_VALUE == (m_pFile = ::CreateFileW(wszPath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
 		                                                     dwFlags, NULL)))
 		{
-			status = Status(Status_OpenFailed, "CreateFileW failed with error {1}", GetLastError());
+			m_pFile = NULL;
+			status  = Status(Status_OpenFailed, "CreateFileW failed with error {1}", GetLastError());
 
 			break;
 		}
