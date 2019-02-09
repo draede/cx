@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2018 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2019 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -29,7 +29,7 @@
 #pragma once
 
 
-#include "CX/Object.hpp"
+#include "CX/SimpleBuffers/Object.hpp"
 #include "CX/APIDefs.hpp"
 
 

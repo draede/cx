@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2018 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2019 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -167,7 +167,6 @@
 #include "CX/DenseMultiHashSet.hpp"
 #include "CX/Deque.hpp"
 #include "CX/Detail/DetailPrint/DetailPrint.hpp"
-#include "CX/EmptyInterface.hpp"
 #include "CX/EmptyType.hpp"
 #include "CX/GSHAlloc.hpp"
 #include "CX/Hash/BLAKE2Hash.hpp"
@@ -182,8 +181,6 @@
 #include "CX/Hash/SHA512Hash.hpp"
 #include "CX/Hash/xxHash32.hpp"
 #include "CX/Hash/xxHash64.hpp"
-#include "CX/IInterface.hpp"
-#include "CX/IInterfaceList.hpp"
 #include "CX/IO/BufferedInputStream.hpp"
 #include "CX/IO/BufferedOutputStream.hpp"
 #include "CX/IO/FileInputStream.hpp"
@@ -209,10 +206,6 @@
 #include "CX/IO/Platform/Windows/LocalFileSysEnumerator.hpp"
 #include "CX/IO/Platform/Windows/LocalFileSysHelper.hpp"
 #include "CX/IO/Platform/Windows/MemoryMappedFile.hpp"
-#include "CX/IObject.hpp"
-#include "CX/IObjectManager.hpp"
-#include "CX/InterfaceList.hpp"
-#include "CX/InterfaceScope.hpp"
 #include "CX/Limits.hpp"
 #include "CX/List.hpp"
 #include "CX/Log/ConsoleOutput.hpp"
@@ -230,8 +223,6 @@
 #include "CX/Mem.hpp"
 #include "CX/Network/HTTP/Client.hpp"
 #include "CX/Network/URLParser.hpp"
-#include "CX/Object.hpp"
-#include "CX/ObjectManager.hpp"
 #include "CX/Platform.hpp"
 #include "CX/Print.hpp"
 #include "CX/Queue.hpp"

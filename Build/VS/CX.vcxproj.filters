@@ -1083,30 +1083,6 @@
     <ClInclude Include="..\..\Include\CX\SimpleBuffers\Custom.hpp">
       <Filter>Header Files\SimpleBuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Object.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IInterfaceList.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\InterfaceList.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IInterface.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IObject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\InterfaceScope.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\IObjectManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\ObjectManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\CBuffers\Buffer.h">
       <Filter>Header Files\CBuffers</Filter>
     </ClInclude>
@@ -1196,6 +1172,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\CLI\Commands.hpp">
       <Filter>Header Files\CLI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\ThreadPool.hpp">
+      <Filter>Header Files\Sys\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileEnumerator.hpp">
+      <Filter>Header Files\IO\Platform\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2236,6 +2218,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\CLI\Commands.cpp">
       <Filter>Source Files\CLI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileEnumerator_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\ThreadPool_windows.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

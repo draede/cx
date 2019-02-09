@@ -1,3 +1,9 @@
+0.2.212 - 2019-02-09
+ - Update copyright to 2019
+ - Removed interface/object 
+ - Added CLI/Args.hpp
+ - Added Sys/ThreadPool.hpp (windows only)
+ - Added Util/FileEnumerator.hpp (windows only)
 0.2.211 - 2019-01-23
  - Fixed handle leaks in IO::MemoryMappedFile
 0.2.210 - 2018-11-18
