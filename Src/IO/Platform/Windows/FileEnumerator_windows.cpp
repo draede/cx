@@ -363,6 +363,80 @@ Status FileEnumerator::Config::FromCmdLine(ArgsVector &vectorArgs, Size cStartAr
 	return status;
 }
 
+FileEnumerator::FileHandlerFile::FileHandlerFile()
+{
+	wszPath       = NULL;
+	cPathLen      = NULL;
+	pContent      = NULL;
+	cbContentSize = NULL;
+	uAttributes   = NULL;
+	hFile         = NULL;
+	hFileMapping  = NULL;
+}
+
+FileEnumerator::FileHandlerFile::~FileHandlerFile()
+{
+	Close();
+}
+
+const WChar *FileEnumerator::FileHandlerFile::GetPath() const
+{
+	return wszPath;
+}
+
+Size FileEnumerator::FileHandlerFile::GetPathLen() const
+{
+	return cPathLen;
+}
+
+const void *FileEnumerator::FileHandlerFile::GetContent() const
+{
+	return pContent;
+}
+
+UInt64 FileEnumerator::FileHandlerFile::GetContentSize() const
+{
+	return cbContentSize;
+}
+
+UInt32 FileEnumerator::FileHandlerFile::GetAttributes() const
+{
+	return uAttributes;
+}
+
+HANDLE FileEnumerator::FileHandlerFile::GetHandle()
+{
+	return hFile;
+}
+
+HANDLE FileEnumerator::FileHandlerFile::GetMappingHandle()
+{
+	return hFileMapping;
+}
+
+void FileEnumerator::FileHandlerFile::Close()
+{
+	if (NULL != pContent)
+	{
+		UnmapViewOfFile(pContent);
+	}
+	if (NULL != hFileMapping)
+	{
+		CloseHandle(hFileMapping);
+	}
+	if (NULL != hFile)
+	{
+		CloseHandle(hFile);
+	}
+	wszPath       = NULL;
+	cPathLen      = NULL;
+	pContent      = NULL;
+	cbContentSize = NULL;
+	uAttributes   = NULL;
+	hFile         = NULL;
+	hFileMapping  = NULL;
+}
+
 FileEnumerator::FileEnumerator()
 {
 }
@@ -544,9 +618,9 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
                             void *pTP, const Config &config, IHandler::Stats *pStats)
 {
 	const WIN32_FIND_DATAW   *pData       = (const WIN32_FIND_DATAW *)pFindData;
-	Sys::ThreadPool         *pThreadPool  = (Sys::ThreadPool *)pTP;
+	Sys::ThreadPool          *pThreadPool  = (Sys::ThreadPool *)pTP;
 	ULARGE_INTEGER           uliSize;
-	Arg                      *pArg;
+	FileHandlerFile          *pFile;
 	HANDLE                   hFile        = NULL;
 	HANDLE                   hFileMapping = NULL;
 	const void               *pFileData   = NULL;
@@ -663,47 +737,37 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 		pStats->cIncludedFiles++;
 		pStats->cbIncludedFilesSize += uliSize.QuadPart;
 
-		if (NULL != (pArg = (Arg *)Mem::Alloc(sizeof(Arg) + sizeof(WChar) * cPathLen)))
+		if (NULL != (pFile = (FileHandlerFile *)Mem::Alloc(sizeof(FileHandlerFile) + sizeof(WChar) * (cPathLen + 1))))
 		{
-			pArg->pHandler     = pHandler;
-			pArg->pStats       = pStats;
-			pArg->cbSize       = uliSize.QuadPart;
-			pArg->cPathLen     = cPathLen;
-			pArg->hFile        = hFile;
-			pArg->hFileMapping = hFileMapping;
-			pArg->pFileData    = pFileData;
-			memcpy(pArg->wszPath, wszPath, sizeof(WChar) * (cPathLen + 1));
-			if (!(status = pThreadPool->AddWork(&FileEnumerator::WorkCallback, pArg)))
+			new (pFile) FileHandlerFile();
+
+			memcpy(pFile + 1, wszPath, sizeof(WChar) * (cPathLen + 1));
+
+			pFile->pHandler      = pHandler;
+			pFile->pStats        = pStats;
+			pFile->wszPath       = (const WChar *)(pFile + 1);
+			pFile->cPathLen      = cPathLen;
+			pFile->pContent      = pFileData;
+			pFile->cbContentSize = uliSize.QuadPart;
+			pFile->uAttributes   = pData->dwFileAttributes;
+			pFile->hFile         = hFile;
+			pFile->hFileMapping  = hFileMapping;
+			if (!(status = pThreadPool->AddWork(&FileEnumerator::WorkCallback, pFile)))
 			{
 				pStats->cErrorProcessingFiles++;
 				pStats->cbErrorProcessingFilesSize += uliSize.QuadPart;
 
-				if (NULL != pFileData)
-				{
-					UnmapViewOfFile(pFileData);
-					pFileData = NULL;
-				}
-				if (NULL != hFileMapping)
-				{
-					CloseHandle(hFileMapping);
-					hFileMapping = NULL;
-				}
-				if (NULL != hFile)
-				{
-					CloseHandle(hFile);
-					hFile = NULL;
-				}
-				Mem::Free(pArg);
+				pFile->~FileHandlerFile();
+				Mem::Free(pFile);
 			}
 			else
 			{
 				pStats->cProcessedFiles++;
 				pStats->cbProcessedFilesSize += uliSize.QuadPart;
-
-				pFileData    = NULL;
-				hFileMapping = NULL;
-				hFile        = NULL;
 			}
+			pFileData    = NULL;
+			hFileMapping = NULL;
+			hFile        = NULL;
 		}
 		else
 		{
@@ -735,23 +799,12 @@ VOID CALLBACK FileEnumerator::WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOI
 	CX_UNUSED(pInstance);
 	CX_UNUSED(pWork);
 
-	Arg   *pArg = (Arg *)pContext;
+	FileHandlerFile   *pFile = (FileHandlerFile *)pContext;
 
-	pArg->pHandler->OnFile(pArg->wszPath, pArg->cPathLen, pArg->cbSize, pArg->pFileData, pArg->pStats);
+	pFile->pHandler->OnFile(pFile, pFile->pStats);
 
-	if (NULL != pArg->pFileData)
-	{
-		UnmapViewOfFile(pArg->pFileData);
-	}
-	if (NULL != pArg->hFileMapping)
-	{
-		CloseHandle(pArg->hFileMapping);
-	}
-	if (NULL != pArg->hFile)
-	{
-		CloseHandle(pArg->hFile);
-	}
-	Mem::Free(pArg);
+	pFile->~FileHandlerFile();
+	Mem::Free(pFile);
 }
 
 }//namespace IO

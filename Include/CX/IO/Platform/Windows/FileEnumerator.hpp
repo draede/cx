@@ -79,7 +79,7 @@ public:
 		static const WChar    *ARG_MAX_FILE_SIZE;  //--maxfilesize <max_file_size : uint64>
 		static const WChar    *ARG_RECURSIVE;      //--recursive <yes|no>
 		static const WChar    *ARG_EXTENSION;      //--extension <extension:string (e.g. : exe)>
-		static const WChar    *ARG_PATTERN;        //--pattern <offset:uint64> <pattern:string_or_hexstring e.g. xAABBCC>
+		static const WChar    *ARG_PATTERN;        //--pattern <offset:uint64> <pattern:string_or_hexstring e.g. 0xAABBCC>
 
 		typedef Set<WString, WCaseInsensitiveOrderPolicy>::Type   ExtensionsSet;
 
@@ -97,7 +97,7 @@ public:
 
 		typedef Vector<Pattern>::Type                             PatternsVector;
 
-		typedef Vector<CX::WString>::Type                         ArgsVector;
+		typedef Vector<WString>::Type                             ArgsVector;
 
 		Size             cThreads;
 		UInt64           cbMinFileSize;
@@ -116,6 +116,30 @@ public:
 	class IHandler
 	{
 	public:
+
+		class IFile
+		{
+		public:
+
+			~IFile() { }
+
+			virtual const WChar *GetPath() const = 0;
+
+			virtual Size GetPathLen() const = 0;
+
+			virtual const void *GetContent() const = 0;
+
+			virtual UInt64 GetContentSize() const = 0;
+
+			virtual UInt32 GetAttributes() const = 0;
+
+			virtual HANDLE GetHandle() = 0;
+
+			virtual HANDLE GetMappingHandle() = 0;
+
+			virtual void Close() = 0;
+
+		};
 
 		struct Stats
 		{
@@ -158,8 +182,7 @@ public:
 
 		virtual void OnBegin() = 0;
 
-		virtual void OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSize, const void *pData, 
-		                    const Stats *pStats) = 0;
+		virtual void OnFile(IFile *pFile, const Stats *pStats) = 0;
 
 		virtual void OnEnd(const Stats *pStats) = 0;
 
@@ -175,16 +198,41 @@ public:
 
 private:
 
-	struct Arg
+	class FileHandlerFile : public IHandler::IFile
 	{
+	public:
+
 		IHandler          *pHandler;
 		IHandler::Stats   *pStats;
-		UInt64            cbSize;
+
+		const WChar       *wszPath;
+		Size              cPathLen;
+		const void        *pContent;
+		UInt64            cbContentSize;
+		UInt32            uAttributes;
 		HANDLE            hFile;
 		HANDLE            hFileMapping;
-		const void        *pFileData;
-		Size              cPathLen;
-		WChar             wszPath[1];
+
+		FileHandlerFile();
+
+		~FileHandlerFile();
+
+		virtual const WChar *GetPath() const;
+
+		virtual Size GetPathLen() const;
+
+		virtual const void *GetContent() const;
+
+		virtual UInt64 GetContentSize() const;
+
+		virtual UInt32 GetAttributes() const;
+
+		virtual HANDLE GetHandle();
+
+		virtual HANDLE GetMappingHandle();
+
+		virtual void Close();
+
 	};
 
 	FileEnumerator();
