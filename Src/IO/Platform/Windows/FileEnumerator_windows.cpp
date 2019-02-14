@@ -53,14 +53,18 @@ const WChar *FileEnumerator::Config::ARG_MAX_FILE_SIZE = L"--maxfilesize";
 const WChar *FileEnumerator::Config::ARG_RECURSIVE     = L"--recursive";
 const WChar *FileEnumerator::Config::ARG_EXTENSION     = L"--extension";
 const WChar *FileEnumerator::Config::ARG_PATTERN       = L"--pattern";
+const WChar *FileEnumerator::Config::ARG_XPATTERN      = L"--xpattern";
 
 FileEnumerator::Config::Pattern::Pattern()
 {
 }
 
-FileEnumerator::Config::Pattern::Pattern(UInt64 cbOffset, const void *pPattern, Size cbSize)
+FileEnumerator::Config::Pattern::Pattern(Bool bHasOffset, UInt64 cbOffset, const void *pPattern, Size cbSize, 
+                                         Bool bNegate)
 {
-	this->cbOffset = cbOffset;
+	this->bHasOffset = bHasOffset;
+	this->cbOffset   = cbOffset;
+	this->bNegate    = bNegate;
 	SetupPattern(pPattern, cbSize);
 }
 
@@ -268,43 +272,77 @@ Status FileEnumerator::Config::FromCmdLine(ArgsVector &vectorArgs, Size cStartAr
 			iter = vectorArgs.erase(iter);
 		}
 		else
-		if (0 == cxw_strcmp(ARG_PATTERN, iter->c_str()))
+		if (0 == cxw_strcmp(ARG_PATTERN, iter->c_str()) || 0 == cxw_strcmp(ARG_XPATTERN, iter->c_str()))
 		{
-			iter = vectorArgs.erase(iter);
-			if (vectorArgs.end() == iter)
-			{
-				status = Status(Status_InvalidArg, "No offset specified for {1}", ARG_PATTERN);
+			Pattern   pattern;
 
-				break;
+			if (0 == cxw_strcmp(ARG_PATTERN, iter->c_str()))
+			{
+				iter = vectorArgs.erase(iter);
+				if (vectorArgs.end() == iter)
+				{
+					status = Status(Status_InvalidArg, "No offset specified for {1}", ARG_PATTERN);
+
+					break;
+				}
+
+				pattern.bHasOffset = True;
+
+				std::wstringstream   wiss;
+
+				wiss.str(iter->c_str());
+				wiss >> pattern.cbOffset;
+				if (wiss.fail() || !wiss.eof())
+				{
+					status = Status(Status_InvalidArg, "Invalid offset specified for {1}", ARG_PATTERN);
+
+					break;
+				}
+				iter = vectorArgs.erase(iter);
+				if (vectorArgs.end() == iter)
+				{
+					status = Status(Status_InvalidArg, "No pattern specified for {1}", ARG_PATTERN);
+
+					break;
+				}
+				if (iter->empty())
+				{
+					status = Status(Status_InvalidArg, "Invalid pattern specified for {1}", ARG_PATTERN);
+
+					break;
+				}
+			}
+			else
+			{
+				iter = vectorArgs.erase(iter);
+				if (vectorArgs.end() == iter)
+				{
+					status = Status(Status_InvalidArg, "No offset specified for {1}", ARG_PATTERN);
+
+					break;
+				}
+
+				pattern.bHasOffset = False;
+				pattern.cbOffset   = 0;
 			}
 
-			Pattern              pattern;
-			std::wstringstream   wiss;
+			const WChar   *wszPattern = iter->c_str();
+			Size          cPatternLen = iter->size();
 
-			wiss.str(iter->c_str());
-			wiss >> pattern.cbOffset;
-			if (wiss.fail() || !wiss.eof())
+			if (L'!' == *wszPattern)
 			{
-				status = Status(Status_InvalidArg, "Invalid offset specified for {1}", ARG_PATTERN);
-
-				break;
+				pattern.bNegate = True;
+				wszPattern++;
+				cPatternLen--;
 			}
-			iter = vectorArgs.erase(iter);
-			if (vectorArgs.end() == iter)
+			else
 			{
-				status = Status(Status_InvalidArg, "No pattern specified for {1}", ARG_PATTERN);
-
-				break;
+				pattern.bNegate = False;
 			}
-			if (iter->empty())
-			{
-				status = Status(Status_InvalidArg, "Invalid pattern specified for {1}", ARG_PATTERN);
 
-				break;
-			}
-			if (L'x' == *iter->c_str())
+			if (4 <= cPatternLen && L'0' == *wszPattern && (L'x' == *(wszPattern + 1) || L'X' == *(wszPattern + 1)))
 			{
-				if (MAX_PATTERN_SIZE + 1 < iter->size() || 1 != (iter->size() % 2))
+				if (MAX_PATTERN_SIZE + 2 < cPatternLen || 0 != (cPatternLen % 2))
 				{
 					status = Status(Status_InvalidArg, "Invalid pattern specified for {1}", ARG_PATTERN);
 
@@ -315,7 +353,7 @@ Status FileEnumerator::Config::FromCmdLine(ArgsVector &vectorArgs, Size cStartAr
 				String           sPattern;
 				Byte             hex[MAX_PATTERN_SIZE];
 
-				if (!(status = Str::UTF8::FromWChar(iter->c_str() + 1, &sPattern)))
+				if (!(status = Str::UTF8::FromWChar(wszPattern + 2, &sPattern)))
 				{
 					status = Status(Status_InvalidArg, "Invalid pattern specified for {1}", ARG_PATTERN);
 
@@ -338,7 +376,7 @@ Status FileEnumerator::Config::FromCmdLine(ArgsVector &vectorArgs, Size cStartAr
 			{
 				String   sPattern;
 
-				if (!(status = Str::UTF8::FromWChar(iter->c_str(), &sPattern)))
+				if (!(status = Str::UTF8::FromWChar(wszPattern, &sPattern)))
 				{
 					status = Status(Status_InvalidArg, "Invalid pattern specified for {1}", ARG_PATTERN);
 
@@ -377,6 +415,13 @@ FileEnumerator::FileHandlerFile::FileHandlerFile()
 FileEnumerator::FileHandlerFile::~FileHandlerFile()
 {
 	Close();
+	wszPath       = NULL;
+	cPathLen      = NULL;
+	pContent      = NULL;
+	cbContentSize = NULL;
+	uAttributes   = NULL;
+	hFile         = NULL;
+	hFileMapping  = NULL;
 }
 
 const WChar *FileEnumerator::FileHandlerFile::GetPath() const
@@ -428,11 +473,8 @@ void FileEnumerator::FileHandlerFile::Close()
 	{
 		CloseHandle(hFile);
 	}
-	wszPath       = NULL;
-	cPathLen      = NULL;
 	pContent      = NULL;
-	cbContentSize = NULL;
-	uAttributes   = NULL;
+	cbContentSize = 0;
 	hFile         = NULL;
 	hFileMapping  = NULL;
 }
@@ -621,6 +663,7 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 	Sys::ThreadPool          *pThreadPool  = (Sys::ThreadPool *)pTP;
 	ULARGE_INTEGER           uliSize;
 	FileHandlerFile          *pFile;
+	Size                     cInclusionPatterns;
 	HANDLE                   hFile        = NULL;
 	HANDLE                   hFileMapping = NULL;
 	const void               *pFileData   = NULL;
@@ -628,6 +671,15 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 
 	for (;;)
 	{
+		cInclusionPatterns = 0;
+		for (auto iter = config.vectorPatterns.begin(); iter != config.vectorPatterns.end(); ++iter)
+		{
+			if (!iter->bNegate)
+			{
+				cInclusionPatterns++;
+			}
+		}
+
 		uliSize.HighPart = pData->nFileSizeHigh;
 		uliSize.LowPart  = pData->nFileSizeLow;
 
@@ -707,22 +759,24 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 				break;
 			}
 
-			Bool   bFound = False;
+			Bool   bMatched = False;
 
-			for (auto iter = config.vectorPatterns.begin(); iter != config.vectorPatterns.end(); ++iter)
+			if (!FindPatterns(pFileData, uliSize.QuadPart, True, config.vectorPatterns))
 			{
-				if (iter->cbOffset < uliSize.QuadPart && 
-				    (UInt64)iter->pattern.size() <= uliSize.QuadPart - iter->cbOffset)
+				if (0 < cInclusionPatterns)
 				{
-					if (0 == memcmp(&iter->pattern[0], (const Byte *)pFileData + iter->cbOffset, iter->pattern.size()))
+					if (FindPatterns(pFileData, uliSize.QuadPart, False, config.vectorPatterns))
 					{
-						bFound = True;
-
-						break;
+						bMatched = True;
 					}
 				}
+				else
+				{
+					bMatched = True;
+				}
 			}
-			if (!bFound)
+
+			if (!bMatched)
 			{
 				pStats->cExcludedFiles++;
 				pStats->cbExcludedFilesSize += uliSize.QuadPart;
@@ -792,6 +846,50 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 		CloseHandle(hFile);
 		hFile = NULL;
 	}
+}
+
+Bool FileEnumerator::FindPatterns(const void *pFileData, UInt64 cbFileSize, Bool bNegate, 
+                                  const Config::PatternsVector &vectorPatterns)
+{
+	const Byte *pData = (const Byte *)pFileData;
+
+	for (auto iter = vectorPatterns.begin(); iter != vectorPatterns.end(); ++iter)
+	{
+		if (bNegate == iter->bNegate)
+		{
+			if (iter->bHasOffset)
+			{
+				if (iter->cbOffset < cbFileSize && (UInt64)iter->pattern.size() <= cbFileSize - iter->cbOffset)
+				{
+					if (0 == memcmp(&iter->pattern[0], (const Byte *)pFileData + iter->cbOffset, iter->pattern.size()))
+					{
+						return True;
+					}
+				}
+			}
+			else
+			{
+				Size   cCount;
+
+				while (cbFileSize >= iter->pattern.size())
+				{
+					cCount = 0;
+					while (iter->pattern.size() > cCount && pData[cCount] == iter->pattern[cCount])
+					{
+						cCount++;
+					}
+					if (iter->pattern.size() == cCount)
+					{
+						return True;
+					}
+					pData++;
+					cbFileSize--;
+				}
+			}
+		}
+	}
+
+	return False;
 }
 
 VOID CALLBACK FileEnumerator::WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOID pContext, PTP_WORK pWork)

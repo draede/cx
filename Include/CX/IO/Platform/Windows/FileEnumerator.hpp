@@ -79,18 +79,21 @@ public:
 		static const WChar    *ARG_MAX_FILE_SIZE;  //--maxfilesize <max_file_size : uint64>
 		static const WChar    *ARG_RECURSIVE;      //--recursive <yes|no>
 		static const WChar    *ARG_EXTENSION;      //--extension <extension:string (e.g. : exe)>
-		static const WChar    *ARG_PATTERN;        //--pattern <offset:uint64> <pattern:string_or_hexstring e.g. 0xAABBCC>
+		static const WChar    *ARG_PATTERN;        //--pattern <offset:uint64> [!]<pattern:string_or_hexstring e.g. 0xAABBCC>
+		static const WChar    *ARG_XPATTERN;       //--xpattern [!]<pattern:string_or_hexstring e.g. 0xAABBCC>
 
 		typedef Set<WString, WCaseInsensitiveOrderPolicy>::Type   ExtensionsSet;
 
 		struct Pattern
 		{
+			Bool     bHasOffset;
 			UInt64   cbOffset;
 			BLOB     pattern;
+			Bool     bNegate;
 
 			Pattern();
 
-			Pattern(UInt64 cbOffset, const void *pPattern, Size cbSize);
+			Pattern(Bool bHasOffset, UInt64 cbOffset, const void *pPattern, Size cbSize, Bool bNegate);
 
 			Bool SetupPattern(const void *pPattern, Size cbSize);
 		};
@@ -238,6 +241,9 @@ private:
 	FileEnumerator();
 
 	~FileEnumerator();
+
+	static Bool FindPatterns(const void *pFileData, UInt64 cbFileSize, Bool bNegate, 
+	                         const Config::PatternsVector &vectorPatterns);
 
 	static void Enumerate(const WChar *wszPath, IHandler *pHandler, void *pTP, const Config &config, 
 	                      IHandler::Stats *pStats, Util::Timer *pTimer);
