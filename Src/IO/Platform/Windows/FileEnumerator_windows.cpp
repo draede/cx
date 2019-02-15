@@ -736,7 +736,7 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 			}
 		}
 
-		if (!config.vectorPatterns.empty())
+		if (!config.vectorPatterns.empty() || config.bMapFile)
 		{
 			if (INVALID_HANDLE_VALUE == (hFile = ::CreateFileW(wszPath, GENERIC_READ, FILE_SHARE_READ, NULL, 
 			                                                   OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)))
@@ -758,7 +758,10 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 
 				break;
 			}
+		}
 
+		if (!config.vectorPatterns.empty())
+		{
 			Bool   bMatched = False;
 
 			if (!FindPatterns(pFileData, uliSize.QuadPart, True, config.vectorPatterns))
