@@ -1,3 +1,5 @@
+0.2.216 - 2019-02-16
+ - Added delayed mapping of files in IO/FileEnumerator.hpp (reduce handles usage)
 0.2.215 - 2019-02-15
  - Fixed mapping bug in IO/FileEnumerator.hpp
 0.2.214 - 2019-02-14

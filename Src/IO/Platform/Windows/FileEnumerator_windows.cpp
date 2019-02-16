@@ -403,80 +403,128 @@ Status FileEnumerator::Config::FromCmdLine(ArgsVector &vectorArgs, Size cStartAr
 
 FileEnumerator::FileHandlerFile::FileHandlerFile()
 {
-	wszPath       = NULL;
-	cPathLen      = NULL;
-	pContent      = NULL;
-	cbContentSize = NULL;
-	uAttributes   = NULL;
-	hFile         = NULL;
-	hFileMapping  = NULL;
+	m_pConfig       = NULL;
+	m_pHandler      = NULL;
+	m_pStats        = NULL;
+	m_wszPath       = NULL;
+	m_cPathLen      = NULL;
+	m_pContent      = NULL;
+	m_cbContentSize = NULL;
+	m_uAttributes   = NULL;
+	m_hFile         = NULL;
+	m_hFileMapping  = NULL;
 }
 
 FileEnumerator::FileHandlerFile::~FileHandlerFile()
 {
 	Close();
-	wszPath       = NULL;
-	cPathLen      = NULL;
-	pContent      = NULL;
-	cbContentSize = NULL;
-	uAttributes   = NULL;
-	hFile         = NULL;
-	hFileMapping  = NULL;
+	m_pConfig       = NULL;
+	m_pHandler      = NULL;
+	m_pStats        = NULL;
+	m_wszPath       = NULL;
+	m_cPathLen      = NULL;
+	m_pContent      = NULL;
+	m_cbContentSize = NULL;
+	m_uAttributes   = NULL;
+	m_hFile         = NULL;
+	m_hFileMapping  = NULL;
+}
+
+Status FileEnumerator::FileHandlerFile::Open()
+{
+	Status   status;
+
+	for (;;)
+	{
+		if ((UInt64)((SIZE_T)-1) < m_cbContentSize)
+		{
+			status = Status(Status_OpenFailed, "File too big to map");
+
+			break;
+		}
+		if (INVALID_HANDLE_VALUE == (m_hFile = ::CreateFileW(m_wszPath, GENERIC_READ, FILE_SHARE_READ, NULL,
+		                                                     OPEN_EXISTING, FILE_FLAG_RANDOM_ACCESS, NULL)))
+		{
+			m_hFile = NULL;
+			status  = Status(Status_OpenFailed, "CreateFileW failed with error {1}", GetLastError());
+
+			break;
+		}
+		if (NULL == (m_hFileMapping = ::CreateFileMapping(m_hFile, NULL, PAGE_READONLY, 0, 0, NULL)))
+		{
+			status = Status(Status_OpenFailed, "CreateFileMapping failed with error {1}", GetLastError());
+
+			break;
+		}
+		if (NULL == (m_pContent = ::MapViewOfFile(m_hFileMapping, FILE_MAP_READ, 0, 0, (SIZE_T)m_cbContentSize)))
+		{
+			status = Status(Status_OperationFailed, "MapViewOfFile failed with error {1}", GetLastError());
+
+			break;
+		}
+
+		break;
+	}
+	if (!status)
+	{
+		Close();
+	}
+
+	return status;
 }
 
 const WChar *FileEnumerator::FileHandlerFile::GetPath() const
 {
-	return wszPath;
+	return m_wszPath;
 }
 
 Size FileEnumerator::FileHandlerFile::GetPathLen() const
 {
-	return cPathLen;
+	return m_cPathLen;
 }
 
 const void *FileEnumerator::FileHandlerFile::GetContent() const
 {
-	return pContent;
+	return m_pContent;
 }
 
 UInt64 FileEnumerator::FileHandlerFile::GetContentSize() const
 {
-	return cbContentSize;
+	return m_cbContentSize;
 }
 
 UInt32 FileEnumerator::FileHandlerFile::GetAttributes() const
 {
-	return uAttributes;
+	return m_uAttributes;
 }
 
 HANDLE FileEnumerator::FileHandlerFile::GetHandle()
 {
-	return hFile;
+	return m_hFile;
 }
 
 HANDLE FileEnumerator::FileHandlerFile::GetMappingHandle()
 {
-	return hFileMapping;
+	return m_hFileMapping;
 }
 
 void FileEnumerator::FileHandlerFile::Close()
 {
-	if (NULL != pContent)
+	if (NULL != m_pContent)
 	{
-		UnmapViewOfFile(pContent);
+		UnmapViewOfFile(m_pContent);
+		m_pContent = NULL;
 	}
-	if (NULL != hFileMapping)
+	if (NULL != m_hFileMapping)
 	{
-		CloseHandle(hFileMapping);
+		CloseHandle(m_hFileMapping);
+		m_hFileMapping = NULL;
 	}
-	if (NULL != hFile)
+	if (NULL != m_hFile)
 	{
-		CloseHandle(hFile);
+		CloseHandle(m_hFile);
+		m_hFile = NULL;
 	}
-	pContent      = NULL;
-	cbContentSize = 0;
-	hFile         = NULL;
-	hFileMapping  = NULL;
 }
 
 FileEnumerator::FileEnumerator()
@@ -505,8 +553,13 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	DWORD              dwAttr;
 	WString            wsPath;
 	IHandler::Stats    stats;
-	Util::Timer        timer;
+	LARGE_INTEGER      liQPerf;
 	Status             status;
+
+	QueryPerformanceFrequency(&liQPerf);
+	stats.nPerfCounterFreq  = liQPerf.QuadPart;
+	QueryPerformanceCounter(&liQPerf);
+	stats.nPerfCounterStart = liQPerf.QuadPart;
 
 	stats.cAllDirs                     = 0;
 	stats.cAllFiles                    = 0;
@@ -529,7 +582,6 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	stats.cbErrorMemAllocFilesSize     = 0;
 	stats.cErrorProcessingFiles        = 0;
 	stats.cbErrorProcessingFilesSize   = 0;
-	stats.lfElapsedTime                = 0.0;
 
 	if (Config::MIN_THREADS > config.cThreads)
 	{
@@ -578,7 +630,7 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 		dwAttr = GetFileAttributesW(iter->c_str());
 		if (INVALID_FILE_ATTRIBUTES == dwAttr || FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & dwAttr))
 		{
-			Enumerate(iter->c_str(), pHandler, &tp, config, &stats, &timer);
+			Enumerate(iter->c_str(), pHandler, &tp, config, &stats);
 		}
 		else
 		{
@@ -590,7 +642,6 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 				wsPath += L"\\";
 				wsPath += data.cFileName;
 
-				stats.lfElapsedTime = timer.GetElapsedTime();
 				OnFile(wsPath.c_str(), wsPath.size(), &data, pHandler, &tp, config, &stats);
 			}
 		}
@@ -598,21 +649,20 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 
 	tp.Stop();
 
-	stats.lfElapsedTime = timer.GetElapsedTime();
 	pHandler->OnEnd(&stats);
 
 	return Status();
 }
 
 void FileEnumerator::Enumerate(const WChar *wszPath, IHandler *pHandler, void *pTP, const Config &config, 
-                               IHandler::Stats *pStats, Util::Timer *pTimer)
+                               IHandler::Stats *pStats)
 {
 	WIN32_FIND_DATAW   data;
 	HANDLE             hFind;
 	WString            wsPath;
 	WString            wsMask;
 
-	pStats->cAllDirs++;
+	InterlockedIncrement64(&pStats->cAllDirs);
 
 	wsMask = wszPath;
 	wsMask += L"\\*.*";
@@ -631,7 +681,6 @@ void FileEnumerator::Enumerate(const WChar *wszPath, IHandler *pHandler, void *p
 					wsPath += L"\\";
 					wsPath += data.cFileName;
 
-					pStats->lfElapsedTime = pTimer->GetElapsedTime();
 					OnFile(wsPath.c_str(), wsPath.size(), &data, pHandler, pTP, config, pStats);
 				}
 				else
@@ -643,7 +692,7 @@ void FileEnumerator::Enumerate(const WChar *wszPath, IHandler *pHandler, void *p
 						wsPath += L"\\";
 						wsPath += data.cFileName;
 
-						Enumerate(wsPath.c_str(), pHandler, pTP, config, pStats, pTimer);
+						Enumerate(wsPath.c_str(), pHandler, pTP, config, pStats);
 					}
 				}
 			}
@@ -663,50 +712,36 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 	Sys::ThreadPool          *pThreadPool  = (Sys::ThreadPool *)pTP;
 	ULARGE_INTEGER           uliSize;
 	FileHandlerFile          *pFile;
-	Size                     cInclusionPatterns;
-	HANDLE                   hFile        = NULL;
-	HANDLE                   hFileMapping = NULL;
-	const void               *pFileData   = NULL;
 	Status                   status;
 
 	for (;;)
 	{
-		cInclusionPatterns = 0;
-		for (auto iter = config.vectorPatterns.begin(); iter != config.vectorPatterns.end(); ++iter)
-		{
-			if (!iter->bNegate)
-			{
-				cInclusionPatterns++;
-			}
-		}
-
 		uliSize.HighPart = pData->nFileSizeHigh;
 		uliSize.LowPart  = pData->nFileSizeLow;
 
-		pStats->cAllFiles++;
-		pStats->cbAllFilesSize += uliSize.QuadPart;
+		InterlockedIncrement64(&pStats->cAllFiles);
+		InterlockedAdd64(&pStats->cbAllFilesSize, uliSize.QuadPart);
 
 		if (config.cbMinFileSize > uliSize.QuadPart)
 		{
-			pStats->cExcludedFiles++;
-			pStats->cbExcludedFilesSize += uliSize.QuadPart;
+			InterlockedIncrement64(&pStats->cExcludedFiles);
+			InterlockedAdd64(&pStats->cbExcludedFilesSize, uliSize.QuadPart);
 
-			pStats->cExcludedTooSmallFiles++;
-			pStats->cbExcludedTooSmallFilesSize += uliSize.QuadPart;
+			InterlockedIncrement64(&pStats->cExcludedTooSmallFiles);
+			InterlockedAdd64(&pStats->cbExcludedTooSmallFilesSize, uliSize.QuadPart);
 
 			break;
 		}
 		if (config.cbMaxFileSize < uliSize.QuadPart)
 		{
-			pStats->cExcludedFiles++;
-			pStats->cbExcludedFilesSize += uliSize.QuadPart;
+			InterlockedIncrement64(&pStats->cExcludedFiles);
+			InterlockedAdd64(&pStats->cbExcludedFilesSize, uliSize.QuadPart);
 
-			pStats->cExcludedTooBigFiles++;
-			pStats->cbExcludedTooBigFilesSize += uliSize.QuadPart;
+			InterlockedIncrement64(&pStats->cExcludedTooBigFiles);
+			InterlockedAdd64(&pStats->cbExcludedTooBigFilesSize, uliSize.QuadPart);
 
 			break;
 		}
-
 		if (!config.setExtensions.empty())
 		{
 			const WChar *wszPos = pData->cFileName;
@@ -726,73 +761,15 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 			}
 			if (config.setExtensions.end() == config.setExtensions.find(wszExt))
 			{
-				pStats->cExcludedFiles++;
-				pStats->cbExcludedFilesSize += uliSize.QuadPart;
+				InterlockedIncrement64(&pStats->cExcludedFiles);
+				InterlockedAdd64(&pStats->cbExcludedFilesSize, uliSize.QuadPart);
 
-				pStats->cExcludedExtensionFiles++;
-				pStats->cbExcludedExtensionFilesSize += uliSize.QuadPart;
-
-				break;
-			}
-		}
-
-		if (!config.vectorPatterns.empty() || config.bMapFile)
-		{
-			if (INVALID_HANDLE_VALUE == (hFile = ::CreateFileW(wszPath, GENERIC_READ, FILE_SHARE_READ, NULL, 
-			                                                   OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)))
-			{
-				hFile  = NULL;
-				status = Status(Status_OpenFailed, "CreateFileW failed with error {1}", GetLastError());
-
-				break;
-			}
-			if (NULL == (hFileMapping = ::CreateFileMapping(hFile, NULL, PAGE_READONLY, 0, 0, NULL)))
-			{
-				status = Status(Status_OpenFailed, "CreateFileMapping failed with error {1}", GetLastError());
-
-				break;
-			}
-			if (NULL == (pFileData = ::MapViewOfFile(hFileMapping, FILE_MAP_READ, 0, 0, 0)))
-			{
-				status = Status(Status_OperationFailed, "MapViewOfFile failed with error {1}", GetLastError());
+				InterlockedIncrement64(&pStats->cExcludedExtensionFiles);
+				InterlockedAdd64(&pStats->cbExcludedExtensionFilesSize, uliSize.QuadPart);
 
 				break;
 			}
 		}
-
-		if (!config.vectorPatterns.empty())
-		{
-			Bool   bMatched = False;
-
-			if (!FindPatterns(pFileData, uliSize.QuadPart, True, config.vectorPatterns))
-			{
-				if (0 < cInclusionPatterns)
-				{
-					if (FindPatterns(pFileData, uliSize.QuadPart, False, config.vectorPatterns))
-					{
-						bMatched = True;
-					}
-				}
-				else
-				{
-					bMatched = True;
-				}
-			}
-
-			if (!bMatched)
-			{
-				pStats->cExcludedFiles++;
-				pStats->cbExcludedFilesSize += uliSize.QuadPart;
-
-				pStats->cExcludedPatternFiles++;
-				pStats->cbExcludedPatternFilesSize += uliSize.QuadPart;
-
-				break;
-			}
-		}
-
-		pStats->cIncludedFiles++;
-		pStats->cbIncludedFilesSize += uliSize.QuadPart;
 
 		if (NULL != (pFile = (FileHandlerFile *)Mem::Alloc(sizeof(FileHandlerFile) + sizeof(WChar) * (cPathLen + 1))))
 		{
@@ -800,54 +777,34 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 
 			memcpy(pFile + 1, wszPath, sizeof(WChar) * (cPathLen + 1));
 
-			pFile->pHandler      = pHandler;
-			pFile->pStats        = pStats;
-			pFile->wszPath       = (const WChar *)(pFile + 1);
-			pFile->cPathLen      = cPathLen;
-			pFile->pContent      = pFileData;
-			pFile->cbContentSize = uliSize.QuadPart;
-			pFile->uAttributes   = pData->dwFileAttributes;
-			pFile->hFile         = hFile;
-			pFile->hFileMapping  = hFileMapping;
-			if (!(status = pThreadPool->AddWork(&FileEnumerator::WorkCallback, pFile)))
+			pFile->m_pConfig       = &config;
+			pFile->m_pHandler      = pHandler;
+			pFile->m_pStats        = pStats;
+			pFile->m_wszPath       = (const WChar *)(pFile + 1);
+			pFile->m_cPathLen      = cPathLen;
+			pFile->m_cbContentSize = uliSize.QuadPart;
+
+			if ((status = pThreadPool->AddWork(&FileEnumerator::WorkCallback, pFile)))
 			{
-				pStats->cErrorProcessingFiles++;
-				pStats->cbErrorProcessingFilesSize += uliSize.QuadPart;
+				InterlockedIncrement64(&pStats->cProcessedFiles);
+				InterlockedAdd64(&pStats->cbProcessedFilesSize, uliSize.QuadPart);
+			}
+			else
+			{
+				InterlockedIncrement64(&pStats->cErrorProcessingFiles);
+				InterlockedAdd64(&pStats->cbErrorProcessingFilesSize, uliSize.QuadPart);
 
 				pFile->~FileHandlerFile();
 				Mem::Free(pFile);
 			}
-			else
-			{
-				pStats->cProcessedFiles++;
-				pStats->cbProcessedFilesSize += uliSize.QuadPart;
-			}
-			pFileData    = NULL;
-			hFileMapping = NULL;
-			hFile        = NULL;
 		}
 		else
 		{
-			pStats->cErrorMemAllocFiles++;
-			pStats->cbErrorMemAllocFilesSize += uliSize.QuadPart;
+			InterlockedIncrement64(&pStats->cErrorMemAllocFiles);
+			InterlockedAdd64(&pStats->cbErrorMemAllocFilesSize, uliSize.QuadPart);
 		}
 
 		break;
-	}
-	if (NULL != pFileData)
-	{
-		UnmapViewOfFile(pFileData);
-		pFileData = NULL;
-	}
-	if (NULL != hFileMapping)
-	{
-		CloseHandle(hFileMapping);
-		hFileMapping = NULL;
-	}
-	if (NULL != hFile)
-	{
-		CloseHandle(hFile);
-		hFile = NULL;
 	}
 }
 
@@ -901,8 +858,67 @@ VOID CALLBACK FileEnumerator::WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOI
 	CX_UNUSED(pWork);
 
 	FileHandlerFile   *pFile = (FileHandlerFile *)pContext;
+	Size              cInclusionPatterns;
+	Status            status;
 
-	pFile->pHandler->OnFile(pFile, pFile->pStats);
+	for (;;)
+	{
+		cInclusionPatterns = 0;
+		for (auto iter = pFile->m_pConfig->vectorPatterns.begin(); iter != pFile->m_pConfig->vectorPatterns.end(); ++iter)
+		{
+			if (!iter->bNegate)
+			{
+				cInclusionPatterns++;
+			}
+		}
+
+		if (!pFile->m_pConfig->vectorPatterns.empty() || pFile->m_pConfig->bMapFile)
+		{
+			if (!(status = pFile->Open()))
+			{
+				break;
+			}
+		}
+
+		if (!pFile->m_pConfig->vectorPatterns.empty())
+		{
+			Bool   bMatched = False;
+
+			if (!FindPatterns(pFile->m_pConfig, pFile->m_cbContentSize, True, pFile->m_pConfig->vectorPatterns))
+			{
+				if (0 < cInclusionPatterns)
+				{
+					if (FindPatterns(pFile->m_pContent, pFile->m_cbContentSize, False, pFile->m_pConfig->vectorPatterns))
+					{
+						bMatched = True;
+					}
+				}
+				else
+				{
+					bMatched = True;
+				}
+			}
+
+			if (!bMatched)
+			{
+				InterlockedIncrement64(&pFile->m_pStats->cErrorMemAllocFiles);
+				InterlockedAdd64(&pFile->m_pStats->cbExcludedFilesSize, pFile->m_cbContentSize);
+
+				InterlockedIncrement64(&pFile->m_pStats->cExcludedPatternFiles);
+				InterlockedAdd64(&pFile->m_pStats->cbExcludedPatternFilesSize, pFile->m_cbContentSize);
+
+				break;
+			}
+		}
+
+		InterlockedIncrement64(&pFile->m_pStats->cIncludedFiles);
+		InterlockedAdd64(&pFile->m_pStats->cbIncludedFilesSize, pFile->m_cbContentSize);
+
+		pFile->m_pHandler->OnFile(pFile, pFile->m_pStats);
+
+		break;
+	}
+
 
 	pFile->~FileHandlerFile();
 	Mem::Free(pFile);

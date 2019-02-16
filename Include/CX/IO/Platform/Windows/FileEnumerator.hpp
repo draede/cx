@@ -42,7 +42,6 @@
 #include "CX/String.hpp"
 #include "CX/C/Platform/Windows/windows.h"
 #include "CX/BLOB.hpp"
-#include "CX/Util/Timer.hpp"
 #include "CX/APIDefs.hpp"
 
 
@@ -140,45 +139,48 @@ public:
 
 			virtual HANDLE GetMappingHandle() = 0;
 
+			virtual Status Open() = 0;
+
 			virtual void Close() = 0;
 
 		};
 
 		struct Stats
 		{
-			Size     cAllDirs;
+			volatile Int64     cAllDirs;
+			
+			volatile Int64     cAllFiles;
+			volatile Int64     cbAllFilesSize;
 
-			Size     cAllFiles;
-			UInt64   cbAllFilesSize;
+			volatile Int64     cExcludedFiles;
+			volatile Int64     cbExcludedFilesSize;
 
-			Size     cExcludedFiles;
-			UInt64   cbExcludedFilesSize;
+			volatile Int64     cExcludedTooSmallFiles;
+			volatile Int64     cbExcludedTooSmallFilesSize;
 
-			Size     cExcludedTooSmallFiles;
-			UInt64   cbExcludedTooSmallFilesSize;
+			volatile Int64     cExcludedTooBigFiles;
+			volatile Int64     cbExcludedTooBigFilesSize;
 
-			Size     cExcludedTooBigFiles;
-			UInt64   cbExcludedTooBigFilesSize;
+			volatile Int64     cExcludedExtensionFiles;
+			volatile Int64     cbExcludedExtensionFilesSize;
 
-			Size     cExcludedExtensionFiles;
-			UInt64   cbExcludedExtensionFilesSize;
+			volatile Int64     cExcludedPatternFiles;
+			volatile Int64     cbExcludedPatternFilesSize;
 
-			Size     cExcludedPatternFiles;
-			UInt64   cbExcludedPatternFilesSize;
+			volatile Int64     cIncludedFiles;
+			volatile Int64     cbIncludedFilesSize;
 
-			Size     cIncludedFiles;
-			UInt64   cbIncludedFilesSize;
+			volatile Int64     cProcessedFiles;
+			volatile Int64     cbProcessedFilesSize;
 
-			Size     cProcessedFiles;
-			UInt64   cbProcessedFilesSize;
+			volatile Int64     cErrorMemAllocFiles;
+			volatile Int64     cbErrorMemAllocFilesSize;
 
-			Size     cErrorMemAllocFiles;
-			UInt64   cbErrorMemAllocFilesSize;
+			volatile Int64     cErrorProcessingFiles;
+			volatile Int64     cbErrorProcessingFilesSize;
 
-			Size     cErrorProcessingFiles;
-			UInt64   cbErrorProcessingFilesSize;
-
-			Double   lfElapsedTime;
+			Int64              nPerfCounterFreq;
+			Int64              nPerfCounterStart;
 		};
 
 		~IHandler() { }
@@ -205,16 +207,17 @@ private:
 	{
 	public:
 
-		IHandler          *pHandler;
-		IHandler::Stats   *pStats;
+		const Config      *m_pConfig;
+		IHandler          *m_pHandler;
+		IHandler::Stats   *m_pStats;
 
-		const WChar       *wszPath;
-		Size              cPathLen;
-		const void        *pContent;
-		UInt64            cbContentSize;
-		UInt32            uAttributes;
-		HANDLE            hFile;
-		HANDLE            hFileMapping;
+		const WChar       *m_wszPath;
+		Size              m_cPathLen;
+		const void        *m_pContent;
+		UInt64            m_cbContentSize;
+		UInt32            m_uAttributes;
+		HANDLE            m_hFile;
+		HANDLE            m_hFileMapping;
 
 		FileHandlerFile();
 
@@ -234,6 +237,8 @@ private:
 
 		virtual HANDLE GetMappingHandle();
 
+		virtual Status Open();
+
 		virtual void Close();
 
 	};
@@ -246,7 +251,7 @@ private:
 	                         const Config::PatternsVector &vectorPatterns);
 
 	static void Enumerate(const WChar *wszPath, IHandler *pHandler, void *pTP, const Config &config, 
-	                      IHandler::Stats *pStats, Util::Timer *pTimer);
+	                      IHandler::Stats *pStats);
 
 	static void OnFile(const WChar *wszPath, Size cPathLen, const void *pFindData, IHandler *pHandler, 
                       void *pTP, const Config &config, IHandler::Stats *pStats);
