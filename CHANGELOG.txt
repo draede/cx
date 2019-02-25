@@ -1,3 +1,5 @@
+0.2.217 - 2019-02-25
+ - Fixed Hash::MultiHash::GetHashName
 0.2.216 - 2019-02-16
  - Added delayed mapping of files in IO/FileEnumerator.hpp (reduce handles usage)
 0.2.215 - 2019-02-15
