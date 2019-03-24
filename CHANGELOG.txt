@@ -1,3 +1,6 @@
+0.2.218 - 2019-03-24
+ - Fixed Sys::BOM
+ - Added support for file lists in IO/FileEnumerator
 0.2.217 - 2019-02-25
  - Fixed Hash::MultiHash::GetHashName
 0.2.216 - 2019-02-16

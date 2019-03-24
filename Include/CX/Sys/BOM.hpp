@@ -52,32 +52,42 @@ public:
 		UTF32_BE,
 	};
 
-	static inline Type Get(const void *pBuffer, Size cbSize)
+	static inline Type Get(const void *pBuffer, Size cbSize, Size *pcbBOMSize)
 	{
 		const Byte *p = (const Byte *)pBuffer;
 
 		if (3 <= cbSize && 0xEF == p[0] && 0xBB == p[1] && 0xBF != p[2])
 		{
+			*pcbBOMSize = 3;
+
 			return UTF8;
 		}
 		else
-		if (4 <= cbSize && 0xFF == p[0] && 0xFE == p[1] && 0x00 != p[2] && 0x00 != p[3])
+		if (2 <= cbSize && 0xFF == p[0] && 0xFE == p[1])
 		{
+			*pcbBOMSize = 2;
+
 			return UTF16_LE;
 		}
 		else
 		if (2 <= cbSize && 0xFE == p[0] && 0xFF == p[1])
 		{
+			*pcbBOMSize = 2;
+
 			return UTF16_BE;
 		}
 		else
 		if (4 <= cbSize && 0xFF == p[0] && 0xFE == p[1] && 0x00 == p[2] && 0x00 == p[3])
 		{
+			*pcbBOMSize = 4;
+
 			return UTF32_LE;
 		}
 		else
 		if (4 <= cbSize && 0x00 == p[0] && 0x00 == p[1] && 0xFE == p[2] && 0xFF == p[3])
 		{
+			*pcbBOMSize = 4;
+
 			return UTF32_BE;
 		}
 		else

@@ -37,6 +37,7 @@
 #include "CX/Sys/Platform/Windows/ThreadPool.hpp"
 #include "CX/Str/HexBinStr.hpp"
 #include "CX/Str/UTF8.hpp"
+#include "CX/Sys/BOM.hpp"
 #include "CX/C/string.h"
 #include <sstream>
 
@@ -539,13 +540,13 @@ Status FileEnumerator::Run(const WChar *wszPath, IHandler *pHandler, const Confi
 {
 	PathsVector   vectorPaths;
 
-	vectorPaths.push_back(wszPath);
+vectorPaths.push_back(wszPath);
 
-	return Run(vectorPaths, pHandler, config);
+return Run(vectorPaths, pHandler, config);
 }
 
-Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler, 
-                           const Config &config/* = Config::GetDefault()*/)
+Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
+	const Config &config/* = Config::GetDefault()*/)
 {
 	Sys::ThreadPool    tp;
 	WIN32_FIND_DATAW   data;
@@ -557,7 +558,7 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	Status             status;
 
 	QueryPerformanceFrequency(&liQPerf);
-	stats.nPerfCounterFreq  = liQPerf.QuadPart;
+	stats.nPerfCounterFreq = liQPerf.QuadPart;
 	QueryPerformanceCounter(&liQPerf);
 	stats.nPerfCounterStart = liQPerf.QuadPart;
 
@@ -627,22 +628,78 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	pHandler->OnBegin();
 	for (auto iter = vectorPaths.begin(); iter != vectorPaths.end(); ++iter)
 	{
-		dwAttr = GetFileAttributesW(iter->c_str());
-		if (INVALID_FILE_ATTRIBUTES == dwAttr || FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & dwAttr))
+		if (0 == cxw_strnicmp(iter->c_str(), L"list:", 5))
 		{
-			Enumerate(iter->c_str(), pHandler, &tp, config, &stats);
+			FILE               *pFile;
+			Size               cbBOMSize;
+			WChar              *wszLine;
+			Size               cLen;
+			Byte               bom[MAX_BOM_SIZE];
+			Sys::BOM::Type     nType;
+
+			if (NULL != (pFile = _wfopen(iter->c_str() + 5, L"rb")))
+			{
+				if (NULL != (wszLine = new WChar[MAX_LINE_LEN]))
+				{
+					memset(wszLine, 0, sizeof(WChar) * MAX_LINE_LEN);
+					if (sizeof(bom) == fread(&bom, 1, sizeof(bom), pFile))
+					{
+						if (Sys::BOM::UTF16_LE == (nType = Sys::BOM::Get(bom, sizeof(bom), &cbBOMSize)))
+						{
+							fseek(pFile, (long)cbBOMSize, SEEK_SET);
+							while (!feof(pFile))
+							{
+								if (NULL != fgetws(wszLine, MAX_LINE_LEN, pFile))
+								{
+									cLen = cxw_strlen(wszLine);
+
+									if (0 < cLen && 32 > wszLine[cLen - 1])
+									{
+										wszLine[cLen - 1] = 0;
+										cLen--;
+										if (0 < cLen && 32 > wszLine[cLen - 1])
+										{
+											wszLine[cLen - 1] = 0;
+											cLen--;
+										}
+									}
+									if (0 < cLen)
+									{
+										if (INVALID_HANDLE_VALUE != (hFind = FindFirstFileW(wszLine, &data)))
+										{
+											FindClose(hFind);
+
+											OnFile(wszLine, cLen, &data, pHandler, &tp, config, &stats);
+										}
+									}
+								}
+							}
+						}
+					}
+					delete [] wszLine;
+				}
+				fclose(pFile);
+			}
 		}
 		else
 		{
-			if (INVALID_HANDLE_VALUE != (hFind = FindFirstFileW(iter->c_str(), &data)))
+			dwAttr = GetFileAttributesW(iter->c_str());
+			if (INVALID_FILE_ATTRIBUTES == dwAttr || FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & dwAttr))
 			{
-				FindClose(hFind);
+				Enumerate(iter->c_str(), pHandler, &tp, config, &stats);
+			}
+			else
+			{
+				if (INVALID_HANDLE_VALUE != (hFind = FindFirstFileW(iter->c_str(), &data)))
+				{
+					FindClose(hFind);
 
-				wsPath = iter->c_str();
-				wsPath += L"\\";
-				wsPath += data.cFileName;
+					wsPath = iter->c_str();
+					wsPath += L"\\";
+					wsPath += data.cFileName;
 
-				OnFile(wsPath.c_str(), wsPath.size(), &data, pHandler, &tp, config, &stats);
+					OnFile(wsPath.c_str(), wsPath.size(), &data, pHandler, &tp, config, &stats);
+				}
 			}
 		}
 	}

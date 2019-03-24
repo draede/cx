@@ -203,6 +203,9 @@ public:
 
 private:
 
+	static const Size   MAX_LINE_LEN = 32768;
+	static const Size   MAX_BOM_SIZE = 4;
+
 	class FileHandlerFile : public IHandler::IFile
 	{
 	public:
