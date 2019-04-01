@@ -684,21 +684,26 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 		else
 		{
 			dwAttr = GetFileAttributesW(iter->c_str());
-			if (INVALID_FILE_ATTRIBUTES == dwAttr || FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & dwAttr))
+			if (INVALID_FILE_ATTRIBUTES == dwAttr)
 			{
+				//try everything...
 				Enumerate(iter->c_str(), pHandler, &tp, config, &stats);
+				OnFile(iter->c_str(), iter->size(), &data, pHandler, &tp, config, &stats);
 			}
 			else
 			{
-				if (INVALID_HANDLE_VALUE != (hFind = FindFirstFileW(iter->c_str(), &data)))
+				if (FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & dwAttr))
 				{
-					FindClose(hFind);
+					Enumerate(iter->c_str(), pHandler, &tp, config, &stats);
+				}
+				else
+				{
+					if (INVALID_HANDLE_VALUE != (hFind = FindFirstFileW(iter->c_str(), &data)))
+					{
+						FindClose(hFind);
 
-					wsPath = iter->c_str();
-					wsPath += L"\\";
-					wsPath += data.cFileName;
-
-					OnFile(wsPath.c_str(), wsPath.size(), &data, pHandler, &tp, config, &stats);
+						OnFile(iter->c_str(), iter->size(), &data, pHandler, &tp, config, &stats);
+					}
 				}
 			}
 		}
