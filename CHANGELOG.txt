@@ -1,3 +1,5 @@
+0.2.220 - 2019-04-04
+ - Improved IO::MemoryMappedFile
 0.2.219 - 2019-04-01
  - Fixed single file enum in IO/FileEnumerator
 0.2.218 - 2019-03-24

@@ -245,6 +245,11 @@ const Char *MemoryMappedFile::GetPath() const
 	return m_sPath.c_str();
 }
 
+void *MemoryMappedFile::GetHandle()
+{
+	return m_pFile;
+}
+
 Status MemoryMappedFile::Remap(UInt64 cbNewMapOffset, UInt64 cbNewMapSize/* = 0*/)
 {
 	DWORD   dwOffsetHigh;

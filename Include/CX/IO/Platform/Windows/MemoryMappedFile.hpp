@@ -85,6 +85,8 @@ public:
 
 	const Char *GetPath() const;
 
+	void *GetHandle();
+
 	Status Remap(UInt64 cbNewMapOffset, UInt64 cbNewMapSize = 0);
 
 private:
