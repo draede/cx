@@ -139,10 +139,7 @@ public:
 
 		for (auto iter = m_vectorOptions.begin(); iter != m_vectorOptions.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szLongName, iter->sLongName.c_str()))
-#pragma warning(pop)
+			if (szLongName == iter->sLongName)
 			{
 				*iter = option;
 
@@ -169,10 +166,7 @@ public:
 
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				*iter = param;
 
@@ -341,10 +335,7 @@ public:
 					bFound = False;
 					for (auto iter = m_vectorOptions.begin(); iter != m_vectorOptions.end(); ++iter)
 					{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-						if (0 == cx_stricmp(argv[i] + 2, iter->sLongName.c_str()))
-#pragma warning(pop)
+						if (argv[i] + 2 == iter->sLongName)
 						{
 							iter->bPresent = True;
 							bFound         = True;
@@ -356,10 +347,7 @@ public:
 					{
 						for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 						{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-							if (0 == cx_stricmp(argv[i] + 2, iter->sName.c_str()))
-#pragma warning(pop)
+							if (argv[i] + 2 == iter->sName)
 							{
 								if (i + 1 < argc)
 								{
@@ -510,10 +498,7 @@ public:
 	{
 		for (auto iter = m_vectorOptions.begin(); iter != m_vectorOptions.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szLongName, iter->sLongName.c_str()))
-#pragma warning(pop)
+			if (szLongName == iter->sLongName)
 			{
 				return iter->bPresent;
 			}
@@ -526,10 +511,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_Int == iter->nType)
 				{
@@ -565,10 +547,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_Double == iter->nType)
 				{
@@ -605,10 +584,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_String == iter->nType)
 				{
@@ -644,10 +620,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_IntArray == iter->nType)
 				{
@@ -663,10 +636,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_IntArray == iter->nType)
 				{
@@ -702,10 +672,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_DoubleArray == iter->nType)
 				{
@@ -722,10 +689,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_DoubleArray == iter->nType)
 				{
@@ -761,10 +725,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_StringArray == iter->nType)
 				{
@@ -782,10 +743,7 @@ public:
 	{
 		for (auto iter = m_vectorParams.begin(); iter != m_vectorParams.end(); ++iter)
 		{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			if (0 == cx_stricmp(szName, iter->sName.c_str()))
-#pragma warning(pop)
+			if (szName == iter->sName)
 			{
 				if (ParamType_StringArray == iter->nType)
 				{

@@ -1,3 +1,6 @@
+0.2.221 - 2019-04-05
+ - Fixed wide char template issues in CLI::CmdLine
+ - Fixed new VS2017 debug options
 0.2.220 - 2019-04-04
  - Improved IO::MemoryMappedFile
 0.2.219 - 2019-04-01
