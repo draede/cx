@@ -51,13 +51,14 @@ class CX_API ThreadPool
 {
 public:
 
-	static const Size MAX_THREADS = 1024;
+	static const Size MAX_THREADS            = 1024;
+	static const Size MAX_WAITING_WORK_ITEMS = 0;
 
 	ThreadPool();
 
 	~ThreadPool();
 
-	Status Start(Size cMaxThreads = MAX_THREADS);
+	Status Start(Size cMaxThreads = MAX_THREADS, Size cWaitingWorkItems = MAX_WAITING_WORK_ITEMS);
 
 	Status Stop();
 
@@ -65,10 +66,21 @@ public:
 
 private:
 
+	struct WorkCallbackContext
+	{
+		ThreadPool          *pThreadPool;
+		PVOID               pActualContext;
+		PTP_WORK_CALLBACK   pfnActualWorkCallback;
+	};
+
 	PTP_POOL              m_pPool;
 	PTP_CLEANUP_GROUP     m_pCleanupGroup;
 	TP_CALLBACK_ENVIRON   m_cbe;
 	Bool                  m_bCBEInitialized;
+	HANDLE                m_hEventStop;
+	HANDLE                m_hSemaphoreWorkItems;
+
+	static VOID CALLBACK WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOID pContext, PTP_WORK pWork);
 
 };
 

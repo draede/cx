@@ -67,19 +67,21 @@ public:
 		static const Size     MIN_PATTERN_SIZE         = 1;
 		static const Size     MAX_PATTERN_SIZE         = 1024;
 
-		static const Size     DEFAULT_THREADS          = 1;
-		static const UInt64   DEFAULT_MIN_FILE_SIZE    = 0;
-		static const UInt64   DEFAULT_MAX_FILE_SIZE    = 268435456; //256 MB;
-		static const Bool     DEFAULT_RECURSIVE        = True;
-		static const Bool     DEFAULT_MAP_FILE         = False; //will still be mapped anyway if patterns are set
+		static const Size     DEFAULT_THREADS           = 1;
+		static const Size     DEFAULT_MAX_WAITING_FILES = 0;
+		static const UInt64   DEFAULT_MIN_FILE_SIZE     = 0;
+		static const UInt64   DEFAULT_MAX_FILE_SIZE     = 268435456; //256 MB;
+		static const Bool     DEFAULT_RECURSIVE         = True;
+		static const Bool     DEFAULT_MAP_FILE          = False; //will still be mapped anyway if patterns are set
 
-		static const WChar    *ARG_THREADS;        //--threads <number_of_threads : size>
-		static const WChar    *ARG_MIN_FILE_SIZE;  //--minfilesize <min_file_size : uint64>
-		static const WChar    *ARG_MAX_FILE_SIZE;  //--maxfilesize <max_file_size : uint64>
-		static const WChar    *ARG_RECURSIVE;      //--recursive <yes|no>
-		static const WChar    *ARG_EXTENSION;      //--extension <extension:string (e.g. : exe)>
-		static const WChar    *ARG_PATTERN;        //--pattern <offset:uint64> [!]<pattern:string_or_hexstring e.g. 0xAABBCC>
-		static const WChar    *ARG_XPATTERN;       //--xpattern [!]<pattern:string_or_hexstring e.g. 0xAABBCC>
+		static const WChar    *ARG_THREADS;           //--threads <number_of_threads : size>
+		static const WChar    *ARG_MAX_WAITING_FILES; //--maxwaitfiles <number_of_max_wait_files : size>
+		static const WChar    *ARG_MIN_FILE_SIZE;     //--minfilesize <min_file_size : uint64>
+		static const WChar    *ARG_MAX_FILE_SIZE;     //--maxfilesize <max_file_size : uint64>
+		static const WChar    *ARG_RECURSIVE;         //--recursive <yes|no>
+		static const WChar    *ARG_EXTENSION;         //--extension <extension:string (e.g. : exe)>
+		static const WChar    *ARG_PATTERN;           //--pattern <offset:uint64> [!]<pattern:string_or_hexstring e.g. 0xAABBCC>
+		static const WChar    *ARG_XPATTERN;          //--xpattern [!]<pattern:string_or_hexstring e.g. 0xAABBCC>
 
 		typedef Set<WString, WCaseInsensitiveOrderPolicy>::Type   ExtensionsSet;
 
@@ -102,6 +104,7 @@ public:
 		typedef Vector<WString>::Type                             ArgsVector;
 
 		Size             cThreads;
+		Size             cMaxWaitFiles;
 		UInt64           cbMinFileSize;
 		UInt64           cbMaxFileSize;
 		Bool             bRecursive;

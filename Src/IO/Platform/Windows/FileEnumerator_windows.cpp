@@ -48,13 +48,14 @@ namespace CX
 namespace IO
 {
 
-const WChar *FileEnumerator::Config::ARG_THREADS       = L"--threads";
-const WChar *FileEnumerator::Config::ARG_MIN_FILE_SIZE = L"--minfilesize";
-const WChar *FileEnumerator::Config::ARG_MAX_FILE_SIZE = L"--maxfilesize";
-const WChar *FileEnumerator::Config::ARG_RECURSIVE     = L"--recursive";
-const WChar *FileEnumerator::Config::ARG_EXTENSION     = L"--extension";
-const WChar *FileEnumerator::Config::ARG_PATTERN       = L"--pattern";
-const WChar *FileEnumerator::Config::ARG_XPATTERN      = L"--xpattern";
+const WChar *FileEnumerator::Config::ARG_THREADS           = L"--threads";
+const WChar *FileEnumerator::Config::ARG_MAX_WAITING_FILES = L"--maxwaitfiles";
+const WChar *FileEnumerator::Config::ARG_MIN_FILE_SIZE     = L"--minfilesize";
+const WChar *FileEnumerator::Config::ARG_MAX_FILE_SIZE     = L"--maxfilesize";
+const WChar *FileEnumerator::Config::ARG_RECURSIVE         = L"--recursive";
+const WChar *FileEnumerator::Config::ARG_EXTENSION         = L"--extension";
+const WChar *FileEnumerator::Config::ARG_PATTERN           = L"--pattern";
+const WChar *FileEnumerator::Config::ARG_XPATTERN          = L"--xpattern";
 
 FileEnumerator::Config::Pattern::Pattern()
 {
@@ -94,6 +95,7 @@ const FileEnumerator::Config &FileEnumerator::Config::GetDefault()
 	static Config   config =
 	{
 		DEFAULT_THREADS,
+		DEFAULT_MAX_WAITING_FILES,
 		DEFAULT_MIN_FILE_SIZE,
 		DEFAULT_MAX_FILE_SIZE,
 		DEFAULT_RECURSIVE,
@@ -153,6 +155,29 @@ Status FileEnumerator::Config::FromCmdLine(ArgsVector &vectorArgs, Size cStartAr
 			if (MAX_THREADS < cThreads)
 			{
 				status = Status(Status_InvalidArg, "Threads too big (was {1}, max is {2})", cThreads, MIN_THREADS);
+
+				break;
+			}
+			iter = vectorArgs.erase(iter);
+		}
+		else
+		if (0 == cxw_strcmp(ARG_MAX_WAITING_FILES, iter->c_str()))
+		{
+			iter = vectorArgs.erase(iter);
+			if (vectorArgs.end() == iter)
+			{
+				status = Status(Status_InvalidArg, "No value specified for {1}", ARG_MAX_WAITING_FILES);
+
+				break;
+			}
+
+			std::wstringstream   wiss;
+
+			wiss.str(iter->c_str());
+			wiss >> cMaxWaitFiles;
+			if (wiss.fail() || !wiss.eof())
+			{
+				status = Status(Status_InvalidArg, "Invalid value specified for {1}", ARG_MAX_WAITING_FILES);
 
 				break;
 			}
@@ -540,13 +565,13 @@ Status FileEnumerator::Run(const WChar *wszPath, IHandler *pHandler, const Confi
 {
 	PathsVector   vectorPaths;
 
-vectorPaths.push_back(wszPath);
+	vectorPaths.push_back(wszPath);
 
-return Run(vectorPaths, pHandler, config);
+	return Run(vectorPaths, pHandler, config);
 }
 
 Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
-	const Config &config/* = Config::GetDefault()*/)
+                           const Config &config/* = Config::GetDefault()*/)
 {
 	Sys::ThreadPool    tp;
 	WIN32_FIND_DATAW   data;
@@ -620,7 +645,7 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 		}
 	}
 
-	if (!(status = tp.Start(config.cThreads)))
+	if (!(status = tp.Start(config.cThreads, config.cMaxWaitFiles)))
 	{
 		return status;
 	}
