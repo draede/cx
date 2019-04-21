@@ -370,6 +370,12 @@
     <Filter Include="Source Files\DB\Flat">
       <UniqueIdentifier>{65085412-87a7-4293-8dfd-58e581504c11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data\CSV">
+      <UniqueIdentifier>{48684de1-0bb4-4fc4-ac5a-70850364b0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\CSV">
+      <UniqueIdentifier>{d5f44975-e889-4d1f-b9aa-2455d065ce8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1178,6 +1184,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileEnumerator.hpp">
       <Filter>Header Files\IO\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\CSV\ISAXParserObserver.hpp">
+      <Filter>Header Files\Data\CSV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\CSV\SAXParser.hpp">
+      <Filter>Header Files\Data\CSV</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2224,6 +2236,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\ThreadPool_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\CSV\CSVSAXParser.cpp">
+      <Filter>Source Files\Data\CSV</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

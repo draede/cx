@@ -58,6 +58,11 @@ Status ConsoleOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer
 	CX_UNUSED(szTag);
 	CX_UNUSED(cLen);
 
+	Util::Console::Color   fgColor;
+	Util::Console::Color   bgColor;
+
+	Util::Console::GetColors(&fgColor, &bgColor);
+
 	switch (nLevel)
 	{
 		case Level_Error:       Util::Console::SetForegroundColor(ERROR_COLOR); break;
@@ -67,7 +72,8 @@ Status ConsoleOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer
 		case Level_Debug:       Util::Console::SetForegroundColor(DEBUG_COLOR); break;
 	}
 	cx_printf("%s", pBuffer);
-	Util::Console::Reset();
+
+	Util::Console::SetColors(fgColor, bgColor);
 
 	return Status();
 }

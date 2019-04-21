@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\Src\Tester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\DB_Flat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Data_JSON_Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

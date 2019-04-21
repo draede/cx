@@ -69,29 +69,28 @@ public:
 		BRIGHT_WHITE   = 0x0F,
 	};
 
-	static void SetColors(Color fgColor, Color bgColor);
+	static Status SetColors(Color fgColor, Color bgColor);
 
-	static void SetForegroundColor(Color fgColor);
+	static Status SetForegroundColor(Color fgColor);
 
-	static void SetBackgroundColor(Color bgColor);
+	static Status SetBackgroundColor(Color bgColor);
 
-	static void Reset();
+	static Status GetColors(Color *pfgColor, Color *pbgColor);
+
+	static Status SetCursorPos(UInt16 cX, UInt16 cY);
+
+	static Status GetCursorPos(UInt16 *pcX, UInt16 *pcY);
+
+	static Status GetWindowSize(UInt16 *pcWidth, UInt16 *pcHeight);
+
+	static Status Clear(Char chChar = ' ', UInt16 cLeft = 0, UInt16 cTop = 0, 
+	                    UInt16 cRight = 65535, UInt16 cBottom = 65535);
 
 private:
-
-	struct Data
-	{
-		Bool  m_bFirst;
-		WORD  m_wAttr;
-	};
 
 	Console();
 
 	~Console();
-
-	static Data &GetData();
-
-	static void SetColors(WORD wColors);
 
 };
 

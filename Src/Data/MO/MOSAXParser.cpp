@@ -185,7 +185,7 @@ Status SAXParser::RemoveObservers()
 	return Status();
 }
 
-}//namespace XML
+}//namespace CSV
 
 }//namespace Data
 

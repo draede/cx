@@ -50,48 +50,143 @@ Console::~Console()
 {
 }
 
-Console::Data &Console::GetData()
+Status Console::SetColors(Color fgColor, Color bgColor)
 {
-	static Data data = { True, 0 };
-
-	return data;
-}
-
-void Console::SetColors(Color fgColor, Color bgColor)
-{
-	SetColors((WORD)(fgColor | (bgColor << 4)));
-}
-
-void Console::SetForegroundColor(Color fgColor)
-{
-	SetColors((WORD)fgColor);
-}
-
-void Console::SetBackgroundColor(Color bgColor)
-{
-	SetColors((WORD)(bgColor << 4));
-}
-
-void Console::Reset()
-{
-	if (GetData().m_bFirst)
+	if (!SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((fgColor & 0xF) | ((bgColor & 0xF) << 4))))
 	{
-		return;
+		return Status_OperationFailed;
 	}
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GetData().m_wAttr);
+
+	return Status();
 }
 
-void Console::SetColors(WORD wColors)
+Status Console::SetForegroundColor(Color fgColor)
 {
-	if (GetData().m_bFirst)
-	{
-		CONSOLE_SCREEN_BUFFER_INFO csbi;
+	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
 
-		GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-		GetData().m_wAttr  = csbi.wAttributes;
-		GetData().m_bFirst = False;
+	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
+	{
+		return Status_OperationFailed;
 	}
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), wColors);
+
+	return SetColors(fgColor, (Color)((csbinfo.wAttributes & 0xFF) >> 4));
+}
+
+Status Console::SetBackgroundColor(Color bgColor)
+{
+	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
+
+	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
+	{
+		return Status_OperationFailed;
+	}
+
+	return SetColors((Color)(csbinfo.wAttributes & 0xF), bgColor);
+}
+
+Status Console::GetColors(Color *pfgColor, Color *pbgColor)
+{
+	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
+
+	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
+	{
+		return Status_OperationFailed;
+	}
+	*pfgColor = (Color)(csbinfo.wAttributes & 0xF);
+	*pbgColor = (Color)((csbinfo.wAttributes & 0xFF) >> 4);
+
+	return Status();
+}
+
+Status Console::SetCursorPos(UInt16 cX, UInt16 cY)
+{
+	COORD   coord;
+
+	coord.X = cX;
+	coord.Y = cY;
+	if (!SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord))
+	{
+		return Status_OperationFailed;
+	}
+
+	return Status();
+}
+
+Status Console::GetCursorPos(UInt16 *pcX, UInt16 *pcY)
+{
+	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
+	CONSOLE_CURSOR_INFO          cinfo;
+
+	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
+	{
+		return Status_OperationFailed;
+	}
+	*pcX = csbinfo.dwCursorPosition.X;
+	*pcY = csbinfo.dwCursorPosition.Y;
+
+	return Status();
+}
+
+Status Console::GetWindowSize(UInt16 *pcWidth, UInt16 *pcHeight)
+{
+	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
+	CONSOLE_CURSOR_INFO          cinfo;
+
+	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
+	{
+		return Status_OperationFailed;
+	}
+	*pcWidth  = csbinfo.srWindow.Right + 1;
+	*pcHeight = csbinfo.srWindow.Bottom + 1;
+
+	return Status();
+}
+
+Status Console::Clear(Char chChar/* = ' '*/, UInt16 cLeft/* = 0*/, UInt16 cTop/* = 0*/, 
+                      UInt16 cRight/* = 65535*/, UInt16 cBottom/* = 65535*/)
+{
+	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
+	COORD                        pos;
+	DWORD                        dwLength;
+	DWORD                        dwNumberOfCharsWritten;
+
+	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
+	{
+		return Status_OperationFailed;
+	}
+	if (cRight > csbinfo.srWindow.Right)
+	{
+		cRight = csbinfo.srWindow.Right;
+	}
+	if (cBottom > csbinfo.srWindow.Bottom)
+	{
+		cBottom = csbinfo.srWindow.Bottom;
+	}
+	if (cRight < cLeft)
+	{
+		return Status_InvalidArg;
+	}
+	if (cBottom < cTop)
+	{
+		return Status_InvalidArg;
+	}
+
+	pos.X    = cLeft;
+	dwLength = cRight - cLeft + 1;
+	for (pos.Y = cTop; pos.Y <= cBottom; pos.Y++)
+	{
+		if (!FillConsoleOutputAttribute(GetStdHandle(STD_OUTPUT_HANDLE), csbinfo.wAttributes, dwLength, pos, 
+		                                &dwNumberOfCharsWritten))
+		{
+			return Status_OperationFailed;
+		}
+		if (!FillConsoleOutputCharacterA(GetStdHandle(STD_OUTPUT_HANDLE), chChar, dwLength, pos, &dwNumberOfCharsWritten))
+		{
+			return Status_OperationFailed;
+		}
+	}
+
+	return Status();
 }
 
 }//namespace Util

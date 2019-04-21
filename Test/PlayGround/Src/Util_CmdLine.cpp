@@ -39,8 +39,7 @@ void Util_CmdLine_Test1()
 	CLI::CmdLine   cmdline;
 	Status         status;
 
-	cmdline.SetBanner("USAGE: a.exe")
-	       .SetMinPositionalParams(1)
+	cmdline.SetMinPositionalParams(1)
 	       .AddOption('a', "aaa", "a option")
 	       .AddOption('b', "bbb", "b option")
 	       .AddOption('c', "ccc", "c option")
