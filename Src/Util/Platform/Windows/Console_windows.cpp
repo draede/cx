@@ -189,6 +189,11 @@ Status Console::Clear(Char chChar/* = ' '*/, UInt16 cLeft/* = 0*/, UInt16 cTop/*
 	return Status();
 }
 
+Status Console::Reset()
+{
+	return SetColors(WHITE, BLACK);
+}
+
 }//namespace Util
 
 }//namespace CX

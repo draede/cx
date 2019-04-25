@@ -86,6 +86,8 @@ public:
 	static Status Clear(Char chChar = ' ', UInt16 cLeft = 0, UInt16 cTop = 0, 
 	                    UInt16 cRight = 65535, UInt16 cBottom = 65535);
 
+	static Status Reset();
+
 private:
 
 	Console();
