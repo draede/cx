@@ -90,6 +90,10 @@ public:
 
 private:
 
+	static Bool    m_bHasDefaultColors;
+	static Color   m_fgDefaultColor;
+	static Color   m_bgDefaultColor;
+
 	Console();
 
 	~Console();

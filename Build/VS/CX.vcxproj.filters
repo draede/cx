@@ -376,6 +376,27 @@
     <Filter Include="Source Files\Data\CSV">
       <UniqueIdentifier>{d5f44975-e889-4d1f-b9aa-2455d065ce8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IO\VFS">
+      <UniqueIdentifier>{3f02ae24-3494-4955-bbec-b891771e0256}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\VFS">
+      <UniqueIdentifier>{39a9f308-ba35-4824-b024-3e89d1c41dec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\VFS\Platform">
+      <UniqueIdentifier>{138a5030-e79b-4d13-8c81-330422635695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\VFS\Platform\Windows">
+      <UniqueIdentifier>{50c8f07d-b0a8-43bc-9664-43d229322eb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\VFS\Platform">
+      <UniqueIdentifier>{e3a13a22-c3d6-4c6e-88b3-72a9fd590dde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\VFS\Platform\Windows">
+      <UniqueIdentifier>{d280e320-d1bf-4155-b95d-2d33974bd1c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contrib\ZLib">
+      <UniqueIdentifier>{86939dd0-57ea-4b51-aa7a-cb3314beb87c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1190,6 +1211,33 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\CSV\SAXParser.hpp">
       <Filter>Header Files\Data\CSV</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\VFS\IFolder.hpp">
+      <Filter>Header Files\IO\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\VFS\IVFS.hpp">
+      <Filter>Header Files\IO\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\VFS\VFSRegistry.hpp">
+      <Filter>Header Files\IO\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\VFS\Local.hpp">
+      <Filter>Header Files\IO\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\VFS\Platform\Windows\Local.hpp">
+      <Filter>Header Files\IO\VFS\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\IO\VFS\Platform\Windows\LocalFolder.hpp">
+      <Filter>Source Files\IO\VFS\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\IO\VFS\ZIP.hpp">
+      <Filter>Header Files\IO\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\IO\VFS\ZIPInputStream.hpp">
+      <Filter>Source Files\IO\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\IO\VFS\ZIPFolder.hpp">
+      <Filter>Source Files\IO\VFS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2239,6 +2287,84 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\CSV\CSVSAXParser.cpp">
       <Filter>Source Files\Data\CSV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\VFS\VFSRegistry.cpp">
+      <Filter>Source Files\IO\VFS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\VFS\Platform\Windows\Local_windows.cpp">
+      <Filter>Source Files\IO\VFS\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\VFS\Platform\Windows\LocalFolder_windows.cpp">
+      <Filter>Source Files\IO\VFS\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\adler32.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\compress.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\deflate.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\gzclose.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\gzlib.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\gzread.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\gzwrite.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\infback.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\inffast.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\inflate.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\inftrees.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\trees.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\uncompr.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\zutil.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\ioapi.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\iowin32.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\mztools.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\unzip.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\zip.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Contrib\ZLib\Src\zlib_crc32.c">
+      <Filter>Contrib\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\VFS\ZIPInputStream.cpp">
+      <Filter>Source Files\IO\VFS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\VFS\ZIPFolder.cpp">
+      <Filter>Source Files\IO\VFS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\VFS\ZIPVFS.cpp">
+      <Filter>Source Files\IO\VFS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

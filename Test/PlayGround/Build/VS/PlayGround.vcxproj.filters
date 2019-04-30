@@ -18,7 +18,16 @@
     <ClCompile Include="..\..\Src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\IO_VFS_Local.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Tester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO_VFS_ZIP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CBuffers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data_JSON_Node.cpp">
@@ -69,6 +78,12 @@
     <ClCompile Include="..\..\Src\Str_UTF8.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Struct1CPP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Struct2CPP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Util_CmdLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -92,8 +107,20 @@
     <ClInclude Include="..\..\Src\My_Namespace_Struct2.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Struct1.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Struct2.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Src\Struct1.cb">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\Src\Struct2.cb">
+      <Filter>Source Files</Filter>
+    </None>
     <None Include="..\..\Src\TestSimpleBuffers1.sbc">
       <Filter>Source Files</Filter>
     </None>

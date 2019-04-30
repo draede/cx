@@ -67,6 +67,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\CBuffers.cpp" />
     <ClCompile Include="..\..\Src\Data_JSON_Node.cpp" />
     <ClCompile Include="..\..\Src\Data_JSON_SAX.cpp" />
     <ClCompile Include="..\..\Src\Data_MO_SAX.cpp" />
@@ -75,6 +76,8 @@
     <ClCompile Include="..\..\Src\DB_SQLite.cpp" />
     <ClCompile Include="..\..\Src\IO_Buffered.cpp" />
     <ClCompile Include="..\..\Src\IO_Filters.cpp" />
+    <ClCompile Include="..\..\Src\IO_VFS_Local.cpp" />
+    <ClCompile Include="..\..\Src\IO_VFS_ZIP.cpp" />
     <ClCompile Include="..\..\Src\Log_OptimizedStreamOutput.cpp" />
     <ClCompile Include="..\..\Src\Main.cpp" />
     <ClCompile Include="..\..\Src\My_Namespace_Struct1.c" />
@@ -82,6 +85,8 @@
     <ClCompile Include="..\..\Src\Network_HTTP_Client.cpp" />
     <ClCompile Include="..\..\Src\Networl_URLParser.cpp" />
     <ClCompile Include="..\..\Src\SimpleBuffers.cpp" />
+    <ClCompile Include="..\..\Src\Struct1CPP.cpp" />
+    <ClCompile Include="..\..\Src\Struct2CPP.cpp" />
     <ClCompile Include="..\..\Src\Str_StringHelper.cpp" />
     <ClCompile Include="..\..\Src\Str_UTF8.cpp" />
     <ClCompile Include="..\..\Src\Tester.cpp" />
@@ -91,11 +96,15 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\My_Namespace_Struct1.h" />
     <ClInclude Include="..\..\Src\My_Namespace_Struct2.h" />
+    <ClInclude Include="..\..\Src\Struct1.hpp" />
+    <ClInclude Include="..\..\Src\Struct2.hpp" />
     <ClInclude Include="..\..\Src\Tester.hpp" />
     <ClInclude Include="..\..\Src\TestSimpleBuffers1.hpp" />
     <ClInclude Include="..\..\Src\TestSimpleBuffers2.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Src\Struct1.cb" />
+    <None Include="..\..\Src\Struct2.cb" />
     <None Include="..\..\Src\TestSimpleBuffers1.sbc" />
     <None Include="..\..\Src\TestSimpleBuffers2.sbc" />
   </ItemGroup>
@@ -390,6 +399,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2019_Debug|Win32'">
@@ -407,6 +417,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|Win32'">
@@ -424,6 +435,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|Win32'">
@@ -441,6 +453,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Debug|x64'">
@@ -458,6 +471,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2019_Debug|x64'">
@@ -475,6 +489,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Debug|x64'">
@@ -492,6 +507,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Debug|x64'">
@@ -509,6 +525,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|Win32'">
@@ -530,6 +547,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2019_Release|Win32'">
@@ -551,6 +569,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|Win32'">
@@ -572,6 +591,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|Win32'">
@@ -593,6 +613,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2017_Release|x64'">
@@ -614,6 +635,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2019_Release|x64'">
@@ -635,6 +657,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2013_Release|x64'">
@@ -656,6 +679,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VS2015_Release|x64'">
@@ -677,6 +701,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../Lib/$(MVS_Version)/$(Platform)/Static$(MVS_Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>cx.lib;dbghelp.lib;ws2_32.lib;wldap32.lib;crypt32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:cx.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

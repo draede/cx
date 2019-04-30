@@ -1,3 +1,7 @@
+0.2.225 - 2019-04-30
+ - Added VFS (Local + ZIP)
+ - Fixed warnings
+ - Restored Util::Console::Reset to previous behaviour
 0.2.224 - 2019-04-25
  - Added Util::Console::Reset
 0.2.223 - 2019-04-20

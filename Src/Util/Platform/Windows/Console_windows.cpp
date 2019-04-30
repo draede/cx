@@ -42,6 +42,10 @@ namespace CX
 namespace Util
 {
 
+Bool             Console::m_bHasDefaultColors = False;
+Console::Color   Console::m_fgDefaultColor    = Console::WHITE;
+Console::Color   Console::m_bgDefaultColor    = Console::BLACK;
+
 Console::Console()
 {
 }
@@ -52,6 +56,11 @@ Console::~Console()
 
 Status Console::SetColors(Color fgColor, Color bgColor)
 {
+	if (!m_bHasDefaultColors)
+	{
+		GetColors(&m_fgDefaultColor, &m_bgDefaultColor);
+		m_bHasDefaultColors = True;
+	}
 	if (!SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((fgColor & 0xF) | ((bgColor & 0xF) << 4))))
 	{
 		return Status_OperationFailed;
@@ -64,6 +73,11 @@ Status Console::SetForegroundColor(Color fgColor)
 {
 	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
 
+	if (!m_bHasDefaultColors)
+	{
+		GetColors(&m_fgDefaultColor, &m_bgDefaultColor);
+		m_bHasDefaultColors = True;
+	}
 	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
 	{
 		return Status_OperationFailed;
@@ -76,6 +90,11 @@ Status Console::SetBackgroundColor(Color bgColor)
 {
 	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
 
+	if (!m_bHasDefaultColors)
+	{
+		GetColors(&m_fgDefaultColor, &m_bgDefaultColor);
+		m_bHasDefaultColors = True;
+	}
 	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
 	{
 		return Status_OperationFailed;
@@ -115,7 +134,6 @@ Status Console::SetCursorPos(UInt16 cX, UInt16 cY)
 Status Console::GetCursorPos(UInt16 *pcX, UInt16 *pcY)
 {
 	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
-	CONSOLE_CURSOR_INFO          cinfo;
 
 	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
 	{
@@ -130,7 +148,6 @@ Status Console::GetCursorPos(UInt16 *pcX, UInt16 *pcY)
 Status Console::GetWindowSize(UInt16 *pcWidth, UInt16 *pcHeight)
 {
 	CONSOLE_SCREEN_BUFFER_INFO   csbinfo;
-	CONSOLE_CURSOR_INFO          cinfo;
 
 	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbinfo))
 	{
@@ -191,7 +208,12 @@ Status Console::Clear(Char chChar/* = ' '*/, UInt16 cLeft/* = 0*/, UInt16 cTop/*
 
 Status Console::Reset()
 {
-	return SetColors(WHITE, BLACK);
+	if (!m_bHasDefaultColors)
+	{
+		return Status();
+	}
+
+	return SetColors(m_fgDefaultColor, m_bgDefaultColor);
 }
 
 }//namespace Util
