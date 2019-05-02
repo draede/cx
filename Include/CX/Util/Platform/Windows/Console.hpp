@@ -36,6 +36,7 @@
 
 
 #include "CX/Types.hpp"
+#include "CX/Status.hpp"
 #include "CX/C/Platform/Windows/windows.h"
 
 
