@@ -154,10 +154,6 @@ Status ZIPFolder::GetCurrentFileInfo()
 	{
 		return Status_OperationFailed;
 	}
-	if (0 == info.internal_fa)
-	{
-		return Status_OperationFailed;
-	}
 	if (0 < info.size_filename)
 	{
 		m_sEntryPath.resize(info.size_filename);

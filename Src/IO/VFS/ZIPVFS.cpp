@@ -260,7 +260,7 @@ Status ZIP::CloseInputStream(IInputStream *pInputStream)
 		return Status_NotInitialized;
 	}
 
-	IO::FileInputStream   *pFIS = dynamic_cast<IO::FileInputStream *>(pInputStream);
+	ZIPInputStream   *pFIS = dynamic_cast<ZIPInputStream *>(pInputStream);
 
 	if (NULL == pFIS)
 	{

@@ -988,7 +988,7 @@ VOID CALLBACK FileEnumerator::WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOI
 
 			if (!bMatched)
 			{
-				InterlockedIncrement64(&pFile->m_pStats->cErrorMemAllocFiles);
+				InterlockedIncrement64(&pFile->m_pStats->cExcludedFiles);
 				InterlockedAdd64(&pFile->m_pStats->cbExcludedFilesSize, pFile->m_cbContentSize);
 
 				InterlockedIncrement64(&pFile->m_pStats->cExcludedPatternFiles);

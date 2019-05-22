@@ -1,3 +1,7 @@
+0.2.228 - 2019-05-22
+ - Added password support for ZLib
+ - Fixed ZIP VFS
+ - Fixed file enumerator stats
 0.2.227 - 2019-05-02
  - Added VFS (Local + ZIP)
  - Fixed warnings
