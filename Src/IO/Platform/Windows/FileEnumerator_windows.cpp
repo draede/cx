@@ -534,6 +534,11 @@ HANDLE FileEnumerator::FileHandlerFile::GetMappingHandle()
 	return m_hFileMapping;
 }
 
+Size FileEnumerator::FileHandlerFile::GetEnumPathIndex() const
+{
+	return m_cEnumPathIndex;
+}
+
 void FileEnumerator::FileHandlerFile::Close()
 {
 	if (NULL != m_pContent)
@@ -650,6 +655,8 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 		return status;
 	}
 
+	Size   cEnumPathIndex = 0;
+
 	pHandler->OnBegin();
 	for (auto iter = vectorPaths.begin(); iter != vectorPaths.end(); ++iter)
 	{
@@ -694,7 +701,7 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 										{
 											FindClose(hFind);
 
-											OnFile(wszLine, cLen, &data, pHandler, &tp, config, &stats);
+											OnFile(wszLine, cLen, cEnumPathIndex, &data, pHandler, &tp, config, &stats);
 										}
 									}
 								}
@@ -712,14 +719,14 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 			if (INVALID_FILE_ATTRIBUTES == dwAttr)
 			{
 				//try everything...
-				Enumerate(iter->c_str(), pHandler, &tp, config, &stats);
-				OnFile(iter->c_str(), iter->size(), &data, pHandler, &tp, config, &stats);
+				Enumerate(iter->c_str(), cEnumPathIndex, pHandler, &tp, config, &stats);
+				OnFile(iter->c_str(), iter->size(), cEnumPathIndex, &data, pHandler, &tp, config, &stats);
 			}
 			else
 			{
 				if (FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & dwAttr))
 				{
-					Enumerate(iter->c_str(), pHandler, &tp, config, &stats);
+					Enumerate(iter->c_str(), cEnumPathIndex, pHandler, &tp, config, &stats);
 				}
 				else
 				{
@@ -727,11 +734,13 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 					{
 						FindClose(hFind);
 
-						OnFile(iter->c_str(), iter->size(), &data, pHandler, &tp, config, &stats);
+						OnFile(iter->c_str(), iter->size(), cEnumPathIndex, &data, pHandler, &tp, config, &stats);
 					}
 				}
 			}
 		}
+
+		cEnumPathIndex++;
 	}
 
 	tp.Stop();
@@ -741,8 +750,8 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	return Status();
 }
 
-void FileEnumerator::Enumerate(const WChar *wszPath, IHandler *pHandler, void *pTP, const Config &config, 
-                               IHandler::Stats *pStats)
+void FileEnumerator::Enumerate(const WChar *wszPath, Size cEnumPathIndex, IHandler *pHandler, void *pTP, 
+                               const Config &config, IHandler::Stats *pStats)
 {
 	WIN32_FIND_DATAW   data;
 	HANDLE             hFind;
@@ -768,7 +777,7 @@ void FileEnumerator::Enumerate(const WChar *wszPath, IHandler *pHandler, void *p
 					wsPath += L"\\";
 					wsPath += data.cFileName;
 
-					OnFile(wsPath.c_str(), wsPath.size(), &data, pHandler, pTP, config, pStats);
+					OnFile(wsPath.c_str(), wsPath.size(), cEnumPathIndex, &data, pHandler, pTP, config, pStats);
 				}
 				else
 				if (0 != wcscmp(data.cFileName, L".") && 0 != wcscmp(data.cFileName, L".."))
@@ -779,7 +788,7 @@ void FileEnumerator::Enumerate(const WChar *wszPath, IHandler *pHandler, void *p
 						wsPath += L"\\";
 						wsPath += data.cFileName;
 
-						Enumerate(wsPath.c_str(), pHandler, pTP, config, pStats);
+						Enumerate(wsPath.c_str(), cEnumPathIndex, pHandler, pTP, config, pStats);
 					}
 				}
 			}
@@ -792,8 +801,8 @@ void FileEnumerator::Enumerate(const WChar *wszPath, IHandler *pHandler, void *p
 	}
 }
 
-void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFindData, IHandler *pHandler, 
-                            void *pTP, const Config &config, IHandler::Stats *pStats)
+void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, Size cEnumPathIndex, const void *pFindData, 
+                            IHandler *pHandler, void *pTP, const Config &config, IHandler::Stats *pStats)
 {
 	const WIN32_FIND_DATAW   *pData       = (const WIN32_FIND_DATAW *)pFindData;
 	Sys::ThreadPool          *pThreadPool  = (Sys::ThreadPool *)pTP;
@@ -864,12 +873,13 @@ void FileEnumerator::OnFile(const WChar *wszPath, Size cPathLen, const void *pFi
 
 			memcpy(pFile + 1, wszPath, sizeof(WChar) * (cPathLen + 1));
 
-			pFile->m_pConfig       = &config;
-			pFile->m_pHandler      = pHandler;
-			pFile->m_pStats        = pStats;
-			pFile->m_wszPath       = (const WChar *)(pFile + 1);
-			pFile->m_cPathLen      = cPathLen;
-			pFile->m_cbContentSize = uliSize.QuadPart;
+			pFile->m_pConfig        = &config;
+			pFile->m_pHandler       = pHandler;
+			pFile->m_pStats         = pStats;
+			pFile->m_wszPath        = (const WChar *)(pFile + 1);
+			pFile->m_cPathLen       = cPathLen;
+			pFile->m_cbContentSize  = uliSize.QuadPart;
+			pFile->m_cEnumPathIndex = cEnumPathIndex;
 
 			if ((status = pThreadPool->AddWork(&FileEnumerator::WorkCallback, pFile)))
 			{

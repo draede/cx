@@ -142,6 +142,8 @@ public:
 
 			virtual HANDLE GetMappingHandle() = 0;
 
+			virtual Size GetEnumPathIndex() const = 0;
+
 			virtual Status Open() = 0;
 
 			virtual void Close() = 0;
@@ -224,6 +226,7 @@ private:
 		UInt32            m_uAttributes;
 		HANDLE            m_hFile;
 		HANDLE            m_hFileMapping;
+		Size              m_cEnumPathIndex;
 
 		FileHandlerFile();
 
@@ -243,6 +246,8 @@ private:
 
 		virtual HANDLE GetMappingHandle();
 
+		virtual Size GetEnumPathIndex() const;
+
 		virtual Status Open();
 
 		virtual void Close();
@@ -256,11 +261,11 @@ private:
 	static Bool FindPatterns(const void *pFileData, UInt64 cbFileSize, Bool bNegate, 
 	                         const Config::PatternsVector &vectorPatterns);
 
-	static void Enumerate(const WChar *wszPath, IHandler *pHandler, void *pTP, const Config &config, 
-	                      IHandler::Stats *pStats);
+	static void Enumerate(const WChar *wszPath, Size cEnumPathIndex, IHandler *pHandler, void *pTP, 
+	                      const Config &config, IHandler::Stats *pStats);
 
-	static void OnFile(const WChar *wszPath, Size cPathLen, const void *pFindData, IHandler *pHandler, 
-                      void *pTP, const Config &config, IHandler::Stats *pStats);
+	static void OnFile(const WChar *wszPath, Size cPathLen, Size cEnumPathIndex, const void *pFindData, 
+	                   IHandler *pHandler, void *pTP, const Config &config, IHandler::Stats *pStats);
 
 	static VOID CALLBACK WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOID pContext, PTP_WORK pWork);
 
