@@ -2366,5 +2366,8 @@
     <ClCompile Include="..\..\Src\IO\VFS\ZIPVFS.cpp">
       <Filter>Source Files\IO\VFS</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileEnumerator2_windows.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

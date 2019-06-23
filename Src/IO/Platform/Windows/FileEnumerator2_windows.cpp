@@ -26,6 +26,7 @@
  * SOFTWARE.
  */ 
 
+#include "CX/precomp.hpp"
 #include "CX/Platform.hpp"
 
 
@@ -997,6 +998,8 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 
 Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, WIN32_FIND_DATAW &data, Context &ctx)
 {
+	CX_UNUSED(cPathLen);
+
 	ULARGE_INTEGER   uliSize;
 	Size             cFileIndex;
 	Status           status;
@@ -1115,7 +1118,7 @@ DWORD WINAPI FileEnumerator2::WorkerThread(void *pArgs)
 
 			if (!pData->pConfig->vectorPatterns.empty() || pData->pConfig->bMapFile)
 			{
-				if ((status = file.Open()))
+				if (!(status = file.Open()))
 				{
 					continue;
 				}
