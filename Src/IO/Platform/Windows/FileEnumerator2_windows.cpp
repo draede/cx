@@ -631,6 +631,12 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 
 		for (Size cPathIndex = 0; cPathIndex < vectorPaths.size(); cPathIndex++)
 		{
+			if (!ctx.bRunning)
+			{
+				status = Status_Cancelled;
+
+				break;
+			}
 			ctx.cPathIndex = cPathIndex;
 			if (0 == cxw_strnicmp(vectorPaths[cPathIndex].c_str(), L"list:", 5))
 			{
@@ -981,7 +987,10 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 						wsPath += L"\\";
 						wsPath += data.cFileName;
 
-						Enumerate(wsPath.c_str(), ctx);
+						if (!( status = Enumerate(wsPath.c_str(), ctx)))
+						{
+							return status;
+						}
 					}
 				}
 			}
@@ -1007,7 +1016,7 @@ Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, WIN32_FIND_D
 	uliSize.HighPart = data.nFileSizeHigh;
 	uliSize.LowPart  = data.nFileSizeLow;
 
-	ctx.stats.cDiscoveredDirs++;
+	ctx.stats.cDiscoveredFiles++;
 	ctx.stats.cbDiscoveredFilesSize += uliSize.QuadPart;
 
 	if (ctx.config.cbMinFileSize > uliSize.QuadPart)
@@ -1094,13 +1103,6 @@ DWORD WINAPI FileEnumerator2::WorkerThread(void *pArgs)
 	for (;;)
 	{
 		WaitForSingleObject(pData->hEvent, INFINITE);
-		
-		if (!*pData->pbRunning)
-		{
-			SetEvent(pData->hReadyEvent);
-
-			break;
-		}
 
 		//Print(stdout, "{1} : Processing {2} files...\n", GetCurrentThreadId(), pData->cActualFiles);
 
@@ -1176,6 +1178,11 @@ DWORD WINAPI FileEnumerator2::WorkerThread(void *pArgs)
 		pData->cActualFiles = 0;
 
 		SetEvent(pData->hReadyEvent);
+
+		if (!*pData->pbRunning)
+		{
+			break;
+		}
 	}
 
 	return 0;
