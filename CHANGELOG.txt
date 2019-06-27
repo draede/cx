@@ -1,3 +1,6 @@
+0.2.234 - 2019-06-28
+ - Added Sys::SyncedWorkerThreads
+ - IO::FileEnumerator2 uses SyncedWorkerThreads now
 0.2.233 - 2019-06-27
  - Fixed IO::FileEnumerator2 out of bounds issue
 0.2.232 - 2019-06-23

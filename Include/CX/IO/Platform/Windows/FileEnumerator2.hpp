@@ -42,6 +42,7 @@
 #include "CX/Set.hpp"
 #include "CX/BLOB.hpp"
 #include "CX/C/Platform/Windows/windows.h"
+#include "CX/Sys/Platform/Windows/SyncedWorkerThreads.hpp"
 #include "CX/APIDefs.hpp"
 
 
@@ -65,13 +66,13 @@ public:
 		static const Size     MAX_QUEUED_FILES          = 1048576;
 
 		static const Size     MIN_THREADS               = 1;
-		static const Size     MAX_THREADS               = 64;
+		static const Size     MAX_THREADS               = 1024;
 
 		static const Size     MIN_PATTERN_SIZE          = 1;
 		static const Size     MAX_PATTERN_SIZE          = 1024;
 
 		static const UInt64   MIN_FILE_SIZE             = 0;
-		static const UInt64   MAX_FILE_SIZE             = 70368744177664; //64 TB ... yeah right
+		static const UInt64   MAX_FILE_SIZE             = 4294967295;
 
 		static const Size     DEFAULT_THREADS           = 1;
 		static const Size     DEFAULT_QUEUED_FILES      = 1024;
@@ -175,7 +176,7 @@ public:
 		virtual Bool OnFile(IFile *pFile, void **ppResult, const Stats *pStats) = 0;
 
 		//called from a single thread
-		virtual Bool OnResults(void **results, Size cResults) = 0;
+		virtual Bool OnResult(void *pResult) = 0;
 
 		virtual Bool OnEnd(const Stats *pStats) = 0;
 
@@ -195,42 +196,6 @@ private:
 
 	static const Size   MAX_LINE_LEN = 32768;
 	static const Size   MAX_BOM_SIZE = 4;
-
-	struct File
-	{
-		WIN32_FIND_DATAW   data;
-		UInt64             cbSize;
-		WString            wsPath;
-		Size               cPathIndex;
-	};
-
-	struct ThreadData
-	{
-		HANDLE             hEvent;
-		HANDLE             hReadyEvent;
-		IHandler           *pHandler;
-		Stats              *pStats;
-		Config             *pConfig;
-		Bool               *pbRunning;
-		Size               cFiles;
-		Size               cActualFiles;
-		File               *files;
-		void               **results;
-		Size               cActualResults;
-	};
-
-	struct Context
-	{
-		Bool               bRunning;
-		IHandler           *pHandler;
-		Stats              stats;
-		Config             config;
-		Size               cPathIndex;
-		HANDLE             *threadHandles;
-		HANDLE             *threadReadyEvents;
-		ThreadData         *threadData;
-		Size               cCurrentThread;
-	};
 
 	class FileImpl : public IFile
 	{
@@ -271,6 +236,28 @@ private:
 
 	};
 
+	struct File
+	{
+		void                        *pCTX;
+		UInt64                      cbSize;
+		WString                     wsPath;
+		Size                        cPathIndex;
+		FileImpl                    file;
+		void                        *pResult;
+	};
+
+	struct Context
+	{
+		Bool                        bRunning;
+		Sys::SyncedWorkerThreads    threads;
+		IHandler                    *pHandler;
+		Stats                       stats;
+		Config                      config;
+		Size                        cPathIndex;
+		File                        *files;
+		Size                        cFiles;
+	};
+
 	FileEnumerator2();
 
 	~FileEnumerator2();
@@ -285,11 +272,11 @@ private:
 
 	static Status Enumerate(const WChar *wszPath, Context &ctx);
 
-	static Status OnFile(const WChar *wszPath, Size cPathLen, WIN32_FIND_DATAW &data, Context &ctx);
+	static Status OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSize, Context &ctx);
 
 	static Status ProcessFiles(Context &ctx);
 
-	static DWORD WINAPI WorkerThread(void *pArgs);
+	static void HandleFileJob(void *pJob, Size cbSize);
 
 	static Bool FindPatterns(const void *pFileData, UInt64 cbFileSize, Bool bNegate, 
 	                         const Config::PatternsVector &vectorPatterns);

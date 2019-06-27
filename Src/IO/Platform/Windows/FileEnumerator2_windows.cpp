@@ -448,17 +448,9 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 {
 	Context            ctx;
 	LARGE_INTEGER      liQPerf;
-	DWORD              dwThreadID;
-	Size               cFilesPerThread;
-	Size               cFiles;
 	Status             status;
 
 	ctx.bRunning                           = True;
-
-	ctx.threadHandles                      = NULL;
-	ctx.threadReadyEvents                  = NULL;
-	ctx.threadData                         = NULL;
-	ctx.cCurrentThread                     = 0;
 
 	ctx.cPathIndex                         = 0;
 
@@ -518,108 +510,18 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 		}
 	}
 
-	cFiles = config.cQueuedFiles;
-	cFilesPerThread = cFiles / config.cThreads;
-	if (0 < (cFiles % config.cThreads))
-	{
-		cFilesPerThread++;
-	}
-
 	for (;;)
 	{
-		if (NULL == (ctx.threadData = (ThreadData *)Mem::Alloc(sizeof(ThreadData) * ctx.config.cThreads)))
+		if (NULL == (ctx.files = new (std::nothrow) File[config.cQueuedFiles]))
 		{
 			status = Status(Status_MemAllocFailed, "Failed to allocate threads data");
 
 			break;
 		}
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			ctx.threadData[i].hEvent         = NULL;
-			ctx.threadData[i].pbRunning      = &ctx.bRunning;
-			ctx.threadData[i].pHandler       = ctx.pHandler;
-			ctx.threadData[i].pStats         = &ctx.stats;
-			ctx.threadData[i].pConfig        = &ctx.config;
-			ctx.threadData[i].files          = NULL;
-			ctx.threadData[i].cActualFiles   = 0;
-			ctx.threadData[i].results        = NULL;
-			ctx.threadData[i].cActualResults = 0;
-			if (cFilesPerThread <= cFiles)
-			{
-				ctx.threadData[i].cFiles    = cFilesPerThread;
-			}
-			else
-			{
-				ctx.threadData[i].cFiles    = cFiles;
-			}
-			cFiles -= ctx.threadData[i].cFiles;
-		}
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			if (NULL == (ctx.threadData[i].files = new File[ctx.threadData[i].cFiles]))
-			{
-				status = Status(Status_MemAllocFailed, "Failed to create files data");
-
-				break;
-			}
-			if (NULL == (ctx.threadData[i].results = (void **)Mem::Alloc(sizeof(void *) * ctx.threadData[i].cFiles)))
-			{
-				status = Status(Status_MemAllocFailed, "Failed to create results data");
-
-				break;
-			}
-			if (NULL == (ctx.threadData[i].hEvent = CreateEvent(NULL, FALSE, FALSE, NULL)))
-			{
-				status = Status(Status_MemAllocFailed, "Failed to create event");
-
-				break;
-			}
-		}
-		if (!status)
+		ctx.cFiles = 0;
+		if (!(status = ctx.threads.Start(ctx.config.cThreads)))
 		{
 			break;
-		}
-
-		if (NULL == (ctx.threadReadyEvents = (HANDLE *)Mem::Alloc(sizeof(HANDLE) * ctx.config.cThreads)))
-		{
-			status = Status(Status_MemAllocFailed, "Failed to allocate thread ready events");
-
-			break;
-		}
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			ctx.threadReadyEvents[i] = NULL;
-		}
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			if (NULL == (ctx.threadReadyEvents[i] = CreateEvent(NULL, FALSE, FALSE, NULL)))
-			{
-				status = Status(Status_MemAllocFailed, "Failed to create ready event");
-
-				break;
-			}
-			ctx.threadData[i].hReadyEvent = ctx.threadReadyEvents[i];
-		}
-		if (!status)
-		{
-			break;
-		}
-
-		if (NULL == (ctx.threadHandles = (HANDLE *)Mem::Alloc(sizeof(HANDLE) * ctx.config.cThreads)))
-		{
-			status = Status(Status_MemAllocFailed, "Failed to allocate threads");
-
-			break;
-		}
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			ctx.threadHandles[i] = NULL;
-		}
-
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			ctx.threadHandles[i] = CreateThread(NULL, 0, &FileEnumerator2::WorkerThread, &ctx.threadData[i], 0, 
-			                                    &dwThreadID);
 		}
 
 		if (!pHandler->OnBegin())
@@ -675,6 +577,9 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	{
 		status = ProcessFiles(ctx);
 	}
+
+	ctx.threads.Stop();
+
 	if (status)
 	{
 		if (!pHandler->OnEnd(&ctx.stats))
@@ -685,57 +590,9 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 
 	ctx.bRunning = False;
 
-	if (NULL != ctx.threadHandles)
+	if (NULL != ctx.files)
 	{
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			if (NULL != ctx.threadData[i].hEvent)
-			{
-				SetEvent(ctx.threadData[i].hEvent);
-			}
-		}
-		WaitForMultipleObjects((DWORD)ctx.config.cThreads, ctx.threadHandles, TRUE, INFINITE);
-
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			if (NULL != ctx.threadHandles[i])
-			{
-				CloseHandle(ctx.threadHandles[i]);
-			}
-		}
-		Mem::Free(ctx.threadHandles);
-	}
-
-	if (NULL != ctx.threadReadyEvents)
-	{
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			if (NULL != ctx.threadReadyEvents[i])
-			{
-				CloseHandle(ctx.threadReadyEvents[i]);
-			}
-		}
-		Mem::Free(ctx.threadReadyEvents);
-	}
-
-	if (NULL != ctx.threadData)
-	{
-		for (Size i = 0; i < ctx.config.cThreads; i++)
-		{
-			if (NULL != ctx.threadData[i].results)
-			{
-				Mem::Free(ctx.threadData[i].results);
-			}
-			if (NULL != ctx.threadData[i].files)
-			{
-				delete [] ctx.threadData[i].files;
-			}
-			if (NULL != ctx.threadData[i].hEvent)
-			{
-				CloseHandle(ctx.threadData[i].hEvent);
-			}
-		}
-		Mem::Free(ctx.threadData);
+		delete [] ctx.files;
 	}
 
 	return status;
@@ -743,37 +600,26 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 
 Status FileEnumerator2::RunWithPath(const WChar *wszPath, Context &ctx)
 {
-	HANDLE             hFind;
-	WIN32_FIND_DATAW   data;
-	DWORD              dwAttr;
-	Status             status;
+	WIN32_FILE_ATTRIBUTE_DATA   data;
 
-	dwAttr = GetFileAttributesW(wszPath);
-	if (INVALID_FILE_ATTRIBUTES == dwAttr)
+	if (!GetFileAttributesExW(wszPath, GetFileExInfoStandard, &data))
+	{
+		return Status_InvalidArg;
+	}
+
+	if (FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & data.dwFileAttributes))
 	{
 		return Enumerate(wszPath, ctx);
 	}
 	else
 	{
-		if (FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & dwAttr))
-		{
-			return Enumerate(wszPath, ctx);
-		}
-		else
-		{
-			if (INVALID_HANDLE_VALUE != (hFind = FindFirstFileW(wszPath, &data)))
-			{
-				FindClose(hFind);
+		ULARGE_INTEGER   uliSize;
 
-				if (!(status = OnFile(wszPath, cxw_strlen(wszPath), data, ctx)))
-				{
-					return status;
-				}
-			}
-		}
+		uliSize.HighPart = data.nFileSizeHigh;
+		uliSize.LowPart  = data.nFileSizeLow;
+
+		return OnFile(wszPath, cxw_strlen(wszPath), uliSize.QuadPart, ctx);
 	}
-
-	return Status();
 }
 
 Status FileEnumerator2::RunWithList(const WChar *wszListPath, Context &ctx)
@@ -952,6 +798,7 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 	HANDLE             hFind;
 	WString            wsPath;
 	WString            wsMask;
+	ULARGE_INTEGER     uliSize;
 	Status             status;
 
 	ctx.stats.cDiscoveredDirs++;
@@ -973,7 +820,10 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 					wsPath += L"\\";
 					wsPath += data.cFileName;
 
-					if (!(status = OnFile(wsPath.c_str(), wsPath.size(), data, ctx)))
+					uliSize.HighPart = data.nFileSizeHigh;
+					uliSize.LowPart  = data.nFileSizeLow;
+
+					if (!(status = OnFile(wsPath.c_str(), wsPath.size(), uliSize.QuadPart, ctx)))
 					{
 						return status;
 					}
@@ -1005,32 +855,27 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 	return Status();
 }
 
-Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, WIN32_FIND_DATAW &data, Context &ctx)
+Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSize, Context &ctx)
 {
 	CX_UNUSED(cPathLen);
 
-	ULARGE_INTEGER   uliSize;
-	Size             cFileIndex;
 	Status           status;
 
-	uliSize.HighPart = data.nFileSizeHigh;
-	uliSize.LowPart  = data.nFileSizeLow;
-
 	ctx.stats.cDiscoveredFiles++;
-	ctx.stats.cbDiscoveredFilesSize += uliSize.QuadPart;
+	ctx.stats.cbDiscoveredFilesSize += cbSize;
 
-	if (ctx.config.cbMinFileSize > uliSize.QuadPart)
+	if (ctx.config.cbMinFileSize > cbSize)
 	{
 		return Status();
 	}
-	if (ctx.config.cbMaxFileSize < uliSize.QuadPart)
+	if (ctx.config.cbMaxFileSize < cbSize)
 	{
 		return Status();
 	}
 
 	if (!ctx.config.setExtensions.empty())
 	{
-		const WChar *wszPos = data.cFileName;
+		const WChar *wszPos = wszPath;
 		const WChar *wszExt = NULL;
 
 		while (0 != *wszPos)
@@ -1051,20 +896,20 @@ Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, WIN32_FIND_D
 		}
 	}
 
-	cFileIndex = ctx.threadData[ctx.cCurrentThread].cActualFiles;
-	ctx.threadData[ctx.cCurrentThread].files[cFileIndex].data       = data;
-	ctx.threadData[ctx.cCurrentThread].files[cFileIndex].wsPath     = wszPath;
-	ctx.threadData[ctx.cCurrentThread].files[cFileIndex].cbSize     = uliSize.QuadPart;
-	ctx.threadData[ctx.cCurrentThread].files[cFileIndex].cPathIndex = ctx.cPathIndex;
-	ctx.threadData[ctx.cCurrentThread].cActualFiles++;
-	if (ctx.threadData[ctx.cCurrentThread].cActualFiles == ctx.threadData[ctx.cCurrentThread].cFiles)
+	ctx.files[ctx.cFiles].pCTX       = &ctx;
+	ctx.files[ctx.cFiles].wsPath     = wszPath;
+	ctx.files[ctx.cFiles].cbSize     = cbSize;
+	ctx.files[ctx.cFiles].cPathIndex = ctx.cPathIndex;
+	ctx.files[ctx.cFiles].pResult    = NULL;
+	ctx.cFiles++;
+
+	if (ctx.cFiles == ctx.config.cQueuedFiles)
 	{
-		ctx.cCurrentThread++;
-		if (ctx.cCurrentThread >= ctx.config.cThreads)
-		{
-			ProcessFiles(ctx);
-			ctx.cCurrentThread = 0;
-		}
+		ProcessFiles(ctx);
+	}
+	if (!ctx.bRunning)
+	{
+		return Status_Cancelled;
 	}
 
 	return Status();
@@ -1072,120 +917,88 @@ Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, WIN32_FIND_D
 
 Status FileEnumerator2::ProcessFiles(Context &ctx)
 {
-	for (Size i = 0; i < ctx.config.cThreads; i++)
+	ctx.threads.RunJobs(ctx.files, ctx.cFiles, sizeof(File), &FileEnumerator2::HandleFileJob);
+	for (Size i = 0; i < ctx.cFiles; i++)
 	{
-		SetEvent(ctx.threadData[i].hEvent);
-	}
-	WaitForMultipleObjects((DWORD)ctx.config.cThreads, ctx.threadReadyEvents, TRUE, INFINITE);
-	for (Size i = 0; i < ctx.config.cThreads; i++)
-	{
-		if (0 < ctx.threadData[i].cActualResults)
+		if (NULL != ctx.files[i].pResult)
 		{
-			if (!ctx.pHandler->OnResults(ctx.threadData[i].results, ctx.threadData[i].cActualResults))
-			{
-				ctx.bRunning = False;
-			}
-			ctx.threadData[i].cActualResults = 0;
+			ctx.pHandler->OnResult(ctx.files[i].pResult);
 		}
 	}
+	ctx.cFiles = 0;
 
 	return Status();
 }
 
-DWORD WINAPI FileEnumerator2::WorkerThread(void *pArgs)
+void FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 {
-	ThreadData   *pData = (ThreadData *)pArgs;
-	FileImpl     file;
-	Size         cInclusionPatterns;
-	Bool         bMatched;
-	Status       status;
+	File      *pFile = (File *)pJob;
+	Context   *pCTX  = (Context *)pFile->pCTX;
+	Bool      bMatched;
+	Size      cInclusionPatterns;
+	Status    status;
 
-	for (;;)
+	pFile->file.m_wszPath       = pFile->wsPath.c_str();
+	pFile->file.m_cPathLen      = pFile->wsPath.size();
+	pFile->file.m_pContent      = NULL;
+	pFile->file.m_cbContentSize = pFile->cbSize;
+	pFile->file.m_hFile         = NULL;
+	pFile->file.m_hFileMapping  = NULL;
+	pFile->file.m_cPathIndex    = pFile->cPathIndex;
+
+	if (!pCTX->config.vectorPatterns.empty() ||pCTX->config.bMapFile)
 	{
-		WaitForSingleObject(pData->hEvent, INFINITE);
-
-		//Print(stdout, "{1} : Processing {2} files...\n", GetCurrentThreadId(), pData->cActualFiles);
-
-		pData->cActualResults = 0;
-		for (Size i = 0; i < pData->cActualFiles; i++)
+		if (!(status = pFile->file.Open()))
 		{
-			file.m_wszPath       = pData->files[i].wsPath.c_str();
-			file.m_cPathLen      = pData->files[i].wsPath.size();
-			file.m_pContent      = NULL;
-			file.m_cbContentSize = pData->files[i].cbSize;
-			file.m_uAttributes   = pData->files[i].data.dwFileAttributes;
-			file.m_hFile         = NULL;
-			file.m_hFileMapping  = NULL;
-			file.m_cPathIndex    = pData->files[i].cPathIndex;
-
-			if (!pData->pConfig->vectorPatterns.empty() || pData->pConfig->bMapFile)
-			{
-				if (!(status = file.Open()))
-				{
-					continue;
-				}
-			}
-
-			bMatched = True;
-			if (!pData->pConfig->vectorPatterns.empty())
-			{
-				bMatched           = False;
-				cInclusionPatterns = 0;
-
-				for (auto iter = pData->pConfig->vectorPatterns.begin(); 
-				     iter != pData->pConfig->vectorPatterns.end(); ++iter)
-				{
-					if (!iter->bNegate)
-					{
-						cInclusionPatterns++;
-					}
-				}
-
-				if (!FindPatterns(pData->pConfig, file.m_cbContentSize, True, pData->pConfig->vectorPatterns))
-				{
-					if (0 < cInclusionPatterns)
-					{
-						if (FindPatterns(file.m_pContent, file.m_cbContentSize, False, pData->pConfig->vectorPatterns))
-						{
-							bMatched = True;
-						}
-					}
-					else
-					{
-						bMatched = True;
-					}
-				}
-			}
-
-			if (!bMatched)
-			{
-				file.Close();
-
-				continue;
-			}
-
-			if (!pData->pHandler->OnFile(&file, &pData->results[pData->cActualResults], pData->pStats))
-			{
-				*pData->pbRunning = False;
-
-				break;
-			}
-			pData->cActualResults++;
-
-			file.Close();
-		}
-
-		pData->cActualFiles = 0;
-
-		SetEvent(pData->hReadyEvent);
-
-		if (!*pData->pbRunning)
-		{
-			break;
+			return;
 		}
 	}
 
-	return 0;
+	bMatched = True;
+	if (!pCTX->config.vectorPatterns.empty())
+	{
+		bMatched           = False;
+		cInclusionPatterns = 0;
+
+		for (auto iter = pCTX->config.vectorPatterns.begin(); iter != pCTX->config.vectorPatterns.end(); ++iter)
+		{
+			if (!iter->bNegate)
+			{
+				cInclusionPatterns++;
+			}
+		}
+
+		if (!FindPatterns(&pCTX->config, pFile->file.m_cbContentSize, True, pCTX->config.vectorPatterns))
+		{
+			if (0 < cInclusionPatterns)
+			{
+				if (FindPatterns(pFile->file.m_pContent, pFile->file.m_cbContentSize, False, pCTX->config.vectorPatterns))
+				{
+					bMatched = True;
+				}
+			}
+			else
+			{
+				bMatched = True;
+			}
+		}
+	}
+
+	if (!bMatched)
+	{
+		pFile->file.Close();
+
+		return;
+	}
+
+	if (!pCTX->pHandler->OnFile(&pFile->file, &pFile->pResult, &pCTX->stats))
+	{
+		pCTX->bRunning = False;
+
+		return;
+	}
+
+	pFile->file.Close();
 }
 
 Bool FileEnumerator2::FindPatterns(const void *pFileData, UInt64 cbFileSize, Bool bNegate, 
