@@ -573,19 +573,13 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 		break;
 	}
 
-	if (status)
-	{
-		status = ProcessFiles(ctx);
-	}
+	status = ProcessFiles(ctx);
 
 	ctx.threads.Stop();
 
-	if (status)
+	if (!pHandler->OnEnd(&ctx.stats))
 	{
-		if (!pHandler->OnEnd(&ctx.stats))
-		{
-			status = Status_Cancelled;
-		}
+		status = Status_Cancelled;
 	}
 
 	ctx.bRunning = False;
@@ -932,6 +926,8 @@ Status FileEnumerator2::ProcessFiles(Context &ctx)
 
 void FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 {
+	CX_UNUSED(cbSize);
+
 	File      *pFile = (File *)pJob;
 	Context   *pCTX  = (Context *)pFile->pCTX;
 	Bool      bMatched;
@@ -993,6 +989,7 @@ void FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 
 	if (!pCTX->pHandler->OnFile(&pFile->file, &pFile->pResult, &pCTX->stats))
 	{
+		pFile->file.Close();
 		pCTX->bRunning = False;
 
 		return;
