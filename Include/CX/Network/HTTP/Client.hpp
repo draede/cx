@@ -88,6 +88,8 @@ public:
 
 	static Status DownloadURL(const Char *szURL, ScopePtr<IO::IOutputStream> response);
 
+	void *GetHandle();
+
 private:
 
 	struct ReadUserData

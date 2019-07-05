@@ -372,6 +372,11 @@ Status Client::DownloadURL(const Char *szURL, ScopePtr<IO::IOutputStream> respon
 	return Status();
 }
 
+void *Client::GetHandle()
+{
+	return m_pHandle;
+}
+
 }//namespace HTTP
 
 }//namespace Network
