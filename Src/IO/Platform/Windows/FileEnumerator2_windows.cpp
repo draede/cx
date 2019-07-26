@@ -732,7 +732,7 @@ Status FileEnumerator2::RunWithListUTF8(FILE *pFile, Context &ctx)
 				}
 				if (!(status = RunWithPath(wszLine, ctx)))
 				{
-					break;
+					//nothing to do here
 				}
 			}
 		}
