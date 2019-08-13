@@ -911,15 +911,20 @@ Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSiz
 
 Status FileEnumerator2::ProcessFiles(Context &ctx)
 {
+	void   *pContext = NULL;
+
 	ctx.threads.RunJobs(ctx.files, ctx.cFiles, sizeof(File), &FileEnumerator2::HandleFileJob);
+
+	ctx.pHandler->OnBeginResults(&pContext);
 	for (Size i = 0; i < ctx.cFiles; i++)
 	{
 		if (NULL != ctx.files[i].pResult)
 		{
-			ctx.pHandler->OnResult(ctx.files[i].pResult);
+			ctx.pHandler->OnResult(ctx.files[i].pResult, pContext);
 		}
 	}
 	ctx.cFiles = 0;
+	ctx.pHandler->OnEndResults(pContext);
 
 	return Status();
 }

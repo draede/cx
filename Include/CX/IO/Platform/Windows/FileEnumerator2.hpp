@@ -176,7 +176,13 @@ public:
 		virtual Bool OnFile(IFile *pFile, void **ppResult, const Stats *pStats) = 0;
 
 		//called from a single thread
-		virtual Bool OnResult(void *pResult) = 0;
+		virtual Bool OnBeginResults(void **ppContext) =0;
+
+		//called from a single thread
+		virtual Bool OnResult(void *pResult, void *pContext) = 0;
+
+		//called from a single thread
+		virtual Bool OnEndResults(void *pContext) = 0;
 
 		virtual Bool OnEnd(const Stats *pStats) = 0;
 
