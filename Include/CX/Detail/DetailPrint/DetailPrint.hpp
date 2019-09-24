@@ -590,13 +590,15 @@ inline StatusCode ToString<Int32>(Int32 p, unsigned int nExtraFlags, Char *szOut
 		}
 		else
 		{
-			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount((UInt64)(-p));
+			Int64   nValue = (Int64)p;
+
+			*pcFinalLen = Detail::DetailPrint::GetUInt64DigitsCount(-nValue);
 			if (*pcFinalLen + 2 > cLen)
 			{
 				return Status_TooSmall;
 			}
 			*szOutput = '-';
-			Detail::DetailPrint::UInt64ToString((UInt64)(-p), szOutput + 1, *pcFinalLen);
+			Detail::DetailPrint::UInt64ToString(-nValue, szOutput + 1, *pcFinalLen);
 			(*pcFinalLen)++;
 			szOutput[*pcFinalLen] = 0;
 		}
