@@ -67,6 +67,7 @@ Status OptimizedStreamOutput::Init(UInt64 cbMaxFileSize, UInt32 cFlushDelay, Siz
 	m_cbMaxFileSize  = cbMaxFileSize / 2;
 	m_cbCrFileSize   = 0;
 
+	m_bRunning       = true;
 
 	for (;;)
 	{
@@ -92,7 +93,7 @@ Status OptimizedStreamOutput::Init(UInt64 cbMaxFileSize, UInt32 cFlushDelay, Siz
 
 			break;
 		}
-		if ((status = m_eventStop.Create(false, false)).IsNOK())
+		if ((status = m_eventState.Create(false, false)).IsNOK())
 		{
 			break;
 		}
@@ -120,12 +121,13 @@ Status OptimizedStreamOutput::Uninit()
 {
 	if (m_threadWrite.IsRunning())
 	{
-		m_eventStop.Set();
+		m_bRunning = false;
+		m_eventState.Set();
 		m_threadWrite.Wait();
 	}
-	if (m_eventStop.IsOK())
+	if (m_eventState.IsOK())
 	{
-		m_eventStop.Destroy();
+		m_eventState.Destroy();
 	}
 	if (NULL != m_pFOS)
 	{
@@ -146,19 +148,15 @@ Status OptimizedStreamOutput::Write(Level nLevel, const Char *szTag, const Char 
 	CX_UNUSED(nLevel);
 	CX_UNUSED(szTag);
 
-	String sLog(pBuffer, cLen);
+	Sys::Locker locker(&m_lockData);
 
+	if (NULL != m_pMemPool && NULL != pBuffer && 0 < cLen)
 	{
-		Sys::Locker locker(&m_lockData);
-
-		if (m_cbCrMem + cLen > m_cbMaxMem)
+		m_pMemPool->Add(pBuffer, cLen);
+		m_cbCrMem += cLen;
+		if (m_cbMaxMem < m_cbCrMem)
 		{
-			return Status_TooBig;
-		}
-		if (NULL != m_pMemPool)
-		{
-			m_pMemPool->Add(sLog.c_str(), sLog.size());
-			m_cbCrMem += cLen;
+			m_eventState.Set();
 		}
 	}
 
@@ -173,7 +171,7 @@ void OptimizedStreamOutput::WriteThread()
 
 	for (;;)
 	{
-		nWaitRes = m_eventStop.Wait(m_cFlushDelay);
+		nWaitRes = m_eventState.Wait(m_cFlushDelay);
 
 		Util::DynMemPool *pMemPool = m_pMemPool;
 
@@ -239,7 +237,7 @@ void OptimizedStreamOutput::WriteThread()
 			delete pMemPool;
 		}
 
-		if (Sys::Event::Wait_OK == nWaitRes)
+		if (!m_bRunning)
 		{
 			break;
 		}

@@ -73,7 +73,8 @@ private:
 #pragma warning(pop)
 	IO::FileOutputStream   *m_pFOS;
 	Sys::Thread            m_threadWrite;
-	Sys::Event             m_eventStop;
+	Sys::Event             m_eventState;
+	Bool                   m_bRunning;
 	Util::DynMemPool       *m_pMemPool;
 	Sys::Lock              m_lockData;
 	UInt32                 m_cFlushDelay;
