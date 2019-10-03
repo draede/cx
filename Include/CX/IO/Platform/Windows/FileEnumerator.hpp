@@ -103,8 +103,8 @@ public:
 
 		typedef Vector<WString>::Type                             ArgsVector;
 
-		Size             cThreads;
-		Size             cMaxWaitFiles;
+		UInt32           cThreads;
+		UInt32           cMaxWaitFiles;
 		UInt64           cbMinFileSize;
 		UInt64           cbMaxFileSize;
 		Bool             bRecursive;

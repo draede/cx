@@ -1,3 +1,5 @@
+0.2.241 - 2019-10-03
+ - Improved win32 thread pool usage
 0.2.240 - 2019-09-30
  - Fixed discarded log messages
 0.2.239 - 2019-09-24

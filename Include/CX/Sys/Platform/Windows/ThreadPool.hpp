@@ -58,9 +58,10 @@ public:
 
 	~ThreadPool();
 
-	Status Start(Size cMaxThreads = MAX_THREADS, Size cWaitingWorkItems = MAX_WAITING_WORK_ITEMS);
+	Status Start(PTP_CLEANUP_GROUP_CANCEL_CALLBACK pfnCancelCallback = NULL, UInt32 cMinThreads = 1, 
+	             UInt32 cMaxThreads = 1, UInt32 cWaitingWorkItems = MAX_WAITING_WORK_ITEMS);
 
-	Status Stop();
+	Status Stop(Bool bWaitForUnfinishedWork = True, void *pCancelCallbackContext = NULL);
 
 	Status AddWork(PTP_WORK_CALLBACK pfnWorkCallback, void *pWorkArg);
 
@@ -68,19 +69,29 @@ private:
 
 	struct WorkCallbackContext
 	{
-		ThreadPool          *pThreadPool;
-		PVOID               pActualContext;
-		PTP_WORK_CALLBACK   pfnActualWorkCallback;
+		ThreadPool                          *pThreadPool;
+		PVOID                               pActualContext;
+		PTP_WORK_CALLBACK                   pfnActualWorkCallback;
 	};
 
-	PTP_POOL              m_pPool;
-	PTP_CLEANUP_GROUP     m_pCleanupGroup;
-	TP_CALLBACK_ENVIRON   m_cbe;
-	Bool                  m_bCBEInitialized;
-	HANDLE                m_hEventStop;
-	HANDLE                m_hSemaphoreWorkItems;
+	struct CancelCallbackContext
+	{
+		ThreadPool                          *pThreadPool;
+		PVOID                               pActualContext;
+		PTP_CLEANUP_GROUP_CANCEL_CALLBACK   pfnActualCancelCallback;
+	};
 
-	static VOID CALLBACK WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOID pContext, PTP_WORK pWork);
+	PTP_POOL                               m_pPool;
+	PTP_CLEANUP_GROUP                      m_pCleanupGroup;
+	TP_CALLBACK_ENVIRON                    m_cbe;
+	PTP_CLEANUP_GROUP_CANCEL_CALLBACK      m_pfnCancelCallback;
+	Bool                                   m_bCBEInitialized;
+	HANDLE                                 m_hEventStop;
+	HANDLE                                 m_hSemaphoreWorkItems;
+
+	static void CALLBACK WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOID pContext, PTP_WORK pWork);
+
+	static void CALLBACK CancelCallback(void *pWorkContext, void *pCleanupContext);
 
 };
 

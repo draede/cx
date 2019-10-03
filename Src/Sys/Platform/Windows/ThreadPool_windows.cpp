@@ -23,6 +23,7 @@ ThreadPool::ThreadPool()
 	m_bCBEInitialized     = False;
 	m_hSemaphoreWorkItems = NULL;
 	m_hEventStop          = NULL;
+	m_pfnCancelCallback   = NULL;
 	memset(&m_cbe, 0, sizeof(m_cbe));
 }
 
@@ -31,7 +32,8 @@ ThreadPool::~ThreadPool()
 	Stop();
 }
 
-Status ThreadPool::Start(Size cMaxThreads/* = MAX_THREADS*/, Size cWaitingWorkItems/* = MAX_WAITING_WORK_ITEMS*/)
+Status ThreadPool::Start(PTP_CLEANUP_GROUP_CANCEL_CALLBACK pfnCancelCallback/* = NULL*/, UInt32 cMinThreads/* = 1*/, 
+                         UInt32 cMaxThreads/* = 1*/, UInt32 cWaitingWorkItems/* = MAX_WAITING_WORK_ITEMS*/)
 {
 	if (NULL != m_pPool)
 	{
@@ -42,11 +44,17 @@ Status ThreadPool::Start(Size cMaxThreads/* = MAX_THREADS*/, Size cWaitingWorkIt
 
 	for (;;)
 	{
+		m_pfnCancelCallback = pfnCancelCallback;
+
 		if (0 < cWaitingWorkItems)
 		{
 			m_hEventStop          = CreateEventA(NULL, FALSE, FALSE, NULL);
 			m_hSemaphoreWorkItems = CreateSemaphoreA(NULL, (LONG)cWaitingWorkItems, (LONG)cWaitingWorkItems, NULL);
 		}
+
+		InitializeThreadpoolEnvironment(&m_cbe);
+		m_bCBEInitialized = True;
+
 		if (NULL == (m_pPool = CreateThreadpool(NULL)))
 		{
 			status = Status(Status_OperationFailed, "CreateThreadpool failed with error {1}", GetLastError());
@@ -54,12 +62,13 @@ Status ThreadPool::Start(Size cMaxThreads/* = MAX_THREADS*/, Size cWaitingWorkIt
 			break;
 		}
 
-		InitializeThreadpoolEnvironment(&m_cbe);
-		m_bCBEInitialized = True;
+		SetThreadpoolThreadMaximum(m_pPool, cMaxThreads);
+		if (!SetThreadpoolThreadMinimum(m_pPool, cMinThreads))
+		{
+			status = Status(Status_OperationFailed, "SetThreadpoolThreadMinimum failed with error {1}", GetLastError());
 
-		SetThreadpoolThreadMaximum(m_pPool, (DWORD)cMaxThreads);
-
-		SetThreadpoolCallbackPool(&m_cbe, m_pPool);
+			break;
+		}
 
 		if (NULL == (m_pCleanupGroup = CreateThreadpoolCleanupGroup()))
 		{
@@ -67,7 +76,8 @@ Status ThreadPool::Start(Size cMaxThreads/* = MAX_THREADS*/, Size cWaitingWorkIt
 
 			break;
 		}
-		SetThreadpoolCallbackCleanupGroup(&m_cbe, m_pCleanupGroup, NULL);
+		::SetThreadpoolCallbackPool(&m_cbe, m_pPool);
+		::SetThreadpoolCallbackCleanupGroup(&m_cbe, m_pCleanupGroup, &ThreadPool::CancelCallback);
 
 		break;
 	}
@@ -79,27 +89,29 @@ Status ThreadPool::Start(Size cMaxThreads/* = MAX_THREADS*/, Size cWaitingWorkIt
 	return status;
 }
 
-Status ThreadPool::Stop()
+Status ThreadPool::Stop(Bool bWaitForUnfinishedWork/* = True*/, void *pCancelCallbackContext/* = NULL*/)
 {
-	if (NULL != m_hEventStop)
-	{
-		SetEvent(m_hEventStop);
-	}
 	if (NULL != m_pCleanupGroup)
 	{
-		CloseThreadpoolCleanupGroupMembers(m_pCleanupGroup, FALSE, NULL);
+		CancelCallbackContext   ctx;
+
+		ctx.pThreadPool             = this;
+		ctx.pActualContext          = pCancelCallbackContext;
+		ctx.pfnActualCancelCallback = m_pfnCancelCallback;
+
+		CloseThreadpoolCleanupGroupMembers(m_pCleanupGroup, !bWaitForUnfinishedWork, &ctx);
 		CloseThreadpoolCleanupGroup(m_pCleanupGroup);
 		m_pCleanupGroup = NULL;
-	}
-	if (m_bCBEInitialized)
-	{
-		DestroyThreadpoolEnvironment(&m_cbe);
-		m_bCBEInitialized = False;
 	}
 	if (NULL != m_pPool)
 	{
 		CloseThreadpool(m_pPool);
 		m_pPool = NULL;
+	}
+	if (m_bCBEInitialized)
+	{
+		DestroyThreadpoolEnvironment(&m_cbe);
+		m_bCBEInitialized = False;
 	}
 	if (NULL != m_hSemaphoreWorkItems)
 	{
@@ -111,6 +123,9 @@ Status ThreadPool::Stop()
 		CloseHandle(m_hEventStop);
 		m_hEventStop = NULL;
 	}
+
+	m_pfnCancelCallback = NULL;
+	memset(&m_cbe, 0, sizeof(m_cbe));
 
 	return Status();
 }
@@ -172,6 +187,23 @@ VOID CALLBACK ThreadPool::WorkCallback(PTP_CALLBACK_INSTANCE pInstance, PVOID pC
 	{
 		ReleaseSemaphore(pCTX->pThreadPool->m_hSemaphoreWorkItems, 1, NULL);
 	}
+
+	delete pCTX;
+
+	CloseThreadpoolWork(pWork);
+}
+
+void CALLBACK ThreadPool::CancelCallback(void *pWorkContext, void *pCleanupContext)
+{
+	WorkCallbackContext     *pCTX        = (WorkCallbackContext *)pWorkContext;
+	CancelCallbackContext   *pCleanupCTX = (CancelCallbackContext *)pCleanupContext;
+
+	if (NULL != pCTX->pThreadPool->m_hSemaphoreWorkItems)
+	{
+		ReleaseSemaphore(pCTX->pThreadPool->m_hSemaphoreWorkItems, 1, NULL);
+	}
+
+	pCleanupCTX->pfnActualCancelCallback(pCTX->pActualContext, pCleanupCTX->pActualContext);
 
 	delete pCTX;
 }

@@ -650,7 +650,7 @@ Status FileEnumerator::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 		}
 	}
 
-	if (!(status = tp.Start(config.cThreads, config.cMaxWaitFiles)))
+	if (!(status = tp.Start(NULL, config.cThreads, config.cMaxWaitFiles)))
 	{
 		return status;
 	}
