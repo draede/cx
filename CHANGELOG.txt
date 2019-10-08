@@ -1,3 +1,9 @@
+0.2.242 - 2019-10-08
+ - Updated sqlite to version 3.30.0
+ - Updated xxHash to version 0.7.1
+ - Updated LZ4 to version 1.9.2
+ - Updated Expat to version 2.2.9
+ - Updated cURL to version 7.66.0
 0.2.241 - 2019-10-03
  - Improved win32 thread pool usage
 0.2.240 - 2019-09-30
