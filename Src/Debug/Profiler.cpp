@@ -43,9 +43,7 @@ Profiler::Profiler()
 	m_root.cMaxDuration             = 0;
 	m_root.cTotalDuration           = 0;
 
-	m_root.szFileName               = NULL;
 	m_root.szScopeName              = NULL;
-	m_root.cLineNo                  = NULL;
 
 	m_root.timer.ResetTimer();
 
@@ -112,7 +110,7 @@ bool Profiler::GetEnabled()
 
 void Profiler::SetOnExitProfilingHandler(IProfilingHandler *pProfilingHandler)
 {
-	Sys::Locker locker(&m_lock);
+	Sys::FastWLocker locker(&m_rwlock);
 
 	if (!m_bEnabled)
 	{
@@ -124,7 +122,7 @@ void Profiler::SetOnExitProfilingHandler(IProfilingHandler *pProfilingHandler)
 
 void Profiler::AddScope(ThreadProfiler::Scope *pScope)
 {
-	Sys::Locker locker(&m_lock);
+	Sys::FastWLocker locker(&m_rwlock);
 
 	pScope->pParent      = &m_root;
 	pScope->pNextSibling = NULL;
@@ -147,7 +145,7 @@ void Profiler::AddScope(ThreadProfiler::Scope *pScope)
 
 bool Profiler::GetProfiling(IProfilingHandler *pProfilingHandler)
 {
-	Sys::Locker                   locker(&m_lock);
+	Sys::FastRLocker              locker(&m_rwlock);
 	ThreadProfiler::Scope         *pScope;
 	HotSpotsVector                vectorCalls;
 	HotSpotsVector                vectorDurations;
@@ -171,7 +169,7 @@ bool Profiler::GetProfiling(IProfilingHandler *pProfilingHandler)
 	pScope = m_root.pFirstChild;
 	while (NULL != pScope)
 	{
-		if (!GetProfiling(pScope, pProfilingHandler, true))
+		if (!GetProfiling(pScope, pProfilingHandler, 0))
 		{
 			return false;
 		}
@@ -185,7 +183,7 @@ bool Profiler::GetProfiling(IProfilingHandler *pProfilingHandler)
 
 	for (HotSpotsVector::iterator iter = vectorCalls.begin(); iter != vectorCalls.end(); ++iter)
 	{
-		if (!pProfilingHandler->OnCallHotSpot(iter->name.szFileName, iter->name.szScopeName, iter->name.cLineNo, 
+		if (!pProfilingHandler->OnCallHotSpot(iter->name.szScopeName, 
 		                                      iter->cMinDuration, iter->cMaxDuration,
 		                                      (UInt64)((double)iter->cTotalDuration / (double)iter->cCalls),
 		                                      iter->cTotalDuration, iter->cCalls))
@@ -207,7 +205,7 @@ bool Profiler::GetProfiling(IProfilingHandler *pProfilingHandler)
 
 	for (HotSpotsVector::iterator iter = vectorDurations.begin(); iter != vectorDurations.end(); ++iter)
 	{
-		if (!pProfilingHandler->OnDurationHotSpot(iter->name.szFileName, iter->name.szScopeName, iter->name.cLineNo, 
+		if (!pProfilingHandler->OnDurationHotSpot(iter->name.szScopeName, 
 		                                          iter->cMinDuration, iter->cMaxDuration, 
 		                                          (UInt64)((double)iter->cTotalDuration / (double)iter->cCalls), 
 		                                          iter->cTotalDuration, iter->cCalls))
@@ -230,27 +228,27 @@ bool Profiler::GetProfiling(IProfilingHandler *pProfilingHandler)
 	return true;
 }
 
-bool Profiler::GetProfiling(ThreadProfiler::Scope *pScope, IProfilingHandler *pProfilingHandler, bool bRootScope)
+bool Profiler::GetProfiling(ThreadProfiler::Scope *pScope, IProfilingHandler *pProfilingHandler, Size cDepth)
 {
 	ThreadProfiler::Scope *pTmp;
 
-	if (!pProfilingHandler->OnBeginScope(pScope->szFileName, pScope->szScopeName, pScope->cLineNo, 
+	if (!pProfilingHandler->OnBeginScope(pScope->szScopeName, 
 	                                     pScope->cMinDuration, pScope->cMaxDuration, 
 	                                     (UInt64)((double)pScope->cTotalDuration / (double)pScope->cCalls),
-	                                     pScope->cTotalDuration, pScope->cCalls, bRootScope))
+	                                     pScope->cTotalDuration, pScope->cCalls, cDepth))
 	{
 		return false;
 	}
 	pTmp = pScope->pFirstChild;
 	while (NULL != pTmp)
 	{
-		if (!GetProfiling(pTmp, pProfilingHandler, false))
+		if (!GetProfiling(pTmp, pProfilingHandler, cDepth + 1))
 		{
 			return false;
 		}
 		pTmp = pTmp->pNextSibling;
 	}
-	if (!pProfilingHandler->OnEndScope(bRootScope))
+	if (!pProfilingHandler->OnEndScope(cDepth))
 	{
 		return false;
 	}
@@ -367,9 +365,7 @@ void Profiler::GetHotSpots(ThreadProfiler::Scope *pScope, HotSpotsVector &vector
 	{
 		HotSpotName hsn;
 
-		hsn.szFileName  = pScope->szFileName;
 		hsn.szScopeName = pScope->szScopeName;
-		hsn.cLineNo     = pScope->cLineNo;
 
 		{
 			HotSpotsMap::iterator   iterMap = mapCalls.find(hsn);

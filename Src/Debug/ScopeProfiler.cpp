@@ -38,14 +38,14 @@ namespace CX
 namespace Debug
 {
 
-ScopeProfiler::ScopeProfiler(const Char *szFileName, const Char *szScopeName, int cLineNo)
+ScopeProfiler::ScopeProfiler(const Char *szScopeName)
 {
 	if (!Profiler::Get().GetEnabled())
 	{
 		return;
 	}
 
-	ThreadProfiler::EnterScope(szFileName, szScopeName, cLineNo);
+	ThreadProfiler::EnterScope(szScopeName);
 }
 
 ScopeProfiler::~ScopeProfiler()

@@ -39,12 +39,12 @@ namespace Debug
 {
 
 #if defined(CX_OS_WINDOWS)
-_declspec(thread) ThreadProfiler::Scope *g_pTHScope = NULL;
+_declspec(thread) ThreadProfiler::Scope   *g_pTHScope = NULL;
 #else
-__thread ThreadProfiler::Scope *g_pTHScope = NULL;
+__thread ThreadProfiler::Scope            *g_pTHScope = NULL;
 #endif
 
-ThreadProfiler::Scope *ThreadProfiler::CreateScope(const Char *szFileName, const Char *szScopeName, int cLineNo)
+ThreadProfiler::Scope *ThreadProfiler::CreateScope(const Char *szScopeName)
 {
 	Size  cLen;
 	Size  cbSize;
@@ -54,27 +54,15 @@ ThreadProfiler::Scope *ThreadProfiler::CreateScope(const Char *szFileName, const
 	{
 		return NULL;
 	}
-	cLen   = cx_strlen(szFileName);
-	cbSize = sizeof(Char) * (cLen + 1);
-	if (NULL == (pScope->szFileName = (Char *)Mem::Alloc(cbSize)))
-	{
-		delete pScope;
-
-		return NULL;
-	}
-	memcpy(pScope->szFileName, szFileName, cbSize);
 	cLen  = cx_strlen(szScopeName);
 	cbSize = sizeof(Char) * (cLen + 1);
 	if (NULL == (pScope->szScopeName = (Char *)Mem::Alloc(cbSize)))
 	{
-		Mem::Free(pScope->szFileName);
 		delete pScope;
 
 		return NULL;
 	}
 	memcpy(pScope->szScopeName, szScopeName, cbSize);
-
-	pScope->cLineNo        = cLineNo;
 
 	pScope->cMinDuration   = 0;
 	pScope->cMaxDuration   = 0;
@@ -95,10 +83,6 @@ void ThreadProfiler::DestroyScope(Scope *pScope)
 {
 	if (NULL != pScope)
 	{
-		if (NULL != pScope->szFileName)
-		{
-			Mem::Free(pScope->szFileName);
-		}
 		if (NULL != pScope->szScopeName)
 		{
 			Mem::Free(pScope->szScopeName);
@@ -107,16 +91,8 @@ void ThreadProfiler::DestroyScope(Scope *pScope)
 	}
 }
 
-bool ThreadProfiler::MatchScope(Scope *pScope, const Char *szFileName, const Char *szScopeName, int cLineNo)
+bool ThreadProfiler::MatchScope(Scope *pScope, const Char *szScopeName)
 {
-	if (pScope->cLineNo != cLineNo)
-	{
-		return false;
-	}
-	if (0 != cx_strcmp(pScope->szFileName, szFileName))
-	{
-		return false;
-	}
 	if (0 != cx_strcmp(pScope->szScopeName, szScopeName))
 	{
 		return false;
@@ -127,10 +103,10 @@ bool ThreadProfiler::MatchScope(Scope *pScope, const Char *szFileName, const Cha
 
 bool ThreadProfiler::MatchScope(Scope *pScope1, Scope *pScope2)
 {
-	return MatchScope(pScope1, pScope2->szFileName, pScope2->szScopeName, pScope2->cLineNo);
+	return MatchScope(pScope1, pScope2->szScopeName);
 }
 
-void ThreadProfiler::EnterScope(const Char *szFileName, const Char *szScopeName, int cLineNo)
+void ThreadProfiler::EnterScope(const Char *szScopeName)
 {
 	if (!Profiler::Get().GetEnabled())
 	{
@@ -149,7 +125,7 @@ void ThreadProfiler::EnterScope(const Char *szFileName, const Char *szScopeName,
 			pPrev = g_pTHScope->pFirstChild;
 			while (NULL != pScope)
 			{
-				if (MatchScope(pScope, szFileName, szScopeName, cLineNo))
+				if (MatchScope(pScope, szScopeName))
 				{
 					break;
 				}
@@ -160,7 +136,7 @@ void ThreadProfiler::EnterScope(const Char *szFileName, const Char *szScopeName,
 	}
 	if (NULL == pScope)
 	{
-		if (NULL == (pScope = CreateScope(szFileName, szScopeName, cLineNo)))
+		if (NULL == (pScope = CreateScope(szScopeName)))
 		{
 			return;
 		}

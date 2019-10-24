@@ -48,8 +48,7 @@ public:
 
 	PrintProfilingHandler(OUTPUT output)
 	{
-		m_output      = output;
-		m_cDepth      = 0;
+		m_output = output;
 	}
 
 	virtual bool OnBeginProfiling()
@@ -61,31 +60,27 @@ public:
 		return true;
 	}
 
-	virtual bool OnBeginScope(const Char *szFileName, const Char *szScopeName, int cLineNo, UInt64 cMinCallDuration, 
+	virtual bool OnBeginScope(const Char *szScopeName, UInt64 cMinCallDuration, 
 	                          UInt64 cMaxCallDuration, UInt64 cAvgCallDuration, UInt64 cTotalCallDuration, 
-	                          UInt64 cTotalCalls, bool bRootScope)
+	                          UInt64 cTotalCalls, Size cDepth)
 	{
 		bRootScope;
 
-		String sIndent(m_cDepth * 3, ' ');
+		String sIndent(cDepth * 3, ' ');
 
-		Print(m_output, "{1}{2} @ {3}:{4}, min={5}, max={6}, avg={7}, total={8}, calls={9}\n",
-		      sIndent, szScopeName, szFileName, cLineNo, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
+		Print(m_output, "{1}{2}, min={3}, max={4}, avg={5}, total={6}, calls={7}\n",
+		      sIndent, szScopeName, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
 		      cTotalCallDuration, cTotalCalls);
-
-		m_cDepth++;
 
 		return true;
 	}
 
-	virtual bool OnEndScope(bool bRootScope)
+	virtual bool OnEndScope(Size cDepth)
 	{
-		if (bRootScope)
+		if (0 == cDepth)
 		{
 			Print(m_output, "\n");
 		}
-
-		m_cDepth--;
 
 		return true;
 	}
@@ -97,12 +92,12 @@ public:
 		return true;
 	}
 
-	virtual bool OnCallHotSpot(const Char *szFileName, const Char *szScopeName, int cLineNo,
+	virtual bool OnCallHotSpot(const Char *szScopeName,
 	                           UInt64 cMinCallDuration, UInt64 cMaxCallDuration, UInt64 cAvgCallDuration,
 	                           UInt64 cTotalCallDuration, UInt64 cTotalCalls)
 	{
-		Print(m_output, "{1} @ {2}:{3}, min={4}, max={5}, avg={6}, total={7}, calls={8}\n",
-		      szScopeName, szFileName, cLineNo, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
+		Print(m_output, "{1}, min={2}, max={3}, avg={4}, total={5}, calls={6}\n",
+		      szScopeName, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
 		      cTotalCallDuration, cTotalCalls);
 
 		return true;
@@ -122,12 +117,12 @@ public:
 		return true;
 	}
 
-	virtual bool OnDurationHotSpot(const Char *szFileName, const Char *szScopeName, int cLineNo, 
+	virtual bool OnDurationHotSpot(const Char *szScopeName, 
 	                               UInt64 cMinCallDuration, UInt64 cMaxCallDuration, UInt64 cAvgCallDuration, 
 	                               UInt64 cTotalCallDuration, UInt64 cTotalCalls)
 	{
-		Print(m_output, "{1} @ {2}:{3}, min={4}, max={5}, avg={6}, total={7}, calls={8}\n",
-		      szScopeName, szFileName, cLineNo, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
+		Print(m_output, "{1}, min={2}, max={3}, avg={4}, total={5}, calls={6}\n",
+		      szScopeName, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
 		      cTotalCallDuration, cTotalCalls);
 
 		return true;
@@ -149,8 +144,7 @@ public:
 
 private:
 
-	OUTPUT     m_output;
-	Size       m_cDepth;
+	OUTPUT   m_output;
 
 };
 

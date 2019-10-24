@@ -50,15 +50,15 @@ public:
 
 	virtual bool OnBeginProfiling();
 
-	virtual bool OnBeginScope(const Char *szFileName, const Char *szScopeName, int cLineNo, UInt64 cMinCallDuration, 
+	virtual bool OnBeginScope(const Char *szScopeName, UInt64 cMinCallDuration, 
 	                          UInt64 cMaxCallDuration, UInt64 cAvgCallDuration, UInt64 cTotalCallDuration, 
-	                          UInt64 cTotalCalls, bool bRootScope);
+	                          UInt64 cTotalCalls, Size cDepth);
 
-	virtual bool OnEndScope(bool bRootScope);
+	virtual bool OnEndScope(Size cDepth);
 
 	virtual bool OnBeginCallHotSpots();
 
-	virtual bool OnCallHotSpot(const Char *szFileName, const Char *szScopeName, int cLineNo,
+	virtual bool OnCallHotSpot(const Char *szScopeName,
 	                           UInt64 cMinCallDuration, UInt64 cMaxCallDuration, UInt64 cAvgCallDuration,
 	                           UInt64 cTotalCallDuration, UInt64 cTotalCalls);
 
@@ -66,7 +66,7 @@ public:
 
 	virtual bool OnBeginDurationHotSpots();
 
-	virtual bool OnDurationHotSpot(const Char *szFileName, const Char *szScopeName, int cLineNo, 
+	virtual bool OnDurationHotSpot(const Char *szScopeName, 
 	                               UInt64 cMinCallDuration, UInt64 cMaxCallDuration, UInt64 cAvgCallDuration, 
 	                               UInt64 cTotalCallDuration, UInt64 cTotalCalls);
 
@@ -76,7 +76,6 @@ public:
 
 private:
 
-	Size                m_cDepth;
 	Log::SystemOutput   m_sysout;
 
 };

@@ -39,7 +39,6 @@ namespace Debug
 
 SysLogProfilingHandler::SysLogProfilingHandler()
 {
-	m_cDepth = 0;
 }
 
 bool SysLogProfilingHandler::OnBeginProfiling()
@@ -53,35 +52,30 @@ bool SysLogProfilingHandler::OnBeginProfiling()
 	return true;
 }
 
-bool SysLogProfilingHandler::OnBeginScope(const Char *szFileName, const Char *szScopeName, int cLineNo, 
+bool SysLogProfilingHandler::OnBeginScope(const Char *szScopeName, 
                                           UInt64 cMinCallDuration, UInt64 cMaxCallDuration, UInt64 cAvgCallDuration, 
-                                          UInt64 cTotalCallDuration, UInt64 cTotalCalls, bool bRootScope)
+                                          UInt64 cTotalCallDuration, UInt64 cTotalCalls, Size cDepth)
 {
-	CX_UNUSED(bRootScope);
-
-	String sIndent(m_cDepth * 3, ' ');
+	String sIndent(cDepth * 3, ' ');
 	String sOutput;
 
-	Print(&sOutput, "{1}{2} @ {3}:{4}, min={5}, max={6}, avg={7}, total={8}, calls={9}\n",
-	      sIndent, szScopeName, szFileName, cLineNo, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
+	Print(&sOutput, "{1}{2}, min={3}, max={4}, avg={5}, total={6}, calls={7}\n",
+	      sIndent, szScopeName, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
 	      cTotalCallDuration, cTotalCalls);
 
 	m_sysout.Write(Log::Level_Debug, "", sOutput.c_str(), sOutput.size());
 
-	m_cDepth++;
-
 	return true;
 }
 
-bool SysLogProfilingHandler::OnEndScope(bool bRootScope)
+bool SysLogProfilingHandler::OnEndScope(Size cDepth)
 {
-	if (bRootScope)
+	if (0 == cDepth)
 	{
 		String sOutput = "\n";
 
 		m_sysout.Write(Log::Level_Debug, "", sOutput.c_str(), sOutput.size());
 	}
-	m_cDepth--;
 
 	return true;
 }
@@ -95,14 +89,14 @@ bool SysLogProfilingHandler::OnBeginCallHotSpots()
 	return true;
 }
 
-bool SysLogProfilingHandler::OnCallHotSpot(const Char *szFileName, const Char *szScopeName, int cLineNo,
+bool SysLogProfilingHandler::OnCallHotSpot(const Char *szScopeName,
                                            UInt64 cMinCallDuration, UInt64 cMaxCallDuration, UInt64 cAvgCallDuration,
                                            UInt64 cTotalCallDuration, UInt64 cTotalCalls)
 {
 	String sOutput;
 
-	Print(&sOutput, "{1} @ {2}:{3}, min={4}, max={5}, avg={6}, total={7}, calls={8}\n",
-	      szScopeName, szFileName, cLineNo, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
+	Print(&sOutput, "{1}, min={2}, max={3}, avg={4}, total={5}, calls={6}\n",
+	      szScopeName, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
 	      cTotalCallDuration, cTotalCalls);
 
 	m_sysout.Write(Log::Level_Debug, "", sOutput.c_str(), sOutput.size());
@@ -128,14 +122,14 @@ bool SysLogProfilingHandler::OnBeginDurationHotSpots()
 	return true;
 }
 
-bool SysLogProfilingHandler::OnDurationHotSpot(const Char *szFileName, const Char *szScopeName, int cLineNo, 
+bool SysLogProfilingHandler::OnDurationHotSpot(const Char *szScopeName, 
                                                UInt64 cMinCallDuration, UInt64 cMaxCallDuration, 
                                                UInt64 cAvgCallDuration, UInt64 cTotalCallDuration, UInt64 cTotalCalls)
 {
 	String sOutput;
 
-	Print(&sOutput, "{1} @ {2}:{3}, min={4}, max={5}, avg={6}, total={7}, calls={8}\n",
-	      szScopeName, szFileName, cLineNo, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
+	Print(&sOutput, "{1}, min={2}, max={3}, avg={4}, total={5}, calls={6}\n",
+	      szScopeName, cMinCallDuration, cMaxCallDuration, cAvgCallDuration,
 	      cTotalCallDuration, cTotalCalls);
 
 	m_sysout.Write(Log::Level_Debug, "", sOutput.c_str(), sOutput.size());

@@ -31,7 +31,7 @@
 
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
-#include "CX/Sys/Lock.hpp"
+#include "CX/Sys/FastRWLock.hpp"
 #include "CX/Debug/ThreadProfiler.hpp"
 #include "CX/Debug/IProfilingHandler.hpp"
 #include "CX/Map.hpp"
@@ -62,71 +62,36 @@ public:
 protected:
 
 	friend class ThreadProfiler;
+	friend struct ScopeHelper;
 
 	void AddScope(ThreadProfiler::Scope *pScope);
 
 private:
 
-	Sys::Lock                     m_lock;
+	Sys::FastRWLock               m_rwlock;
 	IProfilingHandler             *m_pOnDestructProfilingHandler;
 	ThreadProfiler::Scope         m_root;
 	bool                          m_bEnabled;
 
 	struct HotSpotName
 	{
-		Char   *szFileName;
 		Char   *szScopeName;
-		int    cLineNo;
 	};
 
 	struct HotSpot
 	{
-		HotSpotName name;
-		UInt64      cMinDuration;
-		UInt64      cMaxDuration;
-		UInt64      cTotalDuration;
-		UInt64      cCalls;
+		HotSpotName   name;
+		UInt64        cMinDuration;
+		UInt64        cMaxDuration;
+		UInt64        cTotalDuration;
+		UInt64        cCalls;
 	};
 
 	struct HotSpotNameLess
 	{
 		bool operator()(const HotSpotName &hs1, const HotSpotName &hs2) const
 		{
-			int nRet;
-
-#pragma warning(push)
-#pragma warning(disable: 4996)
-			nRet = cx_stricmp(hs1.szFileName, hs2.szFileName);
-#pragma warning(pop)
-			if (0 > nRet)
-			{
-				return true;
-			}
-			else
-			if (0 < nRet)
-			{
-				return false;
-			}
-			else
-			{
-#pragma warning(push)
-#pragma warning(disable: 4996)
-				nRet = cx_stricmp(hs1.szScopeName, hs2.szScopeName);
-#pragma warning(pop)
-				if (0 > nRet)
-				{
-					return true;
-				}
-				else
-				if (0 < nRet)
-				{
-					return false;
-				}
-				else
-				{
-					return (hs1.cLineNo < hs2.cLineNo);
-				}
-			}
+			return (0 > cx_strcmp(hs1.szScopeName, hs2.szScopeName));
 		}
 	};
 
@@ -139,7 +104,7 @@ private:
 
 	void FreeScopeMem(ThreadProfiler::Scope *pScope);
 
-	bool GetProfiling(ThreadProfiler::Scope *pScope, IProfilingHandler *pProfilingHandler, bool bRootScope);
+	bool GetProfiling(ThreadProfiler::Scope *pScope, IProfilingHandler *pProfilingHandler, Size cDepth);
 
 	void Merge(ThreadProfiler::Scope *pScope);
 

@@ -47,9 +47,7 @@ public:
 
 	struct Scope
 	{
-		Char          *szFileName;
 		Char          *szScopeName;
-		int           cLineNo;
 
 		UInt64        cMinDuration;
 		UInt64        cMaxDuration;
@@ -60,19 +58,20 @@ public:
 
 		Scope         *pParent;
 		Scope         *pFirstChild;
+		Scope         *pLastChild;
 		Scope         *pPrevSibling;
 		Scope         *pNextSibling;
 	};
 
-	static void EnterScope(const Char *szFileName, const Char *szScopeName, int cLineNo);
+	static void EnterScope(const Char *szScopeName);
 
 	static void LeaveScope();
 
-	static Scope *CreateScope(const Char *szFileName, const Char *szScopeName, int cLineNo);
+	static Scope *CreateScope(const Char *szScopeName);
 
 	static void DestroyScope(Scope *pScope);
 
-	static bool MatchScope(Scope *pScope, const Char *szFileName, const Char *szScopeName, int cLineNo);
+	static bool MatchScope(Scope *pScope, const Char *szScopeName);
 
 	static bool MatchScope(Scope *pScope1, Scope *pScope2);
 
