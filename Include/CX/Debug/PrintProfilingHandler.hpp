@@ -53,9 +53,9 @@ public:
 
 	virtual bool OnBeginProfiling()
 	{
-		Print(m_output, "\nBEGIN PROFILING\n\n");
+		Print(m_output, "\nBEGIN PROFILING\n");
 
-		Print(m_output, "\nBEGIN SCOPE\n\n");
+		Print(m_output, "\nCALL STACKS\n\n");
 
 		return true;
 	}
@@ -64,8 +64,6 @@ public:
 	                          UInt64 cMaxCallDuration, UInt64 cAvgCallDuration, UInt64 cTotalCallDuration, 
 	                          UInt64 cTotalCalls, Size cDepth)
 	{
-		bRootScope;
-
 		String sIndent(cDepth * 3, ' ');
 
 		Print(m_output, "{1}{2}, min={3}, max={4}, avg={5}, total={6}, calls={7}\n",
