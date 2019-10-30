@@ -130,7 +130,7 @@ Status ThreadPool::Stop(Bool bWaitForUnfinishedWork/* = True*/, void *pCancelCal
 	return Status();
 }
 
-Status ThreadPool::AddWork(PTP_WORK_CALLBACK pfnWorkCallback, void *pWorkArg)
+Status ThreadPool::AddWork(PTP_WORK_CALLBACK pfnWorkCallback, void *pWorkArg, UInt32 cWaitTimeInMS/* = 0xFFFFFFFF*/)
 {
 	if (NULL == m_pPool)
 	{
@@ -142,7 +142,12 @@ Status ThreadPool::AddWork(PTP_WORK_CALLBACK pfnWorkCallback, void *pWorkArg)
 		HANDLE   handles[2] = { m_hEventStop, m_hSemaphoreWorkItems };
 		DWORD    dwRet;
 
-		dwRet = WaitForMultipleObjects(2, handles, FALSE, INFINITE);
+		dwRet = WaitForMultipleObjects(2, handles, FALSE, cWaitTimeInMS);
+		if (WAIT_TIMEOUT == dwRet)
+		{
+			return Status_Busy;
+		}
+		else
 		if (WAIT_OBJECT_0 == dwRet)
 		{
 			SetEvent(m_hEventStop);

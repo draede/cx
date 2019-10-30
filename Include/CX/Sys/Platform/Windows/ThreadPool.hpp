@@ -63,7 +63,7 @@ public:
 
 	Status Stop(Bool bWaitForUnfinishedWork = True, void *pCancelCallbackContext = NULL);
 
-	Status AddWork(PTP_WORK_CALLBACK pfnWorkCallback, void *pWorkArg);
+	Status AddWork(PTP_WORK_CALLBACK pfnWorkCallback, void *pWorkArg, UInt32 cWaitTimeInMS = 0xFFFFFFFF);
 
 private:
 

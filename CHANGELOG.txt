@@ -1,4 +1,6 @@
-0.2.244 - 2019-10-25
+0.2.245 - 2019-10-30
+ - Improved thread pool usage
+0.2.244 - 2019-10-24
  - Fixes in Debug Profiler
 0.2.243 - 2019-10-24
  - Fixes & improvements in Debug Profiler
