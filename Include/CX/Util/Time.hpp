@@ -29,6 +29,9 @@
 #pragma once
 
 
+/* THIS API IS DEPRECATED PLEASE USE DateTime.hpp */
+
+
 #include "CX/Platform.hpp"
 
 

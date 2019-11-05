@@ -1245,6 +1245,9 @@
     <ClInclude Include="..\..\Include\CX\Sys\Platform\Windows\SyncedWorkerThreads.hpp">
       <Filter>Header Files\Sys\Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Util\DateTime.hpp">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2377,6 +2380,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\SyncedWorkerThreads_windows.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\DateTime.cpp">
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
