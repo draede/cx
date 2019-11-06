@@ -614,7 +614,7 @@ void Node::SAXObserver::OnEndElement(const Char *szName, const Char *szText)
 {
 	CX_UNUSED(szName);
 
-	if (NULL == m_pCrNode)
+	if (NULL == m_pCrNode || NULL == szText)
 	{
 		return;
 	}

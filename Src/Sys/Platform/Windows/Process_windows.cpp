@@ -116,7 +116,7 @@ Status Process::GetCurrentProcessPathW(WString &wsPath)
 			break;
 		}
 	}
-	if (status.IsOK())
+	if (status.IsOK() && NULL != wszPath)
 	{
 		wsPath = wszPath;
 	}

@@ -45,6 +45,11 @@ ZIPInputStream::ZIPInputStream(const Char *szZIPPath, const Char *szFileInZIPPat
 	m_cbSize   = 0;
 	m_cbOffset = 0;
 
+	if (NULL == szZIPPath || NULL == szFileInZIPPath)
+	{
+		return;
+	}
+
 	const Char   *pszPos;
 	const Char   *pszTmpPos;
 	String       sPassword;

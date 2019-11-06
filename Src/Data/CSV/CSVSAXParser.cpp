@@ -54,7 +54,7 @@ SAXParser::~SAXParser()
 
 Status SAXParser::BeginParse(Char chDelimiter/* = ','*/)
 {
-	if ('\r' == chDelimiter || '\r' == chDelimiter || '"' == chDelimiter || '\0' == chDelimiter)
+	if ('\r' == chDelimiter || '"' == chDelimiter || '\0' == chDelimiter)
 	{
 		return Status_InvalidArg;
 	}

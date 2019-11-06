@@ -73,7 +73,7 @@ public:
 
 private:
 
-	static const Size   BUFFER_SIZE = 16384;
+	static const Size   BUFFER_SIZE = 15000;
 
 	typedef Vector<ISAXParserObserver *>::Type   ObserversVector;
 

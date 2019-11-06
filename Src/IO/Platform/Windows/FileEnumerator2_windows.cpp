@@ -697,7 +697,7 @@ Status FileEnumerator2::RunWithListUTF8(FILE *pFile, Context &ctx)
 	}
 	if (NULL == (wszLine = new WChar[MAX_LINE_LEN * 6]))
 	{
-		free(szLine);
+		delete [] szLine;
 
 		return ctx.pHandler->OnError(Status(Status_MemAllocFailed, "Failed to allocate line buffer (2)"));
 	}
@@ -738,8 +738,8 @@ Status FileEnumerator2::RunWithListUTF8(FILE *pFile, Context &ctx)
 		}
 	}
 
-	free(wszLine);
-	free(szLine);
+	delete [] wszLine;
+	delete [] szLine;
 
 	return status;
 }
@@ -781,7 +781,7 @@ Status FileEnumerator2::RunWithListUTF16(FILE *pFile, Context &ctx)
 		}
 	}
 
-	free(wszLine);
+	delete [] wszLine;
 
 	return status;
 }
