@@ -397,6 +397,12 @@
     <Filter Include="Contrib\ZLib">
       <UniqueIdentifier>{86939dd0-57ea-4b51-aa7a-cb3314beb87c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data\NPY">
+      <UniqueIdentifier>{f691113f-dedd-4010-90c7-7b2bf161cfec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\NPY">
+      <UniqueIdentifier>{60b7d855-6a24-41cf-8034-c26202d6a625}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1248,6 +1254,48 @@
     <ClInclude Include="..\..\Include\CX\Util\DateTime.hpp">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\ByteOrder.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Column.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Consts.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Converter.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Format.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Header.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\HelpCommand.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\ISAXDictionaryParserObserver.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\pch.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Reader.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\SAXDictionaryParser.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Type.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Version.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Writer.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -1274,14 +1322,8 @@
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\strtod.cc">
       <Filter>Contrib\DoubleConversion</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer_windows.cpp">
-      <Filter>Source Files\Util\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\IO\MemOutputStream.cpp">
       <Filter>Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\JSON\JSONSAXParser.cpp">
       <Filter>Source Files\Data\JSON</Filter>
@@ -1298,20 +1340,8 @@
     <ClCompile Include="..\..\Src\Log\StreamOutput.cpp">
       <Filter>Source Files\Log</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput_windows.cpp">
-      <Filter>Source Files\Log\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Log\DefaultFormatter.cpp">
       <Filter>Source Files\Log</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Windows\Time_windows.cpp">
-      <Filter>Source Files\Util\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\CRC32Hash.cpp">
       <Filter>Source Files\Hash</Filter>
@@ -1330,9 +1360,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Hash\SHA512Hash.cpp">
       <Filter>Source Files\Hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\C\Platform\Windows\Mem_windows.c">
-      <Filter>Source Files\C\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Str\HexBinStr.cpp">
       <Filter>Source Files\Str</Filter>
@@ -1361,9 +1388,6 @@
     <ClCompile Include="..\..\Contrib\TinyMT\Src\tinymt64.c">
       <Filter>Contrib\TinyMT</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint_windows.cpp">
-      <Filter>Source Files\Detail\DetailPrint\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Hash\xxHash64.cpp">
       <Filter>Source Files\Hash</Filter>
     </ClCompile>
@@ -1373,113 +1397,14 @@
     <ClCompile Include="..\..\Src\Mem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Util\RCMemBuffer.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\RCMemBufferMgr.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper_windows.cpp">
-      <Filter>Source Files\IO\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8_windows.cpp">
-      <Filter>Source Files\Str\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileInputStream_windows.cpp">
-      <Filter>Source Files\IO\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream_windows.cpp">
-      <Filter>Source Files\IO\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\C\Platform\Android\Mem_android.c">
-      <Filter>Source Files\C\Platform\Android</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\C\Platform\iOS\Mem_ios.c">
       <Filter>Source Files\C\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Android\DetailPrint_android.cpp">
-      <Filter>Source Files\Detail\DetailPrint\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\iOS\DetailPrint_ios.cpp">
-      <Filter>Source Files\Detail\DetailPrint\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Android\FileInputStream_android.cpp">
-      <Filter>Source Files\IO\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Android\FileOutputStream_android.cpp">
-      <Filter>Source Files\IO\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Android\LocalFileSysHelper_android.cpp">
-      <Filter>Source Files\IO\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileInputStream_ios.cpp">
-      <Filter>Source Files\IO\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileOutputStream_ios.cpp">
-      <Filter>Source Files\IO\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\iOS\LocalFileSysHelper_ios.cpp">
-      <Filter>Source Files\IO\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput_android.cpp">
-      <Filter>Source Files\Log\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput_ios.cpp">
-      <Filter>Source Files\Log\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8_android.cpp">
-      <Filter>Source Files\Str\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Str\Platform\iOS\UTF8_ios.cpp">
-      <Filter>Source Files\Str\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Android\DynLib_android.cpp">
-      <Filter>Source Files\Sys\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Android\Lock_android.cpp">
-      <Filter>Source Files\Sys\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Android\Process_android.cpp">
-      <Filter>Source Files\Sys\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Android\RWLock_android.cpp">
-      <Filter>Source Files\Sys\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Android\Thread_android.cpp">
-      <Filter>Source Files\Sys\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\iOS\DynLib_ios.cpp">
-      <Filter>Source Files\Sys\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Lock_ios.cpp">
-      <Filter>Source Files\Sys\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Process_ios.cpp">
-      <Filter>Source Files\Sys\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\iOS\RWLock_ios.cpp">
-      <Filter>Source Files\Sys\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Thread_ios.cpp">
-      <Filter>Source Files\Sys\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Android\Time_android.cpp">
-      <Filter>Source Files\Util\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Android\Timer_android.cpp">
-      <Filter>Source Files\Util\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\iOS\Time_ios.cpp">
-      <Filter>Source Files\Util\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\iOS\Timer_ios.cpp">
-      <Filter>Source Files\Util\Platform\iOS</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\BLAKE2\Src\blake2b-ref.c">
       <Filter>Contrib\BLAKE2</Filter>
@@ -2066,15 +1991,6 @@
     <ClCompile Include="..\..\Src\DB\SQLite\DBHelper.cpp">
       <Filter>Source Files\DB\SQLite</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Event_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Android\Event_android.cpp">
-      <Filter>Source Files\Sys\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Event_ios.cpp">
-      <Filter>Source Files\Sys\Platform\iOS</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Hash\MultiHash.cpp">
       <Filter>Source Files\Hash</Filter>
     </ClCompile>
@@ -2086,15 +2002,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\DynStruct.cpp">
       <Filter>Source Files\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Android\Atomic_android.cpp">
-      <Filter>Source Files\Sys\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Atomic_ios.cpp">
-      <Filter>Source Files\Sys\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Atomic_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Util\Bitmap.cpp">
       <Filter>Source Files\Util</Filter>
@@ -2113,18 +2020,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\XML\SAXParserObserverBase.cpp">
       <Filter>Source Files\Data\XML</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Util\Platform\Windows\Console_windows.cpp">
-      <Filter>Source Files\Util\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Log\Platform\Android\ConsoleOutput_android.cpp">
-      <Filter>Source Files\Log\Platform\Android</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Log\Platform\iOS\ConsoleOutput_ios.cpp">
-      <Filter>Source Files\Log\Platform\iOS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Log\Platform\Windows\ConsoleOutput_windows.cpp">
-      <Filter>Source Files\Log\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\JSONSL\Src\jsonsl.c">
       <Filter>Contrib\JSONSL</Filter>
@@ -2216,9 +2111,6 @@
     <ClCompile Include="..\..\Src\Data\JSON\DumpSAXParserObserver.cpp">
       <Filter>Source Files\Data\JSON</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Windows\MemoryMappedFile_windows.cpp">
-      <Filter>Source Files\IO\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Contrib\SHA\Src\sha1.c">
       <Filter>Contrib\SHA</Filter>
     </ClCompile>
@@ -2270,9 +2162,6 @@
     <ClCompile Include="..\..\Contrib\Expat\Src\loadlibrary.c">
       <Filter>Contrib\Expat</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\FastRWLock_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\DB\SQLite\DefaultDBHelperAsyncMgr.cpp">
       <Filter>Source Files\DB\SQLite</Filter>
     </ClCompile>
@@ -2288,23 +2177,11 @@
     <ClCompile Include="..\..\Src\CLI\Commands.cpp">
       <Filter>Source Files\CLI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileEnumerator_windows.cpp">
-      <Filter>Source Files\IO\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\ThreadPool_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Data\CSV\CSVSAXParser.cpp">
       <Filter>Source Files\Data\CSV</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\VFS\VFSRegistry.cpp">
       <Filter>Source Files\IO\VFS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\VFS\Platform\Windows\Local_windows.cpp">
-      <Filter>Source Files\IO\VFS\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\IO\VFS\Platform\Windows\LocalFolder_windows.cpp">
-      <Filter>Source Files\IO\VFS\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Contrib\ZLib\Src\adler32.c">
       <Filter>Contrib\ZLib</Filter>
@@ -2375,14 +2252,200 @@
     <ClCompile Include="..\..\Src\IO\VFS\ZIPVFS.cpp">
       <Filter>Source Files\IO\VFS</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileEnumerator2_windows.cpp">
-      <Filter>Source Files\IO\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Sys\Platform\Windows\SyncedWorkerThreads_windows.cpp">
-      <Filter>Source Files\Sys\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Util\DateTime.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\C\Platform\Android\Mem.c">
+      <Filter>Source Files\C\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\C\Platform\Windows\Mem.c">
+      <Filter>Source Files\C\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Android\DetailPrint.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\iOS\DetailPrint.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Detail\DetailPrint\Platform\Windows\DetailPrint.cpp">
+      <Filter>Source Files\Detail\DetailPrint\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\FileInputStream.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileInputStream.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileInputStream.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\FileOutputStream.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\FileOutputStream.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileOutputStream.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Android\LocalFileSysHelper.cpp">
+      <Filter>Source Files\IO\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\iOS\LocalFileSysHelper.cpp">
+      <Filter>Source Files\IO\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\LocalFileSysHelper.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\VFS\Platform\Windows\LocalFolder.cpp">
+      <Filter>Source Files\IO\VFS\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\VFS\Platform\Windows\Local.cpp">
+      <Filter>Source Files\IO\VFS\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileEnumerator.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\FileEnumerator2.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\IO\Platform\Windows\MemoryMappedFile.cpp">
+      <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\SystemOutput.cpp">
+      <Filter>Source Files\Log\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Windows\ConsoleOutput.cpp">
+      <Filter>Source Files\Log\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\iOS\SystemOutput.cpp">
+      <Filter>Source Files\Log\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\iOS\ConsoleOutput.cpp">
+      <Filter>Source Files\Log\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Android\SystemOutput.cpp">
+      <Filter>Source Files\Log\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Log\Platform\Android\ConsoleOutput.cpp">
+      <Filter>Source Files\Log\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\Windows\UTF8.cpp">
+      <Filter>Source Files\Str\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\iOS\UTF8.cpp">
+      <Filter>Source Files\Str\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Str\Platform\Android\UTF8.cpp">
+      <Filter>Source Files\Str\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Android\Time.cpp">
+      <Filter>Source Files\Util\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Android\Timer.cpp">
+      <Filter>Source Files\Util\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\Time.cpp">
+      <Filter>Source Files\Util\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\iOS\Timer.cpp">
+      <Filter>Source Files\Util\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Console.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Time.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Util\Platform\Windows\Timer.cpp">
+      <Filter>Source Files\Util\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Atomic.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\DynLib.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Event.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Lock.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Process.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\RWLock.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Android\Thread.cpp">
+      <Filter>Source Files\Sys\Platform\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Atomic.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\DynLib.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Event.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Lock.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Process.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\RWLock.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\iOS\Thread.cpp">
+      <Filter>Source Files\Sys\Platform\iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Atomic.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\DynLib.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Event.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\FastRWLock.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Lock.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Process.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\RWLock.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\SyncedWorkerThreads.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\Thread.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Sys\Platform\Windows\ThreadPool.cpp">
+      <Filter>Source Files\Sys\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\Converter.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\Header.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\Reader.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\SAXDictionaryParser.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\Writer.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

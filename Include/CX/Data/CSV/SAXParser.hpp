@@ -82,6 +82,7 @@ private:
 		State_None,
 		State_Row,
 		State_Quote,
+		State_EOL,
 	};
 
 #pragma warning(push)

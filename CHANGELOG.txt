@@ -1,3 +1,8 @@
+0.2.248 - 2019-11-10
+ - Simple NPY read/write support
+ - Multiple CSV parsing fixes
+ - Fixed duplicate .obj file names
+0.2.247 - 2019-11-07
  - Fixed issues detected by VS analyze
 0.2.246 - 2019-11-05
  - Added improved date time classes

@@ -218,11 +218,10 @@ Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 			else
 			if ('\r' == *pPos || '\n' == *pPos)
 			{
-				if (!m_sColumn.empty())
-				{
-					m_vectorColumns.push_back(m_sColumn);
-					m_sColumn.clear();
-				}
+				m_nState = State_EOL;
+
+				m_vectorColumns.push_back(m_sColumn);
+				m_sColumn.clear();
 				if (!m_vectorColumns.empty())
 				{
 					for (auto iter = m_vectorObservers.begin(); iter != m_vectorObservers.end(); ++iter)
@@ -235,7 +234,6 @@ Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 					m_cRowIndex++;
 					m_vectorColumns.clear();
 				}
-
 				pPos++;
 			}
 			else
@@ -259,6 +257,18 @@ Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 			{
 				m_bInQuote = False;
 				
+				m_nState = State_Row;
+			}
+		}
+		else
+		if (State_EOL == m_nState)
+		{
+			if ('\r' == *pPos || '\n' == *pPos)
+			{
+				pPos++;
+			}
+			else
+			{
 				m_nState = State_Row;
 			}
 		}
