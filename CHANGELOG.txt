@@ -1,4 +1,4 @@
-0.2.249
+0.2.249 - 2019-11-12
  - Fixed compat issues
 0.2.248 - 2019-11-10
  - Simple NPY read/write support
