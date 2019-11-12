@@ -363,7 +363,7 @@ Status Reader::ParseDictionary(const void *pData, Size cbSize)
 	m_nFormat = observer.m_nFormat;
 	if (1 == observer.m_vectorShape.size())
 	{
-		m_cRows = observer.m_vectorShape[0];
+		m_cRows = (Size)observer.m_vectorShape[0];
 		if (observer.m_vectorColumns.empty())
 		{
 			return Status(Status_ParseFailed, "Invalid descr");
@@ -383,7 +383,7 @@ Status Reader::ParseDictionary(const void *pData, Size cbSize)
 		{
 			return Status(Status_ParseFailed, "Invalid descr");
 		}
-		m_cRows = observer.m_vectorShape[0];
+		m_cRows = (Size)observer.m_vectorShape[0];
 		if (Consts::MIN_COLUMNS_COUNT > observer.m_vectorShape[1] || 
 		    Consts::MAX_COLUMNS_COUNT < observer.m_vectorShape[1])
 		{
@@ -393,7 +393,7 @@ Status Reader::ParseDictionary(const void *pData, Size cbSize)
 		{
 			m_vectorColumns.push_back(observer.m_all);
 		}
-		m_cbRowSize = observer.m_cbRowSize * observer.m_vectorShape[1];
+		m_cbRowSize = (Size)(observer.m_cbRowSize * observer.m_vectorShape[1]);
 	}
 	else
 	{
