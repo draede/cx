@@ -55,7 +55,7 @@ public:
 	static const Size MIN_THREADS         = 1;
 	static const Size MAX_THREADS         = 2048;
 
-	typedef void (* JobFunction)(void *pJob, Size cbSize);
+	typedef Bool (* JobFunction)(void *pJob, Size cbSize);
 
 	SyncedWorkerThreads();
 

@@ -451,9 +451,7 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	Status             status;
 
 	ctx.bRunning                           = True;
-
 	ctx.cPathIndex                         = 0;
-
 	ctx.pHandler                           = pHandler;
 	ctx.config                             = config;
 
@@ -540,29 +538,44 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 				break;
 			}
 			ctx.cPathIndex = cPathIndex;
-			if (0 == cxw_strnicmp(vectorPaths[cPathIndex].c_str(), L"list:", 5))
-			{
-				if (!(status = RunWithList(vectorPaths[cPathIndex].c_str() + 5, ctx)))
-				{
-					if (!pHandler->OnError(status))
-					{
-						status = Status_Cancelled;
 
-						break;
+			if (!pHandler->OnBeginPath(vectorPaths[cPathIndex].c_str(), cPathIndex))
+			{
+				status = Status_Cancelled;
+			}
+
+			if (status)
+			{
+				if (0 == cxw_strnicmp(vectorPaths[cPathIndex].c_str(), L"list:", 5))
+				{
+					if (!(status = RunWithList(vectorPaths[cPathIndex].c_str() + 5, ctx)))
+					{
+						if (!pHandler->OnError(status))
+						{
+							status = Status_Cancelled;
+						}
+					}
+				}
+				else
+				{
+					if (!(status = RunWithPath(vectorPaths[cPathIndex].c_str(), ctx)))
+					{
+						if (!pHandler->OnError(status))
+						{
+							status = Status_Cancelled;
+						}
 					}
 				}
 			}
-			else
-			{
-				if (!(status = RunWithPath(vectorPaths[cPathIndex].c_str(), ctx)))
-				{
-					if (!pHandler->OnError(status))
-					{
-						status = Status_Cancelled;
 
-						break;
-					}
-				}
+			if (!pHandler->OnEndPath(vectorPaths[cPathIndex].c_str(), cPathIndex))
+			{
+				status = Status_Cancelled;
+			}
+
+			if (!status)
+			{
+				break;
 			}
 		}
 		if (!status)
@@ -788,65 +801,85 @@ Status FileEnumerator2::RunWithListUTF16(FILE *pFile, Context &ctx)
 
 Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 {
-	WIN32_FIND_DATAW   data;
-	HANDLE             hFind;
-	WString            wsPath;
-	WString            wsMask;
-	ULARGE_INTEGER     uliSize;
-	Status             status;
+	if (!ctx.pHandler->OnFolder(wszPath))
+	{
+		return Status_Cancelled;
+	}
+
+	struct Data
+	{
+		WIN32_FIND_DATAW   data;
+		HANDLE             hFind;
+		WString            wsPath;
+		WString            wsMask;
+		ULARGE_INTEGER     uliSize;
+	};
+
+	Data     *pData;
+	Status   status;
+
+	if (NULL == (pData = new (std::nothrow) Data()))
+	{
+		return Status_MemAllocFailed;
+	}
 
 	ctx.stats.cDiscoveredDirs++;
 
-	wsMask = wszPath;
-	wsMask += L"\\*.*";
-	if (INVALID_HANDLE_VALUE != (hFind = FindFirstFileW(wsMask.c_str(), &data)))
+	if (ctx.pHandler->OnFolder(wszPath))
 	{
-		for (;;)
+		pData->wsMask = wszPath;
+		pData->wsMask += L"\\*.*";
+		if (INVALID_HANDLE_VALUE != (pData->hFind = FindFirstFileW(pData->wsMask.c_str(), &pData->data)))
 		{
-			if (!(FILE_ATTRIBUTE_REPARSE_POINT & data.dwFileAttributes) &&
-			    !(FILE_ATTRIBUTE_OFFLINE & data.dwFileAttributes) &&
-			    !(0x00400000 & data.dwFileAttributes) && //FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS
-			    !(0x00040000 & data.dwFileAttributes)) //FILE_ATTRIBUTE_RECALL_ON_OPEN
+			for (;;)
 			{
-				if (!(FILE_ATTRIBUTE_DIRECTORY & data.dwFileAttributes))
+				if (!(FILE_ATTRIBUTE_REPARSE_POINT & pData->data.dwFileAttributes) &&
+				    !(FILE_ATTRIBUTE_OFFLINE & pData->data.dwFileAttributes) &&
+				    !(0x00400000 & pData->data.dwFileAttributes) && //FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS
+				    !(0x00040000 & pData->data.dwFileAttributes)) //FILE_ATTRIBUTE_RECALL_ON_OPEN
 				{
-					wsPath = wszPath;
-					wsPath += L"\\";
-					wsPath += data.cFileName;
-
-					uliSize.HighPart = data.nFileSizeHigh;
-					uliSize.LowPart  = data.nFileSizeLow;
-
-					if (!(status = OnFile(wsPath.c_str(), wsPath.size(), uliSize.QuadPart, ctx)))
+					if (!(FILE_ATTRIBUTE_DIRECTORY & pData->data.dwFileAttributes))
 					{
-						return status;
-					}
-				}
-				else
-				if (0 != wcscmp(data.cFileName, L".") && 0 != wcscmp(data.cFileName, L".."))
-				{
-					if (ctx.config.bRecursive)
-					{
-						wsPath = wszPath;
-						wsPath += L"\\";
-						wsPath += data.cFileName;
+						pData->wsPath = wszPath;
+						pData->wsPath += L"\\";
+						pData->wsPath += pData->data.cFileName;
 
-						if (!( status = Enumerate(wsPath.c_str(), ctx)))
+						pData->uliSize.HighPart = pData->data.nFileSizeHigh;
+						pData->uliSize.LowPart  = pData->data.nFileSizeLow;
+
+						if (!(status = OnFile(pData->wsPath.c_str(), pData->wsPath.size(), pData->uliSize.QuadPart, ctx)))
 						{
-							return status;
+							break;
+						}
+					}
+					else
+					if (0 != wcscmp(pData->data.cFileName, L".") && 0 != wcscmp(pData->data.cFileName, L".."))
+					{
+						if (ctx.config.bRecursive)
+						{
+							pData->wsPath = wszPath;
+							pData->wsPath += L"\\";
+							pData->wsPath += pData->data.cFileName;
+
+							if (!( status = Enumerate(pData->wsPath.c_str(), ctx)))
+							{
+								break;
+							}
 						}
 					}
 				}
+				if (!FindNextFileW(pData->hFind, &pData->data))
+				{
+					break;
+				}
 			}
-			if (!FindNextFileW(hFind, &data))
-			{
-				break;
-			}
+			FindClose(pData->hFind);
 		}
-		FindClose(hFind);
 	}
 
-	return Status();
+	delete pData;
+
+	return status;
 }
 
 Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSize, Context &ctx)
@@ -915,21 +948,30 @@ Status FileEnumerator2::ProcessFiles(Context &ctx)
 
 	ctx.threads.RunJobs(ctx.files, ctx.cFiles, sizeof(File), &FileEnumerator2::HandleFileJob);
 
-	ctx.pHandler->OnBeginResults(&pContext);
+	if (!ctx.pHandler->OnBeginResults(&pContext))
+	{
+		ctx.bRunning = False;
+	}
 	for (Size i = 0; i < ctx.cFiles; i++)
 	{
 		if (NULL != ctx.files[i].pResult)
 		{
-			ctx.pHandler->OnResult(ctx.files[i].pResult, pContext);
+			if (!ctx.pHandler->OnResult(ctx.files[i].pResult, pContext))
+			{
+				ctx.bRunning = False;
+			}
 		}
 	}
 	ctx.cFiles = 0;
-	ctx.pHandler->OnEndResults(pContext);
+	if (!ctx.pHandler->OnEndResults(pContext))
+	{
+		ctx.bRunning = False;
+	}
 
 	return Status();
 }
 
-void FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
+Bool FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 {
 	CX_UNUSED(cbSize);
 
@@ -951,7 +993,7 @@ void FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 	{
 		if (!(status = pFile->file.Open()))
 		{
-			return;
+			return pCTX->bRunning;
 		}
 	}
 
@@ -985,22 +1027,17 @@ void FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 		}
 	}
 
-	if (!bMatched)
+	if (bMatched)
 	{
-		pFile->file.Close();
-
-		return;
-	}
-
-	if (!pCTX->pHandler->OnFile(&pFile->file, &pFile->pResult, &pCTX->stats))
-	{
-		pFile->file.Close();
-		pCTX->bRunning = False;
-
-		return;
+		if (!pCTX->pHandler->OnFile(&pFile->file, &pFile->pResult, &pCTX->stats))
+		{
+			pCTX->bRunning = False;
+		}
 	}
 
 	pFile->file.Close();
+
+	return pCTX->bRunning;
 }
 
 Bool FileEnumerator2::FindPatterns(const void *pFileData, UInt64 cbFileSize, Bool bNegate, 
@@ -1046,6 +1083,8 @@ Bool FileEnumerator2::FindPatterns(const void *pFileData, UInt64 cbFileSize, Boo
 
 	return False;
 }
+
+//===
 
 FileEnumerator2::FileImpl::FileImpl()
 {

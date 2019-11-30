@@ -290,7 +290,12 @@ DWORD WINAPI SyncedWorkerThreads::Worker(void *pThreadArgs)
 
 		for (Size i = 0; i < pArg->cJobs; i++)
 		{
-			pArg->pfnJob(jobs, pArg->cbJobSize);
+			if (!pArg->pfnJob(jobs, pArg->cbJobSize))
+			{
+				pArg->pThis->m_bRunning = False;
+
+				break;
+			}
 			jobs = (Byte *)jobs + pArg->cbJobSize;
 		}
 

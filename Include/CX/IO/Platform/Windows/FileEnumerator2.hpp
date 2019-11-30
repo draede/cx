@@ -188,6 +188,15 @@ public:
 
 		virtual Bool OnError(const Status &status) = 0;
 
+		//new 
+		virtual Bool OnFolder(const WChar *wszPath) { wszPath; return True; }
+
+		//new 
+		virtual Bool OnBeginPath(const WChar *wszPath, Size cIndex) { wszPath; cIndex; return True; }
+
+		//new 
+		virtual Bool OnEndPath(const WChar *wszPath, Size cIndex) { wszPath; cIndex; return True; }
+
 	};
 
 	typedef Vector<WString>::Type   PathsVector;
@@ -282,7 +291,7 @@ private:
 
 	static Status ProcessFiles(Context &ctx);
 
-	static void HandleFileJob(void *pJob, Size cbSize);
+	static Bool HandleFileJob(void *pJob, Size cbSize);
 
 	static Bool FindPatterns(const void *pFileData, UInt64 cbFileSize, Bool bNegate, 
 	                         const Config::PatternsVector &vectorPatterns);
