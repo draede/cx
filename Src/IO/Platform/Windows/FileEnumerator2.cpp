@@ -801,6 +801,8 @@ Status FileEnumerator2::RunWithListUTF16(FILE *pFile, Context &ctx)
 
 Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 {
+	ctx.stats.cDiscoveredDirs++;
+
 	if (!ctx.pHandler->OnFolder(wszPath))
 	{
 		return Status_Cancelled;
@@ -823,58 +825,53 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 		return Status_MemAllocFailed;
 	}
 
-	ctx.stats.cDiscoveredDirs++;
-
-	if (ctx.pHandler->OnFolder(wszPath))
+	pData->wsMask = wszPath;
+	pData->wsMask += L"\\*.*";
+	if (INVALID_HANDLE_VALUE != (pData->hFind = FindFirstFileW(pData->wsMask.c_str(), &pData->data)))
 	{
-		pData->wsMask = wszPath;
-		pData->wsMask += L"\\*.*";
-		if (INVALID_HANDLE_VALUE != (pData->hFind = FindFirstFileW(pData->wsMask.c_str(), &pData->data)))
+		for (;;)
 		{
-			for (;;)
+			if (!(FILE_ATTRIBUTE_REPARSE_POINT & pData->data.dwFileAttributes) &&
+			    !(FILE_ATTRIBUTE_OFFLINE & pData->data.dwFileAttributes) &&
+			   !(0x00400000 & pData->data.dwFileAttributes) && //FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS
+			   !(0x00040000 & pData->data.dwFileAttributes)) //FILE_ATTRIBUTE_RECALL_ON_OPEN
 			{
-				if (!(FILE_ATTRIBUTE_REPARSE_POINT & pData->data.dwFileAttributes) &&
-				    !(FILE_ATTRIBUTE_OFFLINE & pData->data.dwFileAttributes) &&
-				    !(0x00400000 & pData->data.dwFileAttributes) && //FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS
-				    !(0x00040000 & pData->data.dwFileAttributes)) //FILE_ATTRIBUTE_RECALL_ON_OPEN
+				if (!(FILE_ATTRIBUTE_DIRECTORY & pData->data.dwFileAttributes))
 				{
-					if (!(FILE_ATTRIBUTE_DIRECTORY & pData->data.dwFileAttributes))
+					pData->wsPath = wszPath;
+					pData->wsPath += L"\\";
+					pData->wsPath += pData->data.cFileName;
+
+					pData->uliSize.HighPart = pData->data.nFileSizeHigh;
+					pData->uliSize.LowPart  = pData->data.nFileSizeLow;
+
+					if (!(status = OnFile(pData->wsPath.c_str(), pData->wsPath.size(), pData->uliSize.QuadPart, ctx)))
+					{
+						break;
+					}
+				}
+				else
+				if (0 != wcscmp(pData->data.cFileName, L".") && 0 != wcscmp(pData->data.cFileName, L".."))
+				{
+					if (ctx.config.bRecursive)
 					{
 						pData->wsPath = wszPath;
 						pData->wsPath += L"\\";
 						pData->wsPath += pData->data.cFileName;
 
-						pData->uliSize.HighPart = pData->data.nFileSizeHigh;
-						pData->uliSize.LowPart  = pData->data.nFileSizeLow;
-
-						if (!(status = OnFile(pData->wsPath.c_str(), pData->wsPath.size(), pData->uliSize.QuadPart, ctx)))
+						if (!( status = Enumerate(pData->wsPath.c_str(), ctx)))
 						{
 							break;
 						}
 					}
-					else
-					if (0 != wcscmp(pData->data.cFileName, L".") && 0 != wcscmp(pData->data.cFileName, L".."))
-					{
-						if (ctx.config.bRecursive)
-						{
-							pData->wsPath = wszPath;
-							pData->wsPath += L"\\";
-							pData->wsPath += pData->data.cFileName;
-
-							if (!( status = Enumerate(pData->wsPath.c_str(), ctx)))
-							{
-								break;
-							}
-						}
-					}
-				}
-				if (!FindNextFileW(pData->hFind, &pData->data))
-				{
-					break;
 				}
 			}
-			FindClose(pData->hFind);
+			if (!FindNextFileW(pData->hFind, &pData->data))
+			{
+				break;
+			}
 		}
+		FindClose(pData->hFind);
 	}
 
 	delete pData;
