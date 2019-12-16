@@ -560,10 +560,9 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 				{
 					if (!(status = RunWithPath(vectorPaths[cPathIndex].c_str(), ctx)))
 					{
-						if (!pHandler->OnError(status))
-						{
-							status = Status_Cancelled;
-						}
+						status = Status_Cancelled;
+
+						break;
 					}
 				}
 			}
@@ -611,7 +610,14 @@ Status FileEnumerator2::RunWithPath(const WChar *wszPath, Context &ctx)
 
 	if (!GetFileAttributesExW(wszPath, GetFileExInfoStandard, &data))
 	{
-		return Status_InvalidArg;
+		if (!ctx.pHandler->OnListLineError(wszPath, ctx.cPathIndex, Status_InvalidArg))
+		{
+			return Status_Cancelled;
+		}
+		else
+		{
+			return Status();
+		}
 	}
 
 	if (FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & data.dwFileAttributes))
@@ -745,7 +751,9 @@ Status FileEnumerator2::RunWithListUTF8(FILE *pFile, Context &ctx)
 				}
 				if (!(status = RunWithPath(wszLine, ctx)))
 				{
-					//nothing to do here
+					status = Status_Cancelled;
+
+					break;
 				}
 			}
 		}
@@ -788,6 +796,8 @@ Status FileEnumerator2::RunWithListUTF16(FILE *pFile, Context &ctx)
 			{
 				if (!(status = RunWithPath(wszLine, ctx)))
 				{
+					status = Status_Cancelled;
+
 					break;
 				}
 			}

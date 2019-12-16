@@ -197,6 +197,16 @@ public:
 		//new 
 		virtual Bool OnEndPath(const WChar *wszPath, Size cIndex) { wszPath; cIndex; return True; }
 
+		//new 
+		virtual Bool OnListLineError(const WChar *wszLine, Size cPathIndex, const Status &status)
+		{
+			wszLine;
+			cPathIndex;
+			status;
+			
+			return True;
+		}
+
 	};
 
 	typedef Vector<WString>::Type   PathsVector;
