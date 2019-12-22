@@ -361,9 +361,6 @@
     <Filter Include="Header Files\CLI">
       <UniqueIdentifier>{ed1080f7-b218-43f6-a081-32aaceea377e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\CLI">
-      <UniqueIdentifier>{c49c5484-62d5-4862-b457-5bfd4abbec6b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\DB\Flat">
       <UniqueIdentifier>{d1a65c08-ff3c-4b52-97d3-981d1ee3ccc4}</UniqueIdentifier>
     </Filter>
@@ -2173,9 +2170,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\DB\Flat\Writer.cpp">
       <Filter>Source Files\DB\Flat</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\CLI\Commands.cpp">
-      <Filter>Source Files\CLI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\CSV\CSVSAXParser.cpp">
       <Filter>Source Files\Data\CSV</Filter>

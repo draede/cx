@@ -39,19 +39,20 @@ namespace CX
 namespace CLI
 {
 
-class ICommand
+template <typename CHAR_TYPE>
+class ICommandBase
 {
 public:
 
-	typedef ICommand * (* Factory)();
+	typedef ICommandBase * (* Factory)();
 
-	virtual ~ICommand() { }
+	virtual ~ICommandBase() { }
 
-	virtual const Char *GetName() = 0;
+	virtual const CHAR_TYPE *GetName() = 0;
 
-	virtual const Char *GetDescription() = 0;
+	virtual const CHAR_TYPE *GetDescription() = 0;
 
-	virtual Status Init(int argc, const Char *argv[]) = 0;
+	virtual Status Init(int argc, const CHAR_TYPE *argv[]) = 0;
 
 	virtual Status Run() = 0;
 
@@ -60,6 +61,9 @@ public:
 	virtual void Destroy() = 0;
 
 };
+
+typedef ICommandBase<Char>    ICommand;
+typedef ICommandBase<WChar>   ICommandW;
 
 }//namespace CLI
 

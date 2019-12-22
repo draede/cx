@@ -32,6 +32,7 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/String.hpp"
+#include "CX/Print.hpp"
 #include "CX/Map.hpp"
 #include "CX/CLI/ICommand.hpp"
 
@@ -42,53 +43,183 @@ namespace CX
 namespace CLI
 {
 
-class Commands
+template <typename CHAR_TYPE, typename STRING_TYPE>
+class CommandsBase
 {
 public:
 
-	static Commands &Get();
+	static CommandsBase &Get()
+	{
+		static CommandsBase   commands;
 
-	Status SetAppName(const Char *szAppName);
+		return commands;
+	}
 
-	const Char *GetAppName();
+	Status SetAppName(const CHAR_TYPE *szAppName)
+	{
+		m_sAppName = szAppName;
 
-	Status SetAppBanner(const Char *szAppBanner);
+		return Status();
+	}
 
-	const Char *GetAppBanner();
+	const CHAR_TYPE *GetAppName()
+	{
+		return m_sAppName.c_str();
+	}
 
-	Status SetUsagePrefix(const Char *szUsagePrefix);
+	Status SetAppBanner(const CHAR_TYPE *szAppBanner)
+	{
+		m_sAppBanner = szAppBanner;
 
-	const Char *GetUsagePrefix();
+		return Status();
+	}
 
-	Status RegisterCommand(const Char *szName, const Char *szDescription, ICommand::Factory pfnFactory);
+	const CHAR_TYPE *GetAppBanner()
+	{
+		return m_sAppBanner.c_str();
+	}
 
-	Status Run(int argc, Char *argv[], const Char *szNoArgs = "ERROR: No arguments provided", 
-	           const Char *szCommandNotFound = "ERROR: Unknown command '{1}'");
+	Status SetUsagePrefix(const CHAR_TYPE *szUsagePrefix)
+	{
+		m_sUsagePrefix = szUsagePrefix;
 
-	void ShowUsage();
+		return Status();
+	}
+
+	const CHAR_TYPE *GetUsagePrefix()
+	{
+		return m_sUsagePrefix.c_str();
+	}
+
+	Status RegisterCommand(const CHAR_TYPE *szName, const CHAR_TYPE *szDescription, 
+	                       typename ICommandBase<CHAR_TYPE>::Factory pfnFactory)
+	{
+		auto iterCommands = m_mapCommands.find(szName);
+
+		if (m_mapCommands.end() != iterCommands)
+		{
+			iterCommands->second.sName        = szName;
+			iterCommands->second.sDescription = szDescription;
+			iterCommands->second.pfnFactory   = pfnFactory;
+		}
+		else
+		{
+			Command   cmd;
+
+			cmd.sName        = szName;
+			cmd.sDescription = szDescription;
+			cmd.pfnFactory   = pfnFactory;
+
+			m_mapCommands[szName] = cmd;
+		}
+
+		return Status();
+	}
+
+	Status Run(int argc, CHAR_TYPE *argv[], const Char *szNoArgs = "ERROR: No arguments provided", 
+	           const Char *szCommandNotFound = "ERROR: Unknown command '{1}")
+	{
+		ICommandBase<CHAR_TYPE>   *pCommand    = NULL;
+		Bool                      bInitialized = False;
+		Status                    status;
+
+		for (;;)
+		{
+			if (1 >= argc)
+			{
+				ShowUsage();
+				status = Status(Status_InvalidArg, "{1}", szNoArgs);
+
+				break;
+			}
+
+			argc--;
+			argv++;
+
+			auto iter = m_mapCommands.find(argv[0]);
+
+			if (m_mapCommands.end() == iter)
+			{
+				ShowUsage();
+				status = Status(Status_NotFound, szCommandNotFound, argv[0]);
+
+				break;
+			}
+
+			if (NULL == (pCommand = iter->second.pfnFactory()))
+			{
+				ShowUsage();
+				status = Status(Status_OperationFailed, "Failed to create '{1}' command", argv[0]);
+
+				break;
+			}
+
+			argc--;
+			argv++;
+
+			if (!(status = pCommand->Init(argc, (const CHAR_TYPE **)argv)))
+			{
+				break;
+			}
+			if (!(status = pCommand->Run()))
+			{
+				break;
+			}
+
+			break;
+		}
+		if (NULL != pCommand)
+		{
+			if (bInitialized)
+			{
+				pCommand->Uninit();
+			}
+			pCommand->Destroy();
+			pCommand = NULL;
+		}
+
+		return status;
+	}
+
+	void ShowUsage()
+	{
+		Print(stdout, "{1}\n", m_sAppBanner);
+		Print(stdout, "{1}: {2} <command>\n", m_sUsagePrefix, m_sAppName);
+		for (auto iter = m_mapCommands.begin(); iter != m_mapCommands.end(); ++iter)
+		{
+			Print(stdout, "  {1} : {2}\n", iter->second.sName, iter->second.sDescription);
+		}
+	}
 
 private:
 
-	String   m_sAppName;
-	String   m_sAppBanner;
-	String   m_sUsagePrefix;
+	STRING_TYPE   m_sAppName;
+	STRING_TYPE   m_sAppBanner;
+	STRING_TYPE   m_sUsagePrefix;
 
 	struct Command
 	{
-		String              sName;
-		String              sDescription;
-		ICommand::Factory   pfnFactory;
+		STRING_TYPE                                 sName;
+		STRING_TYPE                                 sDescription;
+		typename ICommandBase<CHAR_TYPE>::Factory   pfnFactory;
 	};
 
-	typedef Map<String, Command>::Type   CommandsMap;
+	typedef typename Map<STRING_TYPE, Command>::Type   CommandsMap;
 
 	CommandsMap   m_mapCommands;
 
-	Commands();
+	CommandsBase()
+	{
+	}
 
-	~Commands();
+	~CommandsBase()
+	{
+	}
 
 };
+
+typedef CommandsBase<Char, String>     Commands;
+typedef CommandsBase<WChar, WString>   CommandsW;
 
 }//namespace CLI
 
