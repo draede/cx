@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2019 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2020 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -632,7 +632,7 @@ Status Reader::SAXDictionaryObserver::OnString(const Char *pBuffer, Size cLen)
 {
 	Status   status;
 
-	if (2 == m_stackNodes.size() && Node::Type_Tuple == m_stackNodes.top().nType)
+	if (2 == m_stackNodes.size() && Node::Type_Named == m_stackNodes.top().nType)
 	{
 		if (!(status = ParseColumnDesc(&m_all, pBuffer, cLen)))
 		{
