@@ -79,7 +79,7 @@ public:
 
 	const WChar *GetPathW() const;
 
-	const Size GetColumnsCount() const;
+	Size GetColumnsCount() const;
 
 	const Column *GetColumns() const;
 
@@ -120,11 +120,12 @@ private:
 	UInt64             m_cbWritten;
 
 	Status CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, 
-	                       Size cbBufferSize);
+	                       Size cbBufferSize, Bool *pbSame);
 
-	Status CreateHeader(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion);
+	Status CreateHeader(const Column *columns, Size cColumnsCount, Bool bSameColumn, Format nFormat, Version nVersion);
 
-	Status Create(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, Size cbBufferSize);
+	Status Create(const Column *columns, Size cColumnsCount, Bool bSameColumns, Format nFormat, Version nVersion, 
+	              Size cbBufferSize);
 
 	Status Flush();
 

@@ -285,7 +285,7 @@ const WChar *Reader::GetPathW() const
 	return m_wsPath.c_str();
 }
 
-const Size Reader::GetRowsCount() const
+Size Reader::GetRowsCount() const
 {
 	if (!m_mmf.IsOK())
 	{
@@ -295,7 +295,7 @@ const Size Reader::GetRowsCount() const
 	return m_cRows;
 }
 
-const Size Reader::GetColumnsCount() const
+Size Reader::GetColumnsCount() const
 {
 	if (!m_mmf.IsOK())
 	{

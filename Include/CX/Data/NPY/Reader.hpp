@@ -75,9 +75,9 @@ public:
 
 	const WChar *GetPathW() const;
 
-	const Size GetRowsCount() const;
+	Size GetRowsCount() const;
 
-	const Size GetColumnsCount() const;
+	Size GetColumnsCount() const;
 
 	const Column *GetColumns() const;
 

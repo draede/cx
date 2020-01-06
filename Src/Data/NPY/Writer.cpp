@@ -63,7 +63,7 @@ Writer::~Writer()
 }
 
 Status Writer::CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, 
-                               Size cbBufferSize)
+                               Size cbBufferSize, Bool *pbSame)
 {
 	columns;
 
@@ -92,10 +92,34 @@ Status Writer::CheckCreateArgs(const Column *columns, Size cColumnsCount, Format
 		return Status(Status_InvalidArg, "buffer size too big");
 	}
 
+	*pbSame = True;
+	for (Size i = 1; i < cColumnsCount; i++)
+	{
+		if (!columns[i].sName.empty())
+		{
+			*pbSame = False;
+
+			break;
+		}
+		if (columns[i].nByteOrder != columns[0].nByteOrder)
+		{
+			*pbSame = False;
+
+			break;
+		}
+		if (columns[i].nType != columns[0].nType)
+		{
+			*pbSame = False;
+
+			break;
+		}
+	}
+
 	return Status();
 }
 
-Status Writer::CreateHeader(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion)
+Status Writer::CreateHeader(const Column *columns, Size cColumnsCount, Bool bSameColumn, Format nFormat, 
+                            Version nVersion)
 {
 	m_sHeader.clear();
 	switch (nVersion)
@@ -118,24 +142,23 @@ Status Writer::CreateHeader(const Column *columns, Size cColumnsCount, Format nF
 		m_sHeader.append((const Char *)&cbLen, sizeof(cbLen));
 	}
 
-	m_sHeader += "{'descr': [";
-	for (Size i = 0; i < cColumnsCount; i++)
+	if (bSameColumn)
 	{
-		Print(&m_sHeader, "('{1}', '", columns[i].sName.c_str());
-		if (Type_Int8 == columns[i].nType || Type_UInt8 == columns[i].nType)
+		m_sHeader += "{'descr': '";
+		if (Type_Int8 == columns[0].nType || Type_UInt8 == columns[0].nType)
 		{
 			m_sHeader += '|';
 		}
 		else
 		{
-			switch (columns[i].nByteOrder)
+			switch (columns[0].nByteOrder)
 			{
 				case ByteOrder_LittleEndian: m_sHeader += "<"; break;
 				case ByteOrder_BigEndian:    m_sHeader += ">"; break;
 				default:                     return Status_InvalidArg;
 			}
 		}
-		switch (columns[i].nType)
+		switch (columns[0].nType)
 		{
 			case Type_Int8:   m_sHeader += "i1"; break;
 			case Type_UInt8:  m_sHeader += "u1"; break;
@@ -149,13 +172,50 @@ Status Writer::CreateHeader(const Column *columns, Size cColumnsCount, Format nF
 			case Type_Double: m_sHeader += "f8"; break;
 			default:                     return Status_InvalidArg;
 		}
-		m_sHeader += "')";
-		if (i + 1 < cColumnsCount)
-		{
-			m_sHeader += ", ";
-		}
+		m_sHeader += "'";
 	}
-	m_sHeader += "], 'fortran_order': ";
+	else
+	{
+		m_sHeader += "{'descr': [";
+		for (Size i = 0; i < cColumnsCount; i++)
+		{
+			Print(&m_sHeader, "('{1}', '", columns[i].sName.c_str());
+			if (Type_Int8 == columns[i].nType || Type_UInt8 == columns[i].nType)
+			{
+				m_sHeader += '|';
+			}
+			else
+			{
+				switch (columns[i].nByteOrder)
+				{
+					case ByteOrder_LittleEndian: m_sHeader += "<"; break;
+					case ByteOrder_BigEndian:    m_sHeader += ">"; break;
+					default:                     return Status_InvalidArg;
+				}
+			}
+			switch (columns[i].nType)
+			{
+				case Type_Int8:   m_sHeader += "i1"; break;
+				case Type_UInt8:  m_sHeader += "u1"; break;
+				case Type_Int16:  m_sHeader += "i2"; break;
+				case Type_UInt16: m_sHeader += "u2"; break;
+				case Type_Int32:  m_sHeader += "i4"; break;
+				case Type_UInt32: m_sHeader += "u4"; break;
+				case Type_Int64:  m_sHeader += "i8"; break;
+				case Type_UInt64: m_sHeader += "u8"; break;
+				case Type_Float:  m_sHeader += "f4"; break;
+				case Type_Double: m_sHeader += "f8"; break;
+				default:                     return Status_InvalidArg;
+			}
+			m_sHeader += "')";
+			if (i + 1 < cColumnsCount)
+			{
+				m_sHeader += ", ";
+			}
+		}
+		m_sHeader += "]";
+	}
+	m_sHeader += ", 'fortran_order': ";
 	switch (nFormat)
 	{
 		case Format_C:       m_sHeader += "False"; break;
@@ -205,12 +265,10 @@ Status Writer::CreateHeader(const Column *columns, Size cColumnsCount, Format nF
 		*pcLen = (UInt32)m_cbHeaderDictSize;
 	}
 
-
-
 	return Status();
 }
 
-Status Writer::Create(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, 
+Status Writer::Create(const Column *columns, Size cColumnsCount, Bool bSameColumn, Format nFormat, Version nVersion, 
                       Size cbBufferSize)
 {
 	Size     cbRowSize = 0;
@@ -219,7 +277,7 @@ Status Writer::Create(const Column *columns, Size cColumnsCount, Format nFormat,
 	DWORD    dwAckSize;
 	Status   status;
 
-	if (!(status = CreateHeader(columns, cColumnsCount, nFormat, nVersion)))
+	if (!(status = CreateHeader(columns, cColumnsCount, bSameColumn, nFormat, nVersion)))
 	{
 		return status;
 	}
@@ -269,7 +327,7 @@ Status Writer::Create(const Column *columns, Size cColumnsCount, Format nFormat,
 	m_nFormat  = nFormat;
 	m_nVersion = nVersion;
 
-	return 0;
+	return Status();
 }
 
 Status Writer::Flush()
@@ -294,9 +352,10 @@ Status Writer::Flush()
 Status Writer::Create(const Char *szPath, const Column *columns, Size cColumnsCount, Format nFormat/* = Format_C*/, 
                       Version nVersion/* = Version_1_0*/, Size cbBufferSize/* = DEFAULT_BUFFER_SIZE*/)
 {
+	Bool     bSame;
 	Status   status;
 
-	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion, cbBufferSize)))
+	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion, cbBufferSize, &bSame)))
 	{
 		return status;
 	}
@@ -312,7 +371,7 @@ Status Writer::Create(const Char *szPath, const Column *columns, Size cColumnsCo
 	}
 	m_sPath = szPath;
 
-	if (!(status = Create(columns, cColumnsCount, nFormat, nVersion, cbBufferSize)))
+	if (!(status = Create(columns, cColumnsCount, bSame, nFormat, nVersion, cbBufferSize)))
 	{
 		Close();
 
@@ -325,9 +384,10 @@ Status Writer::Create(const Char *szPath, const Column *columns, Size cColumnsCo
 Status Writer::Create(const WChar *wszPath, const Column *columns, Size cColumnsCount, Format nFormat/* = Format_C*/, 
                       Version nVersion/* = Version_1_0*/, Size cbBufferSize/* = DEFAULT_BUFFER_SIZE*/)
 {
+	Bool     bSame;
 	Status   status;
 
-	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion, cbBufferSize)))
+	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion, cbBufferSize, &bSame)))
 	{
 		return status;
 	}
@@ -344,7 +404,7 @@ Status Writer::Create(const WChar *wszPath, const Column *columns, Size cColumns
 	}
 	m_wsPath = wszPath;
 
-	if (!(status = Create(columns, cColumnsCount, nFormat, nVersion, cbBufferSize)))
+	if (!(status = Create(columns, cColumnsCount, bSame, nFormat, nVersion, cbBufferSize)))
 	{
 		Close();
 
@@ -388,7 +448,7 @@ Status Writer::Close()
 
 				Print(&sRows, "{1}", cRows);
 
-				Print(&m_sHeader, "{1},), ", sRows);
+				Print(&m_sHeader, "{1}, {2}, ), ", sRows, m_vectorColumns.size());
 				m_sHeader += "}";
 				while (m_sHeader.size() + 1 < m_cbHeaderSize)
 				{
@@ -523,7 +583,7 @@ Format Writer::GetFormat() const
 	return m_nFormat;
 }
 
-const Size Writer::GetColumnsCount() const
+Size Writer::GetColumnsCount() const
 {
 	if (NULL == m_pFile)
 	{
@@ -537,7 +597,7 @@ const Column *Writer::GetColumns() const
 {
 	if (NULL == m_pFile)
 	{
-		return 0;
+		return NULL;
 	}
 
 	return &m_vectorColumns[0];

@@ -1293,6 +1293,9 @@
     <ClInclude Include="..\..\Include\CX\Data\NPY\Writer.hpp">
       <Filter>Header Files\Data\NPY</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\NonSeqWriter.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2439,6 +2442,9 @@
       <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\NPY\Writer.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\NonSeqWriter.cpp">
       <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
   </ItemGroup>
