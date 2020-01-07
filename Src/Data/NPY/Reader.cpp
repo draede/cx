@@ -242,7 +242,7 @@ const void *Reader::GetRows(Size cStartRowIndex, Size cReqRowsCount, Size *pcAck
 
 	Status   status;
 
-	if (!(status = m_mmf.Remap(cbActualOffset, cbActualOffset)))
+	if (!(status = m_mmf.Remap(cbActualOffset, cbActualSize)))
 	{
 		if (NULL != pcAckRowsCount)
 		{
