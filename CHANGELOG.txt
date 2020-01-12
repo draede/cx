@@ -1,3 +1,7 @@
+0.2.257 - 2020-01-12
+ - Added NPY AppendWriter
+ - Added NPY Tools
+ - Various fixes & refactoring of NPY classes
 0.2.256 - 2020-01-07
  - Fixed NPY reader map size
 0.2.255 - 2020-01-06

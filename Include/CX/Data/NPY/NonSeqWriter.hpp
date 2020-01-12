@@ -59,7 +59,13 @@ public:
 
 	~NonSeqWriter();
 
+	Status Create(const Char *szPath, Size cRowsCount, const Column &column, Size cColumnsCount, 
+	              Format nFormat = Format_C, Version nVersion = Version_1_0);
+
 	Status Create(const Char *szPath, Size cRowsCount, const Column *columns, Size cColumnsCount, 
+	              Format nFormat = Format_C, Version nVersion = Version_1_0);
+
+	Status Create(const WChar *wszPath, Size cRowsCount, const Column &column, Size cColumnsCount, 
 	              Format nFormat = Format_C, Version nVersion = Version_1_0);
 
 	Status Create(const WChar *wszPath, Size cRowsCount, const Column *columns, Size cColumnsCount, 
@@ -89,27 +95,20 @@ public:
 
 private:
 
+	static const Size   MIN_EXTRA_PADDING = 20;//we want to be able to update the rows count in place
+
 #pragma warning(push)
 #pragma warning(disable: 4251)
-	String             m_sHeader;
 	String             m_sPath;
 	WString            m_wsPath;
-	Column::Vector     m_vectorColumns;
 #pragma warning(pop)
 
 	void               *m_pFile;
-	Format             m_nFormat;
-	Version            m_nVersion;
-	Size               m_cRowsCount;
-	Size               m_cbRowSize;
+	Header             m_header;
 
-	Status CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, Bool *pbSame);
+	Status CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion);
 
-	Status CreateHeader(Size cRowsCount, const Column *columns, Size cColumnsCount, Bool bSameColumn, Format nFormat, 
-	                    Version nVersion);
-
-	Status Create(Size RowsCountCount, const Column *columns, Size cColumnsCount, Bool bSameColumns, Format nFormat, 
-	              Version nVersion);
+	Status Create(Size RowsCountCount, const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion);
 
 };
 

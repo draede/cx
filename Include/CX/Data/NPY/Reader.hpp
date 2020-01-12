@@ -32,7 +32,6 @@
 #include "CX/Types.hpp"
 #include "CX/Status.hpp"
 #include "CX/String.hpp"
-#include "CX/Stack.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/IO/Platform/Windows/MemoryMappedFile.hpp"
 #include "CX/Data/NPY/Format.hpp"
@@ -41,7 +40,7 @@
 #include "CX/Data/NPY/Column.hpp"
 #include "CX/Data/NPY/Version.hpp"
 #include "CX/Data/NPY/Header.hpp"
-#include "CX/Data/NPY/SAXDictionaryParser.hpp"
+#include "CX/Data/NPY/HeaderSAXDictionaryObserver.hpp"
 
 
 namespace CX
@@ -89,97 +88,19 @@ public:
 
 private:
 
-	static const UInt64    INITIAL_MAP_SIZE = 32768;
-
-	class SAXDictionaryObserver : public ISAXDictionaryParserObserver
-	{
-	public:
-
-		typedef Vector<UInt64>::Type   ShapeVector;
-
-		Column::Vector   m_vectorColumns;
-		Column           m_all;
-		Format           m_nFormat;
-		Size             m_cRows;
-		Size             m_cColumns;
-		Bool             m_bShapeHasDefault;
-		ShapeVector      m_vectorShape;
-		Size             m_cbRowSize;
-
-		virtual Status OnBeginParse();
-
-		virtual Status OnEndParse();
-
-		virtual Status OnBeginObject();
-
-		virtual Status OnEndObject();
-
-		virtual Status OnBeginArray();
-
-		virtual Status OnEndArray();
-
-		virtual Status OnBeginTuple();
-
-		virtual Status OnEndTuple();
-
-		virtual Status OnKey(const Char *pBuffer, Size cLen);
-
-		virtual Status OnBool(Bool bBool);
-
-		virtual Status OnInt(Int64 nInt);
-
-		virtual Status OnUInt(UInt64 uUInt);
-
-		virtual Status OnReal(Double lfReal);
-
-		virtual Status OnString(const Char *pBuffer, Size cLen);
-
-		virtual Status OnTupleDefault();
-
-	private:
-
-		struct Node
-		{
-			typedef Stack<Node>::Type   Stack;
-
-			enum Type
-			{
-				Type_Object,
-				Type_Array,
-				Type_Tuple,
-
-				Type_Named,
-			};
-
-			Type     nType;
-			String   sKey;
-			Size     cItems;
-		};
-
-		Node::Stack   m_stackNodes;
-
-		Status ParseColumnDesc(Column *pColumn, const Char *pBuffer, Size cLen);
-
-	};
+	static const UInt64    INITIAL_MAP_SIZE = 4 * 1024 * 1024;
 
 #pragma warning(push)
 #pragma warning(disable: 4251)
 	String                 m_sPath;
 	WString                m_wsPath;
-	Column::Vector         m_vectorColumns;
 #pragma warning(pop)
 
 	IO::MemoryMappedFile   m_mmf;
-	Format                 m_nFormat;
-	Version                m_nVersion;
-	UInt64                 m_cbFirstRowOffset;
-	Size                   m_cRows;
-	Size                   m_cbRowSize;
+	Header                 m_header;
 	UInt32                 m_cbAllocationGranularity;
 
 	Status Open();
-
-	Status ParseDictionary(const void *pData, Size cbSize);
 
 };
 

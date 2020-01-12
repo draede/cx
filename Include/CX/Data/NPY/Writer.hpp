@@ -63,7 +63,13 @@ public:
 
 	~Writer();
 
+	Status Create(const Char *szPath, const Column &column, Size cColumnsCount, Format nFormat = Format_C, 
+	              Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
+
 	Status Create(const Char *szPath, const Column *columns, Size cColumnsCount, Format nFormat = Format_C, 
+	              Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
+
+	Status Create(const WChar *wszPath, const Column &column, Size cColumnsCount, Format nFormat = Format_C, 
 	              Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
 
 	Status Create(const WChar *wszPath, const Column *columns, Size cColumnsCount, Format nFormat = Format_C, 
@@ -97,22 +103,16 @@ public:
 
 private:
 
-	static const Size   MAX_ROWS_DIGITS = 20;
+	static const Size   MIN_EXTRA_PADDING = 20;//we want to be able to update the rows count in place
 
 #pragma warning(push)
 #pragma warning(disable: 4251)
-	String             m_sHeader;
 	String             m_sPath;
 	WString            m_wsPath;
-	Column::Vector     m_vectorColumns;
 #pragma warning(pop)
 
-	Size               m_cbHeaderSize;
-	Size               m_cbHeaderDictSize;
 	void               *m_pFile;
-	Format             m_nFormat;
-	Version            m_nVersion;
-	Size               m_cbRowSize;
+	Header             m_header;
 	Byte               *m_pBuffer;
 	Size               m_cbBufferSize;
 	Size               m_cbBufferUsedSize;
@@ -120,12 +120,9 @@ private:
 	UInt64             m_cbWritten;
 
 	Status CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, 
-	                       Size cbBufferSize, Bool *pbSame);
+	                       Size cbBufferSize);
 
-	Status CreateHeader(const Column *columns, Size cColumnsCount, Bool bSameColumn, Format nFormat, Version nVersion);
-
-	Status Create(const Column *columns, Size cColumnsCount, Bool bSameColumns, Format nFormat, Version nVersion, 
-	              Size cbBufferSize);
+	Status Create(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, Size cbBufferSize);
 
 	Status Flush();
 
