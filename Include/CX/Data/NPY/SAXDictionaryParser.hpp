@@ -55,7 +55,7 @@ public:
 
 	~SAXDictionaryParser();
 
-	Status ParseBuffer(const void *pBuffer, Size cbSize);
+	Status ParseBuffer(const void *pBuffer, Size cbSize, Size *pcbActualSize = NULL);
 
 	Status AddObserver(ISAXDictionaryParserObserver *pObserver);
 

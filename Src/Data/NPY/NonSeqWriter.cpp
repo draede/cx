@@ -44,11 +44,13 @@ namespace NPY
 
 NonSeqWriter::NonSeqWriter()
 {
-	m_pFile             = NULL;
-	m_nFormat           = Format_Invalid;
-	m_nVersion          = Version_Invalid;
-	m_cRowsCount        = 0;
-	m_cbRowSize         = 0;
+	m_pFile              = NULL;
+	m_header.nFormat     = Format_Invalid;
+	m_header.nVersion    = Version_Invalid;
+	m_header.cRows       = 0;
+	m_header.cbRowSize   = 0;
+	m_header.cbUsedSize  = 0;
+	m_header.cbTotalSize = 0;
 }
 
 NonSeqWriter::~NonSeqWriter()
@@ -56,8 +58,7 @@ NonSeqWriter::~NonSeqWriter()
 	Close();
 }
 
-Status NonSeqWriter::CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, 
-                                     Bool *pbSame)
+Status NonSeqWriter::CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion)
 {
 	columns;
 
@@ -78,207 +79,29 @@ Status NonSeqWriter::CheckCreateArgs(const Column *columns, Size cColumnsCount, 
 		return Status(Status_InvalidArg, "version is invalid");
 	}
 
-	*pbSame = True;
-	for (Size i = 1; i < cColumnsCount; i++)
-	{
-		if (!columns[i].sName.empty())
-		{
-			*pbSame = False;
-
-			break;
-		}
-		if (columns[i].nByteOrder != columns[0].nByteOrder)
-		{
-			*pbSame = False;
-
-			break;
-		}
-		if (columns[i].nType != columns[0].nType)
-		{
-			*pbSame = False;
-
-			break;
-		}
-	}
-
 	return Status();
 }
 
-Status NonSeqWriter::CreateHeader(Size cRowsCount, const Column *columns, Size cColumnsCount, Bool bSameColumn, 
-                                  Format nFormat, Version nVersion)
-{
-	Size   cbPrefixSize;
-	Size   cbLenIndex;
-
-	m_sHeader.clear();
-	switch (nVersion)
-	{
-		case Version_1_0: 
-		{
-			m_sHeader.append((const Char *)Header::MAGIC_V_1_0, sizeof(Header::MAGIC_V_1_0)); 
-		}
-		break;
-		case Version_2_0: 
-		{
-			m_sHeader.append((const Char *)Header::MAGIC_V_2_0, sizeof(Header::MAGIC_V_2_0)); 
-		}
-		break;
-		case Version_3_0: 
-		{
-			m_sHeader.append((const Char *)Header::MAGIC_V_3_0, sizeof(Header::MAGIC_V_3_0)); 
-		}
-		break;
-		default: return Status_InvalidArg;
-	}
-	cbLenIndex = m_sHeader.size();
-	if (Version_1_0 == nVersion)
-	{
-		UInt16   cbLen = 0;
-
-		m_sHeader.append((const Char *)&cbLen, sizeof(cbLen));
-	}
-	else
-	{
-		UInt32   cbLen = 0;
-
-		m_sHeader.append((const Char *)&cbLen, sizeof(cbLen));
-	}
-
-	cbPrefixSize = m_sHeader.size();
-
-	if (bSameColumn)
-	{
-		m_sHeader += "{'descr': '";
-		if (Type_Int8 == columns[0].nType || Type_UInt8 == columns[0].nType)
-		{
-			m_sHeader += '|';
-		}
-		else
-		{
-			switch (columns[0].nByteOrder)
-			{
-				case ByteOrder_LittleEndian: m_sHeader += "<"; break;
-				case ByteOrder_BigEndian:    m_sHeader += ">"; break;
-				default:                     return Status_InvalidArg;
-			}
-		}
-		switch (columns[0].nType)
-		{
-			case Type_Int8:   m_sHeader += "i1"; break;
-			case Type_UInt8:  m_sHeader += "u1"; break;
-			case Type_Int16:  m_sHeader += "i2"; break;
-			case Type_UInt16: m_sHeader += "u2"; break;
-			case Type_Int32:  m_sHeader += "i4"; break;
-			case Type_UInt32: m_sHeader += "u4"; break;
-			case Type_Int64:  m_sHeader += "i8"; break;
-			case Type_UInt64: m_sHeader += "u8"; break;
-			case Type_Float:  m_sHeader += "f4"; break;
-			case Type_Double: m_sHeader += "f8"; break;
-			default:                     return Status_InvalidArg;
-		}
-		m_sHeader += "'";
-	}
-	else
-	{
-		m_sHeader += "{'descr': [";
-		for (Size i = 0; i < cColumnsCount; i++)
-		{
-			Print(&m_sHeader, "('{1}', '", columns[i].sName.c_str());
-			if (Type_Int8 == columns[i].nType || Type_UInt8 == columns[i].nType)
-			{
-				m_sHeader += '|';
-			}
-			else
-			{
-				switch (columns[i].nByteOrder)
-				{
-					case ByteOrder_LittleEndian: m_sHeader += "<"; break;
-					case ByteOrder_BigEndian:    m_sHeader += ">"; break;
-					default:                     return Status_InvalidArg;
-				}
-			}
-			switch (columns[i].nType)
-			{
-				case Type_Int8:   m_sHeader += "i1"; break;
-				case Type_UInt8:  m_sHeader += "u1"; break;
-				case Type_Int16:  m_sHeader += "i2"; break;
-				case Type_UInt16: m_sHeader += "u2"; break;
-				case Type_Int32:  m_sHeader += "i4"; break;
-				case Type_UInt32: m_sHeader += "u4"; break;
-				case Type_Int64:  m_sHeader += "i8"; break;
-				case Type_UInt64: m_sHeader += "u8"; break;
-				case Type_Float:  m_sHeader += "f4"; break;
-				case Type_Double: m_sHeader += "f8"; break;
-				default:                     return Status_InvalidArg;
-			}
-			m_sHeader += "')";
-			if (i + 1 < cColumnsCount)
-			{
-				m_sHeader += ", ";
-			}
-		}
-		m_sHeader += "]";
-	}
-	m_sHeader += ", 'fortran_order': ";
-	switch (nFormat)
-	{
-		case Format_C:       m_sHeader += "False"; break;
-		case Format_Fortran: m_sHeader += "True"; break;
-		default:             return Status_InvalidArg;
-	}
-	Print(&m_sHeader, ", 'shape': ({1}, {2}, ), }", cRowsCount, cColumnsCount);
-
-	while (63!= (m_sHeader.size() % 64))
-	{
-		m_sHeader += ' ';
-	}
-	m_sHeader += '\n';
-
-	if (Version_1_0 == nVersion)
-	{
-		UInt16   *pcbLen = (UInt16 *)(m_sHeader.c_str() + cbLenIndex);
-
-		*pcbLen = (UInt16)(m_sHeader.size() - cbPrefixSize);
-	}
-	else
-	{
-		UInt32   *pcbLen = (UInt32 *)(m_sHeader.c_str() + cbLenIndex);
-
-		*pcbLen = (UInt32)(m_sHeader.size() - cbPrefixSize);
-	}
-
-	return Status();
-}
-
-Status NonSeqWriter::Create(Size cRowsCount, const Column *columns, Size cColumnsCount, Bool bSameColumn, 
+Status NonSeqWriter::Create(Size cRowsCount, const Column *columns, Size cColumnsCount, 
                             Format nFormat, Version nVersion)
 {
+	String   sHeader;
 	void     *pBuffer;
 	Size     cbBufferSize;
-	Size     cbRowSize = 0;
 	UInt64   cbDataSize;
 	DWORD    dwReqSize;
 	DWORD    dwAckSize;
 	Status   status;
 
-	if (!(status = CreateHeader(cRowsCount, columns, cColumnsCount, bSameColumn, nFormat, nVersion)))
-	{
-		return status;
-	}
-
-	if (!::WriteFile(m_pFile, m_sHeader.c_str(), (DWORD)m_sHeader.size(), &dwAckSize, NULL))
-	{
-		return Status(Status_WriteFailed, "WriteFile failed with error {1}", ::GetLastError());
-	}
-	if (dwAckSize != (DWORD)m_sHeader.size())
-	{
-		return Status(Status_WriteFailed, "WriteFile failed");
-	}
-
-	m_cbRowSize = 0;
+	m_header.nFormat     = nFormat;
+	m_header.nVersion    = nVersion;
+	m_header.cRows       = cRowsCount;
+	m_header.cbRowSize   = 0;
+	m_header.cbUsedSize  = 0;
+	m_header.cbTotalSize = 0;
 	for (Size i = 0; i < cColumnsCount; i++)
 	{
-		if (0 == (cbRowSize = TypeSize::Get(columns[i].nType)))
+		if (0 == TypeSize::Get(columns[i].nType))
 		{
 			return Status(Status_InvalidArg, "Invalid column type for column index {1}", i);
 		}
@@ -286,14 +109,23 @@ Status NonSeqWriter::Create(Size cRowsCount, const Column *columns, Size cColumn
 		{
 			return Status(Status_InvalidArg, "Invalid column byte order for column index {1}", i);
 		}
-		m_vectorColumns.push_back(columns[i]);
-		m_cbRowSize += cbRowSize;
+		m_header.vectorColumns.push_back(columns[i]);
 	}
-	m_nFormat    = nFormat;
-	m_nVersion   = nVersion;
-	m_cRowsCount = cRowsCount;
+	m_header.ComputeRowSize();
+	if (!(status = m_header.Write(&sHeader, MIN_EXTRA_PADDING)))
+	{
+		return status;
+	}
+	if (!::WriteFile(m_pFile, sHeader.c_str(), (DWORD)sHeader.size(), &dwAckSize, NULL))
+	{
+		return Status(Status_WriteFailed, "WriteFile failed with error {1}", ::GetLastError());
+	}
+	if (dwAckSize != (DWORD)sHeader.size())
+	{
+		return Status(Status_WriteFailed, "WriteFile failed");
+	}
 
-	cbDataSize   = m_cbRowSize * cRowsCount;
+	cbDataSize   = m_header.cbRowSize * cRowsCount;
 	cbBufferSize = 1024 * 1024 * 8;
 	if (NULL == (pBuffer = Mem::Alloc(cbBufferSize)))
 	{
@@ -324,13 +156,33 @@ Status NonSeqWriter::Create(Size cRowsCount, const Column *columns, Size cColumn
 	return status;
 }
 
+Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, const Column &column, Size cColumnsCount, 
+                            Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
+{
+	Column::Vector   vectorColumns;
+
+	if (Consts::MIN_COLUMNS_COUNT > cColumnsCount)
+	{
+		return Status(Status_InvalidArg, "columns count too small");
+	}
+	if (Consts::MAX_COLUMNS_COUNT < cColumnsCount)
+	{
+		return Status(Status_InvalidArg, "columns count too big");
+	}
+	for (Size i = 0; i < cColumnsCount; i++)
+	{
+		vectorColumns.push_back(column);
+	}
+
+	return Create(szPath, cRowsCount, &vectorColumns[0], cColumnsCount, nFormat, nVersion);
+}
+
 Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, const Column *columns, Size cColumnsCount, 
                             Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
 {
-	Bool     bSame;
 	Status   status;
 
-	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion, &bSame)))
+	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion)))
 	{
 		return status;
 	}
@@ -346,7 +198,7 @@ Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, const Column *c
 	}
 	m_sPath = szPath;
 
-	if (!(status = Create(cRowsCount, columns, cColumnsCount, bSame, nFormat, nVersion)))
+	if (!(status = Create(cRowsCount, columns, cColumnsCount, nFormat, nVersion)))
 	{
 		Close();
 
@@ -356,13 +208,33 @@ Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, const Column *c
 	return Status();
 }
 
+Status NonSeqWriter::Create(const WChar *wszPath, Size cRowsCount, const Column &column, Size cColumnsCount, 
+                            Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
+{
+	Column::Vector   vectorColumns;
+
+	if (Consts::MIN_COLUMNS_COUNT > cColumnsCount)
+	{
+		return Status(Status_InvalidArg, "columns count too small");
+	}
+	if (Consts::MAX_COLUMNS_COUNT < cColumnsCount)
+	{
+		return Status(Status_InvalidArg, "columns count too big");
+	}
+	for (Size i = 0; i < cColumnsCount; i++)
+	{
+		vectorColumns.push_back(column);
+	}
+
+	return Create(wszPath, cRowsCount, &vectorColumns[0], cColumnsCount, nFormat, nVersion);
+}
+
 Status NonSeqWriter::Create(const WChar *wszPath, Size cRowsCount, const Column *columns, Size cColumnsCount, 
                             Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
 {
-	Bool     bSame;
 	Status   status;
 
-	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion, &bSame)))
+	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion)))
 	{
 		return status;
 	}
@@ -379,7 +251,7 @@ Status NonSeqWriter::Create(const WChar *wszPath, Size cRowsCount, const Column 
 	}
 	m_wsPath = wszPath;
 
-	if (!(status = Create(cRowsCount, columns, cColumnsCount, bSame, nFormat, nVersion)))
+	if (!(status = Create(cRowsCount, columns, cColumnsCount, nFormat, nVersion)))
 	{
 		Close();
 
@@ -398,14 +270,15 @@ Status NonSeqWriter::Close()
 		::CloseHandle(m_pFile);
 		m_pFile = NULL;
 	}
-	m_sHeader.clear();
 	m_sPath.clear();
 	m_wsPath.clear();
-	m_vectorColumns.clear();
-	m_nFormat           = Format_Invalid;
-	m_nVersion          = Version_Invalid;
-	m_cbRowSize         = 0;
-	m_cRowsCount        = 0;
+	m_header.vectorColumns.clear();
+	m_header.nFormat     = Format_Invalid;
+	m_header.nVersion    = Version_Invalid;
+	m_header.cRows       = 0;
+	m_header.cbRowSize   = 0;
+	m_header.cbUsedSize  = 0;
+	m_header.cbTotalSize = 0;
 
 	return status;
 }
@@ -418,29 +291,29 @@ Status NonSeqWriter::Write(const void *pRows, Size cRowsCount, Size cRowsIndex)
 	{
 		return Status_NotInitialized;
 	}
-	if (cRowsIndex >= m_cRowsCount)
+	if (cRowsIndex >= m_header.cRows)
 	{
 		return Status_InvalidArg;
 	}
-	if (cRowsIndex + cRowsCount > m_cRowsCount)
+	if (cRowsIndex + cRowsCount > m_header.cRows)
 	{
 		return Status_InvalidArg;
 	}
 
 	LARGE_INTEGER   liPos;
 
-	liPos.QuadPart = m_sHeader.size() + cRowsIndex * m_cbRowSize;
+	liPos.QuadPart = m_header.cbTotalSize + cRowsIndex * m_header.cbRowSize;
 
 	if (!::SetFilePointerEx(m_pFile, liPos, NULL, FILE_BEGIN))
 	{
 		return Status(Status_InvalidArg, "SetFilePointerEx failed with error {1}",::GetLastError());
 	}
 
-	if (!::WriteFile(m_pFile, pRows, (DWORD)(m_cbRowSize * cRowsCount), &dwAckSize, NULL))
+	if (!::WriteFile(m_pFile, pRows, (DWORD)(m_header.cbRowSize * cRowsCount), &dwAckSize, NULL))
 	{
 		return Status(Status_WriteFailed, "WriteFile failed with error {1}", ::GetLastError());
 	}
-	if (dwAckSize != (DWORD)(m_cbRowSize * cRowsCount))
+	if (dwAckSize != (DWORD)(m_header.cbRowSize * cRowsCount))
 	{
 		return Status(Status_WriteFailed, "WriteFile failed");
 	}
@@ -480,7 +353,7 @@ Format NonSeqWriter::GetFormat() const
 		return Format_Invalid;
 	}
 
-	return m_nFormat;
+	return m_header.nFormat;
 }
 
 Size NonSeqWriter::GetRowsCount() const
@@ -490,7 +363,7 @@ Size NonSeqWriter::GetRowsCount() const
 		return 0;
 	}
 
-	return m_cRowsCount;
+	return m_header.cRows;
 }
 
 Size NonSeqWriter::GetColumnsCount() const
@@ -500,7 +373,7 @@ Size NonSeqWriter::GetColumnsCount() const
 		return 0;
 	}
 
-	return m_vectorColumns.size();
+	return m_header.vectorColumns.size();
 }
 
 const Column *NonSeqWriter::GetColumns() const
@@ -510,7 +383,7 @@ const Column *NonSeqWriter::GetColumns() const
 		return NULL;
 	}
 
-	return &m_vectorColumns[0];
+	return &m_header.vectorColumns[0];
 }
 
 Size NonSeqWriter::GetRowSize() const
@@ -520,7 +393,7 @@ Size NonSeqWriter::GetRowSize() const
 		return 0;
 	}
 
-	return m_cbRowSize;
+	return m_header.cbRowSize;
 }
 
 Version NonSeqWriter::GetVersion() const
@@ -530,7 +403,7 @@ Version NonSeqWriter::GetVersion() const
 		return Version_Invalid;
 	}
 
-	return m_nVersion;
+	return m_header.nVersion;
 }
 
 }//namespace NPY

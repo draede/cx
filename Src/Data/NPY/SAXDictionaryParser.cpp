@@ -48,7 +48,7 @@ SAXDictionaryParser::~SAXDictionaryParser()
 {
 }
 
-Status SAXDictionaryParser::ParseBuffer(const void *pBuffer, Size cbSize)
+Status SAXDictionaryParser::ParseBuffer(const void *pBuffer, Size cbSize, Size *pcbActualSize/* = NULL*/)
 {
 	Context   ctx;
 	Status    status;
@@ -77,6 +77,9 @@ Status SAXDictionaryParser::ParseBuffer(const void *pBuffer, Size cbSize)
 	ctx.Move();
 
 	if (!(status = ParseObject(ctx, 1, MAX_DEPTH)))
+	{
+		return status;
+	}
 
 	for (auto iter = m_vectorObservers.begin(); iter != m_vectorObservers.end(); ++iter)
 	{
@@ -84,6 +87,11 @@ Status SAXDictionaryParser::ParseBuffer(const void *pBuffer, Size cbSize)
 		{
 			return status;
 		}
+	}
+
+	if (NULL != pcbActualSize)
+	{
+		*pcbActualSize = ctx.pPos - (const UChar *)pBuffer;
 	}
 
 	return Status();

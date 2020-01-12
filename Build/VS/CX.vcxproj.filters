@@ -1296,6 +1296,15 @@
     <ClInclude Include="..\..\Include\CX\Data\NPY\NonSeqWriter.hpp">
       <Filter>Header Files\Data\NPY</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\HeaderSAXDictionaryObserver.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\AppendWriter.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Tools.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2445,6 +2454,15 @@
       <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\NPY\NonSeqWriter.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\HeaderSAXDictionaryObserver.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\AppendWriter.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\Tools.cpp">
       <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
   </ItemGroup>
