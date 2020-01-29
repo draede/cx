@@ -47,9 +47,10 @@ const Byte Header::MAGIC_V_3_0[8] = { 0x93, (Byte)'N', (Byte)'U', (Byte)'M', (By
 
 Status Header::Read(const void *pBuffer, Size cbSize)
 {
-	Size     cbDictSize;
-	Size     cbLenSize;
-	Status   status;
+	Size      cbDictSize;
+	Size      cbLenSize;
+	Version   nTmpVersion;
+	Status    status;
 
 	if (sizeof(Header::MAGIC_V_1_0) > cbSize)
 	{
@@ -65,24 +66,24 @@ Status Header::Read(const void *pBuffer, Size cbSize)
 
 	if (0 == memcmp(header, Header::MAGIC_V_1_0, sizeof(Header::MAGIC_V_1_0)))
 	{
-		nVersion = Version_1_0;
+		nTmpVersion = Version_1_0;
 	}
 	else
 	if (0 == memcmp(header, Header::MAGIC_V_2_0, sizeof(Header::MAGIC_V_2_0)))
 	{
-		nVersion = Version_2_0;
+		nTmpVersion = Version_2_0;
 	}
 	else
 	if (0 == memcmp(header, Header::MAGIC_V_3_0, sizeof(Header::MAGIC_V_3_0)))
 	{
-		nVersion = Version_3_0;
+		nTmpVersion = Version_3_0;
 	}
 	else
 	{
 		return Status(Status_InvalidArg, "Invalid version");
 	}
 
-	if (Version_1_0 == nVersion)
+	if (Version_1_0 == nTmpVersion)
 	{
 		if (sizeof(Header::MAGIC_V_1_0) + sizeof(UInt16) > cbSize)
 		{
@@ -115,6 +116,7 @@ Status Header::Read(const void *pBuffer, Size cbSize)
 	}
 
 	cbTotalSize = sizeof(Header::MAGIC_V_1_0) + cbLenSize + cbDictSize;
+	nVersion    = nTmpVersion;
 
 	return Status();
 }
@@ -160,110 +162,35 @@ Status Header::Write(String *psHeader, Size cbMinExtraPadding/* = 0*/)
 
 	cbPrefixSize = psHeader->size();
 
-	Bool bSameColumn = True;
-
-	if (1 == vectorColumns.size())
+	(*psHeader) += "{'descr': '";
+	if (Type_Int8 == nType || Type_UInt8 == nType)
 	{
-		bSameColumn = vectorColumns[0].sName.empty();
+		(*psHeader) += '|';
 	}
 	else
 	{
-		for (Size i = 1; i < vectorColumns.size(); i++)
+		switch (nByteOrder)
 		{
-			if (!vectorColumns[i].sName.empty())
-			{
-				bSameColumn = False;
-
-				break;
-			}
-			if (vectorColumns[i].nByteOrder != vectorColumns[0].nByteOrder)
-			{
-				bSameColumn = False;
-
-				break;
-			}
-			if (vectorColumns[i].nType != vectorColumns[0].nType)
-			{
-				bSameColumn = False;
-
-				break;
-			}
+			case ByteOrder_LittleEndian: (*psHeader) += "<"; break;
+			case ByteOrder_BigEndian:    (*psHeader) += ">"; break;
+			default:                     return Status_InvalidArg;
 		}
 	}
-
-	if (bSameColumn)
+	switch (nType)
 	{
-		(*psHeader) += "{'descr': '";
-		if (Type_Int8 == vectorColumns[0].nType || Type_UInt8 == vectorColumns[0].nType)
-		{
-			(*psHeader) += '|';
-		}
-		else
-		{
-			switch (vectorColumns[0].nByteOrder)
-			{
-				case ByteOrder_LittleEndian: (*psHeader) += "<"; break;
-				case ByteOrder_BigEndian:    (*psHeader) += ">"; break;
-				default:                     return Status_InvalidArg;
-			}
-		}
-		switch (vectorColumns[0].nType)
-		{
-			case Type_Int8:   (*psHeader) += "i1"; break;
-			case Type_UInt8:  (*psHeader) += "u1"; break;
-			case Type_Int16:  (*psHeader) += "i2"; break;
-			case Type_UInt16: (*psHeader) += "u2"; break;
-			case Type_Int32:  (*psHeader) += "i4"; break;
-			case Type_UInt32: (*psHeader) += "u4"; break;
-			case Type_Int64:  (*psHeader) += "i8"; break;
-			case Type_UInt64: (*psHeader) += "u8"; break;
-			case Type_Float:  (*psHeader) += "f4"; break;
-			case Type_Double: (*psHeader) += "f8"; break;
-			default:          return Status_InvalidArg;
-		}
-		(*psHeader) += "'";
+		case Type_Int8:   (*psHeader) += "i1"; break;
+		case Type_UInt8:  (*psHeader) += "u1"; break;
+		case Type_Int16:  (*psHeader) += "i2"; break;
+		case Type_UInt16: (*psHeader) += "u2"; break;
+		case Type_Int32:  (*psHeader) += "i4"; break;
+		case Type_UInt32: (*psHeader) += "u4"; break;
+		case Type_Int64:  (*psHeader) += "i8"; break;
+		case Type_UInt64: (*psHeader) += "u8"; break;
+		case Type_Float:  (*psHeader) += "f4"; break;
+		case Type_Double: (*psHeader) += "f8"; break;
+		default:          return Status_InvalidArg;
 	}
-	else
-	{
-		(*psHeader) += "{'descr': [";
-		for (Size i = 0; i < vectorColumns.size(); i++)
-		{
-			Print(psHeader, "('{1}', '", vectorColumns[i].sName.c_str());
-			if (Type_Int8 == vectorColumns[i].nType || Type_UInt8 == vectorColumns[i].nType)
-			{
-				(*psHeader) += '|';
-			}
-			else
-			{
-				switch (vectorColumns[i].nByteOrder)
-				{
-					case ByteOrder_LittleEndian: (*psHeader) += "<"; break;
-					case ByteOrder_BigEndian:    (*psHeader) += ">"; break;
-					default:                     return Status_InvalidArg;
-				}
-			}
-			switch (vectorColumns[i].nType)
-			{
-				case Type_Int8:   (*psHeader) += "i1"; break;
-				case Type_UInt8:  (*psHeader) += "u1"; break;
-				case Type_Int16:  (*psHeader) += "i2"; break;
-				case Type_UInt16: (*psHeader) += "u2"; break;
-				case Type_Int32:  (*psHeader) += "i4"; break;
-				case Type_UInt32: (*psHeader) += "u4"; break;
-				case Type_Int64:  (*psHeader) += "i8"; break;
-				case Type_UInt64: (*psHeader) += "u8"; break;
-				case Type_Float:  (*psHeader) += "f4"; break;
-				case Type_Double: (*psHeader) += "f8"; break;
-				default:                     return Status_InvalidArg;
-			}
-			(*psHeader) += "')";
-			if (i + 1 < vectorColumns.size())
-			{
-				(*psHeader) += ", ";
-			}
-		}
-		(*psHeader) += "]";
-	}
+	(*psHeader) += "'";
 	(*psHeader) += ", 'fortran_order': ";
 	switch (nFormat)
 	{
@@ -271,7 +198,7 @@ Status Header::Write(String *psHeader, Size cbMinExtraPadding/* = 0*/)
 		case Format_Fortran: *psHeader += "True"; break;
 		default:             return Status_InvalidArg;
 	}
-	Print(psHeader, ", 'shape': ({1}, {2}, ), }", cRows, vectorColumns.size());
+	Print(psHeader, ", 'shape': ({1}, {2}, ), }", cRows, cColumns);
 
 	cbUsedSize = psHeader->size();
 
@@ -309,21 +236,27 @@ Status Header::ComputeRowSize()
 {
 	Size   cbTypeSize;
 
-	if (vectorColumns.empty())
+	if (0 == cColumns)
 	{
 		return Status_NotInitialized;
 	}
-	cbRowSize = 0;
-	for (Size i = 0; i < vectorColumns.size(); i++)
-	{
-		if (0 == (cbTypeSize = TypeSize::Get(vectorColumns[i].nType)))
-		{
-			return Status(Status_InvalidArg, "Invalid column type for column index {1}", i);
-		}
-		cbRowSize += cbTypeSize;
-	}
+	cbTypeSize = TypeSize::Get(nType);
+	cbRowSize  = cbTypeSize * cColumns;
 
 	return Status();
+}
+
+void Header::Reset()
+{
+	nFormat     = Format_Invalid;
+	nVersion    = Version_Invalid;
+	nType       = Type_Invalid;
+	nByteOrder  = ByteOrder_Invalid;
+	cColumns    = 0;
+	cRows       = 0;
+	cbRowSize   = 0;
+	cbUsedSize  = 0;
+	cbTotalSize = 0;
 }
 
 }//namespace NPY

@@ -36,7 +36,6 @@
 #include "CX/Data/NPY/Format.hpp"
 #include "CX/Data/NPY/ByteOrder.hpp"
 #include "CX/Data/NPY/Type.hpp"
-#include "CX/Data/NPY/Column.hpp"
 #include "CX/Data/NPY/Version.hpp"
 #include "CX/Data/NPY/Consts.hpp"
 #include "CX/Data/NPY/Header.hpp"
@@ -63,17 +62,11 @@ public:
 
 	~Writer();
 
-	Status Create(const Char *szPath, const Column &column, Size cColumnsCount, Format nFormat = Format_C, 
-	              Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
+	Status Create(const Char *szPath, Size cColumnsCount, Type nType, ByteOrder nByteOrder = ByteOrder_LittleEndian, 
+	             Format nFormat = Format_C, Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
 
-	Status Create(const Char *szPath, const Column *columns, Size cColumnsCount, Format nFormat = Format_C, 
-	              Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
-
-	Status Create(const WChar *wszPath, const Column &column, Size cColumnsCount, Format nFormat = Format_C, 
-	              Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
-
-	Status Create(const WChar *wszPath, const Column *columns, Size cColumnsCount, Format nFormat = Format_C, 
-	              Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
+	Status Create(const WChar *wszPath, Size cColumnsCount, Type nType, ByteOrder nByteOrder = ByteOrder_LittleEndian, 
+	             Format nFormat = Format_C, Version nVersion = Version_1_0, Size cbBufferSize = DEFAULT_BUFFER_SIZE);
 
 	Status Close();
 
@@ -87,7 +80,9 @@ public:
 
 	Size GetColumnsCount() const;
 
-	const Column *GetColumns() const;
+	Type GetType() const;
+
+	ByteOrder GetByteOrder() const;
 
 	Size GetRowSize() const;
 
@@ -119,10 +114,11 @@ private:
 	UInt64             m_cbReceived;
 	UInt64             m_cbWritten;
 
-	Status CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, 
+	Status CheckCreateArgs(Size cColumnsCount, Type nType, ByteOrder nByteOrder, Format nFormat, Version nVersion, 
 	                       Size cbBufferSize);
 
-	Status Create(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion, Size cbBufferSize);
+	Status Create(Size cColumnsCount, Type nType, ByteOrder nByteOrder, Format nFormat, Version nVersion, 
+	              Size cbBufferSize);
 
 	Status Flush();
 

@@ -112,9 +112,7 @@ Status Tools::Merge(const WPathsVector &vectorPaths)
 
 	AppendWriter   writer;
 	Reader         reader;
-	const Column   *columns;
 	Size           cColumns;
-	const Column   *columnsTmp;
 	Size           cColumnsTmp;
 	Size           cMaxRowsPerChunk;
 	Size           cChunkRows;
@@ -128,7 +126,6 @@ Status Tools::Merge(const WPathsVector &vectorPaths)
 	{
 		return status;
 	}
-	columns  = writer.GetColumns();
 	cColumns = writer.GetColumnsCount();
 	for (Size i = 1; i < vectorPaths.size(); i++)
 	{
@@ -136,26 +133,18 @@ Status Tools::Merge(const WPathsVector &vectorPaths)
 		{
 			return status;
 		}
-		columnsTmp  = reader.GetColumns();
 		cColumnsTmp = reader.GetColumnsCount();
 		if (cColumnsTmp != cColumns)
 		{
 			return Status_InvalidArg;
 		}
-		for (Size j = 0; j < cColumns; j++)
+		if (reader.GetByteOrder() != writer.GetByteOrder())
 		{
-			if (columns[j].nByteOrder != columnsTmp[j].nByteOrder)
-			{
-				return Status_InvalidArg;
-			}
-			if (columns[j].nType != columnsTmp[j].nType)
-			{
-				return Status_InvalidArg;
-			}
-			if (0 != cx_strcmp(columns[j].sName.c_str(), columnsTmp[j].sName.c_str()))
-			{
-				return Status_InvalidArg;
-			}
+			return Status_InvalidArg;
+		}
+		if (reader.GetType() != writer.GetType())
+		{
+			return Status_InvalidArg;
 		}
 
 		cMaxRowsPerChunk = MAX_READ_BUFFER_SIZE / reader.GetRowSize();

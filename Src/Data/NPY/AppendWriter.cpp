@@ -46,12 +46,7 @@ namespace NPY
 
 AppendWriter::AppendWriter()
 {
-	m_header.nFormat     = Format_Invalid;
-	m_header.nVersion    = Version_Invalid;
-	m_header.cRows       = 0;
-	m_header.cbRowSize   = 0;
-	m_header.cbUsedSize  = 0;
-	m_header.cbTotalSize = 0;
+	m_header.Reset();
 	m_pBuffer            = NULL;
 	m_cbBufferSize       = 0;
 	m_cbBufferUsedSize   = 0;
@@ -268,17 +263,7 @@ Status AppendWriter::Close()
 	}
 	m_sPath.clear();
 	m_wsPath.clear();
-	m_header.vectorColumns.clear();
-	m_header.nFormat     = Format_Invalid;
-	m_header.nVersion    = Version_Invalid;
-	m_header.cRows       = 0;
-	m_header.cbRowSize   = 0;
-	m_header.cbUsedSize  = 0;
-	m_header.cbTotalSize = 0;
-	m_cbBufferSize       = 0;
-	m_cbBufferUsedSize   = 0;
-	m_cbReceived         = 0;
-	m_cbWritten          = 0;
+	m_header.Reset();
 
 	return status;
 }
@@ -359,17 +344,27 @@ Size AppendWriter::GetColumnsCount() const
 		return 0;
 	}
 
-	return m_header.vectorColumns.size();
+	return m_header.cColumns;
 }
 
-const Column *AppendWriter::GetColumns() const
+Type AppendWriter::GetType() const
 {
 	if (NULL == m_pFile)
 	{
-		return NULL;
+		return Type_Invalid;
 	}
 
-	return &m_header.vectorColumns[0];
+	return m_header.nType;
+}
+
+ByteOrder AppendWriter::GetByteOrder() const
+{
+	if (NULL == m_pFile)
+	{
+		return ByteOrder_Invalid;
+	}
+
+	return m_header.nByteOrder;
 }
 
 Size AppendWriter::GetRowSize() const

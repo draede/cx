@@ -43,12 +43,7 @@ namespace NPY
 
 Reader::Reader()
 {
-	m_header.nFormat          = Format_Invalid;
-	m_header.nVersion         = Version_Invalid;
-	m_header.cRows            = 0;
-	m_header.cbRowSize        = 0;
-	m_header.cbUsedSize       = 0;
-	m_header.cbTotalSize      = 0;
+	m_header.Reset();
 	m_cbAllocationGranularity = 0;
 }
 
@@ -126,13 +121,7 @@ Status Reader::Close()
 	}
 	m_sPath.clear();
 	m_wsPath.clear();
-	m_header.vectorColumns.clear();
-	m_header.nFormat          = Format_Invalid;
-	m_header.nVersion         = Version_Invalid;
-	m_header.cRows            = 0;
-	m_header.cbRowSize        = 0;
-	m_header.cbUsedSize       = 0;
-	m_header.cbTotalSize      = 0;
+	m_header.Reset();
 	m_cbAllocationGranularity = 0;
 
 	return Status();
@@ -236,17 +225,27 @@ Size Reader::GetColumnsCount() const
 		return 0;
 	}
 
-	return m_header.vectorColumns.size();
+	return m_header.cColumns;
 }
 
-const Column *Reader::GetColumns() const
+Type Reader::GetType() const
 {
 	if (!m_mmf.IsOK())
 	{
-		return NULL;
+		return Type_Invalid;
 	}
 
-	return &m_header.vectorColumns[0];
+	return m_header.nType;
+}
+
+ByteOrder Reader::GetByteOrder() const
+{
+	if (!m_mmf.IsOK())
+	{
+		return ByteOrder_Invalid;
+	}
+
+	return m_header.nByteOrder;
 }
 
 Size Reader::GetRowSize() const

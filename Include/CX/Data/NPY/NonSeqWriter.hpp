@@ -36,7 +36,6 @@
 #include "CX/Data/NPY/Format.hpp"
 #include "CX/Data/NPY/ByteOrder.hpp"
 #include "CX/Data/NPY/Type.hpp"
-#include "CX/Data/NPY/Column.hpp"
 #include "CX/Data/NPY/Version.hpp"
 #include "CX/Data/NPY/Consts.hpp"
 #include "CX/Data/NPY/Header.hpp"
@@ -59,17 +58,13 @@ public:
 
 	~NonSeqWriter();
 
-	Status Create(const Char *szPath, Size cRowsCount, const Column &column, Size cColumnsCount, 
-	              Format nFormat = Format_C, Version nVersion = Version_1_0);
+	Status Create(const Char *szPath, Size cRowsCount, Size cColumnsCount, Type nType, 
+	              ByteOrder nByteOrder = ByteOrder_LittleEndian, Format nFormat = Format_C, 
+	              Version nVersion = Version_1_0);
 
-	Status Create(const Char *szPath, Size cRowsCount, const Column *columns, Size cColumnsCount, 
-	              Format nFormat = Format_C, Version nVersion = Version_1_0);
-
-	Status Create(const WChar *wszPath, Size cRowsCount, const Column &column, Size cColumnsCount, 
-	              Format nFormat = Format_C, Version nVersion = Version_1_0);
-
-	Status Create(const WChar *wszPath, Size cRowsCount, const Column *columns, Size cColumnsCount, 
-	              Format nFormat = Format_C, Version nVersion = Version_1_0);
+	Status Create(const WChar *wszPath, Size cRowsCount, Size cColumnsCount, Type nType, 
+	              ByteOrder nByteOrder = ByteOrder_LittleEndian, Format nFormat = Format_C, 
+	              Version nVersion = Version_1_0);
 
 	Status Close();
 
@@ -85,7 +80,9 @@ public:
 
 	Size GetColumnsCount() const;
 
-	const Column *GetColumns() const;
+	Type GetType() const;
+
+	ByteOrder GetByteOrder() const;
 
 	Size GetRowSize() const;
 
@@ -106,9 +103,10 @@ private:
 	void               *m_pFile;
 	Header             m_header;
 
-	Status CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion);
+	Status CheckCreateArgs(Size cColumnsCount, Type nType, ByteOrder nByteOrder, Format nFormat, Version nVersion);
 
-	Status Create(Size RowsCountCount, const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion);
+	Status Create(Size RowsCountCount, Size cColumnsCount, Type nType, ByteOrder nByteOrder, Format nFormat, 
+	              Version nVersion);
 
 };
 

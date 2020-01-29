@@ -33,7 +33,6 @@
 #include "CX/Status.hpp"
 #include "CX/Stack.hpp"
 #include "CX/Data/NPY/SAXDictionaryParser.hpp"
-#include "CX/Data/NPY/Column.hpp"
 #include "CX/Data/NPY/Format.hpp"
 #include "CX/Data/NPY/Header.hpp"
 
@@ -109,10 +108,8 @@ private:
 
 	Node::Stack   m_stackNodes;
 	ShapeVector   m_vectorShape;
-	Column        m_all;
-	Size          m_cColumns;
 
-	Status ParseColumnDesc(Column *pColumn, const Char *pBuffer, Size cLen);
+	Status ParseColumnDesc(const Char *pBuffer, Size cLen);
 
 };
 

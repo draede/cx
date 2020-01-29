@@ -32,9 +32,10 @@
 #include "CX/Types.hpp"
 #include "CX/APIDefs.hpp"
 #include "CX/String.hpp"
-#include "CX/Data/NPY/Column.hpp"
 #include "CX/Data/NPY/Version.hpp"
 #include "CX/Data/NPY/Format.hpp"
+#include "CX/Data/NPY/Type.hpp"
+#include "CX/Data/NPY/ByteOrder.hpp"
 
 
 namespace CX
@@ -53,12 +54,11 @@ struct CX_API Header
 	static const Byte MAGIC_V_2_0[8];
 	static const Byte MAGIC_V_3_0[8];
 
-#pragma warning(push)
-#pragma warning(disable: 4251)
-	Column::Vector   vectorColumns;
-#pragma warning(pop)
 	Format           nFormat;
 	Version          nVersion;
+	Type             nType;
+	ByteOrder        nByteOrder;
+	Size             cColumns;
 	Size             cRows;
 	Size             cbRowSize;
 	Size             cbUsedSize;
@@ -69,6 +69,8 @@ struct CX_API Header
 	Status Write(String *psHeader, Size cbMinPadding = 0);
 
 	Status ComputeRowSize();
+
+	void Reset();
 
 };
 

@@ -557,8 +557,52 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 					}
 				}
 				else
+				if (0 == cxw_strnicmp(vectorPaths[cPathIndex].c_str(), L"csv:", 4))
 				{
-					if (!(status = RunWithPath(vectorPaths[cPathIndex].c_str(), ctx)))
+					if (!(status = RunWithCSV(vectorPaths[cPathIndex].c_str() + 4, ',', False, ctx)))
+					{
+						if (!pHandler->OnError(status))
+						{
+							status = Status_Cancelled;
+						}
+					}
+				}
+				else
+				if (0 == cxw_strnicmp(vectorPaths[cPathIndex].c_str(), L"tsv:", 4))
+				{
+					if (!(status = RunWithCSV(vectorPaths[cPathIndex].c_str() + 4, '\t', False, ctx)))
+					{
+						if (!pHandler->OnError(status))
+						{
+							status = Status_Cancelled;
+						}
+					}
+				}
+				else
+				if (0 == cxw_strnicmp(vectorPaths[cPathIndex].c_str(), L"csvx:", 5))
+				{
+					if (!(status = RunWithCSV(vectorPaths[cPathIndex].c_str() + 5, ',', True, ctx)))
+					{
+						if (!pHandler->OnError(status))
+						{
+							status = Status_Cancelled;
+						}
+					}
+				}
+				else
+				if (0 == cxw_strnicmp(vectorPaths[cPathIndex].c_str(), L"tsvx:", 5))
+				{
+					if (!(status = RunWithCSV(vectorPaths[cPathIndex].c_str() + 5, '\t', True, ctx)))
+					{
+						if (!pHandler->OnError(status))
+						{
+							status = Status_Cancelled;
+						}
+					}
+				}
+				else
+				{
+					if (!(status = RunWithPath(vectorPaths[cPathIndex].c_str(), ctx, NULL)))
 					{
 						status = Status_Cancelled;
 
@@ -604,7 +648,8 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	return status;
 }
 
-Status FileEnumerator2::RunWithPath(const WChar *wszPath, Context &ctx)
+Status FileEnumerator2::RunWithPath(const WChar *wszPath, Context &ctx, 
+                                    const Data::CSV::ISAXParserObserver::ColumnsVector *pVectorColumns)
 {
 	WIN32_FILE_ATTRIBUTE_DATA   data;
 
@@ -631,7 +676,7 @@ Status FileEnumerator2::RunWithPath(const WChar *wszPath, Context &ctx)
 		uliSize.HighPart = data.nFileSizeHigh;
 		uliSize.LowPart  = data.nFileSizeLow;
 
-		return OnFile(wszPath, cxw_strlen(wszPath), uliSize.QuadPart, ctx);
+		return OnFile(wszPath, cxw_strlen(wszPath), uliSize.QuadPart, ctx, pVectorColumns);
 	}
 }
 
@@ -749,7 +794,7 @@ Status FileEnumerator2::RunWithListUTF8(FILE *pFile, Context &ctx)
 
 					break;
 				}
-				if (!(status = RunWithPath(wszLine, ctx)))
+				if (!(status = RunWithPath(wszLine, ctx, NULL)))
 				{
 					status = Status_Cancelled;
 
@@ -794,7 +839,7 @@ Status FileEnumerator2::RunWithListUTF16(FILE *pFile, Context &ctx)
 			}
 			if (0 < cLen)
 			{
-				if (!(status = RunWithPath(wszLine, ctx)))
+				if (!(status = RunWithPath(wszLine, ctx, NULL)))
 				{
 					status = Status_Cancelled;
 
@@ -807,6 +852,70 @@ Status FileEnumerator2::RunWithListUTF16(FILE *pFile, Context &ctx)
 	delete [] wszLine;
 
 	return status;
+}
+
+Status FileEnumerator2::RunWithCSV(const WChar* wszCSVPath, Char chSeparator, Bool bSkipFirstLine, Context &ctx)
+{
+	Data::CSV::SAXParser   parser;
+	CSVSAXParserObserver   observer;
+	Status                 status;
+
+	observer.m_pCTX           = &ctx;
+	observer.m_bSkipFirstLine = bSkipFirstLine;
+	if (!(status = parser.AddObserver(&observer)))
+	{
+		return status;
+	}
+	if (!(status = parser.BeginParse(chSeparator)))
+	{
+		return status;
+	}
+	if (!(status = parser.ParseStream(wszCSVPath)))
+	{
+		return status;
+	}
+	if (!(status = parser.EndParse()))
+	{
+		return status;
+	}
+
+	return Status();
+}
+
+void FileEnumerator2::CSVSAXParserObserver::OnBeginParse()
+{
+}
+
+void FileEnumerator2::CSVSAXParserObserver::OnEndParse()
+{
+}
+
+Bool FileEnumerator2::CSVSAXParserObserver::OnRow(Size cRowIndex, const ColumnsVector &vectorColumns)
+{
+	Status   status;
+
+	if (0 == cRowIndex && m_bSkipFirstLine)
+	{
+		return True;
+	}
+
+	if (1 > vectorColumns.size())
+	{
+		return False;
+	}
+
+	WString   wsPath;
+
+	Str::UTF8::ToWChar(vectorColumns[0].c_str(), &wsPath);
+
+	if (!(status = RunWithPath(wsPath.c_str(), *m_pCTX, &vectorColumns)))
+	{
+		status = Status_Cancelled;
+
+		return False;
+	}
+
+	return True;
 }
 
 Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
@@ -855,7 +964,7 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 					pData->uliSize.HighPart = pData->data.nFileSizeHigh;
 					pData->uliSize.LowPart  = pData->data.nFileSizeLow;
 
-					if (!(status = OnFile(pData->wsPath.c_str(), pData->wsPath.size(), pData->uliSize.QuadPart, ctx)))
+					if (!(status = OnFile(pData->wsPath.c_str(), pData->wsPath.size(), pData->uliSize.QuadPart, ctx, NULL)))
 					{
 						break;
 					}
@@ -889,7 +998,8 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 	return status;
 }
 
-Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSize, Context &ctx)
+Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSize, Context &ctx, 
+                               const Data::CSV::ISAXParserObserver::ColumnsVector *pVectorColumns)
 {
 	CX_UNUSED(cPathLen);
 
@@ -930,11 +1040,19 @@ Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSiz
 		}
 	}
 
-	ctx.files[ctx.cFiles].pCTX       = &ctx;
-	ctx.files[ctx.cFiles].wsPath     = wszPath;
-	ctx.files[ctx.cFiles].cbSize     = cbSize;
-	ctx.files[ctx.cFiles].cPathIndex = ctx.cPathIndex;
-	ctx.files[ctx.cFiles].pResult    = NULL;
+	ctx.files[ctx.cFiles].pCTX          = &ctx;
+	ctx.files[ctx.cFiles].wsPath        = wszPath;
+	ctx.files[ctx.cFiles].cbSize        = cbSize;
+	ctx.files[ctx.cFiles].cPathIndex    = ctx.cPathIndex;
+	ctx.files[ctx.cFiles].pResult       = NULL;
+	if (NULL == pVectorColumns)
+	{
+		ctx.files[ctx.cFiles].vectorColumns.clear();
+	}
+	else
+	{
+		ctx.files[ctx.cFiles].vectorColumns = *pVectorColumns;
+	}
 	ctx.cFiles++;
 
 	if (ctx.cFiles == ctx.config.cQueuedFiles)
@@ -988,13 +1106,14 @@ Bool FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 	Size      cInclusionPatterns;
 	Status    status;
 
-	pFile->file.m_wszPath       = pFile->wsPath.c_str();
-	pFile->file.m_cPathLen      = pFile->wsPath.size();
-	pFile->file.m_pContent      = NULL;
-	pFile->file.m_cbContentSize = pFile->cbSize;
-	pFile->file.m_hFile         = NULL;
-	pFile->file.m_hFileMapping  = NULL;
-	pFile->file.m_cPathIndex    = pFile->cPathIndex;
+	pFile->file.m_wszPath        = pFile->wsPath.c_str();
+	pFile->file.m_cPathLen       = pFile->wsPath.size();
+	pFile->file.m_pContent       = NULL;
+	pFile->file.m_cbContentSize  = pFile->cbSize;
+	pFile->file.m_hFile          = NULL;
+	pFile->file.m_hFileMapping   = NULL;
+	pFile->file.m_cPathIndex     = pFile->cPathIndex;
+	pFile->file.m_pVectorColumns = &pFile->vectorColumns;
 
 	if (!pCTX->config.vectorPatterns.empty() ||pCTX->config.bMapFile)
 	{
@@ -1218,6 +1337,20 @@ void FileEnumerator2::FileImpl::Close()
 		CloseHandle(m_hFile);
 		m_hFile = NULL;
 	}
+}
+
+const FileEnumerator2::FileImpl::ColumnsVector *FileEnumerator2::FileImpl::GetAsocColumns() const
+{
+	if (NULL == m_pVectorColumns)
+	{
+		return NULL;
+	}
+	if (m_pVectorColumns->empty())
+	{
+		return NULL;
+	}
+
+	return m_pVectorColumns;
 }
 
 }//namespace IO

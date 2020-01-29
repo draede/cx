@@ -33,7 +33,6 @@
 #include "CX/Status.hpp"
 #include "CX/IO/IOutputStream.hpp"
 #include "CX/Data/CSV/ISAXParserObserver.hpp"
-#include "CX/Data/NPY/Column.hpp"
 #include "CX/Data/NPY/Reader.hpp"
 #include "CX/Data/NPY/Writer.hpp"
 #include "CX/APIDefs.hpp"
@@ -55,15 +54,13 @@ public:
 	static const Size   NPY_INPUT_BUFFER_ROWS_COUNT = 65536;
 	static const Size   CSV_OUTPUT_BUFFER_SIZE      = 4 * 1024 * 1024;
 
-	static Status CSV2NPY(const Char *szCSVPath, const Char *szNPYPath, const Column *columns, Size cColumns, 
-	                      Bool bSkipFirstRow = True);
+	static Status CSV2NPY(const Char *szCSVPath, const Char *szNPYPath, Type nType, 
+	                      Bool bSkipFirstRow = True, ByteOrder nByteOrder = ByteOrder_LittleEndian, 
+	                      Format nFormat = Format_C, Version nVersion = Version_1_0);
 
-	static Status CSV2NPY(const WChar *wszCSVPath, const WChar *wszNPYPath, const Column *columns, Size cColumns, 
-	                      Bool bSkipFirstRow = True);
-
-	static Status CSV2NPY(const Char *szCSVPath, Writer *pWriter, Bool bSkipFirstRow = True);
-
-	static Status CSV2NPY(const WChar *wszCSVPath, Writer *pWriter, Bool bSkipFirstRow = True);
+	static Status CSV2NPY(const WChar *wszCSVPath, const WChar *wszNPYPath, 
+	                      Type nType, Bool bSkipFirstRow = True, ByteOrder nByteOrder = ByteOrder_LittleEndian, 
+	                      Format nFormat = Format_C, Version nVersion = Version_1_0);
 
 	static Status NPY2CSV(const Char *szNPYPath, const Char *szCSVPath, 
 	                      Size cNPYInputBufferRowsCount = NPY_INPUT_BUFFER_ROWS_COUNT, 
@@ -83,8 +80,13 @@ protected:
 	{
 	public:
 
-		Writer   *m_pWriter;
-		Bool     m_bSkipFirstRow;
+		WString     m_wsNPYPath;
+		Type        m_nType;
+		ByteOrder   m_nByteOrder;
+		Format      m_nFormat;
+		Version     m_nVersion;
+		Bool        m_bSkipFirstRow;
+		Writer      m_writer;
 
 		virtual void OnBeginParse();
 

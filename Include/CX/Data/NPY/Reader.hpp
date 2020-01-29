@@ -37,7 +37,6 @@
 #include "CX/Data/NPY/Format.hpp"
 #include "CX/Data/NPY/ByteOrder.hpp"
 #include "CX/Data/NPY/Type.hpp"
-#include "CX/Data/NPY/Column.hpp"
 #include "CX/Data/NPY/Version.hpp"
 #include "CX/Data/NPY/Header.hpp"
 #include "CX/Data/NPY/HeaderSAXDictionaryObserver.hpp"
@@ -78,7 +77,9 @@ public:
 
 	Size GetColumnsCount() const;
 
-	const Column *GetColumns() const;
+	Type GetType() const;
+
+	ByteOrder GetByteOrder() const;
 
 	Size GetRowSize() const;
 

@@ -1254,13 +1254,7 @@
     <ClInclude Include="..\..\Include\CX\Data\NPY\ByteOrder.hpp">
       <Filter>Header Files\Data\NPY</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\NPY\Column.hpp">
-      <Filter>Header Files\Data\NPY</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\NPY\Consts.hpp">
-      <Filter>Header Files\Data\NPY</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Include\CX\Data\NPY\Converter.hpp">
       <Filter>Header Files\Data\NPY</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\NPY\Format.hpp">
@@ -1303,6 +1297,9 @@
       <Filter>Header Files\Data\NPY</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\NPY\Tools.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\Converter.hpp">
       <Filter>Header Files\Data\NPY</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2438,9 +2435,6 @@
     <ClCompile Include="..\..\Src\Sys\Platform\Windows\ThreadPool.cpp">
       <Filter>Source Files\Sys\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Data\NPY\Converter.cpp">
-      <Filter>Source Files\Data\NPY</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Data\NPY\Header.cpp">
       <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
@@ -2463,6 +2457,9 @@
       <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\NPY\Tools.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\Converter.cpp">
       <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
   </ItemGroup>

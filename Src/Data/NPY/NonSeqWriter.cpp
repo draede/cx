@@ -44,13 +44,8 @@ namespace NPY
 
 NonSeqWriter::NonSeqWriter()
 {
-	m_pFile              = NULL;
-	m_header.nFormat     = Format_Invalid;
-	m_header.nVersion    = Version_Invalid;
-	m_header.cRows       = 0;
-	m_header.cbRowSize   = 0;
-	m_header.cbUsedSize  = 0;
-	m_header.cbTotalSize = 0;
+	m_pFile = NULL;
+	m_header.Reset();
 }
 
 NonSeqWriter::~NonSeqWriter()
@@ -58,10 +53,9 @@ NonSeqWriter::~NonSeqWriter()
 	Close();
 }
 
-Status NonSeqWriter::CheckCreateArgs(const Column *columns, Size cColumnsCount, Format nFormat, Version nVersion)
+Status NonSeqWriter::CheckCreateArgs(Size cColumnsCount, Type nType, ByteOrder nByteOrder, Format nFormat, 
+                                     Version nVersion)
 {
-	columns;
-
 	if (Consts::MIN_COLUMNS_COUNT > cColumnsCount)
 	{
 		return Status(Status_InvalidArg, "columns count too small");
@@ -69,6 +63,14 @@ Status NonSeqWriter::CheckCreateArgs(const Column *columns, Size cColumnsCount, 
 	if (Consts::MAX_COLUMNS_COUNT < cColumnsCount)
 	{
 		return Status(Status_InvalidArg, "columns count too big");
+	}
+	if (Type_Invalid >= nType || Type_Double < nType)
+	{
+		return Status(Status_InvalidArg, "type is invalid");
+	}
+	if (ByteOrder_Invalid >= nByteOrder || ByteOrder_BigEndian < nByteOrder)
+	{
+		return Status(Status_InvalidArg, "byte order is invalid");
 	}
 	if (Format_Invalid >= nFormat || Format_Fortran < nFormat)
 	{
@@ -82,7 +84,7 @@ Status NonSeqWriter::CheckCreateArgs(const Column *columns, Size cColumnsCount, 
 	return Status();
 }
 
-Status NonSeqWriter::Create(Size cRowsCount, const Column *columns, Size cColumnsCount, 
+Status NonSeqWriter::Create(Size cRowsCount, Size cColumnsCount, Type nType, ByteOrder nByteOrder, 
                             Format nFormat, Version nVersion)
 {
 	String   sHeader;
@@ -95,22 +97,13 @@ Status NonSeqWriter::Create(Size cRowsCount, const Column *columns, Size cColumn
 
 	m_header.nFormat     = nFormat;
 	m_header.nVersion    = nVersion;
+	m_header.nType       = nType;
+	m_header.nByteOrder  = nByteOrder;
+	m_header.cColumns    = cColumnsCount;
 	m_header.cRows       = cRowsCount;
 	m_header.cbRowSize   = 0;
 	m_header.cbUsedSize  = 0;
 	m_header.cbTotalSize = 0;
-	for (Size i = 0; i < cColumnsCount; i++)
-	{
-		if (0 == TypeSize::Get(columns[i].nType))
-		{
-			return Status(Status_InvalidArg, "Invalid column type for column index {1}", i);
-		}
-		if (ByteOrder_Invalid >= columns[i].nByteOrder || ByteOrder_BigEndian < columns[i].nByteOrder)
-		{
-			return Status(Status_InvalidArg, "Invalid column byte order for column index {1}", i);
-		}
-		m_header.vectorColumns.push_back(columns[i]);
-	}
 	m_header.ComputeRowSize();
 	if (!(status = m_header.Write(&sHeader, MIN_EXTRA_PADDING)))
 	{
@@ -156,33 +149,13 @@ Status NonSeqWriter::Create(Size cRowsCount, const Column *columns, Size cColumn
 	return status;
 }
 
-Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, const Column &column, Size cColumnsCount, 
-                            Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
-{
-	Column::Vector   vectorColumns;
-
-	if (Consts::MIN_COLUMNS_COUNT > cColumnsCount)
-	{
-		return Status(Status_InvalidArg, "columns count too small");
-	}
-	if (Consts::MAX_COLUMNS_COUNT < cColumnsCount)
-	{
-		return Status(Status_InvalidArg, "columns count too big");
-	}
-	for (Size i = 0; i < cColumnsCount; i++)
-	{
-		vectorColumns.push_back(column);
-	}
-
-	return Create(szPath, cRowsCount, &vectorColumns[0], cColumnsCount, nFormat, nVersion);
-}
-
-Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, const Column *columns, Size cColumnsCount, 
-                            Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
+Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, Size cColumnsCount, Type nType, 
+                            ByteOrder nByteOrder/* = ByteOrder_LittleEndian*/, Format nFormat/* = Format_C*/, 
+                            Version nVersion/* = Version_1_0*/)
 {
 	Status   status;
 
-	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion)))
+	if (!(status = CheckCreateArgs(cColumnsCount, nType, nByteOrder, nFormat, nVersion)))
 	{
 		return status;
 	}
@@ -198,7 +171,7 @@ Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, const Column *c
 	}
 	m_sPath = szPath;
 
-	if (!(status = Create(cRowsCount, columns, cColumnsCount, nFormat, nVersion)))
+	if (!(status = Create(cRowsCount, cColumnsCount, nType, nByteOrder, nFormat, nVersion)))
 	{
 		Close();
 
@@ -208,33 +181,13 @@ Status NonSeqWriter::Create(const Char *szPath, Size cRowsCount, const Column *c
 	return Status();
 }
 
-Status NonSeqWriter::Create(const WChar *wszPath, Size cRowsCount, const Column &column, Size cColumnsCount, 
-                            Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
-{
-	Column::Vector   vectorColumns;
-
-	if (Consts::MIN_COLUMNS_COUNT > cColumnsCount)
-	{
-		return Status(Status_InvalidArg, "columns count too small");
-	}
-	if (Consts::MAX_COLUMNS_COUNT < cColumnsCount)
-	{
-		return Status(Status_InvalidArg, "columns count too big");
-	}
-	for (Size i = 0; i < cColumnsCount; i++)
-	{
-		vectorColumns.push_back(column);
-	}
-
-	return Create(wszPath, cRowsCount, &vectorColumns[0], cColumnsCount, nFormat, nVersion);
-}
-
-Status NonSeqWriter::Create(const WChar *wszPath, Size cRowsCount, const Column *columns, Size cColumnsCount, 
-                            Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
+Status NonSeqWriter::Create(const WChar *wszPath, Size cRowsCount, Size cColumnsCount, Type nType, 
+                            ByteOrder nByteOrder/* = ByteOrder_LittleEndian*/, Format nFormat/* = Format_C*/, 
+                            Version nVersion/* = Version_1_0*/)
 {
 	Status   status;
 
-	if (!(status = CheckCreateArgs(columns, cColumnsCount, nFormat, nVersion)))
+	if (!(status = CheckCreateArgs(cColumnsCount, nType, nByteOrder, nFormat, nVersion)))
 	{
 		return status;
 	}
@@ -251,7 +204,7 @@ Status NonSeqWriter::Create(const WChar *wszPath, Size cRowsCount, const Column 
 	}
 	m_wsPath = wszPath;
 
-	if (!(status = Create(cRowsCount, columns, cColumnsCount, nFormat, nVersion)))
+	if (!(status = Create(cRowsCount, cColumnsCount, nType, nByteOrder, nFormat, nVersion)))
 	{
 		Close();
 
@@ -272,13 +225,7 @@ Status NonSeqWriter::Close()
 	}
 	m_sPath.clear();
 	m_wsPath.clear();
-	m_header.vectorColumns.clear();
-	m_header.nFormat     = Format_Invalid;
-	m_header.nVersion    = Version_Invalid;
-	m_header.cRows       = 0;
-	m_header.cbRowSize   = 0;
-	m_header.cbUsedSize  = 0;
-	m_header.cbTotalSize = 0;
+	m_header.Reset();
 
 	return status;
 }
@@ -373,17 +320,27 @@ Size NonSeqWriter::GetColumnsCount() const
 		return 0;
 	}
 
-	return m_header.vectorColumns.size();
+	return m_header.cColumns;
 }
 
-const Column *NonSeqWriter::GetColumns() const
+Type NonSeqWriter::GetType() const
 {
 	if (NULL == m_pFile)
 	{
-		return NULL;
+		return Type_Invalid;
 	}
 
-	return &m_header.vectorColumns[0];
+	return m_header.nType;
+}
+
+ByteOrder NonSeqWriter::GetByteOrder() const
+{
+	if (NULL == m_pFile)
+	{
+		return ByteOrder_Invalid;
+	}
+
+	return m_header.nByteOrder;
 }
 
 Size NonSeqWriter::GetRowSize() const

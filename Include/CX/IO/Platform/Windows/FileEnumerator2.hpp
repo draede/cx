@@ -42,6 +42,8 @@
 #include "CX/Set.hpp"
 #include "CX/BLOB.hpp"
 #include "CX/C/Platform/Windows/windows.h"
+#include "CX/Data/CSV/SAXParser.hpp"
+#include "CX/Data/CSV/ISAXParserObserver.hpp"
 #include "CX/Sys/Platform/Windows/SyncedWorkerThreads.hpp"
 #include "CX/APIDefs.hpp"
 
@@ -142,6 +144,8 @@ public:
 
 		~IFile() { }
 
+		typedef Vector<String>::Type   ColumnsVector;
+
 		virtual const WChar *GetPath() const = 0;
 
 		virtual Size GetPathLen() const = 0;
@@ -161,6 +165,8 @@ public:
 		virtual Status Open() = 0;
 
 		virtual void Close() = 0;
+
+		virtual const ColumnsVector *GetAsocColumns() const = 0;
 
 	};
 
@@ -226,14 +232,15 @@ private:
 	{
 	public:
 
-		const WChar       *m_wszPath;
-		Size              m_cPathLen;
-		const void        *m_pContent;
-		UInt64            m_cbContentSize;
-		UInt32            m_uAttributes;
-		HANDLE            m_hFile;
-		HANDLE            m_hFileMapping;
-		Size              m_cPathIndex;
+		const WChar                                          *m_wszPath;
+		Size                                                 m_cPathLen;
+		const void                                           *m_pContent;
+		UInt64                                               m_cbContentSize;
+		UInt32                                               m_uAttributes;
+		HANDLE                                               m_hFile;
+		HANDLE                                               m_hFileMapping;
+		Size                                                 m_cPathIndex;
+		const Data::CSV::ISAXParserObserver::ColumnsVector   *m_pVectorColumns;
 
 		FileImpl();
 
@@ -259,6 +266,8 @@ private:
 
 		virtual void Close();
 
+		virtual const ColumnsVector *GetAsocColumns() const;
+
 	};
 
 	struct File
@@ -269,6 +278,7 @@ private:
 		Size                        cPathIndex;
 		FileImpl                    file;
 		void                        *pResult;
+		IFile::ColumnsVector        vectorColumns;
 	};
 
 	struct Context
@@ -283,11 +293,27 @@ private:
 		Size                        cFiles;
 	};
 
+	class CSVSAXParserObserver : public Data::CSV::ISAXParserObserver
+	{
+	public:
+
+		Context   *m_pCTX;
+		Bool      m_bSkipFirstLine;
+
+		virtual void OnBeginParse();
+
+		virtual void OnEndParse();
+
+		virtual Bool OnRow(Size cRowIndex, const ColumnsVector &vectorColumns);
+
+	};
+
 	FileEnumerator2();
 
 	~FileEnumerator2();
 
-	static Status RunWithPath(const WChar* wszPath, Context &ctx);
+	static Status RunWithPath(const WChar* wszPath, Context &ctx, 
+	                          const Data::CSV::ISAXParserObserver::ColumnsVector *pVectorColumns);
 
 	static Status RunWithList(const WChar* wszListPath, Context &ctx);
 
@@ -295,9 +321,12 @@ private:
 
 	static Status RunWithListUTF16(FILE *pFile, Context &ctx);
 
+	static Status RunWithCSV(const WChar* wszCSVPath, Char chSeparator, Bool bSkipFirstLine, Context &ctx);
+
 	static Status Enumerate(const WChar *wszPath, Context &ctx);
 
-	static Status OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSize, Context &ctx);
+	static Status OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSize, Context &ctx, 
+	                     const Data::CSV::ISAXParserObserver::ColumnsVector *pVectorColumns);
 
 	static Status ProcessFiles(Context &ctx);
 

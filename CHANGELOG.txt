@@ -1,3 +1,6 @@
+0.2.258 - 2020-01-29
+ - Removed NPY invalid struct support
+ - Added support for csv/tsv for FileEnumerator2 lists
 0.2.257 - 2020-01-12
  - Added NPY AppendWriter
  - Added NPY Tools

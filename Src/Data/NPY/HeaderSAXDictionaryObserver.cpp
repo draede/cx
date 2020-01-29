@@ -67,15 +67,8 @@ Status HeaderSAXDictionaryObserver::OnBeginParse()
 	{
 		m_stackNodes.pop();
 	}
-	m_pHeader->nFormat       = Format_Invalid;
-	m_pHeader->vectorColumns.clear();
-	m_all.nByteOrder       = ByteOrder_Invalid;
-	m_all.nType            = Type_Invalid;
-	m_all.sName.clear();
+	m_pHeader->Reset();
 	m_vectorShape.clear();
-	m_pHeader->cbRowSize     = 0;
-	m_pHeader->cbTotalSize   = 0;
-	m_pHeader->cbUsedSize    = 0;
 
 	return Status();
 }
@@ -84,82 +77,25 @@ Status HeaderSAXDictionaryObserver::OnEndParse()
 {
 	if (1 == m_vectorShape.size())
 	{
-		if (!m_pHeader->vectorColumns.empty())
-		{
-			if (Consts::MAX_ROWS_COUNT < m_vectorShape[0])
-			{
-				return Status(Status_ParseFailed, "Invalid shape (rows)");
-			}
-			if (1 != m_pHeader->vectorColumns.size())
-			{
-				return Status(Status_ParseFailed, "Invalid shape (columns)");
-			}
-			m_pHeader->cRows = (Size)m_vectorShape[0];
-		}
-		else
-		if (Type_Invalid != m_all.nType)
-		{
-			if (Consts::MAX_ROWS_COUNT < m_vectorShape[0])
-			{
-				return Status(Status_ParseFailed, "Invalid shape (rows)");
-			}
-			m_pHeader->cRows = (Size)m_vectorShape[0];
-			m_pHeader->vectorColumns.clear();
-			m_pHeader->vectorColumns.push_back(m_all);
-		}
-		else
-		{
-			return Status(Status_ParseFailed, "Invalid header dictionary");
-		}
+		m_pHeader->cColumns = 1;
+		m_pHeader->cRows    = (Size)m_vectorShape[0];
 	}
 	else
 	if (2 == m_vectorShape.size())
 	{
-		if (!m_pHeader->vectorColumns.empty())
+		if (Consts::MIN_COLUMNS_COUNT > m_vectorShape[1] || 
+			   Consts::MAX_COLUMNS_COUNT < m_vectorShape[1])
 		{
-			if (Consts::MAX_ROWS_COUNT < m_vectorShape[0])
-			{
-				return Status(Status_ParseFailed, "Invalid shape (rows)");
-			}
-			if (Consts::MIN_COLUMNS_COUNT > m_vectorShape[1] || 
-			    Consts::MAX_COLUMNS_COUNT < m_vectorShape[1])
-			{
-				return Status(Status_ParseFailed, "Invalid shape (columns)");
-			}
-			if ((Size)m_vectorShape[1] != m_pHeader->vectorColumns.size())
-			{
-				return Status(Status_ParseFailed, "Invalid shape (columns number mismatch)");
-			}
-			m_pHeader->cRows = (Size)m_vectorShape[0];
+			return Status(Status_ParseFailed, "Invalid shape (columns)");
 		}
-		else
-		if (Type_Invalid != m_all.nType)
-		{
-			if (Consts::MAX_ROWS_COUNT < m_vectorShape[0])
-			{
-				return Status(Status_ParseFailed, "Invalid shape (rows)");
-			}
-			if (Consts::MIN_COLUMNS_COUNT > m_vectorShape[1] || 
-			    Consts::MAX_COLUMNS_COUNT < m_vectorShape[1])
-			{
-				return Status(Status_ParseFailed, "Invalid shape (columns)");
-			}
-			m_pHeader->cRows = (Size)m_vectorShape[0];
-			m_pHeader->vectorColumns.clear();
-			for (UInt64 i = 0; i < m_vectorShape[1]; i++)
-			{
-				m_pHeader->vectorColumns.push_back(m_all);
-			}
-		}
-		else
-		{
-			return Status(Status_ParseFailed, "Invalid header dictionary");
-		}
+		m_pHeader->cColumns = (Size)m_vectorShape[1];
+		m_pHeader->cRows    = (Size)m_vectorShape[0];
 	}
 	else
 	{
 		return Status(Status_ParseFailed, "Invalid shape");
 	}
+	m_pHeader->ComputeRowSize();
 
 	return Status();
 }
@@ -370,29 +306,9 @@ Status HeaderSAXDictionaryObserver::OnString(const Char *pBuffer, Size cLen)
 
 	if (2 == m_stackNodes.size() && Node::Type_Named == m_stackNodes.top().nType)
 	{
-		if (!(status = ParseColumnDesc(&m_all, pBuffer, cLen)))
+		if (!(status = ParseColumnDesc(pBuffer, cLen)))
 		{
 			return status;
-		}
-	}
-	else
-	if (3 == m_stackNodes.size() && Node::Type_Tuple == m_stackNodes.top().nType )
-	{
-		if (0 == m_stackNodes.top().cItems)
-		{
-			Column   column;
-
-			column.sName.assign(pBuffer, cLen);
-			m_pHeader->vectorColumns.push_back(column);
-		}
-		else
-		if (1 == m_stackNodes.top().cItems)
-		{
-			if (!(status = ParseColumnDesc(&m_pHeader->vectorColumns[m_pHeader->vectorColumns.size() - 1], pBuffer, 
-			                               cLen)))
-			{
-				return status;
-			}
 		}
 	}
 
@@ -420,7 +336,7 @@ Status HeaderSAXDictionaryObserver::OnTupleDefault()
 	return Status();
 }
 
-Status HeaderSAXDictionaryObserver::ParseColumnDesc(Column *pColumn, const Char *pBuffer, Size cLen)
+Status HeaderSAXDictionaryObserver::ParseColumnDesc(const Char *pBuffer, Size cLen)
 {
 	if (0 == cLen)
 	{
@@ -428,20 +344,20 @@ Status HeaderSAXDictionaryObserver::ParseColumnDesc(Column *pColumn, const Char 
 	}
 	if ('|' == *pBuffer || '<' == *pBuffer)
 	{
-		pColumn->nByteOrder = ByteOrder_LittleEndian;
+		m_pHeader->nByteOrder = ByteOrder_LittleEndian;
 		pBuffer++;
 		cLen--;
 	}
 	else
 	if ('>' == *pBuffer)
 	{
-		pColumn->nByteOrder = ByteOrder_BigEndian;
+		m_pHeader->nByteOrder = ByteOrder_BigEndian;
 		pBuffer++;
 		cLen--;
 	}
 	else
 	{
-		pColumn->nByteOrder = ByteOrder_LittleEndian;
+		m_pHeader->nByteOrder = ByteOrder_LittleEndian;
 	}
 
 	if (2 != cLen)
@@ -450,62 +366,52 @@ Status HeaderSAXDictionaryObserver::ParseColumnDesc(Column *pColumn, const Char 
 	}
 	if (0 == memcmp(pBuffer, "i1", 2))
 	{
-		m_pHeader->cbRowSize += 1;
-		pColumn->nType = Type_Int8;
+		m_pHeader->nType = Type_Int8;
 	}
 	else
 	if (0 == memcmp(pBuffer, "u1", 2))
 	{
-		m_pHeader->cbRowSize += 1;
-		pColumn->nType = Type_UInt8;
+		m_pHeader->nType = Type_UInt8;
 	}
 	else
 	if (0 == memcmp(pBuffer, "i2", 2))
 	{
-		m_pHeader->cbRowSize += 2;
-		pColumn->nType = Type_Int16;
+		m_pHeader->nType = Type_Int16;
 	}
 	else
 	if (0 == memcmp(pBuffer, "u2", 2))
 	{
-		m_pHeader->cbRowSize += 2;
-		pColumn->nType = Type_UInt16;
+		m_pHeader->nType = Type_UInt16;
 	}
 	else
 	if (0 == memcmp(pBuffer, "i4", 2))
 	{
-		m_pHeader->cbRowSize += 4;
-		pColumn->nType = Type_Int32;
+		m_pHeader->nType = Type_Int32;
 	}
 	else
 	if (0 == memcmp(pBuffer, "u4", 2))
 	{
-		m_pHeader->cbRowSize += 4;
-		pColumn->nType = Type_UInt32;
+		m_pHeader->nType = Type_UInt32;
 	}
 	else
 	if (0 == memcmp(pBuffer, "i8", 2))
 	{
-		m_pHeader->cbRowSize += 8;
-		pColumn->nType = Type_Int64;
+		m_pHeader->nType = Type_Int64;
 	}
 	else
 	if (0 == memcmp(pBuffer, "u8", 2))
 	{
-		m_pHeader->cbRowSize += 8;
-		pColumn->nType = Type_UInt64;
+		m_pHeader->nType = Type_UInt64;
 	}
 	else
 	if (0 == memcmp(pBuffer, "f4", 2))
 	{
-		m_pHeader->cbRowSize += 4;
-		pColumn->nType = Type_Float;
+		m_pHeader->nType = Type_Float;
 	}
 	else
 	if (0 == memcmp(pBuffer, "f8", 2))
 	{
-		m_pHeader->cbRowSize += 8;
-		pColumn->nType = Type_Double;
+		m_pHeader->nType = Type_Double;
 	}
 	else
 	{

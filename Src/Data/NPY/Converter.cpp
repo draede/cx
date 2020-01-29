@@ -32,6 +32,7 @@
 #include "CX/IO/BufferedOutputStream.hpp"
 #include "CX/Data/CSV/SAXParser.hpp"
 #include "CX/Print.hpp"
+#include "CX/Str/UTF8.hpp"
 #include <sstream>
 
 
@@ -52,55 +53,19 @@ Converter::~Converter()
 {
 }
 
-Status Converter::CSV2NPY(const Char *szCSVPath, const Char *szNPYPath, const Column *columns, Size cColumns, 
-                          Bool bSkipFirstRow/* = True*/)
-{
-	Writer   writer;
-	Status   status;
-
-	if (!(status = writer.Create(szNPYPath, columns, cColumns)))
-	{
-		return status;
-	}
-
-	status = CSV2NPY(szCSVPath, &writer, bSkipFirstRow);
-
-	if (!status)
-	{
-		::_unlink(szCSVPath);
-	}
-
-	return status;
-}
-
-Status Converter::CSV2NPY(const WChar *wszCSVPath, const WChar *wszNPYPath, const Column *columns, Size cColumns, 
-                          Bool bSkipFirstRow/* = True*/)
-{
-	Writer   writer;
-	Status   status;
-
-	if (!(status = writer.Create(wszNPYPath, columns, cColumns)))
-	{
-		return status;
-	}
-
-	status = CSV2NPY(wszCSVPath, &writer, bSkipFirstRow);
-
-	if (!status)
-	{
-		::_wunlink(wszCSVPath);
-	}
-
-	return status;
-}
-
-Status Converter::CSV2NPY(const Char *szCSVPath, Writer *pWriter, Bool bSkipFirstRow/* = True*/)
+Status Converter::CSV2NPY(const Char *szCSVPath, const Char *szNPYPath, Type nType, 
+                          Bool bSkipFirstRow/* = True*/, ByteOrder nByteOrder/* = ByteOrder_LittleEndian*/, 
+                          Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
 {
 	Data::CSV::SAXParser   parser;
 	SAXCSVObserver         observer;
 	Status                 status;
 
-	observer.m_pWriter       = pWriter;
+	Str::UTF8::ToWChar(szNPYPath, &observer.m_wsNPYPath);
+	observer.m_nType         = nType;
+	observer.m_nByteOrder    = nByteOrder;
+	observer.m_nFormat       = nFormat;
+	observer.m_nVersion      = nVersion;
 	observer.m_bSkipFirstRow = bSkipFirstRow;
 	if (!(status = parser.AddObserver(&observer)))
 	{
@@ -122,13 +87,19 @@ Status Converter::CSV2NPY(const Char *szCSVPath, Writer *pWriter, Bool bSkipFirs
 	return Status();
 }
 
-Status Converter::CSV2NPY(const WChar *wszCSVPath, Writer *pWriter, Bool bSkipFirstRow/* = True*/)
+Status Converter::CSV2NPY(const WChar *wszCSVPath, const WChar *wszNPYPath, Type nType, 
+                          Bool bSkipFirstRow/* = True*/, ByteOrder nByteOrder/* = ByteOrder_LittleEndian*/, 
+                          Format nFormat/* = Format_C*/, Version nVersion/* = Version_1_0*/)
 {
 	Data::CSV::SAXParser   parser;
 	SAXCSVObserver         observer;
 	Status                 status;
 
-	observer.m_pWriter       = pWriter;
+	observer.m_wsNPYPath     = wszNPYPath;
+	observer.m_nType         = nType;
+	observer.m_nByteOrder    = nByteOrder;
+	observer.m_nFormat       = nFormat;
+	observer.m_nVersion      = nVersion;
 	observer.m_bSkipFirstRow = bSkipFirstRow;
 	if (!(status = parser.AddObserver(&observer)))
 	{
@@ -157,6 +128,7 @@ void Converter::SAXCSVObserver::OnBeginParse()
 
 void Converter::SAXCSVObserver::OnEndParse()
 {
+	m_writer.Close();
 }
 
 template <typename T>
@@ -228,35 +200,41 @@ Bool Convert<UInt8>(const String &sVal, Writer *pWriter)
 
 Bool Converter::SAXCSVObserver::OnRow(Size cRowIndex, const ColumnsVector &vectorColumns)
 {
-	Size           cColumns = m_pWriter->GetColumnsCount();
-	const Column   *columns = m_pWriter->GetColumns();
 	Status         status;
 
-	if (vectorColumns.size() != cColumns)
+	if (0 == cRowIndex)
 	{
-		return False;
+		if (!(status = m_writer.Create(m_wsNPYPath.c_str(), vectorColumns.size(), m_nType, m_nByteOrder, m_nFormat, 
+		                               m_nVersion)))
+		{
+			return False;
+		}
 	}
-
 
 	if (0 == cRowIndex && m_bSkipFirstRow)
 	{
 		return True;
 	}
 
+	if (vectorColumns.size() != m_writer.GetColumnsCount())
+	{
+		return False;
+	}
+
 	for (Size i = 0; i < vectorColumns.size(); i++)
 	{
-		switch (columns[i].nType)
+		switch (m_nType)
 		{
-			case Type_Int8:   if (!Convert<Int8>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_UInt8:  if (!Convert<UInt8>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_Int16:  if (!Convert<Int16>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_UInt16: if (!Convert<UInt16>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_Int32:  if (!Convert<Int32>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_UInt32: if (!Convert<UInt32>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_Int64:  if (!Convert<Int64>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_UInt64: if (!Convert<UInt64>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_Float:  if (!Convert<Float>(vectorColumns[i], m_pWriter)) return False; break;
-			case Type_Double: if (!Convert<Double>(vectorColumns[i], m_pWriter)) return False; break;
+			case Type_Int8:   if (!Convert<Int8>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_UInt8:  if (!Convert<UInt8>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_Int16:  if (!Convert<Int16>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_UInt16: if (!Convert<UInt16>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_Int32:  if (!Convert<Int32>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_UInt32: if (!Convert<UInt32>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_Int64:  if (!Convert<Int64>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_UInt64: if (!Convert<UInt64>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_Float:  if (!Convert<Float>(vectorColumns[i], &m_writer)) return False; break;
+			case Type_Double: if (!Convert<Double>(vectorColumns[i], &m_writer)) return False; break;
 			default:          return False;
 		}
 	}
@@ -343,22 +321,8 @@ Status Converter::NPY2CSV(Reader *pReader, IO::IOutputStream *pOutputStream,
 	Size                       cRowIndex = 0;
 	Size                       cRows     = pReader->GetRowsCount();
 	Size                       cColumns  = pReader->GetColumnsCount();
-	const Column               *columns = pReader->GetColumns();
 	Size                       cChunkRows;
 	Size                       cAckRows;
-
-	for (Size cColIdx = 0; cColIdx < cColumns; cColIdx++)
-	{
-		if (cColIdx + 1 < cColumns)
-		{
-			Print((IO::IOutputStream *)&bos, "{1},", columns[cColIdx].sName);
-		}
-		else
-		{
-			Print((IO::IOutputStream *)&bos, "{1}", columns[cColIdx].sName);
-		}
-	}
-	Print((IO::IOutputStream *)&bos, "\n");
 
 	while (cRowIndex < cRows)
 	{
@@ -381,7 +345,7 @@ Status Converter::NPY2CSV(Reader *pReader, IO::IOutputStream *pOutputStream,
 		{
 			for (Size cColIdx = 0; cColIdx < cColumns; cColIdx++)
 			{
-				switch (columns[cColIdx].nType)
+				switch (pReader->GetType())
 				{
 					case Type_Int8:   Print((IO::IOutputStream *)&bos, "{1}", *(Int8 *)data); data += sizeof(Int8); break;
 					case Type_UInt8:  Print((IO::IOutputStream *)&bos, "{1}", *(UInt8 *)data); data += sizeof(UInt8); break;
