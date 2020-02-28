@@ -29,6 +29,7 @@
 #include "CX/precomp.hpp"
 #include "CX/Var.hpp"
 #include "CX/Status.hpp"
+#include "CX/Str/UTF8.hpp"
 #include "CX/IO/MemInputStream.hpp"
 #include "CX/IO/MemOutputStream.hpp"
 #include "CX/Data/JSON/SAXParser.hpp"
@@ -296,11 +297,25 @@ Var::Var(const Char *szString)
 	SetString(szString);
 }
 
+Var::Var(const WChar *wszString)
+{
+	m_pParent = NULL;
+	m_nType   = Type_Null;
+	SetString(wszString);
+}
+
 Var::Var(const String &sString)
 {
 	m_pParent = NULL;
 	m_nType   = Type_Null;
 	SetString(sString);
+}
+
+Var::Var(const WString &wsString)
+{
+	m_pParent = NULL;
+	m_nType   = Type_Null;
+	SetString(wsString);
 }
 
 Var::Var(const Var &var)
@@ -851,6 +866,19 @@ Status Var::SetString(const Char *szString)
 	return Status();
 }
 
+Status Var::SetString(const WChar *wszString)
+{
+	String   sString;
+	Status   status;
+
+	if (!(Str::UTF8::FromWChar(wszString, &sString)))
+	{
+		return status;
+	}
+
+	return SetString(sString);
+}
+
 Status Var::SetString(const String &sString)
 {
 	Status status;
@@ -867,6 +895,19 @@ Status Var::SetString(const String &sString)
 	*m_psString = sString;
 
 	return Status();
+}
+
+Status Var::SetString(const WString &wsString)
+{
+	String   sString;
+	Status   status;
+
+	if (!(Str::UTF8::FromWChar(wsString.c_str(), &sString)))
+	{
+		return status;
+	}
+
+	return SetString(sString);
 }
 
 const Char *Var::GetString(const Char *szStringDefault/* = DEFAULT_STRING*/) const
@@ -1219,9 +1260,16 @@ Var &Var::operator=(Double lfReal)
 	return *this;
 }
 
-Var &Var::operator=(const char *szString)
+Var &Var::operator=(const Char *szString)
 {
 	SetString(szString);
+
+	return *this;
+}
+
+Var &Var::operator=(const WChar *wszString)
+{
+	SetString(wszString);
 
 	return *this;
 }
@@ -1229,6 +1277,13 @@ Var &Var::operator=(const char *szString)
 Var &Var::operator=(const String &sString)
 {
 	SetString(sString);
+
+	return *this;
+}
+
+Var &Var::operator=(const WString &wsString)
+{
+	SetString(wsString);
 
 	return *this;
 }

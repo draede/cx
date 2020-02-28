@@ -120,7 +120,11 @@ public:
 
 	Var(const Char *szString);
 
+	Var(const WChar *wszString);
+
 	Var(const String &sString);
+
+	Var(const WString &wsString);
 
 	Var(const Var &var);
 
@@ -184,7 +188,11 @@ public:
 
 	Status SetString(const Char *szString);
 
+	Status SetString(const WChar *wszString);
+
 	Status SetString(const String &sString);
+
+	Status SetString(const WString &wsString);
 
 	const Char *GetString(const Char *szStringDefault = DEFAULT_STRING) const;
 
@@ -368,9 +376,13 @@ public:
 
 	Var &operator=(Double lfReal);
 
-	Var &operator=(const char *szString);
+	Var &operator=(const Char *szString);
+
+	Var &operator=(const WChar *wszString);
 
 	Var &operator=(const String &sString);
+
+	Var &operator=(const WString &wsString);
 
 	operator Bool () const;
 
