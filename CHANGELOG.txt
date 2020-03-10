@@ -1,3 +1,5 @@
+0.2.260 - 2020-03-10
+ - Fixed FileEnumerator2 pattern matching
 0.2.259 - 2020-02-28
  - Added support for wstring in Var
 0.2.258 - 2020-01-29

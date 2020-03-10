@@ -1137,7 +1137,7 @@ Bool FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 			}
 		}
 
-		if (!FindPatterns(&pCTX->config, pFile->file.m_cbContentSize, True, pCTX->config.vectorPatterns))
+		if (!FindPatterns(pFile->file.m_pContent, pFile->file.m_cbContentSize, True, pCTX->config.vectorPatterns))
 		{
 			if (0 < cInclusionPatterns)
 			{
