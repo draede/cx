@@ -74,12 +74,12 @@ public:
 		static const Size     MAX_PATTERN_SIZE          = 1024;
 
 		static const UInt64   MIN_FILE_SIZE             = 0;
-		static const UInt64   MAX_FILE_SIZE             = 4294967295;
+		static const UInt64   MAX_FILE_SIZE             = 0xFFFFFFFFFFFFFFFF;
 
 		static const Size     DEFAULT_THREADS           = 1;
 		static const Size     DEFAULT_QUEUED_FILES      = 1024;
 		static const UInt64   DEFAULT_MIN_FILE_SIZE     = 0;
-		static const UInt64   DEFAULT_MAX_FILE_SIZE     = 268435456; //256 MB;
+		static const UInt64   DEFAULT_MAX_FILE_SIZE     = 0xFFFFFFFFFFFFFFFF;
 		static const Bool     DEFAULT_RECURSIVE         = True;
 		static const Bool     DEFAULT_MAP_FILE          = False; //will still be mapped anyway if patterns are set
 
