@@ -118,7 +118,7 @@ Status BufferedOutputStream::GetSize(UInt64 *pcbSize) const
 
 Bool BufferedOutputStream::IsOK() const
 {
-	return (NULL == m_pBuffer || NULL == m_pOutputStream);
+	return (NULL != m_pBuffer && NULL != m_pOutputStream);
 }
 
 const Char *BufferedOutputStream::GetPath() const
