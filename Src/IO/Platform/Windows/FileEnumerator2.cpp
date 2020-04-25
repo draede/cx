@@ -1119,7 +1119,7 @@ Bool FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 	{
 		if (!(status = pFile->file.Open()))
 		{
-			return pCTX->bRunning;
+			return pCTX->pHandler->OnListLineError(pFile->wsPath.c_str(), pFile->cPathIndex, status);
 		}
 	}
 
