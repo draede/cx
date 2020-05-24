@@ -93,32 +93,23 @@ Status DynMemPool::SetSize(Size cbSize)
 		return Status(Status_TooBig, "Dynamic mem pool max size will be exceeded");
 	}
 
-	Size cbFinalSize = m_cbTotalSize;
+	Size   cbTotalSize = m_cbTotalSize + (m_cbTotalSize >> 1);
 
-	if (0 == cbFinalSize)
+	if (cbTotalSize < cbSize)
 	{
-		cbFinalSize = 4096;
-	}
-
-	while (cbFinalSize < cbSize)
-	{
-		cbFinalSize = cbFinalSize << 1;
-		if (cbFinalSize > m_cbMaxSize)
-		{
-			cbFinalSize = m_cbMaxSize;
-		}
+		cbTotalSize = cbSize;
 	}
 
 	void *pFinalMem;
 
-	if (NULL == (pFinalMem = Mem::Realloc(m_pMem, cbFinalSize)))
+	if (NULL == (pFinalMem = Mem::Realloc(m_pMem, cbTotalSize)))
 	{
 		return Status(Status_MemAllocFailed, "Failed to allocate memory");
 	}
 
 	m_pMem         = pFinalMem;
 	m_cbSize       = cbSize;
-	m_cbTotalSize  = cbFinalSize;
+	m_cbTotalSize  = cbTotalSize;
 
 	return Status();
 }
