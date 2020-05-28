@@ -72,6 +72,11 @@ Status SystemOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer,
 	return Status();
 }
 
+Status SystemOutput::Flush()
+{
+	return Status();
+}
+
 }//namespace Log
 
 }//namespace CX

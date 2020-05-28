@@ -120,6 +120,18 @@ Status Logger::RemoveOutputs()
 	return Status();
 }
 
+Status Logger::FlushOutputs()
+{
+	Sys::Locker   locker(&m_fmLogger);
+
+	for (OutputsVector::iterator iter = m_vectorOutputs.begin(); iter != m_vectorOutputs.end(); ++iter)
+	{
+		iter->pOutput->Flush();
+	}
+
+	return Status();
+}
+
 }//namespace Log
 
 }//namespace CX

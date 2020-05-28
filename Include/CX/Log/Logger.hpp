@@ -136,6 +136,8 @@ public:
 
 	Status RemoveOutputs();
 
+	Status FlushOutputs();
+
 	Status Log(Level nLevel, const Char *szTag, const Char *szMsg)
 	{
 		if (nLevel > m_nLevel)

@@ -244,6 +244,13 @@ void OptimizedStreamOutput::WriteThread()
 	}
 }
 
+Status OptimizedStreamOutput::Flush()
+{
+	m_eventState.Set();
+
+	return Status();
+}
+
 }//namespace Log
 
 }//namespace CX

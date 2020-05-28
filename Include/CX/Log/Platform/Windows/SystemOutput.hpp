@@ -55,6 +55,8 @@ public:
 
 	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen);
 
+	virtual Status Flush();
+
 private:
 
 };

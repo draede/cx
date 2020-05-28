@@ -90,6 +90,25 @@ Status StreamOutput::Write(Level nLevel, const Char *szTag, const Char *pBuffer,
 	return status;
 }
 
+Status StreamOutput::Flush()
+{
+	if (m_bUseLock)
+	{
+		m_lock.Enter();
+	}
+	if (NULL != m_pOutputStream)
+	{
+		m_pOutputStream->Flush();
+		m_timer.ResetTimer();
+	}
+	if (m_bUseLock)
+	{
+		m_lock.Leave();
+	}
+
+	return Status();
+}
+
 }//namespace Log
 
 }//namespace CX

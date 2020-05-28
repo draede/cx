@@ -51,6 +51,8 @@ public:
 	//pBuffer is always NULL terminated
 	virtual Status Write(Level nLevel, const Char *szTag, const Char *pBuffer, Size cLen) = 0;
 
+	virtual Status Flush() = 0;
+
 };
 
 }//namespace Log
