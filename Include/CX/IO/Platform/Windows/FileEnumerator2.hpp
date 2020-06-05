@@ -134,6 +134,21 @@ public:
 		volatile Int64     cDiscoveredFiles;
 		volatile Int64     cbDiscoveredFilesSize;
 
+		volatile Int64     cValidFiles;
+		volatile Int64     cbValidFilesSize;
+
+		volatile Int64     cInvalidMinSizeFiles;
+		volatile Int64     cbInvalidMinSizeFilesSize;
+
+		volatile Int64     cInvalidMaxSizeFiles;
+		volatile Int64     cbInvalidMaxSizeFilesSize;
+
+		volatile Int64     cInvalidPatternFiles;
+		volatile Int64     cbInvalidPatternFilesSize;
+
+		volatile Int64     cInvalidExtensionFiles;
+		volatile Int64     cbInvalidExtensionFilesSize;
+
 		Int64              nPerfCounterFreq;
 		Int64              nPerfCounterStart;
 	};

@@ -463,6 +463,16 @@ Status FileEnumerator2::Run(const PathsVector &vectorPaths, IHandler *pHandler,
 	ctx.stats.cDiscoveredDirs              = 0;
 	ctx.stats.cDiscoveredFiles             = 0;
 	ctx.stats.cbDiscoveredFilesSize        = 0;
+	ctx.stats.cValidFiles                  = 0;
+	ctx.stats.cbValidFilesSize             = 0;
+	ctx.stats.cInvalidMinSizeFiles         = 0;
+	ctx.stats.cbInvalidMinSizeFilesSize    = 0;
+	ctx.stats.cInvalidMaxSizeFiles         = 0;
+	ctx.stats.cbInvalidMaxSizeFilesSize    = 0;
+	ctx.stats.cInvalidPatternFiles         = 0;
+	ctx.stats.cbInvalidPatternFilesSize    = 0;
+	ctx.stats.cInvalidExtensionFiles       = 0;
+	ctx.stats.cbInvalidExtensionFilesSize  = 0;
 
 	if (Config::MIN_THREADS > config.cThreads)
 	{
@@ -920,7 +930,7 @@ Bool FileEnumerator2::CSVSAXParserObserver::OnRow(Size cRowIndex, const ColumnsV
 
 Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 {
-	ctx.stats.cDiscoveredDirs++;
+	InterlockedIncrement64(&ctx.stats.cDiscoveredDirs);
 
 	if (!ctx.pHandler->OnFolder(wszPath))
 	{
@@ -1005,15 +1015,21 @@ Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSiz
 
 	Status           status;
 
-	ctx.stats.cDiscoveredFiles++;
-	ctx.stats.cbDiscoveredFilesSize += cbSize;
+	InterlockedIncrement64(&ctx.stats.cDiscoveredFiles);
+	InterlockedAdd64(&ctx.stats.cbDiscoveredFilesSize, (Int64)cbSize);
 
 	if (ctx.config.cbMinFileSize > cbSize)
 	{
+		InterlockedIncrement64(&ctx.stats.cInvalidMinSizeFiles);
+		InterlockedAdd64(&ctx.stats.cbInvalidMinSizeFilesSize, (Int64)cbSize);
+
 		return Status();
 	}
 	if (ctx.config.cbMaxFileSize < cbSize)
 	{
+		InterlockedIncrement64(&ctx.stats.cInvalidMinSizeFiles);
+		InterlockedAdd64(&ctx.stats.cbInvalidMinSizeFilesSize, (Int64)cbSize);
+
 		return Status();
 	}
 
@@ -1036,6 +1052,9 @@ Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSiz
 		}
 		if (ctx.config.setExtensions.end() == ctx.config.setExtensions.find(wszExt))
 		{
+			InterlockedIncrement64(&ctx.stats.cInvalidMinSizeFiles);
+			InterlockedAdd64(&ctx.stats.cbInvalidMinSizeFilesSize, (Int64)cbSize);
+
 			return Status();
 		}
 	}
@@ -1155,10 +1174,18 @@ Bool FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 
 	if (bMatched)
 	{
+		InterlockedIncrement64(&pCTX->stats.cValidFiles);
+		InterlockedAdd64(&pCTX->stats.cbValidFilesSize, (Int64)cbSize);
+
 		if (!pCTX->pHandler->OnFile(&pFile->file, &pFile->pResult, &pCTX->stats))
 		{
 			pCTX->bRunning = False;
 		}
+	}
+	else
+	{
+		InterlockedIncrement64(&pCTX->stats.cInvalidPatternFiles);
+		InterlockedAdd64(&pCTX->stats.cbInvalidPatternFilesSize, (Int64)cbSize);
 	}
 
 	pFile->file.Close();
