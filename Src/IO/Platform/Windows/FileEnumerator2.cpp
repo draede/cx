@@ -1027,8 +1027,8 @@ Status FileEnumerator2::OnFile(const WChar *wszPath, Size cPathLen, UInt64 cbSiz
 	}
 	if (ctx.config.cbMaxFileSize < cbSize)
 	{
-		InterlockedIncrement64(&ctx.stats.cInvalidMinSizeFiles);
-		InterlockedAdd64(&ctx.stats.cbInvalidMinSizeFilesSize, (Int64)cbSize);
+		InterlockedIncrement64(&ctx.stats.cInvalidMaxSizeFiles);
+		InterlockedAdd64(&ctx.stats.cbInvalidMaxSizeFilesSize, (Int64)cbSize);
 
 		return Status();
 	}
