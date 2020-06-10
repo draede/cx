@@ -89,6 +89,13 @@ DBHelper::DBHelper(const Char *szPath, IDBHelperAsyncMgr *pAsyncMgr/* = NULL*/,
 	m_initStatus         = Open(szPath, pAsyncMgr, nFlags);
 }
 
+DBHelper::DBHelper(const WChar *wszPath, IDBHelperAsyncMgr *pAsyncMgr/* = NULL*/)
+{
+	m_pAsyncMgr          = NULL;
+	m_bAsyncMgrOwnership = False;
+	m_initStatus         = Open(wszPath, pAsyncMgr);
+}
+
 DBHelper::~DBHelper()
 {
 	Close();
@@ -106,6 +113,55 @@ Status DBHelper::Open(const Char *szPath, IDBHelperAsyncMgr *pAsyncMgr/* = NULL*
 		return status;
 	}
 	if ((status = m_db.Open(szPath, nFlags)).IsNOK())
+	{
+		return status;
+	}
+	if ((status = m_db.Exec(GetDDL())).IsNOK())
+	{
+		m_db.Close();
+
+		return status;
+	}
+	if ((status = OnPostOpen()).IsNOK())
+	{
+		m_db.Close();
+
+		return status;
+	}
+	if (NULL == pAsyncMgr)
+	{
+		m_bAsyncMgrOwnership = True;
+		m_pAsyncMgr          = new DefaultDBHelperAsyncMgr();
+		if (!(status = m_pAsyncMgr->Start()))
+		{
+			m_db.Close();
+			delete m_pAsyncMgr;
+			m_pAsyncMgr          = NULL;
+			m_bAsyncMgrOwnership = False;
+
+			return status;
+		}
+	}
+	else
+	{
+		m_bAsyncMgrOwnership = False;
+		m_pAsyncMgr          = pAsyncMgr;
+	}
+
+	return Status();
+}
+
+Status DBHelper::Open(const WChar *wszPath, IDBHelperAsyncMgr *pAsyncMgr/* = NULL*/)
+{
+	Status status;
+
+	Close();
+
+	if ((status = OnPreOpen()).IsNOK())
+	{
+		return status;
+	}
+	if ((status = m_db.Open(wszPath)).IsNOK())
 	{
 		return status;
 	}

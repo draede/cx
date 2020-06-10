@@ -78,11 +78,15 @@ public:
 
 	Database(const Char *szPath, unsigned int nFlags = OPEN_DEFAULT);
 
+	Database(const WChar *wszPath);
+
 	static Status Initialize();
 
 	static Status Shutdown();
 
 	Status Open(const Char *szPath, unsigned int nFlags = OPEN_DEFAULT);
+
+	Status Open(const WChar *wszPath);
 
 	Status Close();
 

@@ -88,6 +88,12 @@ Database::Database(const Char *szPath, unsigned int nFlags/* = OPEN_DEFAULT*/)
 	m_initStatus = Open(szPath, nFlags);
 }
 
+Database::Database(const WChar *wszPath)
+{
+	m_pDB        = NULL;
+	m_initStatus = Open(wszPath);
+}
+
 Status Database::Initialize()
 {
 	int nRet;
@@ -126,6 +132,25 @@ Status Database::Open(const Char *szPath, unsigned int nFlags/* = OPEN_DEFAULT*/
 		m_pDB = NULL;
 
 		return SQLSTATUS(Status_OpenFailed, "sqlite3_open_v2", nRet);
+	}
+
+	return Status();
+}
+
+Status Database::Open(const WChar *wszPath)
+{
+	int    nRet;
+	Status status;
+
+	if ((status = Close()).IsNOK())
+	{
+		return status;
+	}
+	if (SQLITE_OK != (nRet = sqlite3_open16(wszPath, (sqlite3 **)&m_pDB)))
+	{
+		m_pDB = NULL;
+
+		return SQLSTATUS(Status_OpenFailed, "sqlite3_open16", nRet);
 	}
 
 	return Status();

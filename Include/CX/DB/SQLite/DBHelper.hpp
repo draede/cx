@@ -110,10 +110,14 @@ public:
 	DBHelper(const Char *szPath, IDBHelperAsyncMgr *pAsyncMgr = NULL, 
 	         unsigned int nFlags = DB::SQLite::Database::OPEN_DEFAULT);
 
+	DBHelper(const WChar *wszPath, IDBHelperAsyncMgr *pAsyncMgr = NULL);
+
 	~DBHelper();
 
 	Status Open(const Char *szPath, IDBHelperAsyncMgr *pAsyncMgr = NULL, 
 	            unsigned int nFlags = DB::SQLite::Database::OPEN_DEFAULT);
+
+	Status Open(const WChar *wszPath, IDBHelperAsyncMgr *pAsyncMgr = NULL);
 
 	//statements must not be in use here!
 	Status Close();
