@@ -83,11 +83,14 @@ public:
 		static const Bool     DEFAULT_RECURSIVE         = True;
 		static const Bool     DEFAULT_MAP_FILE          = False; //will still be mapped anyway if patterns are set
 
+		static const Bool     DEFAULT_DONT_FAIL_ON_NON_EXISTENT_PATHS = False;
+
 		static const WChar    *ARG_THREADS;             //--threads <number_of_threads : size>
 		static const WChar    *ARG_QUEUED_FILES;        //--queuedfiles <number_of_queued_files : size>
 		static const WChar    *ARG_MIN_FILE_SIZE;       //--minfilesize <min_file_size : uint64>
 		static const WChar    *ARG_MAX_FILE_SIZE;       //--maxfilesize <max_file_size : uint64>
 		static const WChar    *ARG_RECURSIVE;           //--recursive <yes|no>
+		static const WChar    *ARG_NONEXISTPATHS;       //--nonexistpaths <yes|no>
 		static const WChar    *ARG_EXTENSION;           //--extension <extension:string (e.g. : exe)>
 		static const WChar    *ARG_PATTERN;             //--pattern <offset:uint64> [!]<pattern:string_or_hexstring e.g. 
 		                                                //  0xAABBCC>
@@ -118,6 +121,7 @@ public:
 		UInt64           cbMaxFileSize;
 		Bool             bRecursive;
 		Bool             bMapFile;
+		Bool             bDontFailOnNonExistentPaths;
 		PatternsVector   vectorPatterns;
 		ExtensionsSet    setExtensions;
 

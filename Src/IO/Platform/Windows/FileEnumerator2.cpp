@@ -53,6 +53,7 @@ const WChar *FileEnumerator2::Config::ARG_MAX_FILE_SIZE     = L"--maxfilesize";
 const WChar *FileEnumerator2::Config::ARG_RECURSIVE         = L"--recursive";
 const WChar *FileEnumerator2::Config::ARG_EXTENSION         = L"--extension";
 const WChar *FileEnumerator2::Config::ARG_PATTERN           = L"--pattern";
+const WChar *FileEnumerator2::Config::ARG_NONEXISTPATHS     = L"--nonexistpaths";
 
 FileEnumerator2::Config::Pattern::Pattern()
 {
@@ -97,6 +98,7 @@ const FileEnumerator2::Config &FileEnumerator2::Config::GetDefault()
 		DEFAULT_MAX_FILE_SIZE,
 		DEFAULT_RECURSIVE,
 		DEFAULT_MAP_FILE,
+		DEFAULT_DONT_FAIL_ON_NON_EXISTENT_PATHS,
 	};
 
 	return config;
@@ -276,6 +278,33 @@ Status FileEnumerator2::Config::FromCmdLine(ArgsVector &vectorArgs, Size cStartA
 			else
 			{
 				status = Status(Status_InvalidArg, "Invalid value specified for {1}", ARG_RECURSIVE);
+
+				break;
+			}
+			iter = vectorArgs.erase(iter);
+		}
+		else
+		if (0 == cxw_strcmp(ARG_NONEXISTPATHS, iter->c_str()))
+		{
+			iter = vectorArgs.erase(iter);
+			if (vectorArgs.end() == iter)
+			{
+				status = Status(Status_InvalidArg, "No value specified for {1}", ARG_NONEXISTPATHS);
+
+				break;
+			}
+			if (0 == cxw_stricmp(iter->c_str(), L"yes"))
+			{
+				bDontFailOnNonExistentPaths = True;
+			}
+			else
+			if (0 == cxw_stricmp(iter->c_str(), L"no"))
+			{
+				bDontFailOnNonExistentPaths = True;
+			}
+			else
+			{
+				status = Status(Status_InvalidArg, "Invalid value specified for {1}", ARG_NONEXISTPATHS);
 
 				break;
 			}
@@ -665,13 +694,20 @@ Status FileEnumerator2::RunWithPath(const WChar *wszPath, Context &ctx,
 
 	if (!GetFileAttributesExW(wszPath, GetFileExInfoStandard, &data))
 	{
-		if (!ctx.pHandler->OnListLineError(wszPath, ctx.cPathIndex, Status_InvalidArg))
+		if (ctx.config.bDontFailOnNonExistentPaths)
 		{
-			return Status_Cancelled;
+			return OnFile(wszPath, cxw_strlen(wszPath), ctx.config.cbMinFileSize, ctx, pVectorColumns);
 		}
 		else
 		{
-			return Status();
+			if (!ctx.pHandler->OnListLineError(wszPath, ctx.cPathIndex, Status_InvalidArg))
+			{
+				return Status_Cancelled;
+			}
+			else
+			{
+				return Status();
+			}
 		}
 	}
 
@@ -1134,16 +1170,19 @@ Bool FileEnumerator2::HandleFileJob(void *pJob, Size cbSize)
 	pFile->file.m_cPathIndex     = pFile->cPathIndex;
 	pFile->file.m_pVectorColumns = &pFile->vectorColumns;
 
-	if (!pCTX->config.vectorPatterns.empty() ||pCTX->config.bMapFile)
+	if (!pCTX->config.vectorPatterns.empty() || pCTX->config.bMapFile)
 	{
 		if (!(status = pFile->file.Open()))
 		{
-			return pCTX->pHandler->OnListLineError(pFile->wsPath.c_str(), pFile->cPathIndex, status);
+			if (!pCTX->config.bDontFailOnNonExistentPaths)
+			{
+				return pCTX->pHandler->OnListLineError(pFile->wsPath.c_str(), pFile->cPathIndex, status);
+			}
 		}
 	}
 
 	bMatched = True;
-	if (!pCTX->config.vectorPatterns.empty())
+	if (!pCTX->config.vectorPatterns.empty() && NULL != pFile->file.GetContent())
 	{
 		bMatched           = False;
 		cInclusionPatterns = 0;
