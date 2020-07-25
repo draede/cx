@@ -54,7 +54,7 @@ namespace CX
 namespace IO
 {
 
-//this preservers the order of the files
+//this preserves the order of the files
 //added support for canceling
 //other improvements
 class CX_API FileEnumerator2
