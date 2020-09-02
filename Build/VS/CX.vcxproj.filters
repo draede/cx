@@ -1308,6 +1308,12 @@
     <ClInclude Include="..\..\Include\CX\IO\Platform\Windows\FileEnumSessions.hpp">
       <Filter>Header Files\IO\Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\StreamWriter.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\Data\NPY\NPZWriter.hpp">
+      <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Contrib\DoubleConversion\Src\bignum.cc">
@@ -2473,6 +2479,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\IO\Platform\Windows\FileEnumSessions.cpp">
       <Filter>Source Files\IO\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\StreamWriter.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Data\NPY\NPYWriter.cpp">
+      <Filter>Source Files\Data\NPY</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
