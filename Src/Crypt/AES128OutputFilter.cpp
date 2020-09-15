@@ -124,7 +124,7 @@ Status AES128OutputFilter::Filter(const void *pInput, Size cbInputSize, void **p
 	*pcbOutputSize = 0;
 	if (State_IV == m_nState)
 	{
-		if (!(status = ResizeBuffer(BLOCK_SIZE + cbInputSize)))
+		if (!(status = ResizeBuffer(BLOCK_SIZE + cbInputSize + BLOCK_SIZE))) //IV + data + any leftover (padding)
 		{
 			return status;
 		}
