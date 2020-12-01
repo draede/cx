@@ -1,3 +1,5 @@
+0.2.274 - 2020-12-01
+ - fixed CmdLine compilation
 0.2.273 - 2020-09-15
  - Fixed a buffer overflow in Crypt::AES128OutputFilter::Filter (padding)
 0.2.272 - 2020-09-02

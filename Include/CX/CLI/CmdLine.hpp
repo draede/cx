@@ -780,7 +780,8 @@ public:
 		return m_vectorPositionalParams.size();
 	}
 
-	const CHAR_TYPE *GetPositionalParam(Size cIndex, const CHAR_TYPE *szDefault = "", Bool *pbFound = NULL) const
+	const CHAR_TYPE *GetPositionalParam(Size cIndex, const STRING_TYPE sDefault = DEFAULT_STRING(), 
+	                                    Bool *pbFound = NULL) const
 	{
 		if (m_vectorPositionalParams.size() <= cIndex)
 		{
@@ -789,7 +790,7 @@ public:
 				*pbFound = False;
 			}
 
-			return szDefault;
+			return sDefault.c_str();
 		}
 		if (NULL != pbFound)
 		{
