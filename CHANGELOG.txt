@@ -1,3 +1,6 @@
+0.2.275 - 2021-01-04
+ - removed FILE_ATTRIBUTE_REPARSE_POINT exclusion from file enumerator
+ - updated copyright
 0.2.274 - 2020-12-01
  - fixed CmdLine compilation
 0.2.273 - 2020-09-15

@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2020 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2021 draede - draede [at] outlook [dot] com
  *
  * Released under the MIT License.
  * 
@@ -996,10 +996,9 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 	{
 		for (;;)
 		{
-			if (!(FILE_ATTRIBUTE_REPARSE_POINT & pData->data.dwFileAttributes) &&
-			    !(FILE_ATTRIBUTE_OFFLINE & pData->data.dwFileAttributes) &&
-			   !(0x00400000 & pData->data.dwFileAttributes) && //FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS
-			   !(0x00040000 & pData->data.dwFileAttributes)) //FILE_ATTRIBUTE_RECALL_ON_OPEN
+			if (!(FILE_ATTRIBUTE_OFFLINE & pData->data.dwFileAttributes) &&
+			    !(0x00400000 & pData->data.dwFileAttributes) && //FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS
+			    !(0x00040000 & pData->data.dwFileAttributes)) //FILE_ATTRIBUTE_RECALL_ON_OPEN
 			{
 				if (!(FILE_ATTRIBUTE_DIRECTORY & pData->data.dwFileAttributes))
 				{
