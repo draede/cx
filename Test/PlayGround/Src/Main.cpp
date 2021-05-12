@@ -27,10 +27,103 @@
  */ 
 
 #include "Tester.hpp"
+#include "CX/IO/Platform/Windows/FileEnumerator2.hpp"
+#include "CX/Print.hpp"
 
 
 using namespace CX;
 
+
+class MyEnumHandler : public IO::FileEnumerator2::IHandler
+{
+public:
+
+	virtual Bool OnBegin()
+	{
+		Print(stdout, "OnBegin\n");
+
+		return True;
+	}
+
+	virtual Bool OnEnd(const IO::FileEnumerator2::Stats *pStats)
+	{
+		Print(stdout, "OnEnd\n");
+
+		return True;
+	}
+
+	//called from multiple threads
+	virtual Bool OnFile(IO::FileEnumerator2::IFile *pFile, void **ppResult, const IO::FileEnumerator2::Stats *pStats)
+	{
+		Print(stdout, "OnFile : {1}\n", pFile->GetPath());
+
+		return True;
+	}
+
+	//called from a single thread
+	virtual Bool OnBeginResults(void **ppContext)
+	{
+		Print(stdout, "OnBeginResults\n");
+
+		return True;
+	}
+
+	//called from a single thread
+	virtual Bool OnResult(void *pResult, void *pContext)
+	{
+		Print(stdout, "OnResult\n");
+
+		return True;
+	}
+
+	//called from a single thread
+	virtual Bool OnEndResults(void *pContext)
+	{
+		Print(stdout, "OnEndResults\n");
+
+		return True;
+	}
+
+	virtual Bool OnError(const Status &status)
+	{
+		Print(stdout, "OnError\n");
+
+		return True;
+	}
+
+	//new 
+	virtual Bool OnFolder(const WChar *wszPath)
+	{
+		Print(stdout, "OnFolder : {1}\n", wszPath);
+
+		return True;
+	}
+
+	//new 
+	virtual Bool OnBeginPath(const WChar *wszPath, Size cIndex)
+	{
+		Print(stdout, "OnBeginPath : {1}\n", wszPath);
+
+		return True;
+	}
+
+	//new 
+	virtual Bool OnEndPath(const WChar *wszPath, Size cIndex)
+	{
+		Print(stdout, "OnEndPath : {1}\n", wszPath);
+
+		return True;
+	}
+
+	//new 
+	virtual Bool OnListLineError(const WChar *wszLine, Size cPathIndex, const Status &status)
+	{
+		Print(stdout, "OnListLineError : {1}\n", wszLine);
+
+		return True;
+	}
+
+};
 
 int main(int argc, char *argv[])
 {
@@ -38,6 +131,16 @@ int main(int argc, char *argv[])
 	CX_UNUSED(argv);
 
 	Tester::Run();
+
+	/*MyEnumHandler                 handler;
+	IO::FileEnumerator2::Config   config = IO::FileEnumerator2::Config::GetDefault();
+
+	config.nEnumFlags = IO::FileEnumerator2::Config::Flag_EnumNoReparsePoints | 
+	                    IO::FileEnumerator2::Config::Flag_EnumNoOffline | 
+	                    IO::FileEnumerator2::Config::Flag_EnumNoRecallOnDataAccess | 
+	                    IO::FileEnumerator2::Config::Flag_EnumNoRecallOnOpen;
+	IO::FileEnumerator2::Run(L"J:", &handler, config);
+	*/
 
 	return 0;
 }

@@ -63,6 +63,16 @@ public:
 
 	struct Config
 	{
+		enum Flags
+		{
+			Flag_EnumNoReparsePoints      = 0x01,
+			Flag_EnumNoOffline            = 0x02,
+			Flag_EnumNoRecallOnDataAccess = 0x04,
+			Flag_EnumNoRecallOnOpen       = 0x08,
+		};
+
+		static const UInt64   DEFAULT_ENUM_FLAGS        = Flag_EnumNoOffline | Flag_EnumNoRecallOnDataAccess | 
+		                                                  Flag_EnumNoRecallOnOpen;
 
 		static const Size     MIN_QUEUED_FILES          = 1;
 		static const Size     MAX_QUEUED_FILES          = 1048576;
@@ -122,6 +132,7 @@ public:
 		Bool             bRecursive;
 		Bool             bMapFile;
 		Bool             bDontFailOnNonExistentPaths;
+		UInt64           nEnumFlags;
 		PatternsVector   vectorPatterns;
 		ExtensionsSet    setExtensions;
 

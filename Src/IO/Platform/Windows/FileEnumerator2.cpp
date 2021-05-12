@@ -99,6 +99,7 @@ const FileEnumerator2::Config &FileEnumerator2::Config::GetDefault()
 		DEFAULT_RECURSIVE,
 		DEFAULT_MAP_FILE,
 		DEFAULT_DONT_FAIL_ON_NON_EXISTENT_PATHS,
+		DEFAULT_ENUM_FLAGS,
 	};
 
 	return config;
@@ -990,15 +991,26 @@ Status FileEnumerator2::Enumerate(const WChar *wszPath, Context &ctx)
 		return Status_MemAllocFailed;
 	}
 
+	Bool   bConfigNoReparsePoint              = Config::Flag_EnumNoReparsePoints == (Config::Flag_EnumNoReparsePoints & ctx.config.nEnumFlags);
+	Bool   bConfigNoReparseOffline            = Config::Flag_EnumNoOffline == (Config::Flag_EnumNoOffline & ctx.config.nEnumFlags);
+	Bool   bConfigNoReparseRecallOnDataAccess = Config::Flag_EnumNoRecallOnDataAccess == (Config::Flag_EnumNoRecallOnDataAccess & ctx.config.nEnumFlags);
+	Bool   bConfigNoReparseRecallOnOpen       = Config::Flag_EnumNoRecallOnOpen == (Config::Flag_EnumNoRecallOnOpen & ctx.config.nEnumFlags);
+
 	pData->wsMask = wszPath;
 	pData->wsMask += L"\\*.*";
 	if (INVALID_HANDLE_VALUE != (pData->hFind = FindFirstFileW(pData->wsMask.c_str(), &pData->data)))
 	{
 		for (;;)
 		{
-			if (!(FILE_ATTRIBUTE_OFFLINE & pData->data.dwFileAttributes) &&
-			    !(0x00400000 & pData->data.dwFileAttributes) && //FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS
-			    !(0x00040000 & pData->data.dwFileAttributes)) //FILE_ATTRIBUTE_RECALL_ON_OPEN
+			Bool   bDataReparsePoint                = FILE_ATTRIBUTE_REPARSE_POINT == (FILE_ATTRIBUTE_REPARSE_POINT & pData->data.dwFileAttributes);
+			Bool   bDataReparseOffline              = FILE_ATTRIBUTE_OFFLINE == (FILE_ATTRIBUTE_OFFLINE & pData->data.dwFileAttributes);
+			Bool   bDataReparseRecallOnDataAccess   = FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS == (FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS & pData->data.dwFileAttributes);
+			Bool   bDataReparseRecallOnOpen         = FILE_ATTRIBUTE_RECALL_ON_OPEN == (FILE_ATTRIBUTE_RECALL_ON_OPEN & pData->data.dwFileAttributes);
+
+			if ((!bConfigNoReparsePoint || !bDataReparsePoint) && 
+			     !bConfigNoReparseOffline || !bDataReparseOffline && 
+			     !bConfigNoReparseRecallOnDataAccess || !bDataReparseRecallOnDataAccess && 
+			     !bConfigNoReparseRecallOnOpen || !bDataReparseRecallOnOpen)
 			{
 				if (!(FILE_ATTRIBUTE_DIRECTORY & pData->data.dwFileAttributes))
 				{
