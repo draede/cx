@@ -34,12 +34,13 @@
 
 #include "CX/C/Mem.h"
 #include "CX/C/StatusCodes.h"
-#include "CX/C/Platform/Windows/windows.h"
+//#include "CX/C/Platform/Windows/windows.h"
+#include "mimalloc.h"
 
 
 void *CX_MemAlloc(CX_Size cbSize)
 {
-	return HeapAlloc(GetProcessHeap(), 0, cbSize);
+	return mi_malloc(cbSize);//HeapAlloc(GetProcessHeap(), 0, cbSize);
 }
 
 void *CX_MemRealloc(void *pPtr, CX_Size cbSize)
@@ -50,13 +51,13 @@ void *CX_MemRealloc(void *pPtr, CX_Size cbSize)
 	}
 	else
 	{
-		return HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
+		return mi_realloc(pPtr, cbSize);//HeapReAlloc(GetProcessHeap(), 0, pPtr, cbSize);
 	}
 }
 
 void CX_MemFree(void *pPtr)
 {
-	HeapFree(GetProcessHeap(), 0, pPtr);
+	mi_free(pPtr);//HeapFree(GetProcessHeap(), 0, pPtr);
 }
 
 #endif

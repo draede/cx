@@ -425,7 +425,7 @@ void DB_SQLite_TestDBHelper()
 		Util::Timer          timer;
 		double               lfElapsed;
 		Size                 cCount     = 1000000;
-		DB::SQLite::Bindings **bindings = (DB::SQLite::Bindings **)malloc(sizeof(DB::SQLite::Bindings *) *cCount);
+		DB::SQLite::Bindings **bindings = (DB::SQLite::Bindings **)Mem::Alloc(sizeof(DB::SQLite::Bindings *) *cCount);
 
 		for (Size i = 0; i < cCount; i++)
 		{
@@ -449,7 +449,7 @@ void DB_SQLite_TestDBHelper()
 		}
 		dbh.Close();
 
-		free(bindings);
+		Mem::Free(bindings);
 
 		lfElapsed = timer.GetElapsedTime();
 		Print(stdout, "Insert : {1:.3} inserts / second\n", cCount / lfElapsed);

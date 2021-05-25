@@ -1,3 +1,5 @@
+0.2.278 - 2021-05-25
+ - Switched to mimalloc allocator
 0.2.277 - 2021-05-12
  - added enum flags for IO::FileEnumerator2
 0.2.276 - 2021-04-24

@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 	CX_UNUSED(argc);
 	CX_UNUSED(argv);
 
-	Tester::Run();
+	//Tester::Run();
 
 	/*MyEnumHandler                 handler;
 	IO::FileEnumerator2::Config   config = IO::FileEnumerator2::Config::GetDefault();

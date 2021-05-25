@@ -34,14 +34,18 @@
 #include <new>
 #include <cstddef>
 #include <limits>
+#include "mimalloc.h"
 
 
 #undef max
+
+#define STLAlloc        mi_stl_allocator
 
 
 namespace CX
 {
 
+#if 0
 template <class T> 
 class STLAlloc;
 
@@ -167,5 +171,6 @@ Bool operator!=(const STLAlloc<T1> &p1, const STLAlloc<T2> &p2)
 
 	return False;
 }
+#endif
 
 }//namespace CX
