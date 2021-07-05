@@ -56,7 +56,7 @@ public:
 	{
 		const Byte *p = (const Byte *)pBuffer;
 
-		if (3 <= cbSize && 0xEF == p[0] && 0xBB == p[1] && 0xBF != p[2])
+		if (3 <= cbSize && 0xEF == p[0] && 0xBB == p[1] && 0xBF == p[2])
 		{
 			*pcbBOMSize = 3;
 

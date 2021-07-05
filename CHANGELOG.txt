@@ -1,3 +1,5 @@
+0.2.279 - 2021-07-02
+ - Fixed UTF8 not detected correctly in Sys::BOM 
 0.2.278 - 2021-05-25
  - Switched to mimalloc allocator
 0.2.277 - 2021-05-12
