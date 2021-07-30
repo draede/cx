@@ -48,7 +48,7 @@ extern __inline__ __attribute__((__always_inline__,__gnu_inline__)) void lzham_y
 LZHAM_FORCE_INLINE void lzham_yield_processor()
 {
 #if LZHAM_USE_MSVC_INTRINSICS
-   #if LZHAM_PLATFORM_PC_X64
+   #if LZHAM_PLATFORM_PC_X64 && !defined(_M_ARM64) && !defined(_M_ARM)
       _mm_pause();
    #else
       YieldProcessor();

@@ -1,3 +1,7 @@
+0.2.281 - 2021-07-30
+ - Added latest RapidJSON (neon support for ARM)
+0.2.280 - 2021-07-30
+ - Added ARM & ARM64 (Windows) builds
 0.2.279 - 2021-07-02
  - Fixed UTF8 not detected correctly in Sys::BOM 
 0.2.278 - 2021-05-25
