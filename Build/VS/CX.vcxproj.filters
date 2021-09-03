@@ -400,9 +400,6 @@
     <Filter Include="Source Files\Data\NPY">
       <UniqueIdentifier>{60b7d855-6a24-41cf-8034-c26202d6a625}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contrib\mimalloc">
-      <UniqueIdentifier>{a91cb877-e6eb-4a6b-8c48-05b162d23be6}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -2488,51 +2485,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\NPY\NPYWriter.cpp">
       <Filter>Source Files\Data\NPY</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\alloc.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\alloc-aligned.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\alloc-posix.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\arena.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\bitmap.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\heap.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\init.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\options.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\os.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\page.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\random.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\region.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\segment.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\stats.c">
-      <Filter>Contrib\mimalloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Contrib\MiMalloc\Src\segment-cache.c">
-      <Filter>Contrib\mimalloc</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

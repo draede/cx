@@ -29,5 +29,3 @@
 
 #include "CX/precomp.hpp"
 
-#include "mimalloc-new-delete.h"
-
