@@ -1131,7 +1131,7 @@ public:
 
 private:
 
-	Char m_buffer[BUFFER_LEN];
+	Char m_buffer[BUFFER_LEN + 1];
 	Size m_cLen;
 
 };
