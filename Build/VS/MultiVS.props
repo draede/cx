@@ -17,6 +17,7 @@
     <MVS_Version Condition="'$(PlatformToolset)' == 'v141_xp'">VS2017XP</MVS_Version>
     <MVS_Version Condition="'$(PlatformToolset)' == 'v142'">VS2019</MVS_Version>
     <MVS_Version Condition="'$(PlatformToolset)' == 'v142_xp'">VS2019XP</MVS_Version>
+    <MVS_Version Condition="'$(PlatformToolset)' == 'v143'">VS2022</MVS_Version>
 
     <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2008_(.*)'))">$(Configuration.Replace('VS2008_', ''))</MVS_Configuration>
     <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2008XP_(.*)'))">$(Configuration.Replace('VS2008XP_', ''))</MVS_Configuration>
@@ -32,6 +33,7 @@
     <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2017XP_(.*)'))">$(Configuration.Replace('VS2017XP_', ''))</MVS_Configuration>
     <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2019_(.*)'))">$(Configuration.Replace('VS2019_', ''))</MVS_Configuration>
     <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2019XP_(.*)'))">$(Configuration.Replace('VS2019XP_', ''))</MVS_Configuration>
+    <MVS_Configuration Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(Configuration), 'VS2022_(.*)'))">$(Configuration.Replace('VS2022_', ''))</MVS_Configuration>
 
   </PropertyGroup>
   <PropertyGroup />

@@ -34,6 +34,7 @@
 
 ipch/
 Bin/
+.vs/
 Lib/
 Temp/
 xcuserdata/
