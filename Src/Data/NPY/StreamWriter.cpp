@@ -198,7 +198,6 @@ Status StreamWriter::Create(IO::IOutputStream *pOutputStream, Bool bTakeOwnershi
 
 Status StreamWriter::Close()
 {
-	DWORD    dwAckSize;
 	UInt64   cRows = 0;
 	Status   status;
 

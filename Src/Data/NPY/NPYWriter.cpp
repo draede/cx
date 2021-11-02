@@ -151,7 +151,7 @@ Status NPZWriter::WriteInternal(const void *pBuffer, Size cbSize)
 	int      nRet;
 	Status   status;
 
-	if (ZIP_OK != (nRet = zipWriteInFileInZip(m_pZIP, pBuffer, cbSize)))
+	if (ZIP_OK != (nRet = zipWriteInFileInZip(m_pZIP, pBuffer, (unsigned int)cbSize)))
 	{
 		return Status(Status_WriteFailed, "Write failed with error {1}", nRet);
 	}
@@ -230,9 +230,6 @@ Status NPZWriter::Create(const WChar *wszPath, const Char *szName, int nCompress
 
 Status NPZWriter::Close()
 {
-
-
-	DWORD    dwAckSize;
 	UInt64   cRows = 0;
 	Status   status;
 

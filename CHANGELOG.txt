@@ -1,6 +1,7 @@
-0.2.284 - 2021-11-01
+0.2.284 - 2021-11-02
  - added support for VS 2022
  - updated git ignored files
+ - fixed warnings
 0.2.283 - 2021-09-22
  - added room for null terminator in DetailPrint.hpp (m_buffer)
 0.2.282 - 2021-09-03
