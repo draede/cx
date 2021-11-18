@@ -1,3 +1,5 @@
+0.2.285 - 2021-11-18
+ - updated sqlite to version 3.36
 0.2.284 - 2021-11-02
  - added support for VS 2022
  - updated git ignored files
