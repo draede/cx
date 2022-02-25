@@ -1,3 +1,6 @@
+0.2.287 - 2022-02-25
+ - updated copyright info
+ - added CX::MemPack::*
 0.2.286 - 2022-01-27
  - fixed iterator usage in profiler
 0.2.285 - 2021-11-18

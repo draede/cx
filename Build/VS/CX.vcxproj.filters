@@ -400,6 +400,12 @@
     <Filter Include="Source Files\Data\NPY">
       <UniqueIdentifier>{60b7d855-6a24-41cf-8034-c26202d6a625}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MemPack">
+      <UniqueIdentifier>{c50d62d3-663e-4929-87cc-bca80694d9a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MemPack">
+      <UniqueIdentifier>{e8669d7c-3421-428f-9755-4b966b83a4e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\CX\Sys\Atomic.hpp">
@@ -1313,6 +1319,27 @@
     </ClInclude>
     <ClInclude Include="..\..\Include\CX\Data\NPY\NPZWriter.hpp">
       <Filter>Header Files\Data\NPY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\MemPack\Allocator.hpp">
+      <Filter>Header Files\MemPack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\MemPack\Block.hpp">
+      <Filter>Header Files\MemPack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\MemPack\CXExternalAllocator.hpp">
+      <Filter>Header Files\MemPack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\MemPack\Debug.hpp">
+      <Filter>Header Files\MemPack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\MemPack\ExternalAllocator.hpp">
+      <Filter>Header Files\MemPack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\MemPack\StdLibExternalAllocator.hpp">
+      <Filter>Header Files\MemPack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\CX\MemPack\Storage.hpp">
+      <Filter>Header Files\MemPack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2485,6 +2512,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Data\NPY\NPYWriter.cpp">
       <Filter>Source Files\Data\NPY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MemPack\Allocator.cpp">
+      <Filter>Source Files\MemPack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MemPack\Debug.cpp">
+      <Filter>Source Files\MemPack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MemPack\Storage.cpp">
+      <Filter>Source Files\MemPack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
