@@ -46,6 +46,7 @@ SAXParser::SAXParser()
 	m_chDelimiter = ',';
 	m_bInQuote    = False;
 	m_cRowIndex   = 0;
+	m_uFlags      = 0;
 }
 
 SAXParser::~SAXParser()
@@ -218,23 +219,32 @@ Status SAXParser::ParseBuffer(const void *pBuffer, Size cbSize)
 			else
 			if ('\r' == *pPos || '\n' == *pPos)
 			{
-				m_nState = State_EOL;
-
-				m_vectorColumns.push_back(m_sColumn);
-				m_sColumn.clear();
-				if (!m_vectorColumns.empty())
+				if (m_bInQuote && (Flag_Enable_Multi_Line_Strings == (Flag_Enable_Multi_Line_Strings & m_uFlags)))
 				{
-					for (auto iter = m_vectorObservers.begin(); iter != m_vectorObservers.end(); ++iter)
-					{
-						if (!(*iter)->OnRow(m_cRowIndex, m_vectorColumns))
-						{
-							return Status_Cancelled;
-						}
-					}
-					m_cRowIndex++;
-					m_vectorColumns.clear();
+					m_sColumn += (Char)*pPos;
+
+					pPos++;
 				}
-				pPos++;
+				else
+				{
+					m_nState = State_EOL;
+
+					m_vectorColumns.push_back(m_sColumn);
+					m_sColumn.clear();
+					if (!m_vectorColumns.empty())
+					{
+						for (auto iter = m_vectorObservers.begin(); iter != m_vectorObservers.end(); ++iter)
+						{
+							if (!(*iter)->OnRow(m_cRowIndex, m_vectorColumns))
+							{
+								return Status_Cancelled;
+							}
+						}
+						m_cRowIndex++;
+						m_vectorColumns.clear();
+					}
+					pPos++;
+				}
 			}
 			else
 			{
@@ -289,6 +299,23 @@ Status SAXParser::RemoveObservers()
 	m_vectorObservers.clear();
 
 	return Status();
+}
+
+Status SAXParser::SetFlags(UInt64 uFlags)
+{
+	if (State_None != m_nState)
+	{
+		return Status_InvalidCall;
+	}
+
+	m_uFlags = uFlags;
+
+	return Status();
+}
+
+UInt64 SAXParser::GetFlags() const
+{
+	return m_uFlags;
 }
 
 }//namespace CSV

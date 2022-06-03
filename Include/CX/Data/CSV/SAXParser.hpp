@@ -51,6 +51,11 @@ class CX_API SAXParser
 {
 public:
 
+	enum Flag
+	{
+		Flag_Enable_Multi_Line_Strings = 0x01,
+	};
+
 	SAXParser();
 
 	~SAXParser();
@@ -70,6 +75,11 @@ public:
 	Status AddObserver(ISAXParserObserver *pObserver);
 
 	Status RemoveObservers();
+
+	//call this before BeginParse
+	Status SetFlags(UInt64 uFlags);
+
+	UInt64 GetFlags() const;
 
 private:
 
@@ -96,6 +106,7 @@ private:
 	State                                 m_nState;
 	Bool                                  m_bInQuote;
 	Size                                  m_cRowIndex;
+	UInt64                                m_uFlags;
 
 };
 
