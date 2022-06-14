@@ -3,7 +3,7 @@
  *
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2022 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2022 draede
  *
  * Released under the MIT License.
  * 
@@ -32,42 +32,38 @@
 #include "CX/C/Platform.h"
 
 
-#define CX_VER_MAJOR               0
-#define CX_VER_MINOR               2
-#define CX_VER_BUILD               289
-#define CX_VER_REVISION            0
+#define CX_VER_MAJOR                                      0
+#define CX_VER_MINOR                                      3
+#define CX_VER_BUILD                                      0
+#define CX_VER_REVISION                                   0
 
-#define CX_VER_NAME                "CX" 
-#define CX_VER_COPYRIGHT           "Copyright (C) 2014 - 2022 draede - draede [at] outlook [dot] com"
-#define CX_VER_COMPANY             "draede [at] outlook [dot] com"         
+#define CX_VER_NAME                                       "CX" 
+#define CX_VER_COPYRIGHT                                  "Copyright (C) 2014 - 2022 draede"
+#define CX_VER_COMPANY                                    "draede"
 
 #ifdef CX_DEBUG
 	#ifdef CX_64BIT_ARCH
-		#define CX_VER_DESCRIPTION         "CX (" CX_BUILDSYS ", dbg, 64b) - "                       \
-		                                   "https://github.com/draede/cx"
+		#define CX_VER_DESCRIPTION                          "CX (" CX_BUILDSYS ", dbg, 64b) - https://github.com/draede/cx"
 	#else
-		#define CX_VER_DESCRIPTION         "CX (" CX_BUILDSYS ", dbg, 32b) - "                       \
-		                                   "https://github.com/draede/cx"
+		#define CX_VER_DESCRIPTION                          "CX (" CX_BUILDSYS ", dbg, 32b) - https://github.com/draede/cx"
 	#endif
 #else
 	#ifdef CX_64BIT_ARCH
-		#define CX_VER_DESCRIPTION         "CX (" CX_BUILDSYS ", opt, 64b) - "                       \
-		                                   "https://github.com/draede/cx"
+		#define CX_VER_DESCRIPTION                          "CX (" CX_BUILDSYS ", opt, 64b) - https://github.com/draede/cx"
 	#else
-		#define CX_VER_DESCRIPTION         "CX (" CX_BUILDSYS ", opt, 32b) -"                        \
-		                                   " https://github.com/draede/cx"
+		#define CX_VER_DESCRIPTION                          "CX (" CX_BUILDSYS ", opt, 32b) - https://github.com/draede/cx"
 	#endif
 #endif
 
 
-#define CX_VER_HLP_STRBASE(x)                 #x
+#define CX_VER_HLP_STRBASE(x)                             #x
 
-#define CX_VER_HLP_STR(x)                    CX_VER_HLP_STRBASE(x)
+#define CX_VER_HLP_STR(x)                                 CX_VER_HLP_STRBASE(x)
 
-#define CX_VER_HLP_NUMBER(a, b, c, d)        (a), (b), (c), (d)
+#define CX_VER_HLP_NUMBER(a, b, c, d)                     (a), (b), (c), (d)
 
-#define CX_VER_HLP_STRING(a, b, c, d)        CX_VER_HLP_STR(a) "." CX_VER_HLP_STR(b) "."           \
-                                             CX_VER_HLP_STR(c) "." CX_VER_HLP_STR(d)
+#define CX_VER_HLP_STRING(a, b, c, d)                     CX_VER_HLP_STR(a) "." CX_VER_HLP_STR(b) "."           \
+                                                          CX_VER_HLP_STR(c) "." CX_VER_HLP_STR(d)
 
 #define CX_VER_HLP_SIGNATURE(a, b, c, d, n, cp, co, ds)   n " " CX_VER_HLP_STRING(a, b, c, d) ", " \
                                                           cp ", " ds

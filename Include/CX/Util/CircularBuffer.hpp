@@ -1,7 +1,7 @@
 /*
  * https://github.com/draede/cx
  * 
- * Copyright (C) 2014 - 2022 draede - draede [at] outlook [dot] com
+ * Copyright (C) 2014 - 2022 draede
  *
  * Released under the MIT License.
  * 

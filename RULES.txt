@@ -1,8 +1,7 @@
 
 1. this is not some fancy C++. This is _simple_ C++.
-2. avoid defines 
-3. avoid static globals (use static functions that return addr or refs of static declared vars - 
-                         for non scalars values it's a must)
+2. avoid defines...
+3. avoid static globals...
 4. no exceptions
 5. don't use C++11 (C++0x is ok)
 6. why do we have typedefs over STL containers? to use custom allocs (support cross dll allocs + easy memory 

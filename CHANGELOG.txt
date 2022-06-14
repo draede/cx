@@ -1,3 +1,5 @@
+0.3.0 - 2022-06-14
+ - code cleanup
 0.2.289 - 2022-06-03
  - added flags support for Data::CSV::SAXParser (Flag_Enable_Multi_Line_Strings)
 0.2.288 - 2022-03-21
