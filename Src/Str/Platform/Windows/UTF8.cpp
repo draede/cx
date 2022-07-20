@@ -167,7 +167,7 @@ Status UTF8::ToWChar(const Char *szUTF8, WString *psWChar, Size cUTF8Len/* = TYP
 {
 	Size     cLen;
 	WChar    *pOut = NULL;
-	WChar    out[4000];
+	WChar    out[1024];
 	Status   status;
 
 	if ((status = ToWChar(szUTF8, cUTF8Len, NULL, &cLen)).IsNOK())
@@ -211,7 +211,7 @@ Status UTF8::FromWChar(const WChar *wszWChar, String *psUTF8, Size cWCharLen/* =
 {
 	Size     cLen;
 	Char     *pOut = NULL;
-	Char     out[8000];
+	Char     out[1024];
 	Status   status;
 
 	if ((status = FromWChar(wszWChar, cWCharLen, NULL, &cLen)).IsNOK())
