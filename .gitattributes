@@ -2,3 +2,4 @@
 *.c linguist-detectable=false
 *.hpp linguist-detectable=true
 *.cpp linguist-detectable=true
+Contrib/* linguist-vendored
